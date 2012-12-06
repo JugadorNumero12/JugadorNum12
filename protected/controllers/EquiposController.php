@@ -3,12 +3,6 @@
 class EquiposController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column2';
-
-	/**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -46,101 +40,49 @@ class EquiposController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
+	 * Muestra la informacion de un equipo
+	 * 	aforo del estadio
+	 *  nivel del equipo
+	 *  listado de acciones grupales abiertas
+	 *  (...)
+	 * 
+	 * Si accedes a la pagina de tu aficion
+	 * 	mostrar las acciones en curso 
+	 * 	mostar el listado de jugadores 
+	 * Si accedes a la pagina de otra aficion
+	 *	mostrar boton para abandonar el equipo
+	 *
+	 * @route jugadorNum12/equipos/ver/{$id}
+	 * @param id_equipo a mostrar
 	 */
-	public function actionView($id)
+	public function actionVer($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		/* TODO */
+		// Nota: utilizar la info de los modelos <<equipos>> <<clasificacion>> <<acciones_grupales>>
 	}
 
 	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Equipos;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Equipos']))
-		{
-			$model->attributes=$_POST['Equipos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_equipo));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Equipos']))
-		{
-			$model->attributes=$_POST['Equipos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_equipo));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
+	 * Muestra la clasificacion de todos los equipos
+	 *
+	 * @route jugadorNum12/equipos
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Equipos');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		/* TODO */
+		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
 	}
 
 	/**
-	 * Manages all models.
+	 * Actualizar la aficion del usuario
+	 * Redirige a la pagina de la nueva aficion
+	 *
+	 * @param id del equipo al que cambiamos
+	 * @redirect jugadorNum12/equipos/ver/{$id_equipo_nuevo}
 	 */
-	public function actionAdmin()
+	public function actionCambiar($id_equipo_nuevo)
 	{
-		$model=new Equipos('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Equipos']))
-			$model->attributes=$_GET['Equipos'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+		/* TODO */
+		// Nota: recoger el parametro del equipo al que pertenece el usuario de la sesion
 	}
 
 	/**

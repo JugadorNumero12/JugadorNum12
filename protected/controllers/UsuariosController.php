@@ -3,12 +3,6 @@
 class UsuariosController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column2';
-
-	/**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -46,101 +40,91 @@ class UsuariosController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Usuarios;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Usuarios']))
-		{
-			$model->attributes=$_POST['Usuarios'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_usuario));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Usuarios']))
-		{
-			$model->attributes=$_POST['Usuarios'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_usuario));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
+	 * Redirige al perfil del usuario
+	 *
+	 * @route jugadorNum12/usuarios
+	 * @redirect jugadorNum12/usuarios/perfil 
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Usuarios');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		/* TODO */
 	}
 
-	/**
-	 * Manages all models.
+	/*
+	 * Mostrar los datos del personaje del usuario
+	 *  Tipo del personaje
+	 * 	Nivel del personaje
+	 *  Aficion a la que pertenece
+	 *  Habilidades pasivas desbloqueadas (y que por lo tanto estan haceindo efecto)
+	 *  (...)
+	 *
+	 * @route jugadorNum12/usuarios/perfil
 	 */
-	public function actionAdmin()
+	public function actionPerfil()
 	{
-		$model=new Usuarios('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Usuarios']))
-			$model->attributes=$_GET['Usuarios'];
+		/* TODO recoger los datos del usuario (se recoge de la variable de sesion)
+		 * y renderizar la vista 
+		 */
+		/* TODO crear la vista (Nota: tendra variables)*/
+	}
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+	/*
+	 * Mostrar los datos del personaje de otro usuario: 
+	 *  Tipo del personaje
+	 * 	Nivel del personaje
+	 *  Aficion a la que pertenece
+	 *  (...)
+	 *
+	 * @param id del usuario a mostrar
+	 * @route jugadorNum12/usuarios/ver/{$id}
+	 */
+	public function actionVer($id)
+	{
+		/* TODO */ 
+		// Nota: la vista tendra variables */
+	}
+
+	/*
+	 * Mostrar los datos de la cuenta del usuario
+	 *  Nick
+	 *  eMail
+	 *
+	 * @route jugadorNum12/usuarios/cuenta
+	 */
+	public function actionCuenta()
+	{
+		/* TODO */
+		/* recoger los datos del usuario (se recoge de la variable de sesion)
+		   y renderizar la vista 
+		*/
+	}
+
+	/*
+	 * Muestra un formulario para cambiar la clave
+	 * Recoge datos en $_POST y procesa el formulario 
+	 * Guarda la nueva <<pass>> en la tabla <<usuarios>> 
+	 *
+	 * @route jugadorNum12/usuarios/cambiarClave
+	 * @redirect jugadorNum12/usuarios/cuenta
+	 */
+	public function actionCambiarClave()
+	{
+		/* TODO */
+	}
+
+	/*
+	 * Muestra un formulario para cambiar el eMail
+	 * Recoge datos en $_POST y procesa el formulario 
+	 * Guarda el nuevo <<email>> en la tabla <<usuarios>> 
+	 *
+	 * @route jugadorNum12/usuarios/cambiarEmail
+	 * @redirect jugadorNum12/usuarios/cuenta
+	 */
+	public function actionCambiarEmail()
+	{
+		/* TODO */
+
+		// Nota: el email es unico para cada usuario
 	}
 
 	/**

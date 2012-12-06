@@ -1,13 +1,8 @@
 <?php
 
+/* Pagina del "arbol" de habilidades */
 class HabilidadesController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column2';
-
 	/**
 	 * @return array action filters
 	 */
@@ -46,101 +41,43 @@ class HabilidadesController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Habilidades;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Habilidades']))
-		{
-			$model->attributes=$_POST['Habilidades'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_habilidad));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Habilidades']))
-		{
-			$model->attributes=$_POST['Habilidades'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_habilidad));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
+	 * Muestra el arbol de habilidades completo del juego
+	 *
+	 * @route jugadorNum12/habilidades
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Habilidades');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		/* TODO */
 	}
 
 	/**
-	 * Manages all models.
+	 * Muestra la informacion de la habilidad seleccionada
+	 *  nombre
+	 *  descripcion (efecto, coste, detalles, ...)
+	 *  requisitos para desbloquear 
+	 * 
+	 * Si la accion ya esta desbloqueada por el usuario, indicarlo
+	 * Si no esta aun disponible mostrar un boton para escogerla
+	 *
+	 * @param id_habilidad sobre la que mostramos la informacion
+	 * @route jugadorNum12/habilidades/{$id_habilidad}
 	 */
-	public function actionAdmin()
+	public function actionVer($id_habilidad)
 	{
-		$model=new Habilidades('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Habilidades']))
-			$model->attributes=$_GET['Habilidades'];
+		/* TODO */
+	}
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+	/**
+	 * Lanza un formulario de confirmacion para adquirir la habilidad
+	 * y que pase al listado de habilidades desbloqueadas
+	 *
+	 * @param id_habilidad que se va a adquirir
+	 * @redirect jugadorNum12/acciones si la habilidad es una accion
+	 * @redirect jugadorNum12/usuarios/perfil si la habilidad es pasiva
+	 */
+	public function actionAdquirir($id_habilidad)
+	{
+		/* TODO */
 	}
 
 	/**

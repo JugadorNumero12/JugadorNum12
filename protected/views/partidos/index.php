@@ -1,20 +1,9 @@
 <?php
-/* @var $this PartidosController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var ejemplo de variable dada por el controlador */
+/* @var ejemplo de variable dada por el controlador */
 
-$this->breadcrumbs=array(
-	'Partidoses',
-);
+// codigo PHP
 
-$this->menu=array(
-	array('label'=>'Create Partidos', 'url'=>array('create')),
-	array('label'=>'Manage Partidos', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Partidoses</h1>
-
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<!-- codigo HTML -->

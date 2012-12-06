@@ -52,12 +52,13 @@ class AccionesGrupales extends CActiveRecord
 	}
 
 	/**
-	 * @return array relational rules.
+	 * Define las relaciones entre <acciones_grupales - tabla>
+	 *
+	 * @return array relaciones.
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		/* TODO indicar las relaciones dadas en el UML de la BD */
 		return array(
 		);
 	}

@@ -44,15 +44,16 @@ class Desbloqueadas extends CActiveRecord
 	}
 
 	/**
-	 * @return array relational rules.
+	 * Define las relaciones entre <desbloqueadas - tabla>
+	 *
+	 * @return array relaciones.
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		/* TODO indicar las relaciones dadas en el UML de la BD */
 		return array(
 		);
-	}
+	}}
 
 	/**
 	 * @return array customized attribute labels (name=>label)

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "usuarios".
+ * Modelo de la tabla <<usuarios>>
  *
- * The followings are the available columns in table 'usuarios':
+ * Columnas disponibles
  * @property string $id_usuario
  * @property string $equipos_id_equipo
  * @property string $nick
@@ -52,12 +52,13 @@ class Usuarios extends CActiveRecord
 	}
 
 	/**
-	 * @return array relational rules.
+	 * Define las relaciones entre <usuarios - tabla>
+	 *
+	 * @return array relaciones.
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+		/* TODO indicar las relaciones dadas en el UML de la BD */
 		return array(
 		);
 	}

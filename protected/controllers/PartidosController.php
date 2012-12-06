@@ -1,13 +1,8 @@
 <?php
 
+/* pagina con la informacion de las jornadas y previas a los partidos */
 class PartidosController extends Controller
 {
-	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
-	public $layout='//layouts/column2';
-
 	/**
 	 * @return array action filters
 	 */
@@ -46,101 +41,43 @@ class PartidosController extends Controller
 	}
 
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Partidos;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Partidos']))
-		{
-			$model->attributes=$_POST['Partidos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_partido));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Partidos']))
-		{
-			$model->attributes=$_POST['Partidos'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_partido));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
+	 * Muestra los partidos de la jornada que se esta jugando
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Partidos');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		/* TODO */
+	}
+
+	/** 
+	 * Muestra la informacion previa a un partido
+	 * 	fecha y hora	
+	 *  ambiente para el partido
+	 * 	equipo local y visitante
+	 * 	detalles de ambos equipos (aforo previsto, nivel de los equipos)
+	 *  acciones completadas por las aficiones
+	 *
+	 * @param id_partido sobre el que se consulta la previa
+	 * @route jugadorNum12/partidos/previa/{$id_partido}
+	 */
+	public function actionPrevia($id_partido)
+	{
+		/* TODO */
 	}
 
 	/**
-	 * Manages all models.
+	 * Si el partido ya se jugo, mostrar la cronica (resultado)
+	 * de ese partido
+	 * Si el partido no se ha jugado, y es el proximo partido del
+	 * equipo del jugador, mostrar la pantalla de juego de partido
+	 * 
+	 * @param $id_partido sobre el que se pide informacion
+	 * @route jugadorNum12/partidos/asistir/{$id_partido}
 	 */
-	public function actionAdmin()
+	public function actionAsistir($id_partido)
 	{
-		$model=new Partidos('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Partidos']))
-			$model->attributes=$_GET['Partidos'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+		/* TODO */
+		// Nota: dejar en blanco (o con un simple mensaje indicativo)
+		// la pantalla de jugar partido
 	}
 
 	/**
