@@ -1,0 +1,78 @@
+@charset "utf-8";
+/*GENERAL DIVISIONS*/
+#genLayer {
+	/*border:thin;
+	border-color:#009900;
+	border-style:solid;*/
+    width: 1024px;
+    margin: 0 auto;
+	}
+#topBanner {
+	width:300px;
+	height:120px;
+	}
+#headBox {
+    padding:10px;
+    text-align: center;
+    /*background:#fdd;*/
+	}
+#bottomBox {
+    clear:both;
+    padding:10px;
+    /*background:#ff9;*/
+    text-align: center;
+}
+#leftMenuBar {
+    float:left;
+    width:150px;
+    /*background:#bfb;*/
+}
+#rightMenuBar {
+    float:left;
+    width:150px;
+    /*background:#dff;*/
+}
+#contentSection {
+    float:left;
+    width:724px;
+    background:#ddf;
+}
+/*LOGIN LAYERS*/
+#loginGenLayer {
+	/*border:thin;
+	border-color:#009900;
+	border-style:solid;*/
+    width: 900px;
+    margin: 0 auto;
+	}	
+#leftSide {
+    float:left;
+    width:450px;
+    height: 160px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background:#bfb;
+}
+#rightSide {
+    float:left;
+    width:450px;
+    height: 160px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    background:#dff;
+}
+/*CSS PARA PAGINA DE REGISTRO*/
+#leftSideReg {
+    float:left;
+    width:150px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background:#bfb;
+}
+#rightSideReg {
+    float:left;
+    width:750px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background:#dff;
+}
