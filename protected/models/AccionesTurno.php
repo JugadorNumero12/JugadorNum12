@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "acciones_turno".
+ * Modelo para la tabla <<acciones_turno>>
  *
- * The followings are the available columns in table 'acciones_turno':
- * @property string $usuarios_id_usuario
- * @property string $habilidades_id_habilidad
- * @property string $partidos_id_partido
- * @property string $equipos_id_equipo
- * @property integer $turno
+ * Columnas disponibles:
+ * string  $usuarios_id_usuario
+ * string  $habilidades_id_habilidad
+ * string  $partidos_id_partido
+ * string  $equipos_id_equipo
+ * integer $turno
  */
 class AccionesTurno extends CActiveRecord
 {
@@ -50,13 +50,12 @@ class AccionesTurno extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_turno - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* MARCOS */
+		return array( );
 	}
 
 	/**

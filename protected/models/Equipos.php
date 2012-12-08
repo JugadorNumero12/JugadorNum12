@@ -1,17 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "equipos".
+ * Modelo de la tabla <<equipos>>
  *
- * The followings are the available columns in table 'equipos':
- * @property string $id_equipo
- * @property string $nombre
- * @property string $categoria
- * @property string $aforo_max
- * @property string $aforo_base
- * @property integer $nivel_equipo
- * @property string $factor_ofensivo
- * @property string $factor_defensivo
+ * Columnas disponibles
+ * string 	$id_equipo
+ * string 	$nombre
+ * string 	$categoria
+ * string 	$aforo_max
+ * string 	$aforo_base
+ * integer	$nivel_equipo
+ * string 	$factor_ofensivo
+ * string 	$factor_defensivo
  */
 class Equipos extends CActiveRecord
 {
@@ -54,13 +54,12 @@ class Equipos extends CActiveRecord
 	/**
 	 * Define las relaciones entre <equipos - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* SAM */
+		return array( );
 	}
 
 	/**

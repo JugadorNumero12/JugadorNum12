@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "participaciones".
+ * Modelo para la tabla <<participaciones>>
  *
- * The followings are the available columns in table 'participaciones':
- * @property string $acciones_grupales_id_accion_grupal
- * @property string $usuarios_id_usuario
- * @property string $dinero_aportado
- * @property string $influencias_aportadas
- * @property string $animo_aportado
+ * Columnas disponibles:
+ *  string $acciones_grupales_id_accion_grupal
+ *  string $usuarios_id_usuario
+ *  string $dinero_aportado
+ *  string $influencias_aportadas
+ *  string $animo_aportado
  */
 class Participaciones extends CActiveRecord
 {
@@ -49,13 +49,12 @@ class Participaciones extends CActiveRecord
 	/**
 	 * Define las relaciones entre <participaciones - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* DANI */
+		return array( );
 	}
 
 	/**

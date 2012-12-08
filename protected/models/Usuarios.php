@@ -4,13 +4,13 @@
  * Modelo de la tabla <<usuarios>>
  *
  * Columnas disponibles
- * @property string $id_usuario
- * @property string $equipos_id_equipo
- * @property string $nick
- * @property string $pass
- * @property string $email
- * @property integer $personaje
- * @property string $nivel
+ * 	string 	$id_usuario
+ * 	string 	$equipos_id_equipo
+ * 	string 	$nick
+ * 	string 	$pass
+ * 	string 	$email
+ * 	integer $personaje
+ * 	string 	$nivel
  */
 class Usuarios extends CActiveRecord
 {
@@ -54,13 +54,12 @@ class Usuarios extends CActiveRecord
 	/**
 	 * Define las relaciones entre <usuarios - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* ROBER */
+		return array( );
 	}
 
 	/**

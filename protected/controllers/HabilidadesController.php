@@ -41,13 +41,13 @@ class HabilidadesController extends Controller
 	}
 
 	/**
-	 * Muestra el arbol de habilidades completo del juego
+	 * Muestra el arbol de habilidades completo 
 	 *
-	 * @route jugadorNum12/habilidades
+	 * @ruta 	jugadorNum12/habilidades
 	 */
 	public function actionIndex()
 	{
-		/* TODO */
+		/* DANI */
 	}
 
 	/**
@@ -56,28 +56,31 @@ class HabilidadesController extends Controller
 	 *  descripcion (efecto, coste, detalles, ...)
 	 *  requisitos para desbloquear 
 	 * 
+	 * el id del usuario se recoge de la variable de sesion
 	 * Si la accion ya esta desbloqueada por el usuario, indicarlo
 	 * Si no esta aun disponible mostrar un boton para escogerla
 	 *
-	 * @param id_habilidad sobre la que mostramos la informacion
-	 * @route jugadorNum12/habilidades/{$id_habilidad}
+	 * @parametro 	id de la habilidad seleccionada
+	 * @ruta 		jugadorNum12/habilidades/{$id_habilidad}
 	 */
 	public function actionVer($id_habilidad)
 	{
-		/* TODO */
+		/* DANI */
 	}
 
 	/**
-	 * Lanza un formulario de confirmacion para adquirir la habilidad
-	 * y que pase al listado de habilidades desbloqueadas
+	 * Muestra un formulario de confirmacion para adquirir una habilidad
+	 * 
+	 * Si hay datos en $_POST procesa el formulario y registra 
+	 * la habilidad como desbloqueada
 	 *
-	 * @param id_habilidad que se va a adquirir
-	 * @redirect jugadorNum12/acciones si la habilidad es una accion
-	 * @redirect jugadorNum12/usuarios/perfil si la habilidad es pasiva
+	 * @parametro 	id de la habilidad que se va a adquirir
+	 * @redirige 	jugadorNum12/acciones si la habilidad es una accion
+	 * @redirige 	jugadorNum12/usuarios/perfil si la habilidad es pasiva
 	 */
 	public function actionAdquirir($id_habilidad)
 	{
-		/* TODO */
+		/* ARTURO */
 	}
 
 	/**

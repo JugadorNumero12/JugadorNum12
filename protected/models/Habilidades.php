@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "habilidades".
+ * Modelo de la tabla <<habilidades>>
  *
- * The followings are the available columns in table 'habilidades':
- * @property string $id_habilidad
- * @property string $codigo
+ * Columnas disponibles:
+ * string $id_habilidad
+ * string $codigo
  */
 class Habilidades extends CActiveRecord
 {
@@ -46,13 +46,12 @@ class Habilidades extends CActiveRecord
 	/**
 	 * Define las relaciones entre <habilidades - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* ARTURO */
+		return array( );
 	}
 
 	/**

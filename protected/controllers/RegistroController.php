@@ -8,32 +8,14 @@ class RegistroController extends Controller
 	/**
 	 * Muestra el formulario para registrarse en la pagina
 	 * Si hay datos en $_POST procesa el formulario 
-	 * y guarda en la tabla usuarios un nuevo usuario a traves del modelo Usuarios 
+	 * y guarda en la tabla <<usuarios>> el nuevo usuario 
 	 *
-	 * @route jugadorNum12/registro
+	 * @ruta 		jugadorNum12/registro
+	 * @redirige	juagdorNum12/usuarios/perfil 
 	 */
 	public function actionIndex()
 	{
-		/*  TODO codigo similar a:
-		
-			$model=new Usuarios;
-
-			// Uncomment the following line if AJAX validation is needed
-			// $this->performAjaxValidation($model);
-
-			if(isset($_POST['Usuarios']))
-			{
-				$model->attributes=$_POST['Usuarios'];
-				if($model->save())
-					$this->redirect(array('view','id'=>$model->id_usuario));
-			}
-
-			$this->render('create',array(
-				'model'=>$model,
-			));
-		*/
-
-		/* TODO programar la vista */
+		/* ALEX */
 	}
 
 	public function filters()

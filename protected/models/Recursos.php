@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "recursos".
+ * Modelo de la tabla <<recursos>>
  *
- * The followings are the available columns in table 'recursos':
- * @property string $usuarios_id_usuario
- * @property string $dinero
- * @property double $dinero_gen
- * @property string $influencias
- * @property string $influencias_max
- * @property double $influencias_gen
- * @property string $animo
- * @property string $animo_max
- * @property double $animo_gen
+ * Columnas disponibles:
+ * 	string $usuarios_id_usuario
+ * 	string $dinero
+ * 	double $dinero_gen
+ * 	string $influencias
+ * 	string $influencias_max
+ * 	double $influencias_gen
+ * 	string $animo
+ * 	string $animo_max
+ * 	double $animo_gen
  */
 class Recursos extends CActiveRecord
 {
@@ -54,13 +54,12 @@ class Recursos extends CActiveRecord
 	/**
 	 * Define las relaciones entre <recursos - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* ALEX */
+		return array( );
 	}
 
 	/**
