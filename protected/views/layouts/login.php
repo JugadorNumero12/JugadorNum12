@@ -22,8 +22,8 @@
     <!-- DIVISION DEL MENU IZQUIERDO -->
     <div id="leftSide">
 		<!-- MODIFICAR CORRECTAMENTE -->
-		<p>«Jugador número 12» es un juego de estrategia multijugador, centrado en la gestión de peñas de aficionados.
-      Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo más alto.</p>
+		<p>Jugador n&uacute;mero 12 es un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
+      Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</p>
 		<a href="#">REGISTRATE YA</a>
 
     </div>

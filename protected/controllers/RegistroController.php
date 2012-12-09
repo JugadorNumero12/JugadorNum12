@@ -36,28 +36,31 @@ class RegistroController extends Controller
 		/* TODO programar la vista */
 	}
 
-	public function filters()
+	/**
+	 * @return array de filtros para actions
+	 */
+	/*public function filters()
 	{
-		// return the filter configuration for this controller, e.g.:
 		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
+			'accessControl', // Reglas de acceso
+			'postOnly + delete', // we only allow deletion via POST request
 		);
-	}
+	}*/
 
-	public function actions()
+	/**
+	 * Especifica las reglas de control de acceso.
+	 * Esta función es usada por el filtro "accessControl".
+	 * @return array con las reglas de control de acceso
+	 */
+	/*public function accessRules()
 	{
-		// return external action classes, e.g.:
 		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
+			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
+				'users'=>array(''),
+			),
+			array('deny',  // Niega acceso al resto de usuarios
+				'users'=>array('*'),
 			),
 		);
-	}
-	
+	}*/
 }

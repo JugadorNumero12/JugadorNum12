@@ -22,3 +22,248 @@ HTTP_REFERER=http://localhost/yii/jugadorNum12/gii/default/index.jsp
 ---
 2012/12/06 12:36:19 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'juego.habili' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `habili`.
 in C:\xampp\htdocs\yii\jugadorNum12\index.php (14)
+2012/12/09 13:52:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "login"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('login')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/login
+---
+2012/12/09 13:56:39 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "SiteController/login"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('SiteController/...')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/SiteController/login
+---
+2012/12/09 13:56:47 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "login"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('login')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/login
+---
+2012/12/09 13:58:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "jugadorNum12/site/login"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('jugadorNum12/si...')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/jugadorNum12/site/login
+---
+2012/12/09 14:48:15 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'El sistema no ha podido encontrar la acción "site" solicitada.' in C:\xampp\htdocs\yii\framework\web\CController.php:484
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(271): CController->missingAction('site')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('site')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/site/login')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/JugadorNum12/site/site/login
+---
+2012/12/09 14:48:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'El sistema no ha podido encontrar la acción "site" solicitada.' in C:\xampp\htdocs\yii\framework\web\CController.php:484
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(271): CController->missingAction('site')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('site')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/site')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/JugadorNum12/site/site/
+---
+2012/12/09 14:48:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "s"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('s')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/s
+---
+2012/12/09 14:59:06 [error] [exception.CException] exception 'CException' with message 'Propiedad "Usuarios"."clave" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(144): CComponent->__get('clave')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\components\UserIdentity.php(18): CActiveRecord->__get('clave')
+#2 C:\xampp\htdocs\yii\JugadorNum12\protected\models\LoginForm.php(52): UserIdentity->authenticate()
+#3 C:\xampp\htdocs\yii\framework\validators\CInlineValidator.php(43): LoginForm->authenticate('password', Array)
+#4 C:\xampp\htdocs\yii\framework\validators\CValidator.php(214): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#5 C:\xampp\htdocs\yii\framework\base\CModel.php(158): CValidator->validate(Object(LoginForm), NULL)
+#6 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(95): CModel->validate()
+#7 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#10 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#12 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#13 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 14:59:48 [error] [exception.CException] exception 'CException' with message 'Propiedad "UserIdentity"."pass" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\JugadorNum12\protected\components\UserIdentity.php(18): CComponent->__get('pass')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\models\LoginForm.php(52): UserIdentity->authenticate()
+#2 C:\xampp\htdocs\yii\framework\validators\CInlineValidator.php(43): LoginForm->authenticate('password', Array)
+#3 C:\xampp\htdocs\yii\framework\validators\CValidator.php(214): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#4 C:\xampp\htdocs\yii\framework\base\CModel.php(158): CValidator->validate(Object(LoginForm), NULL)
+#5 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(95): CModel->validate()
+#6 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#7 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#12 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#13 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#14 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 15:00:14 [error] [exception.CException] exception 'CException' with message 'Propiedad "UserIdentity"."clave" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\JugadorNum12\protected\components\UserIdentity.php(18): CComponent->__get('clave')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\models\LoginForm.php(52): UserIdentity->authenticate()
+#2 C:\xampp\htdocs\yii\framework\validators\CInlineValidator.php(43): LoginForm->authenticate('password', Array)
+#3 C:\xampp\htdocs\yii\framework\validators\CValidator.php(214): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#4 C:\xampp\htdocs\yii\framework\base\CModel.php(158): CValidator->validate(Object(LoginForm), NULL)
+#5 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(95): CModel->validate()
+#6 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#7 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#12 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#13 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#14 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 15:01:46 [error] [exception.CException] exception 'CException' with message 'Propiedad "CWebUser"."usIden" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\auth\CWebUser.php(141): CComponent->__get('usIden')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\views\site\login.php(34): CWebUser->__get('usIden')
+#2 C:\xampp\htdocs\yii\framework\web\CBaseController.php(127): require('C:\xampp\htdocs...')
+#3 C:\xampp\htdocs\yii\framework\web\CBaseController.php(96): CBaseController->renderInternal('C:\xampp\htdocs...', Array, true)
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(870): CBaseController->renderFile('C:\xampp\htdocs...', Array, true)
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(783): CController->renderPartial('login', Array, true)
+#6 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(99): CController->render('login', Array)
+#7 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#10 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#12 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#13 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 15:01:50 [error] [exception.CException] exception 'CException' with message 'Propiedad "CWebUser"."usIden" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\auth\CWebUser.php(141): CComponent->__get('usIden')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\views\site\login.php(34): CWebUser->__get('usIden')
+#2 C:\xampp\htdocs\yii\framework\web\CBaseController.php(127): require('C:\xampp\htdocs...')
+#3 C:\xampp\htdocs\yii\framework\web\CBaseController.php(96): CBaseController->renderInternal('C:\xampp\htdocs...', Array, true)
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(870): CBaseController->renderFile('C:\xampp\htdocs...', Array, true)
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(783): CController->renderPartial('login', Array, true)
+#6 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(99): CController->render('login', Array)
+#7 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#10 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#12 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#13 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/
+---
+2012/12/09 15:02:22 [error] [exception.CException] exception 'CException' with message 'Propiedad "CWebUser"."usIden" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\auth\CWebUser.php(141): CComponent->__get('usIden')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\views\site\login.php(35): CWebUser->__get('usIden')
+#2 C:\xampp\htdocs\yii\framework\web\CBaseController.php(127): require('C:\xampp\htdocs...')
+#3 C:\xampp\htdocs\yii\framework\web\CBaseController.php(96): CBaseController->renderInternal('C:\xampp\htdocs...', Array, true)
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(870): CBaseController->renderFile('C:\xampp\htdocs...', Array, true)
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(783): CController->renderPartial('login', Array, true)
+#6 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(99): CController->render('login', Array)
+#7 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#10 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#12 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#13 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/
+---
+2012/12/09 15:03:36 [error] [exception.CException] exception 'CException' with message 'Propiedad "CWebUser"."usIden" no se encuentra definida.' in C:\xampp\htdocs\yii\framework\base\CComponent.php:131
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\auth\CWebUser.php(141): CComponent->__get('usIden')
+#1 C:\xampp\htdocs\yii\JugadorNum12\protected\views\site\login.php(37): CWebUser->__get('usIden')
+#2 C:\xampp\htdocs\yii\framework\web\CBaseController.php(127): require('C:\xampp\htdocs...')
+#3 C:\xampp\htdocs\yii\framework\web\CBaseController.php(96): CBaseController->renderInternal('C:\xampp\htdocs...', Array, true)
+#4 C:\xampp\htdocs\yii\framework\web\CController.php(870): CBaseController->renderFile('C:\xampp\htdocs...', Array, true)
+#5 C:\xampp\htdocs\yii\framework\web\CController.php(783): CController->renderPartial('login', Array, true)
+#6 C:\xampp\htdocs\yii\JugadorNum12\protected\controllers\SiteController.php(99): CController->render('login', Array)
+#7 C:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(50): SiteController->actionLogin()
+#8 C:\xampp\htdocs\yii\framework\web\CController.php(309): CInlineAction->runWithParams(Array)
+#9 C:\xampp\htdocs\yii\framework\web\CController.php(287): CController->runAction(Object(CInlineAction))
+#10 C:\xampp\htdocs\yii\framework\web\CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('login')
+#12 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/login')
+#13 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/yii/JugadorNum12/site/login
+HTTP_REFERER=http://localhost/yii/
+---
+2012/12/09 15:09:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'El sistema no ha podido encontrar la acción "usuarios" solicitada.' in C:\xampp\htdocs\yii\framework\web\CController.php:484
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(271): CController->missingAction('usuarios')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('usuarios')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/usuarios/i...')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/JugadorNum12/site/usuarios/index
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 15:10:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'El sistema no ha podido encontrar la acción "usuarios" solicitada.' in C:\xampp\htdocs\yii\framework\web\CController.php:484
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(271): CController->missingAction('usuarios')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('usuarios')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/usuarios')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/JugadorNum12/site/usuarios
+---
+2012/12/09 15:12:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'El sistema no ha podido encontrar la acción "usuarios" solicitada.' in C:\xampp\htdocs\yii\framework\web\CController.php:484
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CController.php(271): CController->missingAction('usuarios')
+#1 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(283): CController->run('usuarios')
+#2 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('site/usuarios/i...')
+#3 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/JugadorNum12/site/usuarios/index
+HTTP_REFERER=http://localhost/yii/JugadorNum12/site/login
+---
+2012/12/09 15:23:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'No es posible resolver la solicitud "partido"' in C:\xampp\htdocs\yii\framework\web\CWebApplication.php:287
+Stack trace:
+#0 C:\xampp\htdocs\yii\framework\web\CWebApplication.php(142): CWebApplication->runController('partido')
+#1 C:\xampp\htdocs\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\yii\JugadorNum12\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/JugadorNum12/partido
+---
