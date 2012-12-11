@@ -59,7 +59,22 @@ class Usuarios extends CActiveRecord
 	public function relations()
 	{
 		/* ROBER */
-		return array( );
+		return array(
+			/*Relacion entre <<usuarios>> y <<recursos>>*/
+			'tiene'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<acciones_individuales>>*/
+            'realiza'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<desbloqueadas>> */
+			'tiene'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<acciones_turno>> */
+			'hace'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<equipos>> */
+			'pertenece'=>array(self::HAS_MANY, 'Equipos', 'equipos_id_equipo'),
+			/*Relacion entre <<usuarios>> y <<participaciones>> */
+			'participa'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<acciones_grupales>> */
+			'crea'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
+		);
 	}
 
 	/**
