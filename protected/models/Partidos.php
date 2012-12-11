@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "partidos".
+ * Modelo de la tabla <<partidos>>
  *
- * The followings are the available columns in table 'partidos':
- * @property string $id_partido
- * @property string $equipos_id_equipo_1
- * @property string $equipos_id_equipo_2
- * @property string $hora
- * @property string $cronica
+ * Columnas disponibles:
+ * string $id_partido
+ * string $equipos_id_equipo_1
+ * string $equipos_id_equipo_2
+ * string $hora
+ * string $cronica
  */
 class Partidos extends CActiveRecord
 {
@@ -50,13 +50,12 @@ class Partidos extends CActiveRecord
 	/**
 	 * Define las relaciones entre <partidos - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* SAM */
+		return array( );
 	}
 
 	/**

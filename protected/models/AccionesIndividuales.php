@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This is the model class for table "acciones_individuales".
+ * Modelo de la tabla <<acciones_individuales>>
  *
- * The followings are the available columns in table 'acciones_individuales':
- * @property string $habilidades_id_habilidad
- * @property string $usuarios_id_usuario
- * @property string $cooldown
+ * Columnas disponibles
+ * string $habilidades_id_habilidad
+ * string $usuarios_id_usuario
+ * string $cooldown
  */
 class AccionesIndividuales extends CActiveRecord
 {
@@ -48,13 +48,12 @@ class AccionesIndividuales extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_individuales - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array relaciones.
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* PEDRO */
+		return array( );
 	}
 
 	/**

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "acciones_grupales".
+ * Modelo para la tabla <<acciones_grupales>>
  *
- * The followings are the available columns in table 'acciones_grupales':
- * @property string $id_accion_grupal
- * @property string $usuarios_id_usuario
- * @property string $habilidades_id_habilidad
- * @property string $equipos_id_equipo
- * @property string $influencias_acc
- * @property string $animo_acc
- * @property string $dinero_acc
- * @property string $jugadores_acc
- * @property string $finalizacion
+ * columnas disponibles:
+ * string $id_accion_grupal
+ * string $usuarios_id_usuario
+ * string $habilidades_id_habilidad
+ * string $equipos_id_equipo
+ * string $influencias_acc
+ * string $animo_acc
+ * string $dinero_acc
+ * string $jugadores_acc
+ * string $finalizacion
  */
 class AccionesGrupales extends CActiveRecord
 {
@@ -54,13 +54,12 @@ class AccionesGrupales extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_grupales - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* MARCOS */
+		return array( );
 	}
 
 	/**

@@ -1,5 +1,6 @@
 <?php
 
+/* Pagina de equipos o aficiones */
 class EquiposController extends Controller
 {
 	/**
@@ -31,49 +32,55 @@ class EquiposController extends Controller
 	}
 
 	/**
-	 * Muestra la informacion de un equipo
-	 * 	aforo del estadio
-	 *  nivel del equipo
-	 *  listado de acciones grupales abiertas
-	 *  (...)
-	 * 
-	 * Si accedes a la pagina de tu aficion
-	 * 	mostrar las acciones en curso 
-	 * 	mostar el listado de jugadores 
-	 * Si accedes a la pagina de otra aficion
-	 *	mostrar boton para abandonar el equipo
-	 *
-	 * @route jugadorNum12/equipos/ver/{$id}
-	 * @param id_equipo a mostrar
-	 */
-	public function actionVer($id)
-	{
-		/* TODO */
-		// Nota: utilizar la info de los modelos <<equipos>> <<clasificacion>> <<acciones_grupales>>
-	}
-
-	/**
 	 * Muestra la clasificacion de todos los equipos
 	 *
-	 * @route jugadorNum12/equipos
+	 * @ruta jugadorNum12/equipos
 	 */
 	public function actionIndex()
 	{
-		/* TODO */
+		/* MARINA */
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
 	}
 
 	/**
-	 * Actualizar la aficion del usuario
-	 * Redirige a la pagina de la nueva aficion
+	 * Muestra la informacion de un equipo
+	 *	 nombre (color) del equipo (aficion)
+	 * 	 aforo maximo del estadio
+	 *	 aforo basico del estadio
+	 *   nivel del equipo
+	 *   numero de jugadores en esa aficion
+	 * 
+	 * Si se accede a la pagina de tu aficion mostrar ademas:
+	 * 	 acciones grupales abiertas 
+	 * 	 listado de jugadores
+	 * El id del jugador se recoge de la variable de sesion
+	 *  
+	 * Si se accede a la pagina de otra aficion mostrar:
+	 *	 boton para cambiarse a esa aficion
 	 *
-	 * @param id del equipo al que cambiamos
-	 * @redirect jugadorNum12/equipos/ver/{$id_equipo_nuevo}
+	 * @ruta 		jugadorNum12/equipos/ver/{$id}
+	 * @parametro 	id del equipo a mostrar
 	 */
-	public function actionCambiar($id_equipo_nuevo)
+	public function actionVer($id_equipo)
 	{
-		/* TODO */
-		// Nota: recoger el parametro del equipo al que pertenece el usuario de la sesion
+		/* SAM */
+		// Nota: utilizar la info de los modelos <<equipos>> <<clasificacion>> <<acciones_grupales>>
+		// Nota: en comentarios "aficion" y "equipo" son sinonimos
+	}
+
+	/**
+	 * Cambiar la aficion a la que pertenece un usuario
+	 * Actualiza la tabla <<usuario>> y <<equipos>>
+	 * 
+	 * El id del jugador y el equipo al que pertence se recogen 
+	 * de la variable de sesion
+	 *
+	 * @parametro 	id del nuevo equipo al que cambia el jugador
+	 * @redirige 	jugadorNum12/equipos/ver/{$id_equipo_nuevo}
+	 */
+	public function actionCambiar($id_nuevo_equipo)
+	{
+		/* SAM */
 	}
 
 	/**

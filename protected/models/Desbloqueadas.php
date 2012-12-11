@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This is the model class for table "desbloqueadas".
+ * Modelo de la tabla <<desbloqueadas>>
  *
- * The followings are the available columns in table 'desbloqueadas':
- * @property string $habilidades_id_habilidad
- * @property string $usuarios_id_usuario
+ * columnas disponibles:
+ * string $habilidades_id_habilidad
+ * string $usuarios_id_usuario
  */
 class Desbloqueadas extends CActiveRecord
 {
@@ -46,13 +46,12 @@ class Desbloqueadas extends CActiveRecord
 	/**
 	 * Define las relaciones entre <desbloqueadas - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* ALEX */
+		return array( );
 	}}
 
 	/**

@@ -33,10 +33,12 @@ class PartidosController extends Controller
 
 	/**
 	 * Muestra los partidos de la jornada que se esta jugando
+	 *
+	 * @ruta 	jugadorNum12/partidos
 	 */
 	public function actionIndex()
 	{
-		/* TODO */
+		/* ARTURO */
 	}
 
 	/** 
@@ -47,27 +49,27 @@ class PartidosController extends Controller
 	 * 	detalles de ambos equipos (aforo previsto, nivel de los equipos)
 	 *  acciones completadas por las aficiones
 	 *
-	 * @param id_partido sobre el que se consulta la previa
-	 * @route jugadorNum12/partidos/previa/{$id_partido}
+	 * @parametro 	id del partido sobre el que se consulta la previa
+	 * @ruta 		jugadorNum12/partidos/previa/{$id_partido}
 	 */
 	public function actionPrevia($id_partido)
 	{
-		/* TODO */
+		/* MARINA */
 	}
 
 	/**
-	 * Si el partido ya se jugo, mostrar la cronica (resultado)
-	 * de ese partido
+	 * Muestra la pantalla para "jugar" un partido
+	 * Si el partido ya se jugo, mostrar la cronica (resultado) de ese partido
 	 * Si el partido no se ha jugado, y es el proximo partido del
 	 * equipo del jugador, mostrar la pantalla de juego de partido
 	 * 
-	 * @param $id_partido sobre el que se pide informacion
-	 * @route jugadorNum12/partidos/asistir/{$id_partido}
+	 * @parametro 	$id_partido sobre el que se pide informacion
+	 * @ruta 		jugadorNum12/partidos/asistir/{$id_partido}
 	 */
 	public function actionAsistir($id_partido)
 	{
-		/* TODO */
-		// Nota: dejar en blanco (o con un simple mensaje indicativo)
+		/* ARTURO */
+		// Nota: dejar en blanco (o con un simple mensaje indicativo) 
 		// la pantalla de jugar partido
 	}
 

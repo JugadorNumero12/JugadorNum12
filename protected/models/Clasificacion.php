@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This is the model class for table "clasificacion".
+ * Modelo para la tabla <<clasificacion>>
  *
- * The followings are the available columns in table 'clasificacion':
- * @property string $equipos_id_equipo
- * @property string $posicion
- * @property string $puntos
- * @property string $ganados
- * @property string $empatados
- * @property string $perdidos
+ * Columnas disponibles:
+ * 	string $equipos_id_equipo
+ * 	string $posicion
+ * 	string $puntos
+ * 	string $ganados
+ * 	string $empatados
+ * 	string $perdidos
  */
 class Clasificacion extends CActiveRecord
 {
@@ -50,13 +50,12 @@ class Clasificacion extends CActiveRecord
 	/**
 	 * Define las relaciones entre <clasificacion - tabla>
 	 *
-	 * @return array relaciones.
+	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
-		/* TODO indicar las relaciones dadas en el UML de la BD */
-		return array(
-		);
+		/* MARCOS */
+		return array( );
 	}
 
 	/**
