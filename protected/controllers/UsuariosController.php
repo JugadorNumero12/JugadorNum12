@@ -43,6 +43,7 @@ class UsuariosController extends Controller
     public function actionIndex()
     {
         /* ROBER */
+        $this-> redirect(array('usuarios/perfil'));
     }
 
     /*
