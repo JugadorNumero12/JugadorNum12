@@ -8,9 +8,17 @@
 
 <ul>
 <?php foreach ( $habilidades as $habilidad ): ?>
-    <li><a <?php echo 'href="'
-       . $this->createUrl('/habilidades/ver', array('id_habilidad' => $habilidad['id_habilidad']))
-       . '"';
-    ?>> Hab. #<?php echo $habilidad['id_habilidad']; ?> </a></li>
+    <li><a href="<?php
+    	echo $this->createUrl(
+    		'/habilidades/ver',
+    		array('id_habilidad' => $habilidad['id_habilidad'])
+    	);
+    ?>"><?php echo $habilidad['nombre']; ?> </a> <?php
+    	printf('(D:%d, A:%d, I:%d)',
+    		$habilidad['dinero'],
+    		$habilidad['animo'],
+    		$habilidad['influencias']
+    	);
+    ?></li>
 <?php endforeach; ?>
 </ul>
