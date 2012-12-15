@@ -107,16 +107,16 @@ class UsuariosController extends Controller
     public function actionCambiarClave()
     {
         /* ROBER */
-        $id=Yii::app()->user->usIdent;        
-        $modelo = Usuarios :: model()->findByPk($id);
+        $id= Yii::app()->user->usIdent;        
+        $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
 
         if (isset($_POST['Usuarios'])) 
         {
-            //Cojo la clave de post(formulario)
+            //Cojo la clave de post(formulario)       
             $clave=$_POST['Usuarios']['nueva_clave1'];
-            
-            //Modifico dentro del modelo su pass
+            $modelo->attributes=$_POST['Usuarios'];
+            //Modifico dentro del modelo su pass        
             $modelo->setAttributes(array('pass'=>$clave));
             //Si es valido, se guarda y redirecciono a su cuenta
             //Sino es correcto, mensaje de error

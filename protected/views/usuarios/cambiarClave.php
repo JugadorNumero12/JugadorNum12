@@ -8,9 +8,9 @@
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'clave-form',
 			    'enableAjaxValidation'=>true,
-			    'enableClientValidation'=>true,
-			    'clientOptions'=>array(
-					'validateOnSubmit'=>true,),
+			    'enableClientValidation'=>false,
+			  /*  'clientOptions'=>array(
+					'validateOnSubmit'=>true,),*/
 			    ));
  ?>
 
@@ -20,8 +20,7 @@
 	  </tr>
 	  <tr>
 	    <td align="center"><?php echo $form->labelEx($model,'Contraseña actual'); ?>:</td>
-	    <td><?php echo $form->passwordField($model,'antigua_clave'); 
-	    		  echo $model -> antigua_clave; ?></td>
+	    <td><?php echo $form->passwordField($model,'antigua_clave'); ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2"><?php echo $form->error($model,'antigua_clave'); ?></td>
