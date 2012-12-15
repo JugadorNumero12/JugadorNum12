@@ -1,20 +1,17 @@
 <?php
 /* @var $this HabilidadesController */
 /* @var $dataProvider CActiveDataProvider */
-
-$this->breadcrumbs=array(
-	'Habilidades',
-);
-
-$this->menu=array(
-	array('label'=>'Create Habilidades', 'url'=>array('create')),
-	array('label'=>'Manage Habilidades', 'url'=>array('admin')),
-);
+/* @var $habilidades Array con todas las habilidades, obtenidas de la BDD */
 ?>
 
 <h1>Habilidades</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<ul>
+<?php foreach ( $habilidades as $habilidad ): ?>
+  <li><a <?php
+    echo 'href="'
+       . Yii::app()->createUrl('/habilidades/ver', array('id_habilidad' => $habilidad['id_habilidad']))
+       . '"'; ?>>
+       Hab. #<?php echo $habilidad['id_habilidad']; ?> </a></li>
+<?php endforeach; ?>
+</ul>

@@ -47,7 +47,7 @@ class HabilidadesController extends Controller
 		);
 
 		// Manda pintar la lista a la vista
-		$this->render('habilidades/index', $datosVista);
+		$this->render('index', $datosVista);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class HabilidadesController extends Controller
 		);
 
 		// Manda pintar la habilidad en la vista
-		$this->render('habilidades/ver', $datosVista);
+		$this->render('ver', $datosVista);
 	}
 
 	/**
