@@ -9,6 +9,9 @@
  */
 class Habilidades extends CActiveRecord
 {
+	const TIPO_INDIVIDUAL = 'individual';
+	const TIPO_GRUPAL = 'grupal';
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -60,8 +63,19 @@ class Habilidades extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_habilidad' => 'Id Habilidad',
+			'id_habilidad' => 'ID',
 			'codigo' => 'Codigo',
+			'tipo' => 'Tipo',
+			'nombre' => 'Nombre',
+			'descripcion' => 'Descripci&oacute;n',
+			'dinero' => 'Dinero',
+			'animo' => '&Aacute;nimo',
+			'influencias' => 'Influencia',
+			'dinero_max' => 'Dinero MAX',
+			'animo_max' => '&Aacute;nimo MAX',
+			'influencias_max' => 'Influencia MAX',
+			'participantes_max' => 'Participantes m&aacute;ximos',
+			'cooldown_fin' => 'Cooldown/Fin'
 		);
 	}
 
