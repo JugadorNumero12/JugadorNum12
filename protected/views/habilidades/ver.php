@@ -6,4 +6,6 @@
 
 ?>
 
+<h1>Habilidad #<?php $habilidad['id_habilidad'] ?></h1>
+
 <!-- codigo HTML -->

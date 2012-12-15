@@ -8,10 +8,9 @@
 
 <ul>
 <?php foreach ( $habilidades as $habilidad ): ?>
-  <li><a <?php
-    echo 'href="'
+    <li><a <?php echo 'href="'
        . Yii::app()->createUrl('/habilidades/ver', array('id_habilidad' => $habilidad['id_habilidad']))
-       . '"'; ?>>
-       Hab. #<?php echo $habilidad['id_habilidad']; ?> </a></li>
+       . '"';
+    ?>> Hab. #<?php echo $habilidad['id_habilidad']; ?> </a></li>
 <?php endforeach; ?>
 </ul>
