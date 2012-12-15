@@ -109,22 +109,22 @@ class UsuariosController extends Controller
         /* ROBER */
         $id=Yii::app()->user->usIdent;        
         $modelo = Usuarios :: model()->findByPk($id);
+        $modelo->scenario='cambiarClave';
 
-        if (isset($_POST['clave'])) 
+        if (isset($_POST['Usuarios'])) 
         {
             //Cojo la clave de post(formulario)
-            $clave=$_POST['clave'];
+            $clave=$_POST['Usuarios']['nueva_clave1'];
             //Modifico dentro del modelo su pass
-            $modelo->setAttributes(pass->$clave);
+            $modelo->setAttributes(array('pass'=>$clave));
             //Si es valido, se guarda y redirecciono a su cuenta
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
             {
-                $this->redirect(array('usuarios/cuenta'));
+               $this->redirect(array('usuarios/cuenta'));
             }
         }
-
-        $this->render('cambiarClave',array('model'=>$modelo));
+            $this->render('cambiarClave',array('model'=>$modelo));
     }
 
     /*
@@ -161,6 +161,12 @@ class UsuariosController extends Controller
     protected function performAjaxValidation($model)
     {
         if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+        /*Para el formulario de cambiarClave*/
+        if(isset($_POST['ajax']) && $_POST['ajax']==='clave-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

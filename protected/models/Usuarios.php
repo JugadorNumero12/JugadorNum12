@@ -14,6 +14,9 @@
  */
 class Usuarios extends CActiveRecord
 {
+	public $antigua_clave;
+	public $nueva_clave1;
+	public $nueva_clave2;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -41,10 +44,16 @@ class Usuarios extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('equipos_id_equipo, nick, pass, email', 'required'),
+			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
 			array('personaje', 'numerical', 'integerOnly'=>true),
 			array('equipos_id_equipo, nivel', 'length', 'max'=>10),
 			array('nick', 'length', 'max'=>45),
 			array('pass, email', 'length', 'max'=>255),
+			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
+			array('antigua_clave', 'compare', 'compareAttribute'=>'pass','on'=>'cambiarClave','message'=>'Introduzca correctamente la contraseña actual'),
+			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contraseñas'),
+			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contraseña actual'),
+			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_usuario, equipos_id_equipo, nick, pass, email, personaje, nivel', 'safe', 'on'=>'search'),
@@ -69,7 +78,7 @@ class Usuarios extends CActiveRecord
 			/*Relacion entre <<usuarios>> y <<acciones_turno>> */
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<equipos>> */
-			'equipos'=>array(self::BELONG_TO, 'Equipos', 'equipos_id_equipo'),
+			'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
 			/*Relacion entre <<usuarios>> y <<participaciones>> */
 			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<acciones_grupales>> */
