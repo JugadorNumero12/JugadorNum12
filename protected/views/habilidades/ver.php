@@ -6,6 +6,8 @@
 
 ?>
 
-<h1>Habilidad #<?php $habilidad['id_habilidad'] ?></h1>
+<h1>Habilidad #<?php $habilidad['id_habilidad']; ?></h1>
+
+<a href="<?php echo $this->createUrl('/habilidades/index'); ?>">&larr; Habilidades</a>
 
 <!-- codigo HTML -->
