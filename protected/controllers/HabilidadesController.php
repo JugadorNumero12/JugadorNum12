@@ -38,7 +38,16 @@ class HabilidadesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		/* DANI */
+		// Obtiene una lista con todas las habilidades
+		$habilidades = Habilidades::model()->findAll();
+
+		// Prepara los datos a enviar a la vista
+		$datosVista = array(
+			'habilidades' => $habilidades
+		);
+
+		// Manda pintar la lista a la vista
+		$this->render('habilidades/index', $datosVista);
 	}
 
 	/**
@@ -56,7 +65,16 @@ class HabilidadesController extends Controller
 	 */
 	public function actionVer($id_habilidad)
 	{
-		/* DANI */
+		// Obtiene la acción a consultar
+		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+
+		// Prepara los datos a enviar a la vista
+		$datosVista = array(
+			'habilidad' => $habilidad
+		);
+
+		// Manda pintar la habilidad en la vista
+		$this->render('habilidades/ver', $datosVista);
 	}
 
 	/**
