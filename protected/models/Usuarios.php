@@ -50,7 +50,7 @@ class Usuarios extends CActiveRecord
 			array('nick', 'length', 'max'=>45),
 			array('pass, email', 'length', 'max'=>255),
 			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
-			array('antigua_clave', 'compare', 'compareAttribute'=>'pass','on'=>'cambiarClave','message'=>'Introduzca correctamente la contraseña actual'),
+			array('antigua_clave', 'equalPasswords','on'=>'cambiarClave'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contraseñas'),
 			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contraseña actual'),
 			
@@ -60,6 +60,13 @@ class Usuarios extends CActiveRecord
 		);
 	}
 
+
+	public function equalPasswords($antigua_clave, $params)
+	{
+	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
+	    if ( $usuario->pass != $this->$antigua_clave)
+	        $this->addError($antigua_clave, 'Introduzca correctamente la contraseña actual');
+	}
 	/**
 	 * Define las relaciones entre <usuarios - tabla>
 	 *
