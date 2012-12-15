@@ -19,30 +19,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "protected/models/Participaciones.php",
-			"settings":
-			{
-				"buffer_size": 2886,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "protected/controllers/AccionesController.php",
-			"settings":
-			{
-				"buffer_size": 4393,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 1202,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -76,6 +52,9 @@
 	},
 	"file_history":
 	[
+		"/C/xampp/htdocs/yii-1.1.12.b600af/JugadorNum12/README.md",
+		"/C/xampp/htdocs/yii-1.1.12.b600af/JugadorNum12/protected/models/Participaciones.php",
+		"/C/xampp/htdocs/yii-1.1.12.b600af/JugadorNum12/protected/controllers/AccionesController.php",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/AccionesController.php",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/HabilidadesController.php",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/PartidosController.php",
@@ -216,95 +195,13 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "protected/models/Participaciones.php",
-					"settings":
-					{
-						"buffer_size": 2886,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								183,
-								183
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "protected/controllers/AccionesController.php",
-					"settings":
-					{
-						"buffer_size": 4393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2656,
-								2656
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1650.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 2,
-					"file": "README.md",
-					"settings":
-					{
-						"buffer_size": 1202,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								532,
-								532
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
