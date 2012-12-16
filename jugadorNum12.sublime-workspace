@@ -20,26 +20,10 @@
 	"buffers":
 	[
 		{
-			"file": "protected/models/Participaciones.php",
+			"file": "/C/Users/Pedro/Pedro Morgado/Dropbox/Otros/Cosas.txt",
 			"settings":
 			{
-				"buffer_size": 2886,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "protected/controllers/AccionesController.php",
-			"settings":
-			{
-				"buffer_size": 4393,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 1202,
+				"buffer_size": 654,
 				"line_ending": "Windows"
 			}
 		}
@@ -76,6 +60,10 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Pedro/Pedro Morgado/Otros/Otros/chat WhatsApp con Lucia (2).txt",
+		"/C/xampp/htdocs/yii/JugadorNum12/protected/controllers/AccionesController.php",
+		"/C/xampp/htdocs/yii/JugadorNum12/protected/models/Participaciones.php",
+		"/C/xampp/htdocs/yii/JugadorNum12/README.md",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/AccionesController.php",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/HabilidadesController.php",
 		"/C/xampp/htdocs/yii/jugadorNum12/protected/controllers/PartidosController.php",
@@ -221,54 +209,26 @@
 			[
 				{
 					"buffer": 0,
-					"file": "protected/models/Participaciones.php",
+					"file": "/C/Users/Pedro/Pedro Morgado/Dropbox/Otros/Cosas.txt",
 					"settings":
 					{
-						"buffer_size": 2886,
+						"buffer_size": 654,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								183,
-								183
+								654,
+								654
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "protected/controllers/AccionesController.php",
-					"settings":
-					{
-						"buffer_size": 4393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2656,
-								2656
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1650.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -276,35 +236,8 @@
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 2,
-					"file": "README.md",
-					"settings":
-					{
-						"buffer_size": 1202,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								532,
-								532
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -336,7 +269,7 @@
 		"cols":
 		[
 			0.0,
-			0.612099644128,
+			0.543021032504,
 			1.0
 		],
 		"rows":
@@ -379,6 +312,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 234.0,
+	"side_bar_width": 50.0,
 	"status_bar_visible": true
 }
