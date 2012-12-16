@@ -8,9 +8,9 @@
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'clave-form',
 			    'enableAjaxValidation'=>true,
-			    'enableClientValidation'=>true,
-			    'clientOptions'=>array(
-					'validateOnSubmit'=>true,),
+			    'enableClientValidation'=>false,
+			  /*  'clientOptions'=>array(
+					'validateOnSubmit'=>true,),*/
 			    ));
  ?>
 

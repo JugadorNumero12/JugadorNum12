@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2012 a las 16:00:33
+-- Tiempo de generación: 15-12-2012 a las 16:00:25
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -207,7 +207,18 @@ INSERT INTO `equipos` (`id_equipo`, `nombre`, `categoria`, `aforo_max`, `aforo_b
 DROP TABLE IF EXISTS `habilidades`;
 CREATE TABLE IF NOT EXISTS `habilidades` (
   `id_habilidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `codigo` int(10) unsigned NOT NULL,
+  `codigo` varchar(45) NOT NULL,
+  `tipo` varchar(20) NOT NULL DEFAULT 'individual',
+  `nombre` varchar(45) NOT NULL,
+  `descripcion` text NOT NULL,
+  `dinero` int(11) unsigned NOT NULL,
+  `animo` int(10) unsigned NOT NULL,
+  `influencias` int(10) unsigned NOT NULL,
+  `dinero_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `animo_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `influencias_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `participantes_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `cooldown_fin` int(10) unsigned NOT NULL DEFAULT '100',
   PRIMARY KEY (`id_habilidad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
@@ -215,15 +226,15 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
 -- Volcado de datos para la tabla `habilidades`
 --
 
-INSERT INTO `habilidades` (`id_habilidad`, `codigo`) VALUES
-(1, 0),
-(2, 1),
-(3, 2),
-(4, 3),
-(5, 4),
-(6, 5),
-(7, 6),
-(8, 7);
+INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, `animo`, `influencias`, `dinero_max`, `animo_max`, `influencias_max`, `participantes_max`, `cooldown_fin`) VALUES
+(1, 'emborracharse', 'individual', 'emborracharse', 'bla bla bla emborracharse', 100, 2, 0, 0, 0, 0, 0, 100),
+(2, 'sobornar', 'individual', 'sobornar', 'bla bla bla arbitro', 2000, 1, 100, 0, 0, 0, 0, 300),
+(3, 'crear tifo', 'grupal', 'Crear tifo', 'bla bla tifo', 300, 10, 5, 5000, 500, 40, 5, 10000),
+(4, 'pelea', 'grupal', 'Pelearse con aficion rival', 'bla bla pum pum', 100, 35, 4, 600, 4000, 75, 7, 8000),
+(5, 'hackeo', 'individual', 'hackear pagina web rival', 'bla bla hackers', 300, 1, 10, 0, 0, 0, 0, 350),
+(6, 'ola', 'partido', 'Participar en la ola', 'bla bla ueeeee', 0, 5, 0, 0, 0, 0, 0, 0),
+(7, 'dinero1', 'pasiva', 'Mas dinero', 'bla bla soy rico', 0, 0, 0, 0, 0, 0, 0, 0),
+(8, 'animo1', 'pasiva', 'animo', 'bla bla mas animo', 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
