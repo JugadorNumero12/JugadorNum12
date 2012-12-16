@@ -8,8 +8,8 @@
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'clave-form',
 			    'enableAjaxValidation'=>true,
-			    'enableClientValidation'=>false,
-			  /*  'clientOptions'=>array(
+			    'enableClientValidation'=>true,
+			    /*'clientOptions'=>array(
 					'validateOnSubmit'=>true,),*/
 			    ));
  ?>
@@ -19,21 +19,21 @@
 	    <td colspan="2" align="center"><span class="under">CAMBIAR CONTRASE&Ntilde;A</span></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Contraseña actual'); ?>:</td>
+	    <td align="center"><?php echo $form->labelEx($model,'Contrase&ntilde;a actual'); ?>:</td>
 	    <td><?php echo $form->passwordField($model,'antigua_clave'); ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2"><?php echo $form->error($model,'antigua_clave'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Nueva Contraseña'); ?>:</td>
+	    <td align="center"><?php echo $form->labelEx($model,'Nueva Contrase&ntilde;a'); ?>:</td>
 	    <td><?php echo $form->passwordField($model,'nueva_clave1'); ?></td>
 	  </tr>
 	  <tr>
 	    <td colspan="2"><?php echo $form->error($model,'nueva_clave1'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Repetir nueva contraseña'); ?>:</td>
+	    <td align="center"><?php echo $form->labelEx($model,'Repetir nueva contrase&ntilde;a'); ?>:</td>
 	    <td><?php echo $form->passwordField($model,'nueva_clave2'); ?></td>
 	  </tr>
 	  <tr>

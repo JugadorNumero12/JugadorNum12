@@ -141,6 +141,28 @@ class UsuariosController extends Controller
     {
         /* ROBER */
         // Nota: el email es unico para cada usuario
+        //Realizo la comprobacion de si el email es único en su modelo, mediante rules()
+        $id= Yii::app()->user->usIdent;        
+        $modelo = Usuarios:: model()->findByPk($id);
+        $modelo->scenario='cambiarEmail';
+
+        if (isset($_POST['Usuarios'])) 
+        {
+            //Cojo la clave de post(formulario)       
+            $email=$_POST['Usuarios']['nueva_email1'];
+            $modelo->attributes=$_POST['Usuarios'];
+            //Modifico dentro del modelo su pass        
+            $modelo->setAttributes(array('email'=>$email));
+            //Si es valido, se guarda y redirecciono a su cuenta
+            //Sino es correcto, mensaje de error
+            if ($modelo->save()) 
+            {
+               $this->redirect(array('usuarios/cuenta'));
+            }
+           
+        }
+            $this->render('cambiarEmail',array('model'=>$modelo));
+   
     }
 
     /**
@@ -169,6 +191,12 @@ class UsuariosController extends Controller
         }
         /*Para el formulario de cambiarClave*/
         if(isset($_POST['ajax']) && $_POST['ajax']==='clave-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+        /*Para el formulario de cambiarEmail*/
+        if(isset($_POST['ajax']) && $_POST['ajax']==='email-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
