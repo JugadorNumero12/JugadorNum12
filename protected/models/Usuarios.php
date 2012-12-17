@@ -62,8 +62,7 @@ class Usuarios extends CActiveRecord
 			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
 			array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
-			//array('nueva_email1,nueva_email2','match','pattern'=>'//','message'=>'Email no v&aacute;lido')
-
+			array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_usuario, equipos_id_equipo, nick, pass, email, personaje, nivel', 'safe', 'on'=>'search'),
@@ -77,6 +76,15 @@ class Usuarios extends CActiveRecord
 	    if ( $usuario->pass != $this->$antigua_clave)
 	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
 	}
+
+	/*Comprobar que el email coincide con el de la BBDD*/
+	public function emailIguales($antigua_email)
+	{
+	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
+	    if ( $usuario->email != $this->$antigua_email)
+	        $this->addError($antigua_email, 'Introduzca correctamente el email actual');
+	}
+
 	/*Comprueba que ese email sea único*/
 	public function comprobarEmail($nueva_email1)
 	{
@@ -86,6 +94,7 @@ class Usuarios extends CActiveRecord
 	        $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
 	    }
 	}
+
 	/**
 	 * Define las relaciones entre <usuarios - tabla>
 	 *

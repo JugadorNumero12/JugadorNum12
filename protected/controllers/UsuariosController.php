@@ -142,28 +142,41 @@ class UsuariosController extends Controller
     {
         /* ROBER */
         // Nota: el email es unico para cada usuario
-        //Realizo la comprobacion de si el email es único en su modelo, mediante rules()
-        $id= Yii::app()->user->usIdent;        
-        $modelo = Usuarios:: model()->findByPk($id);
-        $modelo->scenario='cambiarEmail';
+        //Hay que realizar una transaccion por si dos usuarios guardan al mismo tiempo el email
+        //ya que les daria que son validos y no es asi 
 
-        if (isset($_POST['Usuarios'])) 
+        $trans=Yii::app()->db->beginTransaction();
+
+        try
         {
-            //Cojo la clave de post(formulario)       
-            $email=$_POST['Usuarios']['nueva_email1'];
-            $modelo->attributes=$_POST['Usuarios'];
-            //Modifico dentro del modelo su pass        
-            $modelo->setAttributes(array('email'=>$email));
-            //Si es valido, se guarda y redirecciono a su cuenta
-            //Sino es correcto, mensaje de error
-            if ($modelo->save()) 
+            //Realizo la comprobacion de si el email es único en su modelo, mediante rules()
+            $id= Yii::app()->user->usIdent;        
+            $modelo = Usuarios:: model()->findByPk($id);
+            $modelo->scenario='cambiarEmail';
+
+            if (isset($_POST['Usuarios'])) 
             {
-               $this->redirect(array('usuarios/cuenta'));
+                //Cojo la clave de post(formulario)       
+                $email=$_POST['Usuarios']['nueva_email1'];
+                $modelo->attributes=$_POST['Usuarios'];
+                //Modifico dentro del modelo su pass        
+                $modelo->setAttributes(array('email'=>$email));
+                //Si es valido, se guarda y redirecciono a su cuenta
+                //Sino es correcto, mensaje de error
+                if ($modelo->save()) 
+                {
+                   $trans->commit();
+                   $this->redirect(array('usuarios/cuenta'));
+                }else
+                    {
+                        $trans->commit(); 
+                    }               
             }
-           
-        }
-            $this->render('cambiarEmail',array('model'=>$modelo));
-   
+        }catch (Exception $e)
+                {
+                    $trans->rollBack();
+                }               
+        $this->render('cambiarEmail',array('model'=>$modelo));
     }
 
     /**
