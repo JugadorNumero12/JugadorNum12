@@ -7,10 +7,10 @@
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'email-form',
-			    'enableAjaxValidation'=>true,
-			    'enableClientValidation'=>false,
-			  /*  'clientOptions'=>array(
-					'validateOnSubmit'=>true,),*/
+			    'enableAjaxValidation'=>false,
+			    'enableClientValidation'=>true,
+			    'clientOptions'=>array(
+					'validateOnSubmit'=>true,),
 			    ));
  ?>
 
