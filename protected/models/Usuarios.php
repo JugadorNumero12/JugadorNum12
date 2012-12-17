@@ -57,11 +57,12 @@ class Usuarios extends CActiveRecord
 			array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
 			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
+			array('nueva_clave1,nueva_clave2','match','pattern'=>'/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).{6,20}/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
 			/*Validaciones para cambio de email*/
 			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
 			array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
-			
+			//array('nueva_email1,nueva_email2','match','pattern'=>'//','message'=>'Email no v&aacute;lido')
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
