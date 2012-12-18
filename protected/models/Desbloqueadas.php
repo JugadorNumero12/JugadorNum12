@@ -52,7 +52,7 @@ class Desbloqueadas extends CActiveRecord
 	{
 		/* ALEX */
 		return array( );
-	}}
+	}
 
 	/**
 	 * @return array customized attribute labels (name=>label)
