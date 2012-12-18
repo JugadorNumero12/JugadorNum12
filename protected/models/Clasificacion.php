@@ -55,7 +55,7 @@ class Clasificacion extends CActiveRecord
 	public function relations()
 	{
 		/* MARCOS */
-		return array( );
+		return array('equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'));
 	}
 
 	/**
