@@ -48,7 +48,7 @@ class Clasificacion extends CActiveRecord
 	}
 
 	/**
-	 * Define las relaciones entre <clasificacion - tabla>
+	 * Define las relaciones entre <clasificacion - equipos>
 	 *
 	 * @devuelve array de relaciones
 	 */
