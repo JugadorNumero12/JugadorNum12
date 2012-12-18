@@ -55,7 +55,12 @@ class AccionesTurno extends CActiveRecord
 	public function relations()
 	{
 		/* MARCOS */
-		return array( );
+		return array(
+			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
+			'habilidad'=>array(self::BELONGS_TO, 'Hablidad', 'habilidades_id_habilidad'),
+			'partidos_id_partido'=>array(self::BELONG_TO, 'Partido', 'partidos_id_partido'),
+			'equipo'=>array(self::BELONGS_TO, 'Equipo', 'equipos_id_equipo')
+		);
 	}
 
 	/**

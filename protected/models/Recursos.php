@@ -59,7 +59,9 @@ class Recursos extends CActiveRecord
 	public function relations()
 	{
 		/* ALEX */
-		return array( );
+		return array( 
+			'usuarios_id_usuario'=>array(self::BELONGS_TO, 'Usuarios', 'id_usuario')
+		);
 	}
 
 	/**
