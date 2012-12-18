@@ -43,6 +43,11 @@ class AccionesController extends Controller
 	public function actionIndex()
 	{
 		/* PEDRO */
+		//Coger datos. Todavía no puedo hacerlo porque necesito el relations() del modelo Desbloqueadas.
+		//$listaHabilidades = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+
+		//Mostrar la vista
+		$this->render('index',array('listaHabilidades'=>$listaHabilidades));
 	}
 
 	/**
