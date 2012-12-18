@@ -59,7 +59,12 @@ class AccionesGrupales extends CActiveRecord
 	public function relations()
 	{
 		/* MARCOS */
-		return array( );
+		return array(
+			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
+			'habilidad'=>array(self::BELONGS_TO, 'Hablidad', 'habilidades_id_habilidad'),
+			'equipo'=>array(self::BELONGS_TO, 'Equipo', 'equipos_id_equipo'),
+			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario')
+		);
 	}
 
 	/**
