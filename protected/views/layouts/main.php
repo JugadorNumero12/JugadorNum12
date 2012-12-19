@@ -27,9 +27,10 @@
 			   <li><a href='#'><span>Perfil</span></a></li>
 			   <li><a href='#'><span>Habilidades</span></a></li>
 			   <li><a href='#'><span>Acciones</span></a></li>
-			   <li><a href='#'><span>Afición</span></a></li>
-			   <li><a href='#'><span>Estadísticas</span></a></li>
-			   <li><a href='#'><span>Clasificación</span></a></li>
+			   <li><a href='#'><span>Afici&oacute;n</span></a></li>
+			   <li><a href='#'><span>Estad&iacute;sticas</span></a></li>
+			   <li><a href='#'><span>Calendario</span></a></li>
+			   <li><a href='#'><span>Clasificaci&oacute;n</span></a></li>
 			   <li><a href='#'><span>Partido</span></a></li>
 			</ul>
 		</div>
@@ -47,7 +48,7 @@
 			<ul>
 			   <li><a href='#'><span>Mi Cuenta</span></a></li>
 			   <li><a href='#'><span>Mensajes</span></a></li>
-			   <li><a href='#'><span>Logout</span></a></li>
+			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
 			</ul>
 		</div>
     </div>

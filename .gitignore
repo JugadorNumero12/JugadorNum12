@@ -1,3 +1,5 @@
 assets/
 protected/runtime/
 themes/classic/views/
+*.sublime-project
+*.sublime-workspace

@@ -6,42 +6,33 @@
  */
 class UsuariosController extends Controller
 {
-    /**
-     * @return array action filters
-     */
-    public function filters()
-    {
-        return array(
-            'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
-        );
-    }
+	/**
+	 * @return array de filtros para actions
+	 */
+	public function filters()
+	{
+		return array(
+			'accessControl', // Reglas de acceso
+			'postOnly + delete', // we only allow deletion via POST request
+		);
+	}
 
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
-    public function accessRules()
-    {
-        return array(
-            array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions'=>array('index','view'),
-                'users'=>array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update'),
-                'users'=>array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions'=>array('admin','delete'),
-                'users'=>array('admin'),
-            ),
-            array('deny',  // deny all users
-                'users'=>array('*'),
-            ),
-        );
-    }
+	/**
+	 * Especifica las reglas de control de acceso.
+	 * Esta función es usada por el filtro "accessControl".
+	 * @return array con las reglas de control de acceso
+	 */
+	public function accessRules()
+	{
+		return array(
+			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
+				'users'=>array('@'),
+			),
+			array('deny',  // Niega acceso al resto de usuarios
+				'users'=>array('*'),
+			),
+		);
+	}
 
     /**
      * Redirige al perfil del usuario
@@ -52,6 +43,7 @@ class UsuariosController extends Controller
     public function actionIndex()
     {
         /* ROBER */
+        $this-> redirect(array('usuarios/perfil'));
     }
 
     /*
@@ -115,6 +107,27 @@ class UsuariosController extends Controller
     public function actionCambiarClave()
     {
         /* ROBER */
+        $id= Yii::app()->user->usIdent;        
+        $modelo = Usuarios:: model()->findByPk($id);
+        $modelo->scenario='cambiarClave';
+
+        if (isset($_POST['Usuarios'])) 
+        {
+            //Cojo la clave de post(formulario)       
+            $clave=$_POST['Usuarios']['nueva_clave1'];
+            $modelo->attributes=$_POST['Usuarios'];
+            //Modifico dentro del modelo su pass     
+            $modelo->setAttributes(array('pass'=>$clave));             
+            //Si es valido, se guarda y redirecciono a su cuenta
+            //Sino es correcto, mensaje de error
+            if ($modelo->save()) 
+            {
+                $this->redirect(array('usuarios/cuenta'));
+            }
+           
+        }
+            $this->render('cambiarClave',array('model'=>$modelo));
+            
     }
 
     /*
@@ -129,6 +142,41 @@ class UsuariosController extends Controller
     {
         /* ROBER */
         // Nota: el email es unico para cada usuario
+        //Hay que realizar una transaccion por si dos usuarios guardan al mismo tiempo el email
+        //ya que les daria que son validos y no es asi 
+
+        $trans=Yii::app()->db->beginTransaction();
+
+        try
+        {
+            //Realizo la comprobacion de si el email es único en su modelo, mediante rules()
+            $id= Yii::app()->user->usIdent;        
+            $modelo = Usuarios:: model()->findByPk($id);
+            $modelo->scenario='cambiarEmail';
+
+            if (isset($_POST['Usuarios'])) 
+            {
+                //Cojo la clave de post(formulario)       
+                $email=$_POST['Usuarios']['nueva_email1'];
+                $modelo->attributes=$_POST['Usuarios'];
+                //Modifico dentro del modelo su pass        
+                $modelo->setAttributes(array('email'=>$email));
+                //Si es valido, se guarda y redirecciono a su cuenta
+                //Sino es correcto, mensaje de error
+                if ($modelo->save()) 
+                {
+                   $trans->commit();
+                   $this->redirect(array('usuarios/cuenta'));
+                }else
+                    {
+                        $trans->commit(); 
+                    }               
+            }
+        }catch (Exception $e)
+                {
+                    $trans->rollBack();
+                }               
+        $this->render('cambiarEmail',array('model'=>$modelo));
     }
 
     /**
@@ -151,6 +199,18 @@ class UsuariosController extends Controller
     protected function performAjaxValidation($model)
     {
         if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+        /*Para el formulario de cambiarClave*/
+        if(isset($_POST['ajax']) && $_POST['ajax']==='clave-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+        /*Para el formulario de cambiarEmail*/
+        if(isset($_POST['ajax']) && $_POST['ajax']==='email-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
