@@ -48,14 +48,17 @@ class Clasificacion extends CActiveRecord
 	}
 
 	/**
-	 * Define las relaciones entre <clasificacion - equipos>
+	 * Define las relaciones entre <clasificacion - tabla>
 	 *
 	 * @devuelve array de relaciones
 	 */
 	public function relations()
 	{
 		/* MARCOS */
-		return array('equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'));
+		return array(
+			//relacion con tablas de la arquitectura (1ª iteración)
+			'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo')
+		);
 	}
 
 	/**
