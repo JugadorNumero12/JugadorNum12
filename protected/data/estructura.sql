@@ -1,0 +1,232 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.2.2
+-- http://www.phpmyadmin.net
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 19-12-2012 a las 22:02:51
+-- Versión del servidor: 5.5.27
+-- Versión de PHP: 5.4.7
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `juego`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acciones_grupales`
+--
+
+DROP TABLE IF EXISTS `acciones_grupales`;
+CREATE TABLE IF NOT EXISTS `acciones_grupales` (
+  `id_accion_grupal` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `habilidades_id_habilidad` int(10) unsigned NOT NULL,
+  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `influencias_acc` int(10) unsigned NOT NULL,
+  `animo_acc` int(10) unsigned NOT NULL,
+  `dinero_acc` int(10) unsigned NOT NULL,
+  `jugadores_acc` int(10) unsigned NOT NULL,
+  `finalizacion` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id_accion_grupal`),
+  KEY `acciones_grupales_FKIndex1` (`equipos_id_equipo`),
+  KEY `acciones_grupales_FKIndex3` (`habilidades_id_habilidad`),
+  KEY `acciones_grupales_FKIndex2` (`usuarios_id_usuario`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acciones_individuales`
+--
+
+DROP TABLE IF EXISTS `acciones_individuales`;
+CREATE TABLE IF NOT EXISTS `acciones_individuales` (
+  `habilidades_id_habilidad` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `cooldown` int(11) unsigned NOT NULL,
+  KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
+  KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acciones_turno`
+--
+
+DROP TABLE IF EXISTS `acciones_turno`;
+CREATE TABLE IF NOT EXISTS `acciones_turno` (
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `habilidades_id_habilidad` int(10) unsigned NOT NULL,
+  `partidos_id_partido` int(10) unsigned NOT NULL,
+  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `turno` smallint(5) unsigned NOT NULL,
+  KEY `acciones_turno_FKIndex3` (`equipos_id_equipo`),
+  KEY `acciones_turno_FKIndex4` (`partidos_id_partido`),
+  KEY `acciones_turno_FKIndex2` (`habilidades_id_habilidad`),
+  KEY `acciones_turno_FKIndex1` (`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clasificacion`
+--
+
+DROP TABLE IF EXISTS `clasificacion`;
+CREATE TABLE IF NOT EXISTS `clasificacion` (
+  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `posicion` int(10) unsigned NOT NULL,
+  `puntos` int(10) unsigned NOT NULL,
+  `ganados` int(10) unsigned NOT NULL,
+  `empatados` int(10) unsigned NOT NULL,
+  `perdidos` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`equipos_id_equipo`),
+  KEY `Clasificacion_FKIndex1` (`equipos_id_equipo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `desbloqueadas`
+--
+
+DROP TABLE IF EXISTS `desbloqueadas`;
+CREATE TABLE IF NOT EXISTS `desbloqueadas` (
+  `habilidades_id_habilidad` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  KEY `desbloqueadas_FKIndex1` (`usuarios_id_usuario`),
+  KEY `desbloqueadas_FKIndex2` (`habilidades_id_habilidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `equipos`
+--
+
+DROP TABLE IF EXISTS `equipos`;
+CREATE TABLE IF NOT EXISTS `equipos` (
+  `id_equipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  `categoria` int(10) unsigned NOT NULL,
+  `aforo_max` int(10) unsigned NOT NULL,
+  `aforo_base` int(10) unsigned NOT NULL,
+  `nivel_equipo` smallint(5) unsigned NOT NULL,
+  `factor_ofensivo` int(10) unsigned NOT NULL,
+  `factor_defensivo` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_equipo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `habilidades`
+--
+
+DROP TABLE IF EXISTS `habilidades`;
+CREATE TABLE IF NOT EXISTS `habilidades` (
+  `id_habilidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(45) NOT NULL,
+  `tipo` varchar(20) NOT NULL DEFAULT 'individual',
+  `nombre` varchar(45) NOT NULL,
+  `descripcion` text NOT NULL,
+  `dinero` int(11) unsigned NOT NULL,
+  `animo` int(10) unsigned NOT NULL,
+  `influencias` int(10) unsigned NOT NULL,
+  `dinero_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `animo_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `influencias_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `participantes_max` int(10) unsigned NOT NULL DEFAULT '0',
+  `cooldown_fin` int(10) unsigned NOT NULL DEFAULT '100',
+  PRIMARY KEY (`id_habilidad`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `participaciones`
+--
+
+DROP TABLE IF EXISTS `participaciones`;
+CREATE TABLE IF NOT EXISTS `participaciones` (
+  `acciones_grupales_id_accion_grupal` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `dinero_aportado` int(10) unsigned NOT NULL,
+  `influencias_aportadas` int(10) unsigned NOT NULL,
+  `animo_aportado` int(10) unsigned NOT NULL,
+  KEY `participantes_FKIndex1` (`usuarios_id_usuario`),
+  KEY `participaciones_FKIndex2` (`acciones_grupales_id_accion_grupal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `partidos`
+--
+
+DROP TABLE IF EXISTS `partidos`;
+CREATE TABLE IF NOT EXISTS `partidos` (
+  `id_partido` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `equipos_id_equipo_1` int(10) unsigned NOT NULL,
+  `equipos_id_equipo_2` int(10) unsigned NOT NULL,
+  `hora` int(11) unsigned NOT NULL,
+  `cronica` text NOT NULL,
+  PRIMARY KEY (`id_partido`),
+  KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
+  KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recursos`
+--
+
+DROP TABLE IF EXISTS `recursos`;
+CREATE TABLE IF NOT EXISTS `recursos` (
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `dinero` int(10) unsigned NOT NULL,
+  `dinero_gen` float NOT NULL,
+  `influencias` int(10) unsigned NOT NULL,
+  `influencias_max` int(10) unsigned NOT NULL,
+  `influencias_gen` float NOT NULL,
+  `animo` int(10) unsigned NOT NULL,
+  `animo_max` int(10) unsigned NOT NULL,
+  `animo_gen` float NOT NULL,
+  KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `nick` varchar(45) NOT NULL,
+  `pass` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `personaje` smallint(5) unsigned DEFAULT NULL,
+  `nivel` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE KEY `id_usuario` (`id_usuario`),
+  KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

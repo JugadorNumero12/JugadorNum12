@@ -1,0 +1,35 @@
+<?php 
+public class AccionSingleton
+{
+   /* Instancia del objeto */
+   private static $instancia;   
+
+   /* Constructora privada para evitar instanciación externa */
+   private function __construct()
+   {
+      echo "Creado singletonDeAccion"; //Eliminar!!
+   }
+
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
+   /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. */
+   public function ejecutar(){ }
+
+   /* Codigo asociado a finalizar dicha acción. P. ej.: devolver X influencias al jugador. */
+   public function finalizar(){ }
+
+   /* Evita que el objeto se pueda clonar */
+   public function __clone()
+   {
+      trigger_error('Clonación no permitida.', E_USER_ERROR);
+   } 
+}
+?>
