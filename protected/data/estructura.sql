@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-12-2012 a las 22:02:51
+-- Tiempo de generación: 25-12-2012 a las 13:37:12
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -138,17 +138,17 @@ DROP TABLE IF EXISTS `habilidades`;
 CREATE TABLE IF NOT EXISTS `habilidades` (
   `id_habilidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `codigo` varchar(45) NOT NULL,
-  `tipo` varchar(20) NOT NULL DEFAULT 'individual',
+  `tipo` varchar(20) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `descripcion` text NOT NULL,
   `dinero` int(11) unsigned NOT NULL,
   `animo` int(10) unsigned NOT NULL,
   `influencias` int(10) unsigned NOT NULL,
-  `dinero_max` int(10) unsigned NOT NULL DEFAULT '0',
-  `animo_max` int(10) unsigned NOT NULL DEFAULT '0',
-  `influencias_max` int(10) unsigned NOT NULL DEFAULT '0',
-  `participantes_max` int(10) unsigned NOT NULL DEFAULT '0',
-  `cooldown_fin` int(10) unsigned NOT NULL DEFAULT '100',
+  `dinero_max` int(10) unsigned NOT NULL,
+  `animo_max` int(10) unsigned NOT NULL,
+  `influencias_max` int(10) unsigned NOT NULL,
+  `participantes_max` int(10) unsigned NOT NULL,
+  `cooldown_fin` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_habilidad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `animo` int(10) unsigned NOT NULL,
   `animo_max` int(10) unsigned NOT NULL,
   `animo_gen` float NOT NULL,
+  PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -223,7 +224,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `personaje` smallint(5) unsigned DEFAULT NULL,
   `nivel` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
-  UNIQUE KEY `id_usuario` (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
