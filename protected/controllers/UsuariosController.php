@@ -94,6 +94,9 @@ class UsuariosController extends Controller
     public function actionCuenta()
     {
         /* ALEX */
+        $id= Yii::app()->user->usIdent;
+        $modelo = Usuarios:: model()->findByPk($id);
+        $this->render('cuenta',array('modelo'=>$modelo));
     }
 
     /*
@@ -122,7 +125,7 @@ class UsuariosController extends Controller
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
             {
-                $this->redirect(array('usuarios/cuenta'));
+                //$this->redirect(array('usuarios/cuenta'));
             }
            
         }
