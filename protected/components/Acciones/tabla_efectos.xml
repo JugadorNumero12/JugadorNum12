@@ -1,103 +1,19 @@
-<recursos>
- <!-- recompensa inmediata -->
- 	<dinero>
- 		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</dinero>
-	
-	<influencias>
-		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</influencias>
-	
-	<animo>
-		<muy_bajo> 5 </muy_bajo>
-		<bajo> 15 </bajo>
-		<medio>	30 </medio>
-		<alto> 50 </alto>
-		<muy_alto> 75 </muy_ato>
-	</animo>
+<Acciones>
+ 
+ <!-- Grupales -->
+	<FinanciarEvento>
+		<aforo> 0.3% </aforo>
+		<ambiente> 2 </ambiente>
+	</FinanciarEvento>
+ 
+ <!-- Individuales -->
+	<Apostar>
+		<dinero> 600 </dinero>
+	</Apostar>
 
- <!-- indices de recursos -->	
- 	<gen_dinero>
- 		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</gen_dinero>
-	
-	<max_influencias>
-		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</max_influencias>
-	
-	<max_animo>
-		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</max_animo>
-</recursos>
+	<Ascender>
+		<dinero_gen> 12% </dinero_gen>
+	</Ascender>
 
-<factores_partido>
- <!-- preparatorios -->
-	<aforo>
-		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	0.3% </medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</aforo>
-	
-	<nivel_equipo>
-		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</nivel_equipo>
-	
-	<ambiente>
-		<muy_bajo> 1 </muy_bajo>
-		<bajo> 2 </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
-	</ambiente>
-
- <!-- partido -->
- 	<moral>
- 		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
- 	</moral>
- 	
- 	<momento_ofensivo>
- 		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
- 	</momento_ofensivo>
- 	
- 	<momento_defensivo>
- 		<muy_bajo> </muy_bajo>
-		<bajo> </bajo>
-		<medio>	</medio>
-		<alto> </alto>
-		<muy_alto> </muy_ato>
- 	</momento_defensivo>
-</factores_partido>
+ <!-- Partido -->
+</Acciones>
