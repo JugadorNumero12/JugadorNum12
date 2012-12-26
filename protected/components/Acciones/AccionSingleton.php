@@ -21,7 +21,7 @@ public class AccionSingleton
    }
 
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. */
-   public function ejecutar(){ }
+   public function ejecutar($id_accion){ }
 
    /* Codigo asociado a finalizar dicha acción. P. ej.: devolver X influencias al jugador. */
    public function finalizar(){ }
