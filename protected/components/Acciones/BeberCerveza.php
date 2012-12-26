@@ -16,7 +16,7 @@ public class BeberCerveza extends AccionSingleton
 		/* TODO */
 	}
 
-	/* Accion de un uso: metodo vacio */
+	/* Accion de partido: metodo vacio */
 	public void finalizar()
 	{
 		/* VACIO */
