@@ -64,7 +64,96 @@ class AccionesController extends Controller
 	 */
 	public function actionUsar($id_accion)
 	{
-		/* DANI */
+		// El parámetro $id_accion es en realidad el ID de la habilidad
+
+						echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
+		$trans = Yii::app()->db->beginTransaction();
+		$habilidad = Habilidades::model()->findByPk($id_accion);
+
+		if ( $habilidad == null ) {
+			// Habilidad no encontrada
+			$trans->rollback();
+			throw new CHttpException(404,'Acción inexistente.');
+
+		} else {
+			// TODO Comprobar que el usuario ha desbloqueado la acción
+
+			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) {
+				if ( Yii::app()->request->isPostRequest ) {
+					// Petición POST: Procesar la acción
+					$formDin = Yii::app()->request->getPost('dinero');
+					$formAni = Yii::app()->request->getPost('animo');
+					$formInf = Yii::app()->request->getPost('influencia');
+
+					// Si no son suficientes recursos, pedir otra entrada al usuario
+					if ( $formDin < $habilidad['dinero']
+					  || $formAni < $habilidad['animo']
+					  || $formInf < $habilidad['influencias']
+					) {
+						$trans->rollback();
+
+						Yii::app()->user->setFlash('error', 'Recursos demasiado bajos');
+						$this->refresh();
+					}
+
+					// Comprobar ahora que el usuario tiene recursos suficientes
+					$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->id));
+					$actDin = $res['dinero'];
+					$actAni = $res['animo'];
+					$actInf = $res['influencias'];
+
+					if ($actDin < $formDin || $actAni < $formAni || $actInf < $formInf) {
+						$trans->rollback();
+
+						Yii::app()->user->setFlash('error', 'No tienes suficientes recursos');
+						$this->refresh();
+					}
+
+					try {
+						$res['dinero'] = $actDin - $formDin;
+						$res['animo'] = $actAni - $formAni;
+						$res['influencias'] = $actInf - $formInf;
+						$res->save();
+
+						$idUsuario = Yii::app()->user->id;
+						$idAficion = 0;
+
+						$accion = new AccionesGrupales();
+						$accion['usuarios_id_usuario'] = $idUsuario;
+						$accion['habilidades_id_habilidad'] = $habilidad['id_habilidad'];
+						$accion['equipos_id_equipo'] = $idAficion;
+						$accion['dinero_acc'] = $formDin;
+						$accion['animo_acc'] = $formAni;
+						$accion['influencias_acc'] = $formInf;
+						/* TODO Resto de cosas que no sé qué son
+						$accion['jugadores_acc'] = <?>;
+						$accion['finalizacion'] = <?>;
+						*/
+						$accion->save();
+
+						$trans->commit();
+
+					} catch ( Exception $exc ) {
+						$trans->rollback();
+						throw $exc;
+					}
+
+				} else {
+					// Petición GET: Mostrar formulario de recursos
+					$trans->commit();
+					$this->render('usar', array('habilidad'=>$habilidad));
+				}
+
+			} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
+				// Habilidad Grupal: TODO
+				$trans->rollback();
+
+			} else {
+				// La acción no es de ningún tipo conocido
+				// TODO Soltar un error de tres pares de huevos
+				$trans->rollback();
+			}
+		}
 	}
 
 	/**
