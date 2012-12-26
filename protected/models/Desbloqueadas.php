@@ -52,8 +52,8 @@ class Desbloqueadas extends CActiveRecord
 	{
 		/* ALEX */
 		return array( 
-			'usuarios_id_usuario'=>array(self::BELONGS_TO, 'Usuarios', 'id_usuario'),
-            'habilidades_id_habilidad'=>array(self::BELONGS_TO, 'Habilidades' , 'id_habilidad'),
+			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
+            'habilidades'=>array(self::BELONGS_TO, 'Habilidades' , 'habilidades_id_habilidad'),
 		);
 	}}
 

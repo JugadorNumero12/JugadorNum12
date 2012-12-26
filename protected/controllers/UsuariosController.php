@@ -94,6 +94,9 @@ class UsuariosController extends Controller
     public function actionCuenta()
     {
         /* ALEX */
+        $id= Yii::app()->user->usIdent;
+        $modelo = Usuarios:: model()->findByPk($id);
+        $this->render('cuenta',array('modelo'=>$modelo));
     }
 
     /*
