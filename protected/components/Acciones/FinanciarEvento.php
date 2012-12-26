@@ -7,7 +7,7 @@
  *
  * Efectos
  * 	 aumenta aforo para el proximo partido 
- *	 aumenta ambiente para el procimo partido
+ *	 aumenta ambiente para el proximo partido
  *
  * Bonus al creador
  * 	 ninguno

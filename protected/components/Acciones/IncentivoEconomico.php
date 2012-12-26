@@ -2,7 +2,7 @@
 
 /** 
  * Descripcion breve: Incentivar economicamente a los jugadores
- * Tipo: Accion grupal
+ * Tipo: Grupal
  * Perfil asociado: Empresario
  *
  * Efectos:
