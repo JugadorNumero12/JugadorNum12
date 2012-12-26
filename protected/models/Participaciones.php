@@ -53,8 +53,10 @@ class Participaciones extends CActiveRecord
 	 */
 	public function relations()
 	{
-		/* DANI */
-		return array( );
+		return array(
+			'usuario' => array( self::HAS_ONE, 'Usuarios', 'usuarios_id_usuario'),
+			'accionGrupal' => array( self::HAS_ONE, 'AccionesGrupales', 'acciones_grupales_id_accion_grupal'),
+		);
 	}
 
 	/**
