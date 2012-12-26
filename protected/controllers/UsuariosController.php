@@ -168,9 +168,9 @@ class UsuariosController extends Controller
                    $trans->commit();
                    $this->redirect(array('usuarios/cuenta'));
                 }else
-                    {
-                        $trans->commit(); 
-                    }               
+                {
+                    $trans->commit(); 
+                }               
             }
         }catch (Exception $e)
                 {
