@@ -44,15 +44,17 @@ class AccionesController extends Controller
 	{
 		/* PEDRO */
 		//Sacar una lista de las acciones desbloqueadas de un usuario
-		/*$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Prepara los datos
-		foreach ($accionesDesbloqueadas["habilidades_id_habilidad"] as $habilidad){
-			$acciones = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad));
+		foreach ($accionesDesbloqueadas[0] as $habilidad){
+			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad));
 		}
 
 		//Envía los datos para que los muestre la vista
-		$this->render('index',array('accionesDesbloqueadas'=>$acciones));*/
+		//$this->render('index',array('accionesDesbloqueadas'=>$ad));
+		//print_r($accionesDesbloqueadas);
+		print_r($acciones);
 	}
 
 	/**
@@ -93,6 +95,11 @@ class AccionesController extends Controller
 	public function actionVer($id_accion)
 	{
 		/* PEDRO */
+		$accionGrupal = AccionesGrupales::model()->findAllByAttributes(array('id_accion_grupal'=>$id_accion));
+
+		//$this->render('ver', array('accionesGrupales' => $accionesGrupales));
+
+		echo $accionGrupal;
 	}
 
 	/**
