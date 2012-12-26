@@ -13,8 +13,7 @@
  * 	 ninguno
  */
 public class FinanciarEvento extends AccionSingleton
-{
-	
+{	
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
   {

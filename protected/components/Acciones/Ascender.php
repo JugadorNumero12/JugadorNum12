@@ -2,30 +2,23 @@
 
 /** 
  * Descripcion breve: Ascender en el trabajo
- * Tipo: Accion individual
- * Perfil asociado: Comun
+ * Tipo: Individual
+ * Perfil asociado: Empresario, Ultra
  *
  * Efectos:
- *  
- *
- * Bonus al creador:
- *  
+ * 	Aumenta de forma permanente la generacion de dinero
  */
 public class Ascender extends AccionSingleton
 {
-	/*
-	 *
-	 */
-	public void ejecutar()
-	{
-		/* TODO */
-	}
+  /* Aplicar los efectos de la accion */
+  public function ejecutar($id_accion)
+  {
+  	/* TODO */
+  }
 
-	/* restarurar valores tras el partido
-	 *
-	 */
-	public void finalizar()
-	{
-		/* TODO */
-	}
+  /* Accion permanente: metodo vacio */
+  public function finalizar()
+  {
+  	/* VACIO */
+  }	
 }

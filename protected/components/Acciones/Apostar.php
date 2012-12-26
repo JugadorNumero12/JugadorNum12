@@ -1,31 +1,24 @@
 <?php
 
 /** 
- * Descripcion breve: Apostar prevision para el proximo partido
- * Tipo: Accion individual
- * Perfil asociado: Comun
+ * Descripcion breve: Apostar resultado del proximo partido
+ * Tipo: Individual
+ * Perfil asociado: Empresario, Ultra
  *
- * Efectos:
- *  
- *
- * Bonus al creador:
- *  
+ * Efectos
+ *  aumenta el dinero al acabar el partido (de momento para cualquier resultado)
  */
 public class Apostar extends AccionSingleton
 {
-	/*
-	 *
-	 */
-	public void ejecutar()
-	{
-		/* TODO */
-	}
+  /* Ningun efecto al ejecutar la accion */
+  public function ejecutar($id_accion)
+  {
+  	/* VACIO */
+  }
 
-	/* restarurar valores tras el partido
-	 *
-	 */
-	public void finalizar()
-	{
-		/* TODO */
-	}
+  /* Aplicar la bonificacion al acabar el partido */
+  public function finalizar()
+  {
+  	/* TODO */
+  }	
 }

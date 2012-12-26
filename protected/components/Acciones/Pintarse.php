@@ -1,29 +1,23 @@
 <?php
 
+/* TODO RECOGER CONSTANTES DE LA TABLA .XML */
+
 /** 
  * Descripcion breve: Grupo de aficionados pintados con los colores del equipo
- * Tipo: Accion grupal
+ * Tipo: Grupal
  * Perfil asociado: Ultra, Movedora
  *
  * Efectos:
- *    Animo,    nivel medio
- *    Ambiente, nivel muy bajo
+ *    Aumenta de forma inmediata el animo de los participantes
+ *    Aumenta el factor de partido ambiente para el proximo partido
  *
  * Bonus al creador:
- *    Animo,    nivel bajo
+ *    Aumento extra del animo
  */
 public class Pintarse extends AccionSingleton
 {
 	
-  /* Mejoras inmediatas para los jugadores 
-   *   Animo: +30 puntos
-   * 
-   * Mejoras para el proximo partido
-   *   Ambiente: +1 punto
-   *
-   * Bonus para el creador
-   *   Animo: +15 puntos 
-   */
+  /* Aplica las mejoras inmediatas y para el proximo partido */
   public function ejecutar($id_accion)
   {
     $helper = new Helper();
@@ -44,11 +38,9 @@ public class Pintarse extends AccionSingleton
  		$helper->aumentar_recursos($creador["id_usuario"], "animo", 15);
   }
 
-  /* Restaurar valores tras el partido
-   *  Ambiente: -1 punto
-   */
+  /* Restaurar valores tras el partido */
   public function finalizar()
   {
-    /* TODO */
+    /* TODO: solo restar el ambiente (no restar los recursos) */
   }	
 }
