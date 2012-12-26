@@ -3,7 +3,7 @@
 /** 
  * Descripcion breve: Grupo de aficionados pintados con los colores del equipo
  * Tipo: Accion grupal
- * Perfil asociado: Ultra
+ * Perfil asociado: Ultra, Movedora
  *
  * Efectos:
  *    Animo,    nivel medio

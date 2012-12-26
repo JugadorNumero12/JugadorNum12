@@ -6,11 +6,11 @@
  * Perfil asociado: Empresario
  *
  * Efectos:
- * 		Aforo, 		nivel medio
- *		Ambiente,   nivel bajo
+ * 	 Aforo, 	nivel medio
+ *	 Ambiente,  nivel bajo
  *
  * Bonus al creador:
- * 		Ninguno
+ * 	 Ninguno
  */
 public class FinanciarEvento extends AccionSingleton
 {
