@@ -204,6 +204,28 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
+		$owner=AccionesGrupales::model->findByPk($id_accion);
+		if($owner===null)
+			Yii::app()->user->setFlash('error', 'La accion no existe.');
+
+		else if($owner['usuarios_id_usuario']!= Yii::app()->user->usIdent)
+			Yii::app()->user->setFlash('error', 'No eres el propietario');
+
+		else
+		{
+			$part=Participaciones::model->findByAttributes(array(
+						'acciones_grupales_id_accion_grupal'=>id_accion,
+						'usuarios_id_usuario'=>is_jugador
+						));
+
+		if($part===null)
+			Yii::app()->user->setFlash('error', 'El jugador indicado no partricipa en la accion');
+
+		}
+		//FIXME ¿que pasa si se echa a si mismo el propietario?
+
+		//TODO pues eso,  esta por hacer
+
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
 	
