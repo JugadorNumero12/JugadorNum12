@@ -127,6 +127,8 @@ class Usuarios extends CActiveRecord
             'accionesIndividuales'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<desbloqueadas>> */
 			'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<habilidades>>*/
+			'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
 			/*Relacion entre <<usuarios>> y <<acciones_turno>> */
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<equipos>> */
