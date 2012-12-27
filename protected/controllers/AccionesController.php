@@ -115,6 +115,7 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
+		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
 	
 	/**
