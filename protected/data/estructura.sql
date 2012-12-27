@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-12-2012 a las 13:37:12
+-- Tiempo de generación: 27-12-2012 a las 11:17:55
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -182,6 +182,11 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `equipos_id_equipo_2` int(10) unsigned NOT NULL,
   `hora` int(11) unsigned NOT NULL,
   `cronica` text NOT NULL,
+  `ambiente` int(10) unsigned NOT NULL DEFAULT '0',
+  `nivel_local` int(10) unsigned NOT NULL DEFAULT '0',
+  `nivel_visitante` int(10) unsigned NOT NULL DEFAULT '0',
+  `aforo_local` int(10) unsigned NOT NULL DEFAULT '0',
+  `aforo_visitante` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_partido`),
   KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
   KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)
@@ -206,6 +211,29 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `animo_gen` float NOT NULL,
   PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `turnos`
+--
+
+DROP TABLE IF EXISTS `turnos`;
+CREATE TABLE IF NOT EXISTS `turnos` (
+  `partidos_id_partido` int(10) unsigned NOT NULL,
+  `turno` int(11) NOT NULL DEFAULT '0',
+  `goles_local` int(11) NOT NULL DEFAULT '0',
+  `goles_visitante` int(11) NOT NULL DEFAULT '0',
+  `moral_local` int(11) NOT NULL DEFAULT '0',
+  `moral_visitante` int(11) NOT NULL DEFAULT '0',
+  `ofensivo_local` int(11) NOT NULL DEFAULT '0',
+  `ofensivo_visitante` int(11) NOT NULL DEFAULT '0',
+  `defensivo_local` int(11) NOT NULL DEFAULT '0',
+  `defensivo_visitante` int(11) NOT NULL DEFAULT '0',
+  `estado` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`partidos_id_partido`),
+  KEY `turnos_FKIndex1` (`partidos_id_partido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
