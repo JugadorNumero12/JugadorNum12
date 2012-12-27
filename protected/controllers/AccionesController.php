@@ -52,10 +52,6 @@ class AccionesController extends Controller
 			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
 		}
 
-		/*foreach ($acciones as $accion) { 
-			echo $accion[0]['codigo'];
-		}*/
-
 		//Envía los datos para que los muestre la vista
 		$this->render('index',array('acciones'=>$acciones));
 	}
