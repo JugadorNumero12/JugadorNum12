@@ -3,10 +3,12 @@
 /* @var habilidades */
 
 // codigo PHP
-
 ?>
+<<<<<<< HEAD
 
 <h1>Accion Grupal: <?php echo $habilidades[0]['nombre']; ?></h1>
+=======
+>>>>>>> develop
 
 <ul>
 <?php foreach ( $accionGrupal as $accion ){ ?>

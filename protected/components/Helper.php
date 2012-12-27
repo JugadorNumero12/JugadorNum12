@@ -13,7 +13,7 @@ public class Helper
 	 */
 	public int aumentar_recursos($id_usuario, $columna, $cantidad)
 	{
-
+		/* ROBER */
 	}
 
 	/** Funcion auxiliar que modifica la tabla de recursos
@@ -26,6 +26,6 @@ public class Helper
 	 */
 	public int quitar_recursos($id_usuario, $columna, $cantidad)
 	{
-
+		/* ROBER */
 	} 
 }
