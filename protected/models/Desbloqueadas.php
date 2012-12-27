@@ -55,7 +55,7 @@ class Desbloqueadas extends CActiveRecord
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
             'habilidades'=>array(self::BELONGS_TO, 'Habilidades' , 'habilidades_id_habilidad'),
 		);
-	}}
+	}
 
 	/**
 	 * @return array customized attribute labels (name=>label)
