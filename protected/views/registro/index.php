@@ -27,7 +27,7 @@
 	  </tr>
 
 	  <tr>
-	    <td align="left"><?php echo $form->labelEx($modelo,'Correo Electrónico'); ?>:</td>
+	    <td align="left"><?php echo $form->labelEx($modelo,'Correo Electr&oacute;nico'); ?>:</td>
 	    <td><?php echo $form->emailField($modelo,'nueva_email1'); ?></td>
 	  </tr>
 	  <tr>
@@ -51,6 +51,10 @@
 	  </tr>
 
 	  <tr>
+	   	<td colspan="2" align="left"><span>Personajes disponibles</span></td>
+	  </tr>
+
+	  <tr>
 	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
 	  		<?PHP print $animadora_status; ?> >Animadora
 	  	</td>
@@ -60,6 +64,10 @@
 	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
 	  		<?PHP print $ultra_status; ?> >Ultra
 	  	</td>
+	  </tr>
+
+	  <tr>
+	   	<td colspan="2" align="left"><span>Equipos disponibles</span></td>
 	  </tr>
 
 	  <tr>
@@ -73,7 +81,7 @@
 	  </tr>
 
 	  <tr><?php if($str!=0): ?>
-	   	<td colspan="2" align="left"><span style="color:red">Debe escoger scoge un personaje y un equipo!</span></td>
+	   	<td colspan="2" align="left"><span style="color:red">¡Debe escoger un personaje y un equipo!</span></td>
 	  <?php endif; ?></tr>
 
 	  <tr>
