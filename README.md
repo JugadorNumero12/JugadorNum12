@@ -1,56 +1,57 @@
-JugadorNum12
+#JugadorNum12
 ============
 
-Historial de revisiones (los modelos estan indicados con *)
+##Historial de revisiones 
+*(los modelos estan indicados con +)*
 
 
-Diciembre
+1. Diciembre
 
-	Controladores
-		Usuarios: Alex, Marina, Rober
-		Registro: Alex
-		Equipos:  Marina, Sam
-		Habilidades: Arturo, Dani
-		Acciones: Dani, Pedro, Marcos
-		Partidos: Marina, Arturo
+	**Controladores**
+	* Usuarios: Alex, Marina, Rober
+	* Registro: Alex
+	* Equipos:  Marina, Sam
+	* Habilidades: Arturo, Dani
+	* Acciones: Dani, Pedro, Marcos
+	* Partidos: Marina, Arturo
 
-	Modelos(*)
-		Usuarios: Rober
-		Recursos: Alex
-		Equipos: Sam
-		Clasificacion: Marcos
-		Habilidades: Arturo
-		Acciones individuales: Pedro
-		Acciones grupales: Marcos
-		Acciones turno: Marcos
-		Desbloqueadas: Alex
-		Partidos: Sam
-		Participaciones: Dani
-		
-	===================
-	
-	Alex 
-		Registro.index
-		Usuarios.cuenta
-		Desbloqueadas(*)
-		Recursos(*)
+	**Modelos**
+	* Usuarios: Rober
+	* Recursos: Alex
+	* Equipos: Sam
+	* Clasificacion: Marcos
+	* Habilidades: Arturo
+	* Acciones individuales: Pedro
+	* Acciones grupales: Marcos
+	* Acciones turno: Marcos
+	* Desbloqueadas: Alex
+	* Partidos: Sam
+	* Participaciones: Dani
+===================	
+	**Alex** 
+	```
+	Registro.index
+	Usuarios.cuenta
+	Desbloqueadas(+)
+	Recursos(+)
+	```
 
 	Arturo
 		Habilidades.adquirir
 		Partidos.index
 		Partidos.asistir
-		Habilidades(*)
+		Habilidades(+)
 
 	Dani
 		Habilidades.index
 		Habilidades.ver
 		Acciones.usar
-		Participaciones(*)
+		Participaciones(+)
 
 	Marcos
-		Clasificacion(*)
-		AccionesGrupales(*)
-		AccionesTurno(*)
+		Clasificacion(+)
+		AccionesGrupales(+)
+		AccionesTurno(+)
 		Acciones.expulsar
 
 	Marina
@@ -61,7 +62,7 @@ Diciembre
 
 	Pedro
 		Acciones.index
-		AccionesIndividuales(*)
+		AccionesIndividuales(+)
 		Acciones.ver
 		Acciones.participar
 
@@ -69,10 +70,10 @@ Diciembre
 		Usuarios.index
 		Usuarios.cambiarClave
 		Usuarios.cambiarEmail
-		Usuarios(*)
+		Usuarios(+)
 
 	Sam
 		Equipos.ver
 		Equipos.cambiar
-		Equipos(*)
-		Partidos(*)
+		Equipos(+)
+		Partidos(+)
