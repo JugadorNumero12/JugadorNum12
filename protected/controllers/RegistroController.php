@@ -31,15 +31,11 @@ class RegistroController extends Controller
 
 		if (isset($_POST['Usuarios']) && isset($_POST['registro']) ) {
 			
-			//cojo datos del formulario
-			$nombre=$_POST['Usuarios']['nuevo_nick'];
-			$clave=$_POST['Usuarios']['nueva_clave1'];
-			$correo=$_POST['Usuarios']['nueva_email1'];
 			$modelo->attributes=$_POST['Usuarios'];
-			//modifico modelo
-			$modelo->setAttributes(array('nick'=>$nombre));
-			$modelo->setAttributes(array('pass'=>$clave));
-			$modelo->setAttributes(array('email'=>$correo));
+			//modifico modelo con los datos del formulario
+			$modelo->setAttributes(array('nick'=>$_POST['Usuarios']['nuevo_nick']));
+			$modelo->setAttributes(array('pass'=>$_POST['Usuarios']['nueva_clave1']));
+			$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 			$modelo->setAttributes(array('nivel'=>0));
 
 			if(isset($_POST['pers'])){
