@@ -4,5 +4,3 @@
 
 // codigo PHP
 ?>
-
-<!-- codigo HTML -->
