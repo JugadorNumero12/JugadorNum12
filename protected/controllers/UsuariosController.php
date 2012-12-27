@@ -64,6 +64,9 @@ class UsuariosController extends Controller
     {
         /* MARINA */
         /* Nota: la vista tendra variables */
+        $id= Yii::app()->user->usIdent;
+        $modelo = Usuarios:: model()->findByPk($id); 
+        $this->render('perfil',array('modelo'=>$modelo));
     }
 
     /*
@@ -79,7 +82,8 @@ class UsuariosController extends Controller
     public function actionVer($id_usuario)
     {
         /* MARINA */ 
-        // Nota: la vista tendra variables 
+        // Nota: la vista tendra variables
+       
     }
 
     /*
