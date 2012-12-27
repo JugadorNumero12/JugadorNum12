@@ -183,6 +183,15 @@ class AccionesController extends Controller
 	public function actionVer($id_accion)
 	{
 		/* PEDRO */
+		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
+
+		$habilidades = array();
+		foreach ($accionGrupal as $habilidad){
+			$habilidades[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
+		}
+
+		//$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidades'=>$habilidades));
+		echo $accionGrupal['id_accion_grupal'];
 	}
 
 	/**

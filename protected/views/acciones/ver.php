@@ -1,16 +1,19 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+/* @var $accionGrupal */
+/* @var habilidades */
 
 // codigo PHP
 
 ?>
-<h1>Ver acción grupal</h1>
+
+<h1>Accion Grupal: <?php echo $habilidades[0]['nombre']; ?></h1>
 
 <ul>
-<?php foreach ( $accionGrupal as $acciones ){
-    <li><?php echo $acciones; ?></li>
-}  ?>
+<?php foreach ( $accionGrupal as $accion ){ ?>
+	<?php foreach ( $habilidades as $habilidad ){ ?>
+		<li>
+    	<?php echo $habilidad['codigo']; ?>
+    	</li>
+	<?php } ?>    
+<?php } ?>
 </ul>
-
-<!-- codigo HTML -->
