@@ -51,23 +51,35 @@
 	  </tr>
 
 	  <tr>
-	    <td align="left"><input type="radio" name="pers" value="anim">Animadora</td>
-	    <td align="center"><input type="radio" name="pers" value="empres">Empresario</td>
-	    <td align="right"><input type="radio" name="pers" value="ultra">Ultra</td>
+	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
+	  		<?PHP print $animadora_status; ?> >Animadora
+	  	</td>
+	  	<td align="center"><input type = 'radio' name ='pers' value= 'empresario'
+	  		<?PHP print $empresario_status; ?> >Empresario
+	  	</td>
+	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
+	  		<?PHP print $ultra_status; ?> >Ultra
+	  	</td>
 	  </tr>
 
 	  <tr>
-	  	<td colspan="2" align="center"><select name="equipo" onchange="window.open(formulario1.destinos1.value);">
+	  	<td colspan="2" align="center">
+	  		<select name='ocup'>
 	  		<option>Elige un equipo</option>
 	  		<?php foreach ( $equipos as $equipo ): ?>
-    				<option><li><?php echo $equipo['nombre']; ?></li></option>
+    				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
 			<?php endforeach; ?>
 	  	</td></select>
 	  </tr>
 
+	  <tr><?php if($str!=0): ?>
+	   	<td colspan="2" align="left"><span style="color:red">Debe escoger scoge un personaje y un equipo!</span></td>
+	  <?php endif; ?></tr>
+
 	  <tr>
-	    <td colspan="2" align="center"><?php echo CHtml::submitButton('REGISTRAR');?></td>
+	    <td colspan="2" align="center"><input type = "Submit" Name = "registro" VALUE = "REGISTRAR"></td>
 	  </tr>
+
 	</table>
 
 	<?php $this->endWidget(); ?>

@@ -16,16 +16,21 @@ class RegistroController extends Controller
 	public function actionIndex()
 	{
 		/* ALEX */
+		$animadora_status='unchecked';
+		$empresario_status='unchecked';
+		$ultra_status='unchecked';
+		$str = 0;
 		$equipos = Equipos::model()->findAll();
 		$modelo = new Usuarios ;
 		$modelo->scenario='registro';
-		if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form')
-		{
+		
+		if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-		if (isset($_POST['Usuarios'])) 
-		{
+
+		if (isset($_POST['Usuarios']) && isset($_POST['registro']) ) {
+			
 			//cojo datos del formulario
 			$nombre=$_POST['Usuarios']['nuevo_nick'];
 			$clave=$_POST['Usuarios']['nueva_clave1'];
@@ -37,16 +42,33 @@ class RegistroController extends Controller
 			$modelo->setAttributes(array('email'=>$correo));
 			$modelo->setAttributes(array('nivel'=>0));
 
+			if(isset($_POST['pers'])){
+				$str = 0;
+				$selected_radio = $_POST['pers'];
+				if ($selected_radio === 'animadora') {
+					$animadora_status = 'checked';
+					$modelo->setAttributes(array('personaje'=>0));
 
-			$modelo->setAttributes(array('equipos_id_equipo'=>1));
-			$modelo->setAttributes(array('personaje'=>1));
-			
-			if ($modelo->save())
-			{
-				 $this->redirect(array('site/login'));
-			}
+				}else if ($selected_radio === 'empresario') {
+					$empresario_status = 'checked';
+					$modelo->setAttributes(array('personaje'=>1));
+
+				}else if($selected_radio === 'ultra'){
+					$ultra_status = 'checked';
+					$modelo->setAttributes(array('personaje'=>2));
+				}
+				$modelo->setAttributes(array('equipos_id_equipo'=>$_POST['ocup']));
+				if ($_POST['ocup'] != 'Elige un equipo' && $modelo->save()){
+					$this->redirect(array('site/login'));
+				}else $str = 1;
+
+			}else $str = 1;
 		}
-		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos) );
+
+		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos , 
+			'animadora_status'=>$animadora_status , 
+			'empresario_status'=>$empresario_status , 
+			'ultra_status'=>$ultra_status , 'str'=>$str ) );
 	}
 	
 
