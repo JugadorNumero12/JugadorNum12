@@ -110,7 +110,7 @@ public class Partido
 	 */
 	private void generaCronicaBase()
 	{
-		/* ALEX */
+		/* PEDRO */
 	}
 
 	/*

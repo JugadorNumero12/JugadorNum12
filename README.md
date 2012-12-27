@@ -108,7 +108,7 @@
 
 	**Tests**
 	* fixtures: Sam
-	* functional: Sam
+	* functional: Sam Alex
 
 	**CSS**
 	* Diseño de la jerarquia: Marina
@@ -121,7 +121,7 @@
 	components/Partido.cargaEstado
 	components/Partido.guardaEstado
 	components/Partido.inicializarEncuentro
-	components/Partido.generarCronicaBase
+	functional/ .php
 	```
 
 	**Arturo**
@@ -159,6 +159,7 @@
 	components/Formula.php
 	components/Acciones/FinanciarEvento.php
 	components/Acciones/OrganizarHomenaje.php
+	components/Partido.generarCronicaBase
 	```
 	
 	**Rober**
@@ -166,6 +167,7 @@
 	components/ejecutor_turnos.php
 	components/Helper.php
 	components/Acciones/RetransmitirRRSS.php
+	components/Acciones/IniciarOla.php
 	```
 	
 	**Sam**
@@ -174,7 +176,6 @@
 	fixtures/Usuarios.php
 	functional/ .php
 	components/Acciones/IncentivoEconomico.php
-	components/Acciones/IniciarOla.php
 	```
 
 3. Enero
