@@ -33,6 +33,7 @@ public class Formula
 	/** Formula del juego */
 	public int siguiente_estado()
 	{
-
+		/* DANI & PEDRO */
+		// No quiero ver una linea de codigo hasta que este probada en MatLab o simulador similar
 	}
 }
