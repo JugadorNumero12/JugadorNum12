@@ -47,14 +47,17 @@ class AccionesController extends Controller
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Prepara los datos
-		foreach ($accionesDesbloqueadas[0] as $habilidad){
-			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad));
+		$acciones = array();
+		foreach ($accionesDesbloqueadas as $habilidad){
+			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
 		}
 
+		/*foreach ($acciones as $accion) { 
+			echo $accion[0]['codigo'];
+		}*/
+
 		//Envía los datos para que los muestre la vista
-		//$this->render('index',array('accionesDesbloqueadas'=>$ad));
-		//print_r($accionesDesbloqueadas);
-		print_r($acciones);
+		$this->render('index',array('acciones'=>$acciones));
 	}
 
 	/**
@@ -78,7 +81,7 @@ class AccionesController extends Controller
 	{
 		// El parámetro $id_accion es en realidad el ID de la habilidad
 
-						echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
+		echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
 		$trans = Yii::app()->db->beginTransaction();
 		$habilidad = Habilidades::model()->findByPk($id_accion);
 
@@ -184,11 +187,6 @@ class AccionesController extends Controller
 	public function actionVer($id_accion)
 	{
 		/* PEDRO */
-		$accionGrupal = AccionesGrupales::model()->findAllByAttributes(array('id_accion_grupal'=>$id_accion));
-
-		//$this->render('ver', array('accionesGrupales' => $accionesGrupales));
-
-		echo $accionGrupal;
 	}
 
 	/**
