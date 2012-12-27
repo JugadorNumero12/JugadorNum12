@@ -43,6 +43,17 @@ class AccionesController extends Controller
 	public function actionIndex()
 	{
 		/* PEDRO */
+		//Sacar una lista de las acciones desbloqueadas de un usuario
+		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+
+		//Prepara los datos
+		$acciones = array();
+		foreach ($accionesDesbloqueadas as $habilidad){
+			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
+		}
+
+		//Envía los datos para que los muestre la vista
+		$this->render('index',array('acciones'=>$acciones));
 	}
 
 	/**
@@ -66,7 +77,7 @@ class AccionesController extends Controller
 	{
 		// El parámetro $id_accion es en realidad el ID de la habilidad
 
-						echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
+		echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
 		$trans = Yii::app()->db->beginTransaction();
 		$habilidad = Habilidades::model()->findByPk($id_accion);
 
