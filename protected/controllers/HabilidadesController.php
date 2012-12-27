@@ -1,3 +1,4 @@
+
 <?php
 
 /* Pagina del "arbol" de habilidades */
