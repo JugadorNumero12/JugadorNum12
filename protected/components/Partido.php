@@ -39,7 +39,7 @@ public class Partido
 	 */
 	public Partido($id_partido)
 	{
-
+		/* ALEX */
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Partido
  	 */
 	private void cargaEstado()
 	{
-
+		/* ALEX */
 	}
 	
 	/*
@@ -57,7 +57,7 @@ public class Partido
 	 */
 	private void guardaEstado()
 	{
-		
+		/* ALEX */
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Partido
 	 */
 	private void inicializaEncuentro()
 	{
-		/* 		*/
+		/* ALEX */
 	}
 
 	/*
@@ -81,7 +81,7 @@ public class Partido
 	*/
 	private void recogeAccionesTurno()
 	{
-
+		/* MARCOS */
 	}
 	
 	/*
@@ -102,7 +102,7 @@ public class Partido
 	 */
 	private void generaCronicaTurno()
 	{
-
+		/* MARCOS */
 	}
 
 	/*
@@ -110,7 +110,7 @@ public class Partido
 	 */
 	private void generaCronicaBase()
 	{
-	
+		/* ALEX */
 	}
 
 	/*
@@ -130,7 +130,7 @@ public class Partido
 	 */
 	private void generaBonificacion()
 	{
-	
+		/* MARCOS */
 	}
 
 	private void actualizaClasificacion()
@@ -138,9 +138,11 @@ public class Partido
 		/*
 			Recalcula los puntos y actualiza la clasificación
 		*/
+
+		/* MARCOS */
 	}
 
-	public void run()
+	public void jugarse()
 	{
 		switch ($turno) 
 		{
@@ -174,4 +176,3 @@ public class Partido
 		}
 	}
 }
-?>
