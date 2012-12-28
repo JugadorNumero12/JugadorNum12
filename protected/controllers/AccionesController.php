@@ -230,7 +230,7 @@ class AccionesController extends Controller
 		if($owner===null)
 			Yii::app()->user->setFlash('error', 'La accion no existe.');
 
-		else if($owner['usuarios_id_usuario']!= Yii::app()->user->usIdent)
+		elseif($owner['usuarios_id_usuario']!= Yii::app()->user->usIdent)
 			Yii::app()->user->setFlash('error', 'No eres el propietario');
 
 		else
@@ -240,13 +240,14 @@ class AccionesController extends Controller
 						'usuarios_id_usuario'=>is_jugador
 						));
 
-		if($part===null)
-			Yii::app()->user->setFlash('error', 'El jugador indicado no partricipa en la accion');
+			if($part===null)
+				Yii::app()->user->setFlash('error', 'El jugador indicado no partricipa en la accion');
 
 		}
-		//FIXME ¿que pasa si se echa a si mismo el propietario?
+		//FIXME ¿que pasa si el propietario se echa a si mismo?
+		//FIXME ¿puede haber más de una participación del mismo jugador el una acción?
 
-		//TODO pues eso,  esta por hacer
+		//TODO pues eso, esta por hacer
 
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
