@@ -46,14 +46,17 @@ class AccionesController extends Controller
 		//Sacar una lista de las acciones desbloqueadas de un usuario
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
-		//Prepara los datos
+		//Sacar una lista con los recursos del usuario
+		$recursosUsuario = Recursos::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+
+		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
 		foreach ($accionesDesbloqueadas as $habilidad){
 			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
 		}
 
 		//Envía los datos para que los muestre la vista
-		$this->render('index',array('acciones'=>$acciones));
+		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario));
 	}
 
 	/**
@@ -183,15 +186,14 @@ class AccionesController extends Controller
 	public function actionVer($id_accion)
 	{
 		/* PEDRO */
+		//Cojo la acción de la tabla acciones_grupales
 		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
 
-		$habilidades = array();
-		foreach ($accionGrupal as $habilidad){
-			$habilidades[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
-		}
+		//A partir de la acción saco la habilidad para poder mostrar los datos
+		$habilidad = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $accionGrupal['habilidades_id_habilidad']));
 
-		//$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidades'=>$habilidades));
-		echo $accionGrupal['id_accion_grupal'];
+		//Envío los datos a la vista
+		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad));
 	}
 
 	/**
@@ -224,7 +226,7 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
-		$owner=AccionesGrupales::model->findByPk($id_accion);
+		/*$owner=AccionesGrupales::model->findByPk($id_accion);
 		if($owner===null)
 			Yii::app()->user->setFlash('error', 'La accion no existe.');
 
@@ -246,7 +248,7 @@ class AccionesController extends Controller
 
 		//TODO pues eso,  esta por hacer
 
-		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
+		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));*/
 	}
 	
 	/**
