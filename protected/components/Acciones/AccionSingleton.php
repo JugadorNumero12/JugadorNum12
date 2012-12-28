@@ -4,6 +4,9 @@ public class AccionSingleton
    /* Instancia del objeto */
    private static $instancia;   
 
+   /* Incluir tabla de efectos */
+   include(tabla_efectos.php);
+
    /* Constructora privada para evitar instanciación externa */
    private function __construct()
    {
