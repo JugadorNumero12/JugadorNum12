@@ -20,17 +20,11 @@ public class Ascender extends AccionSingleton
       //Aumentar generación de dinero
       $id = Yii::app()->user->usIdent;        
       $modelo = Recursos::model()->findByPk($id);
-      $gen_base = $modelo->getAttribute('dinero_gen');
-      $gen_mod = $gen_base + 0.12;
-      $modelo->setAttributes(array('dinero_gen'=>$gen_mod));
-      if ($modelo->save()) 
-      {
-        $trans->commit();
-      }
-      else
-      {
-        $trans->commit(); 
-      } 
+      $columna = 'dinero_gen';
+      $cantidad = $datos_acciones['Ascender']['dinero_gen'];
+      $help = new Helper();
+      $help->aumentar_recursos($id, $columna, $cantidad) 
+      $trans->commit();
     }
     catch (Exception $e)
     {
@@ -47,17 +41,11 @@ public class Ascender extends AccionSingleton
       //Reducir generación de dinero de nuevo
       $id = Yii::app()->user->usIdent;        
       $modelo = Recursos::model()->findByPk($id);
-      $gen_base = $modelo->getAttribute('dinero_gen');
-      $gen_mod = $gen_base - 0.12;
-      $modelo->setAttributes(array('dinero_gen'=>$gen_mod));
-      if ($modelo->save()) 
-      {
-        $trans->commit();
-      }
-      else
-      {
-        $trans->commit(); 
-      } 
+      $columna = 'dinero_gen';
+      $cantidad = $datos_acciones['Ascender']['dinero_gen'];
+      $help = new Helper();
+      $help->quitar_recursos($id, $columna, $cantidad) 
+      $trans->commit();
     }
     catch (Exception $e)
     {
