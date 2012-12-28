@@ -110,15 +110,14 @@ class UsuariosController extends Controller
         // Nota: la vista tendra variables
 
          //Saco los datos el usuario pedido
-        /*$modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
+        $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
         //Saco los datos del equipo del usuario
         $idEquipo = $modeloUsuario->equipos_id_equipo;
         $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
        
         $this->render('ver',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo));*/
-         $this->render('ver',array('Usuario'=>$id_usuario));
+                                      'modeloE'=>$modeloEquipo));
     
     }
 
