@@ -80,7 +80,7 @@
 
 <?php foreach ( $accionesPas as $accion ){ ?>
 	<li>
-    <?php echo $accion[0]['nombre']; ?>
+    <?php if ($accion != null) echo $accion[0]['nombre']; ?>
     </li>
 <?php } ?>
 

@@ -70,7 +70,7 @@ class UsuariosController extends Controller
 
         //Saco los datos del equipo del usuario
         $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
+        $modeloEquipo = Equipos:: model()->findAllByAttributes(array('id_equipo'=>$modeloUsuario['equipos_id_equipo']));
 
         //Saco los datos de los recursos del usuario
         $modeloRecursos = Recursos:: model()->findByPk($id);
