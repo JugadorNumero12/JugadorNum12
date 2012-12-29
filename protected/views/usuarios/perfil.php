@@ -12,6 +12,8 @@
 
 <h3> DATOS BÁSICOS</h3>
 
+<!--
+
 <table cellspacing="5px">
 	<tr>
 		<th>Nick</th>
@@ -84,4 +86,4 @@
     </li>
 <?php } ?>
 
-	
+	-->
