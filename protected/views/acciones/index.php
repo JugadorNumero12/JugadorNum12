@@ -5,7 +5,8 @@
 
 <h1>Acciones del usuario</h1>
 
-<?php foreach ( $acciones as $accion ){ ?>
+<?php 
+foreach ( $acciones as $accion ){ ?>
 	<li>
 	<!-- Comprobamos si el usuario puede realizar la acción o no puede por falta de recursos -->
 	<?php if ($recursosUsuario[0]['dinero'] > $accion[0]['dinero'] &&

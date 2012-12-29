@@ -22,3 +22,13 @@
 <p> <?php echo "<b>EFECTO CONSEGUIDO => </b>"; ?>
 			<?php echo $habilidad[0]['descripcion']; ?>
 </p>
+
+<p>
+<?php 
+$usuario = Yii::app()->user->usIdent;
+$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
+if ($usuario == $propietarioAccion){ ?>
+	<a href="<?php echo $this->createUrl(/*Aquí falta añadir la url para expulsar jugadores*/);<?>">
+	<?php echo "Expulsar participantes";?> </a>
+<?php } ?>
+</p>
