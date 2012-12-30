@@ -93,7 +93,7 @@ INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripc
 (4,  'Pintarse', 'GRUPAL', 'Pintarse con los colores del equipo', 'DESCRIPCION PARA PINTARSE', 100, 35, 4, 600, 4000, 75, 7, 8000),
 (5,  'PromoverPartido', 'GRUPAL', 'Promover el partido por las redes sociales', 'DESCRIPCION PARA PROMOVER PARTIDO', 300, 1, 10, 0, 0, 0, 0, 350),
 (6,  'Apostar', 'INDIVIDUAL', 'Apostar por el partido', 'DESCRIPCION APOSTAR', 0, 5, 0, 0, 0, 0, 0, 0),
-(7,  'Ascender', 'INDIVIDUAL', 'Ascender en el trabajo', 'DESCRIPCION ASCENDER', 0, 0, 0, 0, 0, 0, 0, 0),
+(7,  'Ascender', 'pasiva', 'Ascender en el trabajo', 'DESCRIPCION ASCENDER', 0, 0, 0, 0, 0, 0, 0, 0),
 (8,  'ContratarRRPP', 'INDIVIDUAL', 'Contratar temporalmente a un relaciones públicas', 'DESCRIPCION CONTRATAR RRPP', 0, 0, 0, 0, 0, 0, 0, 0),
 (9,  'BeberCerveza', 'PARTIDO', 'Beber cerveza durante el partido', 'DESCRIPCION BEBER CERVEZA', 0, 0, 0, 0, 0, 0, 0, 0),
 (10, 'HablarSpeaker', 'PARTIDO', 'Hablar con el Speaker del estadio', 'DESCRIPCION HABLAR SPEAKER', 0, 0, 0, 0, 0, 0, 0, 0),

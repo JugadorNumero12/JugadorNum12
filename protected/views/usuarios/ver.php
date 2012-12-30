@@ -8,7 +8,6 @@
 
 <!-- codigo HTML -->
 
-<!--
 <h1> PERFIL DE OTRO USUARIO</h1>
 
 <h3> DATOS BÁSICOS</h3>
@@ -41,6 +40,3 @@
 	</tr>
 	<tr></tr>
 </table>
-
--->
-	
