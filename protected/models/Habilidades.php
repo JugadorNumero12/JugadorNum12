@@ -9,9 +9,10 @@
  */
 class Habilidades extends CActiveRecord
 {
-	const TIPO_INDIVIDUAL = 'individual';
-	const TIPO_GRUPAL = 'grupal';
-	const TIPO_PASIVA = 'pasiva';
+	const TIPO_INDIVIDUAL = 'INDIVIDUAL';
+	const TIPO_GRUPAL = 'GRUPAL';
+	const TIPO_PASIVA = 'PASIVA';
+	const TIPO_PARTIDO = 'PARTIDO';
 
 	/**
 	 * Returns the static model of the specified AR class.

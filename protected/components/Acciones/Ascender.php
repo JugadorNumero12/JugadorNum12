@@ -2,7 +2,7 @@
 
 /** 
  * Descripcion breve: Ascender en el trabajo
- * Tipo: Individual
+ * Tipo: Individual - PASIVA
  * Perfil asociado: Empresario, Ultra
  *
  * Efectos:

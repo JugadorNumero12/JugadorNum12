@@ -42,64 +42,63 @@ INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_us
 
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`) VALUES
-(1, 3, 4, 1, 1, 1),
-(2, 2, 5, 1, 2, 0),
-(3, 1, 7, 2, 1, 0),
-(4, 4, 0, 0, 0, 3);
+ -- ----------------
+ -- Rojos   7 puntos
+ -- Negros  4 puntos
+ -- Verdes  2 puntos
+ -- Blancos 2 puntos
+ -- ----------------
+ (1, 1, 7, 2, 1, 0),
+ (2, 3, 2, 0, 2, 1),
+ (3, 2, 4, 1, 1, 1),
+ (4, 3, 2, 0, 2, 1);
 
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
-(3, 1),
-(4, 1),
-(8, 1),
-(1, 1),
-(2, 2),
-(3, 2),
-(4, 2),
-(7, 2),
-(8, 2),
-(5, 3),
-(6, 3),
-(8, 3),
-(8, 4),
-(1, 5),
-(2, 5),
-(4, 6),
-(5, 7),
-(1, 7),
-(1, 8),
-(2, 8),
-(3, 8),
-(6, 9),
-(1, 10),
-(2, 10),
-(3, 10),
-(4, 10),
-(5, 10),
-(7, 10);
+ -- desbloqueadas de Xaby (empresario)
+ (1, 1), (2, 1), (3, 1), (6, 1), (7, 1), (8, 1),
+ -- desbloqueadas de marina (movedora)
+ (3, 2), (4, 2), (5, 2), (8, 2), (10, 2), (13, 2),
+ -- desbloqueadas de arturo (empresario)
+ (1, 3), (2, 3), (3, 3), (6, 3), (7, 3), (8, 3),
+ -- desbloqueadas de dani (ultra)
+ (4, 4), (6, 4), (7, 4), (9, 4), (11, 4), (12, 4), (13, 4),
+ -- desbloqueadas de pedro (empresario)
+ (1, 5), (2, 5), (3, 5), (6, 5), (7, 5), (8, 5),
+ -- desbloqueadas de manu (movedora)
+ (3, 6), (4, 6), (5, 6), (8, 6), (10, 6), (13, 6),
+ -- desbloqueadas de rober (ultra)
+ (4, 7), (6, 7), (7, 7), (9, 7), (11, 7), (12, 7), (13, 7),
+ -- desbloqueadas de marcos (ultra)
+ (4, 8), (6, 8), (7, 8), (9, 8), (11, 8), (12, 8), (13, 8),
+ -- desbloqueadas de alex (movedora)
+ (3, 9), (4, 9), (5, 9), (8, 9), (10, 9), (13, 9),
+ -- desbloqueadas de samu (ultra)
+ (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10);
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`id_equipo`, `nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
-(1, 'Rojos', 1, 3000, 400, 12, 7, 6),
-(2, 'Verdes', 1, 3000, 500, 10, 7, 6),
-(3, 'Negros', 1, 3600, 400, 10, 7, 7),
-(4, 'Blancos', 1, 4000, 400, 9, 6, 8);
+ (1, 'Rojos',   1, 3000, 400, 12, 7, 6),
+ (2, 'Verdes',  1, 3000, 500, 10, 7, 6),
+ (3, 'Negros',  1, 3600, 400, 10, 7, 7),
+ (4, 'Blancos', 1, 4000, 400, 9,  6, 8);
 
 TRUNCATE `habilidades`;
 INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, `animo`, `influencias`, `dinero_max`, `animo_max`, `influencias_max`, `participantes_max`, `cooldown_fin`) VALUES
-(1,  'FinanciarEvento', 'GRUPAL', 'Financiar un evento promocional', 'El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio', 100, 2, 0, 0, 0, 0, 0, 100),
-(2,  'IncentivoEconomico', 'GRUPAL', 'Incentivo económico a los jugadores', 'Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones', 2000, 1, 100, 0, 0, 0, 0, 300),
-(3,  'OrganizarHomenaje', 'GRUPAL', 'Organizar homenaje a un jugador', 'Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje', 300, 10, 5, 5000, 500, 40, 5, 10000),
-(4,  'Pintarse', 'GRUPAL', 'Pintarse con los colores del equipo', 'DESCRIPCION PARA PINTARSE', 100, 35, 4, 600, 4000, 75, 7, 8000),
-(5,  'PromoverPartido', 'GRUPAL', 'Promover el partido por las redes sociales', 'DESCRIPCION PARA PROMOVER PARTIDO', 300, 1, 10, 0, 0, 0, 0, 350),
-(6,  'Apostar', 'INDIVIDUAL', 'Apostar por el partido', 'DESCRIPCION APOSTAR', 0, 5, 0, 0, 0, 0, 0, 0),
-(7,  'Ascender', 'pasiva', 'Ascender en el trabajo', 'DESCRIPCION ASCENDER', 0, 0, 0, 0, 0, 0, 0, 0),
-(8,  'ContratarRRPP', 'INDIVIDUAL', 'Contratar temporalmente a un relaciones públicas', 'DESCRIPCION CONTRATAR RRPP', 0, 0, 0, 0, 0, 0, 0, 0),
-(9,  'BeberCerveza', 'PARTIDO', 'Beber cerveza durante el partido', 'DESCRIPCION BEBER CERVEZA', 0, 0, 0, 0, 0, 0, 0, 0),
-(10, 'HablarSpeaker', 'PARTIDO', 'Hablar con el Speaker del estadio', 'DESCRIPCION HABLAR SPEAKER', 0, 0, 0, 0, 0, 0, 0, 0),
-(11, 'IniciarOla', 'PARTIDO', 'Iniciar una ola en la grada', 'DESCRIPCION INICIAR OLA', 0, 0, 0, 0, 0, 0, 0, 0),
-(12, 'PunteroLaser', 'PARTIDO', 'Molestar con el puntero láser a un jugador', 'DESCRIPCION PUNTERO LASER', 0, 0, 0, 0, 0, 0, 0, 0),
-(13, 'RetransmitirRRSS', 'PARTIDO', 'Retransmitir el partido por las redes sociales', 'DESCRIPCION RETRANSMITIR RRSS', 0, 0, 0, 0, 0, 0, 0, 0);
+ -- ver tabla_efectos.xml --
+ (1,  'FinanciarEvento', 'GRUPAL', 'Financiar un evento promocional', 'El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio', 100, 2, 0, 0, 0, 0, 0, 100),
+ (2,  'IncentivoEconomico', 'GRUPAL', 'Incentivo económico a los jugadores', 'Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones', 2000, 1, 100, 0, 0, 0, 0, 300),
+ (3,  'OrganizarHomenaje', 'GRUPAL', 'Organizar homenaje a un jugador', 'Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje', 300, 10, 5, 5000, 500, 40, 5, 10000),
+ (4,  'Pintarse', 'GRUPAL', 'Pintarse con los colores del equipo', 'DESCRIPCION PARA PINTARSE', 100, 35, 4, 600, 4000, 75, 7, 8000),
+ (5,  'PromoverPartido', 'GRUPAL', 'Promover el partido por las redes sociales', 'DESCRIPCION PARA PROMOVER PARTIDO', 300, 1, 10, 0, 0, 0, 0, 350),
+ (6,  'Apostar', 'INDIVIDUAL', 'Apostar por el partido', 'DESCRIPCION APOSTAR', 0, 5, 0, 0, 0, 0, 0, 0),
+ (7,  'Ascender', 'PASIVA', 'Ascender en el trabajo', 'DESCRIPCION ASCENDER', 0, 0, 0, 0, 0, 0, 0, 0),
+ (8,  'ContratarRRPP', 'INDIVIDUAL', 'Contratar temporalmente a un relaciones públicas', 'DESCRIPCION CONTRATAR RRPP', 0, 0, 0, 0, 0, 0, 0, 0),
+ (9,  'BeberCerveza', 'PARTIDO', 'Beber cerveza durante el partido', 'DESCRIPCION BEBER CERVEZA', 0, 0, 0, 0, 0, 0, 0, 0),
+ (10, 'HablarSpeaker', 'PARTIDO', 'Hablar con el Speaker del estadio', 'DESCRIPCION HABLAR SPEAKER', 0, 0, 0, 0, 0, 0, 0, 0),
+ (11, 'IniciarOla', 'PARTIDO', 'Iniciar una ola en la grada', 'DESCRIPCION INICIAR OLA', 0, 0, 0, 0, 0, 0, 0, 0),
+ (12, 'PunteroLaser', 'PARTIDO', 'Molestar con el puntero láser a un jugador', 'DESCRIPCION PUNTERO LASER', 0, 0, 0, 0, 0, 0, 0, 0),
+ (13, 'RetransmitirRRSS', 'PARTIDO', 'Retransmitir el partido por las redes sociales', 'DESCRIPCION RETRANSMITIR RRSS', 0, 0, 0, 0, 0, 0, 0, 0);
 
 TRUNCATE `participaciones`;
 INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_id_usuario`, `dinero_aportado`, `influencias_aportadas`, `animo_aportado`) VALUES
