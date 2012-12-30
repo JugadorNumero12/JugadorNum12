@@ -74,11 +74,11 @@ public class Partido
 	}
 
 	/*
-		Recoge los datos de las acciones de este turno de locales y visitantes y recalcula los factores.
-		También, de forma transaccional todo, modifica el turno actual en la tabla Partidos (hay que añadirlo)
-		para que las acciones sepan a qué turno tienen que ser asociadas.
-		Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
-	*/
+	 * Recoge los datos de las acciones de este turno de locales y visitantes y recalcula los factores.
+	 * También, de forma transaccional todo, modifica el turno actual en la tabla Partidos (hay que añadirlo)
+	 * para que las acciones sepan a qué turno tienen que ser asociadas.
+	 * Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
+	 */
 	private void recogeAccionesTurno()
 	{
 		/* MARCOS */
@@ -133,12 +133,11 @@ public class Partido
 		/* MARCOS */
 	}
 
+	/*
+	 * Recalcula los puntos y actualiza la clasificación.
+	 */
 	private void actualizaClasificacion()
 	{
-		/*
-			Recalcula los puntos y actualiza la clasificación
-		*/
-
 		/* MARCOS */
 	}
 
