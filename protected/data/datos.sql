@@ -106,14 +106,31 @@ INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_i
 
 TRUNCATE `partidos`;
 INSERT INTO `partidos` (`id_partido`, `equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`) VALUES
-(1, 1, 2, 0, '"par1"'),
-(2, 4, 3, 0, '"par2"'),
-(3, 3, 1, 0, '"par3"'),
-(4, 2, 4, 0, '"par4"'),
-(5, 1, 3, 0, '"par5"'),
-(6, 4, 2, 0, '"par6"'),
-(7, 2, 1, 0, '"par7"'),
-(8, 3, 4, 0, '"par8"');
+ -- Rojos vs. Verdes: ganaron los Rojos
+ -- Negros vs. Blancos: ganaron los Negros
+ (1, 1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (2, 3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ -- Rojos vs. Negros: ganaron los Rojos
+ -- Verdes vs. Blancos: empate
+ (3, 1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (4, 2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ -- Rojos vs. Blancos: empate
+ -- Negros vs. Verdes: empate
+ (5, 1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (6, 3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ -- Verdes vs. Rojos: PROXIMO PARTIDO
+ -- Blancos vs. Negros: PROXIMO PARTIDO
+ (7, 2, 1, 150, NULL),
+ (8, 4, 3, 150, NULL),
+ -- Negros vs. Rojos
+ -- Blancos vs. Verdes
+ (9,  3, 1, 200, NULL),
+ (10, 4, 2, 200, NULL),
+ -- Blancos vs. Rojos
+ -- Verdes vs. Negros
+ (11, 4, 1, 250, NULL),
+ (12, 2, 3, 250, NULL);
+
 
 TRUNCATE `recursos`;
 INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
@@ -128,18 +145,33 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
 (9, 500, 4, 1, 9, 2, 125, 350, 11),
 (10, 1200, 6, 10, 10, 1, 180, 200, 6);
 
+ -- ----------------
+ -- empresarios: 3
+ -- movedoras: 3
+ -- ultras: 4
+ -- ----------------
 TRUNCATE `usuarios`;
 INSERT INTO `usuarios` (`id_usuario`, `equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`) VALUES
-(1, 1, 'xaby', 'xaby', 'xaby@xaby.com', 2, 31),
-(2, 2, 'marina', 'marina', 'marina@marina.com', 1, 30),
-(3, 1, 'arturo', 'arturo', 'arturo@arturo.com', 2, 14),
-(4, 1, 'dani', 'dani', 'dani@dani.com', 0, 20),
-(5, 2, 'pedro', 'pedro', 'pedro@pedro.com', 2, 20),
-(6, 3, 'manu', 'manu', 'manu@manu.com', 1, 13),
-(7, 2, 'rober', 'rober', 'rober@rober.com', 0, 33),
-(8, 1, 'marcos', 'marcos', 'marcos@marcos.com', 0, 32),
-(9, 2, 'alex', 'alex', 'alex@alex.com', 1, 19),
-(10, 3, 'samu', 'samu', 'samu@samu.com', 0, 76);
+ -- xaby: empresario
+ (1, 1, 'xaby', 'xaby', 'xaby@xaby.com', 2, 5),
+ -- marina: movedora
+ (2, 2, 'marina', 'marina', 'marina@marina.com', 1, 5),
+ -- arturo: empresario
+ (3, 1, 'arturo', 'arturo', 'arturo@arturo.com', 2, 5),
+ -- dani: ultra
+ (4, 1, 'dani', 'dani', 'dani@dani.com', 0, 5),
+ -- pedro: empresario
+ (5, 2, 'pedro', 'pedro', 'pedro@pedro.com', 2, 5),
+ -- manu: movedora
+ (6, 3, 'manu', 'manu', 'manu@manu.com', 1, 5),
+ -- rober: ultra
+ (7, 2, 'rober', 'rober', 'rober@rober.com', 0, 5),
+ -- marcos: ultra
+ (8, 1, 'marcos', 'marcos', 'marcos@marcos.com', 0, 5),
+ -- alex: movedora
+ (9, 2, 'alex', 'alex', 'alex@alex.com', 1, 5),
+ -- samu: ultra
+ (10, 3, 'samu', 'samu', 'samu@samu.com', 0, 5);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
