@@ -19,16 +19,17 @@ public class Partido
 	private $dif_niveles;
 	private $aforo_local;
 	private $aforo_visitante;
+
+	private $ofensivo_local;
+	private $ofensivo_visitante;
+	private $defensivo_local;
+	private $defensivo_visitante;
 	
 	private $goles_local;
 	private $goles_visitante;
 	private $estado;
 	private $moral_local;
 	private $moral_visitante;
-	private $ofensivo_local;
-	private $ofensivo_visitante;
-	private $defensivo_local;
-	private $defensivo_visitante;
 
 	/**
 	 * Constructora: Inicializar 
@@ -63,7 +64,8 @@ public class Partido
 	/**
 	 * Estado 0: generar el estado inicial, 
 	 * carga las acciones preparatorias y calcula por primera vez 
-	 * las variables ambiente, aforos, y diferencia de niveles
+	 * las variables ambiente, aforos, diferencia de niveles 
+	 * y valor ofensivo y defensivo basico de los equipos.
 	 * y lo almacena en la tabla turnos.
 	 * A partir de la diferencia de niveles, almacena el primer estado
 	 * del partido.
@@ -71,6 +73,8 @@ public class Partido
 	private void inicializaEncuentro()
 	{
 		/* ALEX */
+		// NOTA: en la tabla <<equipos>> estan los atributos
+		// nivel_equipo, factor_ofensivo y factor_defensivo
 	}
 
 	/*
