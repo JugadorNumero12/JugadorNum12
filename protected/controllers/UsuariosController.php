@@ -65,7 +65,7 @@ class UsuariosController extends Controller
         /* MARINA */
         /* Nota: la vista tendra variables */
         //Busco el id del usuario actual y saco los datos el usuario
-        $id= Yii::app()->user->usIdent;
+        /*$id= Yii::app()->user->usIdent;
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
 
         //Saco los datos del equipo del usuario
@@ -91,7 +91,7 @@ class UsuariosController extends Controller
         $this->render('perfil',array('modeloU'=>$modeloUsuario,
                                       'modeloE'=>$modeloEquipo,
                                       'modeloR'=>$modeloRecursos,
-                                      'accionesPas'=>$accionesPas));
+                                      'accionesPas'=>$accionesPas));*/
     }
 
     /*
@@ -110,14 +110,14 @@ class UsuariosController extends Controller
         // Nota: la vista tendra variables
 
          //Saco los datos el usuario pedido
-        $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
+        /*$modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
         //Saco los datos del equipo del usuario
         $idEquipo = $modeloUsuario->equipos_id_equipo;
         $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
        
         $this->render('ver',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo));
+                                      'modeloE'=>$modeloEquipo));*/
     
     }
 

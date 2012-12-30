@@ -40,9 +40,9 @@ class EquiposController extends Controller
 	{
 		/* MARINA */
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
-		 $modeloClasificacion = Clasificacion:: model()->findAll();
+		 /*$modeloClasificacion = Clasificacion:: model()->findAll();
 
-		 $this->render('index',array('modeloC'=>$modeloClasificacion));
+		 $this->render('index',array('modeloC'=>$modeloClasificacion));*/
 	}
 
 	/**
