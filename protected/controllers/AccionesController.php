@@ -240,7 +240,7 @@ class AccionesController extends Controller
 			if($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) 
 				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
 			if($part == null)
-				throw new CHttpException(404,'El jugador indicado no partricipa en la accion.');
+				throw new CHttpException(404,'El jugador indicado no partricipa en la acción.');
 
 			$actAni = $rec['animo'];
 			$actInf = $rec['influencias'];
@@ -266,6 +266,7 @@ class AccionesController extends Controller
 
 			if($n != 1)
 				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				//Si salta esto es que había más de una participación del mismo usuario en la acción
 
 			$trans->commit();
 
