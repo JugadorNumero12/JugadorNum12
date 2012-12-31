@@ -252,7 +252,7 @@ class AccionesController extends Controller
 
 			$rec['dinero'] += $partDin;
 			$rec['animo'] = min(($actAni + $partAni), $maxAni);
-			$rec['influencias'] = min(($actInf + $partInf), $maxAni);
+			$rec['influencias'] = min(($actInf + $partInf), $maxInf);
 			$rec->save();
 
 			$acc['jugadores_acc'] -= 1;
@@ -265,7 +265,7 @@ class AccionesController extends Controller
 			$n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 
 			if($n != 1)
-				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador');
+				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 
 			$trans->commit();
 
