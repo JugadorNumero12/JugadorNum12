@@ -245,7 +245,6 @@ class AccionesController extends Controller
 			//FIXME ¿que pasa si el propietario se echa a si mismo?
 			//FIXME ¿puede haber más de una participación del mismo jugador en una acción?
 
-
 			$actAni = $rec['animo'];
 			$actInf = $rec['influencias'];
 			$maxAni = $rec['animo_max'];
