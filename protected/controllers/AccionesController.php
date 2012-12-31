@@ -242,9 +242,6 @@ class AccionesController extends Controller
 			if($part == null)
 				throw new CHttpException(404,'El jugador indicado no partricipa en la accion.');
 
-			//FIXME ¿que pasa si el propietario se echa a si mismo?
-			//FIXME ¿puede haber más de una participación del mismo jugador en una acción?
-
 			$actAni = $rec['animo'];
 			$actInf = $rec['influencias'];
 			$maxAni = $rec['animo_max'];
@@ -264,8 +261,13 @@ class AccionesController extends Controller
 			$acc['influencias_acc'] -= $partInf;
 			$acc->save();
 
-			//$part->delete(); // delete the row from the database table
-			//TODO el delete da error
+			//$part->delete(); // elegante, pero no funciona
+			$n=Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+
+			if($n!=1){
+				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador');
+				$trans->rollback();
+			}
 
 			$trans->commit();
 
