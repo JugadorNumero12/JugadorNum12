@@ -238,7 +238,7 @@ class AccionesController extends Controller
 			if($acc == null)
 				throw new CHttpException(404,'Acción inexistente.');
 			if($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) 
-				throw new CHttpException(403,'No tienes privilegios sobre la acción.');
+				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
 			if($part == null)
 				throw new CHttpException(404,'El jugador indicado no partricipa en la accion.');
 
