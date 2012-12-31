@@ -20,13 +20,13 @@
 	  <tr>
 	    <td colspan="2">
 			<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarClave', array());?>">
-	    		<input type = "Submit" name = "clave" value = "Cambiar Clave">
+	    		<input type = "button" name = "clave" value = "Cambiar Clave">
 	    	</a>	    
 	    </td>
 	    
 	    <td colspan="2">
 	    	<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarEmail', array());?>">
-	    		<input type = "Submit" name = "email" value = "Cambiar Email">
+	    		<input type = "button" name = "email" value = "Cambiar Email">
 	    	</a>
 	    </td>
 	  </tr>
