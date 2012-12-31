@@ -262,12 +262,10 @@ class AccionesController extends Controller
 			$acc->save();
 
 			//$part->delete(); // elegante, pero no funciona
-			$n=Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+			$n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 
-			if($n!=1){
+			if($n != 1)
 				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador');
-				$trans->rollback();
-			}
 
 			$trans->commit();
 
