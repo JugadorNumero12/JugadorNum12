@@ -226,28 +226,54 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
-		$owner = AccionesGrupales::model()->findByPk($id_accion);
-		if($owner == null)
-			Yii::app()->user->setFlash('error', 'La accion no existe.');
 
-		elseif($owner['usuarios_id_usuario']!= Yii::app()->user->usIdent)
-			Yii::app()->user->setFlash('error', 'No eres el propietario');
-
-		else
-		{
-			$part = Participaciones::model()->findByAttributes(array(
-						'acciones_grupales_id_accion_grupal'=>$id_accion,
-						'usuarios_id_usuario'=>$is_jugador
-						));
-
+		//Empieza la transacción
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$acc = AccionesGrupales::model()->findByPk($id_accion);
+			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
+			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+			
+			//Se comprueba la coherencia de la petición
+			if($acc == null)
+				throw new CHttpException(404,'Acción inexistente.');
+			if($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) 
+				throw new CHttpException(404,'No tienes privilegios sobre la acción.');
 			if($part == null)
-				Yii::app()->user->setFlash('error', 'El jugador indicado no partricipa en la accion');
+				throw new CHttpException(404,'El jugador indicado no partricipa en la accion.');
 
+			//FIXME ¿que pasa si el propietario se echa a si mismo?
+			//FIXME ¿puede haber más de una participación del mismo jugador en una acción?
+
+
+			$actAni = $rec['animo'];
+			$actInf = $rec['influencias'];
+			$maxAni = $rec['animo_max'];
+			$maxInf = $rec['influencias_max'];
+			$partDin = $part['dinero_aportado'];
+			$partAni = $part['animo_aportado'];
+			$partInf = $part['influencias_aportadas'];
+
+			$rec['dinero'] += $partDin;
+			$rec['animo'] = min(($actAni + $partAni), $maxAni);
+			$rec['influencias'] = min(($actInf + $partInf), $maxAni);
+			$rec->save();
+
+			$acc['jugadores_acc'] -= 1;
+			$acc['dinero_acc'] -= $partDin;
+			$acc['animo_acc'] -= $partAni;
+			$acc['influencias_acc'] -= $partInf;
+			$acc->save();
+
+			//$part->delete(); // delete the row from the database table
+			//TODO el delete da error
+
+			$trans->commit();
+
+		}catch(Exception $exc) {
+    		$trans->rollback();
+    		throw $exc;
 		}
-		//FIXME ¿que pasa si el propietario se echa a si mismo?
-		//FIXME ¿puede haber más de una participación del mismo jugador en una acción?
-
-		//TODO pues eso, esta por hacer
 
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
