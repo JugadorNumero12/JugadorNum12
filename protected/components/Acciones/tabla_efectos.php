@@ -35,9 +35,9 @@ static $datos_acciones = array (
 		'dinero' => 600
 	), 
 	
-	'Ascender' => array (
-		'dinero_gen' => 0.12
-	), 
+	'CrearseEspectativas' => array (
+		'animo' => 0.15
+	),
 		
 	'ContratarRRPP' => array (
 		'bonus_especial' => 1
@@ -66,4 +66,10 @@ static $datos_acciones = array (
 		'defensivo' => 3,
 		'animo' => 12
 	)
+
+	// PASIVAS
+	// -------------------------------------------------
+		'Ascender' => array (
+		'dinero_gen' => 0.12
+	), 
 )
