@@ -68,16 +68,20 @@
 
 	  <tr>
 	   	<td align="left"><span>Equipos disponibles</span></td>
-	  	<td>
-	  		<select name='ocup'>
-	  		<option>Elige un equipo</option>
+	  	<td><select name='ocup'>
+	  		<option value=0 >Elige un equipo</option>
 	  		<?php foreach ( $equipos as $equipo ): ?>
-    				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
-			<?php endforeach; ?>
+	  			<?php if($seleccionado==$equipo['id_equipo']){ ?>
+	  				<option value= <?php echo $equipo['id_equipo']; ?> selected ><li><?php echo $equipo['nombre']; ?></li></option>
+	  			<?php }else{ ?>
+	  				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
+	  			<?php } ?>
+	  			
+    		<?php endforeach; ?>
 	  	</td></select>
 	  </tr>
 
-	  <tr><?php if($str!=0): ?>
+	  <tr><?php if($error): ?>
 	   	<td colspan="2" align="left"><span style="color:red">¡Debe escoger un personaje y un equipo!</span></td>
 	  <?php endif; ?></tr>
 
