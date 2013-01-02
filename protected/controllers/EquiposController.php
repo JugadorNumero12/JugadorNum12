@@ -73,6 +73,7 @@ class EquiposController extends Controller
 		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
 		$modeloClasificacion = Clasificacion::model()->findByPk($id_equipo);
 		$modeloAccionesGrupales = AccionesGrupales::model()->findByPk($id_equipo);
+		//Enviar datos a la vista
 		$this->render('ver', array('equipos'=>$modeloEquipos, 
 									'clasificacion'=>$modeloClasificacion,
 									 'grupales'=>$modeloAccionesGrupales));
