@@ -37,6 +37,6 @@
 	if(!$mi_equipo){
 		echo "Pulsa el botón para cambiarte a este equipo";	
 ?>
-	<button type="button">Cambiar de equipo</button>
+	<button type="button" onClick="actionCambiar($equipos->id_equipo)">Cambiar de equipo</button>
 <?php }
 ?>
