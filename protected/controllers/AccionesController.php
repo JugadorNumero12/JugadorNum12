@@ -47,12 +47,12 @@ class AccionesController extends Controller
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Sacar una lista con los recursos del usuario
-		$recursosUsuario = Recursos::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
 		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
+			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
 		}
 
 		//Envía los datos para que los muestre la vista
@@ -190,10 +190,20 @@ class AccionesController extends Controller
 		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
 
 		//A partir de la acción saco la habilidad para poder mostrar los datos
-		$habilidad = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $accionGrupal['habilidades_id_habilidad']));
+		$habilidad = Habilidades::model()->findByPK($accionGrupal['habilidades_id_habilidad']);
+
+		//Saco las participaciones de la acción
+		$participaciones = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal' => $id_accion));
+
+		//Saco el usuario
+		$usuario = Yii::app()->user->usIdent;
+
+		//Saco el propietario de la acción
+		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
 		//Envío los datos a la vista
-		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad));
+		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
+					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones));
 	}
 
 	/**
@@ -210,6 +220,64 @@ class AccionesController extends Controller
 	public function actionParticipar($id_accion)
 	{
 		/* PEDRO */
+		//Iniciamos la transaccion
+		$transaccion = Yii::app()->db->beginTransaction();
+
+		//Recojo los datos de la habilidad
+		$habilidad = Habilidades::model()->findByPk($id_accion);
+
+		//Saco el usuario que quiere participar en la acción y su equipo
+		$usuario = Yii::app()->user->usIdent;
+		$datosUsuario = Usuarios::model()->findByPK($usuario);
+		$equipoAficion = $datosUsuario['equipos_id_equipo'];
+
+		//TODO: Falta comprobar que la acción sea del equipo del usuario y además que esté abierta
+
+		//Comprobamos si la habilidad es grupal y si pertenece a la afición del jugador
+		if ( $habilidad != null && $habilidad['tipo'] == "grupal" ){
+			//La acción es grupal
+			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
+			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
+			$dineroUsuario = $recursosUsuario['dinero'];
+			$influenciasUsuario = $recursosUsuario['influencias'];
+			$animoUsuario = $recursosUsuario['animo'];
+
+			if( Yii::app()->request->isPostRequest ){
+				//Petición POST
+				$dineroAportado = Yii::app()->request->getPost('dinero');
+				$animoAportado = Yii::app()->request->getPost('animo');
+				$influenciasAportadas = Yii::app()->request->getPost('influencias');
+
+				if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
+					$trans->rollback();
+					Yii::app()->user->setFlash('error', 'Recursos insuficientes');
+					$this->refresh();
+				}
+				
+				try {
+					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
+					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
+					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
+					$recursosUsuario->save();
+
+					//TODO: Falta sumarle los recursos a la acción
+					
+					$transaccion->commit();
+					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
+					$this->redirect(array('acciones/index'));
+				} catch ( Exception $exc ) {
+					$transaccion->rollback();
+					throw $exc;
+				}
+			} else {
+				//Petición GET: Muestro el formulario
+				$transaccion->commit();
+				$this->render('participar', array('habilidad' => $habilidad));
+			}
+		} else {
+			$transaccion->rollback();
+			throw new CHttpException(404,'Accion no válida.');
+		}
 	}
 
 	/**
@@ -226,28 +294,54 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
-		$owner=AccionesGrupales::model->findByPk($id_accion);
-		if($owner===null)
-			Yii::app()->user->setFlash('error', 'La accion no existe.');
 
-		elseif($owner['usuarios_id_usuario']!= Yii::app()->user->usIdent)
-			Yii::app()->user->setFlash('error', 'No eres el propietario');
+		//Empieza la transacción
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$acc = AccionesGrupales::model()->findByPk($id_accion);
+			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
+			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+			
+			//Se comprueba la coherencia de la petición
+			if($acc == null)
+				throw new CHttpException(404,'Acción inexistente.');
+			if($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) 
+				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
+			if($part == null)
+				throw new CHttpException(404,'El jugador indicado no partricipa en la acción.');
 
-		else
-		{
-			$part=Participaciones::model->findByAttributes(array(
-						'acciones_grupales_id_accion_grupal'=>id_accion,
-						'usuarios_id_usuario'=>is_jugador
-						));
+			$actAni = $rec['animo'];
+			$actInf = $rec['influencias'];
+			$maxAni = $rec['animo_max'];
+			$maxInf = $rec['influencias_max'];
+			$partDin = $part['dinero_aportado'];
+			$partAni = $part['animo_aportado'];
+			$partInf = $part['influencias_aportadas'];
 
-			if($part===null)
-				Yii::app()->user->setFlash('error', 'El jugador indicado no partricipa en la accion');
+			$rec['dinero'] += $partDin;
+			$rec['animo'] = min(($actAni + $partAni), $maxAni);
+			$rec['influencias'] = min(($actInf + $partInf), $maxInf);
+			$rec->save();
 
+			$acc['jugadores_acc'] -= 1;
+			$acc['dinero_acc'] -= $partDin;
+			$acc['animo_acc'] -= $partAni;
+			$acc['influencias_acc'] -= $partInf;
+			$acc->save();
+
+			//$part->delete(); // elegante, pero no funciona
+			$n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+
+			if($n != 1)
+				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				//Si salta esto es que había más de una participación del mismo usuario en la acción
+
+			$trans->commit();
+
+		}catch(Exception $exc) {
+    		$trans->rollback();
+    		throw $exc;
 		}
-		//FIXME ¿que pasa si el propietario se echa a si mismo?
-		//FIXME ¿puede haber más de una participación del mismo jugador en una acción?
-
-		//TODO pues eso, esta por hacer
 
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}

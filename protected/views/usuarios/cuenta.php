@@ -1,13 +1,6 @@
 <?php
 /* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
-
-// codigo PHP
-
 ?>
-
-<!-- codigo HTML -->
-
 <table cellspacing="5px">
 	<tr></tr>
 	
@@ -22,6 +15,20 @@
 	  <tr>
 	  	<th>eMail : </th>
 	  	<td><?php echo $modelo['email'] ?></td>
+	  </tr>
+
+	  <tr>
+	    <td colspan="2">
+			<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarClave', array());?>">
+	    		<input type = "button" name = "clave" value = "Cambiar Clave">
+	    	</a>	    
+	    </td>
+	    
+	    <td colspan="2">
+	    	<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarEmail', array());?>">
+	    		<input type = "button" name = "email" value = "Cambiar Email">
+	    	</a>
+	    </td>
 	  </tr>
 
 	  <tr></tr>

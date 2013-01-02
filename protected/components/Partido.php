@@ -19,16 +19,17 @@ public class Partido
 	private $dif_niveles;
 	private $aforo_local;
 	private $aforo_visitante;
+
+	private $ofensivo_local;
+	private $ofensivo_visitante;
+	private $defensivo_local;
+	private $defensivo_visitante;
 	
 	private $goles_local;
 	private $goles_visitante;
 	private $estado;
 	private $moral_local;
 	private $moral_visitante;
-	private $ofensivo_local;
-	private $ofensivo_visitante;
-	private $defensivo_local;
-	private $defensivo_visitante;
 
 	/**
 	 * Constructora: Inicializar 
@@ -63,7 +64,8 @@ public class Partido
 	/**
 	 * Estado 0: generar el estado inicial, 
 	 * carga las acciones preparatorias y calcula por primera vez 
-	 * las variables ambiente, aforos, y diferencia de niveles
+	 * las variables ambiente, aforos, diferencia de niveles 
+	 * y valor ofensivo y defensivo basico de los equipos.
 	 * y lo almacena en la tabla turnos.
 	 * A partir de la diferencia de niveles, almacena el primer estado
 	 * del partido.
@@ -71,14 +73,16 @@ public class Partido
 	private void inicializaEncuentro()
 	{
 		/* ALEX */
+		// NOTA: en la tabla <<equipos>> estan los atributos
+		// nivel_equipo, factor_ofensivo y factor_defensivo
 	}
 
 	/*
-		Recoge los datos de las acciones de este turno de locales y visitantes y recalcula los factores.
-		También, de forma transaccional todo, modifica el turno actual en la tabla Partidos (hay que añadirlo)
-		para que las acciones sepan a qué turno tienen que ser asociadas.
-		Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
-	*/
+	 * Recoge los datos de las acciones de este turno de locales y visitantes y recalcula los factores.
+	 * También, de forma transaccional todo, modifica el turno actual en la tabla Partidos (hay que añadirlo)
+	 * para que las acciones sepan a qué turno tienen que ser asociadas.
+	 * Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
+	 */
 	private void recogeAccionesTurno()
 	{
 		/* MARCOS */
@@ -103,6 +107,16 @@ public class Partido
 	private void generaCronicaTurno()
 	{
 		/* MARCOS */
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$partido=Partidos::model()->findByPk($id_partido);
+			$partido['cronica'] += $cronica;
+			$partido->save();
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+			throw new Exception("Error al guardar la cronica", 1);
+		}
 	}
 
 	/*
@@ -133,12 +147,11 @@ public class Partido
 		/* MARCOS */
 	}
 
+	/*
+	 * Recalcula los puntos y actualiza la clasificación.
+	 */
 	private void actualizaClasificacion()
 	{
-		/*
-			Recalcula los puntos y actualiza la clasificación
-		*/
-
 		/* MARCOS */
 	}
 

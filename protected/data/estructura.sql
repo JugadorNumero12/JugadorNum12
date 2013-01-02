@@ -16,6 +16,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+-- --------------
+-- boolean values
+-- --------------
+-- 0 false
+-- 1 true
+-- --------------
+
 --
 -- Base de datos: `juego`
 --
@@ -37,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `acciones_grupales` (
   `dinero_acc` int(10) unsigned NOT NULL,
   `jugadores_acc` int(10) unsigned NOT NULL,
   `finalizacion` int(11) unsigned NOT NULL,
+  `completada` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_accion_grupal`),
   KEY `acciones_grupales_FKIndex1` (`equipos_id_equipo`),
   KEY `acciones_grupales_FKIndex3` (`habilidades_id_habilidad`),
@@ -138,17 +146,17 @@ DROP TABLE IF EXISTS `habilidades`;
 CREATE TABLE IF NOT EXISTS `habilidades` (
   `id_habilidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `codigo` varchar(45) NOT NULL,
-  `tipo` varchar(20) NOT NULL,
+  `tipo` int(10) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `descripcion` text NOT NULL,
   `dinero` int(11) unsigned NOT NULL,
   `animo` int(10) unsigned NOT NULL,
   `influencias` int(10) unsigned NOT NULL,
-  `dinero_max` int(10) unsigned NOT NULL,
-  `animo_max` int(10) unsigned NOT NULL,
-  `influencias_max` int(10) unsigned NOT NULL,
+  `dinero_max` int(10),
+  `animo_max` int(10),
+  `influencias_max` int(10),
   `participantes_max` int(10) unsigned NOT NULL,
-  `cooldown_fin` int(10) unsigned NOT NULL,
+  `cooldown_fin` int(10),
   PRIMARY KEY (`id_habilidad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 

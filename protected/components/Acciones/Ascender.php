@@ -2,7 +2,7 @@
 
 /** 
  * Descripcion breve: Ascender en el trabajo
- * Tipo: Individual
+ * Tipo: Pasiva
  * Perfil asociado: Empresario, Ultra
  *
  * Efectos:
@@ -33,23 +33,5 @@ public class Ascender extends AccionSingleton
   }
 
   /* Accion permanente: metodo vacio */
-  public function finalizar()
-  {
-    $trans=Yii::app()->db->beginTransaction();
-    try
-    {
-      //Reducir generación de dinero de nuevo
-      $id = Yii::app()->user->usIdent;        
-      $modelo = Recursos::model()->findByPk($id);
-      $columna = 'dinero_gen';
-      $cantidad = $datos_acciones['Ascender']['dinero_gen'];
-      $help = new Helper();
-      $help->quitar_recursos($id, $columna, $cantidad) 
-      $trans->commit();
-    }
-    catch (Exception $e)
-    {
-      $trans->rollBack();
-    }
-  }	
+  public function finalizar() {}	
 }

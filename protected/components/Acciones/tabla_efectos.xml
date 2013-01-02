@@ -38,9 +38,9 @@
 		<dinero> 600 </dinero>
 	</Apostar>
 
-	<Ascender>
-		<dinero_gen> 0.12 </dinero_gen>
-	</Ascender>
+	<CrearseEspectativas>
+		<animo> 0.15 </animo>
+	</CrearseEspectativas>
 
 	<ContratarRRPP>
 		<bonus_especial> 1 </bonus_especial>
@@ -69,4 +69,8 @@
  		<animo> 12 </animo>
  	</RetransmitirRRSS>
 
+ <!-- Pasivas -->
+ 	<Ascender>
+		<dinero_gen> 0.12 </dinero_gen>
+	</Ascender>
 </Acciones>

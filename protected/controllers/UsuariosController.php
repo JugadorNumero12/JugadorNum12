@@ -64,34 +64,25 @@ class UsuariosController extends Controller
     {
         /* MARINA */
         /* Nota: la vista tendra variables */
+        
         //Busco el id del usuario actual y saco los datos el usuario
         $id= Yii::app()->user->usIdent;
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
-
-        //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
-
-        //Saco los datos de los recursos del usuario
-        $modeloRecursos = Recursos:: model()->findByPk($id);
 
         //Saca la lista de las acciones desbloqueadas por el usuario
         $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>$id));
         
         //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas
         $accionesPas = array();
-        foreach ($modeloDesbloqueadas as $habilidad){
-            $accionDes = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
-            if ($accionDes[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
-                $accionesPas[] = $accionDes;
+        foreach ($modeloDesbloqueadas as $desbloqueada){
+            $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
+            if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
+                $accionesPas[] = $infoDesbloqueada[0]['nombre'];
             }
-           
         }
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo,
-                                      'modeloR'=>$modeloRecursos,
-                                      'accionesPas'=>$accionesPas));
+                                      'accionesPas'=>$accionesPas) );
     }
 
     /*
@@ -111,14 +102,8 @@ class UsuariosController extends Controller
 
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
-
-        //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
        
-        $this->render('ver',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo));
-    
+        $this->render('ver',array('modeloU'=>$modeloUsuario));
     }
 
     /*

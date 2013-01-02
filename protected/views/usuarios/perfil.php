@@ -26,17 +26,17 @@
 		<td align="center"><?php switch ($modeloU->personaje)
 								{
 								case 0:
-								  echo "Animadora" ;
-								  break;
-								case 1:
 								  echo "Empresario";
 								  break;
+								case 1:
+								  echo "Ultra" ;
+								  break;
 								case 2:
-								  echo "Ultra";
+								  echo "Animadora";
 								  break;
 								} ?></td>
 		<td align="center"><?php echo $modeloU->nivel ?></td>
-		<td align="center"><?php echo $modeloE->nombre ?></td>
+		<td align="center"><?php echo $modeloU->equipos->nombre ?></td>
 	</tr>
 	<tr></tr>
 </table>
@@ -50,9 +50,9 @@
 		<th>Ánimo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloR->dinero ?></td>
-		<td align="center"><?php echo $modeloR->influencias ?></td>
-		<td align="center"><?php echo $modeloR->animo ?></td>
+		<td align="center"><?php echo $modeloU->recursos->dinero ?></td>
+		<td align="center"><?php echo $modeloU->recursos->influencias ?></td>
+		<td align="center"><?php echo $modeloU->recursos->animo ?></td>
 	</tr>
 	<tr></tr>
 </table>
@@ -68,11 +68,11 @@
 		<th align="center">Generación de ánimo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloR->dinero_gen ?></td>
-		<td align="center"><?php echo $modeloR->influencias_max ?></td>
-		<td align="center"><?php echo $modeloR->influencias_gen ?></td>
-		<td align="center"><?php echo $modeloR->animo_max ?></td>
-		<td align="center"><?php echo $modeloR->animo_gen ?></td>
+		<td align="center"><?php echo $modeloU->recursos->dinero_gen ?></td>
+		<td align="center"><?php echo $modeloU->recursos->influencias_max ?></td>
+		<td align="center"><?php echo $modeloU->recursos->influencias_gen ?></td>
+		<td align="center"><?php echo $modeloU->recursos->animo_max ?></td>
+		<td align="center"><?php echo $modeloU->recursos->animo_gen ?></td>
 	</tr>
 </table>
 
@@ -80,8 +80,7 @@
 
 <?php foreach ( $accionesPas as $accion ){ ?>
 	<li>
-    <?php echo $accion[0]['nombre']; ?>
+    <?php echo $accion; ?>
     </li>
 <?php } ?>
 
-	
