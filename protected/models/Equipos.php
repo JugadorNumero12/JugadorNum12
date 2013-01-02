@@ -60,8 +60,8 @@ class Equipos extends CActiveRecord
 	{
 		/* SAM */
 		return array(
-			'local'=>array(self::HAS_MANY, 'Local', 'equipos_id_equipo_1');
-			'visitante'=>array(self::HAS_MANY, 'Visitante', 'equipos_id_equipo_2');
+			'local'=>array(self::HAS_MANY, 'Partidos', 'equipos_id_equipo_1');
+			'visitante'=>array(self::HAS_MANY, 'Partidos', 'equipos_id_equipo_2');
 			'clasificacion'=>array(self::HAS_ONE, 'Clasificacion', 'equipos_id_equipo');
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'equipos_id_equipo');
 			'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'equipos_id_equipo');
