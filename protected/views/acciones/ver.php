@@ -11,7 +11,7 @@
 <h1>Accion Grupal: <?php echo $habilidad['nombre']; ?></h1>
 
 <p> <b>USUARIO QUE HA CREADO LA ACCION => </b>
-		<?php $accionGrupal['usuarios_id_usuario']; ?>
+		<?php echo $accionGrupal['usuarios_id_usuario']; ?>
 </p>
 
 <p> <b>NUMERO DE PARTICIPANTES => </b>
