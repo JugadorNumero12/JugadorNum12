@@ -47,12 +47,12 @@ class AccionesController extends Controller
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Sacar una lista con los recursos del usuario
-		$recursosUsuario = Recursos::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
 		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
+			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
 		}
 
 		//Envía los datos para que los muestre la vista
@@ -190,10 +190,20 @@ class AccionesController extends Controller
 		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
 
 		//A partir de la acción saco la habilidad para poder mostrar los datos
-		$habilidad = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $accionGrupal['habilidades_id_habilidad']));
+		$habilidad = Habilidades::model()->findByPK($accionGrupal['habilidades_id_habilidad']);
+
+		//Saco las participaciones de la acción
+		$participaciones = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal' => $id_accion));
+
+		//Saco el usuario
+		$usuario = Yii::app()->user->usIdent;
+
+		//Saco el propietario de la acción
+		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
 		//Envío los datos a la vista
-		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad));
+		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
+					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones));
 	}
 
 	/**
@@ -210,6 +220,64 @@ class AccionesController extends Controller
 	public function actionParticipar($id_accion)
 	{
 		/* PEDRO */
+		//Iniciamos la transaccion
+		$transaccion = Yii::app()->db->beginTransaction();
+
+		//Recojo los datos de la habilidad
+		$habilidad = Habilidades::model()->findByPk($id_accion);
+
+		//Saco el usuario que quiere participar en la acción y su equipo
+		$usuario = Yii::app()->user->usIdent;
+		$datosUsuario = Usuarios::model()->findByPK($usuario);
+		$equipoAficion = $datosUsuario['equipos_id_equipo'];
+
+		//TODO: Falta comprobar que la acción sea del equipo del usuario y además que esté abierta
+
+		//Comprobamos si la habilidad es grupal y si pertenece a la afición del jugador
+		if ( $habilidad != null && $habilidad['tipo'] == "grupal" ){
+			//La acción es grupal
+			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
+			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
+			$dineroUsuario = $recursosUsuario['dinero'];
+			$influenciasUsuario = $recursosUsuario['influencias'];
+			$animoUsuario = $recursosUsuario['animo'];
+
+			if( Yii::app()->request->isPostRequest ){
+				//Petición POST
+				$dineroAportado = Yii::app()->request->getPost('dinero');
+				$animoAportado = Yii::app()->request->getPost('animo');
+				$influenciasAportadas = Yii::app()->request->getPost('influencias');
+
+				if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
+					$trans->rollback();
+					Yii::app()->user->setFlash('error', 'Recursos insuficientes');
+					$this->refresh();
+				}
+				
+				try {
+					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
+					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
+					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
+					$recursosUsuario->save();
+
+					//TODO: Falta sumarle los recursos a la acción
+					
+					$transaccion->commit();
+					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
+					$this->redirect(array('acciones/index'));
+				} catch ( Exception $exc ) {
+					$transaccion->rollback();
+					throw $exc;
+				}
+			} else {
+				//Petición GET: Muestro el formulario
+				$transaccion->commit();
+				$this->render('participar', array('habilidad' => $habilidad));
+			}
+		} else {
+			$transaccion->rollback();
+			throw new CHttpException(404,'Accion no válida.');
+		}
 	}
 
 	/**

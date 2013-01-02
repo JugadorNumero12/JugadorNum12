@@ -51,7 +51,7 @@
 	  </tr>
 
 	  <tr>
-	   	<td colspan="2" align="left"><span>Personajes disponibles</span></td>
+	   	<td colspan="2" align="center"><span>Personajes disponibles</span></td>
 	  </tr>
 
 	  <tr>
@@ -67,25 +67,32 @@
 	  </tr>
 
 	  <tr>
-	   	<td colspan="2" align="left"><span>Equipos disponibles</span></td>
-	  </tr>
-
-	  <tr>
-	  	<td colspan="2" align="center">
-	  		<select name='ocup'>
-	  		<option>Elige un equipo</option>
+	   	<td align="left"><span>Equipos disponibles</span></td>
+	  	<td><select name='ocup'>
+	  		<option value=0 >Elige un equipo</option>
 	  		<?php foreach ( $equipos as $equipo ): ?>
-    				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
-			<?php endforeach; ?>
+	  			<?php if($seleccionado==$equipo['id_equipo']){ ?>
+	  				<option value= <?php echo $equipo['id_equipo']; ?> selected ><li><?php echo $equipo['nombre']; ?></li></option>
+	  			<?php }else{ ?>
+	  				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
+	  			<?php } ?>
+	  			
+    		<?php endforeach; ?>
 	  	</td></select>
 	  </tr>
 
-	  <tr><?php if($str!=0): ?>
+	  <tr><?php if($error): ?>
 	   	<td colspan="2" align="left"><span style="color:red">¡Debe escoger un personaje y un equipo!</span></td>
 	  <?php endif; ?></tr>
 
 	  <tr>
-	    <td colspan="2" align="center"><input type = "Submit" Name = "registro" VALUE = "REGISTRAR"></td>
+	    <td align="left"><input type = "submit" name = "registro" value = "REGISTRAR"></td>
+	    <td align="center"><input type = "reset" name = "reiniciar" value = "REINICIAR"></td>
+	    <td align="right">
+	    	<a href="<?php echo Yii::app()->createUrl('/site/login', array());?>">
+	    		<input type = "button" name = "cancelar" value = "CANCELAR">
+	    	</a>
+	    </td>
 	  </tr>
 
 	</table>

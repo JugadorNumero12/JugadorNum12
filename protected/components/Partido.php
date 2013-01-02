@@ -107,6 +107,16 @@ public class Partido
 	private void generaCronicaTurno()
 	{
 		/* MARCOS */
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$partido=Partidos::model()->findByPk($id_partido);
+			$partido['cronica'] += $cronica;
+			$partido->save();
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+			throw new Exception("Error al guardar la cronica", 1);
+		}
 	}
 
 	/*

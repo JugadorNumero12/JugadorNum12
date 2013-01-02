@@ -56,10 +56,10 @@ class Partidos extends CActiveRecord
 	{
 		/* SAM */
 		return array(
-			'turnos'=>array(self::HAS_ONE, 'Turnos', 'partidos_id_partido');
-			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'partidos_id_partido');
-			'local'=>array(self::BELONGS_TO, 'Local', 'equipos_id_equipo_1');
-			'visitante'=>array(self::BELONGS_TO, 'Visitante', 'equipos_id_equipo_2');
+			'turnos'=>array(self::HAS_ONE, 'Turnos', 'partidos_id_partido'),
+			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'partidos_id_partido'),
+			'local'=>array(self::BELONGS_TO, 'Local', 'equipos_id_equipo_1'),
+			'visitante'=>array(self::BELONGS_TO, 'Visitante', 'equipos_id_equipo_2'),
 			 );
 	}
 

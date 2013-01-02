@@ -62,8 +62,8 @@ class AccionesGrupales extends CActiveRecord
 		return array(
 			//relacion con tablas de la arquitectura (1ª iteración)
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
-			'habilidades'=>array(self::BELONGS_TO, 'Hablidad', 'habilidades_id_habilidad'),
-			'equipos'=>array(self::BELONGS_TO, 'Equipo', 'equipos_id_equipo'),
+			'habilidades'=>array(self::BELONGS_TO, 'Habilidades', 'habilidades_id_habilidad'),
+			'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
 			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'acciones_grupales_id_accion_grupal')
 		);
 	}
