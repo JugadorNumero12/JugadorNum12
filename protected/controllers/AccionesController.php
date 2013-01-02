@@ -294,7 +294,7 @@ class AccionesController extends Controller
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
 		/* MARCOS */
-		/*$owner=AccionesGrupales::model->findByPk($id_accion);
+		$owner=AccionesGrupales::model->findByPk($id_accion);
 		if($owner===null)
 			Yii::app()->user->setFlash('error', 'La accion no existe.');
 
@@ -317,7 +317,7 @@ class AccionesController extends Controller
 
 		//TODO pues eso, esta por hacer
 
-		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));*/
+		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
 	
 	/**
