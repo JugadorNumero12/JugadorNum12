@@ -69,20 +69,11 @@ class UsuariosController extends Controller
         $id= Yii::app()->user->usIdent;
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
 
-        //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
-
-        //Saco los datos de los recursos del usuario
-        $modeloRecursos = Recursos:: model()->findByAttributes(array('usuarios_id_usuario'=>$id));
-
         //Saca la lista de las acciones desbloqueadas por el usuario
         $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>$id));
         
         //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas
         $accionesPas = array();
-        //$accionDes = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
-
         foreach ($modeloDesbloqueadas as $desbloqueada){
             $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
             if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
@@ -91,8 +82,6 @@ class UsuariosController extends Controller
         }
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo,
-                                      'modeloR'=>$modeloRecursos,
                                       'accionesPas'=>$accionesPas) );
     }
 

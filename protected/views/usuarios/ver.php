@@ -26,13 +26,13 @@
 		<td align="center"><?php switch ($modeloU->personaje)
 								{
 								case 0:
-								  echo "Animadora" ;
+								  echo "Empresario" ;
 								  break;
 								case 1:
-								  echo "Empresario";
+								  echo "Ultra";
 								  break;
 								case 2:
-								  echo "Ultra";
+								  echo "Animadora";
 								  break;
 								} ?></td>
 		<td align="center"><?php echo $modeloU->nivel ?></td>

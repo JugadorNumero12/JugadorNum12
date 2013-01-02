@@ -55,6 +55,24 @@ class PartidosController extends Controller
 	public function actionPrevia($id_partido)
 	{
 		/* MARINA */
+		//Saco la informacion del partido
+		$modeloPartidos = Partidos:: model()->findByPk($id_partido);
+
+		//Saco la información de los equipos para mostrar el nombre en la vista
+		$modeloEquipoLocal = Equipos:: model()->findByPk($modeloPartidos->equipos_id_equipo_1);
+		$modeloEquipoVisitante = Equipos:: model()->findByPk($modeloPartidos->equipos_id_equipo_2);
+
+		//Saco la información de las acciones grupales previstas para el partido por el equipo local
+		$modeloGrupalesLocal = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_1));
+
+		//Saco la información de las acciones grupales previstas para el partido por el equipo visitante
+		$modeloGrupalesVisitante = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_2));
+
+		$this->render('previa',array('modeloP'=>$modeloPartidos,
+									 'modeloL'=>$modeloEquipoLocal,
+									 'modeloV'=>$modeloEquipoVisitante,
+									 'modeloGL'=>$modeloGrupalesLocal,
+									 'modeloGV'=>$modeloGrupalesVisitante));
 	}
 
 	/**
