@@ -113,14 +113,8 @@ class UsuariosController extends Controller
 
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
-
-        //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
        
-        $this->render('ver',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo));
-    
+        $this->render('ver',array('modeloU'=>$modeloUsuario));
     }
 
     /*

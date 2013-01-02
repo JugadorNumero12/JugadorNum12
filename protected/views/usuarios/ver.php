@@ -36,7 +36,7 @@
 								  break;
 								} ?></td>
 		<td align="center"><?php echo $modeloU->nivel ?></td>
-		<td align="center"><?php echo $modeloE->nombre ?></td>
+		<td align="center"><?php echo $modeloU->equipos->nombre ?></td>
 	</tr>
 	<tr></tr>
 </table>
