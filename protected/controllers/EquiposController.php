@@ -69,6 +69,13 @@ class EquiposController extends Controller
 		/* SAM */
 		// Nota: utilizar la info de los modelos <<equipos>> <<clasificacion>> <<acciones_grupales>>
 		// Nota: en comentarios "aficion" y "equipo" son sinonimos
+		$id= Yii::app()->user->usIdent;
+		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
+		$modeloClasificacion = Clasificacion::model()->findByPk($id_equipo);
+		$modeloAccionesGrupales = AccionesGrupales::model()->findByPk($id_equipo);
+		$this->render('ver', array('equipos'=>$modeloEquipos, 
+									'clasificacion'=>$modeloClasificacion,
+									 'grupales'=>$modeloAccionesGrupales));
 	}
 
 	/**
