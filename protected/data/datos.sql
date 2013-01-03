@@ -19,6 +19,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 
+-- TODO: COMPROBAR LIMITES DE RECURSOS EN PARTICIPACIONES
+ 
+
 -- ------------------------------------------------------------------------------------
 -- Vaciado de tablas
 --
@@ -28,7 +31,6 @@ SET time_zone = "+00:00";
 -- truncate <<tabla>>
 --  borra los n registros almacenados, el siguiente registro que guardemos sera el 1
 -- ------------------------------------------------------------------------------------
-
 
 
  -- -----------------------------------------------------
@@ -76,11 +78,11 @@ INSERT INTO `acciones_grupales` (`id_accion_grupal`, `usuarios_id_usuario`, `hab
  -- COMPLETADA: pedro, habilidad 1 (hab. de perfil empresario)
  (10, 5, 1, 2, 12, 60, 10000, 2, 50, 1);
 
--- POR HACER
+ -- POR HACER
 TRUNCATE `acciones_individuales`;
--- INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_usuario`, `cooldown`) VALUES
--- (3, 1, 0),
--- (2, 2, 0);
+ -- INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_usuario`, `cooldown`) VALUES
+ -- (3, 1, 0),
+ -- (2, 2, 0);
 
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`) VALUES
@@ -158,10 +160,54 @@ INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripc
  (13, 'RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"DESCRIPCION RETRANSMITIR RRSS"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
  (14, 'Ascender', 3, 'Ascender en el trabajo', '"DESCRIPCION ASCENDER"', 500, 3, 1, NULL, NULL, NULL, 1, NULL);
 
--- POR HACER
+ -- ----------------------------------------------------
+ -- Acciones grupales abiertas y completadas
+ -- ----------------------------------------------------
+ -- Rojos (jugadores 1, 3, 4, 8) 
+ -- 	1)  hab. 2 empresarial
+ --		2)  hab. 1 empresarial 	[COMPLETADA]
+ --     8)  hab. 4 ultra 		[COMPLETADA] 
+ -- 	9)  hab. 4 ultra
+ -- Verdes (jugadores 2, 5, 7, 9)
+ --		3)  hab. 4 ultra
+ --     4)  hab. 3 movedora
+ --     7)  hab. 5 movedora
+ -- 	10) hab. 1 empresarial 	[COMPLETADA]
+ -- Negros (jugadores 6, 10)
+ -- 	5)  hab. 3 movedora 	[COMPLETADA]
+ --     6)  hab. 4 ultra
+ -- -----------------------------------------------------
+ -- Coste de las habilidades
+ -- -----------------------------------------------------
+ -- empresariales:  10000 dinero; 12 influencias; 60 animo 
+ -- ultras: 		4000 dinero;  1 influencias; 600 animo
+ -- movedora: 		1200 dinero; 24 influencias; 300 animo 
+ -- ------------------------------------------------------
 TRUNCATE `participaciones`;
--- INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_id_usuario`, `dinero_aportado`, `influencias_aportadas`, `animo_aportado`) VALUES
--- ();
+INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_id_usuario`, `dinero_aportado`, `influencias_aportadas`, `animo_aportado`) VALUES
+ (10, 2, 4000, 5, 45),
+ (1, 4, 1000, 2, 10),
+ (2, 8, 6000, 2, 0),
+ (1, 1, 4000, 0, 10),
+ (6, 10, 500, 1, 1),
+ (2, 3, 4000, 2, 0),
+ (8, 8, 0, 1, 600),
+ (9, 3, 500, 0, 100),
+ (5, 10, 200, 4, 50),
+ (3, 2, 500, 1, 200),
+ (9, 8, 1000, 1, 100),
+ (1, 3, 0, 4, 10),
+ (3, 5, 1000, 0, 100),
+ (9, 4, 500, 0, 0),
+ (5, 6, 1000, 20, 250),
+ (3, 7, 500, 0, 0), 
+ (4, 9, 300, 8, 0),
+ (8, 1, 4000, 0, 0),
+ (4, 2, 300, 4, 150),
+ (7, 7, 200, 4, 50),
+ (7, 9, 200, 4, 50),
+ (10, 9, 6000, 7, 15),
+ (7, 5, 200, 4, 50);
 
 TRUNCATE `partidos`;
 INSERT INTO `partidos` (`id_partido`, `equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`) VALUES
