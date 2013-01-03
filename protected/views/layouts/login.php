@@ -24,7 +24,7 @@
 		<!-- MODIFICAR CORRECTAMENTE -->
 		<p>Jugador n&uacute;mero 12 es un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
       Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</p>
-		<a href="#">REGISTRATE YA</a>
+		<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>">REGISTRATE YA</a>
 
     </div>
 

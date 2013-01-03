@@ -64,6 +64,25 @@ class UsuariosController extends Controller
     {
         /* MARINA */
         /* Nota: la vista tendra variables */
+        
+        //Busco el id del usuario actual y saco los datos el usuario
+        $id= Yii::app()->user->usIdent;
+        $modeloUsuario = Usuarios:: model()->findByPk($id); 
+
+        //Saca la lista de las acciones desbloqueadas por el usuario
+        $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>$id));
+        
+        //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas
+        $accionesPas = array();
+        foreach ($modeloDesbloqueadas as $desbloqueada){
+            $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
+            if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
+                $accionesPas[] = $infoDesbloqueada[0]['nombre'];
+            }
+        }
+
+        $this->render('perfil',array('modeloU'=>$modeloUsuario,
+                                      'accionesPas'=>$accionesPas) );
     }
 
     /*
@@ -79,7 +98,12 @@ class UsuariosController extends Controller
     public function actionVer($id_usuario)
     {
         /* MARINA */ 
-        // Nota: la vista tendra variables 
+        // Nota: la vista tendra variables
+
+         //Saco los datos el usuario pedido
+        $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
+       
+        $this->render('ver',array('modeloU'=>$modeloUsuario));
     }
 
     /*
@@ -94,6 +118,9 @@ class UsuariosController extends Controller
     public function actionCuenta()
     {
         /* ALEX */
+        $id= Yii::app()->user->usIdent;
+        $modelo = Usuarios:: model()->findByPk($id);
+        $this->render('cuenta',array('modelo'=>$modelo));
     }
 
     /*
@@ -168,9 +195,9 @@ class UsuariosController extends Controller
                    $trans->commit();
                    $this->redirect(array('usuarios/cuenta'));
                 }else
-                    {
-                        $trans->commit(); 
-                    }               
+                {
+                    $trans->commit(); 
+                }               
             }
         }catch (Exception $e)
                 {

@@ -56,10 +56,11 @@ class AccionesTurno extends CActiveRecord
 	{
 		/* MARCOS */
 		return array(
+			//relacion con tablas de la arquitectura (1ª iteración)
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
-			'habilidad'=>array(self::BELONGS_TO, 'Hablidad', 'habilidades_id_habilidad'),
-			'partidos_id_partido'=>array(self::BELONG_TO, 'Partido', 'partidos_id_partido'),
-			'equipo'=>array(self::BELONGS_TO, 'Equipo', 'equipos_id_equipo')
+			'habilidades'=>array(self::BELONGS_TO, 'Hablidad', 'habilidades_id_habilidad'),
+			'partidos'=>array(self::BELONG_TO, 'Partido', 'partidos_id_partido'),
+			'equipos'=>array(self::BELONGS_TO, 'Equipo', 'equipos_id_equipo')
 		);
 	}
 

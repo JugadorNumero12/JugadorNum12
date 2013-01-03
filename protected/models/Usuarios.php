@@ -20,6 +20,7 @@ class Usuarios extends CActiveRecord
 	public $antigua_email;
 	public $nueva_email1;
 	public $nueva_email2;
+	public $nuevo_nick;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -63,6 +64,12 @@ class Usuarios extends CActiveRecord
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
 			array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
 			array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
+			/*Validaciones para registrar usuario*/
+			array('nueva_email1','comprobarEmail','on'=>'registro'),
+			array('nuevo_nick','comprobarNick','on'=>'registro'),
+			array('nuevo_nick,nueva_email1,nueva_clave1,nueva_clave2','required','on'=>'registro','message'=>'Tienes que rellenar estos campos'),
+			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
+			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_usuario, equipos_id_equipo, nick, pass, email, personaje, nivel', 'safe', 'on'=>'search'),
@@ -95,6 +102,16 @@ class Usuarios extends CActiveRecord
 	    }
 	}
 
+	/*Comprobar que el nombre sea único*/
+	public function comprobarNick($nuevo_nick)
+	{
+	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->$nuevo_nick));
+
+	    if($registro <> null){
+	        $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
+	    }
+	}
+
 	/**
 	 * Define las relaciones entre <usuarios - tabla>
 	 *
@@ -110,6 +127,8 @@ class Usuarios extends CActiveRecord
             'accionesIndividuales'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<desbloqueadas>> */
 			'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<habilidades>>*/
+			'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
 			/*Relacion entre <<usuarios>> y <<acciones_turno>> */
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<equipos>> */

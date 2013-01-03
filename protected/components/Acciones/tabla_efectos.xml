@@ -1,0 +1,76 @@
+<Acciones>
+ 
+ <!-- Grupales -->
+	<FinanciarEvento>
+		<aforo> 0.03 </aforo>
+		<ambiente> 2 </ambiente>
+	</FinanciarEvento>
+ 	
+ 	<IncentivoEconomico>
+ 		<nivel_equipo> 8 </nivel_equipo>
+ 		<bonus_creador>
+ 			<influencias> 2 </influencias>
+ 		</bonus_creador>
+ 	</IncentivoEconomico>
+
+ 	<OrganizarHomenaje>
+ 		<aforo> 0.05 </aforo>
+ 		<bonus_creador>
+ 			<influencias_max> 1 </influencias_max>
+ 		</bonus_creador>
+ 	</OrganizarHomenaje>
+
+ 	<Pintarse>
+ 		<ambiente> 1 </ambiente>
+ 		<animo> 30 </animo>
+ 		<bonus_creador> 
+ 			<animo> 15 </animo>
+ 		</bonus_creador>
+ 	</Pintarse>
+
+ 	<PromoverPartido>
+ 		<ambiente> 4 </ambiente>
+ 		<aforo> 0.06 </aforo>
+ 	</PromoverPartido>
+
+ <!-- Individuales -->
+	<Apostar>
+		<dinero> 600 </dinero>
+	</Apostar>
+
+	<CrearseEspectativas>
+		<animo> 0.15 </animo>
+	</CrearseEspectativas>
+
+	<ContratarRRPP>
+		<bonus_especial> 1 </bonus_especial>
+	</ContratarRRPP>
+
+ <!-- Partido -->
+ 	<BeberCerveza>
+ 		<animo> 25 </animo>
+ 	</BeberCerveza>
+
+ 	<HablarSpeaker>
+ 		<moral> 20 </moral>
+ 		<ofensivo> 5 </ofensivo>
+ 	</HablarSpeaker>
+
+ 	<IniciarOla>
+ 		<moral> 29 </moral>
+ 	</IniciarOla>
+
+ 	<PunteroLaser>
+ 		<defensivo> 35 </defensivo>
+ 	</PunteroLaser>
+
+ 	<RetransmitirRRSS>
+ 		<defensivo> 3 </defensivo>
+ 		<animo> 12 </animo>
+ 	</RetransmitirRRSS>
+
+ <!-- Pasivas -->
+ 	<Ascender>
+		<dinero_gen> 0.12 </dinero_gen>
+	</Ascender>
+</Acciones>
