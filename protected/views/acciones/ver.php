@@ -12,6 +12,10 @@
 
 <p> <b>USUARIO QUE HA CREADO LA ACCION => </b>
 		<?php echo $accionGrupal['usuarios_id_usuario']; ?>
+		&nbsp;
+		<?php if($propietarioAccion == $usuario){
+			echo "(Eres el creador de esta accion)";
+		} ?>
 </p>
 
 <p> <b>NUMERO DE PARTICIPANTES => </b>
@@ -19,11 +23,11 @@
 </p>
 
 <p> <b>TOTAL DE RECURSOS AÑADIDOS => </b>
-		<?php printf('Dinero:%d', $accionGrupal['dinero_acc']); ?>
+		<?php printf('Dinero: %d / %d', $accionGrupal['dinero_acc'], $habilidad['dinero_max']); ?>
 		&nbsp;
-		<?php printf('Influencias:%d', $accionGrupal['influencias_acc']); ?>
+		<?php printf('Influencias: %d / %d', $accionGrupal['influencias_acc'], $habilidad['influencias_max']); ?>
 		&nbsp;
-		<?php printf('Animo:%d', $accionGrupal['animo_acc']); ?>
+		<?php printf('Animo: %d / %d', $accionGrupal['animo_acc'], $habilidad['animo_max']); ?>
 </p>
 
 <p> <b>EFECTO QUE SE CONSIGUE => </b>
@@ -37,11 +41,11 @@
 		foreach ($participaciones as $participacion){
 			printf('Usuario:%d', $participacion['usuarios_id_usuario']); ?>
 			&nbsp;
-			<?php printf('Dinero aportado: %d', $participacion['dinero_aportado']); ?>
+			<?php printf('Dinero aportado: %d / %d', $participacion['dinero_aportado'], $habilidad['dinero_max']); ?>
 			&nbsp;
-			<?php printf('Influencias aportadas: %d', $participacion['influencias_aportadas']); ?>
+			<?php printf('Influencias aportadas: %d / %d', $participacion['influencias_aportadas'], $habilidad['influencias_max']); ?>
 			&nbsp;
-			<?php printf('Animo aportado: %d', $participacion['animo_aportado']);
+			<?php printf('Animo aportado: %d / %d', $participacion['animo_aportado'], $habilidad['animo_max']);
 		} ?>
 </p> </li>
 
@@ -50,9 +54,19 @@
 </p>
 
 <p>
-<?php 
-if ($usuario == $propietarioAccion){ ?>
-	<a href="<?php /*echo $this->createUrl(Aquí falta poner el enlace a la acción de expulsar jugadores);*/ ?>"> 
-	<input type="button" value="Expulsar jugadores"/> </a>
+<?php if ($participante == true){
+	//El usuario ha participado en la accion o es el creador
+	if ($propietarioAccion == $usuario){ ?>
+		<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
+		<!-- <a href="<?php echo $this->createUrl('acciones/expulsar', array('id_accion'=>$accionGrupal['id_accion_grupal'], 'id_jugador'=>$propietarioAccion)); ?>"> -->
+		<input type="button" value="Expulsar jugadores"/> <!-- </a> -->
+	<?php } else {
+		//El usuario no es el propietario de la accíón y ya ha participado, con lo cual no puede participar
+		echo "Ya has participado en la accion";
+	}
+} else { ?>
+	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
+	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
+	<input type="button" value="Participar"/> </a>
 <?php } ?>
 </p>
