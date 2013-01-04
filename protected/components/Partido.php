@@ -112,12 +112,17 @@ public class Partido
 
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			//consultar en accionesturno con la id de partido y el turno, las acciones realizadas
+			//consultar las acciones guardadas para este turno
 			$acciones = AccionesTurno::model()->findAllByAtributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			
+			//abrir la tabla del turno para guardar los resultados
 			$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			
+			//para cada accion ejecutada
 			foreach ($acciones as $acc) {
 				$id_habilidad = $acc('habilidades_id_habilidad')
-				
+
+				//busco el código (nombre de la habilidad)
 				$cod = Habilidades::model()->findByPk($id_habilidad);
 				if($cod == null){
 					$log=fopen("runtime/application.log","a");
@@ -126,6 +131,7 @@ public class Partido
 					break;//si la habilidad no existe me la salto.
 				}
 
+				//guardo en accLocal si la han ejecutado los locales o los visitantes
 				$id_equipo = $acc('equipos_id_equipo')
 				if($id_equipo == $id_local) $accLocal = true;
 				elseif($id_equipo == $id_visitante) $accLocal = false;
@@ -136,13 +142,13 @@ public class Partido
 					break;//si se ha colado una acción de un equipo que no participa la salto.
 				}
 
+				//busco los artibutos del equipo correspondiente
 				$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
 
-				//consultar el efecto de las acciones en components/Acciones/tabla_efectos.php::datos_acciones
-
+				//compruebo las keys de datos_acciones y actualizo las que corresponden a mis atributos
 				foreach (array_keys($datos_acciones['cod']) as $atributo) 
 					if( array_key_exists($atributo, $lista_de_equipo) ){
-						//sumo porque no se que operador se aplica (no viene en ningun sitio)
+						//sumo porque no se que operador se aplica
 						$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
 					
 						//actualizar la tabla
@@ -150,8 +156,7 @@ public class Partido
 					}
 
 			}
-			//Partido['turno']=++$turno;
-
+			//salvo los cambios de todas las acciones
 			$tablaTurno->save();
 
 			$trans->commit();
