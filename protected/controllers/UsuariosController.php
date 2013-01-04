@@ -148,7 +148,7 @@ class UsuariosController extends Controller
             //Si es valido, se guarda y redirecciono a su cuenta
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
-            {
+            { 
                 $this->redirect(array('usuarios/cuenta'));
             }
            

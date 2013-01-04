@@ -67,16 +67,22 @@ class EquiposController extends Controller
 	public function actionVer($id_equipo)
 	{
 		/* SAM */
-		// Nota: utilizar la info de los modelos <<equipos>> <<clasificacion>> <<acciones_grupales>>
+		// Nota: utilizar la info de los modelos <<equipos>> y <<acciones_grupales>>
 		// Nota: en comentarios "aficion" y "equipo" son sinonimos
 		$id= Yii::app()->user->usIdent;
 		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
-		$modeloClasificacion = Clasificacion::model()->findByPk($id_equipo);
-		$modeloAccionesGrupales = AccionesGrupales::model()->findByPk($id_equipo);
+		//Sacar lista de acciones grupales del equipo
+		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+
+		$mi_equipo = false;
+		$modeloUsuario = Usuarios:: model()->findByPk($id);
+		if($modeloUsuario->equipos_id_equipo == $id_equipo)
+			$mi_equipo = true;
+
 		//Enviar datos a la vista
 		$this->render('ver', array('equipos'=>$modeloEquipos, 
-									'clasificacion'=>$modeloClasificacion,
-									 'grupales'=>$modeloAccionesGrupales));
+									 'grupales'=>$accionesGrupales,
+									 'mi_equipo'=>$mi_equipo));
 	}
 
 	/**
@@ -92,6 +98,23 @@ class EquiposController extends Controller
 	public function actionCambiar($id_nuevo_equipo)
 	{
 		/* SAM */
+		//No hace falta modificar la tabla <<equipos>>
+		$id = Yii::app()->user->usIdent;
+		$id_equipo = Yii::app()->user->usAfic;
+		$modeloUsuario = Usuarios::model()->findByPk($id);
+
+		//Comienza la transaccion
+		$transaction = Yii::app()->db->beginTransaction();
+		try {
+			if(!($modeloUsuario->setAttribute('equipos_id_equipo',$id_nuevo_equipo)))
+				throw new Exception("Error Processing Request", 1);
+			//Transaccion completada
+			$transaction->commit();
+		} catch (Exception $e) {
+			//Ocurre un error. Se anula la transaccion
+			$transaction->rollBack();
+		}
+		$this->redirect(array('equipos/ver/$id_equipo_nuevo'));
 	}
 
 	/**
