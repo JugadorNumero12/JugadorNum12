@@ -23,11 +23,11 @@
 </p>
 
 <p> <b>TOTAL DE RECURSOS AÑADIDOS => </b>
-		<?php printf('Dinero: %d / %d', $accionGrupal['dinero_acc'], $habilidad['dinero_max']); ?>
+		<?php printf('<b>Dinero:</b> %d / %d', $accionGrupal['dinero_acc'], $habilidad['dinero_max']); ?>
 		&nbsp;
-		<?php printf('Influencias: %d / %d', $accionGrupal['influencias_acc'], $habilidad['influencias_max']); ?>
+		<?php printf('<b>Influencias:</b> %d / %d', $accionGrupal['influencias_acc'], $habilidad['influencias_max']); ?>
 		&nbsp;
-		<?php printf('Animo: %d / %d', $accionGrupal['animo_acc'], $habilidad['animo_max']); ?>
+		<?php printf('<b>Animo:</b> %d / %d', $accionGrupal['animo_acc'], $habilidad['animo_max']); ?>
 </p>
 
 <p> <b>EFECTO QUE SE CONSIGUE => </b>
@@ -36,18 +36,19 @@
 
 <p> <b>PARTICIPANTES Y RECURSOS AÑADIDOS POR CADA UNO </b> </p>
 
-<p> <li>
-	<?php 
-		foreach ($participaciones as $participacion){
-			printf('Usuario:%d', $participacion['usuarios_id_usuario']); ?>
-			&nbsp;
-			<?php printf('Dinero aportado: %d / %d', $participacion['dinero_aportado'], $habilidad['dinero_max']); ?>
-			&nbsp;
-			<?php printf('Influencias aportadas: %d / %d', $participacion['influencias_aportadas'], $habilidad['influencias_max']); ?>
-			&nbsp;
-			<?php printf('Animo aportado: %d / %d', $participacion['animo_aportado'], $habilidad['animo_max']);
-		} ?>
-</p> </li>
+<p> 
+<?php foreach ($participaciones as $participacion){ ?>
+	<li>
+		<?php printf('<b>Usuario:</b> %d', $participacion['usuarios_id_usuario']); ?>
+		&nbsp;
+		<?php printf('<b>Dinero aportado:</b> %d / %d', $participacion['dinero_aportado'], $habilidad['dinero_max']); ?>
+		&nbsp;
+		<?php printf('<b>Influencias aportadas:</b> %d / %d', $participacion['influencias_aportadas'], $habilidad['influencias_max']); ?>
+		&nbsp;
+		<?php printf('<b>Animo aportado:</b> %d / %d', $participacion['animo_aportado'], $habilidad['animo_max']); ?>
+	</li>
+<?php } ?>
+</p>
 
 <p> <b>FINALIZACION DE LA ACCION => </b>
 	<?php echo $accionGrupal['finalizacion']; ?>
