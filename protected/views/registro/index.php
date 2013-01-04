@@ -1,5 +1,15 @@
 <?php
 /* @var $this RegistroController */
+/* @var $modelo LoginForm */
+/* @var $form CActiveForm  */
+/* @var $animadora (radio checked/unchecked)*/
+/* @var $empresario (radio checked/unchecked)*/
+/* @var $ultra (radio checked/unchecked) */
+/* @var $error (personaje checked && equipo selected)*/
+/* @var $seleccionado (equipo selected)*/
+/* @var $equipos (array con los equipos de la DB) */
+
+
 ?>
 
 

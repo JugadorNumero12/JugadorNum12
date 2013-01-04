@@ -1,5 +1,7 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
+/* @var $this UsuariosController */
+/* @var $model LoginForm */
+/* @var $form CActiveForm */
 ?>
 <table cellspacing="5px">
 	<tr></tr>
