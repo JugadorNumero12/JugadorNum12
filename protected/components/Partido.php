@@ -112,53 +112,55 @@ public class Partido
 
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-		//consultar en accionesturno con la id de partido y el turno, las acciones realizadas
-		$acciones = AccionesTurno::model()->findAllByAtributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
-		$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
-		foreach ($acciones as $acc) {
-			$id_habilidad = $acc('habilidades_id_habilidad')
-			$cod = Habilidades::model()->findByPk($id_habilidad);
-			if($cod == null){
-				$log=fopen("runtime/application.log","a");
-				fwrite($log, "Run time error: Habilidades::codigo of habilidad ".$id_habilidad." not found. [turno ".$turno."| partido ".$id_partido."]\n");
-				fclose($log);
-				break;//si la habilidad no existe me la salto.
-			}
-			$id_equipo = $acc('equipos_id_equipo')
-			switch ($id_equipo) {
-				case $id_local:
-					$accLocal = true;
-					break;
-				case $id_visitante:
-					$accLocal = false;
-					break;
-			}
-			if(!isset($accLocal)){
-				$log=fopen("runtime/application.log","a");
-				fwrite($log, "Run time error: encontrada una accion del equipo ".$id_equipo.". [turno ".$turno."| partido ".$id_partido."]\n");
-				fclose($log);
-				break;//si se ha colado una acción de un equipo que no participa la salto.
-			}
-
-			$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
-
-			//consultar el efecto de las acciones en components/Acciones/tabla_efectos.php::datos_acciones
-
-			foreach (array_keys($datos_acciones['cod']) as $atributo) 
-				if( array_key_exists($atributo, $lista_de_equipo) ){
-					//sumo porque no se que operador se aplica (no viene en ningun sitio)
-					$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
-					
-					//actualizar la tabla
-					$tablaTurno[$atributo.($accLocal?'_local':'_visistante')] = $lista_de_equipo[$atributo];
+			//consultar en accionesturno con la id de partido y el turno, las acciones realizadas
+			$acciones = AccionesTurno::model()->findAllByAtributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			foreach ($acciones as $acc) {
+				$id_habilidad = $acc('habilidades_id_habilidad')
+				$cod = Habilidades::model()->findByPk($id_habilidad);
+				if($cod == null){
+					$log=fopen("runtime/application.log","a");
+					fwrite($log, "Run time error: Habilidades::codigo of habilidad ".$id_habilidad." not found. [turno ".$turno."| partido ".$id_partido."]\n");
+					fclose($log);
+					break;//si la habilidad no existe me la salto.
+				}
+				$id_equipo = $acc('equipos_id_equipo')
+				switch ($id_equipo) {
+					case $id_local:
+						$accLocal = true;
+						break;
+					case $id_visitante:
+						$accLocal = false;
+						break;
+					default:
+						$accLocal = null;
+				}
+				if(!isset($accLocal)){
+					$log=fopen("runtime/application.log","a");
+					fwrite($log, "Run time error: encontrada una accion del equipo ".$id_equipo.". [turno ".$turno."| partido ".$id_partido."]\n");
+					fclose($log);
+					break;//si se ha colado una acción de un equipo que no participa la salto.
 				}
 
-		}
-		//Partido['turno']=++$turno;
+				$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
 
-		$tablaTurno->save();
+				//consultar el efecto de las acciones en components/Acciones/tabla_efectos.php::datos_acciones
 
-		$trans->commit();
+				foreach (array_keys($datos_acciones['cod']) as $atributo) 
+					if( array_key_exists($atributo, $lista_de_equipo) ){
+						//sumo porque no se que operador se aplica (no viene en ningun sitio)
+						$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
+					
+						//actualizar la tabla
+						$tablaTurno[$atributo.($accLocal?'_local':'_visistante')] = $lista_de_equipo[$atributo];
+					}
+
+			}
+			//Partido['turno']=++$turno;
+
+			$tablaTurno->save();
+
+			$trans->commit();
 
 		}catch(Exception $exc) {
     		$trans->rollback();
