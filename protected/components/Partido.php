@@ -86,6 +86,10 @@ public class Partido
 	private void recogeAccionesTurno()
 	{
 		/* MARCOS */
+
+		//consultar en accionesturno con la id de partido y el turno, las acciones realizadas
+		//consultar el efecto de las acciones en components/Acciones/tabla_efectos.php
+		//actualizar los artibutos de Partido, y la tabla partido
 	}
 	
 	/*
