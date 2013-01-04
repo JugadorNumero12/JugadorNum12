@@ -16,6 +16,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
+-- --------------
+-- boolean values
+-- --------------
+-- 0 false
+-- 1 true
+-- --------------
+
 --
 -- Base de datos: `juego`
 --
@@ -37,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `acciones_grupales` (
   `dinero_acc` int(10) unsigned NOT NULL,
   `jugadores_acc` int(10) unsigned NOT NULL,
   `finalizacion` int(11) unsigned NOT NULL,
+  `completada` tinyint(1) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_accion_grupal`),
   KEY `acciones_grupales_FKIndex1` (`equipos_id_equipo`),
   KEY `acciones_grupales_FKIndex3` (`habilidades_id_habilidad`),

@@ -13,7 +13,18 @@ public class Apostar extends AccionSingleton
   /* Aplicar el efecto de la accion */
   public function ejecutar($id_accion)
   {
-  	/* VACIO */
+  	/*ROBER */ 
+      $trans=Yii::app()->db->beginTransaction();
+      try
+      {
+        //Aumentar el factor de partido "moral"
+        
+        $trans->commit();
+      }
+      catch (Exception $e)
+      {
+        $trans->rollBack();
+      }       
   }
 
   /* Accion de partido: metodo vacio */

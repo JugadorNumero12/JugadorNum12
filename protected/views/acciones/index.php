@@ -5,24 +5,25 @@
 
 <h1>Acciones del usuario</h1>
 
-<?php foreach ( $acciones as $accion ){ ?>
+<?php 
+foreach ( $acciones as $accion ){ ?>
 	<li>
 	<!-- Comprobamos si el usuario puede realizar la acción o no puede por falta de recursos -->
-	<?php if ($recursosUsuario[0]['dinero'] > $accion[0]['dinero'] &&
-				$recursosUsuario[0]['animo'] > $accion[0]['animo'] &&
-				$recursosUsuario[0]['influencias'] > $accion[0]['influencias']
+	<?php if ($recursosUsuario['dinero'] > $accion['dinero'] &&
+				$recursosUsuario['animo'] > $accion['animo'] &&
+				$recursosUsuario['influencias'] > $accion['influencias']
 				 ) { ?>
 		<!-- Si tiene recursos suficientes se enlaza para poder usar la acción -->
-		<a href="<?php echo $this->createUrl('acciones/usar', array('id_accion' => $accion[0]['id_habilidad']));?>">
-    	<?php echo $accion[0]['nombre'];?>
+		<a href="<?php echo $this->createUrl('acciones/usar', array('id_accion' => $accion['id_habilidad']));?>">
+    	<?php echo $accion['nombre'];?>
     	</a>
     <?php } else {
     	//Si no puede por falta de recursos, se muestra la acción sin enlace
-    	echo $accion[0]['nombre'];
+    	echo $accion['nombre'];
     }
-    printf('(D:%d, A:%d, I:%d)', $accion[0]['dinero'], $accion[0]['animo'], $accion[0]['influencias']); ?>
+    printf('(D:%d, A:%d, I:%d)', $accion['dinero'], $accion['animo'], $accion['influencias']); ?>
     <!-- Enlace para poder ver la habilidad con mas detalle en /habilidades/ver/{id_habilidad} -->
-    <a href="<?php echo $this->createUrl('habilidades/ver', array('id_habilidad' => $accion[0]['id_habilidad']));?>">
-    <?php echo "Ver habilidad"?> </a>
+    <a href="<?php echo $this->createUrl('habilidades/ver', array('id_habilidad' => $accion['id_habilidad']));?>">
+    <input type="button" value="Ver habilidad"/> </a>
     </li>
 <?php } ?>
