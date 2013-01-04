@@ -107,4 +107,31 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+	public function actionFormula()
+	{
+
+?>
+<table>
+	<tr>
+		<th>La F&oacute;rmula</th>
+<?php for ( $i = -10; $i <= 10; $i++ ): ?>
+		<th><?php echo $i ?></th>
+<?php endfor ?>
+	</tr>
+<?php for ( $i = -10; $i <= 10; $i++ ):
+	$probs = Formula::probabilidades($i);
+?>
+	<tr>
+		<td><?php echo $i ?></td>
+<?php 	for ( $j = -10; $j <= 10; $j++ ):?>
+		<td style="background-color:rgb(<?php echo (int) ((1-$probs[$j])*255) ?>,255,255)">
+			<?php echo $probs[$j] ?>
+		</td>
+<?php 	endfor ?>
+	</tr>
+<?php endfor ?>
+</table>
+<?php
+	}
 }
