@@ -110,7 +110,6 @@ class SiteController extends Controller
 
 	public function actionFormula()
 	{
-
 ?>
 <table>
 	<tr>
@@ -125,8 +124,8 @@ class SiteController extends Controller
 	<tr>
 		<td><?php echo $i ?></td>
 <?php 	for ( $j = -10; $j <= 10; $j++ ):?>
-		<td style="background-color:rgb(<?php echo (int) ((1-$probs[$j])*255) ?>,255,255)">
-			<?php echo $probs[$j] ?>
+		<td style="background-color: rgb(255,<?php echo (int) ((1-$probs[$j])*255) ?>,<?php echo (int) ((1-$probs[$j])*255) ?>)">
+			<?php echo (int)($probs[$j]*1000) / 1000 ?>
 		</td>
 <?php 	endfor ?>
 	</tr>
