@@ -107,9 +107,6 @@ public class Partido
 	private void recogeAccionesTurno()
 	{
 		/* MARCOS */
-
-		//No tengo id_accion, no puedo ejecutarla con su metodo
-
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			//consultar las acciones guardadas para este turno
