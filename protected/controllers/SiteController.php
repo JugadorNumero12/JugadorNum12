@@ -118,14 +118,15 @@ class SiteController extends Controller
 		<th><?php echo $i ?></th>
 <?php endfor ?>
 	</tr>
-<?php for ( $i = -10; $i <= 10; $i++ ):
-	$probs = Formula::probabilidades($i);
+<?php for ( $i = -9; $i <= 9; $i++ ):
+	$f = new Formula(0,0,0,0,0,0,0,0,0,0);
+	$probs = $f->probabilidades($i);
 ?>
 	<tr>
 		<td><?php echo $i ?></td>
 <?php 	for ( $j = -10; $j <= 10; $j++ ):?>
 		<td style="background-color: rgb(255,<?php echo (int) ((1-$probs[$j])*255) ?>,<?php echo (int) ((1-$probs[$j])*255) ?>)">
-			<?php echo (int)($probs[$j]*1000) / 1000 ?>
+			<?php echo (int)($probs[$j]*100) ?>
 		</td>
 <?php 	endfor ?>
 	</tr>
