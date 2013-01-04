@@ -1,5 +1,6 @@
 assets/
 protected/runtime/
+protected/data/participaciones.sql
 themes/classic/views/
 *.sublime-project
 *.sublime-workspace
