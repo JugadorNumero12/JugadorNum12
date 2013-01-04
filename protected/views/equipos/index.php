@@ -1,6 +1,5 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+/* @var modeloC */
 
 // codigo PHP
 
@@ -19,8 +18,7 @@
 	</tr> 
 	<?php foreach ($modeloC as $m ) { ?>
 	<tr>
-		<td align="center"><?php $modeloEquipo = Equipos:: model()->findByPk($m->equipos_id_equipo);
-								 echo $modeloEquipo['nombre']?></td>
+		<td align="center"><?php echo $m->equipos->nombre?></td>
 		<td align="center"><?php echo $m->posicion ?></td>
 		<td align="center"><?php echo $m->puntos ?></td>
 		<td align="center"><?php echo $m->ganados ?></td>
