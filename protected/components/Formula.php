@@ -1,6 +1,6 @@
 <?php
 
-public class Formula
+class Formula
 {
 	private $estado;
  	private	$dif_niveles;
@@ -14,7 +14,7 @@ public class Formula
 	private $defensivo_visitante;
 
 	/** Constructora */
-	public Formula ( $estado, $dif_niveles, $aforo_local ,$aforo_visitante,
+	public function __construct ( $estado, $dif_niveles, $aforo_local ,$aforo_visitante,
 					 $moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
 					 $defensivo_local ,$defensivo_visitante )
 	{
@@ -29,11 +29,25 @@ public class Formula
 		$this->$defensivo_local  = $defensivo_local;
 		$this->$defensivo_visitante = $defensivo_visitante;
 	}
+
+	public static function gauss ( $x, $avg, $stdev ) {
+		return $x/10;
+	}
+
+	public static function probabilidades ( $actual ) {
+		$probs = array();
+		for ( $i=-10; $i<=10; $i++ ) {
+			$probs[$i] = self::gauss( $i, $actual, 1 );
+		}
+
+		return $probs;
+	}
 		
 	/** Formula del juego */
-	public int siguiente_estado()
+	public function siguiente_estado()
 	{
 		/* DANI & PEDRO */
-		// No quiero ver una linea de codigo hasta que este probada en MatLab o simulador similar
+		
+
 	}
 }
