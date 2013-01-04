@@ -4,14 +4,14 @@ public class Formula
 {
 	private $estado;
  	private	$dif_niveles;
- 	private $aforo_local ;
+ 	private $aforo_local;
 	private $aforo_visitante;
-	private $moral_local ;
-	private $moral_visitante ;
-	private $ofensivo_local ;
+	private $moral_local;
+	private $moral_visitante;
+	private $ofensivo_local;
 	private $ofensivo_visitante;
-	private $defensivo_local ;
-	private $defensivo_visitante
+	private $defensivo_local;
+	private $defensivo_visitante;
 
 	/** Constructora */
 	public Formula ( $estado, $dif_niveles, $aforo_local ,$aforo_visitante,
