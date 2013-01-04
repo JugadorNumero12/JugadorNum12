@@ -117,6 +117,7 @@ public class Partido
 			$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
 			foreach ($acciones as $acc) {
 				$id_habilidad = $acc('habilidades_id_habilidad')
+				
 				$cod = Habilidades::model()->findByPk($id_habilidad);
 				if($cod == null){
 					$log=fopen("runtime/application.log","a");
@@ -124,18 +125,11 @@ public class Partido
 					fclose($log);
 					break;//si la habilidad no existe me la salto.
 				}
+
 				$id_equipo = $acc('equipos_id_equipo')
-				switch ($id_equipo) {
-					case $id_local:
-						$accLocal = true;
-						break;
-					case $id_visitante:
-						$accLocal = false;
-						break;
-					default:
-						$accLocal = null;
-				}
-				if(!isset($accLocal)){
+				if($id_equipo == $id_local) $accLocal = true;
+				elseif($id_equipo == $id_visitante) $accLocal = false;
+				else{
 					$log=fopen("runtime/application.log","a");
 					fwrite($log, "Run time error: encontrada una accion del equipo ".$id_equipo.". [turno ".$turno."| partido ".$id_partido."]\n");
 					fclose($log);
