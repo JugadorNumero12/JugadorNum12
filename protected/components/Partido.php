@@ -31,6 +31,7 @@ public class Partido
 	private $moral_local;
 	private $moral_visitante;
 
+	//atributo redundante añadido para hacer busquedas automaticas
 	private /*static*/ $lista_atributos = array(
 		'local' => /*static*/ array(
 			'id'=> $id_local,
