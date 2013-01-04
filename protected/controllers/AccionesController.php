@@ -317,12 +317,6 @@ class AccionesController extends Controller
 			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
-			echo '<script type="text/javascript"> '.
-			"jConfirm('Can you confirm this?', 'Confirmation Dialog', function(r) {"
-    			.'if(!r)window.location = "http://www.google.com/"
-			});';
-
-
 			//Se comprueba la coherencia de la petición
 			if($acc == null)
 				throw new CHttpException(404,'Acción inexistente.');
