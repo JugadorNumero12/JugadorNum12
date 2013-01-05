@@ -170,8 +170,7 @@ class UsuariosController extends Controller
             }
            
         }
-            $this->render('cambiarClave',array('model'=>$modelo));
-            
+            $this->render('cambiarClave',array('model'=>$modelo));            
     }
 
     /*
