@@ -39,6 +39,28 @@ class PartidosController extends Controller
 	public function actionIndex()
 	{
 		/* ARTURO */
+		//TODO Obtener fecha actual (min)
+		//TODO Sumarle la duracion de la jornada (max)
+		$min = 130;
+		$max = 160;
+
+		//Obtener el modelo de Partidos
+		//TODO poner la condicion a findAll (hora > min AND hora < max)
+		$modeloPartidos = Partidos::model()->findAll();
+
+		//Por cada partido obtener los equipos locales y visitantes
+		$equiposLocal = array();
+		$equiposVisit = array();
+		
+		foreach ($modeloPartidos as $partido){
+			$equiposLocal[] = Equipos::model()->findByPk($partido['equipos_id_equipo_1']);
+			$equiposVisit[] = Equipos::model()->findByPk($partido['equipos_id_equipo_2']);
+		}
+
+		//pasar los datos de cada partido a la vista index
+		$this->render('index',array('equiposL'=>$equiposLocal,
+									'equiposV'=>$equiposVisit
+									));
 	}
 
 	/** 

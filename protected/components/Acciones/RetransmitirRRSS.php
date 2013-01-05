@@ -15,6 +15,24 @@ public class RetransmitirRRSS extends AccionSingleton
 	public void ejecutar()
 	{
 		/* TODO */
+		 $trans=Yii::app()->db->beginTransaction();
+	    try
+	    {
+	    	$helper = new Helper();
+	      	//Aumentar el recurso animo del jugador
+	    	 $id = Yii::app()->user->usIdent;    		  
+     		 $columna = 'animo';
+     		 $cantidad = $datos_acciones['RetransmitirRRSS']['animo'];
+     		 $help->aumentar_recursos($id, $columna, $cantidad); 
+     		 
+	      	//Aumentar el factor de partido "defensivo"
+     		 
+	      	$trans->commit();
+	    }
+	    catch (Exception $e)
+	    {
+	      $trans->rollBack();
+	    }  
 	}
 
 	/* restarurar valores tras el partido */

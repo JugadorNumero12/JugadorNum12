@@ -24,6 +24,6 @@ foreach ( $acciones as $accion ){ ?>
     printf('(D:%d, A:%d, I:%d)', $accion['dinero'], $accion['animo'], $accion['influencias']); ?>
     <!-- Enlace para poder ver la habilidad con mas detalle en /habilidades/ver/{id_habilidad} -->
     <a href="<?php echo $this->createUrl('habilidades/ver', array('id_habilidad' => $accion['id_habilidad']));?>">
-    <?php echo "Ver habilidad"?> </a>
+    <input type="button" value="Ver habilidad"/> </a>
     </li>
 <?php } ?>
