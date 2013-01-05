@@ -201,9 +201,22 @@ class AccionesController extends Controller
 		//Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
+		//Compruebo si el usuario es participante de la acción o el creador de la accion
+		$participante = false;
+		if($propietarioAccion == $usuario){
+			$participante = true;
+		} else {
+			foreach($participaciones as $participacion){
+				if ($participacion['usuarios_id_usuario'] == $usuario){
+					$participante = true;
+				}
+			}
+		}
+
 		//Envío los datos a la vista
 		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
-					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones));
+					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones,
+					 'participante'=>$participante));
 	}
 
 	/**
@@ -229,12 +242,12 @@ class AccionesController extends Controller
 		//Saco el usuario que quiere participar en la acción y su equipo
 		$usuario = Yii::app()->user->usIdent;
 		$datosUsuario = Usuarios::model()->findByPK($usuario);
-		$equipoAficion = $datosUsuario['equipos_id_equipo'];
+		$equipoUsuario = $datosUsuario['equipos_id_equipo'];
 
 		//TODO: Falta comprobar que la acción sea del equipo del usuario y además que esté abierta
 
 		//Comprobamos si la habilidad es grupal y si pertenece a la afición del jugador
-		if ( $habilidad != null && $habilidad['tipo'] == "grupal" ){
+		if ( $habilidad != null ){
 			//La acción es grupal
 			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
 			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
@@ -249,7 +262,7 @@ class AccionesController extends Controller
 				$influenciasAportadas = Yii::app()->request->getPost('influencias');
 
 				if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
-					$trans->rollback();
+					$transaccion->rollback();
 					Yii::app()->user->setFlash('error', 'Recursos insuficientes');
 					$this->refresh();
 				}
@@ -258,13 +271,14 @@ class AccionesController extends Controller
 					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
 					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
 					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
-					$recursosUsuario->save();
-
+	
 					//TODO: Falta sumarle los recursos a la acción
+
+
+					$recursosUsuario->save();
 					
 					$transaccion->commit();
 					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
-					$this->redirect(array('acciones/index'));
 				} catch ( Exception $exc ) {
 					$transaccion->rollback();
 					throw $exc;
@@ -298,6 +312,7 @@ class AccionesController extends Controller
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
 		try{
+
 			$acc = AccionesGrupales::model()->findByPk($id_accion);
 			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
