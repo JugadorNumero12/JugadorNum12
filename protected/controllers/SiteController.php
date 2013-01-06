@@ -108,30 +108,33 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
+	/**
+	 * Esta acción debería desaparecer en producción
+	 */
 	public function actionFormula()
 	{
-?>
-<table>
-	<tr>
-		<th>La F&oacute;rmula</th>
-<?php for ( $i = -10; $i <= 10; $i++ ): ?>
-		<th><?php echo $i ?></th>
-<?php endfor ?>
-	</tr>
-<?php for ( $i = -9; $i <= 9; $i++ ):
-	$f = new Formula(0,0,0,0,0,0,0,0,0,0);
-	$probs = $f->probabilidades($i);
-?>
-	<tr>
-		<td><?php echo $i ?></td>
-<?php 	for ( $j = -10; $j <= 10; $j++ ):?>
-		<td style="background-color: rgb(255,<?php echo (int) ((1-$probs[$j])*255) ?>,<?php echo (int) ((1-$probs[$j])*255) ?>)">
-			<?php echo (int)($probs[$j]*100) ?>
-		</td>
-<?php 	endfor ?>
-	</tr>
-<?php endfor ?>
-</table>
-<?php
+		$f = new Formula(0,0,0,0,0,0,0,0,0,0);
+
+		$pesos = array();
+		$probs = array();
+		for ( $i = -9; $i <= 9; $i++ ) {	
+			$pesos[$i] = $f->pesos($i);
+			$probs[$i] = $f->probabilidades($i);
+		}
+
+		$colors = array();
+		foreach ( $probs as $i=>$v ) {
+			foreach ( $v as $ii=>$vv ) {
+				$c = (int) round(255 - $vv*255);
+				$colors[$i][$ii] = 'rgb(255,' . $c . ',' . $c . ')';
+			}
+		}
+
+		$this->layout = "main";
+		$this->render('formula', array(
+			'probs'=>$probs,
+			'pesos'=>$pesos,
+			'colors'=>$colors
+		));
 	}
 }
