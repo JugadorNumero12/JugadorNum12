@@ -1,4 +1,25 @@
 <?php
+
+/* array estatico que define los valores contantes para las acciones
+ *
+ * listado de claves esperables
+ *		aforo => valor
+ *		ambiente => valor
+ * 		animo => valor
+ *		animo_gen => valor
+ * 		animo_max => valor
+ *		bonus_creador => array(claves espereables)
+ * 		bonus_jugador => array(claves esperables)
+ * 		defensivo => valor
+ * 		dinero => valor
+ * 		dinero_gen => valor
+ * 		influencias => valor
+ * 		influencias_gen => valor
+ * 		influencias_max => valor
+ * 		moral => valor
+ * 		nivel_equipo => valor
+ * 		ofensivo => valor
+ */
 static $datos_acciones = array (
 	
 	// GRUPALES
@@ -40,7 +61,7 @@ static $datos_acciones = array (
 	),
 		
 	'ContratarRRPP' => array (
-		'bonus_especial' => 1
+		'bonus_jugador' => array ('influencias' => 1)
 	),
 	
 	//PARTIDO 
