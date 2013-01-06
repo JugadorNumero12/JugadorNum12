@@ -106,7 +106,7 @@ class EquiposController extends Controller
 		//Comienza la transaccion
 		$transaction = Yii::app()->db->beginTransaction();
 		try {
-			if(!($modeloUsuario->setAttribute('equipos_id_equipo',$id_nuevo_equipo)))
+			if(!($modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo))))
 				throw new Exception("Error Processing Request", 1);
 			//Transaccion completada
 			$transaction->commit();
@@ -114,7 +114,8 @@ class EquiposController extends Controller
 			//Ocurre un error. Se anula la transaccion
 			$transaction->rollBack();
 		}
-		$this->redirect(array('equipos/ver/$id_equipo_nuevo'));
+		//$this->refresh();
+		$this->redirect(array('equipos/ver/','id_equipo'=>$id_equipo));
 	}
 
 	/**
