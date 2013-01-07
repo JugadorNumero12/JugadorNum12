@@ -39,26 +39,39 @@ class PartidosController extends Controller
 	public function actionIndex()
 	{
 		/* ARTURO */
+		//Obtener el equipo del usuario
+		$id_usuario = Yii::app()->user->usIdent;        
+        $equipo_usuario = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
+
 		//TODO Obtener fecha actual (min)
 		//TODO Sumarle la duracion de la jornada (max)
 		$min = 130;
-		$max = 160;
+		$max = 230;
 
 		//Obtener el modelo de Partidos
-		//TODO poner la condicion a findAll (hora > min AND hora < max)
-		$modeloPartidos = Partidos::model()->findAll();
+		//deben cumplir la condicion (hora > min AND hora < max)
+		$modeloPartidos = Partidos::model()->findAll('hora >:horaMin AND 
+													  hora <:horaMax',
+													array(':horaMin'=>$min,
+														  ':horaMax'=>$max));
 
 		//Por cada partido obtener los equipos locales y visitantes
+		//y averiguar si el equipo del usuario juega en dicho partido
+		$esPartidoUsuario = array();
 		$equiposLocal = array();
 		$equiposVisit = array();
 		
 		foreach ($modeloPartidos as $partido){
-			$equiposLocal[] = Equipos::model()->findByPk($partido['equipos_id_equipo_1']);
-			$equiposVisit[] = Equipos::model()->findByPk($partido['equipos_id_equipo_2']);
+			$id_equipo1 = $partido['equipos_id_equipo_1'];
+			$id_equipo2 = $partido['equipos_id_equipo_2'];
+			$esPartidoUsuario[] = $id_equipo1 == $equipo_usuario || $id_equipo2 == $equipo_usuario; 
+			$equiposLocal[] = Equipos::model()->findByPk($id_equipo1);
+			$equiposVisit[] = Equipos::model()->findByPk($id_equipo2);
 		}
 
 		//pasar los datos de cada partido a la vista index
-		$this->render('index',array('equiposL'=>$equiposLocal,
+		$this->render('index',array('esDeUsuario'=>$esPartidoUsuario,
+									'equiposL'=>$equiposLocal,
 									'equiposV'=>$equiposVisit
 									));
 	}
