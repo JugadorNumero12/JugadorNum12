@@ -149,7 +149,7 @@ class UsuariosController extends Controller
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
             { 
-                $this->redirect(array('usuarios/cuenta'));
+               $this->redirect(array('usuarios/cuenta'));
             }
            
         }
