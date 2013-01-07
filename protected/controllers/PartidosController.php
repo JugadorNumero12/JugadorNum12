@@ -140,6 +140,10 @@ class PartidosController extends Controller
 													  hora >:horaAct',
 													array(':equipo'=>$id_equipo,
 														  ':horaAct'=>$hora_actual));
+
+		//Saco la información de los equipos para mostrar el nombre en la vista
+		$modeloEquipoLocal     = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_1);
+		$modeloEquipoVisitante = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_2);
 		
 		if($hora_actual > $modeloPartido->hora)
 		{
@@ -154,12 +158,17 @@ class PartidosController extends Controller
 		}
 		else
 		{
+			//TODO enviar un error y redirigir,
+			//no se puede asistir a un partido que esta despues del siguiente partido
 			$cronica_partido = 'No hay informacion acerca del partido';
 		} 
+
 		//pasar los datos de cada partido a la vista index
-		$this->render('asistir',array('cronica'=>$cronica_partido,
-									  'sigPartido'=>$modeloSigPartido
-									 ));
+		$this->render('asistir', array(	'equipoL'=>$modeloEquipoLocal,
+										'equipoV'=>$modeloEquipoVisitante,
+									   	'cronica'=>$cronica_partido,
+									   	'sigPartido'=>$modeloSigPartido
+									  ));
 			
 	}
 
