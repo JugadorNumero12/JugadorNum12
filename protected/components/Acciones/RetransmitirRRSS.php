@@ -33,7 +33,8 @@ public class RetransmitirRRSS extends AccionSingleton
      		 $equipo=Equipos::model()->findByPK($id_equipo);
      		 $cantidad=$datos_acciones['RetransmitirRRSS']['defensivo'];
      		 $nuevo_defensivo=$equipo->factor_defensivo +$cantidad;
-     		 $equipo->->setAttributes(array('factor_defensivo'=>$nuevo_defensivo));
+     		 $equipo->setAttributes(array('factor_defensivo'=>$nuevo_defensivo));
+     		 $equipo->save();
 
      		 
 	      	$trans->commit();
