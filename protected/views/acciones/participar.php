@@ -19,7 +19,7 @@
 <h1>Participar en la acción grupal: <?php echo $habilidad['nombre']; ?></h1>
 <h2> Aportar recursos </h2>
 
-<form action="<?php echo $this->createUrl('acciones/participar');?>" method="post">
+<form action="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$datosAccion['id_accion_grupal']));?>" method="post">
 	<label> 
 		<b> Dinero: </b>
 		<input type="text" name="dinero" value=0 />
