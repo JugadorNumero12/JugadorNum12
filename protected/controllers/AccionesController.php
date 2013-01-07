@@ -244,11 +244,12 @@ class AccionesController extends Controller
 		$datosUsuario = Usuarios::model()->findByPK($usuario);
 		$equipoUsuario = $datosUsuario['equipos_id_equipo'];
 
-		//TODO: Falta comprobar que la acción sea del equipo del usuario y además que esté abierta
+		//Saco el equipo que ha creado la accion
+		$datosAccion = AccionesGrupales::model()->findByPK($id_accion);
+		$equipoAccion = $datosAccion['equipos_id_equipo'];
 
 		//Comprobamos si la habilidad es grupal y si pertenece a la afición del jugador
-		if ( $habilidad != null ){
-			//La acción es grupal
+		if ( $equipoAccion == $equipoUsuario ){
 			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
 			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
 			$dineroUsuario = $recursosUsuario['dinero'];
@@ -290,7 +291,7 @@ class AccionesController extends Controller
 			}
 		} else {
 			$transaccion->rollback();
-			throw new CHttpException(404,'Accion no válida.');
+			throw new CHttpException(404,'La acción no es del equipo del usuario.');
 		}
 	}
 
@@ -312,6 +313,7 @@ class AccionesController extends Controller
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
 		try{
+
 			$acc = AccionesGrupales::model()->findByPk($id_accion);
 			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));

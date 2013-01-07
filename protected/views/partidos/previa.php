@@ -1,8 +1,10 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+/* @var $modeloP*/
+/* @var $modeloL */
+/* @var $modeloV */
+/* @var $modeloGL */
+/* @var $modeloGV*/
 
-// codigo PHP
 
 ?>
 

@@ -39,6 +39,28 @@ class PartidosController extends Controller
 	public function actionIndex()
 	{
 		/* ARTURO */
+		//TODO Obtener fecha actual (min)
+		//TODO Sumarle la duracion de la jornada (max)
+		$min = 130;
+		$max = 160;
+
+		//Obtener el modelo de Partidos
+		//TODO poner la condicion a findAll (hora > min AND hora < max)
+		$modeloPartidos = Partidos::model()->findAll();
+
+		//Por cada partido obtener los equipos locales y visitantes
+		$equiposLocal = array();
+		$equiposVisit = array();
+		
+		foreach ($modeloPartidos as $partido){
+			$equiposLocal[] = Equipos::model()->findByPk($partido['equipos_id_equipo_1']);
+			$equiposVisit[] = Equipos::model()->findByPk($partido['equipos_id_equipo_2']);
+		}
+
+		//pasar los datos de cada partido a la vista index
+		$this->render('index',array('equiposL'=>$equiposLocal,
+									'equiposV'=>$equiposVisit
+									));
 	}
 
 	/** 
@@ -89,6 +111,43 @@ class PartidosController extends Controller
 		/* ARTURO */
 		// Nota: dejar en blanco (o con un simple mensaje indicativo) 
 		// la pantalla de jugar partido
+
+		//Obtener el equipo del usuario
+		$id_usuario = Yii::app()->user->usIdent;        
+        $id_equipo  = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
+
+		//TODO Obtener hora actual
+		$hora_actual = 130;
+
+		//Obtener el partido a consultar y
+		//el siguiente partido del equipo del usuario
+		$modeloPartido    = Partidos::model()->findByPk($id_partido);
+		$modeloSigPartido = Partidos::model()->find('(equipos_id_equipo_1 =:equipo OR 
+													  equipos_id_equipo_2 =:equipo) AND 
+													  hora >:horaAct',
+													array(':equipo'=>$id_equipo,
+														  ':horaAct'=>$hora_actual));
+		
+		if($hora_actual > $modeloPartido->hora)
+		{
+			//si el partido se jugo, obtener cronica
+			$cronica_partido = $modeloPartido->cronica;			
+		}
+		elseif($modeloPartido->id_partido == $modeloSigPartido->id_partido)
+		{
+			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
+			//TODO redirigir a Jugar Partido
+			$cronica_partido = 'Jugar Partido';
+		}
+		else
+		{
+			$cronica_partido = 'No hay informacion acerca del partido';
+		} 
+		//pasar los datos de cada partido a la vista index
+		$this->render('asistir',array('cronica'=>$cronica_partido,
+									  'sigPartido'=>$modeloSigPartido
+									 ));
+			
 	}
 
 	/**

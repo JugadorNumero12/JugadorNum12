@@ -7,3 +7,4 @@
 ?>
 
 <!-- codigo HTML -->
+<?php echo $cronica; ?>
