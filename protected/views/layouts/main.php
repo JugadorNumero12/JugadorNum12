@@ -30,8 +30,8 @@
 			   <li><a href='#'><span>Afici&oacute;n</span></a></li>
 			   <li><a href='#'><span>Estad&iacute;sticas</span></a></li>
 			   <li><a href='#'><span>Calendario</span></a></li>
-			   <li><a href='#'><span>Clasificaci&oacute;n</span></a></li>
-			   <li><a href='#'><span>Partido</span></a></li>
+			   <li><a href="<?php echo Yii::app()->createUrl('/equipos');?>"><span>Clasificaci&oacute;n</span></a></li>
+			   <li><a href="<?php echo Yii::app()->createUrl('/partidos');?>"><span>Partido</span></a></li>
 			</ul>
 		</div>
     </div>
