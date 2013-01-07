@@ -1,5 +1,6 @@
 <?php
 // @var $habilidad
+// @var $datosAccion
 
 // codigo PHP
 
@@ -18,7 +19,7 @@
 <h1>Participar en la acción grupal: <?php echo $habilidad['nombre']; ?></h1>
 <h2> Aportar recursos </h2>
 
-<form action="<?php $this->createUrl('acciones/participar', 'id_accion'=> $datosAccion);?>" method="post">
+<form action="<?php echo $this->createUrl('acciones/participar');?>" method="post">
 	<label> 
 		<b> Dinero: </b>
 		<input type="text" name="dinero" value=0 />
