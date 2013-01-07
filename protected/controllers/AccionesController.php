@@ -303,8 +303,7 @@ class AccionesController extends Controller
 					
 					$transaccion->commit();
 					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
-					//$this->redirect(array('ver', 'id_accion'=>$id_accion));
-					echo "La accion se ha realizado con exito";
+					$this->redirect(array('ver', 'id_accion'=>$id_accion));
 				} catch ( Exception $exc ) {
 					$transaccion->rollback();
 					throw $exc;
