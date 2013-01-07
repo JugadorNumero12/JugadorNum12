@@ -69,13 +69,13 @@
 	echo 'La accion ha alcanzado el número máximo de participantes';
 } ?> </b></p>
 
-<p><b><?php if ($accionGupal['terminado'] = 1){
-		echo "La accion ha terminado";
+<p><b><?php if ($accionGupal['completada'] = 1){
+		echo "La accion se ha completado";
 	} ?> </b>
 </p>
 
 <!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, puede participar -->
-<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['terminado'] = 0){ ?>
+<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] = 0){ ?>
 	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
 	<input type="button" value="Participar"/> </a>
