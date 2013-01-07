@@ -1,37 +1,34 @@
 -- phpMyAdmin SQL Dump
 -- version 3.5.2.2
 -- http://www.phpmyadmin.net
---
+
 -- Servidor: 127.0.0.1
 -- Tiempo de generación: 27-12-2012 a las 11:17:55
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
+-- Base de datos: `juego`
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
--- --------------
--- boolean values
--- --------------
+
+-- -------------------
+-- VALORES BOOLEANOS
+-- -------------------
 -- 0 false
 -- 1 true
--- --------------
+-- -------------------
 
---
--- Base de datos: `juego`
---
 
 -- --------------------------------------------------------
+-- ---------- DEFINICION DE LAS TABLAS --------------------
+-- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `acciones_grupales`
---
 
 DROP TABLE IF EXISTS `acciones_grupales`;
 CREATE TABLE IF NOT EXISTS `acciones_grupales` (
@@ -53,10 +50,6 @@ CREATE TABLE IF NOT EXISTS `acciones_grupales` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `acciones_individuales`
---
-
 DROP TABLE IF EXISTS `acciones_individuales`;
 CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
@@ -67,10 +60,6 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `acciones_turno`
---
 
 DROP TABLE IF EXISTS `acciones_turno`;
 CREATE TABLE IF NOT EXISTS `acciones_turno` (
@@ -87,10 +76,6 @@ CREATE TABLE IF NOT EXISTS `acciones_turno` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `clasificacion`
---
-
 DROP TABLE IF EXISTS `clasificacion`;
 CREATE TABLE IF NOT EXISTS `clasificacion` (
   `equipos_id_equipo` int(10) unsigned NOT NULL,
@@ -105,10 +90,6 @@ CREATE TABLE IF NOT EXISTS `clasificacion` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `desbloqueadas`
---
-
 DROP TABLE IF EXISTS `desbloqueadas`;
 CREATE TABLE IF NOT EXISTS `desbloqueadas` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
@@ -118,10 +99,6 @@ CREATE TABLE IF NOT EXISTS `desbloqueadas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `equipos`
---
 
 DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE IF NOT EXISTS `equipos` (
@@ -137,10 +114,6 @@ CREATE TABLE IF NOT EXISTS `equipos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `habilidades`
---
 
 DROP TABLE IF EXISTS `habilidades`;
 CREATE TABLE IF NOT EXISTS `habilidades` (
@@ -162,10 +135,6 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `participaciones`
---
-
 DROP TABLE IF EXISTS `participaciones`;
 CREATE TABLE IF NOT EXISTS `participaciones` (
   `acciones_grupales_id_accion_grupal` int(10) unsigned NOT NULL,
@@ -178,10 +147,6 @@ CREATE TABLE IF NOT EXISTS `participaciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `partidos`
---
 
 DROP TABLE IF EXISTS `partidos`;
 CREATE TABLE IF NOT EXISTS `partidos` (
@@ -202,10 +167,6 @@ CREATE TABLE IF NOT EXISTS `partidos` (
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `recursos`
---
-
 DROP TABLE IF EXISTS `recursos`;
 CREATE TABLE IF NOT EXISTS `recursos` (
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
@@ -217,15 +178,14 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `animo` int(10) unsigned NOT NULL,
   `animo_max` int(10) unsigned NOT NULL,
   `animo_gen` float NOT NULL,
+  `bonus_dinero` int(10) unsigned NOT NULL DEFAULT 0,
+  `bonus_influencias` int(10) unsigned NOT NULL DEFAULT 0,
+  `bonus_animo` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `turnos`
---
 
 DROP TABLE IF EXISTS `turnos`;
 CREATE TABLE IF NOT EXISTS `turnos` (
@@ -245,10 +205,6 @@ CREATE TABLE IF NOT EXISTS `turnos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (

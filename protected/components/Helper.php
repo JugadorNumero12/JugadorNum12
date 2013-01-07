@@ -1,4 +1,5 @@
 <?php
+
 public class Helper 
 {
 	public Helper(){}
@@ -26,7 +27,23 @@ public class Helper
 			{
 				/*Cojo la columna a modificar del modelo, para modificarla despues*/
 				$actuales=$recursos->$columna;
-				$recursos->$columna=$actuales + $cantidad;
+				$valor_nuevo=$actuales + $cantidad;
+				/*Debo comprobar que no esta o sobrepasa en su máximo el atributo*/
+
+				/*En el caso del animo*/
+				if( ($columna==='animo') && ($valor_nuevo >= $recursos->animo_max))
+				{
+					$recursos->$columna=$recursos->animo_max;
+
+				}else if( ($columna==='influencias') && ($valor_nuevo >= $recursos->influencias_max))
+						{
+							$recursos->$columna=$recursos->influencias_max;
+
+						}else 
+							{
+								$recursos->$columna=$valor_nuevo;
+							}
+				
 				/*Si save() no lanza error entonces se realizo correctamente la actualizacion
 				 sino devuelves error*/
 				if($recursos->save())
@@ -83,3 +100,4 @@ public class Helper
 			}
 	} 
 }
+

@@ -39,6 +39,41 @@ class PartidosController extends Controller
 	public function actionIndex()
 	{
 		/* ARTURO */
+		//Obtener el equipo del usuario
+		$id_usuario = Yii::app()->user->usIdent;        
+        $equipo_usuario = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
+
+		//TODO Obtener fecha actual (min)
+		//TODO Sumarle la duracion de la jornada (max)
+		$min = 130;
+		$max = 230;
+
+		//Obtener el modelo de Partidos
+		//deben cumplir la condicion (hora > min AND hora < max)
+		$modeloPartidos = Partidos::model()->findAll('hora >:horaMin AND 
+													  hora <:horaMax',
+													array(':horaMin'=>$min,
+														  ':horaMax'=>$max));
+
+		//Por cada partido obtener los equipos locales y visitantes
+		//y averiguar si el equipo del usuario juega en dicho partido
+		$esPartidoUsuario = array();
+		$equiposLocal = array();
+		$equiposVisit = array();
+		
+		foreach ($modeloPartidos as $partido){
+			$id_equipo1 = $partido['equipos_id_equipo_1'];
+			$id_equipo2 = $partido['equipos_id_equipo_2'];
+			$esPartidoUsuario[] = $id_equipo1 == $equipo_usuario || $id_equipo2 == $equipo_usuario; 
+			$equiposLocal[] = Equipos::model()->findByPk($id_equipo1);
+			$equiposVisit[] = Equipos::model()->findByPk($id_equipo2);
+		}
+
+		//pasar los datos de cada partido a la vista index
+		$this->render('index',array('esDeUsuario'=>$esPartidoUsuario,
+									'equiposL'=>$equiposLocal,
+									'equiposV'=>$equiposVisit
+									));
 	}
 
 	/** 
@@ -89,6 +124,52 @@ class PartidosController extends Controller
 		/* ARTURO */
 		// Nota: dejar en blanco (o con un simple mensaje indicativo) 
 		// la pantalla de jugar partido
+
+		//Obtener el equipo del usuario
+		$id_usuario = Yii::app()->user->usIdent;        
+        $id_equipo  = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
+
+		//TODO Obtener hora actual
+		$hora_actual = 130;
+
+		//Obtener el partido a consultar y
+		//el siguiente partido del equipo del usuario
+		$modeloPartido    = Partidos::model()->findByPk($id_partido);
+		$modeloSigPartido = Partidos::model()->find('(equipos_id_equipo_1 =:equipo OR 
+													  equipos_id_equipo_2 =:equipo) AND 
+													  hora >:horaAct',
+													array(':equipo'=>$id_equipo,
+														  ':horaAct'=>$hora_actual));
+
+		//Saco la información de los equipos para mostrar el nombre en la vista
+		$modeloEquipoLocal     = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_1);
+		$modeloEquipoVisitante = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_2);
+		
+		if($hora_actual > $modeloPartido->hora)
+		{
+			//si el partido se jugo, obtener cronica
+			$cronica_partido = $modeloPartido->cronica;			
+		}
+		elseif($modeloPartido->id_partido == $modeloSigPartido->id_partido)
+		{
+			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
+			//TODO redirigir a Jugar Partido
+			$cronica_partido = 'Jugar Partido';
+		}
+		else
+		{
+			//TODO enviar un error y redirigir,
+			//no se puede asistir a un partido que esta despues del siguiente partido
+			$cronica_partido = 'No hay informacion acerca del partido';
+		} 
+
+		//pasar los datos de cada partido a la vista index
+		$this->render('asistir', array(	'equipoL'=>$modeloEquipoLocal,
+										'equipoV'=>$modeloEquipoVisitante,
+									   	'cronica'=>$cronica_partido,
+									   	'sigPartido'=>$modeloSigPartido
+									  ));
+			
 	}
 
 	/**
