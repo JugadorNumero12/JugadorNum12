@@ -201,22 +201,18 @@ class AccionesController extends Controller
 		//Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
-		//Compruebo si el usuario es participante de la acción o el creador de la accion
-		$participante = false;
-		if($propietarioAccion == $usuario){
-			$participante = true;
-		} else {
-			foreach($participaciones as $participacion){
-				if ($participacion['usuarios_id_usuario'] == $usuario){
-					$participante = true;
-				}
+		//Compruebo si el usuario ha participado ya en la accion
+		$esParticipante = false;
+		foreach($participaciones as $participacion){
+			if ($participacion['usuarios_id_usuario'] == $usuario){
+				$esParticipante = true;
 			}
 		}
-
+		
 		//Envío los datos a la vista
 		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
 					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones,
-					 'participante'=>$participante));
+					 'esParticipante'=>$esParticipante));
 	}
 
 	/**
@@ -248,8 +244,8 @@ class AccionesController extends Controller
 		$datosAccion = AccionesGrupales::model()->findByPK($id_accion);
 		$equipoAccion = $datosAccion['equipos_id_equipo'];
 
-		//Comprobamos si la habilidad es grupal y si pertenece a la afición del jugador
-		if ( $equipoAccion == $equipoUsuario ){
+		//Compruebo que la acción es del equipo del user, que la acción no ha terminado y que no se ha sobrepasado el límite de jugadores
+		if ( $equipoAccion == $equipoUsuario && $datosAccion['completada'] = 0 && $datosAccion['jugadores_acc'] = $habilidad['participantes_max']){
 			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
 			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
 			$dineroUsuario = $recursosUsuario['dinero'];
@@ -269,12 +265,30 @@ class AccionesController extends Controller
 				}
 				
 				try {
+					//Resta los recursos al usuario
 					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
 					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
 					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
-	
-					//TODO: Falta sumarle los recursos a la acción
+					
+					//Añade los recursos en acciones_grupales
+					$datosAccion['jugadores_acc']++;
+					$datosAccion['dinero_acc'] += $dineroAportado;  
+					$datosAccion['influencias_acc'] += $influenciasAportadas;
+					$datosAccion['animo_acc'] += $animoAportado;
 
+					//Añado una nueva participación en la tabla de participaciones
+					$participacion = new Participaciones();
+					$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
+					$participacion['usuarios_id_usuario'] = $usuario;
+					$participacion['dinero_aportado'] = $dineroAportado;
+					$participacion['influencias_aportadas'] = $influenciasAportadas;
+					$participacion['animo_aportado'] = $animoAportado;
+
+					//Compruebo si ya se han aportado todos los recursos necesarios para la acción
+					if ( $datosAccion['dinero_acc'] = $habilidad['dinero_max'] && $datosAccion['influencias_acc'] = $habilidad['influencias_max']
+						&& $datosAccion['animo_acc'] = $habilidad['animo_max']){
+						$datosAccion['finalizado'] = 1;
+					}
 
 					$recursosUsuario->save();
 					
@@ -287,11 +301,11 @@ class AccionesController extends Controller
 			} else {
 				//Petición GET: Muestro el formulario
 				$transaccion->commit();
-				$this->render('participar', array('habilidad' => $habilidad));
+				$this->render('participar', array('habilidad' => $habilidad, 'datos_accion' => $datosAccion));
 			}
 		} else {
 			$transaccion->rollback();
-			throw new CHttpException(404,'La acción no es del equipo del usuario.');
+			throw new CHttpException(404,'El usuario no puede participar en esta acción');
 		}
 	}
 
