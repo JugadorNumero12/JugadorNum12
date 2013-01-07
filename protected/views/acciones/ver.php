@@ -65,17 +65,17 @@
 } ?> </b></p>
 
 <!-- Compruebo si la accion ha alcanzado el numero maximo de participantes -->
-<p><b><?php if ($accionGrupal['jugadores_acc'] = $habilidad['participantes_max']){
+<p><b><?php if ($accionGrupal['jugadores_acc'] == $habilidad['participantes_max']){
 	echo 'La accion ha alcanzado el número máximo de participantes';
 } ?> </b></p>
 
-<p><b><?php if ($accionGupal['completada'] = 1){
+<p><b><?php if ($accionGrupal['completada'] == 1){
 		echo "La accion se ha completado";
 	} ?> </b>
 </p>
 
 <!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, puede participar -->
-<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] = 0){ ?>
+<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] == 0){ ?>
 	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
 	<input type="button" value="Participar"/> </a>
