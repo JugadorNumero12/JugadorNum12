@@ -1,15 +1,24 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+// @var $habilidad
 
 // codigo PHP
 
 ?>
 
+<?php
+	$form = $this->beginWidget('CActiveForm', array(
+				'id'=>'clave-form',
+			    'enableAjaxValidation'=>false,
+			    'enableClientValidation'=>true,
+			    'clientOptions'=>array(
+				'validateOnSubmit'=>true,),
+			    ));
+?>
+
 <h1>Participar en la acción grupal: <?php echo $habilidad['nombre']; ?></h1>
 <h2> Aportar recursos </h2>
 
-<form action="<?php $this->createUrl('acciones/participar'); ?>" method="post">
+<form action="<?php $this->createUrl('acciones/participar', 'id_accion'=> $datosAccion);?>" method="post">
 	<label> 
 		<b> Dinero: </b>
 		<input type="text" name="dinero" value=0 />
@@ -27,3 +36,5 @@
 
 	<input type="submit" value="Participar"/>
 </form>
+
+<?php $this->endWidget(); ?>
