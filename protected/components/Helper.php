@@ -97,5 +97,30 @@ public class Helper
 					}
 			}
 	} 
+
+	/** Funcion auxiliar que modifica la tabla de recursos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public function aumentar_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+
+	}
+	/** Funcion auxiliar que modifica la tabla de recursos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public function disminuir_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+
+	}
 }
 
