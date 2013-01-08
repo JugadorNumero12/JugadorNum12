@@ -376,19 +376,30 @@ public class Partido
 	{
 		$trans = Yii::app()->db->beginTransaction();
 		try{
+			//sumar puntos
+			$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_equipo);
+			$puntosAnt= $eq['puntos'];
+			$puntosAct= ($eq['puntos']+=$puntos);
+
+			//Actualizar todos los equipos desplazados
 			$criteria= new CDbCriteria();
 			$criteria->condition=("puntos>=:puntosAnt && puntos< :puntosAct");
-
-			$puntosOrig= $eq['puntos'];
-			$puntosAct= ($eq['puntos']+=$puntos);
-				
-			$criteria->params=array(':puntosAnt'=>$puntosActOrig,':puntosAct'=>$puntosAct);
+			$criteria->params=array(':puntosAnt'=>$puntosActAnt,':puntosAct'=>$puntosAct);
 			$clas= Clasificacion::model()->findAll($criteria);
 			foreach ($clas as $e){
-				 $e['clasificacion']+=1;
+				 $e['posicion']+=1;
 				 $e->save();
 			}
-			//TODO eq['clasificacion']=
+
+			//Calcula la nueva 'posicion' del equipo
+			$criteria= new CDbCriteria();
+			$criteria->select='MAX(posicion) as posMax';
+			$criteria->condition='puntos>=:puntosAct';
+			$criteria->params=array(':puntosAnt'=>$puntosActAnt);
+			$clas= Clasificacion::model()->find($criteria);
+			$posSig= $clas['posMax'];//posSig es la posicion del equipo inmediatamente superior (puede ser igual)
+			$clas= Clasificacion::model()->findByAttributes(posicion=>$posSig);
+			$eq['posicion']= ($clas['puntos']==$puntosAct)? $posSig: $posSig+1;
 
 			$eq->save();
 			$trans->commit();
