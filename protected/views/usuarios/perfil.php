@@ -8,7 +8,9 @@
 
 <!-- codigo HTML -->
 
-<h1> PERFIL DE USUARIO</h1>
+<div id='datos_usuarios'>
+	<h1> PERFIL DE USUARIO </h1>
+</div>
 
 <h3> DATOS BÁSICOS</h3>
 

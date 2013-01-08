@@ -1,10 +1,41 @@
 @charset "utf-8";
 
+#contenedor{
+    margin: 0em;
+}
+
+#menu_iquierdo{
+    float:left;
+    background: red;
+}
+
+#menu_derecho{
+    float:right;
+    background: blue;
+}
+
+#cabecera{
+    background: yellow;
+    clear:left;
+}
+
+#pie_pagina{
+    clear:left;
+    background: orange;
+}
+
+#centro{
+     /*float:left;*/
+     background: purple;
+}
+
+
 /*
 #genLayer {
     width: 1024px;
     margin: 0 auto;
 	}
+
 #topBanner {
 	width:300px;
 	height:120px;
@@ -31,7 +62,7 @@
     width:724px;
     background:#ddf;
 }
-#loginGenLayer {
+#contenedorLogin {
     width: 900px;
     margin: 0 auto;
 	}	

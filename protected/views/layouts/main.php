@@ -13,16 +13,16 @@
 
 <body>
 
-<div id="genLayer">
+<div id="envoltorio">
 
   	<!-- DIVISION DE CABECERA -->
-    <div id="headBox">
+    <div id="cabecera">
 		CABECERA
     </div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
-    <div id="leftMenuBar">
-		<div id='cssmenu'>
+    <div id="menu_izquierdo">	
+    	<div class="elementos_menu">	
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>"><span>Perfil</span></a></li>
 			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Habilidades desbloqueadas</span></a></li>
@@ -36,14 +36,14 @@
     </div>
     
     <!-- DIVISION CENTRAL/CONTENIDO -->
-    <div id="contentSection" align="center">
+    <div id='centro'>
       <?php echo $content; ?>
     </div>
 
 	<!-- DIVISION DEL MENU DERECHO -->
-    <div id="rightMenuBar">
+    <div id="menu_derecho">
     	ESTADO JUGADOR
-    	<div id='cssmenu'>
+    	<div class="elementos_menu">
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
 			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
@@ -52,7 +52,7 @@
     </div>
 	
   	<!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="bottomBox">
+    <div id="pie_pagina">
         <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>

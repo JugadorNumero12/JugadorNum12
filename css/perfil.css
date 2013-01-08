@@ -1,1 +1,8 @@
-@charset "utf-8";
+div#centro >
+	div#datos_usuarios >
+		h1{
+			color: #333333;
+		}
+	
+	
+
