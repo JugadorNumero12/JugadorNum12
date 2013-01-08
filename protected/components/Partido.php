@@ -345,19 +345,33 @@ public class Partido
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->roollback();
-			throw $exc;
 		}
 	}
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
-	private void actualizaClasificacion() //TODO
+	private void actualizaClasificacion()
 	{
 		/* MARCOS */ 
-		if($goles_local>$goles_visitante);
-		elseif($goles_visitante>$goles_local);
-		else;
-		/*clasificacion +3gana , +1 empata, reordena clasif*/
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			if($goles_local>$goles_visitante){
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$clas['puntos']+=3;
+			}elseif($goles_visitante>$goles_local){
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=3;
+			}else{
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$clas['puntos']+=1;
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=1;
+			}
+			//TODO reordenar las clasificaciones
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+		}
 	}
 
 	public void jugarse()
