@@ -1,7 +1,12 @@
 @charset "utf-8";
 
 
+div.elementos_menu{
+	a{
+		
+	}
 
+}
 
 /* Some stylesheet reset */
 /*
@@ -79,7 +84,7 @@
 			width: 0px;
 			height: 0px;
 
-			/* Creating the arrow using borders */
+			Creating the arrow using borders
 			border: 4px solid transparent;
 			border-left: 4px solid #3dafea; 
 		}
@@ -92,7 +97,7 @@
 			width: 0px;
 			height: 0px;
 
-			/* Creating the arrow using borders */
+			Creating the arrow using borders
 			border: 4px solid transparent;
 			border-left: 4px solid #fff;
 		}
@@ -112,7 +117,7 @@
 			top: -9999px;
 			padding-left: 5px;
 			opacity: 0;
-			/* The fade effect, created using an opacity transition */
+			The fade effect, created using an opacity transition
 			-webkit-transition: opacity .3s ease-in;
 			-moz-transition: opacity .3s ease-in;
 			-o-transition: opacity .3s ease-in;
@@ -123,4 +128,4 @@
 			top: 0px;
 			opacity: 1;
 		}
-		*/
+*/
