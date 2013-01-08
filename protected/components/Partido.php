@@ -32,8 +32,8 @@ public class Partido
 	private $moral_visitante;
 
 	//atributo redundante añadido para hacer busquedas automaticas
-	private /*static*/ $lista_atributos = array(
-		'local' => /*static*/ array(
+	/*private  $lista_atributos = array(
+		'local' =>  array(
 			'id'=> $id_local,
 			'aforo'=> $aforo_local,
 			'ofensivo'=> $ofensivo_local,
@@ -41,16 +41,15 @@ public class Partido
 			'goles'=> $goles_local,
 			'moral'=> $moral_local
 		),
-		'visitante' => /*static*/ array(
+		'visitante' =>  array(
 			'id'=> $id_visitante,
 			'aforo'=> $aforo_visitante,
 			'ofensivo'=> $ofensivo_visitante,
 			'defensivo'=> $defensivo_visitante,
 			'goles'=> $goles_visitante,
 			'moral'=> $moral_visitante
-		),
-		//FIXME comprovar que => asigna por referencia
-	);
+			//FIXME comprovar que => asigna por referencia
+		),*/
 
 	/**
 	 * Constructora: Inicializar 
@@ -61,7 +60,44 @@ public class Partido
 	 */
 	public Partido($id_partido)
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito 
+        $transaction = Yii::app()->db->beginTransaction();
+        try{
+        	$partido = Partidos::model()->findByPk($id_partido);
+        	if ($partido != null){
+        		//$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+        		//$visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
+
+        		$this->$id_partido = $id_partido;
+        		$this->$id_local = $partido->$equipos_id_equipo_1;
+        		$this->$id_visitante = $partido->$equipos_id_equipo_2;
+        		$this->$turno = 0;
+        		$this->$cronica = $partido->$cronica;
+        		$this->$ambiente = $partido->$ambiente;
+        		$this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
+        		$this->$aforo_local = $partido->$aforo_local;
+        		$this->$aforo_visitante = $partido->$aforo_visitante;
+
+        		/*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
+        		$ofensivo_local = $local->$factor_ofensivo;
+        		$ofensivo_visitante = $visitante->$factor_ofensivo;
+        		$defensivo_local = $local->$factor_defensivo;
+        		$defensivo_visitante = $visitante->$factor_defensivo;
+
+        		$goles_local = 0;
+        		$goles_visitante = 0;
+
+        		//TODO
+
+        		$estado = 0;
+        		$moral_local = 0;
+        		$moral_visitante = 0;
+        		
+        		$transaction->commit();
+        	}
+        }catch(Exception $e){
+        	$transaction->rollback();
+        }
 	}
 
 	/**
@@ -71,7 +107,26 @@ public class Partido
  	 */
 	private void cargaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$ofensivo_local = $turno->$ofensivo_local;
+				$ofensivo_visitante = $turno->$ofensivo_visitante;
+				$defensivo_local = $turno->$defensivo_local;
+				$defensivo_visitante = $turno->$defensivo_visitante;
+
+				$goles_local = $turno->goles_local;
+				$goles_visitante = $turno->$goles_visitante;
+				$estado = $turno->estado;
+				$moral_local = $turno->$moral_local;
+				$moral_visitante = $turno->$moral_visitante;
+				$transaction->commit();
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 	
 	/*
@@ -79,7 +134,29 @@ public class Partido
 	 */
 	private void guardaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito + aumento turno?
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$turno->$ofensivo_local = $ofensivo_local;
+				$turno->$ofensivo_visitante = $ofensivo_visitante;
+				$turno->$defensivo_local = $defensivo_local;
+				$turno->$defensivo_visitante = $defensivo_visitante;
+
+				$turno->goles_local = $goles_local;
+				$turno->$goles_visitante = $goles_visitante;
+				$turno->estado = $estado;
+				$turno->$moral_local = $moral_local;
+				$turno->$moral_visitante = $moral_visitante;
+				if($turno->save()){
+					$transaction->commit();
+				}
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
+
 	}
 
 	/**
@@ -96,6 +173,12 @@ public class Partido
 		/* ALEX */
 		// NOTA: en la tabla <<equipos>> estan los atributos
 		// nivel_equipo, factor_ofensivo y factor_defensivo
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 
 	/*
@@ -104,9 +187,9 @@ public class Partido
 	 * para que las acciones sepan a qué turno tienen que ser asociadas.
 	 * Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
 	 */
-	private void recogeAccionesTurno()
+	/*private void recogeAccionesTurno()
 	{
-		/* MARCOS */
+		// MARCOS
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			//consultar las acciones guardadas para este turno
@@ -162,7 +245,7 @@ public class Partido
     		$trans->rollback();
     		throw $exc;
 		}
-	}
+	}*/
 	
 	/*
 	 * En función de los datos recogidos para este turno y el estado anterior,
@@ -220,15 +303,55 @@ public class Partido
 	 */
 	private void generaBonificacion()
 	{
-		/* MARCOS */
+		/* MARCOS 
+		$bonifGanador = 50;
+		$bonifEmpate = 20;
+		$bonifPerdedor = 10;*/
+		
+		if($goles_local>$goles_visitante){
+			bonifAnimo($id_local, 50);
+			bonifAnimo($id_visitante, 10);
+		}elseif($goles_visitante>$goles_local){
+			bonifAnimo($id_visitante, 50);
+			bonifAnimo($id_local, 10);
+		}else{
+			bonifAnimo($id_local, 20);
+			bonifAnimo($id_visitante, 20);
+		}
+	}
+	private void bonifAnimo($equipo, $participantes, int $bonus){
+		/*
+		$bonifParticipante = 3;
+		$bonifNoParticipante = 1*/
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
+			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
+			foreach ($usuarios as $user){
+				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
+				if(array_key_exists($user, $participantes))
+					$rec['animo']+= 3*$bonus*$ambiente;
+				else
+					$rec['animo']+= $bonus*$ambiente;
+				$rec->save();
+			}
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+			throw $exc;
+		}
 	}
 
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
-	private void actualizaClasificacion()
+	private void actualizaClasificacion() //TODO
 	{
-		/* MARCOS */
+		/* MARCOS */ 
+		if($goles_local>$goles_visitante);
+		elseif($goles_visitante>$goles_local);
+		else;
+		/*clasificacion +3gana , +1 empata, reordena clasif*/
 	}
 
 	public void jugarse()
