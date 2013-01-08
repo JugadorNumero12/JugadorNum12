@@ -2,9 +2,12 @@
 
 class Formula
 {
-	const PESOS_MIN_CERCA = 4;
+
+	const PESOS_DIST_CERCA = 10;
+
+	const PESOS_MIN_CERCA = 10;
 	const PESOS_MIN_LEJOS = 1;
-	const PESOS_MULT = 4096;
+	const PESOS_MULT = 10000;
 
 	const DIFNIV_NFACT_BASE = 0.5;
 
@@ -99,8 +102,10 @@ class Formula
 			$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
 			//}
 
+			$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
+
 			$pm = $p * self::PESOS_MULT;
-			$pm += abs($i-$params['estado']) < 10 ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
 			$pesos[$i] = (int) $pm;
 		}
 
