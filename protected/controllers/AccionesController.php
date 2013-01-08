@@ -320,8 +320,9 @@ class AccionesController extends Controller
 	}
 
 	/**
-	 * Muestra un formulario de confirmacion para expulsar a un jugador
-	 * participante en una accion grupal.
+	 * NO LLAMAR DIRECTAMENTE, 
+	 * usar render('ver', array("¿Está seguro de expulsarle?", jugadorNum12/acciones/expulsar/{$id_accion}/{$id_jugador}, tuUrl)
+	 * 
 	 * Los recursos que puso el jugador le son devueltos
 	 * (comprobando limite de animo e influencias)
 	 * 
