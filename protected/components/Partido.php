@@ -31,26 +31,6 @@ public class Partido
 	private $moral_local;
 	private $moral_visitante;
 
-	//atributo redundante añadido para hacer busquedas automaticas
-	/*private $lista_atributos = array(
-		'local' => array(
-			'id'=> $id_local,
-			'aforo'=> $aforo_local,
-			'ofensivo'=> $ofensivo_local,
-			'defensivo'=> $defensivo_local,
-			'goles'=> $goles_local,
-			'moral'=> $moral_local
-		),
-		'visitante' => array(
-			'id'=> $id_visitante,
-			'aforo'=> $aforo_visitante,
-			'ofensivo'=> $ofensivo_visitante,
-			'defensivo'=> $defensivo_visitante,
-			'goles'=> $goles_visitante,
-			'moral'=> $moral_visitante
-			//FIXME comprovar que => asigna por referencia
-		),*/
-
 	/**
 	 * Constructora: Inicializar 
 	 * 	id_partido,
@@ -222,18 +202,9 @@ public class Partido
 					break;//si se ha colado una acción de un equipo que no participa la salto.
 				}
 
-				//busco los artibutos del equipo correspondiente
-				$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
-
 				//compruebo las keys de datos_acciones y actualizo las que corresponden a mis atributos
 				foreach (array_keys($datos_acciones['cod']) as $atributo) 
-					if( array_key_exists($atributo, $lista_de_equipo) ){
-						//sumo porque no se que operador se aplica
-						$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
-					
-						//actualizar la tabla
-						$tablaTurno[$atributo.($accLocal?'_local':'_visistante')] = $lista_de_equipo[$atributo];
-					}
+					//ahora se haría llamando a helper
 
 			}
 			//salvo los cambios de todas las acciones
