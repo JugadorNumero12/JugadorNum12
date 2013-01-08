@@ -359,7 +359,7 @@ public class Partido
 		if($goles_local>$goles_visitante)
 			sumaCalisf($id_local, 3);
 		elseif($goles_visitante>$goles_local)
-			sumaCalisf($id_visitante, 3)
+			sumaCalisf($id_visitante, 3);
 		else{
 			sumaCalisf($id_local, 1);
 			sumaCalisf($id_visitante, 1);
