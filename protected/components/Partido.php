@@ -355,27 +355,44 @@ public class Partido
 	 */
 	private void actualizaClasificacion()
 	{
-		/* MARCOS */ 
+		/* MARCOS */
+		if($goles_local>$goles_visitante)
+			sumaCalisf($id_local, 3);
+		elseif($goles_visitante>$goles_local)
+			sumaCalisf($id_visitante, 3)
+		else{
+			sumaCalisf($id_local, 1);
+			sumaCalisf($id_visitante, 1);
+		}
+
+	}
+
+	/*
+	 * Se usa exclusivamente como paso intermedio de actualizaClasificacion.
+	 *
+	 * Suma $puntos a $id_equipo en la tabla de clasificacion y reordena.
+	 */
+	private sumaCalisf($id_equipo, int $puntos)
+	{
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			if($goles_local>$goles_visitante){
-				$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$eq['puntos']+=3;
-				$eq->save();
-			}elseif($goles_visitante>$goles_local){
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$clas['puntos']+=3;
-				$clas->save();
-			}else{
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$clas['puntos']+=1;
-				$clas->save();
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$clas['puntos']+=1;
-				$clas->save();
+			$criteria= new CDbCriteria();
+			$criteria->condition=("puntos> :puntosAnt && puntos<= :puntosAct");
+
+			$puntosOrig= $eq['puntos'];
+			$puntosAct= ($eq['puntos']+=$puntos);
+				
+			$criteria->params=array(':puntosAnt'=>$puntosActOrig,':puntosAct'=>$puntosAct);
+			$clas= Clasificacion::model()->findAll($criteria);
+			foreach ($clas as $e){
+				 $e['clasificacion']+=1;
+				 $e->save();
 			}
-			//TODO reordenar las clasificaciones
+			//TODO eq['clasificacion']=
+
+			$eq->save();
 			$trans->commit();
+
 		}catch(Exception $exc){
 			$trans->roollback();
 		}
