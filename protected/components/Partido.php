@@ -391,7 +391,7 @@ public class Partido
 			//Actualizar todos los equipos desplazados
 			$criteria= new CDbCriteria();
 			$criteria->condition=("puntos>=:puntosAnt && puntos< :puntosAct");
-			$criteria->params=array(':puntosAnt'=>$puntosActAnt,':puntosAct'=>$puntosAct);
+			$criteria->params=array(':puntosAnt'=>$puntosAnt, ':puntosAct'=>$puntosAct);
 			$clas= Clasificacion::model()->findAll($criteria);
 			foreach ($clas as $e){
 				 $e['posicion']+=1;
@@ -402,7 +402,7 @@ public class Partido
 			$criteria= new CDbCriteria();
 			$criteria->select='MAX(posicion) as posMax';
 			$criteria->condition='puntos>:puntosAct';
-			$criteria->params=array(':puntosAnt'=>$puntosActAnt);
+			$criteria->params=array(':puntosAct'=>$puntosAct);
 			$clas= Clasificacion::model()->find($criteria);
 			$eq['posicion']= ($clas==null)? 1: $clas['posMax']+1;
 
