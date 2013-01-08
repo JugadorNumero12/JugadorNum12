@@ -22,17 +22,17 @@
 <form action="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$datosAccion['id_accion_grupal']));?>" method="post">
 	<label> 
 		<b> Dinero: </b>
-		<input type="text" name="dinero" value=0 />
+		<input type="text" name="dinero" value="0" />
 	</label>
 
 	<label>
 		<b> Animo: </b>
-		<input type="text" name="animo" value=0 />
+		<input type="text" name="animo" value="0" />
 	</label>
 
 	<label>
 		<b> Influencia: </b>
-		<input type="text" name="influencias" value=0 />
+		<input type="text" name="influencias" value="0" />
 	</label>
 
 	<input type="submit" value="Participar"/>
