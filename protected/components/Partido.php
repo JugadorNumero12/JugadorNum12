@@ -32,8 +32,8 @@ public class Partido
 	private $moral_visitante;
 
 	//atributo redundante añadido para hacer busquedas automaticas
-	/*private  $lista_atributos = array(
-		'local' =>  array(
+	/*private $lista_atributos = array(
+		'local' => array(
 			'id'=> $id_local,
 			'aforo'=> $aforo_local,
 			'ofensivo'=> $ofensivo_local,
@@ -41,7 +41,7 @@ public class Partido
 			'goles'=> $goles_local,
 			'moral'=> $moral_local
 		),
-		'visitante' =>  array(
+		'visitante' => array(
 			'id'=> $id_visitante,
 			'aforo'=> $aforo_visitante,
 			'ofensivo'=> $ofensivo_visitante,
@@ -304,54 +304,74 @@ public class Partido
 	private void generaBonificacion()
 	{
 		/* MARCOS 
-		$bonifGanador = 50;
-		$bonifEmpate = 20;
-		$bonifPerdedor = 10;*/
+		$bonifGanador = 28;
+		$bonifEmpate = 14;
+		$bonifPerdedor = 7;*/
 		
 		if($goles_local>$goles_visitante){
-			bonifAnimo($id_local, 50);
-			bonifAnimo($id_visitante, 10);
+			bonifAnimo($id_local, 28);
+			bonifAnimo($id_visitante, 7);
 		}elseif($goles_visitante>$goles_local){
-			bonifAnimo($id_visitante, 50);
-			bonifAnimo($id_local, 10);
+			bonifAnimo($id_visitante, 28);
+			bonifAnimo($id_local, 7);
 		}else{
-			bonifAnimo($id_local, 20);
-			bonifAnimo($id_visitante, 20);
+			bonifAnimo($id_local, 14);
+			bonifAnimo($id_visitante, 14);
 		}
 	}
-	private void bonifAnimo($equipo, $participantes, int $bonus){
-		/*
-		$bonifParticipante = 3;
-		$bonifNoParticipante = 1*/
+	/*
+	 * Se usa exclusivamente como paso intermedio de generaBonificacion.
+	 *
+	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
+	 * bonificacion = [(1.5^(ambiente+1))/(4+.7*ambiente)] * bonus * (haParticipado?3:1)
+	 */
+	private void bonifAnimo($equipo, int $bonus)
+	{
+		/*$bonifParticipante = 3;
+		  $bonifNoParticipante = 1*/
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
 			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
+			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				if(array_key_exists($user, $participantes))
-					$rec['animo']+= 3*$bonus*$ambiente;
+				if(array_key_exists($user, $participantes))//FIXME a saber si esto funciona
+					$rec['animo']= min(3*$bonusAmbiente+$rec['animo'], $rec['animo_max']);
 				else
-					$rec['animo']+= $bonus*$ambiente;
+					$rec['animo']= min(  $bonusAmbiente+$rec['animo'], $rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->roollback();
-			throw $exc;
 		}
 	}
-
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
-	private void actualizaClasificacion() //TODO
+	private void actualizaClasificacion()
 	{
 		/* MARCOS */ 
-		if($goles_local>$goles_visitante);
-		elseif($goles_visitante>$goles_local);
-		else;
-		/*clasificacion +3gana , +1 empata, reordena clasif*/
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			if($goles_local>$goles_visitante){
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$clas['puntos']+=3;
+			}elseif($goles_visitante>$goles_local){
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=3;
+			}else{
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$clas['puntos']+=1;
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=1;
+			}
+			//TODO reordenar las clasificaciones
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+		}
 	}
 
 	public void jugarse()
