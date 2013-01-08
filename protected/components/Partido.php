@@ -319,7 +319,14 @@ public class Partido
 			bonifAnimo($id_visitante, 14);
 		}
 	}
-	private void bonifAnimo($equipo, $participantes, int $bonus)
+	/*
+	 * Se usa exclusivamente como paso intermedio de generaBonificacion.
+	 *
+	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
+	 * la bonificacion es lineal a $bonus y exponencial a $ambiente
+	 * y es 3 veces mayor para los participantes que para los que no han asistido.
+	 */
+	private void bonifAnimo($equipo, int $bonus)
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
@@ -327,7 +334,7 @@ public class Partido
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
 			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
-			$bonusAmbiente = $bonus*(pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(x+1))/(4+.7*x)
+			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
 				if(array_key_exists($user, $participantes))//FIXME a saber si esto funciona
