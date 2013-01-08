@@ -14,16 +14,14 @@ class HablarSpeaker extends AccionSingleton
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($idAccion)
 	{
-		$moral = $datos_acciones['HablarSpeaker']['moral'];
-		$ofens = $datos_acciones['HablarSpeaker']['ofensivo'];
 
 		$trans = Yii::app()->db->beginTransaction();
 		try {
 			$accion = Accion::model()->findByPk($idAccion);
 			
 			// FIXME Cambiar los parámetros
-			Helper::getInstance()->aumentar_param(/* params */, $moral);
-			Helper::getInstance()->aumentar_param(/* params */, $moral);
+			Helper::getInstance()->aumentar_param(/* params */0, $moral);
+			Helper::getInstance()->aumentar_param(/* params */0, $moral);
 
 			$trans->commit();
 
@@ -31,11 +29,5 @@ class HablarSpeaker extends AccionSingleton
 			$trans->rollback();
 			throw $exc;
 		}
-	}
-
-	/* Accion de partido: metodo vacio */
-	public function finalizar($idAccion)
-	{
-		/* VACIO */
 	}
 }
