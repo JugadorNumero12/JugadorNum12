@@ -60,6 +60,7 @@ class PartidosController extends Controller
 		$esPartidoUsuario = array();
 		$equiposLocal = array();
 		$equiposVisit = array();
+		$idPartidos = array();
 		
 		foreach ($modeloPartidos as $partido){
 			$id_equipo1 = $partido['equipos_id_equipo_1'];
@@ -67,12 +68,14 @@ class PartidosController extends Controller
 			$esPartidoUsuario[] = $id_equipo1 == $equipo_usuario || $id_equipo2 == $equipo_usuario; 
 			$equiposLocal[] = Equipos::model()->findByPk($id_equipo1);
 			$equiposVisit[] = Equipos::model()->findByPk($id_equipo2);
+			$idPartidos[] = $partido->id_partido;
 		}
 
 		//pasar los datos de cada partido a la vista index
 		$this->render('index',array('esDeUsuario'=>$esPartidoUsuario,
 									'equiposL'=>$equiposLocal,
-									'equiposV'=>$equiposVisit
+									'equiposV'=>$equiposVisit,
+									'idPartidos'=>$idPartidos
 									));
 	}
 

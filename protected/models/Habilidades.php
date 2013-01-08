@@ -56,7 +56,16 @@ class Habilidades extends CActiveRecord
 	public function relations()
 	{
 		/* ARTURO */
-		return array( );
+		return array(
+			//Relación entre "habilidades" y "desbloqueadas"
+			'desbloqueadas' => array(self::HAS_MANY, 'Desbloqueadas', 'habilidades_id_habilidad'),
+			//Relación entre "habilidades" y "acciones_individuales"
+			'accionesIndividuales' => array(self::HAS_MANY, 'AccionesIndividuales', 'habilidades_id_habilidad'),
+			//Relación entre "habilidades" y "acciones_grupales"
+			'accionesGrupales' => array(self::HAS_MANY, 'AccionesGrupales', 'habilidades_id_habilidad'),
+			//Relación entre "habilidades" y "acciones_turno"
+			'accionesTurno' => array(self::HAS_MANY, 'AccionesTurno', 'habilidades_id_habilidad'),
+		);
 	}
 
 	/**
