@@ -319,7 +319,7 @@ class AccionesController extends Controller
 		}
 	}
 
-	/**
+	/** Expulsar a un jugador participante en una accion grupal.
 	 * Los recursos que puso el jugador le son devueltos
 	 * (comprobando limite de animo e influencias)
 	 * 
