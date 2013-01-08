@@ -365,12 +365,10 @@ public class Partido
 			//Calcula la nueva 'posicion' del equipo
 			$criteria= new CDbCriteria();
 			$criteria->select='MAX(posicion) as posMax';
-			$criteria->condition='puntos>=:puntosAct';
+			$criteria->condition='puntos>:puntosAct';
 			$criteria->params=array(':puntosAnt'=>$puntosActAnt);
 			$clas= Clasificacion::model()->find($criteria);
-			$posSig= $clas['posMax'];//posSig es la posicion del equipo inmediatamente superior (puede ser igual)
-			$clas= Clasificacion::model()->findByAttributes(posicion=>$posSig);
-			$eq['posicion']= ($clas['puntos']==$puntosAct)? $posSig: $posSig+1;
+			$eq['posicion']= ($clas==null)? 1: $clas['posMax']+1;
 
 			$eq->save();
 			$trans->commit();
