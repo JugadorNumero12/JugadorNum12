@@ -70,7 +70,7 @@ class UsuariosController extends Controller
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
 
         //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
+        $idEquipo = Yii::app()->user->usAfic;
         $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
 
         //Saco los datos de los recursos del usuario

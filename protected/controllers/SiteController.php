@@ -111,11 +111,12 @@ class SiteController extends Controller
 	/**
 	 * Esta acción debería desaparecer en producción
 	 */
-	public function actionFormula($dn=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
+	public function actionFormula($dn=0, $am=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
 	{
 		// Creamos el array de parámetros a partir de los datos GET
 		$params = array(
  			'difNiv'    => (double) $dn,
+ 			'aforoMax'  => (double) $am,
  			'aforoLoc'  => (double) $al,
 			'aforoVis'  => (double) $av,
 			'moralLoc'  => (double) $ml,

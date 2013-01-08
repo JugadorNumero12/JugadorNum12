@@ -6,20 +6,28 @@
  * Perfil asociado: Movedora
  *
  * Efectos:
- *  Aumenta el factor de partido "moral"
- *  Aumenta el factor de partido "ofensivo_local"
+ *  Aumenta el factor de partido "moral_propio"
+ *  Aumenta el factor de partido "ofensivo_propio"
  */
-public class HablarSpeaker extends AccionSingleton
+class HablarSpeaker extends AccionSingleton
 {
 	/* Aplicar los efectos de la accion */
-	public void ejecutar()
+	public function ejecutar($idAccion)
 	{
-		/* TODO */
-	}
 
-	/* Accion de partido: metodo vacio */
-	public void finalizar()
-	{
-		/* VACIO */
+		$trans = Yii::app()->db->beginTransaction();
+		try {
+			$accion = Accion::model()->findByPk($idAccion);
+			
+			// FIXME Cambiar los parámetros
+			Helper::getInstance()->aumentar_param(/* params */0, $moral);
+			Helper::getInstance()->aumentar_param(/* params */0, $moral);
+
+			$trans->commit();
+
+		} catch ( Exception $exc ) {
+			$trans->rollback();
+			throw $exc;
+		}
 	}
 }
