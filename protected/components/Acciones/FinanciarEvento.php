@@ -39,7 +39,7 @@ public class FinanciarEvento extends AccionSingleton
   }
 
   /* Restaurar valores tras el partido */
-  public function finalizar()
+  public function finalizar($id_accion)
   {
   	//Aquí no hace falta hacer nada ya que al acabar el partido ya no importan sus valores
   }	
