@@ -79,5 +79,19 @@
 			</td>
 		<?php endforeach ?>
 	</tr>
-<?php endforeach ?>
+	<?php endforeach ?>
+</table>
+
+<table id="partido-sim" style="font-size: 9px">
+	<?php foreach ( $estados as $i=>$v ): ?>
+	<tr>
+		<th><?php echo $i ?></th>
+
+		<?php foreach ( $v as $j=>$e ):?>
+			<td style="text-align: center; background-color: <?php echo $estColors[$i][$j] ?>">
+				<?php echo $e . ( ($j==0 || abs($le)==10 ) ? '' : ' (' . round($probs[$le][$e]*100, 1) . '%)') ?>
+			</td>
+		<?php $le = $e; endforeach ?>
+	</tr>
+	<?php endforeach ?>
 </table>

@@ -115,16 +115,11 @@ class SiteController extends Controller
 	{
 		// Creamos el array de parámetros a partir de los datos GET
 		$params = array(
- 			'difNiv'    => (double) $dn,
- 			'aforoMax'  => (double) $am,
- 			'aforoLoc'  => (double) $al,
-			'aforoVis'  => (double) $av,
-			'moralLoc'  => (double) $ml,
-			'moralVis'  => (double) $mv,
-			'ofensLoc'  => (double) $ol,
-			'ofensVis'  => (double) $ov,
-			'defensLoc' => (double) $dl,
-			'defensVis' => (double) $dv,
+ 			'difNiv'    => (double) $dn, 'aforoMax'  => (double) $am,
+ 			'aforoLoc'  => (double) $al, 'aforoVis'  => (double) $av,
+			'moralLoc'  => (double) $ml, 'moralVis'  => (double) $mv,
+			'ofensLoc'  => (double) $ol, 'ofensVis'  => (double) $ov,
+			'defensLoc' => (double) $dl, 'defensVis' => (double) $dv,
 		);
 
 		// Obtenemos los pesos y las probabilidades de todos los estados
@@ -146,6 +141,34 @@ class SiteController extends Controller
 			}
 		}
 
+		// Simulamos un partido con todos los estados iniciales
+		for ( $i = -9; $i <= 9; $i++ ) {
+			$estados[$i] = array($i);
+			$params['estado'] = $i;
+
+			for ( $t = 0; $t < 12; $t++ ) {
+				$estSig = Formula::siguienteEstado($params);
+
+				$params['estado'] = $estSig;
+				$estados[$i][] = $estSig;
+			}
+		}
+
+		foreach ($estados as $i=>$v) {
+			foreach ($v as $ii=>$vv) {
+				if ( $vv < 0 ) {
+					$nc = (int)( 255 * (1 + $vv/10) );
+					$c = "rgb(255,$nc,$nc)";
+				} else if ( $vv > 0) {
+					$nc = (int)( 255 * (1 - $vv/10) );
+					$c = "rgb($nc,$nc,255)";
+				} else {
+					$c = 'white';
+				}
+				$estColors[$i][$ii] = ($c);
+			}
+		}
+
 		// Dibujamos la vista
 		unset($params['estado']);
 		
@@ -154,8 +177,9 @@ class SiteController extends Controller
 			'probs'=>$probs,
 			'pesos'=>$pesos,
 			'colors'=>$colors,
-			'params'=>$params
+			'params'=>$params,
+			'estados'=>$estados,
+			'estColors'=>$estColors
 		));
-
 	}
 }
