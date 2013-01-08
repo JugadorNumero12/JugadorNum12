@@ -331,9 +331,9 @@ public class Partido
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
 				if(array_key_exists($user, $participantes))//FIXME a saber si esto funciona
-					$rec['animo']+= 3*$bonusAmbiente;
+					$rec['animo']= min(3*$bonusAmbiente+$rec['animo'], rec['animo_max']);
 				else
-					$rec['animo']+= $bonusAmbiente;
+					$rec['animo']= min(  $bonusAmbiente+$rec['animo'], rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
