@@ -8,7 +8,7 @@
 
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
-				'id'=>'clave-form',
+				'id'=>'acciones-grupales-form',
 			    'enableAjaxValidation'=>false,
 			    'enableClientValidation'=>true,
 			    'clientOptions'=>array(
@@ -17,25 +17,34 @@
 ?>
 
 <h1>Participar en la acción grupal: <?php echo $habilidad['nombre']; ?></h1>
-<h2> Aportar recursos </h2>
-
-<form action="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$datosAccion['id_accion_grupal']));?>" method="post">
-	<label> 
-		<b> Dinero: </b>
-		<input type="text" name="dinero" value="0" />
-	</label>
-
-	<label>
-		<b> Animo: </b>
-		<input type="text" name="animo" value="0" />
-	</label>
-
-	<label>
-		<b> Influencia: </b>
-		<input type="text" name="influencias" value="0" />
-	</label>
-
-	<input type="submit" value="Participar"/>
-</form>
+<table cellspacing="5px">
+	  <tr>
+	    <td colspan="2" align="center"><span class="under">Aportar recursos</span></td>
+	  </tr>
+	  <tr>
+	    <td align="center"><?php echo $form->labelEx($participacion,'Dinero'); ?>:</td>
+	    <td><?php echo $form->textField($participacion,'dinero_nuevo'); ?></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2"><?php echo $form->error($participacion,'dinero_nuevo'); ?></td>
+	  </tr>
+	  <tr>
+	    <td align="center"><?php echo $form->labelEx($participacion,'Animo'); ?>:</td>
+	    <td><?php echo $form->textField($participacion,'animo_nuevo'); ?></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2"><?php echo $form->error($participacion,'animo_nuevo'); ?></td>
+	  </tr>
+	  <tr>
+	    <td align="center"><?php echo $form->labelEx($participacion,'Influencia'); ?>:</td>
+	    <td><?php echo $form->textField($participacion,'influencia_nueva'); ?></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2"><?php echo $form->error($participacion,'influencia_nueva'); ?></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Participar');?></td>
+	  </tr>
+	</table>
 
 <?php $this->endWidget(); ?>

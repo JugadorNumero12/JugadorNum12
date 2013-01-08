@@ -17,6 +17,11 @@ class Participaciones extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Participaciones the static model class
 	 */
+
+	public $dinero_nuevo;
+	public $animo_nuevo;
+	public $influencia_nueva;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -43,6 +48,11 @@ class Participaciones extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('acciones_grupales_id_accion_grupal, usuarios_id_usuario, dinero_aportado, influencias_aportadas, animo_aportado', 'safe', 'on'=>'search'),
+			//Reglas para Participar
+			array('dinero_nuevo, animo_nuevo, influencia_nueva', 'required'),
+			array('dinero_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Dinero debe ser un numero >= 0'),			
+			array('animo_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Animo debe ser un numero >= 0'),
+			array('influencia_nueva', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Influencia debe ser un numero >= 0'),
 		);
 	}
 
