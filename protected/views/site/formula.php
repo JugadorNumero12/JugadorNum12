@@ -8,6 +8,7 @@
  * @var $probs Matriz de probabilidades
  * @var $pesos Matriz de pesos
  * @var $colors Matriz con los colores de las celdas según probabilidad
+ * @var $params Parámetros usados en la última petición
  */
 ?>
 <table id="la-formula" style="font-size: 9px">

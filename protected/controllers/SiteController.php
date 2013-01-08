@@ -113,20 +113,20 @@ class SiteController extends Controller
 	 */
 	public function actionFormula($dn=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
 	{
+		// Creamos el array de parámetros a partir de los datos GET
 		$params = array(
- 			'difNiv' => $dn,
- 			'aforoLoc' => $al,
-			'aforoVis' => $av,
-			'moralLoc' => $ml,
-			'moralVis' => $mv,
-			'ofensLov' => $ol,
-			'ofensVis' => $ov,
-			'defensLoc' => $dl,
-			'defensVis' => $dv,
+ 			'difNiv'    => (double) $dn,
+ 			'aforoLoc'  => (double) $al,
+			'aforoVis'  => (double) $av,
+			'moralLoc'  => (double) $ml,
+			'moralVis'  => (double) $mv,
+			'ofensLov'  => (double) $ol,
+			'ofensVis'  => (double) $ov,
+			'defensLoc' => (double) $dl,
+			'defensVis' => (double) $dv,
 		);
 
-		$pesos = array();
-		$probs = array();
+		// Obtenemos los pesos y las probabilidades de todos los estados
 		for ( $i = -9; $i <= 9; $i++ ) {
 			$params['estado'] = $i;
 
@@ -134,7 +134,7 @@ class SiteController extends Controller
 			$probs[$i] = Formula::probabilidades($params);
 		}
 
-		$colors = array();
+		// Calculamos los colores para la tabla
 		foreach ( $probs as $i=>$v ) {
 			$max = max($v);
 			foreach ( $v as $ii=>$vv ) {
@@ -145,19 +145,16 @@ class SiteController extends Controller
 			}
 		}
 
+		// Dibujamos la vista
+		unset($params['estado']);
+		
 		$this->layout = "main";
 		$this->render('formula', array(
 			'probs'=>$probs,
 			'pesos'=>$pesos,
-			'colors'=>$colors
+			'colors'=>$colors,
+			'params'=>$params
 		));
 
-		// Simulación cutre del partido
-		$params['estado'] = 0;
-		for ( $i=0; $i<32; $i++){
-			echo '('.$params['estado'] . ') &rarr; ';
-			$params['estado'] = Formula::siguienteEstado($params);
-		}
-		echo '(' . $params['estado'] . ')';
 	}
 }
