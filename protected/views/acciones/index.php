@@ -3,7 +3,7 @@
 // @var $recursosUsuario
 ?>
 
-<h1>Acciones del usuario</h1>
+<h1>Acciones desbloqueadas por el usuario</h1>
 
 <?php 
 foreach ( $acciones as $accion ){ ?>

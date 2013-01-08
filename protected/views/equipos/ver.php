@@ -1,6 +1,7 @@
 <?php
 /* @var $equipos */
 /* @var $grupales */
+/* @var $mi_equipo */
 
 // codigo PHP
 
@@ -36,7 +37,9 @@
 <?php 
 	if(!$mi_equipo){
 		echo "Pulsa el botón para cambiarte a este equipo";	
+		//echo CHtml::button('Cambiar de equipo', array('submit' => array('equipos/ver', 'id_equipo'=>$equipos->id_equipo)));
+		//echo CHtml::link('Link Text',array('equipos/cambiar','id_equipo'=>$equipos->id_equipo));
+		//EquiposController::actionCambiar($equipos->id_equipo);
 ?>
-	<button type="button" onClick="actionCambiar($equipos->id_equipo)">Cambiar de equipo</button>
-<?php }
-?>
+<!-- 	<button id="b" type="button" onClick="EquiposController::actionCambiar($equipos->id_equipo)";>Cambiar de equipo</button> -->
+<!-- <?php } ?> -->

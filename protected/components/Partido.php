@@ -31,6 +31,26 @@ public class Partido
 	private $moral_local;
 	private $moral_visitante;
 
+	//atributo redundante añadido para hacer busquedas automaticas
+	/*private $lista_atributos = array(
+		'local' => array(
+			'id'=> $id_local,
+			'aforo'=> $aforo_local,
+			'ofensivo'=> $ofensivo_local,
+			'defensivo'=> $defensivo_local,
+			'goles'=> $goles_local,
+			'moral'=> $moral_local
+		),
+		'visitante' => array(
+			'id'=> $id_visitante,
+			'aforo'=> $aforo_visitante,
+			'ofensivo'=> $ofensivo_visitante,
+			'defensivo'=> $defensivo_visitante,
+			'goles'=> $goles_visitante,
+			'moral'=> $moral_visitante
+			//FIXME comprovar que => asigna por referencia
+		),*/
+
 	/**
 	 * Constructora: Inicializar 
 	 * 	id_partido,
@@ -40,7 +60,44 @@ public class Partido
 	 */
 	public Partido($id_partido)
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito 
+        $transaction = Yii::app()->db->beginTransaction();
+        try{
+        	$partido = Partidos::model()->findByPk($id_partido);
+        	if ($partido != null){
+        		//$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+        		//$visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
+
+        		$this->$id_partido = $id_partido;
+        		$this->$id_local = $partido->$equipos_id_equipo_1;
+        		$this->$id_visitante = $partido->$equipos_id_equipo_2;
+        		$this->$turno = 0;
+        		$this->$cronica = $partido->$cronica;
+        		$this->$ambiente = $partido->$ambiente;
+        		$this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
+        		$this->$aforo_local = $partido->$aforo_local;
+        		$this->$aforo_visitante = $partido->$aforo_visitante;
+
+        		/*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
+        		$ofensivo_local = $local->$factor_ofensivo;
+        		$ofensivo_visitante = $visitante->$factor_ofensivo;
+        		$defensivo_local = $local->$factor_defensivo;
+        		$defensivo_visitante = $visitante->$factor_defensivo;
+
+        		$goles_local = 0;
+        		$goles_visitante = 0;
+
+        		//TODO
+
+        		$estado = 0;
+        		$moral_local = 0;
+        		$moral_visitante = 0;
+        		
+        		$transaction->commit();
+        	}
+        }catch(Exception $e){
+        	$transaction->rollback();
+        }
 	}
 
 	/**
@@ -50,7 +107,26 @@ public class Partido
  	 */
 	private void cargaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$ofensivo_local = $turno->$ofensivo_local;
+				$ofensivo_visitante = $turno->$ofensivo_visitante;
+				$defensivo_local = $turno->$defensivo_local;
+				$defensivo_visitante = $turno->$defensivo_visitante;
+
+				$goles_local = $turno->goles_local;
+				$goles_visitante = $turno->$goles_visitante;
+				$estado = $turno->estado;
+				$moral_local = $turno->$moral_local;
+				$moral_visitante = $turno->$moral_visitante;
+				$transaction->commit();
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 	
 	/*
@@ -58,7 +134,29 @@ public class Partido
 	 */
 	private void guardaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito + aumento turno?
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$turno->$ofensivo_local = $ofensivo_local;
+				$turno->$ofensivo_visitante = $ofensivo_visitante;
+				$turno->$defensivo_local = $defensivo_local;
+				$turno->$defensivo_visitante = $defensivo_visitante;
+
+				$turno->goles_local = $goles_local;
+				$turno->$goles_visitante = $goles_visitante;
+				$turno->estado = $estado;
+				$turno->$moral_local = $moral_local;
+				$turno->$moral_visitante = $moral_visitante;
+				if($turno->save()){
+					$transaction->commit();
+				}
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
+
 	}
 
 	/**
@@ -75,6 +173,12 @@ public class Partido
 		/* ALEX */
 		// NOTA: en la tabla <<equipos>> estan los atributos
 		// nivel_equipo, factor_ofensivo y factor_defensivo
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 
 	/*
@@ -83,14 +187,65 @@ public class Partido
 	 * para que las acciones sepan a qué turno tienen que ser asociadas.
 	 * Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
 	 */
-	private void recogeAccionesTurno()
+	/*private void recogeAccionesTurno()
 	{
-		/* MARCOS */
+		// MARCOS
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			//consultar las acciones guardadas para este turno
+			$acciones = AccionesTurno::model()->findAllByAtributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			
+			//abrir la tabla del turno para guardar los resultados
+			$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
+			
+			//para cada accion ejecutada
+			foreach ($acciones as $acc) {
+				$id_habilidad = $acc('habilidades_id_habilidad')
 
-		//consultar en accionesturno con la id de partido y el turno, las acciones realizadas
-		//consultar el efecto de las acciones en components/Acciones/tabla_efectos.php
-		//actualizar los artibutos de Partido, y la tabla partido
-	}
+				//busco el código (nombre de la habilidad)
+				$cod = Habilidades::model()->findByPk($id_habilidad);
+				if($cod == null){
+					$log=fopen("runtime/application.log","a");
+					fwrite($log, "Run time error: Habilidades::codigo of habilidad ".$id_habilidad." not found. [turno ".$turno."| partido ".$id_partido."]\n");
+					fclose($log);
+					break;//si la habilidad no existe me la salto.
+				}
+
+				//guardo en accLocal si la han ejecutado los locales o los visitantes
+				$id_equipo = $acc('equipos_id_equipo')
+				if($id_equipo == $id_local) $accLocal = true;
+				elseif($id_equipo == $id_visitante) $accLocal = false;
+				else{
+					$log=fopen("runtime/application.log","a");
+					fwrite($log, "Run time error: encontrada una accion del equipo ".$id_equipo.". [turno ".$turno."| partido ".$id_partido."]\n");
+					fclose($log);
+					break;//si se ha colado una acción de un equipo que no participa la salto.
+				}
+
+				//busco los artibutos del equipo correspondiente
+				$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
+
+				//compruebo las keys de datos_acciones y actualizo las que corresponden a mis atributos
+				foreach (array_keys($datos_acciones['cod']) as $atributo) 
+					if( array_key_exists($atributo, $lista_de_equipo) ){
+						//sumo porque no se que operador se aplica
+						$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
+					
+						//actualizar la tabla
+						$tablaTurno[$atributo.($accLocal?'_local':'_visistante')] = $lista_de_equipo[$atributo];
+					}
+
+			}
+			//salvo los cambios de todas las acciones
+			$tablaTurno->save();
+
+			$trans->commit();
+
+		}catch(Exception $exc) {
+    		$trans->rollback();
+    		throw $exc;
+		}
+	}*/
 	
 	/*
 	 * En función de los datos recogidos para este turno y el estado anterior,
@@ -148,15 +303,82 @@ public class Partido
 	 */
 	private void generaBonificacion()
 	{
-		/* MARCOS */
+		/* MARCOS 
+		$bonifGanador = 28;
+		$bonifEmpate = 14;
+		$bonifPerdedor = 7;*/
+		
+		if($goles_local>$goles_visitante){
+			bonifAnimo($id_local, 28);
+			bonifAnimo($id_visitante, 7);
+		}elseif($goles_visitante>$goles_local){
+			bonifAnimo($id_visitante, 28);
+			bonifAnimo($id_local, 7);
+		}else{
+			bonifAnimo($id_local, 14);
+			bonifAnimo($id_visitante, 14);
+		}
 	}
-
+	/*
+	 * Se usa exclusivamente como paso intermedio de generaBonificacion.
+	 *
+	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
+	 * bonificacion = [(1.5^(ambiente+1))/(4+.7*ambiente)] * bonus * (haParticipado?3:1)
+	 */
+	private void bonifAnimo($equipo, int $bonus)
+	{
+		/*$bonifParticipante = 3;
+		  $bonifNoParticipante = 1*/
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
+			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
+			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
+			
+			foreach ($usuarios as $user){//Esta bonificacion se le da a todos
+				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
+				$rec['animo']= min(  $bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec->save();
+			}
+			foreach ($participantes as $user){//Esta se le da solo a los participantes
+				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
+				$rec['animo']= min(2*$bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec->save();
+			}
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+		}
+	}
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
 	private void actualizaClasificacion()
 	{
-		/* MARCOS */
+		/* MARCOS */ 
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			if($goles_local>$goles_visitante){
+				$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$eq['puntos']+=3;
+				$eq->save();
+			}elseif($goles_visitante>$goles_local){
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=3;
+				$clas->save();
+			}else{
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+				$clas['puntos']+=1;
+				$clas->save();
+				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+				$clas['puntos']+=1;
+				$clas->save();
+			}
+			//TODO reordenar las clasificaciones
+			$trans->commit();
+		}catch(Exception $exc){
+			$trans->roollback();
+		}
 	}
 
 	public void jugarse()
