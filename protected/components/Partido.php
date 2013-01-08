@@ -48,8 +48,13 @@ public class Partido
 			'defensivo'=> $defensivo_visitante,
 			'goles'=> $goles_visitante,
 			'moral'=> $moral_visitante
+<<<<<<< HEAD
 		),*/
 		//FIXME comprovar que => asigna por referencia
+=======
+		),
+		//FIXME comprobar que => asigna por referencia
+>>>>>>> c27ae4953ac0571ea2903723addfc9ffe7637456
 	);
 
 	/**
@@ -61,7 +66,44 @@ public class Partido
 	 */
 	public Partido($id_partido)
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito 
+        $transaction = Yii::app()->db->beginTransaction();
+        try{
+        	$partido = Partidos::model()->findByPk($id_partido);
+        	if ($partido != null){
+        		//$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+        		//$visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
+
+        		$this->$id_partido = $id_partido;
+        		$this->$id_local = $partido->$equipos_id_equipo_1;
+        		$this->$id_visitante = $partido->$equipos_id_equipo_2;
+        		$this->$turno = 0;
+        		$this->$cronica = $partido->$cronica;
+        		$this->$ambiente = $partido->$ambiente;
+        		$this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
+        		$this->$aforo_local = $partido->$aforo_local;
+        		$this->$aforo_visitante = $partido->$aforo_visitante;
+
+        		/*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
+        		$ofensivo_local = $local->$factor_ofensivo;
+        		$ofensivo_visitante = $visitante->$factor_ofensivo;
+        		$defensivo_local = $local->$factor_defensivo;
+        		$defensivo_visitante = $visitante->$factor_defensivo;
+
+        		$goles_local = 0;
+        		$goles_visitante = 0;
+
+        		//TODO
+
+        		$estado = 0;
+        		$moral_local = 0;
+        		$moral_visitante = 0;
+        		
+        		$transaction->commit();
+        	}
+        }catch(Exception $e){
+        	$transaction->rollback();
+        }
 	}
 
 	/**
@@ -71,7 +113,26 @@ public class Partido
  	 */
 	private void cargaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$ofensivo_local = $turno->$ofensivo_local;
+				$ofensivo_visitante = $turno->$ofensivo_visitante;
+				$defensivo_local = $turno->$defensivo_local;
+				$defensivo_visitante = $turno->$defensivo_visitante;
+
+				$goles_local = $turno->goles_local;
+				$goles_visitante = $turno->$goles_visitante;
+				$estado = $turno->estado;
+				$moral_local = $turno->$moral_local;
+				$moral_visitante = $turno->$moral_visitante;
+				$transaction->commit();
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 	
 	/*
@@ -79,7 +140,29 @@ public class Partido
 	 */
 	private void guardaEstado()
 	{
-		/* ALEX */
+		/* ALEX */ //poner bonito + aumento turno?
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+			$partido = Partidos::findByPk($id_partido);
+			if($partido != null){
+				$turno->$ofensivo_local = $ofensivo_local;
+				$turno->$ofensivo_visitante = $ofensivo_visitante;
+				$turno->$defensivo_local = $defensivo_local;
+				$turno->$defensivo_visitante = $defensivo_visitante;
+
+				$turno->goles_local = $goles_local;
+				$turno->$goles_visitante = $goles_visitante;
+				$turno->estado = $estado;
+				$turno->$moral_local = $moral_local;
+				$turno->$moral_visitante = $moral_visitante;
+				if($turno->save()){
+					$transaction->commit();
+				}
+			}
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
+
 	}
 
 	/**
@@ -96,6 +179,12 @@ public class Partido
 		/* ALEX */
 		// NOTA: en la tabla <<equipos>> estan los atributos
 		// nivel_equipo, factor_ofensivo y factor_defensivo
+		$transaction = Yii::app()->db->beginTransaction();
+		try{
+
+		}catch(Exception $e){
+			$transaction->rollback();
+		}
 	}
 
 	/*

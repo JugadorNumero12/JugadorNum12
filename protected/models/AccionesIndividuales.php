@@ -55,9 +55,9 @@ class AccionesIndividuales extends CActiveRecord
 		/* PEDRO */
 		return array(
 			//Relación entre "acciones_individuales" y "habilidades"
-			'habilidades' => array(self::BELONGS_TO, 'Habilidades', 'habilidades_id_habilidad');
+			'habilidades' => array(self::BELONGS_TO, 'Habilidades', 'habilidades_id_habilidad'),
 			//Relación entre "acciones_individuales" y "usuarios"
-			'usuarios' => array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario');
+			'usuarios' => array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario')
 		);
 	}
 
