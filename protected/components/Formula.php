@@ -71,6 +71,8 @@ class Formula
 	private static function calcMedia (array $params) {
 		// Inicialmente, la media es el estado actual
 		$avg = $params['estado'];
+
+		// Acercamos la media al punto de equilibrio	
 		$factDifNiv = 0.4;
 		$avg += ($params['difNiv'] - $params['estado']) * $factDifNiv;
 
@@ -100,7 +102,7 @@ class Formula
 			//} else if ( $i == 10 ) {
 			//	$p = (1 - self::gauss( 9.5, $avg, $stdev ));
 			//} else {
-				$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
+			$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
 			//}
 
 			$pesos[$i] = (int) (($p * self::PESOS_MULT) + self::PESOS_MIN);
