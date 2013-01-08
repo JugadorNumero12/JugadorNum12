@@ -319,58 +319,42 @@ public class Partido
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->roollback();
+			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
 	}
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
 	private void actualizaClasificacion()
-	{
+	{			
 		/* MARCOS */
-		if($goles_local>$goles_visitante){
-			sumaCalisf($id_local, 3);
-			$trans = Yii::app()->db->beginTransaction();
-			try{
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$eq['ganados']+=1;
-				$eq->save();
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$eq['perdidos']+=1;
-				$eq->save();
-				$trans->commit();			
-			}catch(Exception $exc){
-				$trans->roollback();
+		//FIXME comprobar que se puede llamar a una funcion con transaccion dentro de otra transaccion
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$loc=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+			$vis=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+			
+			if($goles_local>$goles_visitante){
+				sumaCalisf($id_local, 3);
+				$loc['ganados']+=1;
+				$vis['perdidos']+=1;
+			}elseif($goles_visitante>$goles_local){
+				sumaCalisf($id_visitante, 3);
+				$loc['perdidos']+=1;
+				$vis['ganados']+=1;	
+			}else{
+				sumaCalisf($id_local, 1);
+				sumaCalisf($id_visitante, 1);
+				$loc['empatados']+=1;
+				$vis['empatados']+=1;	
 			}
-		}elseif($goles_visitante>$goles_local){
-			sumaCalisf($id_visitante, 3);
-			$trans = Yii::app()->db->beginTransaction();
-			try{
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$eq['ganados']+=1;
-				$eq->save();
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$eq['perdidos']+=1;
-				$eq->save();
-				$trans->commit();			
-			}catch(Exception $exc){
-				$trans->roollback();
-			}
-		}else{
-			sumaCalisf($id_local, 1);
-			sumaCalisf($id_visitante, 1);
-			$trans = Yii::app()->db->beginTransaction();
-			try{
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$eq['empatados']+=1;
-				$eq->save();
-				$eq=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$eq['empatados']+=1;
-				$eq->save();
-				$trans->commit();			
-			}catch(Exception $exc){
-				$trans->roollback();
-			}
-		}
+			$loc->save();
+			$vis->save();
+			$trans->commit();	
+	}catch(Exception $exc){
+		$trans->roollback();
+		throw new Exception("Error al recalcular la clasificación", 1);
+	}
 
 	}
 
@@ -411,6 +395,7 @@ public class Partido
 
 		}catch(Exception $exc){
 			$trans->roollback();
+			throw $exc;	
 		}
 	}
 
