@@ -5,40 +5,12 @@ class Formula
 	const PESOS_MULT = 2048;
 	const PESOS_MIN = 1;
 
-	// private $estado;
- // 	private	$difNiveles;
- // 	private $aforoL;
-	// private $aforoV;
-	// private $moralL;
-	// private $moralV;
-	// private $ofL;
-	// private $ofV;
-	// private $defL;
-	// private $defV;
-
-	// /** Constructora */
-	// public function __construct ( $estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-	// 				 $moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-	// 				 $defensivo_local ,$defensivo_visitante )
-	// {
-	// 	$this->estado = $estado;
- // 		$this->difNiveles = $dif_niveles;
- // 		$this->aforoL = $aforo_local;
-	// 	$this->aforoV = $aforo_visitante;
-	// 	$this->moralL = $moral_local;
-	// 	$this->moralV = $moral_visitante;
-	// 	$this->ofL = $ofensivo_local;
-	// 	$this->ofV = $ofensivo_visitante;
-	// 	$this->defL  = $defensivo_local;
-	// 	$this->defV = $defensivo_visitante;
-	// }
-
 	/**
 	 * @param $x Punto en el que calcular la normal
 	 * @return La normal acumulada en el punto $x
 	 */
 	// Algoritmo encontrado en StackOverflow para calcular la normal
-	// acumulada en un punto. Viva StackOverflow
+	// acumulada en un punto. Viva StackOverflow.
 	private static function cumnormdist($x)
 	{
 		$b1 =  0.319381530;
