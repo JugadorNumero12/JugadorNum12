@@ -111,22 +111,37 @@ class SiteController extends Controller
 	/**
 	 * Esta acción debería desaparecer en producción
 	 */
-	public function actionFormula()
+	public function actionFormula($dn=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
 	{
-		$f = new Formula(0,0,0,0,0,0,0,0,0,0);
+		$params = array(
+ 			'difNiv' => $dn,
+ 			'aforoLoc' => $al,
+			'aforoVis' => $av,
+			'moralLoc' => $ml,
+			'moralVis' => $mv,
+			'ofensLov' => $ol,
+			'ofensVis' => $ov,
+			'defensLoc' => $dl,
+			'defensVis' => $dv,
+		);
 
 		$pesos = array();
 		$probs = array();
-		for ( $i = -9; $i <= 9; $i++ ) {	
-			$pesos[$i] = $f->pesos($i);
-			$probs[$i] = $f->probabilidades($i);
+		for ( $i = -9; $i <= 9; $i++ ) {
+			$params['estado'] = $i;
+
+			$pesos[$i] = Formula::pesos($params);
+			$probs[$i] = Formula::probabilidades($params);
 		}
 
 		$colors = array();
 		foreach ( $probs as $i=>$v ) {
+			$max = max($v);
 			foreach ( $v as $ii=>$vv ) {
-				$c = (int) round(255 - $vv*255);
-				$colors[$i][$ii] = 'rgb(255,' . $c . ',' . $c . ')';
+				$r = 255;
+				$g = 255 - (int) round($vv*255);
+				$b = 255 - (int) round(($vv/$max)*255);
+				$colors[$i][$ii] = "rgb($r,$g,$b)";
 			}
 		}
 
@@ -136,5 +151,13 @@ class SiteController extends Controller
 			'pesos'=>$pesos,
 			'colors'=>$colors
 		));
+
+		// Simulación cutre del partido
+		$params['estado'] = 0;
+		for ( $i=0; $i<32; $i++){
+			echo '('.$params['estado'] . ') &rarr; ';
+			$params['estado'] = Formula::siguienteEstado($params);
+		}
+		echo '(' . $params['estado'] . ')';
 	}
 }

@@ -23,8 +23,8 @@
 		<th><?php echo $i ?></th>
 
 		<?php foreach ( $probs[$i] as $j=>$p ):?>
-			<td style="background-color: <?php echo $colors[$i][$j] ?>">
-				<?php echo (int)($p*100) ?>% (<?php echo (int) $pesos[$i][$j] ?>)
+			<td style="text-align: center; background-color: <?php echo $colors[$i][$j] ?>">
+				<?php echo round($p*100, 1) ?>%<br/>(<?php echo (int) $pesos[$i][$j] ?>)
 			</td>
 		<?php endforeach ?>
 	</tr>
