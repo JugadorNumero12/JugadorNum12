@@ -48,14 +48,8 @@ public class Partido
 			'defensivo'=> $defensivo_visitante,
 			'goles'=> $goles_visitante,
 			'moral'=> $moral_visitante
-<<<<<<< HEAD
+			//FIXME comprovar que => asigna por referencia
 		),*/
-		//FIXME comprovar que => asigna por referencia
-=======
-		),
-		//FIXME comprobar que => asigna por referencia
->>>>>>> c27ae4953ac0571ea2903723addfc9ffe7637456
-	);
 
 	/**
 	 * Constructora: Inicializar 
