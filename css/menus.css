@@ -1,5 +1,10 @@
 @charset "utf-8";
+
+
+
+
 /* Some stylesheet reset */
+/*
 #cssmenu > ul{
 	list-style: none;
 	margin: 0;
@@ -8,14 +13,12 @@
 	line-height: 1;
 }
 
-/* The container */
 #cssmenu > ul {
 	display: block;
 	position: relative;
 	width: 150px;
 }
 
-	/* The list elements which contain the links */
 	#cssmenu > ul li {
 		display: block;
 		position: relative;
@@ -24,9 +27,7 @@
 		width: 150px;	
 	}
 
-		/* General link styling */
 		#cssmenu > ul li a {
-			/* Layout */
 			display: block;
 			position: relative;
 			margin: 0;
@@ -35,7 +36,6 @@
 			padding: 11px 20px;
 			width: 110px;
 
-			/* Typography */
 			font-family:  Helvetica, Arial, sans-serif;
 			color: #3dafea;
 			text-decoration: none;
@@ -44,18 +44,15 @@
 			font-size: 13px;
 			font-weight: 300;
 
-			/* Background & effects */
 			background: #eaeaea;
 		}
 
-		/* Rounded corners for the first link of the menu/submenus */
 		#cssmenu > ul li:first-child>a {
 			border-top-left-radius: 4px;
 			border-top-right-radius: 4px;
 			border-top: 0;
 		}
 
-		/* Rounded corners for the last link of the menu/submenus */
 		#cssmenu > ul li:last-child>a {
 			border-bottom-left-radius: 4px;
 			border-bottom-right-radius: 4px;
@@ -63,7 +60,6 @@
 		}
 
 
-		/* The hover state of the menu/submenu links */
 		#cssmenu > ul li>a:hover, #cssmenu > ul li:hover>a {
 			color: #fff;
 			text-shadow: 0 1px 0 rgba(0, 0, 0, .3);
@@ -75,7 +71,6 @@
 			border-color: transparent;
 		}
 
-		/* The arrow indicating a submenu */
 		#cssmenu > ul .has-sub>a::after {
 			content: '';
 			position: absolute;
@@ -89,7 +84,6 @@
 			border-left: 4px solid #3dafea; 
 		}
 
-		/* The same arrow, but with a darker color, to create the shadow effect */
 		#cssmenu > ul .has-sub>a::before {
 			content: '';
 			position: absolute;
@@ -103,7 +97,6 @@
 			border-left: 4px solid #fff;
 		}
 
-		/* Changing the color of the arrow on hover */
 		#cssmenu > ul li>a:hover::after, #cssmenu > ul li:hover>a::after {
 			border-left: 4px solid #fff;
 		}
@@ -113,7 +106,6 @@
 		}
 
 	
-		/* THE SUBMENUS */
 		#cssmenu > ul ul {
 			position: absolute;
 			left: 250px;
@@ -127,8 +119,8 @@
 			-ms-transition: opacity .3s ease-in;
 		}
 
-		/* Showing the submenu when the user is hovering the parent link */
 		#cssmenu > ul li:hover>ul {
 			top: 0px;
 			opacity: 1;
 		}
+		*/

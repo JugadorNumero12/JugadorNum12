@@ -1,9 +1,7 @@
 @charset "utf-8";
-/*GENERAL DIVISIONS*/
+
+/*
 #genLayer {
-	/*border:thin;
-	border-color:#009900;
-	border-style:solid;*/
     width: 1024px;
     margin: 0 auto;
 	}
@@ -14,34 +12,26 @@
 #headBox {
     padding:10px;
     text-align: center;
-    /*background:#fdd;*/
 	}
 #bottomBox {
     clear:both;
     padding:10px;
-    /*background:#ff9;*/
     text-align: center;
 }
 #leftMenuBar {
     float:left;
     width:150px;
-    /*background:#bfb;*/
 }
 #rightMenuBar {
     float:left;
     width:150px;
-    /*background:#dff;*/
 }
 #contentSection {
     float:left;
     width:724px;
     background:#ddf;
 }
-/*LOGIN LAYERS*/
 #loginGenLayer {
-	/*border:thin;
-	border-color:#009900;
-	border-style:solid;*/
     width: 900px;
     margin: 0 auto;
 	}	
@@ -61,7 +51,6 @@
     padding-bottom: 20px;
     background:#dff;
 }
-/*CSS PARA PAGINA DE REGISTRO*/
 #leftSideReg {
     float:left;
     width:150px;
@@ -75,4 +64,4 @@
     padding-top: 20px;
     padding-bottom: 20px;
     background:#dff;
-}
+}*/
