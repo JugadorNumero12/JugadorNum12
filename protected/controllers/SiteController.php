@@ -107,4 +107,34 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+	/**
+	 * Esta acción debería desaparecer en producción
+	 */
+	public function actionFormula()
+	{
+		$f = new Formula(0,0,0,0,0,0,0,0,0,0);
+
+		$pesos = array();
+		$probs = array();
+		for ( $i = -9; $i <= 9; $i++ ) {	
+			$pesos[$i] = $f->pesos($i);
+			$probs[$i] = $f->probabilidades($i);
+		}
+
+		$colors = array();
+		foreach ( $probs as $i=>$v ) {
+			foreach ( $v as $ii=>$vv ) {
+				$c = (int) round(255 - $vv*255);
+				$colors[$i][$ii] = 'rgb(255,' . $c . ',' . $c . ')';
+			}
+		}
+
+		$this->layout = "main";
+		$this->render('formula', array(
+			'probs'=>$probs,
+			'pesos'=>$pesos,
+			'colors'=>$colors
+		));
+	}
 }
