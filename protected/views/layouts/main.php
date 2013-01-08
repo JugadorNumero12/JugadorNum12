@@ -46,7 +46,6 @@
     	<div id='cssmenu'>
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-			   <li><a href='#'><span>Mensajes</span></a></li>
 			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
 			</ul>
 		</div>
