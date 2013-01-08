@@ -32,8 +32,8 @@ public class Partido
 	private $moral_visitante;
 
 	//atributo redundante añadido para hacer busquedas automaticas
-	/*private  $lista_atributos = array(
-		'local' =>  array(
+	/*private $lista_atributos = array(
+		'local' => array(
 			'id'=> $id_local,
 			'aforo'=> $aforo_local,
 			'ofensivo'=> $ofensivo_local,
@@ -41,7 +41,7 @@ public class Partido
 			'goles'=> $goles_local,
 			'moral'=> $moral_local
 		),
-		'visitante' =>  array(
+		'visitante' => array(
 			'id'=> $id_visitante,
 			'aforo'=> $aforo_visitante,
 			'ofensivo'=> $ofensivo_visitante,
@@ -304,19 +304,19 @@ public class Partido
 	private void generaBonificacion()
 	{
 		/* MARCOS 
-		$bonifGanador = 50;
-		$bonifEmpate = 20;
-		$bonifPerdedor = 10;*/
+		$bonifGanador = 28;
+		$bonifEmpate = 14;
+		$bonifPerdedor = 7;*/
 		
 		if($goles_local>$goles_visitante){
-			bonifAnimo($id_local, 50);
-			bonifAnimo($id_visitante, 10);
+			bonifAnimo($id_local, 28);
+			bonifAnimo($id_visitante, 7);
 		}elseif($goles_visitante>$goles_local){
-			bonifAnimo($id_visitante, 50);
-			bonifAnimo($id_local, 10);
+			bonifAnimo($id_visitante, 28);
+			bonifAnimo($id_local, 7);
 		}else{
-			bonifAnimo($id_local, 20);
-			bonifAnimo($id_visitante, 20);
+			bonifAnimo($id_local, 14);
+			bonifAnimo($id_visitante, 14);
 		}
 	}
 	private void bonifAnimo($equipo, $participantes, int $bonus){
@@ -327,12 +327,13 @@ public class Partido
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
 			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
+			$bonusAmbiente = formulaDelAmbiente()*$bonus;
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				if(array_key_exists($user, $participantes))
-					$rec['animo']+= 3*$bonus*$ambiente;
+				if(array_key_exists($user, $participantes))//FIXME a saber si esto funciona
+					$rec['animo']+= 3*$bonusAmbiente;
 				else
-					$rec['animo']+= $bonus*$ambiente;
+					$rec['animo']+= $bonusAmbiente;
 				$rec->save();
 			}
 			$trans->commit();
@@ -340,6 +341,11 @@ public class Partido
 			$trans->roollback();
 			throw $exc;
 		}
+	}
+	private double formulaDelAmbiente(){
+		//(1.5^(x+1))/(4+.7*x) donde x=ambiente
+		return pow(1.5, $ambiente+1)/(4+.7*$ambiente);
+
 	}
 
 	/*
