@@ -17,7 +17,16 @@ public class FinanciarEvento extends AccionSingleton
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
   {
-  	/* TODO */
+      $trans = Yii::app()->db->beginTransaction();
+      try{
+        $helper = new Helper();
+        
+        //TODO
+
+        $trans->commit();
+      } catch {
+        $trans->rollBack();
+      }
   }
 
   /* Restaurar valores tras el partido */

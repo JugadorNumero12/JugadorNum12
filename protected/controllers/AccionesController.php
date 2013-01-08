@@ -201,6 +201,13 @@ class AccionesController extends Controller
 		//Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
+		//Saco el usuario que quiere participar en la acción y su equipo
+		$datosUsuario = Usuarios::model()->findByPK($usuario);
+		$equipoUsuario = $datosUsuario['equipos_id_equipo'];
+
+		//Saco el equipo que ha creado la accion
+		$equipoAccion = $accionGrupal['equipos_id_equipo'];
+
 		//Compruebo si el usuario ha participado ya en la accion
 		$esParticipante = false;
 		foreach($participaciones as $participacion){
@@ -212,7 +219,7 @@ class AccionesController extends Controller
 		//Envío los datos a la vista
 		$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
 					 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones,
-					 'esParticipante'=>$esParticipante));
+					 'esParticipante'=>$esParticipante, 'equipoAccion' => $equipoAccion, 'equipoUsuario' => $equipoUsuario));
 	}
 
 	/**
@@ -245,7 +252,7 @@ class AccionesController extends Controller
 		$equipoAccion = $datosAccion['equipos_id_equipo'];
 
 		//Compruebo que la acción es del equipo del user, que la acción no ha terminado y que no se ha sobrepasado el límite de jugadores
-		if ( $equipoAccion == $equipoUsuario && $datosAccion['completada'] = 0 && $datosAccion['jugadores_acc'] = $habilidad['participantes_max']){
+		if ( $datosAccion != null && $equipoAccion == $equipoUsuario && $datosAccion['completada'] == 0 && $datosAccion['jugadores_acc'] < $habilidad['participantes_max']){
 			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
 			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
 			$dineroUsuario = $recursosUsuario['dinero'];
@@ -271,7 +278,7 @@ class AccionesController extends Controller
 					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
 					
 					//Añade los recursos en acciones_grupales
-					$datosAccion['jugadores_acc']++;
+					$datosAccion['jugadores_acc'] += 1;
 					$datosAccion['dinero_acc'] += $dineroAportado;  
 					$datosAccion['influencias_acc'] += $influenciasAportadas;
 					$datosAccion['animo_acc'] += $animoAportado;
@@ -285,15 +292,18 @@ class AccionesController extends Controller
 					$participacion['animo_aportado'] = $animoAportado;
 
 					//Compruebo si ya se han aportado todos los recursos necesarios para la acción
-					if ( $datosAccion['dinero_acc'] = $habilidad['dinero_max'] && $datosAccion['influencias_acc'] = $habilidad['influencias_max']
-						&& $datosAccion['animo_acc'] = $habilidad['animo_max']){
-						$datosAccion['finalizado'] = 1;
+					if ( $datosAccion['dinero_acc'] == $habilidad['dinero_max'] && $datosAccion['influencias_acc'] == $habilidad['influencias_max']
+						&& $datosAccion['animo_acc'] == $habilidad['animo_max']){
+						$datosAccion['completado'] = 1;
 					}
 
 					$recursosUsuario->save();
+					$datosAccion->save();
+					$participacion->save();
 					
 					$transaccion->commit();
 					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
+					$this->redirect(array('ver', 'id_accion'=>$id_accion));
 				} catch ( Exception $exc ) {
 					$transaccion->rollback();
 					throw $exc;
@@ -301,7 +311,7 @@ class AccionesController extends Controller
 			} else {
 				//Petición GET: Muestro el formulario
 				$transaccion->commit();
-				$this->render('participar', array('habilidad' => $habilidad, 'datos_accion' => $datosAccion));
+				$this->render('participar', array('habilidad' => $habilidad, 'datosAccion' => $datosAccion));
 			}
 		} else {
 			$transaccion->rollback();

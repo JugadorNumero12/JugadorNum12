@@ -5,11 +5,13 @@
 // @var $propietarioAccion
 // @var $participaciones
 // @var esParticipante
+// @var equipoAccion
+// @var equipoUsuario
 
 // codigo PHP
 ?>
 
-<h1>Accion Grupal: <?php echo $habilidad['nombre']; ?></h1>
+<h1>ACCION GRUPAL: <?php echo $habilidad['nombre']; ?></h1>
 
 <p> <b>USUARIO QUE HA CREADO LA ACCION => </b>
 		<?php echo $accionGrupal['usuarios_id_usuario']; ?>
@@ -21,6 +23,14 @@
 
 <p> <b>NUMERO DE PARTICIPANTES => </b>
 		<?php echo $accionGrupal['jugadores_acc']; ?>
+</p>
+
+<p> <b>EQUIPO CREADOR DE LA ACCION => </b>
+		<?php echo $equipoAccion; ?>
+		&nbsp;
+		<?php if($equipoAccion == $equipoUsuario){
+			echo "(Este es tu equipo)";
+		} ?>
 </p>
 
 <p> <b>TOTAL DE RECURSOS AÑADIDOS => </b>
@@ -65,17 +75,17 @@
 } ?> </b></p>
 
 <!-- Compruebo si la accion ha alcanzado el numero maximo de participantes -->
-<p><b><?php if ($accionGrupal['jugadores_acc'] = $habilidad['participantes_max']){
+<p><b><?php if ($accionGrupal['jugadores_acc'] >= $habilidad['participantes_max']){
 	echo 'La accion ha alcanzado el número máximo de participantes';
 } ?> </b></p>
 
-<p><b><?php if ($accionGupal['completada'] = 1){
+<p><b><?php if ($accionGrupal['completada'] == 1){
 		echo "La accion se ha completado";
 	} ?> </b>
 </p>
 
-<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, puede participar -->
-<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] = 0){ ?>
+<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
+<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
 	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
 	<input type="button" value="Participar"/> </a>
