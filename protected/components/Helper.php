@@ -1,8 +1,6 @@
 <?php
-
-public class Helper 
+public class Helper
 {
-	public Helper(){}
 
 	/** Funcion auxiliar que modifica la tabla de recursos
 	 * 
@@ -12,7 +10,7 @@ public class Helper
 	 * @devuelve flag de error
 	 * @ejemplo	$h->aumentar_recursos(3, "animo", 30);
 	 */
-	public int aumentar_recursos($id_usuario, $columna, $cantidad)
+	public function aumentar_recursos($id_usuario, $columna, $cantidad)
 	{
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
@@ -99,5 +97,30 @@ public class Helper
 					}
 			}
 	} 
+
+	/** Funcion auxiliar que modifica la tabla de recursos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public function aumentar_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+
+	}
+	/** Funcion auxiliar que modifica la tabla de recursos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public function disminuir_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+
+	}
 }
 
