@@ -120,7 +120,7 @@ class SiteController extends Controller
 			'aforoVis'  => (double) $av,
 			'moralLoc'  => (double) $ml,
 			'moralVis'  => (double) $mv,
-			'ofensLov'  => (double) $ol,
+			'ofensLoc'  => (double) $ol,
 			'ofensVis'  => (double) $ov,
 			'defensLoc' => (double) $dl,
 			'defensVis' => (double) $dv,

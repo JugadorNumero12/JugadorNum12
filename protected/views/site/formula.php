@@ -15,47 +15,47 @@
 <form action="<?php $this->createUrl('site/formula'); ?>" method="get">
 	<label> 
 		<b> Diferencia niveles: </b>
-		<input type="text" name="dn" value="0" />
+		<input type="text" name="dn" value="<?php echo $params['difNiv']; ?>" />
 	</label>
 	<br>
 	<label> 
 		<b> Aforo local: </b>
-		<input type="text" name="al" value="0" />
+		<input type="text" name="al" value="<?php echo $params['aforoLoc']; ?>" />
 	</label>
 
 	<label> 
 		<b> Aforo visitante: </b>
-		<input type="text" name="av" value="0" />
+		<input type="text" name="av" value="<?php echo $params['aforoVis']; ?>" />
 	</label>
 	<br>
 	<label> 
 		<b> Moral local: </b>
-		<input type="text" name="ml" value="0" />
+		<input type="text" name="ml" value="<?php echo $params['moralLoc']; ?>" />
 	</label>
 
 	<label> 
 		<b> Moral visitante: </b>
-		<input type="text" name="mv" value="0" />
+		<input type="text" name="mv" value="<?php echo $params['moralVis']; ?>" />
 	</label>
 	<br>
 	<label> 
 		<b> Factor ofensivo local: </b>
-		<input type="text" name="ol" value="0" />
+		<input type="text" name="ol" value="<?php echo $params['ofensLoc']; ?>" />
 	</label>
 
 	<label> 
 		<b> Factor ofensivo visitante: </b>
-		<input type="text" name="ov" value="0" />
+		<input type="text" name="ov" value="<?php echo $params['ofensVis']; ?>" />
 	</label>
 	<br>
 	<label> 
 		<b> Factor defensivo local: </b>
-		<input type="text" name="dl" value="0" />
+		<input type="text" name="dl" value="<?php echo $params['defensLoc']; ?>" />
 	</label>
 
 	<label> 
 		<b> Factor defensivo visitante: </b>
-		<input type="text" name="dv" value="0" />
+		<input type="text" name="dv" value="<?php echo $params['defensVis']; ?>" />
 	</label>
 	<br>
 	<input type="submit" value="Simular"/>
