@@ -25,13 +25,12 @@
 		<div id='cssmenu'>
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>"><span>Perfil</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/habilidades');?>"><span>Habilidades</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Acciones</span></a></li>
-			   <li><a href='#'><span>Afici&oacute;n</span></a></li>
-			   <li><a href='#'><span>Estad&iacute;sticas</span></a></li>
-			   <li><a href='#'><span>Calendario</span></a></li>
+			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Habilidades desbloqueadas</span></a></li>
+			   <li><a href="<?php echo $this->createUrl( '/equipos/ver', 
+									array('id_equipo' => Yii::app()->user->usAfic) ); ?>"><span>Afici&oacute;n</span></a></li>
+			   <li><a href="<?php echo Yii::app()->createUrl('/partidos/index');?>"><span>Calendario de partidos</span></a></li>
+			   <li><a href="<?php echo Yii::app()->createUrl('/habilidades');?>"><span>&Aacute;rbol de habilidades</span></a></li>
 			   <li><a href="<?php echo Yii::app()->createUrl('/equipos');?>"><span>Clasificaci&oacute;n</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/partidos');?>"><span>Partido</span></a></li>
 			</ul>
 		</div>
     </div>
@@ -47,7 +46,6 @@
     	<div id='cssmenu'>
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-			   <li><a href='#'><span>Mensajes</span></a></li>
 			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
 			</ul>
 		</div>
