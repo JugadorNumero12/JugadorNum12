@@ -323,8 +323,7 @@ public class Partido
 	 * Se usa exclusivamente como paso intermedio de generaBonificacion.
 	 *
 	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
-	 * la bonificacion es lineal a $bonus y exponencial a $ambiente
-	 * y es 3 veces mayor para los participantes que para los que no han asistido.
+	 * bonificacion = [(1.5^(ambiente+1))/(4+.7*ambiente)] * bonus * (haParticipado?3:1)
 	 */
 	private void bonifAnimo($equipo, int $bonus)
 	{
