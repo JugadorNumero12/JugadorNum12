@@ -27,7 +27,7 @@ public class AccionSingleton
    public function ejecutar($id_accion){ }
 
    /* Codigo asociado a finalizar dicha acción. P. ej.: devolver X influencias al jugador. */
-   public function finalizar(){ }
+   public function finalizar($id_accion){ }
 
    /* Evita que el objeto se pueda clonar */
    public function __clone()
