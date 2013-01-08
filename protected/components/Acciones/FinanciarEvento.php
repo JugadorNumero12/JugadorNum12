@@ -18,9 +18,7 @@ public class FinanciarEvento extends AccionSingleton
   public function ejecutar($id_accion)
   {
       $trans = Yii::app()->db->beginTransaction();
-      try{
-        $helper = new Helper();
-        
+      try{        
         //Busco el siguiente partido (Falta seleccionar el partido actual)
         $partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
         //Saco el ambiente nuevo y se lo añado
