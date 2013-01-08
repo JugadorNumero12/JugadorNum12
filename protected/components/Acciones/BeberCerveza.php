@@ -8,17 +8,22 @@
  * Efectos:
  *  Aumenta de forma inmediata el recurso animo 
  */
-public class BeberCerveza extends AccionSingleton
+class BeberCerveza extends AccionSingleton
 {
 	/* Aplicar efectos de la accion */
-	public void ejecutar()
+	public function ejecutar($idAccion)
 	{
-		/* TODO */
-	}
+		$animo = $datos_acciones['BeberCerveza']['animo'];
 
-	/* Accion de partido: metodo vacio */
-	public void finalizar()
-	{
-		/* VACIO */
+		$trans = Yii::app()->db->beginTransaction();
+		try {
+			$accion = Accion::model()->findByPk($idAccion);
+			Helper::getInstance()->aumentar_recursos($accion['usuario_id_usuario'], 'animo', $animo);
+			$trans->commit();
+
+		} catch ( Exception $exc ) {
+			$trans->rollback();
+			throw $exc;
+		}
 	}
 }
