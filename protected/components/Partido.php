@@ -48,14 +48,8 @@ public class Partido
 			'defensivo'=> $defensivo_visitante,
 			'goles'=> $goles_visitante,
 			'moral'=> $moral_visitante
-<<<<<<< HEAD
+			//FIXME comprovar que => asigna por referencia
 		),*/
-		//FIXME comprovar que => asigna por referencia
-=======
-		),
-		//FIXME comprobar que => asigna por referencia
->>>>>>> c27ae4953ac0571ea2903723addfc9ffe7637456
-	);
 
 	/**
 	 * Constructora: Inicializar 
@@ -336,9 +330,9 @@ public class Partido
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
 				if(array_key_exists($user, $participantes))
-					$rec['animo']+= 3*$bonus;
+					$rec['animo']+= 3*$bonus*$ambiente;
 				else
-					$rec['animo']+= $bonus;
+					$rec['animo']+= $bonus*$ambiente;
 				$rec->save();
 			}
 			$trans->commit();
