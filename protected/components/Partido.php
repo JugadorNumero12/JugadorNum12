@@ -319,15 +319,15 @@ public class Partido
 			bonifAnimo($id_visitante, 14);
 		}
 	}
-	private void bonifAnimo($equipo, $participantes, int $bonus){
-		/*
-		$bonifParticipante = 3;
-		$bonifNoParticipante = 1*/
+	private void bonifAnimo($equipo, $participantes, int $bonus)
+	{
+		/*$bonifParticipante = 3;
+		  $bonifNoParticipante = 1*/
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
 			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
-			$bonusAmbiente = formulaDelAmbiente()*$bonus;
+			$bonusAmbiente = $bonus*(pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(x+1))/(4+.7*x)
 			foreach ($usuarios as $user){
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
 				if(array_key_exists($user, $participantes))//FIXME a saber si esto funciona
@@ -342,12 +342,6 @@ public class Partido
 			throw $exc;
 		}
 	}
-	private double formulaDelAmbiente(){
-		//(1.5^(x+1))/(4+.7*x) donde x=ambiente
-		return pow(1.5, $ambiente+1)/(4+.7*$ambiente);
-
-	}
-
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
