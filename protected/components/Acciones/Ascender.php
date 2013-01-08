@@ -33,5 +33,7 @@ public class Ascender extends AccionSingleton
   }
 
   /* Accion permanente: metodo vacio */
-  public function finalizar() {}	
+  public function finalizar() {
+    
+  }	
 }

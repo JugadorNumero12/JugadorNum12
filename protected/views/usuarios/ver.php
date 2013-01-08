@@ -1,6 +1,6 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+/* @var $modeloU */
+
 
 // codigo PHP 
 
@@ -26,13 +26,13 @@
 		<td align="center"><?php switch ($modeloU->personaje)
 								{
 								case 0:
-								  echo "Empresario" ;
+								  echo "Ultra" ;
 								  break;
 								case 1:
-								  echo "Ultra";
+								  echo "Animadora";
 								  break;
 								case 2:
-								  echo "Animadora";
+								  echo "Empresario";
 								  break;
 								} ?></td>
 		<td align="center"><?php echo $modeloU->nivel ?></td>
