@@ -377,7 +377,7 @@ public class Partido
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$criteria= new CDbCriteria();
-			$criteria->condition=("puntos> :puntosAnt && puntos<= :puntosAct");
+			$criteria->condition=("puntos>=:puntosAnt && puntos< :puntosAct");
 
 			$puntosOrig= $eq['puntos'];
 			$puntosAct= ($eq['puntos']+=$puntos);
