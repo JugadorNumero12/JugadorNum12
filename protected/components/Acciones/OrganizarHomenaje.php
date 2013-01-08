@@ -14,7 +14,7 @@
 public class OrganizarHomenaje extends AccionSingleton
 {
 	/* Aplicar los efectos de la accion */
-	public void ejecutar()
+	public void ejecutar($id_accion)
 	{
 		$trans = Yii::app()->db->beginTransaction();
 
@@ -42,8 +42,21 @@ public class OrganizarHomenaje extends AccionSingleton
 	}
 
 	/* Restarurar valores tras el partido */
-	public void finalizar()
+	public void finalizar($id_accion)
 	{
-		//
+		$trans = Yii::app()->db->beginTransaction();
+
+      	try{
+        	$helper = new Helper();
+
+        	//Quitamos el bonus al creador
+        	$creador = AccionesGrupales::model()->findbyPK($id_accion);
+   			$helper->quitar_recursos($creador['id_usuario'], 'influencias_max',
+   					$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']); 
+
+        	$trans->commit();
+      } catch {
+        	$trans->rollBack();
+      }
 	}
 }
