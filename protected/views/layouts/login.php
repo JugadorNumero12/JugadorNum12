@@ -13,7 +13,7 @@
 
 <body>
 
-<div id="contenedorLogin">
+<div id="loginGenLayer">
   	<!-- DIVISION DE CABECERA -->
     <div id="headBox">
 		CABECERA

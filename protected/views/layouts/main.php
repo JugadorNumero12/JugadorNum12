@@ -17,12 +17,25 @@
 
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
-		CABECERA
+    	<!--<img src="a.png" width=178 height=180 border=2 alt="Logo Jugador numero 12"> -->
+    	<!--<?php echo CHtml::image('a',"Logo Jugador numero 12",array('controller/action')); ?>-->
+		JUGADOR NUMERO 12
+    </div>
+
+    <!-- DIVISION DE RECURSOS -->
+    <div id="recursos">
+    	<?php $id= Yii::app()->user->usIdent;
+        	  $modeloUsuario = Usuarios:: model()->findByPk($id);  ?>
+    	<ul>
+		  <li> Dinero: <?php echo $modeloUsuario->recursos->dinero; ?></li>
+		  <li> Animo: <?php echo $modeloUsuario->recursos->animo; ?></li>
+		  <li> Influencia: <?php echo $modeloUsuario->recursos->influencias; ?></li>
+		</ul>
     </div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
-    <div id="menu_izquierdo">	
-    	<div class="elementos_menu">	
+    <div id="menu-izquierdo">
+		<div id='cssmenu'>
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>"><span>Perfil</span></a></li>
 			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Habilidades desbloqueadas</span></a></li>
@@ -35,30 +48,34 @@
 		</div>
     </div>
     
-    <!-- DIVISION CENTRAL/CONTENIDO -->
-    <div id='centro'>
-      <?php echo $content; ?>
-    </div>
+    <!-- DIVISION PARA FLOTAR -->
+    <div id="grupo-derecha">
 
-	<!-- DIVISION DEL MENU DERECHO -->
-    <div id="menu_derecho">
-    	ESTADO JUGADOR
-    	<div class="elementos_menu">
-			<ul>
-			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
-			</ul>
-		</div>
-    </div>
-	
+	    <!-- DIVISION CENTRAL/CONTENIDO -->
+	    <div id="contenido">
+	      <?php echo $content; ?>
+	    </div>
+
+		<!-- DIVISION DEL MENU DERECHO -->
+	    <div id="menu-derecho">
+	    	ESTADO JUGADOR
+	    	<div id='cssmenu'>
+				<ul>
+				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
+				   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
+				</ul>
+			</div>
+	    </div>
+
+	</div>
   	<!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="pie_pagina">
+    <div id="pie-pagina">
         <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
     </div>
     
-</div> <!-- End GenLayer -->
+</div> <!-- contenido -->
 
 </body>
 
