@@ -1,6 +1,28 @@
 <?php
+
 public class Helper
 {
+	/*Sirve para cambiar más facilmente los factores de partido*/
+	static $datos_factores = array (	
+		//Si es local
+		'local' => array (
+			'ambiente'=> 'ambiente',
+			'nivel'=> 'nivel_local',
+			'aforo' => 'aforo_local',
+			'moral' => 'moral_local',
+			'ofensivo' => 'ofensivo_local',
+			'defensivo' => 'defensivo_local'
+		), 
+		//Si es visitante
+		'visitante' => array (
+			'ambiente'=> 'ambiente',
+			'nivel'=> 'nivel_visitante',
+			'aforo' => 'aforo_visitante',
+			'moral' => 'moral_visitante',
+			'ofensivo' => 'ofensivo_visitante',
+			'defensivo' => 'defensivo_visitante'
+		), 
+	)
 
 	/** Funcion auxiliar que modifica la tabla de recursos
 	 * 
@@ -108,7 +130,32 @@ public class Helper
 	 */
 	public function aumentar_factores($id_partido,$id_equipo, $columna, $cantidad)
 	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
 
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=$datos_factores['local'][$columna];
+			$valor_nuevo=$partido->$factor + $cantidad;
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		if($partido->save()) return 0; else return -1;
+
+		}else if($partido->equipos_id_equipo_2 == $id_equipo)
+				{
+					$factor=$datos_factores['visitante'][$columna];
+					$valor_nuevo=$partido->$factor + $cantidad;
+					//Si fallara tiene que ser por el $factor,comprobar si es asi 
+					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+		     		if($partido->save()) return 0; else return -1;
+		     		
+				}else
+					{
+						//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+						//los id de los equipo del partido
+						return -1;
+					}
 	}
 	/** Funcion auxiliar que modifica la tabla de recursos
 	 * 
@@ -120,7 +167,31 @@ public class Helper
 	 */
 	public function disminuir_factores($id_partido,$id_equipo, $columna, $cantidad)
 	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
 
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=$datos_factores['local'][$columna];
+			$valor_nuevo=$partido->$factor - $cantidad;
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		if($partido->save()) return 0; else return -1;
+
+		}else if($partido->equipos_id_equipo_2 == $id_equipo)
+				{
+					$factor=$datos_factores['visitante'][$columna];
+					$valor_nuevo=$partido->$factor - $cantidad;
+					//Si fallara tiene que ser por el $factor,comprobar si es asi 
+					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+		     		if($partido->save()) return 0; else return -1;
+				}else
+					{
+						//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+						//los id de los equipo del partido
+						return -1;
+					}
 	}
 }
 
