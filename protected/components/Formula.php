@@ -2,8 +2,14 @@
 
 class Formula
 {
-	const PESOS_MULT = 2048;
-	const PESOS_MIN = 1;
+
+	const PESOS_DIST_CERCA = 10;
+
+	const PESOS_MIN_CERCA = 10;
+	const PESOS_MIN_LEJOS = 1;
+	const PESOS_MULT = 10000;
+
+	const DIFNIV_NFACT_BASE = 0.5;
 
 	/**
 	 * @param $x Punto en el que calcular la normal
@@ -18,8 +24,8 @@ class Formula
 		$b3 =  1.781477937;
 		$b4 = -1.821255978;
 		$b5 =  1.330274429;
-		$p  =  0.2316419;
-		$c  =  0.39894228;
+		$p  =  0.231641900;
+		$c  =  0.398942280;
 
 		if ($x >= 0.0) {
 			$t = 1.0 / ( 1.0 + $p * $x );
@@ -40,28 +46,47 @@ class Formula
 		return self::cumnormdist(($x - $avg)/$stdev);
 	}
 
+	/**
+	 * Calcula la media de la función final dados los parámetros para el turno.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Media de la función final
+	 */
 	private static function calcMedia (array $params) {
 		// Inicialmente, la media es el estado actual
 		$avg = $params['estado'];
 
 		// Acercamos la media al punto de equilibrio	
-		$factDifNiv = 0.4;
+		$factDifNiv = self::DIFNIV_NFACT_BASE;
 		$avg += ($params['difNiv'] - $params['estado']) * $factDifNiv;
 
 		return $avg;
 	}
 
+	/**
+	 * Calcula la desviación típica de la función final dados los parámetros
+	 * para el turno.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Desviación típica de la función final
+	 */
 	private static function calcDesv (array $params) {
 		// Desviación inicial con valor arbitrario
-		$stdev = 3;
+		$stdev = 2.5;
 
 		// La curva es más aplastada en el centro
-		$stdev *= 1 - abs($params['estado'])*0.08;
+		$stdev *= 1 - abs($params['estado'])*0.07;
 
 		return $stdev;
 	}
 
-
+	/**
+	 * Devuelve un array de los pesos que indicarán la probabilidad de cada
+	 * cambio de estado.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Pesos de los cambios de estado
+	 */
 	public static function pesos (array $params) {
 		$pesos = array();
 
@@ -77,7 +102,11 @@ class Formula
 			$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
 			//}
 
-			$pesos[$i] = (int) (($p * self::PESOS_MULT) + self::PESOS_MIN);
+			$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
+
+			$pm = $p * self::PESOS_MULT;
+			$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			$pesos[$i] = (int) $pm;
 		}
 
 		return $pesos;
@@ -88,6 +117,7 @@ class Formula
 	 * dividiendo cada elemento entre la suma de todos
 	 *
 	 * @param $params Array de parámetros de la fórmula
+	 * @return Probabilidades de los cambios de estado
 	 */
 	public static function probabilidades (array $params) {
 		$pesos = self::pesos($params);
