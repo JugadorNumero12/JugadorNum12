@@ -13,24 +13,26 @@
 
 <body>
 
-<div id="envoltorio">
+<div id="envoltorio1"><div id="envoltorio2">
 
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
-    	<!--<img src="a.png" width=178 height=180 border=2 alt="Logo Jugador numero 12"> -->
+    	<div id = "logo">
+    	<img src="a.png" width=68 height=70 border=2 alt="Logo Jugador numero 12">
+    	</div>
     	<!--<?php echo CHtml::image('a',"Logo Jugador numero 12",array('controller/action')); ?>-->
-		JUGADOR NUMERO 12
     </div>
 
     <!-- DIVISION DE RECURSOS -->
     <div id="recursos">
-    	<?php $id= Yii::app()->user->usIdent;
+    	<!--  <?php $id= Yii::app()->user->usIdent;
         	  $modeloUsuario = Usuarios:: model()->findByPk($id);  ?>
     	<ul>
 		  <li> Dinero: <?php echo $modeloUsuario->recursos->dinero; ?></li>
 		  <li> Animo: <?php echo $modeloUsuario->recursos->animo; ?></li>
 		  <li> Influencia: <?php echo $modeloUsuario->recursos->influencias; ?></li>
 		</ul>
+		 -->
     </div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
@@ -58,7 +60,6 @@
 
 		<!-- DIVISION DEL MENU DERECHO -->
 	    <div id="menu-derecho">
-	    	ESTADO JUGADOR
 	    	<div id='cssmenu'>
 				<ul>
 				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
@@ -75,7 +76,7 @@
 		<?php echo Yii::powered(); ?>
     </div>
     
-</div> <!-- contenido -->
+</div></div> <!-- envoltorio -->
 
 </body>
 
