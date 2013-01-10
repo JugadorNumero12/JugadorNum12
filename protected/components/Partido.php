@@ -334,21 +334,21 @@ public class Partido
 			$vis=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
 			
 			if($goles_local>$goles_visitante){
-				$ca=sumaCalisf($id_local, 3, $trans);
+				$suCl=sumaCalisf($id_local, 3, $trans);
 				$loc['ganados']+=1;
 				$vis['perdidos']+=1;
 			}elseif($goles_visitante>$goles_local){
-				$ca=sumaCalisf($id_visitante, 3, $trans);
+				$suCl=sumaCalisf($id_visitante, 3, $trans);
 				$loc['perdidos']+=1;
 				$vis['ganados']+=1;	
 			}else{
-				$ca= sumaCalisf($id_local, 1, $trans) && sumaCalisf($id_visitante, 1, $trans);
+				$suCl= sumaCalisf($id_local, 1, $trans) && sumaCalisf($id_visitante, 1, $trans);
 				$loc['empatados']+=1;
 				$vis['empatados']+=1;	
 			}
 			$loc->save();
 			$vis->save();
-			if(!$ca)throw new Exception("Error en sumaCalisf");
+			if(!$suCl)throw new Exception("Error en sumaCalisf");
 			$trans->commit();	
 	}catch(Exception $exc){
 		$trans->roollback();
@@ -369,14 +369,14 @@ public class Partido
 	 */
 	private bool sumaCalisf($id_equipo, int $puntos, &$transaction=null)
 	{	
-		$autocommit=false;
 		if($transaction==null) {
 			$transaction= Yii::app()->db->beginTransaction();
 			$autocommit=true;
 		}else $autocommit=false;
 
-		if(!($transaction instaceof CDbTransaction&& $transaction$transaction->getActive())
+		if(!($transaction instaceof CDbTransaction && $transaction->getActive()))
 			return false;
+
 		try{
 			//sumar puntos
 			$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_equipo);
