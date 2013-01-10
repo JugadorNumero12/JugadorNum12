@@ -8,13 +8,15 @@
 
 <!-- codigo HTML -->
 
-<div id='datos_usuarios'>
+<div id='datos-usuarios'>
 	<h1> PERFIL DE USUARIO </h1>
-</div>
+
 
 <h3> DATOS BÁSICOS</h3>
 
-<table cellspacing="5px">
+
+
+<table>
 	<tr>
 		<th>Nick</th>
 		<th>eMail</th>
@@ -23,9 +25,9 @@
 		<th>Equipo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloU->nick ?></td>
-		<td align="center"><?php echo $modeloU->email ?></td>
-		<td align="center"><?php switch ($modeloU->personaje)
+		<td><?php echo $modeloU->nick ?></td>
+		<td><?php echo $modeloU->email ?></td>
+		<td><?php switch ($modeloU->personaje)
 								{
 								case 0:
 								  echo "Ultra";
@@ -37,8 +39,8 @@
 								  echo "Empresario";
 								  break;
 								} ?></td>
-		<td align="center"><?php echo $modeloU->nivel ?></td>
-		<td align="center"><?php echo $modeloU->equipos->nombre ?></td>
+		<td><?php echo $modeloU->nivel ?></td>
+		<td><?php echo $modeloU->equipos->nombre ?></td>
 	</tr>
 	<tr></tr>
 </table>
@@ -52,29 +54,29 @@
 		<th>Ánimo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloU->recursos->dinero ?></td>
-		<td align="center"><?php echo $modeloU->recursos->influencias ?></td>
-		<td align="center"><?php echo $modeloU->recursos->animo ?></td>
+		<td><?php echo $modeloU->recursos->dinero ?></td>
+		<td><?php echo $modeloU->recursos->influencias ?></td>
+		<td><?php echo $modeloU->recursos->animo ?></td>
 	</tr>
 	<tr></tr>
 </table>
 
 <h3> GENERACIÓN DE RECURSOS </h3>
 
-<table cellspacing="5px">
+<table>
 	<tr>
-		<th align="center">Generación de dinero</th>
-		<th align="center">Influencias máximas</th>
-		<th align="center">Generación de influencias</th>
-		<th align="center">Ánimo máximo</th>
-		<th align="center">Generación de ánimo</th>
+		<th>Generación de dinero</th>
+		<th>Influencias máximas</th>
+		<th>Generación de influencias</th>
+		<th>Ánimo máximo</th>
+		<th>Generación de ánimo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloU->recursos->dinero_gen ?></td>
-		<td align="center"><?php echo $modeloU->recursos->influencias_max ?></td>
-		<td align="center"><?php echo $modeloU->recursos->influencias_gen ?></td>
-		<td align="center"><?php echo $modeloU->recursos->animo_max ?></td>
-		<td align="center"><?php echo $modeloU->recursos->animo_gen ?></td>
+		<td><?php echo $modeloU->recursos->dinero_gen ?></td>
+		<td><?php echo $modeloU->recursos->influencias_max ?></td>
+		<td><?php echo $modeloU->recursos->influencias_gen ?></td>
+		<td><?php echo $modeloU->recursos->animo_max ?></td>
+		<td><?php echo $modeloU->recursos->animo_gen ?></td>
 	</tr>
 </table>
 
@@ -85,4 +87,6 @@
     <?php echo $accion; ?>
     </li>
 <?php } ?>
+
+</div>
 

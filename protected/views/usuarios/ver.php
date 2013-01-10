@@ -12,7 +12,7 @@
 
 <h3> DATOS BÁSICOS</h3>
 
-<table cellspacing="5px">
+<table>
 	<tr>
 		<th>Nick</th>
 		<th>eMail</th>
@@ -21,9 +21,9 @@
 		<th>Equipo</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloU->nick ?></td>
-		<td align="center"><?php echo $modeloU->email ?></td>
-		<td align="center"><?php switch ($modeloU->personaje)
+		<td><?php echo $modeloU->nick ?></td>
+		<td><?php echo $modeloU->email ?></td>
+		<td><?php switch ($modeloU->personaje)
 								{
 								case 0:
 								  echo "Ultra" ;
@@ -35,8 +35,8 @@
 								  echo "Empresario";
 								  break;
 								} ?></td>
-		<td align="center"><?php echo $modeloU->nivel ?></td>
-		<td align="center"><?php echo $modeloU->equipos->nombre ?></td>
+		<td><?php echo $modeloU->nivel ?></td>
+		<td><?php echo $modeloU->equipos->nombre ?></td>
 	</tr>
 	<tr></tr>
 </table>

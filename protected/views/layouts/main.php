@@ -18,9 +18,9 @@
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
     	<div id = "logo">
-    	<img src="a.png" width=68 height=70 border=2 alt="Logo Jugador numero 12">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/Imagen_numero_doce.png'; ?>" width=900 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
-    	<!--<?php echo CHtml::image('a',"Logo Jugador numero 12",array('controller/action')); ?>-->
+ 
     </div>
 
     <!-- DIVISION DE RECURSOS -->
