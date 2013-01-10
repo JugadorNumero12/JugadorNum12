@@ -247,6 +247,11 @@ class AccionesController extends Controller
 		$datosUsuario = Usuarios::model()->findByPK($usuario);
 		$equipoUsuario = $datosUsuario['equipos_id_equipo'];
 
+		//Saco el modelo que le voy a pasar a la vista
+		$participacion = new Participaciones;
+		$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
+		$participacion['usuarios_id_usuario'] = $usuario;
+
 		//Saco el equipo que ha creado la accion
 		$datosAccion = AccionesGrupales::model()->findByPK($id_accion);
 		$equipoAccion = $datosAccion['equipos_id_equipo'];
@@ -259,11 +264,12 @@ class AccionesController extends Controller
 			$influenciasUsuario = $recursosUsuario['influencias'];
 			$animoUsuario = $recursosUsuario['animo'];
 
-			if( Yii::app()->request->isPostRequest ){
+			if( isset($_POST['Participaciones']) ){
 				//Petición POST
-				$dineroAportado = Yii::app()->request->getPost('dinero');
-				$animoAportado = Yii::app()->request->getPost('animo');
-				$influenciasAportadas = Yii::app()->request->getPost('influencias');
+				$recursosAportados = $_POST['Participaciones'];
+				$dineroAportado = $recursosAportados['dinero_nuevo'];
+				$animoAportado = $recursosAportados['animo_nuevo'];
+				$influenciasAportadas = $recursosAportados['influencia_nueva'];
 
 				if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
 					$transaccion->rollback();
@@ -272,7 +278,25 @@ class AccionesController extends Controller
 				}
 				
 				try {
-					//Resta los recursos al usuario
+					//Primero calculo los recursos que faltan para terminar la accion
+					$dineroF = $habilidad['dinero_max'] - $datosAccion['dinero_acc'];
+					$animoF = $habilidad['animo_max'] - $datosAccion['animo_acc'];
+					$influenciaF = $habilidad['influencias_max'] - $datosAccion['influencias_acc'];
+
+					//Compruebo que los recursos aportados no sobrepasan los necesarios para finalizar la accion
+					if ($dineroF < $dineroAportado){
+						$dineroAportado = $dineroF;
+					}
+
+					if ($animoF < $animoAportado){
+						$animoAportado = $animoF;
+					}
+
+					if ($influenciaF < $influenciasAportadas){
+						$influenciasAportadas = $influenciaF;
+					}
+
+					//Resto los recursos al usuario
 					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
 					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
 					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
@@ -284,9 +308,6 @@ class AccionesController extends Controller
 					$datosAccion['animo_acc'] += $animoAportado;
 
 					//Añado una nueva participación en la tabla de participaciones
-					$participacion = new Participaciones();
-					$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
-					$participacion['usuarios_id_usuario'] = $usuario;
 					$participacion['dinero_aportado'] = $dineroAportado;
 					$participacion['influencias_aportadas'] = $influenciasAportadas;
 					$participacion['animo_aportado'] = $animoAportado;
@@ -311,18 +332,15 @@ class AccionesController extends Controller
 			} else {
 				//Petición GET: Muestro el formulario
 				$transaccion->commit();
-				$this->render('participar', array('habilidad' => $habilidad, 'datosAccion' => $datosAccion));
+				$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
 			}
 		} else {
 			$transaccion->rollback();
-			throw new CHttpException(404,'El usuario no puede participar en esta acción');
+			throw new CHttpException('El usuario no puede participar en esta acción');
 		}
 	}
 
-	/**
-	 * NO LLAMAR DIRECTAMENTE, 
-	 * usar render('ver', array("¿Está seguro de expulsarle?", jugadorNum12/acciones/expulsar/{$id_accion}/{$id_jugador}, tuUrl)
-	 * 
+	/** Expulsar a un jugador participante en una accion grupal.
 	 * Los recursos que puso el jugador le son devueltos
 	 * (comprobando limite de animo e influencias)
 	 * 

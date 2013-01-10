@@ -1,0 +1,88 @@
+<?php
+return array(
+	'partido_1'=>array(
+		'id_partido'=>'1',
+		'equipos_id_equipo_1'=>'1',
+		'equipos_id_equipo_2'=>'2',
+		'hora'=>'1',
+		'cronica'=>'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_2'=>array(
+		'id_partido'=>'2',
+		'equipos_id_equipo_1'=>'3',
+		'equipos_id_equipo_2'=>'4',
+		'hora'=>'1',
+		'cronica'=>'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_3'=>array(
+		'id_partido'=>'3',
+		'equipos_id_equipo_1'=>'1',
+		'equipos_id_equipo_2'=>'3',
+		'hora'=>'50',
+		'cronica'=>'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_4'=>array(
+		'id_partido'=>'4',
+		'equipos_id_equipo_1'=>'2',
+		'equipos_id_equipo_2'=>'4',
+		'hora'=>'50',
+		'cronica'=>'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_5'=>array(
+		'id_partido'=>'5',
+		'equipos_id_equipo_1'=>'1',
+		'equipos_id_equipo_2'=>'4',
+		'hora'=>'100',
+		'cronica'=>'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_6'=>array(
+		'id_partido'=>'6',
+		'equipos_id_equipo_1'=>'3',
+		'equipos_id_equipo_2'=>'2',
+		'hora'=>'100',
+		'cronica'=>'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.',
+	),
+	'partido_7'=>array(
+		'id_partido'=>'7',
+		'equipos_id_equipo_1'=>'2',
+		'equipos_id_equipo_2'=>'1',
+		'hora'=>'150',
+		'cronica'=>'NULL',
+	),
+	'partido_8'=>array(
+		'id_partido'=>'8',
+		'equipos_id_equipo_1'=>'4',
+		'equipos_id_equipo_2'=>'3',
+		'hora'=>'150',
+		'cronica'=>'NULL',
+	),
+	'partido_9'=>array(
+		'id_partido'=>'9',
+		'equipos_id_equipo_1'=>'3',
+		'equipos_id_equipo_2'=>'1',
+		'hora'=>'200',
+		'cronica'=>'NULL',
+	),
+	'partido_10'=>array(
+		'id_partido'=>'10',
+		'equipos_id_equipo_1'=>'4',
+		'equipos_id_equipo_2'=>'2',
+		'hora'=>'200',
+		'cronica'=>'NULL',
+	),
+	'partido_11'=>array(
+		'id_partido'=>'11',
+		'equipos_id_equipo_1'=>'4',
+		'equipos_id_equipo_2'=>'1',
+		'hora'=>'250',
+		'cronica'=>'NULL',
+	),
+	'partido_12'=>array(
+		'id_partido'=>'12',
+		'equipos_id_equipo_1'=>'2',
+		'equipos_id_equipo_2'=>'3',
+		'hora'=>'250',
+		'cronica'=>'NULL',
+	),
+
+);

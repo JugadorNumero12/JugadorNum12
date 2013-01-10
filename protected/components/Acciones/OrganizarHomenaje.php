@@ -32,8 +32,8 @@ public class OrganizarHomenaje extends AccionSingleton
 
         	//Bonus al creador: le aumento las influencias
         	$creador = AccionesGrupales::model()->findbyPK($id_accion);
-   			$helper->aumentar_recursos($creador['id_usuario'], 'influencias_max',
-   					$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']); 
+   			  $helper->aumentar_recursos($creador['id_usuario'], 'influencias_max',
+   				$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']); 
 
         	$trans->commit();
       } catch {

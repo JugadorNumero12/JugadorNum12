@@ -31,26 +31,6 @@ public class Partido
 	private $moral_local;
 	private $moral_visitante;
 
-	//atributo redundante añadido para hacer busquedas automaticas
-	/*private $lista_atributos = array(
-		'local' => array(
-			'id'=> $id_local,
-			'aforo'=> $aforo_local,
-			'ofensivo'=> $ofensivo_local,
-			'defensivo'=> $defensivo_local,
-			'goles'=> $goles_local,
-			'moral'=> $moral_local
-		),
-		'visitante' => array(
-			'id'=> $id_visitante,
-			'aforo'=> $aforo_visitante,
-			'ofensivo'=> $ofensivo_visitante,
-			'defensivo'=> $defensivo_visitante,
-			'goles'=> $goles_visitante,
-			'moral'=> $moral_visitante
-			//FIXME comprovar que => asigna por referencia
-		),*/
-
 	/**
 	 * Constructora: Inicializar 
 	 * 	id_partido,
@@ -222,18 +202,9 @@ public class Partido
 					break;//si se ha colado una acción de un equipo que no participa la salto.
 				}
 
-				//busco los artibutos del equipo correspondiente
-				$lista_de_equipo = $lista_atributos[($accLocal?'local':'visistante')]
-
 				//compruebo las keys de datos_acciones y actualizo las que corresponden a mis atributos
 				foreach (array_keys($datos_acciones['cod']) as $atributo) 
-					if( array_key_exists($atributo, $lista_de_equipo) ){
-						//sumo porque no se que operador se aplica
-						$lista_de_equipo[$atributo] += $datos_acciones['cod'][$atributo];
-					
-						//actualizar la tabla
-						$tablaTurno[$atributo.($accLocal?'_local':'_visistante')] = $lista_de_equipo[$atributo];
-					}
+					//ahora se haría llamando a helper
 
 			}
 			//salvo los cambios de todas las acciones
@@ -348,36 +319,83 @@ public class Partido
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->roollback();
+			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
 	}
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
 	private void actualizaClasificacion()
-	{
-		/* MARCOS */ 
+	{			
+		/* MARCOS */
+		//FIXME comprobar que se puede llamar a una funcion con transaccion dentro de otra transaccion
 		$trans = Yii::app()->db->beginTransaction();
 		try{
+			$loc=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
+			$vis=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+			
 			if($goles_local>$goles_visitante){
-				$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$eq['puntos']+=3;
-				$eq->save();
+				sumaCalisf($id_local, 3);
+				$loc['ganados']+=1;
+				$vis['perdidos']+=1;
 			}elseif($goles_visitante>$goles_local){
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$clas['puntos']+=3;
-				$clas->save();
+				sumaCalisf($id_visitante, 3);
+				$loc['perdidos']+=1;
+				$vis['ganados']+=1;	
 			}else{
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-				$clas['puntos']+=1;
-				$clas->save();
-				$clas= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
-				$clas['puntos']+=1;
-				$clas->save();
+				sumaCalisf($id_local, 1);
+				sumaCalisf($id_visitante, 1);
+				$loc['empatados']+=1;
+				$vis['empatados']+=1;	
 			}
-			//TODO reordenar las clasificaciones
+			$loc->save();
+			$vis->save();
+			$trans->commit();	
+	}catch(Exception $exc){
+		$trans->roollback();
+		throw new Exception("Error al recalcular la clasificación", 1);
+	}
+
+	}
+
+	/*
+	 * Se usa exclusivamente como paso intermedio de actualizaClasificacion.
+	 *
+	 * Suma $puntos a $id_equipo en la tabla de clasificacion y reordena.
+	 */
+	private sumaCalisf($id_equipo, int $puntos)
+	{
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			//sumar puntos
+			$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_equipo);
+			$puntosAnt= $eq['puntos'];
+			$puntosAct= ($eq['puntos']+=$puntos);
+
+			//Actualizar todos los equipos desplazados
+			$criteria= new CDbCriteria();
+			$criteria->condition=("puntos>=:puntosAnt && puntos< :puntosAct");
+			$criteria->params=array(':puntosAnt'=>$puntosAnt, ':puntosAct'=>$puntosAct);
+			$clas= Clasificacion::model()->findAll($criteria);
+			foreach ($clas as $e){
+				 $e['posicion']+=1;
+				 $e->save();
+			}
+
+			//Calcula la nueva 'posicion' del equipo
+			$criteria= new CDbCriteria();
+			$criteria->select='MAX(posicion) as posMax';
+			$criteria->condition='puntos>:puntosAct';
+			$criteria->params=array(':puntosAct'=>$puntosAct);
+			$clas= Clasificacion::model()->find($criteria);
+			$eq['posicion']= ($clas==null)? 1: $clas['posMax']+1;
+
+			$eq->save();
 			$trans->commit();
+
 		}catch(Exception $exc){
 			$trans->roollback();
+			throw $exc;	
 		}
 	}
 

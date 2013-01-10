@@ -1,0 +1,35 @@
+<?php
+return array(
+	'clasificacion_rojo'=>array(
+		'equipos_id_equipo'=>'1',
+		'posicion'=>'1',
+		'puntos'=>'7',
+		'ganados'=>'2',
+		'empatados'=>'1',
+		'perdidos'=>'0',
+	),
+	'clasificacion_verde'=>array(
+		'equipos_id_equipo'=>'2',
+		'posicion'=>'3',
+		'puntos'=>'2',
+		'ganados'=>'0',
+		'empatados'=>'2',
+		'perdidos'=>'1',
+	),
+	'clasificacion_negro'=>array(
+		'equipos_id_equipo'=>'3',
+		'posicion'=>'2',
+		'puntos'=>'4',
+		'ganados'=>'1',
+		'empatados'=>'1',
+		'perdidos'=>'1',
+	),
+	'clasificacion_blanco'=>array(
+		'equipos_id_equipo'=>'4',
+		'posicion'=>'3',
+		'puntos'=>'2',
+		'ganados'=>'0',
+		'empatados'=>'2',
+		'perdidos'=>'1',
+	),
+);
