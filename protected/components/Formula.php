@@ -9,7 +9,7 @@ class Formula
 	const PESOS_MIN_LEJOS = 1;
 	const PESOS_MULT = 10000;
 
-	const DIFNIV_NFACT_BASE = 0.5;
+	const DIFNIV_NFACT_BASE = 50;
 
 	/**
 	 * @param $x Punto en el que calcular la normal
@@ -58,7 +58,7 @@ class Formula
 
 		// Acercamos la media al punto de equilibrio	
 		$factDifNiv = self::DIFNIV_NFACT_BASE;
-		$avg += ($params['difNiv'] - $params['estado']) * $factDifNiv;
+		$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
 
 		return $avg;
 	}
