@@ -19,7 +19,7 @@
 	</label>
 	<label> 
 		<b> Aforo maximo: </b>
-		<input align="right" type="text" name="dn" value="<?php echo $params['aforoMax']; ?>" />
+		<input align="right" type="text" name="am" value="<?php echo $params['aforoMax']; ?>" />
 	</label>
 	<br>
 	<label> 

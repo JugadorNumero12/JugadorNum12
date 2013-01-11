@@ -9,7 +9,7 @@ class Formula
 	const PESOS_MIN_LEJOS = 1;
 	const PESOS_MULT = 10000;
 
-	const DIFNIV_NFACT_BASE = 50;
+	const DIFNIV_NFACT_BASE = 100;
 
 	/**
 	 * @param $x Punto en el que calcular la normal
@@ -57,8 +57,13 @@ class Formula
 		$avg = $params['estado'];
 
 		// Acercamos la media al punto de equilibrio	
-		$factDifNiv = self::DIFNIV_NFACT_BASE;
+		$factDifNiv = self::DIFNIV_NFACT_BASE + ($params['moralLoc'] + $params['moralVis'])/10;
 		$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
+
+
+		//Hacemos la diferencia de morales en valor absoluto
+		$difMoral = $params['moralLoc'] -  $params['moralVis'];
+		$avg += atan($difMoral/1000) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
 
 		return $avg;
 	}
