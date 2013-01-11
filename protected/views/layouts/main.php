@@ -18,10 +18,10 @@
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
     	<div id = "logo">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "titulo-jugador">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
  
     </div>

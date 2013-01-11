@@ -13,34 +13,41 @@
 
 <body>
 
-<div id="loginGenLayer">
-  	<!-- DIVISION DE CABECERA -->
-    <div id="headBox">
-		CABECERA
-    </div>
-	
-    <!-- DIVISION DEL MENU IZQUIERDO -->
-    <div id="leftSide">
-		<!-- MODIFICAR CORRECTAMENTE -->
-		<p>Jugador n&uacute;mero 12 es un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
-      Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</p>
-		<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>">REGISTRATE YA</a>
+	<div class="envoltorio-login"> <div class="envoltorio2-login">
 
-    </div>
+		<div id="descripcion-login">
+			<h1>Bienvenido a Jugador n&uacute;mero 12</h1>
+			<p> </b>Un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
+	      		Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</br></b></p>
+	      	<p>
+	      		</br>
+	      	</p>
+			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="boton">Reg&iacute;strate</a>
+	   	</div>
 
-	<!-- DIVISION DEL MENU DERECHO -->
-    <div id="rightSide" align="center">    	
-    	<?php echo $content; ?>
-    </div>
+	   	<div id="grupo-derecha-login"> 
+
+			<div id="columna-vacia-central-login"> </div>
+
+	   		<div id="entrada-login">
+				<p><?php echo $content; ?></p>
+	   		</div>
+
 	
-  	<!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="bottomBox">
-        <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-    </div>
-    
-</div> <!-- End GenLayer -->
+		</div>
+
+   	
+
+		<div class="push"></div>
+
+	</div> </div> <!--ENVOLTORIOS-->
+
+		<div class="pie-pagina-login">
+			<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+			All Rights Reserved.<br/>
+			<?php echo Yii::powered(); ?>
+		</div>
+
 
 </body>
 
