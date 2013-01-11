@@ -328,28 +328,27 @@ public class Partido
 	private void actualizaClasificacion()
 	{			
 		/* MARCOS */
-		//FIXME comprobar que se puede llamar a una funcion con transaccion dentro de otra transaccion
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$loc=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
 			$vis=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
 			
 			if($goles_local>$goles_visitante){
-				sumaCalisf($id_local, 3);
+				$suCl=sumaCalisf($id_local, 3, $trans);
 				$loc['ganados']+=1;
 				$vis['perdidos']+=1;
 			}elseif($goles_visitante>$goles_local){
-				sumaCalisf($id_visitante, 3);
+				$suCl=sumaCalisf($id_visitante, 3, $trans);
 				$loc['perdidos']+=1;
 				$vis['ganados']+=1;	
 			}else{
-				sumaCalisf($id_local, 1);
-				sumaCalisf($id_visitante, 1);
+				$suCl= sumaCalisf($id_local, 1, $trans) && sumaCalisf($id_visitante, 1, $trans);
 				$loc['empatados']+=1;
 				$vis['empatados']+=1;	
 			}
 			$loc->save();
 			$vis->save();
+			if(!$suCl)throw new Exception("Error en sumaCalisf");
 			$trans->commit();	
 	}catch(Exception $exc){
 		$trans->roollback();
@@ -362,10 +361,22 @@ public class Partido
 	 * Se usa exclusivamente como paso intermedio de actualizaClasificacion.
 	 *
 	 * Suma $puntos a $id_equipo en la tabla de clasificacion y reordena.
+	 * 
+	 * @returns si la transaccion ha terminado con exito o no.
+	 *
+	 * Si se le pasa una transaccion activa, no commita los cambios 
+	 * (espera a que los commite quien inició la transacion).
 	 */
-	private sumaCalisf($id_equipo, int $puntos)
-	{
-		$trans = Yii::app()->db->beginTransaction();
+	private bool sumaCalisf($id_equipo, int $puntos, &$transaction=null)
+	{	
+		if($transaction==null) {
+			$transaction= Yii::app()->db->beginTransaction();
+			$autocommit=true;
+		}else $autocommit=false;
+
+		if(!($transaction instaceof CDbTransaction && $transaction->getActive()))
+			return false;
+
 		try{
 			//sumar puntos
 			$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_equipo);
@@ -391,12 +402,13 @@ public class Partido
 			$eq['posicion']= ($clas==null)? 1: $clas['posMax']+1;
 
 			$eq->save();
-			$trans->commit();
+			if($autocommit)$transaction->commit();
 
 		}catch(Exception $exc){
-			$trans->roollback();
-			throw $exc;	
+			if($autocommit)$transaction->roollback();
+			return false;
 		}
+		return true;
 	}
 
 	public void jugarse()
