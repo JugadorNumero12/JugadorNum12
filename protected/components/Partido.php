@@ -162,63 +162,6 @@ public class Partido
 	}
 
 	/*
-	 * Recoge los datos de las acciones de este turno de locales y visitantes y recalcula los factores.
-	 * También, de forma transaccional todo, modifica el turno actual en la tabla Partidos (hay que añadirlo)
-	 * para que las acciones sepan a qué turno tienen que ser asociadas.
-	 * Importante -> esto provoca que ejecutar una accion de partido sea una transacción también.
-	 */
-	/*private void recogeAccionesTurno()
-	{
-		// MARCOS
-		$trans = Yii::app()->db->beginTransaction();
-		try{
-			//consultar las acciones guardadas para este turno
-			$acciones = AccionesTurno::model()->findAllByAtributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
-			
-			//abrir la tabla del turno para guardar los resultados
-			$tablaTurno = Turno::model()->findByAttributes(array(partidos_id_partido=>$id_partido, turno=>$turno));
-			
-			//para cada accion ejecutada
-			foreach ($acciones as $acc) {
-				$id_habilidad = $acc('habilidades_id_habilidad')
-
-				//busco el código (nombre de la habilidad)
-				$cod = Habilidades::model()->findByPk($id_habilidad);
-				if($cod == null){
-					$log=fopen("runtime/application.log","a");
-					fwrite($log, "Run time error: Habilidades::codigo of habilidad ".$id_habilidad." not found. [turno ".$turno."| partido ".$id_partido."]\n");
-					fclose($log);
-					break;//si la habilidad no existe me la salto.
-				}
-
-				//guardo en accLocal si la han ejecutado los locales o los visitantes
-				$id_equipo = $acc('equipos_id_equipo')
-				if($id_equipo == $id_local) $accLocal = true;
-				elseif($id_equipo == $id_visitante) $accLocal = false;
-				else{
-					$log=fopen("runtime/application.log","a");
-					fwrite($log, "Run time error: encontrada una accion del equipo ".$id_equipo.". [turno ".$turno."| partido ".$id_partido."]\n");
-					fclose($log);
-					break;//si se ha colado una acción de un equipo que no participa la salto.
-				}
-
-				//compruebo las keys de datos_acciones y actualizo las que corresponden a mis atributos
-				foreach (array_keys($datos_acciones['cod']) as $atributo) 
-					//ahora se haría llamando a helper
-
-			}
-			//salvo los cambios de todas las acciones
-			$tablaTurno->save();
-
-			$trans->commit();
-
-		}catch(Exception $exc) {
-    		$trans->rollback();
-    		throw $exc;
-		}
-	}*/
-	
-	/*
 	 * En función de los datos recogidos para este turno y el estado anterior,
 	 * pasa al estado siguiente llamando a un objeto Formula
 	 */
@@ -308,12 +251,12 @@ public class Partido
 			
 			foreach ($usuarios as $user){//Esta bonificacion se le da a todos
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				$rec['animo']= min(  $bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec['animo']= min(round(  $bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			foreach ($participantes as $user){//Esta se le da solo a los participantes
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				$rec['animo']= min(2*$bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec['animo']= min(round(2*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
@@ -374,7 +317,7 @@ public class Partido
 			$autocommit=true;
 		}else $autocommit=false;
 
-		if(!($transaction instaceof CDbTransaction && $transaction->getActive()))
+		if(!($transaction instaceof CDbTransaction && $transaction->getActive())
 			return false;
 
 		try{
