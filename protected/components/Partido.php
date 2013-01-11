@@ -308,12 +308,12 @@ public class Partido
 			
 			foreach ($usuarios as $user){//Esta bonificacion se le da a todos
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				$rec['animo']= min(  $bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec['animo']= min(round(  $bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			foreach ($participantes as $user){//Esta se le da solo a los participantes
 				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
-				$rec['animo']= min(2*$bonusAmbiente+$rec['animo'], $rec['animo_max']);
+				$rec['animo']= min(round(2*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
@@ -374,7 +374,7 @@ public class Partido
 			$autocommit=true;
 		}else $autocommit=false;
 
-		if(!($transaction instaceof CDbTransaction && $transaction->getActive()))
+		if(!($transaction instaceof CDbTransaction && $transaction->getActive())
 			return false;
 
 		try{
