@@ -3,7 +3,6 @@
 /* @var $grupales */
 /* @var $mi_equipo */
 
-// codigo PHP
 
 //Numero de jugadores de una aficion??
 

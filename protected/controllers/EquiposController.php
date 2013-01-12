@@ -38,9 +38,8 @@ class EquiposController extends Controller
 	 */
 	public function actionIndex()
 	{
-		/* MARINA */
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
-		$modeloClasificacion = Clasificacion:: model()->findAll();
+		$modeloClasificacion = Clasificacion::model()->findAll();
 
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
@@ -66,8 +65,6 @@ class EquiposController extends Controller
 	 */
 	public function actionVer($id_equipo)
 	{
-		/* SAM */
-		// Nota: utilizar la info de los modelos <<equipos>> y <<acciones_grupales>>
 		// Nota: en comentarios "aficion" y "equipo" son sinonimos
 		$id= Yii::app()->user->usIdent;
 		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
