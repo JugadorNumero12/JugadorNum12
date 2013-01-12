@@ -5,6 +5,7 @@
  */
 class RegistroController extends Controller
 {
+	public $layout='//layouts/login';
 	/**
 	 * Muestra el formulario para registrarse en la pagina
 	 * Si hay datos en $_POST procesa el formulario 
