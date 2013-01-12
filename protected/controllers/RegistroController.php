@@ -21,7 +21,11 @@ class RegistroController extends Controller
 		$empresario_status='unchecked';
 		$ultra_status='unchecked';
 		$error = false;
-		$equipos = Equipos::model()->findAll();
+		$equip = Equipos::model()->findAll();
+		$equipos[0] = "Elige un equipo";
+		foreach ($equip as $equipo){
+			$equipos[$equipo['id_equipo']] = $equipo['nombre'];
+		}
 		$modelo = new Usuarios ;
 		$seleccionado =0;
 		
