@@ -1,8 +1,6 @@
 <?php
 /* @var modeloC */
 
-// codigo PHP
-
 ?>
 
 <!-- codigo HTML -->
