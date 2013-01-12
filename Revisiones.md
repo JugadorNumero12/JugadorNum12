@@ -93,3 +93,24 @@ Acciones.participar [POR COMPROBAR]
 
 Acciones.expulsar
     Controlador: falta la comprobacion de que no se está expulsando al propio jugador (que es el creador)
+
+###Habilidades
+
+Habilidades.index 
+    Vista: Falta contemplar las habildiades pasivas y las de partido. Estamos mostrando el árbol completo. 
+
+    Vista: Cambiar la información que se muestra en cada habilidad, mostrar el nombre (hecho), tipo de acción que es (la relación número - tipo está en constantes Habilidades::TIPO_N) y si está desbloqueada. No mostrar los recursos.
+
+Habilidades.ver
+    Vista: falta el botón para adquirir la habilidad. 
+    hacer uso de la clase de Yii CHTML::Button.
+    La información de cómo hacerlo está en http://www.yiiframework.com/wiki/48/by-example-chtml/#hh1. (Hay un ejemplo que es copiar-pegar el código)
+
+    Vista: Faltan por contemplar las habilidades pasivas y las de partido
+
+    Vista: Añadir a la información que se muestra toda la informacion que hay en la base de datos para acciones grupales.
+    Nota: Las acciones no grupales, en esas columnas tienen NULL
+
+    Modelo: comprobar que se pide mostrar una habilidad que existe.
+
+Habilidades.adquirir
