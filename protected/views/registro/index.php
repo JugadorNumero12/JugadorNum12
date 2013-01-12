@@ -9,7 +9,6 @@
 /* @var $seleccionado (equipo selected)*/
 /* @var $equipos (array con los equipos de la DB) */
 
-
 ?>
 
 
@@ -78,17 +77,9 @@
 
 	  <tr>
 	   	<td align="left"><span>Equipos disponibles</span></td>
-	  	<td colspan="2" align="center"><select name='ocup'>
-	  		<option value=0 >Elige un equipo</option>
-	  		<?php foreach ( $equipos as $equipo ): ?>
-	  			<?php if($seleccionado==$equipo['id_equipo']){ ?>
-	  				<option value= <?php echo $equipo['id_equipo']; ?> selected ><li><?php echo $equipo['nombre']; ?></li></option>
-	  			<?php }else{ ?>
-	  				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
-	  			<?php } ?>
-	  			
-    		<?php endforeach; ?>
-	  	</td></select>
+	   	<td colspan="2" align="center">
+	   		<?php echo CHtml::dropDownList('ocup', $seleccionado, $equipos); ?>
+	   	</td>
 	  </tr>
 
 	  <tr><?php if($error): ?>
