@@ -78,7 +78,7 @@
 
 	  <tr>
 	   	<td align="left"><span>Equipos disponibles</span></td>
-	  	<td><select name='ocup'>
+	  	<td colspan="2" align="center"><select name='ocup'>
 	  		<option value=0 >Elige un equipo</option>
 	  		<?php foreach ( $equipos as $equipo ): ?>
 	  			<?php if($seleccionado==$equipo['id_equipo']){ ?>
@@ -96,12 +96,11 @@
 	  <?php endif; ?></tr>
 
 	  <tr>
-	    <td align="left"><input type = "submit" name = "registro" value = "REGISTRAR"></td>
-	    <td align="center"><input type = "reset" name = "reiniciar" value = "REINICIAR"></td>
-	    <td align="right">
-	    	<a href="<?php echo Yii::app()->createUrl('/site/login', array());?>">
-	    		<input type = "button" name = "cancelar" value = "CANCELAR">
-	    	</a>
+	    <td align="left">
+	    	<?php echo CHtml::submitButton('REGISTRAR');?>
+	    </td>
+	    <td colspan="2" align="center">
+	    	<?php echo CHtml::resetButton('REINICIAR');?>
 	    </td>
 	  </tr>
 
