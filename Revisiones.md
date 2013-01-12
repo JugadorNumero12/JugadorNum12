@@ -52,6 +52,10 @@ Equipos.cambiar [NO FUNCIONA]
 
     Controlador: falta un save para guardar el nuevo registro. También falta un "if" que compruebe que no te estaas cambiando a tu propio equipo. 
 
+    Controlador: Cambiar la variable de sesion "userAfic"
+
+    Controlador: Habrá que expulsar al jugador de todas las acciones grupales en las que está participando actualmente.
+
     Modelo: hay que añadir "rules" para validar que el nuevo equipo al que cambias es un equipo existente en la base de datos (esta validación es en el modelo, la de que no te cambias a tu mismo equipo es en el controlador)
 
 ###Acciones
@@ -114,3 +118,12 @@ Habilidades.ver
     Modelo: comprobar que se pide mostrar una habilidad que existe.
 
 Habilidades.adquirir
+
+###Partidos [PENDIENTE DE REVISION]
+NOTA: En asistir, solo mostrar una pantalla en la que ponga "has asistido al partido tal del equipo tal"
+La funcionalidad escrita en asistir pertenece a previa.
+
+
+###Registro [PENDIENTE DE REVISIÓN]
+
+###
