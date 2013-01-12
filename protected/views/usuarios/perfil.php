@@ -25,13 +25,13 @@
 		<td align="center"><?php echo $modeloU->email ?></td>
 		<td align="center"><?php switch ($modeloU->personaje)
 								{
-								case 0:
-								  echo "Ultra";
+								case Usuarios::PERSONAJE_ULTRA:
+								  echo "Ultra" ;
 								  break;
-								case 1:
-								  echo "Animadora" ;
+								case Usuarios::PERSONAJE_MOVEDORA:
+								  echo "Relaciones públicas";
 								  break;
-								case 2:
+								case Usuarios::PERSONAJE_EMPRESARIO:
 								  echo "Empresario";
 								  break;
 								} ?></td>
