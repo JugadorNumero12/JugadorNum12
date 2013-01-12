@@ -32,112 +32,122 @@ public class Partido
 	private $moral_visitante;
 
 	/**
-	 * Constructora: Inicializar 
-	 * 	id_partido,
-	 * 	local, visitante, turno cronica
-	 *  ambiente, dif_niveles, aforo_local, aforo_visitante
-	 * a partir del id_partido de la tabla de partidos
-	 */
-	public Partido($id_partido)
-	{
-		/* ALEX */ //poner bonito 
+     * Constructora: Inicializar 
+     *  id_partido,
+     *  local, visitante, turno cronica
+     *  ambiente, dif_niveles, aforo_local, aforo_visitante
+     * a partir del id_partido de la tabla de partidos
+     */
+    public Partido($id_partido)
+    {
+        /* ALEX */
         $transaction = Yii::app()->db->beginTransaction();
         try{
-        	$partido = Partidos::model()->findByPk($id_partido);
-        	if ($partido != null){
-        		//$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
-        		//$visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
+            $partido = Partidos::model()->findByPk($id_partido);
+            if ($partido == null)
+                throw new CHttpException(404,'Partido inexistente.');
 
-        		$this->$id_partido = $id_partido;
-        		$this->$id_local = $partido->$equipos_id_equipo_1;
-        		$this->$id_visitante = $partido->$equipos_id_equipo_2;
-        		$this->$turno = 0;
-        		$this->$cronica = $partido->$cronica;
-        		$this->$ambiente = $partido->$ambiente;
-        		$this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
-        		$this->$aforo_local = $partido->$aforo_local;
-        		$this->$aforo_visitante = $partido->$aforo_visitante;
+            $local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+            $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
 
-        		/*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
-        		$ofensivo_local = $local->$factor_ofensivo;
-        		$ofensivo_visitante = $visitante->$factor_ofensivo;
-        		$defensivo_local = $local->$factor_defensivo;
-        		$defensivo_visitante = $visitante->$factor_defensivo;
+            if ($local == null)
+                throw new CHttpException(404,'Equipo local inexistente.');
+            if ($visitante == null)
+                throw new CHttpException(404,'Equipo visitante inexistente.');
 
-        		$goles_local = 0;
-        		$goles_visitante = 0;
-
-        		//TODO
-
-        		$estado = 0;
-        		$moral_local = 0;
-        		$moral_visitante = 0;
-        		
-        		$transaction->commit();
-        	}
+            $this->$id_partido = $id_partido;
+            $this->$id_local = $partido->$equipos_id_equipo_1;
+            $this->$id_visitante = $partido->$equipos_id_equipo_2;
+            $this->$turno = 0;
+            $this->$cronica = $partido->$cronica;
+            $this->$ambiente = $partido->$ambiente;
+            /*niveles de la tabla partidos o de la tabla equipos ?*/
+            $this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
+            $this->$aforo_local = $partido->$aforo_local;
+            $this->$aforo_visitante = $partido->$aforo_visitante;
+            /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
+            $ofensivo_local = $local->$factor_ofensivo;
+            $ofensivo_visitante = $visitante->$factor_ofensivo;
+            $defensivo_local = $local->$factor_defensivo;
+            $defensivo_visitante = $visitante->$factor_defensivo;
+            $goles_local = 0;
+            $goles_visitante = 0;
+            //TODO
+            $estado = 0;
+            $moral_local = 0;
+            $moral_visitante = 0;
+            
+            $transaction->commit();
         }catch(Exception $e){
-        	$transaction->rollback();
+            $transaction->rollback();
+            throw $e;
         }
-	}
+    }
 
-	/**
- 	 * Funcion que inicializa los atributos 
- 	 *	estado, moral, ofensivo, defensivo y goles
- 	 * cargandolos desde la tabla turnos 
- 	 */
-	private void cargaEstado()
-	{
-		/* ALEX */ //poner bonito
-		$transaction = Yii::app()->db->beginTransaction();
-		try{
-			$partido = Partidos::findByPk($id_partido);
-			if($partido != null){
-				$ofensivo_local = $turno->$ofensivo_local;
-				$ofensivo_visitante = $turno->$ofensivo_visitante;
-				$defensivo_local = $turno->$defensivo_local;
-				$defensivo_visitante = $turno->$defensivo_visitante;
+    /**
+     * Funcion que inicializa los atributos 
+     *  estado, moral, ofensivo, defensivo y goles
+     * cargandolos desde la tabla turnos 
+     */
+    private void cargaEstado()
+    {
+        /* ALEX */
+        $transaction = Yii::app()->db->beginTransaction();
+        try{
+            $turn = Turnos::findByPk($id_partido);
 
-				$goles_local = $turno->goles_local;
-				$goles_visitante = $turno->$goles_visitante;
-				$estado = $turno->estado;
-				$moral_local = $turno->$moral_local;
-				$moral_visitante = $turno->$moral_visitante;
-				$transaction->commit();
-			}
-		}catch(Exception $e){
-			$transaction->rollback();
-		}
-	}
-	
-	/*
-	 * Guarda toda la información del estado actual en la base de datos.
-	 */
-	private void guardaEstado()
-	{
-		/* ALEX */ //poner bonito + aumento turno?
-		$transaction = Yii::app()->db->beginTransaction();
-		try{
-			$partido = Partidos::findByPk($id_partido);
-			if($partido != null){
-				$turno->$ofensivo_local = $ofensivo_local;
-				$turno->$ofensivo_visitante = $ofensivo_visitante;
-				$turno->$defensivo_local = $defensivo_local;
-				$turno->$defensivo_visitante = $defensivo_visitante;
+            if ($turn == null)
+                throw new CHttpException(404,'Turno inexistente.');
 
-				$turno->goles_local = $goles_local;
-				$turno->$goles_visitante = $goles_visitante;
-				$turno->estado = $estado;
-				$turno->$moral_local = $moral_local;
-				$turno->$moral_visitante = $moral_visitante;
-				if($turno->save()){
-					$transaction->commit();
-				}
-			}
-		}catch(Exception $e){
-			$transaction->rollback();
-		}
+            $ofensivo_local = $turn->$ofensivo_local;
+            $ofensivo_visitante = $turn->$ofensivo_visitante;
+            $defensivo_local = $turn->$defensivo_local;
+            $defensivo_visitante = $turn->$defensivo_visitante;
 
-	}
+            $goles_local = $turn->goles_local;
+            $goles_visitante = $turn->$goles_visitante;
+            $estado = $turn->estado;
+            $moral_local = $turn->$moral_local;
+            $moral_visitante = $turn->$moral_visitante;
+            
+            $transaction->commit();
+        }catch(Exception $e){
+            $transaction->rollback();
+            throw $e;
+        }
+    }
+    
+    /*
+     * Guarda toda la información del estado actual en la base de datos.
+     */
+    private void guardaEstado()
+    {
+        /* ALEX */
+        $transaction = Yii::app()->db->beginTransaction();
+        try{
+            $turn = Turnos::findByPk($id_partido);
+
+            if ($turn == null)
+                throw new CHttpException(404,'Turno inexistente.');
+
+            $turn->$ofensivo_local = $ofensivo_local;
+            $turn->$ofensivo_visitante = $ofensivo_visitante;
+            $turn->$defensivo_local = $defensivo_local;
+            $turn->$defensivo_visitante = $defensivo_visitante;
+
+            $turn->goles_local = $goles_local;
+            $turn->$goles_visitante = $goles_visitante;
+            $turn->estado = $estado;
+            $turn->$moral_local = $moral_local;
+            $turn->$moral_visitante = $moral_visitante;
+            if(!$turno->save()) 
+                throw new Exception('No se ha podido guardar el turno actual.');
+            $transaction->commit();
+        }catch(Exception $e){
+            $transaction->rollback();
+            throw $e;
+        }
+    }
 
 	/**
 	 * Estado 0: generar el estado inicial, 

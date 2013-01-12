@@ -20,6 +20,8 @@ class WebTestCase extends CWebTestCase
 	protected function setUp()
 	{
 		parent::setUp();
+		$this->setBrowser('*firefox /usr/bin/firefox'); //para linux
+        //$this->setBrowser('*firefox'); //para windows
 		$this->setBrowserUrl(TEST_BASE_URL);
 	}
 }
