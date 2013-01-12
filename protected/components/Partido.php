@@ -165,9 +165,46 @@ public class Partido
 		// nivel_equipo, factor_ofensivo y factor_defensivo
 		$transaction = Yii::app()->db->beginTransaction();
 		try{
+		/*carga las acciones preparatorias y calcula por primera vez 
+		las variables AMBIENTE, AFOROS, DIFERENCIA DE NIVELES 
+		y VALOR OFENSIVO y DEFENSIVO basico de los equipos.*/
+			$partido = Partidos::model()->findByPk($id_partido);
+            if ($partido == null)
+                throw new CHttpException(404,'Partido inexistente.');
 
+            $local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+            $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
+
+            if ($local == null)
+                throw new CHttpException(404,'Equipo local inexistente.');
+            if ($visitante == null)
+                throw new CHttpException(404,'Equipo visitante inexistente.');
+
+            $this->$ambiente = $partido->$ambiente;
+            /*niveles de la tabla partidos o de la tabla equipos ?*/
+            $this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
+            $this->$aforo_local = $partido->$aforo_local;
+            $this->$aforo_visitante = $partido->$aforo_visitante;
+            /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
+            $ofensivo_local = $local->$factor_ofensivo;
+            $ofensivo_visitante = $visitante->$factor_ofensivo;
+            $defensivo_local = $local->$factor_defensivo;
+            $defensivo_visitante = $visitante->$factor_defensivo;
+            $goles_local = 0;
+            $goles_visitante = 0;
+            //TODO
+            $estado = 0; //pelota en medio
+            $moral_local = 0;
+            $moral_visitante = 0;
+
+            generar_estado(); //se supone que cambia la variable $estado pero dudo que lo haga
+            //revisar cuando acaben la fórmula
+			/*y lo almacena en la tabla turnos.
+			/*A partir de la diferencia de niveles, almacena el primer estado del partido.*/
+			guardaEstado();
 		}catch(Exception $e){
 			$transaction->rollback();
+			throw $e;
 		}
 	}
 
@@ -176,11 +213,15 @@ public class Partido
 	 * pasa al estado siguiente llamando a un objeto Formula
 	 */
 	private void generar_estado()
-	{
-		$foo = new Formula(	$estado, $dif_niveles, $aforo_local ,$aforo_visitante,
+	{	
+		/*$foo = new Formula(	$estado, $dif_niveles, $aforo_local ,$aforo_visitante,
 							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
 							$defensivo_local ,$defensivo_visitante );
-		$estado = $foo->siguiente_estado();
+		$estado = $foo->siguiente_estado();*/
+		//completar con los nombres que se usen en la Formula
+		$estado = Formula::siguienteEstado(array($estado, $dif_niveles, $aforo_local ,$aforo_visitante,
+							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
+							$defensivo_local ,$defensivo_visitante ));
 	}
 
 	/*
@@ -377,7 +418,7 @@ public class Partido
 		    case (($turno > PRIMER_TURNO) && ($turno < ULTIMO_TURNO)):	
 		    	//Turnos de partido
 		    	cargaEstado();
-				recogeAccionesTurno();
+				//recogeAccionesTurno();
 				generar_estado();
 				generaCronicaTurno();
 				guardaEstado();
@@ -386,7 +427,7 @@ public class Partido
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
 		    	cargaEstado();
-				recogeAccionesTurno();
+				//recogeAccionesTurno();
 				generar_estado();
 				generaCronicaTurno();
 				finalizaEncuentro();
