@@ -2,35 +2,21 @@
 
 class Formula
 {
-	private $estado;
- 	private	$difNiveles;
- 	private $aforoL;
-	private $aforoV;
-	private $moralL;
-	private $moralV;
-	private $ofL;
-	private $ofV;
-	private $defL;
-	private $defV;
 
-	/** Constructora */
-	public function __construct ( $estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-					 $moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-					 $defensivo_local ,$defensivo_visitante )
-	{
-		$this->estado = $estado;
- 		$this->difNiveles = $dif_niveles;
- 		$this->aforoL = $aforo_local;
-		$this->aforoV = $aforo_visitante;
-		$this->moralL = $moral_local;
-		$this->moralV = $moral_visitante;
-		$this->ofL = $ofensivo_local;
-		$this->ofV = $ofensivo_visitante;
-		$this->defL  = $defensivo_local;
-		$this->defV = $defensivo_visitante;
-	}
+	const PESOS_DIST_CERCA = 10;
 
-	// Viva StackOverflow
+	const PESOS_MIN_CERCA = 10;
+	const PESOS_MIN_LEJOS = 1;
+	const PESOS_MULT = 10000;
+
+	const DIFNIV_NFACT_BASE = 100;
+
+	/**
+	 * @param $x Punto en el que calcular la normal
+	 * @return La normal acumulada en el punto $x
+	 */
+	// Algoritmo encontrado en StackOverflow para calcular la normal
+	// acumulada en un punto. Viva StackOverflow.
 	private static function cumnormdist($x)
 	{
 		$b1 =  0.319381530;
@@ -38,8 +24,8 @@ class Formula
 		$b3 =  1.781477937;
 		$b4 = -1.821255978;
 		$b5 =  1.330274429;
-		$p  =  0.2316419;
-		$c  =  0.39894228;
+		$p  =  0.231641900;
+		$c  =  0.398942280;
 
 		if ($x >= 0.0) {
 			$t = 1.0 / ( 1.0 + $p * $x );
@@ -50,41 +36,96 @@ class Formula
 		}
 	}
 
-	public static function gauss ( $x, $avg, $stdev ) {
+	/**
+	 * @param $x Punto en el que calcular la normal
+	 * @param $avg Media de la normal a calcular
+	 * @param $stdev Desviación típica de la normal acalcular
+	 * @return La normal N($avg,$stdev) en el punto $x
+	 */
+	private static function gauss ( $x, $avg, $stdev ) {
 		return self::cumnormdist(($x - $avg)/$stdev);
 	}
 
-	public function pesos ( $actual ) {
+	/**
+	 * Calcula la media de la función final dados los parámetros para el turno.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Media de la función final
+	 */
+	private static function calcMedia (array $params) {
+		// Inicialmente, la media es el estado actual
+		$avg = $params['estado'];
+
+		// Acercamos la media al punto de equilibrio	
+		$factDifNiv = self::DIFNIV_NFACT_BASE + ($params['moralLoc'] + $params['moralVis'])/10;
+		$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
+
+
+		//Hacemos la diferencia de morales en valor absoluto
+		$difMoral = $params['moralLoc'] -  $params['moralVis'];
+		$avg += atan($difMoral/1000) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
+
+		return $avg;
+	}
+
+	/**
+	 * Calcula la desviación típica de la función final dados los parámetros
+	 * para el turno.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Desviación típica de la función final
+	 */
+	private static function calcDesv (array $params) {
+		// Desviación inicial con valor arbitrario
+		$stdev = 2.5;
+
+		// La curva es más aplastada en el centro
+		$stdev *= 1 - abs($params['estado'])*0.07;
+
+		return $stdev;
+	}
+
+	/**
+	 * Devuelve un array de los pesos que indicarán la probabilidad de cada
+	 * cambio de estado.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Pesos de los cambios de estado
+	 */
+	public static function pesos (array $params) {
 		$pesos = array();
 
 		for ( $i=-10; $i<=10; $i++ ) {
-			$avg = $actual;
+			$avg = self::calcMedia($params);
+			$stdev = self::calcDesv($params);
 
-			// Movemos la media hacia el punto de equilibrio
-			$factDifNiv = 0.2;
-			$avg += ($this->difNiveles - $actual) * $factDifNiv;
+			//if ( $i == -10 ) {
+			//	$p = self::gauss( -9.5, $avg, $stdev );
+			//} else if ( $i == 10 ) {
+			//	$p = (1 - self::gauss( 9.5, $avg, $stdev ));
+			//} else {
+			$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
+			//}
 
-			$stdev = 2;
+			$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
 
-			// La curva es más aplastadaen el centro
-			$stdev *= 1 - abs($actual)*0.09;
-
-			if ( $i == -10 ) {
-				$p = self::gauss( -9.5, $avg, $stdev )*100;
-			} else if ( $i == 10 ) {
-				$p = (1 - self::gauss( 9.5, $avg, $stdev ))*100;
-			} else {
-				$p = (self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev ))*100;
-			}
-
-			$pesos[$i] = $p;
+			$pm = $p * self::PESOS_MULT;
+			$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			$pesos[$i] = (int) $pm;
 		}
 
 		return $pesos;
 	}
 
-	public function probabilidades ( $actual ) {
-		$pesos = $this->pesos($actual);
+	/**
+	 * Obtiene un array de {@link #pesos} y lo transforma en probabilidades,
+	 * dividiendo cada elemento entre la suma de todos
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Probabilidades de los cambios de estado
+	 */
+	public static function probabilidades (array $params) {
+		$pesos = self::pesos($params);
 		$tot = array_sum( $pesos );
 		foreach ( $pesos as $i=>$v ) {
 			$probs[$i] = $v/$tot;
@@ -92,11 +133,30 @@ class Formula
 
 		return $probs;
 	}
-		
-	/** Formula del juego */
-	public function siguiente_estado()
+	
+	/**
+	 * Calcula de forma aleatoria el siguiente estado, basado en las
+	 * probabilidades calculadas por {@link #probabilidades} y
+	 * los parámetros dados.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 */
+	public static function siguienteEstado (array $params)
 	{
 		/* DANI & PEDRO ==> Ingenieros de LA FÓRMULA */
-		$probs = probabilidades($estado);
+		$probs = self::probabilidades($params);
+		
+		// PHP >4.2.0 -- No necesita llamada a mt_srand()
+		$rnd = mt_rand() / mt_getrandmax();
+
+		$acc = 0;
+		foreach ( $probs as $i=>$v ) {
+			$acc += $v;
+			if ( $rnd <= $acc ) {
+				return $i;
+			}
+		}
+
+		return null;
 	}
 }

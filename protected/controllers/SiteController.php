@@ -111,30 +111,75 @@ class SiteController extends Controller
 	/**
 	 * Esta acción debería desaparecer en producción
 	 */
-	public function actionFormula()
+	public function actionFormula($dn=0, $am=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
 	{
-		$f = new Formula(0,0,0,0,0,0,0,0,0,0);
+		// Creamos el array de parámetros a partir de los datos GET
+		$params = array(
+ 			'difNiv'    => (double) $dn, 'aforoMax'  => (double) $am,
+ 			'aforoLoc'  => (double) $al, 'aforoVis'  => (double) $av,
+			'moralLoc'  => (double) $ml, 'moralVis'  => (double) $mv,
+			'ofensLoc'  => (double) $ol, 'ofensVis'  => (double) $ov,
+			'defensLoc' => (double) $dl, 'defensVis' => (double) $dv,
+		);
 
-		$pesos = array();
-		$probs = array();
-		for ( $i = -9; $i <= 9; $i++ ) {	
-			$pesos[$i] = $f->pesos($i);
-			$probs[$i] = $f->probabilidades($i);
+		// Obtenemos los pesos y las probabilidades de todos los estados
+		for ( $i = -9; $i <= 9; $i++ ) {
+			$params['estado'] = $i;
+
+			$pesos[$i] = Formula::pesos($params);
+			$probs[$i] = Formula::probabilidades($params);
 		}
 
-		$colors = array();
+		// Calculamos los colores para la tabla
 		foreach ( $probs as $i=>$v ) {
+			$max = max($v);
 			foreach ( $v as $ii=>$vv ) {
-				$c = (int) round(255 - $vv*255);
-				$colors[$i][$ii] = 'rgb(255,' . $c . ',' . $c . ')';
+				$r = 255;
+				$g = 255 - (int) round($vv*255);
+				$b = 255 - (int) round(($vv/$max)*255);
+				$colors[$i][$ii] = "rgb($r,$g,$b)";
 			}
 		}
 
+		// Simulamos un partido con todos los estados iniciales
+		for ( $i = -9; $i <= 9; $i++ ) {
+			$estados[$i] = array($i);
+			$params['estado'] = $i;
+
+			for ( $t = 0; $t < 12; $t++ ) {
+				$estSig = Formula::siguienteEstado($params);
+
+				$params['estado'] = $estSig;
+				$estados[$i][] = $estSig;
+			}
+		}
+
+		foreach ($estados as $i=>$v) {
+			foreach ($v as $ii=>$vv) {
+				if ( $vv < 0 ) {
+					$nc = (int)( 255 * (1 + $vv/10) );
+					$c = "rgb(255,$nc,$nc)";
+				} else if ( $vv > 0) {
+					$nc = (int)( 255 * (1 - $vv/10) );
+					$c = "rgb($nc,$nc,255)";
+				} else {
+					$c = 'white';
+				}
+				$estColors[$i][$ii] = ($c);
+			}
+		}
+
+		// Dibujamos la vista
+		unset($params['estado']);
+		
 		$this->layout = "main";
 		$this->render('formula', array(
 			'probs'=>$probs,
 			'pesos'=>$pesos,
-			'colors'=>$colors
+			'colors'=>$colors,
+			'params'=>$params,
+			'estados'=>$estados,
+			'estColors'=>$estColors
 		));
 	}
 }
