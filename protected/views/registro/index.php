@@ -8,7 +8,17 @@
 /* @var $error (personaje checked && equipo selected)*/
 /* @var $seleccionado (equipo selected)*/
 /* @var $equipos (array con los equipos de la DB) */
-
+/* <tr>
+	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
+	  		<?php print $animadora_status; ?> >Animadora
+	  	</td>
+	  	<td align="center"><input type = 'radio' name ='pers' value= 'empresario'
+	  		<?php print $empresario_status; ?> >Empresario
+	  	</td>
+	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
+	  		<?php print $ultra_status; ?> >Ultra
+	  	</td>
+	  </tr>*/
 ?>
 
 
@@ -64,14 +74,17 @@
 	  </tr>
 
 	  <tr>
-	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
-	  		<?PHP print $animadora_status; ?> >Animadora
+	  	<td align="left">
+	  		<?php echo $form->labelEx($modelo,'Animadora'); ?>
+	  		<?php echo CHtml::radioButton('pers', $animadora_status,array('value'=>'animadora','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="center"><input type = 'radio' name ='pers' value= 'empresario'
-	  		<?PHP print $empresario_status; ?> >Empresario
+	  	<td align="center">
+	  		<?php echo $form->labelEx($modelo,'Empresario'); ?>
+	  		<?php echo CHtml::radioButton('pers', $empresario_status,array('value'=>'empresario','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
-	  		<?PHP print $ultra_status; ?> >Ultra
+	  	<td align="right">
+	  		<?php echo $form->labelEx($modelo,'Ultra'); ?>
+	  		<?php echo CHtml::radioButton('pers', $ultra_status,array('value'=>'ultra','uncheckValue'=>null)); ?>
 	  	</td>
 	  </tr>
 
