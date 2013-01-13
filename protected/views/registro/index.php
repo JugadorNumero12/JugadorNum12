@@ -8,17 +8,7 @@
 /* @var $error (personaje checked && equipo selected)*/
 /* @var $seleccionado (equipo selected)*/
 /* @var $equipos (array con los equipos de la DB) */
-/* <tr>
-	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
-	  		<?php print $animadora_status; ?> >Animadora
-	  	</td>
-	  	<td align="center"><input type = 'radio' name ='pers' value= 'empresario'
-	  		<?php print $empresario_status; ?> >Empresario
-	  	</td>
-	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
-	  		<?php print $ultra_status; ?> >Ultra
-	  	</td>
-	  </tr>*/
+
 ?>
 
 
