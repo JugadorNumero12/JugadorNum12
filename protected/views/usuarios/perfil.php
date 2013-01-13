@@ -6,87 +6,78 @@
 
 ?>
 
-<!-- codigo HTML -->
+<head>
 
-<div id='datos-usuarios'>
-	<h1> PERFIL DE USUARIO </h1>
+</head>
 
+<body>
 
-<h3> DATOS BÁSICOS</h3>
+	<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
 
+		<div class="perfil-grupo-arriba">
 
+			<div class="perfil-grupo-arriba-izquierda">
 
-<table>
-	<tr>
-		<th>Nick</th>
-		<th>eMail</th>
-		<th>Personaje</th>
-		<th>Nivel</th>
-		<th>Equipo</th>
-	</tr> 
-	<tr>
-		<td><?php echo $modeloU->nick ?></td>
-		<td><?php echo $modeloU->email ?></td>
-		<td><?php switch ($modeloU->personaje)
+				<div class="perfil-grupo-arriba-izquierda-personaje">
+				
+				<?php switch ($modeloU->personaje)
 								{
-								case Usuarios::PERSONAJE_ULTRA:
-								  echo "Ultra" ;
-								  break;
-								case Usuarios::PERSONAJE_MOVEDORA:
-								  echo "Relaciones públicas";
-								  break;
-								case Usuarios::PERSONAJE_EMPRESARIO:
-								  echo "Empresario";
-								  break;
-								} ?></td>
-		<td><?php echo $modeloU->nivel ?></td>
-		<td><?php echo $modeloU->equipos->nombre ?></td>
-	</tr>
-	<tr></tr>
-</table>
+								case Usuarios::PERSONAJE_ULTRA: ?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/ultra.jpg'; ?>" width=300 height=300 border=0 alt="Ultra"> 
+								  <?php break;
+								case Usuarios::PERSONAJE_MOVEDORA:?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/animadora.jpg'; ?>" width=300 height=300 border=0 alt="Animadora"> 
+								  <?php break;
+								case Usuarios::PERSONAJE_EMPRESARIO:?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/empresario.jpg'; ?>" width=300 height=300 border=0 alt="Empresario"> 
+								  <?php break;
+								} ?>
+				</div>
 
-<h3> RECURSOS </h3>
+				<div class="perfil-grupo-arriba-izquierda-equipo">
+				
+				<?php switch ($modeloU->equipos->id_equipo)
+								{
+								case 1: ?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=100 height=100 border=0 alt="Escudo rojo"> 
+								  <?php break;
+								case 2:?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=100 height=100 border=0 alt="Escudo verde"> 
+								  <?php break;
+								case 3:?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=100 height=100 border=0 alt="Escudo negro"> 
+								  <?php break;
+								  case 4:?>
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=100 height=100 border=0 alt="Escudo blanco"> 
+								  <?php break;
+								} ?>
+				</div>
 
-<table cellspacing="5px">
-	<tr>
-		<th>Dinero</th>
-		<th>Influencia</th>
-		<th>Ánimo</th>
-	</tr> 
-	<tr>
-		<td><?php echo $modeloU->recursos->dinero ?></td>
-		<td><?php echo $modeloU->recursos->influencias ?></td>
-		<td><?php echo $modeloU->recursos->animo ?></td>
-	</tr>
-	<tr></tr>
-</table>
+			</div>
 
-<h3> GENERACIÓN DE RECURSOS </h3>
+			<div class="perfil-grupo-arriba-derecha">
+				<table>
+						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
+						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
+						<tr><th> <br></th> <td> </td> <br></tr> 
+						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td><?php echo $modeloU->recursos->animo ?> </td> </tr> 
+						<tr><th>Influencias: </th> <td><?php echo $modeloU->recursos->influencias ?></td> </tr> 
+						<tr><th> <br></th> <td> </td> <br></tr> 
+						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->animo_max ?></td> </tr> 
+						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_max ?> </td> </tr> 
+						
+					</tr> 
+				</table>
+			</div>
+		</div>
 
-<table>
-	<tr>
-		<th>Generación de dinero</th>
-		<th>Influencias máximas</th>
-		<th>Generación de influencias</th>
-		<th>Ánimo máximo</th>
-		<th>Generación de ánimo</th>
-	</tr> 
-	<tr>
-		<td><?php echo $modeloU->recursos->dinero_gen ?></td>
-		<td><?php echo $modeloU->recursos->influencias_max ?></td>
-		<td><?php echo $modeloU->recursos->influencias_gen ?></td>
-		<td><?php echo $modeloU->recursos->animo_max ?></td>
-		<td><?php echo $modeloU->recursos->animo_gen ?></td>
-	</tr>
-</table>
+		<div class="perfil-grupo-abajo">
 
-<h3> HABILIDADES PASIVAS DESBLOQUEADAS </h3>
+		</div>
 
-<?php foreach ( $accionesPas as $accion ){ ?>
-	<li>
-    <?php echo $accion; ?>
-    </li>
-<?php } ?>
+	</div></div> <!--ENVOLTORIOS-->
 
-</div>
+</body>
 
+</html>
