@@ -22,7 +22,7 @@
 	      	<p>
 	      		</br>
 	      	</p>
-			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="boton">Reg&iacute;strate</a>
+			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="boton-negro">Reg&iacute;strate</a>
 	   	</div>
 
 	   	<div id="grupo-derecha-login"> 
@@ -32,7 +32,6 @@
 	   		<div id="entrada-login">
 				<p><?php echo $content; ?></p>
 	   		</div>
-
 	
 		</div>
 

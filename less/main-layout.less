@@ -1,9 +1,11 @@
 //ENVOLTORIOS
 #envoltorio1{
-	width:100%;
+	min-height: 100%;
+	height: auto !important;
 	height: 100%;
+	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+	width:100%;
 	background: white;
-	margin: 0 auto;	
 }
 
 #envoltorio2{
@@ -37,14 +39,31 @@
 }
 
 //PIE DE PAGINA
+* {
+	margin: 0; //Importante para que el pie de pagina se vea abajo siempre
+}
+
 #pie-pagina {
-	height:150px; 
-	background-color:white; 
-	clear:both;
-	display:block;
-	overflow:auto;
-	float:left: ;
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	background: transparent;
+}
+
+#pie-pagina{
+	position: absolute;
+	left: 0;
+	bottom: 4px;
+	width: 100%;
+	padding: 0;
+	color: black;
+	font: 0.8em helvetica,arial,sans-serif;
 	text-align: center;
+}
+
+#pie-pagina a {
+	color: black;
+	text-decoration: none;
 }
 
 //CENTRO DE LA PAGINA

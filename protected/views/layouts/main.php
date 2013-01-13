@@ -60,14 +60,18 @@
 	    </div>
 
 	</div>
-  	<!-- DIVISION DEL PIE DE PÁGINA -->
+
+	<div class="push"></div>
+  	
+    
+</div></div> <!-- envoltorios -->
+
+<!-- DIVISION DEL PIE DE PÁGINA -->
     <div id="pie-pagina">
         <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
     </div>
-    
-</div></div> <!-- envoltorio -->
 
 </body>
 
