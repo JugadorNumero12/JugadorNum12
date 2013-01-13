@@ -80,19 +80,23 @@ class PartidosController extends Controller
 	}
 
 	/** 
-	 * Muestra la informacion previa a un partido
-	 * 	fecha y hora	
-	 *  ambiente para el partido
-	 * 	equipo local y visitante
-	 * 	detalles de ambos equipos (aforo previsto, nivel de los equipos)
-	 *  acciones completadas por las aficiones
+	 * Muestra la informacion previa a un partido.
+	 * 
+	 *  Si el partido ya se jugo, mostrar la cronica (resultado) de ese partido
+	 * 	Si el partido no se ha jugado aún y no es el partido próximo mostrar:
+	 * 		fecha y hora; equipos que jugarán
+	 *  Si el partido es el próximo partido del equipo, mostrar:
+	 *  	fecha y hora	
+	 *  	ambiente para el partido
+	 * 		equipo local y visitante
+	 * 		detalles de ambos equipos (aforo previsto, nivel de los equipos)
+	 *  	acciones completadas por las aficiones
 	 *
 	 * @parametro 	id del partido sobre el que se consulta la previa
 	 * @ruta 		jugadorNum12/partidos/previa/{$id_partido}
 	 */
 	public function actionPrevia($id_partido)
 	{
-		/* MARINA */
 		//Saco la informacion del partido
 		$modeloPartidos = Partidos:: model()->findByPk($id_partido);
 
@@ -115,19 +119,20 @@ class PartidosController extends Controller
 
 	/**
 	 * Muestra la pantalla para "jugar" un partido
-	 * Si el partido ya se jugo, mostrar la cronica (resultado) de ese partido
-	 * Si el partido no se ha jugado, y es el proximo partido del
-	 * equipo del jugador, mostrar la pantalla de juego de partido
 	 * 
+	 * De momento, solo muestra una pantalla con información básica
+	 *
 	 * @parametro 	$id_partido sobre el que se pide informacion
 	 * @ruta 		jugadorNum12/partidos/asistir/{$id_partido}
 	 */
 	public function actionAsistir($id_partido)
 	{
-		/* ARTURO */
-		// Nota: dejar en blanco (o con un simple mensaje indicativo) 
-		// la pantalla de jugar partido
+		// Nota: dejar con un simple mensaje indicativo) 
+		// una pantalla en la que ponga "has asistido al partido tal del equipo tal"
 
+		/* TODO: mover código a actionPrevia */
+
+		
 		//Obtener el equipo del usuario
 		$id_usuario = Yii::app()->user->usIdent;        
         $id_equipo  = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;

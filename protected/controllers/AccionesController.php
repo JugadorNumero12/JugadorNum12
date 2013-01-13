@@ -42,7 +42,6 @@ class AccionesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		/* PEDRO */
 		//Sacar una lista de las acciones desbloqueadas de un usuario
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
@@ -60,13 +59,16 @@ class AccionesController extends Controller
 	}
 
 	/**
-	 * Ejecuta la accion (individual o grupal) pulsada 
+	 * Ejecuta la accion (individual o grupal) pulsada (no habrá acciones pasivas o de partido)
+	 * Significa "bajarse la carta de habilidad"
 	 *
-	 * Si es una accion grupal muestra un formulario para recoger la 
-	 * cantidad inicial de recursos que aporta el jugador
+	 * Cualquier habilidad resta los recursos iniciales al jugador, además,
+	 *
+	 *   Si es una accion grupal muestra un formulario para recoger la 
+	 * cantidad inicial de recursos que aporta el jugador (podría no aportar recursos), 
 	 * Los datos del formulario se recogen por $_POST y se crea una 
 	 * nueva accion grupal en el equipo al que pertenece el usuario
-	 * Si es una accion individual se ejecuta
+	 *   Si es una accion individual o pasiva se ejecuta al momento
 	 * 
 	 * El id del jugador y la aficion a la que pertence se recogen de 
 	 * la variable de sesion
@@ -80,7 +82,7 @@ class AccionesController extends Controller
 	{
 		// El parámetro $id_accion es en realidad el ID de la habilidad
 
-		echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
+		// echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
 		$trans = Yii::app()->db->beginTransaction();
 		$habilidad = Habilidades::model()->findByPk($id_accion);
 
@@ -185,7 +187,6 @@ class AccionesController extends Controller
 	 */
 	public function actionVer($id_accion)
 	{
-		/* PEDRO */
 		//Cojo la acción de la tabla acciones_grupales
 		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
 
@@ -351,8 +352,6 @@ class AccionesController extends Controller
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
-		/* MARCOS */
-
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
 		try{
@@ -391,9 +390,10 @@ class AccionesController extends Controller
 			//$part->delete(); // elegante, pero no funciona
 			$n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 
-			if($n != 1)
-				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+			if($n != 1) {
 				//Si salta esto es que había más de una participación del mismo usuario en la acción
+				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+			}
 
 			$trans->commit();
 

@@ -90,8 +90,6 @@ class HabilidadesController extends Controller
 	 */
 	public function actionAdquirir($id_habilidad)
 	{
-		/* ARTURO */
-		
 		//empezamos la transaccion
 		$trans = Yii::app()->db->beginTransaction();
 

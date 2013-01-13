@@ -9,7 +9,6 @@
 /* @var $seleccionado (equipo selected)*/
 /* @var $equipos (array con los equipos de la DB) */
 
-
 ?>
 
 
@@ -65,30 +64,25 @@
 	  </tr>
 
 	  <tr>
-	  	<td align="left"><input type = 'radio' name ='pers' value= 'animadora'
-	  		<?PHP print $animadora_status; ?> >Animadora
+	  	<td align="left">
+	  		<?php echo $form->labelEx($modelo,'Animadora'); ?>
+	  		<?php echo CHtml::radioButton('pers', $animadora_status,array('value'=>'animadora','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="center"><input type = 'radio' name ='pers' value= 'empresario'
-	  		<?PHP print $empresario_status; ?> >Empresario
+	  	<td align="center">
+	  		<?php echo $form->labelEx($modelo,'Empresario'); ?>
+	  		<?php echo CHtml::radioButton('pers', $empresario_status,array('value'=>'empresario','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="right"><input type = 'radio' name ='pers' value= 'ultra' 
-	  		<?PHP print $ultra_status; ?> >Ultra
+	  	<td align="right">
+	  		<?php echo $form->labelEx($modelo,'Ultra'); ?>
+	  		<?php echo CHtml::radioButton('pers', $ultra_status,array('value'=>'ultra','uncheckValue'=>null)); ?>
 	  	</td>
 	  </tr>
 
 	  <tr>
 	   	<td align="left"><span>Equipos disponibles</span></td>
-	  	<td><select name='ocup'>
-	  		<option value=0 >Elige un equipo</option>
-	  		<?php foreach ( $equipos as $equipo ): ?>
-	  			<?php if($seleccionado==$equipo['id_equipo']){ ?>
-	  				<option value= <?php echo $equipo['id_equipo']; ?> selected ><li><?php echo $equipo['nombre']; ?></li></option>
-	  			<?php }else{ ?>
-	  				<option value= <?php echo $equipo['id_equipo']; ?>><li><?php echo $equipo['nombre']; ?></li></option>
-	  			<?php } ?>
-	  			
-    		<?php endforeach; ?>
-	  	</td></select>
+	   	<td colspan="2" align="center">
+	   		<?php echo CHtml::dropDownList('ocup', $seleccionado, $equipos); ?>
+	   	</td>
 	  </tr>
 
 	  <tr><?php if($error): ?>
@@ -96,12 +90,11 @@
 	  <?php endif; ?></tr>
 
 	  <tr>
-	    <td align="left"><input type = "submit" name = "registro" value = "REGISTRAR"></td>
-	    <td align="center"><input type = "reset" name = "reiniciar" value = "REINICIAR"></td>
-	    <td align="right">
-	    	<a href="<?php echo Yii::app()->createUrl('/site/login', array());?>">
-	    		<input type = "button" name = "cancelar" value = "CANCELAR">
-	    	</a>
+	    <td align="left">
+	    	<?php echo CHtml::submitButton('REGISTRAR');?>
+	    </td>
+	    <td colspan="2" align="center">
+	    	<?php echo CHtml::resetButton('REINICIAR');?>
 	    </td>
 	  </tr>
 

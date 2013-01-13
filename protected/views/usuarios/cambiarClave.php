@@ -6,7 +6,7 @@
 
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
-				'id'=>'clave-form',
+				'id'=>'usuarios-form',
 			    'enableAjaxValidation'=>false,
 			    'enableClientValidation'=>true,
 			    'clientOptions'=>array(

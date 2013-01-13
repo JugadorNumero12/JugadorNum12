@@ -42,7 +42,6 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
-        /* ROBER */
         $this-> redirect(array('usuarios/perfil'));
     }
 
@@ -61,28 +60,16 @@ class UsuariosController extends Controller
      * @ruta jugadorNum12/usuarios/perfil
      */
     public function actionPerfil()
-    {
-        /* MARINA */
-        /* Nota: la vista tendra variables */
-        
+    {    
         //Busco el id del usuario actual y saco los datos el usuario
         $id= Yii::app()->user->usIdent;
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
-
-        //Saco los datos del equipo del usuario
-        $idEquipo = Yii::app()->user->usAfic;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
-
-        //Saco los datos de los recursos del usuario
-        $modeloRecursos = Recursos:: model()->findByAttributes(array('usuarios_id_usuario'=>$id));
 
         //Saca la lista de las acciones desbloqueadas por el usuario
         $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>$id));
         
         //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas
         $accionesPas = array();
-        //$accionDes = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $habilidad['habilidades_id_habilidad']));
-
         foreach ($modeloDesbloqueadas as $desbloqueada){
             $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
             if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
@@ -90,10 +77,8 @@ class UsuariosController extends Controller
             }
         }
 
-        $this->render('perfil',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo,
-                                      'modeloR'=>$modeloRecursos,
-                                      'accionesPas'=>$accionesPas) );
+        $this->render('perfil',array('modeloU'=>$modeloUsuario, 
+                        'accionesPas'=>$accionesPas) );
     }
 
     /*
@@ -108,19 +93,10 @@ class UsuariosController extends Controller
      */
     public function actionVer($id_usuario)
     {
-        /* MARINA */ 
-        // Nota: la vista tendra variables
-
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
-        //Saco los datos del equipo del usuario
-        $idEquipo = $modeloUsuario->equipos_id_equipo;
-        $modeloEquipo = Equipos:: model()->findByPk($idEquipo);
-       
-        $this->render('ver',array('modeloU'=>$modeloUsuario,
-                                      'modeloE'=>$modeloEquipo));
-    
+        $this->render('ver',array('modeloU'=>$modeloUsuario));    
     }
 
     /*
@@ -134,9 +110,9 @@ class UsuariosController extends Controller
      */
     public function actionCuenta()
     {
-        /* ALEX */
         $id= Yii::app()->user->usIdent;
         $modelo = Usuarios:: model()->findByPk($id);
+        
         $this->render('cuenta',array('modelo'=>$modelo));
     }
 
@@ -150,7 +126,6 @@ class UsuariosController extends Controller
      */
     public function actionCambiarClave()
     {
-        /* ROBER */
         $id= Yii::app()->user->usIdent;        
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
@@ -170,7 +145,8 @@ class UsuariosController extends Controller
             }
            
         }
-            $this->render('cambiarClave',array('model'=>$modelo));            
+        
+        $this->render('cambiarClave',array('model'=>$modelo));            
     }
 
     /*
@@ -183,7 +159,6 @@ class UsuariosController extends Controller
      */
     public function actionCambiarEmail()
     {
-        /* ROBER */
         // Nota: el email es unico para cada usuario
         //Hay que realizar una transaccion por si dos usuarios guardan al mismo tiempo el email
         //ya que les daria que son validos y no es asi 
@@ -242,18 +217,6 @@ class UsuariosController extends Controller
     protected function performAjaxValidation($model)
     {
         if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-        /*Para el formulario de cambiarClave*/
-        if(isset($_POST['ajax']) && $_POST['ajax']==='clave-form')
-        {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-        /*Para el formulario de cambiarEmail*/
-        if(isset($_POST['ajax']) && $_POST['ajax']==='email-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

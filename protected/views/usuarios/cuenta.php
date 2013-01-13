@@ -21,15 +21,11 @@
 
 	  <tr>
 	    <td colspan="2">
-			<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarClave', array());?>">
-	    		<input type = "button" name = "clave" value = "Cambiar Clave">
-	    	</a>	    
+	    	<?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave')));?>
 	    </td>
 	    
 	    <td colspan="2">
-	    	<a href="<?php echo Yii::app()->createUrl('/usuarios/cambiarEmail', array());?>">
-	    		<input type = "button" name = "email" value = "Cambiar Email">
-	    	</a>
+	    	<?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail')));?>
 	    </td>
 	  </tr>
 
