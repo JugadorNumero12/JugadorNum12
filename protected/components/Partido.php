@@ -268,11 +268,10 @@ public class Partido
 	 */
 	private void generaBonificacion()
 	{
-		/* MARCOS 
-		$bonifGanador = 28;
-		$bonifEmpate = 14;
-		$bonifPerdedor = 7;*/
-		
+		/* MARCOS */
+		/*$bonifGanador = 28;
+		  $bonifEmpate = 14;
+		  $bonifPerdedor = 7;*/
 		if($goles_local>$goles_visitante){
 			bonifAnimo($id_local, 28);
 			bonifAnimo($id_visitante, 7);
@@ -284,6 +283,7 @@ public class Partido
 			bonifAnimo($id_visitante, 14);
 		}
 	}
+
 	/*
 	 * Se usa exclusivamente como paso intermedio de generaBonificacion.
 	 *
@@ -316,6 +316,7 @@ public class Partido
 			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
 	}
+
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
@@ -344,13 +345,13 @@ public class Partido
 			$vis->save();
 			if(!$suCl)throw new Exception("Error en sumaCalisf");
 			$trans->commit();	
-	}catch(Exception $exc){
-		$trans->roollback();
-		throw new Exception("Error al recalcular la clasificación", 1);
-	}
+		}catch(Exception $exc){
+			$trans->roollback();
+			throw new Exception("Error al recalcular la clasificación", 1);
+		}
 
 	}
-
+	
 	/*
 	 * Se usa exclusivamente como paso intermedio de actualizaClasificacion.
 	 *
