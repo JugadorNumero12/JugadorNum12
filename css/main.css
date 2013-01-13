@@ -1,1 +1,1 @@
-@charset "utf-8";@import url('./general.css');@import url('./envoltorio.css');@import url('./cabecera.css');@import url('./recursos.css');@import url('./menu-izquierdo.css');@import url('./grupo-derecha.css');@import url('./menu-derecho.css');@import url('./contenido.css');@import url('./pie-pagina.css');@import url('./menus.css');@import url('./boton-redondeado.css');@import url('./login.css');
+@charset "utf-8";@import url('./general.css');@import url('./menus.css');@import url('./boton-redondeado.css');@import url('./login-layout.css');@import url('./main-layout.css');

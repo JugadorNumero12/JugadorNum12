@@ -25,18 +25,6 @@
     	</div>
  
     </div>
-
-    <!-- DIVISION DE RECURSOS -->
-    <div id="recursos">
-    	<!--  <?php $id= Yii::app()->user->usIdent;
-        	  $modeloUsuario = Usuarios:: model()->findByPk($id);  ?>
-    	<ul>
-		  <li> Dinero: <?php echo $modeloUsuario->recursos->dinero; ?></li>
-		  <li> Animo: <?php echo $modeloUsuario->recursos->animo; ?></li>
-		  <li> Influencia: <?php echo $modeloUsuario->recursos->influencias; ?></li>
-		</ul>
-		 -->
-    </div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
     <div id="menu-izquierdo">
