@@ -31,10 +31,9 @@ public class RetransmitirRRSS extends AccionSingleton
      		 si esta accion fallara sera probablemente por eso,cambiarlo si es asi*/
      		 $id_equipo=Yii::app()->user->usAfic;
      		 $equipo=Equipos::model()->findByPK($id_equipo);
+     		 //Falta el id_partido que se cogera de la relacion de equipos con partidos
      		 $cantidad=$datos_acciones['RetransmitirRRSS']['defensivo'];
-     		 $nuevo_defensivo=$equipo->factor_defensivo +$cantidad;
-     		 $equipo->setAttributes(array('factor_defensivo'=>$nuevo_defensivo));
-     		 $equipo->save();
+     		 $helper->aumentar_factores($id_partido,$id_equipo,'defensivo',$cantidad);
 
      		 
 	      	$trans->commit();
