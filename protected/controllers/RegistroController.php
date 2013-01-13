@@ -17,9 +17,9 @@ class RegistroController extends Controller
 	public function actionIndex()
 	{
 		/* ALEX */
-		$animadora_status='unchecked';
-		$empresario_status='unchecked';
-		$ultra_status='unchecked';
+		$animadora_status=false;
+		$empresario_status=false;
+		$ultra_status=false;
 		$error = false;
 		$equip = Equipos::model()->findAll();
 		$equipos[0] = "Elige un equipo";
@@ -52,15 +52,15 @@ class RegistroController extends Controller
 					$error = false;
 					$selected_radio = $_POST['pers'];
 					if ($selected_radio === 'animadora') {
-						$animadora_status = 'checked';
+						$animadora_status = true;
 						$modelo->setAttributes(array('personaje'=>0));
 
 					}else if ($selected_radio === 'empresario') {
-						$empresario_status = 'checked';
+						$empresario_status = true;
 						$modelo->setAttributes(array('personaje'=>1));
 
 					}else if($selected_radio === 'ultra'){
-						$ultra_status = 'checked';
+						$ultra_status = true;
 						$modelo->setAttributes(array('personaje'=>2));
 					}
 
