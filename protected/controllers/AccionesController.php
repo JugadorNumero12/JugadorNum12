@@ -255,7 +255,7 @@ class AccionesController extends Controller
 		//Compruebo que la acción es del equipo del user
 		if($habilidad['equipos_id_equipo']!= $datosUsuario['equipos_id_equipo'])
 			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
-			
+
 		//Iniciamos la transaccion
 		$transaccion = Yii::app()->db->beginTransaction();
 
@@ -263,14 +263,23 @@ class AccionesController extends Controller
 		if ($datosAccion['completada'] != 0)
 			throw new CHttpException(403,'La acción indicada ya ha acabado.');
 
-		//Compruebo que no se ha sobrepasado el límite de jugadores
-		if($datosAccion['jugadores_acc'] >= $habilidad['participantes_max'])
-		 	throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes..');
+		//Compuebo si el jugador ya ha participado en la acción
+		$participacion=Participantes::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
+		if($participacion==null){
+			//Compruebo que no se sobrepase el límite de jugadores
+			if($datosAccion['jugadores_acc'] >= $habilidad['participantes_max'])
+		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
+			
+		 	//Saco el modelo que le voy a pasar a la vista
+			$participacion = new Participaciones;
+			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
+			$participacion['usuarios_id_usuario'] = $id_user;
+			$participacion['dinero_aportado'] = 0;
+			$participacion['influencias_aportadas'] = 0;
+			$participacion['animo_aportado'] = 0;
 
-		//Saco el modelo que le voy a pasar a la vista
-		$participacion = new Participaciones;
-		$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
-		$participacion['usuarios_id_usuario'] = $id_user;
+			$nuevo_participante=true;
+		}else $nuevo_participante=false;
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
@@ -278,8 +287,7 @@ class AccionesController extends Controller
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
 
-		if( !isset($_POST['Participaciones']) )
-			//Petición GET: Muestro el formulario
+		if( !isset($_POST['Participaciones']) )	//Petición GET: Muestro el formulario
 			$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
 
 		//Petición POST
@@ -315,15 +323,15 @@ class AccionesController extends Controller
 			$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
 				
 			//Añado los recursos en acciones_grupales
-			$datosAccion['jugadores_acc'] += 1;
+			if($nuevo_participante) $datosAccion['jugadores_acc'] += 1;
 			$datosAccion['dinero_acc'] += $dineroAportado;  
 			$datosAccion['influencias_acc'] += $influenciasAportadas;
 			$datosAccion['animo_acc'] += $animoAportado;
 
-			//Añado una nueva participación en la tabla de participaciones
-			$participacion['dinero_aportado'] = $dineroAportado;
-			$participacion['influencias_aportadas'] = $influenciasAportadas;
-			$participacion['animo_aportado'] = $animoAportado;
+			//Actializo la participacion
+			$participacion['dinero_aportado'] += $dineroAportado;
+			$participacion['influencias_aportadas'] += $influenciasAportadas;
+			$participacion['animo_aportado'] += $animoAportado;
 
 			//Compruebo si ya se han aportado todos los recursos necesarios para la acción
 			if ($datosAccion['dinero_acc'] == $habilidad['dinero_max'] && $datosAccion['influencias_acc'] == $habilidad['influencias_max'] && $datosAccion['animo_acc'] == $habilidad['animo_max'])
@@ -335,7 +343,7 @@ class AccionesController extends Controller
 			$participacion->save();
 				
 			$transaccion->commit();
-			Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
+			Yii::app()->user->setFlash('success', 'Tu equipo agradece tu generosa contrubución.');
 			$this->redirect(array('ver', 'id_accion'=>$id_accion));
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
