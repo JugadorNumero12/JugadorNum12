@@ -238,36 +238,36 @@ class AccionesController extends Controller
 	{
 		/* PEDRO */
 		//Recojo los datos de la acción
-		$datosAccion = AccionesGrupales::model()->findByPK($id_accion);
-		if($datosAccion==null)
+		$accion = AccionesGrupales::model()->findByPK($id_accion);
+		if($accion==null)
 			throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
-		$id_habilidad= $datosAccion['habilidades_id_habilidad'];
+		$id_habilidad= $accion['habilidades_id_habilidad'];
 		$habilidad = Habilidades::model()->findByPk($id_accion);
 		if($habilidad==null)
 			throw new CHttpException(501,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
 		$id_user = Yii::app()->user->usIdent;
-		$datosUsuario = Usuarios::model()->findByPK($id_user);
+		$usuario = Usuarios::model()->findByPK($id_user);
 
 		//Compruebo que la acción es del equipo del user
-		if($habilidad['equipos_id_equipo']!= $datosUsuario['equipos_id_equipo'])
+		if($accion['equipos_id_equipo']!= $usuario['equipos_id_equipo'])
 			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
 
-		//Iniciamos la transaccion
+		//Iniciamos la transacción
 		$transaccion = Yii::app()->db->beginTransaction();
 
 		//Compruebo que la acción no ha terminado
-		if ($datosAccion['completada'] != 0)
+		if ($accion['completada'] != 0)
 			throw new CHttpException(403,'La acción indicada ya ha acabado.');
 
 		//Compuebo si el jugador ya ha participado en la acción
-		$participacion=Participantes::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
+		$participacion=Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
 		if($participacion==null){
 			//Compruebo que no se sobrepase el límite de jugadores
-			if($datosAccion['jugadores_acc'] >= $habilidad['participantes_max'])
+			if($accion['jugadores_acc'] >= $habilidad['participantes_max'])
 		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
 			
 		 	//Saco el modelo que le voy a pasar a la vista
@@ -287,8 +287,12 @@ class AccionesController extends Controller
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
 
-		if( !isset($_POST['Participaciones']) )	//Petición GET: Muestro el formulario
+		if( !isset($_POST['Participaciones'])){
+			$transaccion->rollback();
+			//Petición GET: Muestro el formulario
 			$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
+			return;
+		}
 
 		//Petición POST
 		$recursosAportados = $_POST['Participaciones'];
@@ -297,25 +301,23 @@ class AccionesController extends Controller
 		$influenciasAportadas = $recursosAportados['influencia_nueva'];
 
 		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
+			$transaccion->rollback();
 			Yii::app()->user->setFlash('error', 'Recursos insuficientes');
 			$this->refresh();
+			return;
 		}
 			
 		try {
-			//Primero calculo los recursos que faltan para terminar la acción
-			$dineroF = $habilidad['dinero_max'] - $datosAccion['dinero_acc'];
-			$animoF = $habilidad['animo_max'] - $datosAccion['animo_acc'];
-			$influenciaF = $habilidad['influencias_max'] - $datosAccion['influencias_acc'];
+			//Compruebo que los recursos aportados no sobrepasan los que faltan para terminar la acción
+			$dineroAportado = min($dineroAportado, $habilidad['dinero_max'] - $accion['dinero_acc']);
+			$animoAportado = min($animoAportado, $habilidad['animo_max'] - $accion['animo_acc']);
+			$influenciasAportadas = min($influenciasAportadas, $habilidad['influencias_max'] - $accion['influencias_acc']);
 
-			//Compruebo que los recursos aportados no sobrepasan máximos
-			if ($dineroF < $dineroAportado)
-				$dineroAportado = $dineroF;
-
-			if ($animoF < $animoAportado)
-				$animoAportado = $animoF;
-
-			if ($influenciaF < $influenciasAportadas)
-				$influenciasAportadas = $influenciaF;
+			//Si no se aporta nada ignoro la petición
+			if($dineroAportado==0&&$animoAportado==0&&$influenciasAportadas==0){
+				$transaccion->rollback();
+				$this->redirect(array('ver', 'id_accion'=>$id_accion));
+			}
 
 			//Resto los recursos al usuario
 			$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
@@ -323,27 +325,27 @@ class AccionesController extends Controller
 			$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
 				
 			//Añado los recursos en acciones_grupales
-			if($nuevo_participante) $datosAccion['jugadores_acc'] += 1;
-			$datosAccion['dinero_acc'] += $dineroAportado;  
-			$datosAccion['influencias_acc'] += $influenciasAportadas;
-			$datosAccion['animo_acc'] += $animoAportado;
+			if($nuevo_participante) $accion['jugadores_acc'] += 1;
+			$accion['dinero_acc'] += $dineroAportado;  
+			$accion['influencias_acc'] += $influenciasAportadas;
+			$accion['animo_acc'] += $animoAportado;
 
-			//Actializo la participacion
+			//Calculo la participación
 			$participacion['dinero_aportado'] += $dineroAportado;
 			$participacion['influencias_aportadas'] += $influenciasAportadas;
 			$participacion['animo_aportado'] += $animoAportado;
 
 			//Compruebo si ya se han aportado todos los recursos necesarios para la acción
-			if ($datosAccion['dinero_acc'] == $habilidad['dinero_max'] && $datosAccion['influencias_acc'] == $habilidad['influencias_max'] && $datosAccion['animo_acc'] == $habilidad['animo_max'])
-					$datosAccion['completado'] = 1;
+			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
+					$accion['completada'] = 1;
 				
 
 			$recursosUsuario->save();
-			$datosAccion->save();
+			$accion->save();
 			$participacion->save();
 				
 			$transaccion->commit();
-			Yii::app()->user->setFlash('success', 'Tu equipo agradece tu generosa contrubución.');
+			Yii::app()->user->setFlash('success', 'Tu equipo agradece tu generosa contribución.');
 			$this->redirect(array('ver', 'id_accion'=>$id_accion));
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
