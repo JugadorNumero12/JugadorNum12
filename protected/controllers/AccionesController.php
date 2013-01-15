@@ -323,7 +323,7 @@ class AccionesController extends Controller
 
 			//Esto es un poco paranoico, pero dejarlo pasar sería una burrada (y no se como se valida el formulario)
 			if($dineroAportado<0 || $animoAportado<0 || $influenciasAportadas<0){
-				Yii::log('[MALICIOUS_REQUEST]El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
+				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
 				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
 				//El usuario se ha saltado el filtro del formulario y esta intentando robar recursos
 			}
