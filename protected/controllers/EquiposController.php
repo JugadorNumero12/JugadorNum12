@@ -40,8 +40,10 @@ class EquiposController extends Controller
 	{
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
 		$modeloClasificacion = Clasificacion::model()->findAll();
+		// Saco el equipo del usuario para poder remarcarlo en la clasificacion
+		$equipoUsuario = Yii::app()->user->usAfic;
 
-		$this->render('index',array('modeloC'=>$modeloClasificacion));
+		$this->render('index',array('modeloC'=>$modeloClasificacion, 'equipoUsuario'=>$equipoUsuario));
 	}
 
 	/**
