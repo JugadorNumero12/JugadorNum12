@@ -45,6 +45,10 @@ class Equipos extends CActiveRecord
 			array('nivel_equipo', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>45),
 			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo', 'length', 'max'=>10),
+			//El equipo al que se cambia existe en la base de datos. className es la tabla donde lo comprueba.
+			//array('id_equipo','in','range'=>array('1','2','3','4'),'message'=>'El equipo no existe.'),
+			array('id_equipo','exist','className'=>'equipos','message'=>'El equipo no existe.'),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_equipo, nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'safe', 'on'=>'search'),

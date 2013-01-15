@@ -45,6 +45,8 @@ class AccionesGrupales extends CActiveRecord
 			array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion', 'required'),
 			array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc', 'length', 'max'=>10),
 			array('finalizacion', 'length', 'max'=>11),
+			//Comprobar si la accion grupal existe
+			array('id_accion_grupal','exist','className'=>'acciones_grupales','message'=>'La accion grupal no existe.'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_accion_grupal, usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion', 'safe', 'on'=>'search'),
