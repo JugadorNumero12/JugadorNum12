@@ -302,8 +302,16 @@ class AccionesController extends Controller
 
 		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
 			$transaccion->rollback();
-			Yii::app()->user->setFlash('error', 'Recursos insuficientes');
-			$this->refresh();
+
+			//este script equivale al flash y el redirect
+			$url_redirecct = $this->createUrl('acciones/participar', array('id_accion'=>$id_accion));
+			echo '<script type="text/javascript">'.
+				 'alert("Recursos insuficientes.");'.
+				 'window.location = "'.
+				  $url_redirecct.
+				 '"</script>';
+			//fin del script
+
 			return;
 		}
 			
@@ -345,8 +353,17 @@ class AccionesController extends Controller
 			$participacion->save();
 				
 			$transaccion->commit();
-			Yii::app()->user->setFlash('success', 'Tu equipo agradece tu generosa contribución.');
-			$this->redirect(array('ver', 'id_accion'=>$id_accion));
+			
+			//este script equivale al flash y el redirect
+			$url_redirecct = $this->createUrl('acciones/ver', array('id_accion'=>$id_accion));
+			echo '<script type="text/javascript">'.
+				 'alert("Tu equipo agradece tu generosa contribución.");'.
+				 'window.location = "'.
+				  $url_redirecct.
+				 '"</script>';
+			//fin del script
+
+			//$this->redirect(array('ver', 'id_accion'=>$id_accion));
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
 			throw $exc;
