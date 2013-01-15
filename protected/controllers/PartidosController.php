@@ -115,24 +115,10 @@ class PartidosController extends Controller
 									 'modeloV'=>$modeloEquipoVisitante,
 									 'modeloGL'=>$modeloGrupalesLocal,
 									 'modeloGV'=>$modeloGrupalesVisitante));
-	}
 
-	/**
-	 * Muestra la pantalla para "jugar" un partido
-	 * 
-	 * De momento, solo muestra una pantalla con información básica
-	 *
-	 * @parametro 	$id_partido sobre el que se pide informacion
-	 * @ruta 		jugadorNum12/partidos/asistir/{$id_partido}
-	 */
-	public function actionAsistir($id_partido)
-	{
-		// Nota: dejar con un simple mensaje indicativo) 
-		// una pantalla en la que ponga "has asistido al partido tal del equipo tal"
+		//TODO
 
-		/* TODO: mover código a actionPrevia */
 
-		
 		//Obtener el equipo del usuario
 		$id_usuario = Yii::app()->user->usIdent;        
         $id_equipo  = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
@@ -170,14 +156,40 @@ class PartidosController extends Controller
 			//no se puede asistir a un partido que esta despues del siguiente partido
 			$cronica_partido = 'No hay informacion acerca del partido';
 		} 
+	}
 
-		//pasar los datos de cada partido a la vista index
-		$this->render('asistir', array(	'equipoL'=>$modeloEquipoLocal,
-										'equipoV'=>$modeloEquipoVisitante,
-									   	'cronica'=>$cronica_partido,
-									   	'sigPartido'=>$modeloSigPartido
-									  ));
-			
+	/**
+	 * Muestra la pantalla para "jugar" un partido
+	 * 
+	 * De momento, solo muestra una pantalla con información básica
+	 *
+	 * @parametro 	$id_partido sobre el que se pide informacion
+	 * @ruta 		jugadorNum12/partidos/asistir/{$id_partido}
+	 */
+	public function actionAsistir($id_partido)
+	{
+		// Nota: dejar con un simple mensaje indicativo una pantalla 
+		// con un texto similar a "has asistido al partido" 
+
+		// obtener el id del equipo del usuario
+		$id_equipo_usuario = Yii::appp()->user->usAfic;
+
+		// obtener la informacion del partido, 
+		// en $partido participan $equipo_local y $equipo_visitante
+		$partido 			= Partidos::model()->findByPk($id_partido);
+		$equipo_local     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
+		$equipo_visitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
+
+		// un usuario no puede asisitir a un partido en el que su equipo no participa
+		if ( ($equipo_local->id_equipo != $id_equipo_usuario) || 
+			 ($equipo_visitante->id_equipo != $id_equipo_usuario) ) {
+			/* TODO */
+		} else {
+			//pasar los datos del partido y los equipos
+			$this->render('asistir', array(	'equipo_local'		=> $equipo_local,
+											'equipo_visitante'	=> $equipo_visitante,
+									   		'partido'			=> $partido));
+		}	
 	}
 
 	/**
