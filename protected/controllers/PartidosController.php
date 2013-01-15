@@ -106,15 +106,9 @@ class PartidosController extends Controller
 
 		//Saco la información de las acciones grupales previstas para el partido por el equipo local
 		$modeloGrupalesLocal = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_1));
-
+	
 		//Saco la información de las acciones grupales previstas para el partido por el equipo visitante
 		$modeloGrupalesVisitante = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_2));
-
-		$this->render('previa',array('modeloP'=>$modeloPartidos,
-									 'modeloL'=>$modeloEquipoLocal,
-									 'modeloV'=>$modeloEquipoVisitante,
-									 'modeloGL'=>$modeloGrupalesLocal,
-									 'modeloGV'=>$modeloGrupalesVisitante));
 
 		//TODO
 
@@ -123,8 +117,7 @@ class PartidosController extends Controller
 		$id_usuario = Yii::app()->user->usIdent;        
         $id_equipo  = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
 
-		//TODO Obtener hora actual
-		$hora_actual = 130;
+		
 
 		//Obtener el partido a consultar y
 		//el siguiente partido del equipo del usuario
@@ -138,24 +131,38 @@ class PartidosController extends Controller
 		//Saco la información de los equipos para mostrar el nombre en la vista
 		$modeloEquipoLocal     = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_1);
 		$modeloEquipoVisitante = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_2);
-		
+
+		//Declaracion de todas las variables que usa el render
+		$pasado=$presente=false;
+		//TODO Obtener hora actual
+		$hora_actual = 130;
 		if($hora_actual > $modeloPartido->hora)
 		{
 			//si el partido se jugo, obtener cronica
+			$pasado = true;
 			$cronica_partido = $modeloPartido->cronica;			
 		}
-		elseif($modeloPartido->id_partido == $modeloSigPartido->id_partido)
+		elseif($id_partido == $modeloSigPartido->id_partido)
 		{
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
-			//TODO redirigir a Jugar Partido
-			$cronica_partido = 'Jugar Partido';
+			$presente = true;
+			
 		}
 		else
 		{
 			//TODO enviar un error y redirigir,
 			//no se puede asistir a un partido que esta despues del siguiente partido
 			$cronica_partido = 'No hay informacion acerca del partido';
-		} 
+		}
+
+		$this->render('previa',array('modeloP'=>$modeloPartidos,
+									 'modeloL'=>$modeloEquipoLocal,
+									 'modeloV'=>$modeloEquipoVisitante,
+									 'modeloGL'=>$modeloGrupalesLocal,
+									 'modeloGV'=>$modeloGrupalesVisitante,
+									 'partido_pasado'=>$pasado,
+									 'cronica'=>$cronica_partido,
+									 'partido_presente'=>$presente)); 
 	}
 
 	/**
