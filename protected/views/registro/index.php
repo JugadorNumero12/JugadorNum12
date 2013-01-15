@@ -21,83 +21,91 @@
 					'validateOnSubmit'=>true,),
 			    ));
  ?>
-
-<table cellspacing="5px">
+<div class="envoltorio-contenido-registro">
+	<tr>
+	    <td><h3>REGISTRO</h3></td>
+	</tr>
+<table>
 	  <tr>
-	    <td colspan="2" align="center"><span class="under">REGISTRO</span></td>
-	  </tr>
-
-	  <tr>
-	    <td align="left"><?php echo $form->labelEx($modelo,'Nickname'); ?>:</td>
+	    <td><?php echo $form->labelEx($modelo,'Nickname'); ?>:</td>
 	    <td><?php echo $form->textField($modelo,'nuevo_nick'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($modelo,'nuevo_nick'); ?></td>
+	    <td><?php echo $form->error($modelo,'nuevo_nick'); ?></td>
 	  </tr>
 
 	  <tr>
-	    <td align="left"><?php echo $form->labelEx($modelo,'Correo Electr&oacute;nico'); ?>:</td>
+	    <td><?php echo $form->labelEx($modelo,'Correo Electr&oacute;nico'); ?>:</td>
 	    <td><?php echo $form->emailField($modelo,'nueva_email1'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($modelo,'nueva_email1'); ?></td>
+	    <td><?php echo $form->error($modelo,'nueva_email1'); ?></td>
 	  </tr>
 
 	  <tr>
-	    <td align="left"><?php echo $form->labelEx($modelo,'Contrase&ntilde;a'); ?>:</td>
+	    <td><?php echo $form->labelEx($modelo,'Contrase&ntilde;a'); ?>:</td>
 	    <td><?php echo $form->passwordField($modelo,'nueva_clave1'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($modelo,'nueva_clave1'); ?></td>
+	    <td><?php echo $form->error($modelo,'nueva_clave1'); ?></td>
 	  </tr>
 
 	  <tr>
-	    <td align="left"><?php echo $form->labelEx($modelo,'Repetir contrase&ntilde;a'); ?>:</td>
+	    <td><?php echo $form->labelEx($modelo,'Repetir contrase&ntilde;a'); ?>:</td>
 	    <td><?php echo $form->passwordField($modelo,'nueva_clave2'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($modelo,'nueva_clave2'); ?></td>
+	    <td><?php echo $form->error($modelo,'nueva_clave2'); ?></td>
 	  </tr>
 
 	  <tr>
-	   	<td colspan="2" align="center"><span>Personajes disponibles</span></td>
+	   	<td>Personajes disponibles</td>
 	  </tr>
 
 	  <tr>
-	  	<td align="left">
+	  	<td>
 	  		<?php echo $form->labelEx($modelo,'Animadora'); ?>
+	  			</td>
+	  	<td>
+	  		<?php echo $form->labelEx($modelo,'Empresario'); ?>
+	  		</td>
+	  	<td>
+	  		<?php echo $form->labelEx($modelo,'Ultra'); ?>
+	  		</td>
+	  </tr>
+	  <tr>
+	  	<td>
 	  		<?php echo CHtml::radioButton('pers', $animadora_status,array('value'=>'animadora','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="center">
-	  		<?php echo $form->labelEx($modelo,'Empresario'); ?>
+	  	<td>
 	  		<?php echo CHtml::radioButton('pers', $empresario_status,array('value'=>'empresario','uncheckValue'=>null)); ?>
 	  	</td>
-	  	<td align="right">
-	  		<?php echo $form->labelEx($modelo,'Ultra'); ?>
+	  	<td>
 	  		<?php echo CHtml::radioButton('pers', $ultra_status,array('value'=>'ultra','uncheckValue'=>null)); ?>
 	  	</td>
 	  </tr>
 
 	  <tr>
-	   	<td align="left"><span>Equipos disponibles</span></td>
-	   	<td colspan="2" align="center">
+	   	<td >Equipos disponibles</td>
+	   	<td >
 	   		<?php echo CHtml::dropDownList('ocup', $seleccionado, $equipos); ?>
 	   	</td>
 	  </tr>
 
 	  <tr><?php if($error): ?>
-	   	<td colspan="2" align="left"><span style="color:red">¡Debe escoger un personaje y un equipo!</span></td>
+	   	<td>¡Debe escoger un personaje y un equipo!</td>
 	  <?php endif; ?></tr>
 
 	  <tr>
-	    <td align="left">
-	    	<?php echo CHtml::submitButton('REGISTRAR');?>
+	    <td >
+	    	<?php echo CHtml::submitButton('REGISTRAR',array('class'=>"button large black"));?>
 	    </td>
-	    <td colspan="2" align="center">
-	    	<?php echo CHtml::resetButton('REINICIAR');?>
+	    <td >
+	    	<?php echo CHtml::resetButton('REINICIAR',array('class'=>"button large black"));?>
 	    </td>
 	  </tr>
 
 	</table>
+</div>
 
 	<?php $this->endWidget(); ?>
