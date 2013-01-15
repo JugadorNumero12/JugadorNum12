@@ -4,7 +4,7 @@
 ?>
 
 <!-- codigo HTML -->
-
+<!-- COMPARTE LOS CSS CON LA VISTA PERFIL PORQUE SON LOS MISMOS -->
 <div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
 
 	<div class="perfil-grupo-arriba">
@@ -50,9 +50,8 @@
 
 			<div class="perfil-grupo-arriba-derecha">
 				<table>
-						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
-						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 						 
-					</tr> 
+					<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
+					<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 						 
 				</table>
 			</div>
 		</div>
