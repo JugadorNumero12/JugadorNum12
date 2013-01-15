@@ -1,44 +1,70 @@
 <?php
-/* @var $equipos */
-/* @var $grupales */
+/* @var $equipo    */
+/* @var $grupales  */
+/* @var jugadores  */
 /* @var $mi_equipo */
 
-
-//Numero de jugadores de una aficion??
-
+//echo '<pre>'.print_r($jugadores, true).'</pre>';
 ?>
 
-<!-- codigo HTML -->
 
-<h1>Equipo: <?php echo $equipos->nombre ?></h1>
-<ul>
-	<li>Aforo maximo del estadio -> <?php echo $equipos->aforo_max ?></li>
-	<li>Aforo basico del estadio -> <?php echo $equipos->aforo_base ?></li>
-	<li>Nivel del equipo -> <?php echo $equipos->nivel_equipo ?></li>
-	
-		<?php 
-		if($mi_equipo){ ?>
-		<li> <?php
-			if($grupales==null)
-				echo "No hay acciones grupales.";
-			else 
-				echo "Numero de acciones grupales -> ". sizeof($grupales);
-			?>
-		</li><br>
-			<?php
-			foreach ($grupales as $accion) {
-				echo "Accion con ID " . $accion['id_accion_grupal'];
-			}
-		} ?>
-	
-</ul>
+<div class="envoltorio-equipos"> <div class="envoltorio2-equipos"> 
 
-<?php 
-	if(!$mi_equipo){
-		echo "Pulsa el botón para cambiarte a este equipo";	
-		//echo CHtml::button('Cambiar de equipo', array('submit' => array('equipos/ver', 'id_equipo'=>$equipos->id_equipo)));
-		//echo CHtml::link('Link Text',array('equipos/cambiar','id_equipo'=>$equipos->id_equipo));
-		//EquiposController::actionCambiar($equipos->id_equipo);
-?>
-<!-- 	<button id="b" type="button" onClick="EquiposController::actionCambiar($equipos->id_equipo)";>Cambiar de equipo</button> -->
-<!-- <?php } ?> -->
+	<div class="equipos-escudo">
+		<?php switch ($equipo->id_equipo)
+			{
+			case 1: ?>
+			  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=200 height=200 border=0 alt="Escudo rojo"> 
+			  <?php break;
+			case 2:?>
+			  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=200 height=200 border=0 alt="Escudo verde"> 
+			  <?php break;
+			case 3:?>
+			  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=200 height=200 border=0 alt="Escudo negro"> 
+			  <?php break;
+			  case 4:?>
+			  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=200 height=200 border=0 alt="Escudo blanco"> 
+			  <?php break;
+			} ?>				
+	</div>
+
+	<div class="equipos-informacion">
+		<table>
+			<tr>
+				<th> Nombre equipo: </th>
+				<td> <?php echo $equipo->nombre ?> </td>
+			</tr> 
+			<tr>
+				<th> Nivel del equipo: </th>
+				<td> <?php echo $equipo->nivel_equipo ?> </td>
+			</tr>
+			<tr>
+				<th> Aforo m&aacute;ximo del estadio: </th>
+				<td> <?php echo $equipo->aforo_max ?> </td>
+			</tr> 	
+			<tr>
+				<th>Aforo b&aacute;sico del estadio: </th>
+				<td><?php echo $equipo->aforo_base ?> </td>
+			</tr> 					 
+		</table>
+
+	</div>
+
+	<div class="equipos-jugadores">
+		<table>
+			<tr>
+				<th> Jugador </th>
+				<th> Tipo </th>
+				<th> Nivel </th>
+			</tr>
+			<?php foreach($jugadores as $jugador) { ?>
+			<tr>
+				<td> <?php echo $jugador['nick']; ?> </td>
+				<td> <?php echo $jugador['nick']; ?> </td>
+				<td> <?php echo $jugador['nick']; ?> </td>
+			</tr>
+			<?php } ?>
+		</table>
+	</div>
+
+</div></div> <!--ENVOLTORIOS-->

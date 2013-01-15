@@ -73,7 +73,7 @@
 		</div>
 
 		<div class="perfil-grupo-abajo">
-
+			
 		</div>
 
 	</div></div> <!--ENVOLTORIOS-->
