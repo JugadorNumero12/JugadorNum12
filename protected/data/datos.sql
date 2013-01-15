@@ -118,18 +118,22 @@ INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_us
  (8, 9, 200),
  (7, 10, 200);
  
+ -- ----------------------------------
+ -- Rojos (1)   7 puntos 	+4 goles
+ -- Negros (3) 	4 puntos 	-1 goles
+ -- Verdes (2) 	2 puntos 	+2 goles
+ -- Blancos (4) 2 puntos 	-2 goles
+ -- ----------------------------------
 TRUNCATE `clasificacion`;
-INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`) VALUES
- -- ----------------
- -- Rojos   7 puntos
- -- Negros  4 puntos
- -- Verdes  2 puntos
- -- Blancos 2 puntos
- -- ----------------
- (1, 1, 7, 2, 1, 0),
- (2, 3, 2, 0, 2, 1),
- (3, 2, 4, 1, 1, 1),
- (4, 3, 2, 0, 2, 1);
+INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
+ -- rojos
+ (1, 1, 7, 2, 1, 0, 4),
+ -- verdes
+ (2, 3, 2, 0, 2, 1, 2),
+ -- negros
+ (3, 2, 4, 1, 1, 1, -1),
+ -- blancos
+ (4, 4, 2, 0, 2, 1, -2);
 
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
