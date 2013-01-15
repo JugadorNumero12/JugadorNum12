@@ -5,9 +5,9 @@
 
 <!-- codigo HTML -->
 
-  <div class="cabecera-clasificacion"> <h1> CLASIFICACIÓN</h1> </div>
+<div class="cabecera-clasificacion"> <h1> CLASIFICACIÓN</h1> </div>
 
-<table>
+<div class="clasificacion"> <table cellspacing="0">
 	<tr>
 		<th>Equipo</th>
 		<th>Posicion</th>
@@ -32,4 +32,4 @@
 	</tr>
 	<?php } ?>
 	<tr></tr>
-</table>
+</table> </div>
