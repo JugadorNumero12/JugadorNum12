@@ -269,8 +269,10 @@ class AccionesController extends Controller
 			throw new CHttpException(403,'La acción indicada ya ha acabado.');
 
 		//Compuebo si el jugador ya ha participado en la acción
-		$participacion=Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
-		if($participacion==null){
+		$participacion= Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
+		$nuevo_participante= $participacion==null;
+
+		if($nuevo_participante){
 			//Compruebo que no se sobrepase el límite de jugadores
 			if($accion['jugadores_acc'] >= $habilidad['participantes_max'])
 		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
@@ -279,11 +281,10 @@ class AccionesController extends Controller
 			$participacion = new Participaciones();
 			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
 			$participacion['usuarios_id_usuario'] = $id_user;
-			$participacion['dinero_aportado'] = 0;
+			/*$participacion['dinero_aportado'] = 0;
 			$participacion['influencias_aportadas'] = 0;
-			$participacion['animo_aportado'] = 0;
-			$nuevo_participante=true;
-		}else $nuevo_participante=false;
+			$participacion['animo_aportado'] = 0;*/
+		}
 
 		$participacion->setScenario('participar');
 
@@ -355,9 +356,9 @@ class AccionesController extends Controller
 			$accion['animo_acc'] += $animoAportado;
 
 			//Calculo la participación
-			$participacion['dinero_aportado'] += $dineroAportado;
-			$participacion['influencias_aportadas'] += $influenciasAportadas;
-			$participacion['animo_aportado'] += $animoAportado;
+			$dinFin=$participacion['dinero_aportado'] += $dineroAportado;
+			$infFin=$participacion['influencias_aportadas'] += $influenciasAportadas;
+			$aniFin=$participacion['animo_aportado'] += $animoAportado;
 
 			//Compruebo si ya se han aportado todos los recursos necesarios para la acción
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
@@ -366,7 +367,22 @@ class AccionesController extends Controller
 
 			$recursosUsuario->save();
 			$accion->save();
-			$participacion->save();
+			if($nuevo_participante)
+				$participacion->save();
+			else{
+				$n=$participacion->updateAll(array('dinero_aportado'=>$dinFin,
+														  'influencias_aportadas'=>$infFin,
+														  'animo_aportado'=>$aniFin),
+														  "acciones_grupales_id_accion_grupal=:id_accion && usuarios_id_usuario=:id_user",
+														  array(':id_accion'=>$id_accion, ':id_user'=>$id_user));
+					if($n!=1){
+						//Si salta esto es que había más de una participación del mismo usuario en la acción
+						Yii::log('[DATABASE_ERROR] El usuario '.$id_user.' tiene multiples participaciones en la acción '.$id_accion,'error');
+						throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+					}
+				}
+
+
 				
 			$transaccion->commit();
 			
