@@ -5,9 +5,9 @@
 
 <!-- codigo HTML -->
 
-<h1> CLASIFICACIÓN</h1>
+  <div class="cabecera-clasificacion"> <h1> CLASIFICACIÓN</h1> </div>
 
-<table cellspacing="5px">
+<table>
 	<tr>
 		<th>Equipo</th>
 		<th>Posicion</th>
@@ -18,17 +18,17 @@
 	</tr> 
 	<?php foreach ($modeloC as $m ) { ?>
 	<tr>
-		<td align="center"> <a href=
+		<td> <a href=
 									"<?php echo $this->createUrl( '/equipos/ver', 
 									array('id_equipo' => $m->equipos_id_equipo) ); ?>">  
 
 							<?php echo $m->equipos->nombre ?></td>
 							</a>
-		<td align="center"><?php echo $m->posicion ?></td>
-		<td align="center"><?php echo $m->puntos ?></td>
-		<td align="center"><?php echo $m->ganados ?></td>
-		<td align="center"><?php echo $m->empatados ?></td>
-		<td align="center"><?php echo $m->perdidos ?></td>
+		<td><?php echo $m->posicion ?></td>
+		<td><?php echo $m->puntos ?></td>
+		<td><?php echo $m->ganados ?></td>
+		<td><?php echo $m->empatados ?></td>
+		<td><?php echo $m->perdidos ?></td>
 	</tr>
 	<?php } ?>
 	<tr></tr>
