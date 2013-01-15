@@ -237,107 +237,136 @@ class AccionesController extends Controller
 	public function actionParticipar($id_accion)
 	{
 		/* PEDRO */
-		//Iniciamos la transaccion
-		$transaccion = Yii::app()->db->beginTransaction();
+		//Recojo los datos de la acción
+		$accion = AccionesGrupales::model()->findByPK($id_accion);
+		if($accion==null)
+			throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
+		$id_habilidad= $accion['habilidades_id_habilidad'];
 		$habilidad = Habilidades::model()->findByPk($id_accion);
+		if($habilidad==null)
+			throw new CHttpException(501,'La habilidad no existe.');
 
-		//Saco el usuario que quiere participar en la acción y su equipo
-		$usuario = Yii::app()->user->usIdent;
-		$datosUsuario = Usuarios::model()->findByPK($usuario);
-		$equipoUsuario = $datosUsuario['equipos_id_equipo'];
+		//Saco el usuario que quiere participar en la acción
+		$id_user = Yii::app()->user->usIdent;
+		$usuario = Usuarios::model()->findByPK($id_user);
 
-		//Saco el modelo que le voy a pasar a la vista
-		$participacion = new Participaciones;
-		$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
-		$participacion['usuarios_id_usuario'] = $usuario;
+		//Compruebo que la acción es del equipo del user
+		if($accion['equipos_id_equipo']!= $usuario['equipos_id_equipo'])
+			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
 
-		//Saco el equipo que ha creado la accion
-		$datosAccion = AccionesGrupales::model()->findByPK($id_accion);
-		$equipoAccion = $datosAccion['equipos_id_equipo'];
+		//Iniciamos la transacción
+		$transaccion = Yii::app()->db->beginTransaction();
 
-		//Compruebo que la acción es del equipo del user, que la acción no ha terminado y que no se ha sobrepasado el límite de jugadores
-		if ( $datosAccion != null && $equipoAccion == $equipoUsuario && $datosAccion['completada'] == 0 && $datosAccion['jugadores_acc'] < $habilidad['participantes_max']){
-			//Saco el usuario que va a participar en la acción para luego sacar sus recursos
-			$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $usuario));
-			$dineroUsuario = $recursosUsuario['dinero'];
-			$influenciasUsuario = $recursosUsuario['influencias'];
-			$animoUsuario = $recursosUsuario['animo'];
+		//Compruebo que la acción no ha terminado
+		if ($accion['completada'] != 0)
+			throw new CHttpException(403,'La acción indicada ya ha acabado.');
 
-			if( isset($_POST['Participaciones']) ){
-				//Petición POST
-				$recursosAportados = $_POST['Participaciones'];
-				$dineroAportado = $recursosAportados['dinero_nuevo'];
-				$animoAportado = $recursosAportados['animo_nuevo'];
-				$influenciasAportadas = $recursosAportados['influencia_nueva'];
+		//Compuebo si el jugador ya ha participado en la acción
+		$participacion=Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
+		if($participacion==null){
+			//Compruebo que no se sobrepase el límite de jugadores
+			if($accion['jugadores_acc'] >= $habilidad['participantes_max'])
+		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
+			
+		 	//Saco el modelo que le voy a pasar a la vista
+			$participacion = new Participaciones;
+			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
+			$participacion['usuarios_id_usuario'] = $id_user;
+			$participacion['dinero_aportado'] = 0;
+			$participacion['influencias_aportadas'] = 0;
+			$participacion['animo_aportado'] = 0;
 
-				if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
-					$transaccion->rollback();
-					Yii::app()->user->setFlash('error', 'Recursos insuficientes');
-					$this->refresh();
-				}
-				
-				try {
-					//Primero calculo los recursos que faltan para terminar la accion
-					$dineroF = $habilidad['dinero_max'] - $datosAccion['dinero_acc'];
-					$animoF = $habilidad['animo_max'] - $datosAccion['animo_acc'];
-					$influenciaF = $habilidad['influencias_max'] - $datosAccion['influencias_acc'];
+			$nuevo_participante=true;
+		}else $nuevo_participante=false;
 
-					//Compruebo que los recursos aportados no sobrepasan los necesarios para finalizar la accion
-					if ($dineroF < $dineroAportado){
-						$dineroAportado = $dineroF;
-					}
+		//Saco los recursos del ususario
+		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
+		$dineroUsuario = $recursosUsuario['dinero'];
+		$influenciasUsuario = $recursosUsuario['influencias'];
+		$animoUsuario = $recursosUsuario['animo'];
 
-					if ($animoF < $animoAportado){
-						$animoAportado = $animoF;
-					}
-
-					if ($influenciaF < $influenciasAportadas){
-						$influenciasAportadas = $influenciaF;
-					}
-
-					//Resto los recursos al usuario
-					$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
-					$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
-					$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
-					
-					//Añade los recursos en acciones_grupales
-					$datosAccion['jugadores_acc'] += 1;
-					$datosAccion['dinero_acc'] += $dineroAportado;  
-					$datosAccion['influencias_acc'] += $influenciasAportadas;
-					$datosAccion['animo_acc'] += $animoAportado;
-
-					//Añado una nueva participación en la tabla de participaciones
-					$participacion['dinero_aportado'] = $dineroAportado;
-					$participacion['influencias_aportadas'] = $influenciasAportadas;
-					$participacion['animo_aportado'] = $animoAportado;
-
-					//Compruebo si ya se han aportado todos los recursos necesarios para la acción
-					if ( $datosAccion['dinero_acc'] == $habilidad['dinero_max'] && $datosAccion['influencias_acc'] == $habilidad['influencias_max']
-						&& $datosAccion['animo_acc'] == $habilidad['animo_max']){
-						$datosAccion['completado'] = 1;
-					}
-
-					$recursosUsuario->save();
-					$datosAccion->save();
-					$participacion->save();
-					
-					$transaccion->commit();
-					Yii::app()->user->setFlash('success', 'Se ha completado la acción con éxito');
-					$this->redirect(array('ver', 'id_accion'=>$id_accion));
-				} catch ( Exception $exc ) {
-					$transaccion->rollback();
-					throw $exc;
-				}
-			} else {
-				//Petición GET: Muestro el formulario
-				$transaccion->commit();
-				$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
-			}
-		} else {
+		if( !isset($_POST['Participaciones'])){
 			$transaccion->rollback();
-			throw new CHttpException('El usuario no puede participar en esta acción');
+			//Petición GET: Muestro el formulario
+			$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
+			return;
+		}
+
+		//Petición POST
+		$recursosAportados = $_POST['Participaciones'];
+		$dineroAportado = $recursosAportados['dinero_nuevo'];
+		$animoAportado = $recursosAportados['animo_nuevo'];
+		$influenciasAportadas = $recursosAportados['influencia_nueva'];
+
+		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
+			$transaccion->rollback();
+
+			//este script equivale al flash y el redirect
+			$url_redirecct = $this->createUrl('acciones/participar', array('id_accion'=>$id_accion));
+			echo '<script type="text/javascript">'.
+				 'alert("Recursos insuficientes.");'.
+				 'window.location = "'.
+				  $url_redirecct.
+				 '"</script>';
+			//fin del script
+
+			return;
+		}
+			
+		try {
+			//Compruebo que los recursos aportados no sobrepasan los que faltan para terminar la acción
+			$dineroAportado = min($dineroAportado, $habilidad['dinero_max'] - $accion['dinero_acc']);
+			$animoAportado = min($animoAportado, $habilidad['animo_max'] - $accion['animo_acc']);
+			$influenciasAportadas = min($influenciasAportadas, $habilidad['influencias_max'] - $accion['influencias_acc']);
+
+			//Si no se aporta nada ignoro la petición
+			if($dineroAportado==0&&$animoAportado==0&&$influenciasAportadas==0){
+				$transaccion->rollback();
+				$this->redirect(array('ver', 'id_accion'=>$id_accion));
+			}
+
+			//Resto los recursos al usuario
+			$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
+			$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
+			$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
+				
+			//Añado los recursos en acciones_grupales
+			if($nuevo_participante) $accion['jugadores_acc'] += 1;
+			$accion['dinero_acc'] += $dineroAportado;  
+			$accion['influencias_acc'] += $influenciasAportadas;
+			$accion['animo_acc'] += $animoAportado;
+
+			//Calculo la participación
+			$participacion['dinero_aportado'] += $dineroAportado;
+			$participacion['influencias_aportadas'] += $influenciasAportadas;
+			$participacion['animo_aportado'] += $animoAportado;
+
+			//Compruebo si ya se han aportado todos los recursos necesarios para la acción
+			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
+					$accion['completada'] = 1;
+				
+
+			$recursosUsuario->save();
+			$accion->save();
+			$participacion->save();
+				
+			$transaccion->commit();
+			
+			//este script equivale al flash y el redirect
+			$url_redirecct = $this->createUrl('acciones/ver', array('id_accion'=>$id_accion));
+			echo '<script type="text/javascript">'.
+				 'alert("Tu equipo agradece tu generosa contribución.");'.
+				 'window.location = "'.
+				  $url_redirecct.
+				 '"</script>';
+			//fin del script
+
+			//$this->redirect(array('ver', 'id_accion'=>$id_accion));
+		} catch ( Exception $exc ) {
+			$transaccion->rollback();
+			throw $exc;
 		}
 	}
 
