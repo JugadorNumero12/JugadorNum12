@@ -255,10 +255,9 @@ class AccionesController extends Controller
 
 		//Saco el usuario que quiere participar en la acción
 		$id_user = Yii::app()->user->usIdent;
-		$usuario = Usuarios::model()->findByPK($id_user);
 
 		//Compruebo que la acción es del equipo del user
-		if($accion['equipos_id_equipo']!= $usuario['equipos_id_equipo'])
+		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic)
 			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
 
 		//Iniciamos la transacción
@@ -281,9 +280,6 @@ class AccionesController extends Controller
 			$participacion = new Participaciones();
 			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
 			$participacion['usuarios_id_usuario'] = $id_user;
-			/*$participacion['dinero_aportado'] = 0;
-			$participacion['influencias_aportadas'] = 0;
-			$participacion['animo_aportado'] = 0;*/
 		}
 
 		$participacion->setScenario('participar');
@@ -306,22 +302,19 @@ class AccionesController extends Controller
 		$dineroAportado = $recursosAportados['dinero_nuevo'];
 		$animoAportado = $recursosAportados['animo_nuevo'];
 		$influenciasAportadas = $recursosAportados['influencia_nueva'];
-
-		//creo que esto es lo que comprueba las rules (ajax)
 		$participacion->setAttributes(array('dinero_nuevo'=>$dineroAportado, 'animo_nuevo'=>$animoAportado, 'influencia_nueva'=>$influenciasAportadas));
+			//esta ultimo linea es para que el ajax compruebe las rules
 
+		//Compruebo que el usuario tiene suficientes recursos
 		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
-			$transaccion->rollback();
-
-			//este script equivale al flash y el redirect
+			//script equivalente al flash y el redirect
 			$url_redirecct = $this->createUrl('acciones/participar', array('id_accion'=>$id_accion));
 			echo '<script type="text/javascript">'.
 				 'alert("Recursos insuficientes.");'.
 				 'window.location = "'.
 				  $url_redirecct.
 				 '"</script>';
-			//fin del script
-
+			$transaccion->rollback();
 			return;
 		}
 			
@@ -344,58 +337,50 @@ class AccionesController extends Controller
 				return;
 			}
 
-			//Resto los recursos al usuario
+			//Actualizo los recursos del user
 			$recursosUsuario['dinero'] = $dineroUsuario - $dineroAportado;
 			$recursosUsuario['animo'] = $animoUsuario - $animoAportado;
 			$recursosUsuario['influencias'] = $influenciasUsuario - $influenciasAportadas;
-				
-			//Añado los recursos en acciones_grupales
-			if($nuevo_participante) $accion['jugadores_acc'] += 1;
+			$recursosUsuario->save();
+
+			//Actualizo acciones_grupales
 			$accion['dinero_acc'] += $dineroAportado;  
 			$accion['influencias_acc'] += $influenciasAportadas;
 			$accion['animo_acc'] += $animoAportado;
-
-			//Calculo la participación
-			$dinFin=$participacion['dinero_aportado'] += $dineroAportado;
-			$infFin=$participacion['influencias_aportadas'] += $influenciasAportadas;
-			$aniFin=$participacion['animo_aportado'] += $animoAportado;
-
-			//Compruebo si ya se han aportado todos los recursos necesarios para la acción
+			if($nuevo_participante)
+				$accion['jugadores_acc'] += 1;
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
 					$accion['completada'] = 1;
-				
-
-			$recursosUsuario->save();
 			$accion->save();
-			if($nuevo_participante)
+			
+			//Actualizo la participación
+			if($nuevo_participante){
+				$participacion['dinero_aportado'] = $dineroAportado;
+				$participacion['influencias_aportadas'] = $influenciasAportadas;
+				$participacion['animo_aportado'] = $animoAportado;
 				$participacion->save();
-			else{
-				$n=$participacion->updateAll(array('dinero_aportado'=>$dinFin,
-														  'influencias_aportadas'=>$infFin,
-														  'animo_aportado'=>$aniFin),
-														  "acciones_grupales_id_accion_grupal=:id_accion && usuarios_id_usuario=:id_user",
-														  array(':id_accion'=>$id_accion, ':id_user'=>$id_user));
-					if($n!=1){
-						//Si salta esto es que había más de una participación del mismo usuario en la acción
-						Yii::log('[DATABASE_ERROR] El usuario '.$id_user.' tiene multiples participaciones en la acción '.$id_accion,'error');
-						throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
-					}
+			}else{	
+				$n=$participacion->updateAll(array( 'dinero_aportado'=>$participacion['dinero_aportado'] + $dineroAportado,
+													'influencias_aportadas'=>$participacion['influencias_aportadas'] + $influenciasAportadas,
+													'animo_aportado'=>$participacion['animo_aportado'] + $animoAportado),
+											"acciones_grupales_id_accion_grupal=:id_accion && usuarios_id_usuario=:id_user",
+											array(':id_accion'=>$id_accion, ':id_user'=>$id_user)); 
+				if($n!=1){
+					//Si salta esto es que había más de una participación del mismo usuario en la acción
+					Yii::log('[DATABASE_ERROR] El usuario '.$id_user.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
+					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
+			}
 
-
-				
 			$transaccion->commit();
 			
-			//este script equivale al flash y el redirect
+			//script equivalente al flash y el redirect
 			$url_redirecct = $this->createUrl('acciones/ver', array('id_accion'=>$id_accion));
 			echo '<script type="text/javascript">'.
 				 'alert("Tu equipo agradece tu generosa contribucion.");'.
 				 'window.location = "'.
 				  $url_redirecct.
 				 '"</script>';
-			//fin del script
-
-			//$this->redirect(array('ver', 'id_accion'=>$id_accion));
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
 			throw $exc;
@@ -454,7 +439,7 @@ class AccionesController extends Controller
 
 			if($n != 1) {
 				//Si salta esto es que había más de una participación del mismo usuario en la acción
-				Yii::log('[DATABASE_ERROR] El usuario '.$id_jugador.' tiene multiples participaciones en la acción '.$id_accion,'error');
+				Yii::log('[DATABASE_ERROR] El usuario '.$id_jugador.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
 				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 			}
 
