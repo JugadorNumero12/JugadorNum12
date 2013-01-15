@@ -321,10 +321,18 @@ class AccionesController extends Controller
 			$animoAportado = min($animoAportado, $habilidad['animo_max'] - $accion['animo_acc']);
 			$influenciasAportadas = min($influenciasAportadas, $habilidad['influencias_max'] - $accion['influencias_acc']);
 
+			//Esto es un poco paranoico, pero dejarlo pasar sería una burrada (y no se como se valida el formulario)
+			if($dineroAportado<0 || $animoAportado<0 || $influenciasAportadas<0){
+				Yii::log('El usuario '.$id_user.' se ha saltado una validación de seguridad intentando robar recursos de la accion '.$id_accion, 'warning');
+				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
+				//El usuario se ha saltado el filtro del formulario y esta intentando robar recursos
+			}
+
 			//Si no se aporta nada ignoro la petición
-			if($dineroAportado==0&&$animoAportado==0&&$influenciasAportadas==0){
+			if($dineroAportado==0 && $animoAportado==0 && $influenciasAportadas==0){
 				$transaccion->rollback();
 				$this->redirect(array('ver', 'id_accion'=>$id_accion));
+				return;
 			}
 
 			//Resto los recursos al usuario
@@ -357,7 +365,7 @@ class AccionesController extends Controller
 			//este script equivale al flash y el redirect
 			$url_redirecct = $this->createUrl('acciones/ver', array('id_accion'=>$id_accion));
 			echo '<script type="text/javascript">'.
-				 'alert("Tu equipo agradece tu generosa contribución.");'.
+				 'alert("Tu equipo agradece tu generosa contribucion.");'.
 				 'window.location = "'.
 				  $url_redirecct.
 				 '"</script>';
