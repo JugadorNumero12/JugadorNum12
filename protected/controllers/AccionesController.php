@@ -271,15 +271,16 @@ class AccionesController extends Controller
 		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
 			
 		 	//Saco el modelo que le voy a pasar a la vista
-			$participacion = new Participaciones;
+			$participacion = new Participaciones();
 			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
 			$participacion['usuarios_id_usuario'] = $id_user;
 			$participacion['dinero_aportado'] = 0;
 			$participacion['influencias_aportadas'] = 0;
 			$participacion['animo_aportado'] = 0;
-
 			$nuevo_participante=true;
 		}else $nuevo_participante=false;
+
+		$participacion->setScenario('participar');
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
@@ -299,6 +300,9 @@ class AccionesController extends Controller
 		$dineroAportado = $recursosAportados['dinero_nuevo'];
 		$animoAportado = $recursosAportados['animo_nuevo'];
 		$influenciasAportadas = $recursosAportados['influencia_nueva'];
+
+		//creo que esto es lo que comprueba las rules (ajax)
+		$participacion->setAttributes(array('dinero_nuevo'=>$dineroAportado, 'animo_nuevo'=>$animoAportado, 'influencia_nueva'=>$influenciasAportadas));
 
 		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
 			$transaccion->rollback();

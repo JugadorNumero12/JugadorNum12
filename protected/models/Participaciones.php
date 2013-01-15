@@ -49,10 +49,10 @@ class Participaciones extends CActiveRecord
 			// Please remove those attributes that should not be searched.
 			array('acciones_grupales_id_accion_grupal, usuarios_id_usuario, dinero_aportado, influencias_aportadas, animo_aportado', 'safe', 'on'=>'search'),
 			//Reglas para Participar
-			array('dinero_nuevo, animo_nuevo, influencia_nueva', 'required'),
-			array('dinero_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Dinero debe ser un numero >= 0'),			
-			array('animo_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Animo debe ser un numero >= 0'),
-			array('influencia_nueva', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Influencia debe ser un numero >= 0'),
+			array('dinero_nuevo, animo_nuevo, influencia_nueva', 'required', 'on'=>'participar'),
+			array('dinero_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Dinero debe ser un numero >= 0', 'on'=>'participar'),			
+			array('animo_nuevo', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Animo debe ser un numero >= 0', 'on'=>'participar'),
+			array('influencia_nueva', 'numerical', 'integerOnly'=>true, 'min'=>0, 'message'=>'El campo Influencia debe ser un numero >= 0', 'on'=>'participar'),
 		);
 	}
 
