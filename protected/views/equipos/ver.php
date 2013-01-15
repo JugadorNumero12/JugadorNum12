@@ -1,17 +1,17 @@
 <?php
-/* @var $equipos */
-/* @var $grupales */
+/* @var $equipo    */
+/* @var $grupales  */
+/* @var jugadores  */
 /* @var $mi_equipo */
 
-
-//Numero de jugadores de una aficion??
-
+//echo '<pre>'.print_r($jugadores, true).'</pre>';
 ?>
 
+
 <div class="envoltorio-equipos"> <div class="envoltorio2-equipos"> 
-	
+
 	<div class="equipos-escudo">
-		<?php switch ($equipos->id_equipo)
+		<?php switch ($equipo->id_equipo)
 			{
 			case 1: ?>
 			  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=200 height=200 border=0 alt="Escudo rojo"> 
@@ -30,30 +30,41 @@
 
 	<div class="equipos-informacion">
 		<table>
-			<tr><th>Nombre equipo: </th> <td><?php echo $equipos->nombre ?></td> </tr> 
-			<tr><th>Nivel del equipo: </th> <td><?php echo $equipos->nivel_equipo ?></td> </tr>
-			<tr><th>Aforo m&aacute;ximo del estadio: </th> <td><?php echo $equipos->aforo_max ?> </td> </tr> 	
-			<tr><th>Aforo b&aacute;sico del estadio: </th> <td><?php echo $equipos->aforo_base ?> </td> </tr> 					 
+			<tr>
+				<th> Nombre equipo: </th>
+				<td> <?php echo $equipo->nombre ?> </td>
+			</tr> 
+			<tr>
+				<th> Nivel del equipo: </th>
+				<td> <?php echo $equipo->nivel_equipo ?> </td>
+			</tr>
+			<tr>
+				<th> Aforo m&aacute;ximo del estadio: </th>
+				<td> <?php echo $equipo->aforo_max ?> </td>
+			</tr> 	
+			<tr>
+				<th>Aforo b&aacute;sico del estadio: </th>
+				<td><?php echo $equipo->aforo_base ?> </td>
+			</tr> 					 
 		</table>
 
 	</div>
 
+	<div class="equipos-jugadores">
+		<table>
+			<tr>
+				<th> Jugador </th>
+				<th> Tipo </th>
+				<th> Nivel </th>
+			</tr>
+			<?php foreach($jugadores as $jugador) { ?>
+			<tr>
+				<td> <?php echo $jugador['nick']; ?> </td>
+				<td> <?php echo $jugador['nick']; ?> </td>
+				<td> <?php echo $jugador['nick']; ?> </td>
+			</tr>
+			<?php } ?>
+		</table>
+	</div>
 
 </div></div> <!--ENVOLTORIOS-->
-
-<ul>
-		<?php 
-		if($mi_equipo){ ?>
-		<li> <?php
-			if($grupales==null)
-				echo "No hay acciones grupales.";
-			else 
-				echo "Numero de acciones grupales -> ". sizeof($grupales);
-			?>
-		</li><br>
-			<?php
-			foreach ($grupales as $accion) {
-				echo "Accion con ID " . $accion['id_accion_grupal'];
-			}
-		} ?>
-	</ul>

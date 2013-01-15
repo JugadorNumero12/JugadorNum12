@@ -66,20 +66,30 @@ class EquiposController extends Controller
 	public function actionVer($id_equipo)
 	{
 		// Nota: en comentarios "aficion" y "equipo" son sinonimos
-		$id= Yii::app()->user->usIdent;
-		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
-		//Sacar lista de acciones grupales del equipo
-		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
 
+		// Obtenemos el id del usuario y el equipo al que pertenece
+		$id= Yii::app()->user->usIdent;
+		$modeloEquipo = Equipos::model()->findByPk($id_equipo);
+		
+		//Sacar lista de acciones grupales del equipo
+		$accionesGrupales = $modeloEquipo->accionesGrupales;
+		// $accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+		
+		// Sacar la lista de aficionados de ese equipo
+		$jugadores = $modeloEquipo['usuarios'];
+
+		// Determinar si es el equipo del jugador
 		$mi_equipo = false;
 		$modeloUsuario = Usuarios:: model()->findByPk($id);
-		if($modeloUsuario->equipos_id_equipo == $id_equipo)
+		if($modeloUsuario->equipos_id_equipo == $id_equipo){
 			$mi_equipo = true;
+		}	
 
 		//Enviar datos a la vista
-		$this->render('ver', array('equipos'=>$modeloEquipos, 
-									 'grupales'=>$accionesGrupales,
-									 'mi_equipo'=>$mi_equipo));
+		$this->render('ver', array( 'equipo'=>$modeloEquipo, 
+									'grupales'=>$accionesGrupales,
+									'jugadores'=>$jugadores,
+									'es_mi_equipo'=>$mi_equipo));
 	}
 
 	/**
