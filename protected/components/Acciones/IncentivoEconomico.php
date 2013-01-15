@@ -25,7 +25,7 @@ public class IncentivoEconomico extends AccionSingleton
 		 	//Aumentar nivel_equipo
         	$id_partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
         	$id_equipo = Yii::app()->user->usAfic;
-        	$columna = 'nivel_equipo';
+        	$columna = 'nivel';
         	//La cantidad no creo que sea esta
         	$cantidad = $datos_acciones['IncentivoEconomico']['nivel_equipo'];
         	$helper->aumentar_factores($id_partido,$id_equipo,$columna,$cantidad);
@@ -54,7 +54,7 @@ public class IncentivoEconomico extends AccionSingleton
 		 	//Aumentar nivel_equipo
         	$id_partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
         	$id_equipo = Yii::app()->user->usAfic;
-        	$columna = 'nivel_equipo';
+        	$columna = 'nivel';
         	//La cantidad no creo que sea esta
         	$cantidad = $datos_acciones['IncentivoEconomico']['nivel_equipo'];
         	$helper->disminuir_factores($id_partido,$id_equipo,$columna,$cantidad);
