@@ -68,18 +68,23 @@ class EquiposController extends Controller
 		// Nota: en comentarios "aficion" y "equipo" son sinonimos
 		$id= Yii::app()->user->usIdent;
 		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
-		//Sacar lista de acciones grupales del equipo
-		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+		if($modeloEquipos <> null){
+			//Sacar lista de acciones grupales del equipo
+			$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
 
-		$mi_equipo = false;
-		$modeloUsuario = Usuarios:: model()->findByPk($id);
-		if($modeloUsuario->equipos_id_equipo == $id_equipo)
-			$mi_equipo = true;
+			$mi_equipo = false;
+			$modeloUsuario = Usuarios:: model()->findByPk($id);
+			if($modeloUsuario->equipos_id_equipo == $id_equipo)
+				$mi_equipo = true;
 
-		//Enviar datos a la vista
-		$this->render('ver', array('equipos'=>$modeloEquipos, 
-									 'grupales'=>$accionesGrupales,
-									 'mi_equipo'=>$mi_equipo));
+			//Enviar datos a la vista
+			$this->render('ver', array('equipos'=>$modeloEquipos, 
+										 'grupales'=>$accionesGrupales,
+										 'mi_equipo'=>$mi_equipo));
+		}
+		else{
+			echo "El equipo no existe.";
+		}
 	}
 
 	/**
