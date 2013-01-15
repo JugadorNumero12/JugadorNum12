@@ -13,7 +13,7 @@
 	)); ?> 	
 	<table cellspacing="5px">
 	  <tr>
-	    <td colspan="2" align="center"><span class="under">INICIO DE SESI&Oacute;N</span></td>
+	    
 	  </tr>
 	  <tr>
 	    <td align="center"><?php echo $form->labelEx($model,'Usuario'); ?>:</td>
@@ -31,7 +31,7 @@
 	    <td colspan="2"><?php echo $form->error($model,'password'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Entrar');?></td>
+	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Entrar',array('class'=>"boton-negro"));?></td>
 	  </tr>
 	</table>
 	<?php $this->endWidget(); ?>
