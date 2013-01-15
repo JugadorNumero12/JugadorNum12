@@ -370,8 +370,7 @@ public class Partido
 			$autocommit=true;
 		}else $autocommit=false;
 
-		if(!($transaction instaceof CDbTransaction && $transaction->getActive())
-		//FIXME comprobar que Yii no jode el funcionamiento del instanceof de PHP
+		if(!($transaction instaceof CDbTransaction && $transaction->getActive()) )
 			return false;
 
 		try{
