@@ -236,7 +236,7 @@ class AccionesController extends Controller
 	 */
 	public function actionParticipar($id_accion)
 	{
-		/* PEDRO */
+		/* PEDRO pero cualquier duda preguntar a MARCOS*/
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
 		if($accion==null)
@@ -325,7 +325,6 @@ class AccionesController extends Controller
 			if($dineroAportado<0 || $animoAportado<0 || $influenciasAportadas<0){
 				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
 				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
-				//El usuario se ha saltado el filtro del formulario y esta intentando robar recursos
 			}
 
 			//Si no se aporta nada ignoro la petición
