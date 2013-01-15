@@ -85,8 +85,8 @@
 </p>
 
 <!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
-<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
+<p><?php if(($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] || $esParticipante) && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
 	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
-	<input type="button" value="Participar"/> </a>
+	<input type="button" value="<?php echo !$esParticipante?'Participar':'Aumentar Participacion';?>"/> </a>
 <?php } ?></p>
