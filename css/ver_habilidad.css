@@ -1,0 +1,7 @@
+.envoltorio-ver-habilidad table,
+.envoltorio-ver-habilidad th,
+.envoltorio-ver-habilidad td {
+  border: 1px solid black;
+  width: 50%;
+  text-align: left;
+}
