@@ -313,6 +313,7 @@ public class Partido
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->roollback();
+			//Yii::log('[MATCH_ERROR].'.$exc->getMessage(), 'error');
 			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
 	}
