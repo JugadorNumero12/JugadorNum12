@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nick` varchar(45) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `personaje` smallint(5) unsigned DEFAULT NULL,
+  `personaje` tinyint(4) unsigned DEFAULT NULL,
   `nivel` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
