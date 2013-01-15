@@ -296,23 +296,23 @@ public class Partido
 		  $bonifNoParticipante = 1*/
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$participantes=AccionesTurno::model()->findByAllAttributes(equipos_id_equipo=>$equipo, partidos_id_partido=>$id_partido),
-			$usuarios=Usuarios::model()->findAllByAtributes(equipos_id_equipo=>$equipo);
+			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido)),
+			$usuarios=Usuarios::model()->findAllByAtributes(array('equipos_id_equipo'=>$equipo));
 			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
 			
 			foreach ($usuarios as $user){//Esta bonificacion se le da a todos
-				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
+				$rec=Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>$user));
 				$rec['animo']= min(round(  $bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			foreach ($participantes as $user){//Esta se le da solo a los participantes
-				$rec=Recursos::model()->findByAttributes(usuarios_id_usuario=>$user);
+				$rec=Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>$user));
 				$rec['animo']= min(round(2*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
 		}catch(Exception $exc){
-			$trans->roollback();
+			$trans->rollback();
 			//Yii::log('[MATCH_ERROR].'.$exc->getMessage(), 'error');
 			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
@@ -326,8 +326,8 @@ public class Partido
 		/* MARCOS */
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$loc=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_local);
-			$vis=Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_visitante);
+			$loc=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_local));
+			$vis=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_visitante));
 			
 			if($goles_local>$goles_visitante){
 				$suCl=sumaCalisf($id_local, 3, $trans);
@@ -347,7 +347,7 @@ public class Partido
 			if(!$suCl)throw new Exception("Error en sumaCalisf");
 			$trans->commit();	
 		}catch(Exception $exc){
-			$trans->roollback();
+			$trans->rollback();
 			throw new Exception("Error al recalcular la clasificación", 1);
 		}
 
@@ -371,11 +371,12 @@ public class Partido
 		}else $autocommit=false;
 
 		if(!($transaction instaceof CDbTransaction && $transaction->getActive())
+		//FIXME comprobar que Yii no jode el funcionamiento del instanceof de PHP
 			return false;
 
 		try{
 			//sumar puntos
-			$eq= Clasificacion::model()->findByAttributes(equipos_id_equipo=>$id_equipo);
+			$eq= Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_equipo));
 			$puntosAnt= $eq['puntos'];
 			$puntosAct= ($eq['puntos']+=$puntos);
 
@@ -401,7 +402,7 @@ public class Partido
 			if($autocommit)$transaction->commit();
 
 		}catch(Exception $exc){
-			if($autocommit)$transaction->roollback();
+			if($autocommit)$transaction->rollback();
 			return false;
 		}
 		return true;
