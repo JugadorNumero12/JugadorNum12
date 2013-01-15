@@ -1,6 +1,6 @@
 //ENVOLTORIO
 
-.envoltorio-login {
+div.envoltorio-login {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
@@ -9,12 +9,52 @@
 	background-image: url("/yii/JugadorNum12/less/imagenes/login/fondo-login.jpg");
 	background-size: cover;
 	width:100%;
-}
-.envoltorio2-login {
+
+	div.envoltorio2-login {
 	background-color: transparent;
 	width:65%;
 	margin: 0 auto;	
-}
+		
+		//DIVISIONES PRINCIPALES LOGIN
+
+		//Division del texto de bienvenida
+		div#descripcion-login {
+			width:65%;
+			background-color: transparent;
+			float:left; 
+			padding-top: 20em;
+		    padding-bottom: 10em;
+
+		    p{
+		    	text-align: left;
+				color: white;
+				font-size: 1.4em;
+		    }
+
+		    h1 {
+			text-align: left;
+			color: white;
+			font-size: 2.5em;
+			}
+
+		}//#descripcion-login
+
+		//Division de la entrada de usuario 
+		div#entrada-login {
+			width:25%;
+			background-color: transparent;
+			float:right; 
+			padding-top: 13em;
+		    padding-bottom: 10em;
+		    color:white;
+		    font-size: 1.5em;
+		}//#entrada-login
+
+	}//#envoltorio2-login
+
+		
+}//#envoltorio-login
+
 
 //PIE DE PÁGINA 
 * {
@@ -26,14 +66,14 @@
 	height: 142px; /* Esto es lo que hace que el pie de pagina permanezca abajo de la pagina*/
 }
 
-.pie-pagina-login {
+div.pie-pagina-login {
 	position: relative;
 	width: 100%;
 	margin: 0 auto;
 	background: transparent;
 }
 
-.pie-pagina-login {
+div.pie-pagina-login {
 	position: absolute;
 	left: 0;
 	bottom: 4px;
@@ -44,44 +84,16 @@
 	text-align: center;
 }
 
-.pie-pagina-login a {
+div.pie-pagina-login a {
 	color: white;
 	text-decoration: none;
 }
 
-//DIVISIONES PRINCIPALES LOGIN
+	
 
-//Division del texto de bienvenida
-#descripcion-login {
-	width:65%;
-	background-color: transparent;
-	float:left; 
-	padding-top: 20em;
-    padding-bottom: 10em;
-}
 
-#descripcion-login p {
-	text-align: left;
-	color: white;
-	font-size: 1.4em;
-}
 
-#descripcion-login h1 {
-	text-align: left;
-	color: white;
-	font-size: 2.5em;
-}
 
-//Division de la entrada de usuario 
-#entrada-login {
-	width:25%;
-	background-color: transparent;
-	float:right; 
-	padding-top: 13em;
-    padding-bottom: 10em;
-    color:white;
-    font-size: 1.5em;
-}
 
 
 
