@@ -352,6 +352,7 @@ class AccionesController extends Controller
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
+		/* MARCOS */
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
 		try{
@@ -392,6 +393,7 @@ class AccionesController extends Controller
 
 			if($n != 1) {
 				//Si salta esto es que había más de una participación del mismo usuario en la acción
+				//Yii::log('El usuario '.$id_jugador.' tiene multiples participaciones en la acción '.$id_accion,'warning', 'protected.controllers.AccionesController');
 				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 			}
 
