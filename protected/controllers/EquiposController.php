@@ -94,16 +94,49 @@ class EquiposController extends Controller
 	 */
 	public function actionCambiar($id_nuevo_equipo)
 	{
-		/* SAM */
-		//No hace falta modificar la tabla <<equipos>>
-		$id = Yii::app()->user->usIdent;
-		$id_equipo = Yii::app()->user->usAfic;
-		$modeloUsuario = Usuarios::model()->findByPk($id);
+		//Coger id de usuario y creo un helper
+		$helper=new Helper();
+		$id_usuario = Yii::app()->user->usIdent;
 
-		if(!($modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo))))
-				throw new Exception("Error Processing Request", 1);
-		
-		$this->redirect(array('equipos/ver/','id_equipo'=>$id_equipo));
+		//Coger de <<acciones_grupales>> todos los registros con id_usuario
+		$acciones_grupales=AccionesGrupales::model()->findAllByAttributes(array('usuarios_id_usuario'=>$id_usuario));
+
+		/* Recorrer todas las entradas de la tabla, buscando en <<Participaciones>>
+			devolviendo todos los recursos a la gente que participo, borrando esos registros,
+			para después borrar esa accion grupal de la tabla <<acciones_grupales>>*/
+		foreach ($acciones_grupales as $accion_grupal)
+		{
+			/*Devuelvo los recursos de los participantes*/
+			//Cojo de <<Participaciones>> todos los registros para devolver los recursos
+			$participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $accion_grupal->id_accion_grupal));
+
+			//Recorro todos los participantes devolviendoles sus recursos
+			foreach ($participantes as $participante)
+			{
+				//Cojo el dinero,influencia y animo aportado por el usuario
+				$dinero=$participante->dinero_aportado;
+				$influencia=$participante->influencias_aportado;
+				$animo=$participante->animo_aportado;
+
+				//Utilizo el helper para ingresarle al usuario los recursos
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencia',$influencia);
+
+				//Eliminar ese modelo
+				$participante->delete();
+			}
+
+		}
+		/*ATENCION las acciones en las que el participa ya se encarga el usuario que las creo de borrarlas
+		sino le interesa tener ese aportacion de recursos*/
+		//Una vez devuelto los recursos a la gente que participo en las acciones que creo el usuario
+		//Cambio el id del equipo al que pertenece
+		//Y guardo el modelo modificado
+		$modeloUsuario = Usuarios::model()->findByPk($id);
+		$modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo));
+		$modeloUsuario->save();	
+		$this->redirect(array('equipos/ver/','id_equipo'=>$id_nuevo_equipo));
 	}
 
 	/**
