@@ -13,15 +13,21 @@
 
 <body>
 
-<div id="genLayer">
+<div id="envoltorio1"><div id="envoltorio2">
 
   	<!-- DIVISION DE CABECERA -->
-    <div id="headBox">
-		CABECERA
+    <div id="cabecera">
+    	<div id = "logo">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
+    	</div>
+    	<div id = "titulo-jugador">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
+    	</div>
+ 
     </div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
-    <div id="leftMenuBar">
+    <div id="menu-izquierdo">
 		<div id='cssmenu'>
 			<ul>
 			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>"><span>Perfil</span></a></li>
@@ -35,30 +41,37 @@
 		</div>
     </div>
     
-    <!-- DIVISION CENTRAL/CONTENIDO -->
-    <div id="contentSection" align="center">
-      <?php echo $content; ?>
-    </div>
+    <!-- DIVISION PARA FLOTAR -->
+    <div id="grupo-derecha">
 
-	<!-- DIVISION DEL MENU DERECHO -->
-    <div id="rightMenuBar">
-    	ESTADO JUGADOR
-    	<div id='cssmenu'>
-			<ul>
-			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-			   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
-			</ul>
-		</div>
-    </div>
-	
-  	<!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="bottomBox">
+	    <!-- DIVISION CENTRAL/CONTENIDO -->
+	    <div id="contenido">
+	      <?php echo $content; ?>
+	    </div>
+
+		<!-- DIVISION DEL MENU DERECHO -->
+	    <div id="menu-derecho">
+	    	<div id='cssmenu'>
+				<ul>
+				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
+				   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
+				</ul>
+			</div>
+	    </div>
+
+	</div>
+
+	<div class="push"></div>
+  	
+    
+</div></div> <!-- envoltorios -->
+
+<!-- DIVISION DEL PIE DE PÁGINA -->
+    <div id="pie-pagina">
         <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
     </div>
-    
-</div> <!-- End GenLayer -->
 
 </body>
 
