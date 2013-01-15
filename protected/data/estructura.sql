@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `clasificacion` (
   `ganados` int(10) unsigned NOT NULL,
   `empatados` int(10) unsigned NOT NULL,
   `perdidos` int(10) unsigned NOT NULL,
+  `diferencia_goles` int(10) NOT NULL,
   PRIMARY KEY (`equipos_id_equipo`),
   KEY `Clasificacion_FKIndex1` (`equipos_id_equipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -213,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nick` varchar(45) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `personaje` smallint(5) unsigned DEFAULT NULL,
+  `personaje` tinyint(4) unsigned DEFAULT NULL,
   `nivel` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)

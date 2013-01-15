@@ -22,14 +22,12 @@ public class Apostar extends AccionSingleton
          Turnos. Por tanto, como aun no se coger justo el ultimo turno, voy a coger todos
          los turnos de ese partido y voy a aumentar el atributo moral.Cuando encuentre como
          coger solo el ultimo optimizare la accion*/
+        $h=new Helper();
         $id_equipo=Yii::app()->user->usAfic;
         $equipo=Equipos::model()->findByPK($id_equipo);
-        /*Partidos que juega como local*/
-        $local=$equipo->local;
-        /*Partidos que juega como visitante*/
-        $visitante=$equipo->visitante;
-        /*Ahora debo buscar aquel partido que tenga hora 0 y sera el que este jugandose,entonces 
-        cogere todos sus turnos y les cambiare la moral*/
+        $cantidad=$datos_acciones['IniciarOla']['moral'];
+        $h->aumentar_factores($id_partido,$id_equipo,'moral',$cantidad);
+        
         
         $trans->commit();
       }
