@@ -1,5 +1,5 @@
 <?php
-/* @var $equipos */
+/* @var $equipo */
 /* @var $grupales */
 /* @var $mi_equipo */
 
@@ -10,26 +10,33 @@
 
 <!-- codigo HTML -->
 
-<h1>Equipo: <?php echo $equipos->nombre ?></h1>
+<h1>Equipo: <?php echo $equipo->nombre ?></h1>
 <ul>
-	<li>Aforo maximo del estadio -> <?php echo $equipos->aforo_max ?></li>
-	<li>Aforo basico del estadio -> <?php echo $equipos->aforo_base ?></li>
-	<li>Nivel del equipo -> <?php echo $equipos->nivel_equipo ?></li>
+	<li>Aforo maximo del estadio -> <?php echo $equipo->aforo_max ?></li>
+	<li>Aforo basico del estadio -> <?php echo $equipo->aforo_base ?></li>
+	<li>Nivel del equipo -> <?php echo $equipo->nivel_equipo ?></li>
 	
-		<?php 
-		if($mi_equipo){ ?>
+		<?php if($mi_equipo){ ?>
 		<li> <?php
-			if($grupales==null)
+			if(empty($equipo['accionesGrupales'])) {
 				echo "No hay acciones grupales.";
-			else 
-				echo "Numero de acciones grupales -> ". sizeof($grupales);
-			?>
-		</li><br>
-			<?php
-			foreach ($grupales as $accion) {
-				echo "Accion con ID " . $accion['id_accion_grupal'];
+			} else {
+				echo "Numero de acciones grupales -> ". sizeof($equipo['accionesGrupales']);
 			}
-		} ?>
+			?>
+		</li>
+		<li><ul>
+			<?php
+			foreach ($equipo['accionesGrupales'] as $accion) { ?>
+			<li>
+				<? echo "Accion con ID " . $accion['id_accion_grupal']; ?>
+			</li>
+			<? } ?>
+		</ul></li>
+		<?php } ?>
+
+		<!-- TODO: Lista de usuarios -->
+		<!-- Usad la variables $equipo['usuarios'] -->
 	
 </ul>
 
