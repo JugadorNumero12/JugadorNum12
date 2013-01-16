@@ -248,8 +248,7 @@ class AccionesController extends Controller
 			throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
-		$id_habilidad= $accion['habilidades_id_habilidad'];
-		$habilidad = Habilidades::model()->findByPk($id_accion);
+		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
 		if($habilidad==null)
 			throw new CHttpException(501,'La habilidad no existe.');
 
@@ -324,8 +323,19 @@ class AccionesController extends Controller
 			$animoAportado = min($animoAportado, $habilidad['animo_max'] - $accion['animo_acc']);
 			$influenciasAportadas = min($influenciasAportadas, $habilidad['influencias_max'] - $accion['influencias_acc']);
 
-			//Esto es un poco paranoico, pero dejarlo pasar sería una burrada (y no se como se valida el formulario)
+			//Esto no debería ocurrir nunca
 			if($dineroAportado<0 || $animoAportado<0 || $influenciasAportadas<0){
+				if($habilidad['dinero_max'] < $accion['dinero_acc']){
+					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más dinero del maximo ('.$accion['dinero_acc'].'/'.$habilidad['dinero_max'].').','error');
+					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				}elseif($habilidad['animo_max'] < $accion['animo_acc']){
+					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más animo del maximo ('.$accion['animo_acc'].'/'.$habilidad['animo_max'].').','error');
+					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				}elseif($habilidad['influencias_max'] < $accion['influencias_acc']){
+					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más influencia del maximo ('.$accion['influencias_acc'].'/'.$habilidad['influencias_max'].').','error');
+					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				}
+				
 				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
 				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
 			}
