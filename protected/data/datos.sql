@@ -74,23 +74,23 @@ INSERT INTO `acciones_grupales` (`id_accion_grupal`, `usuarios_id_usuario`, `hab
  -- arturo, habilidad 2 (hab. de perfil empresarial)
  (1, 3, 2, 1, 6, 30, 5000, 2, 50, 0),
  -- COMPLETADA: xaby, habilidad 1 (hab. de perfil empresarial)
- (2, 1, 1, 1, 12, 60, 10000, 2, 50, 1),
+ (2, 1, 1, 1, 12, 60, 10000, 1, 50, 1),
  -- marina, habilidad 4 (hab. de perfil ultra)
- (3, 2, 4, 2, 0, 300, 2000, 2, 50, 0),
+ (3, 2, 4, 2, 1, 300, 400, 2, 50, 0),
  -- alex, habilidad 3 (hab. de perfil movedora)
- (4, 9, 3, 2, 12, 150, 600, 2, 50, 0),
+ (4, 9, 3, 2, 12, 150, 600, 1, 50, 0),
  -- COMPLETADA: manu, habilidad 3 (hab. de perfil movedora)
- (5, 6, 3, 3, 24, 300, 1200, 2, 50, 1),
+ (5, 6, 3, 3, 24, 300, 1200, 1, 50, 1),
  -- samu, habilidad 4 (hab. de perfil ultra)
- (6, 10, 4, 3, 0, 300, 2000, 2, 50, 0),
+ (6, 10, 4, 3, 1, 1, 400, 1, 50, 0),
  -- marina, habilidad 5 (hab. de perfil movedora)
  (7, 2, 5, 2, 12, 150, 600, 2, 50, 0),
  -- COMPLETADA: dani, habilidad 4 (hab. de perfil ultra)
- (8, 4, 4, 1, 1, 600, 4000, 2, 50, 1),
+ (8, 4, 4, 1, 1, 600, 400, 1, 50, 1),
  -- marcos, habilidad 4 (hab. de perfil ultra)
- (9, 8, 4, 1, 0, 300, 2000, 2, 50, 0),
+ (9, 8, 4, 1, 1, 200, 400, 2, 50, 0),
  -- COMPLETADA: pedro, habilidad 1 (hab. de perfil empresario)
- (10, 5, 1, 2, 12, 60, 10000, 2, 50, 1);
+ (10, 5, 1, 2, 12, 60, 10000, 1, 50, 1);
 
  -- -------------------------------------------------
  -- Acciones individuales desbloqeuadas 6,7,8
@@ -223,29 +223,29 @@ INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripc
  -- ------------------------------------------------------
 TRUNCATE `participaciones`;
 INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_id_usuario`, `dinero_aportado`, `influencias_aportadas`, `animo_aportado`) VALUES
- (10, 2, 4000, 5, 45),
- (1, 4, 1000, 2, 10),
- (2, 8, 6000, 2, 0),
  (1, 1, 4000, 0, 10),
- (6, 10, 500, 1, 1),
- (2, 3, 4000, 2, 0),
- (8, 8, 0, 1, 600),
- (9, 3, 500, 0, 100),
- (5, 10, 200, 4, 50),
- (3, 2, 500, 1, 200),
- (9, 8, 1000, 1, 100),
  (1, 3, 0, 4, 10),
- (3, 5, 1000, 0, 100),
- (9, 4, 500, 0, 0),
- (5, 6, 1000, 20, 250),
- (3, 7, 500, 0, 0), 
- (4, 9, 300, 8, 0),
- (8, 1, 4000, 0, 0),
+ (1, 4, 1000, 2, 10),
+ (2, 3, 4000, 10, 60),
+ (2, 8, 6000, 2, 0),
+ (3, 2, 200, 1, 200),
+ (3, 5, 0, 0, 100),
+ (3, 7, 200, 0, 0),
  (4, 2, 300, 4, 150),
+ (4, 9, 300, 8, 0),
+ (5, 6, 1000, 20, 250),
+ (5, 10, 200, 4, 50),
+ (6, 10, 400, 1, 1),
+ (7, 5, 200, 4, 50),
  (7, 7, 200, 4, 50),
  (7, 9, 200, 4, 50),
- (10, 9, 6000, 7, 15),
- (7, 5, 200, 4, 50);
+ (8, 1, 400, 0, 0),
+ (8, 8, 0, 1, 600),
+ (9, 3, 200, 0, 100),
+ (9, 4, 200, 0, 0),
+ (9, 8, 0, 1, 100),
+ (10, 2, 4000, 5, 45),
+ (10, 9, 6000, 7, 15);
 
 TRUNCATE `partidos`;
 INSERT INTO `partidos` (`id_partido`, `equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`) VALUES

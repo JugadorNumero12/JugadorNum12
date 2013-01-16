@@ -62,8 +62,8 @@ class Usuarios extends CActiveRecord
 			array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
 			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
-			// TODO: Revisar la expresión regular
-			//array('nueva_clave1,nueva_clave2','match','pattern'=>'/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_]).{6,20}/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
+			// Contraseña: minimo 6 caracteres, maximo 20. No hay restricciones de numeros o letras
+			array('nueva_clave1,nueva_clave2','match','pattern'=>'/^[a-zA-Z0-9]{6,20}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
 			/*Validaciones para cambio de email*/
 			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),

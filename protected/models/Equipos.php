@@ -45,6 +45,7 @@ class Equipos extends CActiveRecord
 			array('nivel_equipo', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>45),
 			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo', 'length', 'max'=>10),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_equipo, nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'safe', 'on'=>'search'),

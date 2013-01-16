@@ -10,6 +10,14 @@
 
 <!-- codigo HTML -->
 
+<?php
+if($partido_pasado){
+	echo $cronica; 
+}  
+//if($partido_presente){ 
+else{
+?>
+
 <h3> INFORMACIÓN PREVIA AL PARTIDO</h3>
 
 <table cellspacing="5px">
@@ -68,4 +76,6 @@
 		<li> <?php echo $accionV->habilidades->nombre; ?>
 		</li>
     <?php } ?> 
+<?php } ?>
+
 <?php } ?>
