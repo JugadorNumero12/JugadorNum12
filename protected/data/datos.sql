@@ -74,23 +74,23 @@ INSERT INTO `acciones_grupales` (`id_accion_grupal`, `usuarios_id_usuario`, `hab
  -- arturo, habilidad 2 (hab. de perfil empresarial)
  (1, 3, 2, 1, 6, 30, 5000, 2, 50, 0),
  -- COMPLETADA: xaby, habilidad 1 (hab. de perfil empresarial)
- (2, 1, 1, 1, 12, 60, 10000, 2, 50, 1),
+ (2, 1, 1, 1, 12, 60, 10000, 1, 50, 1),
  -- marina, habilidad 4 (hab. de perfil ultra)
  (3, 2, 4, 2, 0, 300, 2000, 2, 50, 0),
  -- alex, habilidad 3 (hab. de perfil movedora)
- (4, 9, 3, 2, 12, 150, 600, 2, 50, 0),
+ (4, 9, 3, 2, 12, 150, 600, 1, 50, 0),
  -- COMPLETADA: manu, habilidad 3 (hab. de perfil movedora)
- (5, 6, 3, 3, 24, 300, 1200, 2, 50, 1),
+ (5, 6, 3, 3, 24, 300, 1200, 1, 50, 1),
  -- samu, habilidad 4 (hab. de perfil ultra)
- (6, 10, 4, 3, 0, 300, 2000, 2, 50, 0),
+ (6, 10, 4, 3, 0, 300, 2000, 0, 50, 0),
  -- marina, habilidad 5 (hab. de perfil movedora)
  (7, 2, 5, 2, 12, 150, 600, 2, 50, 0),
  -- COMPLETADA: dani, habilidad 4 (hab. de perfil ultra)
- (8, 4, 4, 1, 1, 600, 4000, 2, 50, 1),
+ (8, 4, 4, 1, 1, 600, 4000, 1, 50, 1),
  -- marcos, habilidad 4 (hab. de perfil ultra)
  (9, 8, 4, 1, 0, 300, 2000, 2, 50, 0),
  -- COMPLETADA: pedro, habilidad 1 (hab. de perfil empresario)
- (10, 5, 1, 2, 12, 60, 10000, 2, 50, 1);
+ (10, 5, 1, 2, 12, 60, 10000, 1, 50, 1);
 
  -- -------------------------------------------------
  -- Acciones individuales desbloqeuadas 6,7,8
