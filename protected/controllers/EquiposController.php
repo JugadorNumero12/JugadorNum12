@@ -39,11 +39,11 @@ class EquiposController extends Controller
 	public function actionIndex()
 	{
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
-		$modeloClasificacion = Clasificacion::model()->findAll();
-		// Saco el equipo del usuario para poder remarcarlo en la clasificacion
-		$equipoUsuario = Yii::app()->user->usAfic;
+		$modeloClasificacion = Clasificacion::model()->findAll(
+			array('order'=>'posicion ASC')
+		);
 
-		$this->render('index',array('modeloC'=>$modeloClasificacion, 'equipoUsuario'=>$equipoUsuario));
+		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
 
 	/**
@@ -67,52 +67,27 @@ class EquiposController extends Controller
 	 */
 	public function actionVer($id_equipo)
 	{
-		// Nota: en comentarios "aficion" y "equipo" son sinonimos
+		$uid = Yii::app()->user->usIdent; // ID de usuario
+		$eid = Yii::app()->user->usAfic; // ID de la afición del usuario
 
-		// Obtenemos el id del usuario y el equipo al que pertenece
-		$id= Yii::app()->user->usIdent;
-<<<<<<< HEAD
-		$modeloEquipo = Equipos::model()->findByPk($id_equipo);
-		
-		//Sacar lista de acciones grupales del equipo
-		$accionesGrupales = $modeloEquipo->accionesGrupales;
-		// $accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
-		
-		// Sacar la lista de aficionados de ese equipo
-		$jugadores = $modeloEquipo['usuarios'];
+		// Si el equipo es el del usuario
+		$miEquipo = ($eid == $id_equipo);
 
-		// Determinar si es el equipo del jugador
-		$mi_equipo = false;
-		$modeloUsuario = Usuarios:: model()->findByPk($id);
-		if($modeloUsuario->equipos_id_equipo == $id_equipo){
-			$mi_equipo = true;
-		}	
+		// Obtenemos el equipo junto a todos sus usuarios y,
+		// si hacen falta, sus acciones grupales
+		$modeloEquipos = Equipos::model();
+		$modeloEquipos->with('usuarios');
+		if ( $miEquipo ) {
+			$modeloEquipos->with('accionesGrupales');
+		}
+
+		$equipo = $modeloEquipos->findByPk($id_equipo);
 
 		//Enviar datos a la vista
-		$this->render('ver', array( 'equipo'=>$modeloEquipo, 
-									'grupales'=>$accionesGrupales,
-									'jugadores'=>$jugadores,
-									'es_mi_equipo'=>$mi_equipo));
-=======
-		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
-		if($modeloEquipos <> null){
-			//Sacar lista de acciones grupales del equipo
-			$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
-
-			$mi_equipo = false;
-			$modeloUsuario = Usuarios:: model()->findByPk($id);
-			if($modeloUsuario->equipos_id_equipo == $id_equipo)
-				$mi_equipo = true;
-
-			//Enviar datos a la vista
-			$this->render('ver', array('equipos'=>$modeloEquipos, 
-										 'grupales'=>$accionesGrupales,
-										 'mi_equipo'=>$mi_equipo));
-		}
-		else{
-			echo "El equipo no existe.";
-		}
->>>>>>> develop
+		$this->render('ver', array(
+			'equipo'=>$equipo,
+			'mi_equipo'=>$miEquipo
+		));
 	}
 
 	/**
