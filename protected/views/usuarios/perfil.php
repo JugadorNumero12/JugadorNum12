@@ -57,7 +57,7 @@
 			</div>
 
 			<div class="perfil-grupo-arriba-derecha">
-				<table >
+				<table border=1>
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
@@ -89,14 +89,14 @@
 			{?>
 
 				<h1> Habilidades pasivas desbloqueadas </h1>
-				<table> <tr> <td>
-				<?php foreach ($accionesPas as $accion){ 					
-						 echo $accion->nombre; ?> 	
-						 </td>
-						<td> Ver </td>
+				<table > 
+				<?php foreach ($accionesPas as $accion){ ?> 
+						<tr> 
+							<td><?php echo $accion->nombre; ?> 	
+							 </td>
+							<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/habilidades/ver','id_habilidad'=>$accion->id_habilidad),'class'=>"button small black"));?> </td>
 						</tr>				
 				 <?php } ?>
-				
 				</table>
 
 			<?php } ?>
