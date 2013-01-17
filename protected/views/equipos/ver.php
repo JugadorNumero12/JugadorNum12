@@ -10,42 +10,55 @@
 
 <!-- codigo HTML -->
 
-<h1>Equipo: <?php echo $equipo->nombre ?></h1>
+<h1><?php echo $equipo->nombre?></h1>
 <ul>
-	<li>Aforo maximo del estadio -> <?php echo $equipo->aforo_max ?></li>
-	<li>Aforo basico del estadio -> <?php echo $equipo->aforo_base ?></li>
-	<li>Nivel del equipo -> <?php echo $equipo->nivel_equipo ?></li>
-	
-		<?php if($mi_equipo){ ?>
-		<li> <?php
-			if(empty($equipo['accionesGrupales'])) {
-				echo "No hay acciones grupales.";
-			} else {
-				echo "Numero de acciones grupales -> ". sizeof($equipo['accionesGrupales']);
-			}
-			?>
+	<h2>Datos del equipo</h2>
+	<!-- Muestra el aforo maximo del estadio -->
+	<li><b>Aforo maximo del estadio:</b> <?php echo $equipo->aforo_max; ?></li>
+	<!-- Muestra el aforo básico del estadio -->
+	<li><b>Aforo basico del estadio:</b> <?php echo $equipo->aforo_base; ?></li>
+	<!-- Muestra el nivel del equipo -->
+	<li><b>Nivel del equipo:</b> <?php echo $equipo->nivel_equipo; ?></li>
+
+	<!--Muestra todos los usuarios del del equipo con su nick, su nivel y su tipo de personaje -->
+	<h2>Jugadores del equipo</h2>
+	<?php foreach ($equipo->usuarios as $e){ ?>
+		<li>
+			<b>Nick: </b> <?php echo $e->nick; ?>
+			<b>Nivel: </b> <?php echo $e->nivel; ?>
+			<?php switch($e->personaje){
+				case Usuarios::PERSONAJE_ULTRA:
+					$tipoPersonaje = "Ultra";
+					break;
+				case Usuarios::PERSONAJE_MOVEDORA:	
+					$tipoPersonaje = "Movedora";
+					break;
+				case Usuarios::PERSONAJE_EMPRESARIO:
+					$tipoPersonaje = "Empresario";
+					break;	
+			}; ?>
+			<b>Personaje: </b> <?php echo $tipoPersonaje; ?>
 		</li>
-		<li><ul>
-			<?php
-			foreach ($equipo['accionesGrupales'] as $accion) { ?>
-			<li>
-				<? echo "Accion con ID " . $accion['id_accion_grupal']; ?>
-			</li>
-			<? } ?>
-		</ul></li>
-		<?php } ?>
+	<?php } ?>
 
-		<!-- TODO: Lista de usuarios -->
-		<!-- Usad la variables $equipo['usuarios'] -->
-	
+	<!-- Si es el equipo del usuario muestra las acciones grupales abiertas del equipo -->
+	<?php if($mi_equipo){ ?>
+		<h2>Acciones grupales abiertas</h2>
+		<?php
+			if(empty($equipo->accionesGrupales)) {
+				echo "No hay acciones grupales abiertas.";
+			} else {
+				foreach ($equipo->accionesGrupales as $ag) { ?>
+					<li>
+						<b>Accion: </b> <?php echo $ag->id_accion_grupal; ?>
+						<b>Creador: </b> <?php echo $ag->usuarios_id_usuario; ?>
+						<b>Participantes: </b> <?php echo $ag->jugadores_acc; ?>
+					</li>
+				<?php }
+			}
+		?>
+	<?php } ?>
+
+	<!-- Botón para poder cambiar de equipo -->
+	<?php echo CHtml::button('Cambiar equipo', array('submit' => array('equipos/clave'))); ?>
 </ul>
-
-<?php 
-	if(!$mi_equipo){
-		echo "Pulsa el botón para cambiarte a este equipo";	
-		//echo CHtml::button('Cambiar de equipo', array('submit' => array('equipos/ver', 'id_equipo'=>$equipos->id_equipo)));
-		//echo CHtml::link('Link Text',array('equipos/cambiar','id_equipo'=>$equipos->id_equipo));
-		//EquiposController::actionCambiar($equipos->id_equipo);
-?>
-<!-- 	<button id="b" type="button" onClick="EquiposController::actionCambiar($equipos->id_equipo)";>Cambiar de equipo</button> -->
-<!-- <?php } ?> -->
