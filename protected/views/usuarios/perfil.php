@@ -57,7 +57,7 @@
 			</div>
 
 			<div class="perfil-grupo-arriba-derecha">
-				<table border=1>
+				<table >
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
