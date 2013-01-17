@@ -70,6 +70,7 @@ class UsuariosController extends Controller
         
         //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas y las de partido
         $accionesPas = array();
+        $accionesPar = array();
         foreach ($modeloDesbloqueadas as $desbloqueada){
             $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
             if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
