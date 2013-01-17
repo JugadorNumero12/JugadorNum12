@@ -58,7 +58,4 @@
 			}
 		?>
 	<?php } ?>
-
-	<!-- Botón para poder cambiar de equipo -->
-	<?php echo CHtml::button('Cambiar equipo', array('submit' => array('equipos/clave'))); ?>
 </ul>
