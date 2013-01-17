@@ -17,7 +17,7 @@
 		<th>Perdidos</th>
 	</tr> 
 	<?php foreach ($modeloC as $m ) { ?>
-	<tr <?php if ($equipoUsuario == $m->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
+	<tr <?php if (Yii::app()->user->usAfic == $m->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
 		<td> <a href=
 									"<?php echo $this->createUrl( '/equipos/ver', 
 									array('id_equipo' => $m->equipos_id_equipo) ); ?>">  
