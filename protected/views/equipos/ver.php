@@ -10,39 +10,44 @@
 
 <!-- codigo HTML -->
 
-<h1><?php echo $equipo->nombre?></h1>
-<ul>
-	<h2>Datos del equipo</h2>
-	<!-- Muestra el aforo maximo del estadio -->
-	<li><b>Aforo maximo del estadio:</b> <?php echo $equipo->aforo_max; ?></li>
-	<!-- Muestra el aforo básico del estadio -->
-	<li><b>Aforo basico del estadio:</b> <?php echo $equipo->aforo_base; ?></li>
-	<!-- Muestra el nivel del equipo -->
-	<li><b>Nivel del equipo:</b> <?php echo $equipo->nivel_equipo; ?></li>
+<div class="envoltorio-equipos"> <div class="envoltorio2-equipos"> 
+	
+	<div cass="equipos-arriba">
 
-	<!--Muestra todos los usuarios del del equipo con su nick, su nivel y su tipo de personaje -->
-	<h2>Jugadores del equipo</h2>
-	<?php foreach ($equipo->usuarios as $e){ ?>
-		<li>
-			<b>Nick: </b> <?php echo $e->nick; ?>
-			<b>Nivel: </b> <?php echo $e->nivel; ?>
-			<?php switch($e->personaje){
-				case Usuarios::PERSONAJE_ULTRA:
-					$tipoPersonaje = "Ultra";
-					break;
-				case Usuarios::PERSONAJE_MOVEDORA:	
-					$tipoPersonaje = "Movedora";
-					break;
-				case Usuarios::PERSONAJE_EMPRESARIO:
-					$tipoPersonaje = "Empresario";
-					break;	
-			}; ?>
-			<b>Personaje: </b> <?php echo $tipoPersonaje; ?>
-		</li>
-	<?php } ?>
+		<div class="equipos-escudo">
+			<?php switch ($equipo->id_equipo)
+				{
+				case 1: ?>
+				  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=200 height=200 border=0 alt="Escudo rojo"> 
+				  <?php break;
+				case 2:?>
+				  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=200 height=200 border=0 alt="Escudo verde"> 
+				  <?php break;
+				case 3:?>
+				  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=200 height=200 border=0 alt="Escudo negro"> 
+				  <?php break;
+				  case 4:?>
+				  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=200 height=200 border=0 alt="Escudo blanco"> 
+				  <?php break;
+				} ?>				
+		</div>
 
-	<!-- Si es el equipo del usuario muestra las acciones grupales abiertas del equipo -->
-	<?php if($mi_equipo){ ?>
+		<div class="equipos-informacion">
+			<table>
+				<tr><th>Nombre equipo: </th> <td><?php echo $equipo->nombre ?></td> </tr> 
+				<tr><th>Nivel del equipo: </th> <td><?php echo $equipo->nivel_equipo ?></td> </tr>
+				<tr><th>Aforo m&aacute;ximo del estadio: </th> <td><?php echo $equipo->aforo_max ?> </td> </tr> 	
+				<tr><th>Aforo b&aacute;sico del estadio: </th> <td><?php echo $equipo->aforo_base ?> </td> </tr> 					 
+			</table>
+
+		</div>
+
+	</div>
+
+	<div class="equipos-acciones-grupales">
+
+		<ul>
+		<?php if($mi_equipo){ ?>
 		<h2>Acciones grupales abiertas</h2>
 		<?php
 			if(empty($equipo->accionesGrupales)) {
@@ -55,7 +60,12 @@
 						<b>Participantes: </b> <?php echo $ag->jugadores_acc; ?>
 					</li>
 				<?php }
-			}
-		?>
-	<?php } ?>
-</ul>
+				}?>
+			<?php } ?>
+		</ul>
+
+	</div>
+
+
+</div></div> <!--ENVOLTORIOS-->
+
