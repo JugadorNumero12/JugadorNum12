@@ -68,17 +68,23 @@ class UsuariosController extends Controller
         //Saca la lista de las acciones desbloqueadas por el usuario
         $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>$id));
         
-        //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas
+        //Prepara los datos de las acciones. Solo queremos enseñar las habilidades pasivas y las de partido
         $accionesPas = array();
+        $accionesPar = array();
         foreach ($modeloDesbloqueadas as $desbloqueada){
             $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
             if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PASIVA ) {
-                $accionesPas[] = $infoDesbloqueada[0]['nombre'];
+                $accionesPas[] = $infoDesbloqueada[0];
+            }
+            if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PARTIDO ) {
+                $accionesPar[] = $infoDesbloqueada[0];
             }
         }
 
+
         $this->render('perfil',array('modeloU'=>$modeloUsuario, 
-                        'accionesPas'=>$accionesPas) );
+                        'accionesPas'=>$accionesPas,
+                        'accionesPar'=>$accionesPar) );
     }
 
     /*

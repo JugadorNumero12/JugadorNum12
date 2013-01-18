@@ -187,45 +187,39 @@ class AccionesController extends Controller
 	 */
 	public function actionVer($id_accion)
 	{
-		//Cojo la acción de la tabla acciones_grupales
-		$accionGrupal = AccionesGrupales::model()->findByPK($id_accion);
+		// Cojo la acción de la tabla acciones_grupales
+		$accionGrupal = AccionesGrupales::model()
+			->with('habilidades')
+			->with('participaciones')
+			->findByPk($id_accion);
 
-		//A partir de la acción saco la habilidad para poder mostrar los datos
-		$habilidad = Habilidades::model()->findByPK($accionGrupal['habilidades_id_habilidad']);
-		if($habilidad <> null){
+		// Saco el usuario
+		$usuario = Yii::app()->user->usIdent;
+		$equipoUsuario = Yii::app()->user->usAfic;
 
-			//Saco las participaciones de la acción
-			$participaciones = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal' => $id_accion));
+		// Saco el propietario de la acción
+		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
-			//Saco el usuario
-			$usuario = Yii::app()->user->usIdent;
+		// Saco el equipo que ha creado la accion
+		$equipoAccion = $accionGrupal['equipos_id_equipo'];
 
-			//Saco el propietario de la acción
-			$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
-
-			//Saco el usuario que quiere participar en la acción y su equipo
-			$datosUsuario = Usuarios::model()->findByPK($usuario);
-			$equipoUsuario = $datosUsuario['equipos_id_equipo'];
-
-			//Saco el equipo que ha creado la accion
-			$equipoAccion = $accionGrupal['equipos_id_equipo'];
-
-			//Compruebo si el usuario ha participado ya en la accion
-			$esParticipante = false;
-			foreach($participaciones as $participacion){
-				if ($participacion['usuarios_id_usuario'] == $usuario){
-					$esParticipante = true;
-				}
+		// Compruebo si el usuario ha participado ya en la accion
+		// FIXME Esto es lento como su puta madre
+		$esParticipante = false;
+		foreach($accionGrupal['participaciones'] as $participacion){
+			if ($participacion['usuarios_id_usuario'] == $usuario){
+				$esParticipante = true;
 			}
-			
-			//Envío los datos a la vista
-			$this->render('ver', array('accionGrupal'=>$accionGrupal, 'habilidad'=>$habilidad,
-						 'usuario'=>$usuario, 'propietarioAccion'=>$propietarioAccion, 'participaciones'=>$participaciones,
-						 'esParticipante'=>$esParticipante, 'equipoAccion' => $equipoAccion, 'equipoUsuario' => $equipoUsuario));
 		}
-		else{
-			echo "La accion no existe.";
-		}
+		
+		// Envío los datos a la vista
+		$this->render('ver', array(
+			'accionGrupal'=>$accionGrupal,
+			'usuario'=>$usuario,
+			'propietarioAccion'=>$propietarioAccion,
+			'esParticipante'=>$esParticipante,
+			'equipoAccion' => $equipoAccion,
+			'equipoUsuario' => $equipoUsuario));
 	}
 
 	/**
