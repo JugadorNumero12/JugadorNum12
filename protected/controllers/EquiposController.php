@@ -80,17 +80,10 @@ class EquiposController extends Controller
 			$equipo->with('accionesGrupales');
 		}
 
-		//Se sacan las habilidades de las acciones
-		$habilidades = array();
-		foreach ($equipo->accionesGrupales as $ag){
-			$habilidades[] = Habilidades::model()->findByPK($ag['habilidades_id_habilidad']);
-		}
-
 		//Enviar datos a la vista
 		$this->render('ver', array(
 			'equipo'=>$equipo,
-			'mi_equipo'=>$miEquipo,
-			'habilidades'=>$habilidades
+			'mi_equipo'=>$miEquipo
 		));
 	}
 

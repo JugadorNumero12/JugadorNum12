@@ -50,8 +50,8 @@
 			} else {
 				foreach ($equipo->accionesGrupales as $ag) { ?>
 					<li>
-						<b>Accion: </b> <?php echo $ag->id_accion_grupal; ?>
-						<b>Creador: </b> <?php echo $ag->usuarios_id_usuario; ?>
+						<b>Accion: </b> <?php echo $ag->habilidades->codigo; ?>
+						<b>Creador: </b> <?php echo $ag->usuarios->nick; ?>
 						<b>Participantes: </b> <?php echo $ag->jugadores_acc; ?>
 					</li>
 				<?php }
