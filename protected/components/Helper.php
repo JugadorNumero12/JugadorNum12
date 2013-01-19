@@ -1,6 +1,6 @@
 <?php
 
-public class Helper
+class Helper
 {
 	/*Sirve para cambiar más facilmente los factores de partido*/
 	static $datos_factores = array (	
@@ -22,7 +22,7 @@ public class Helper
 			'ofensivo' => 'ofensivo_visitante',
 			'defensivo' => 'defensivo_visitante'
 		), 
-	)
+	);
 
 	/** Funcion auxiliar que modifica la tabla de recursos
 	 * 
@@ -36,7 +36,7 @@ public class Helper
 	{
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
-		$usuario=Usuario::model()->findByPK($id_usuario);
+		$usuario=Usuarios::model()->findByPK($id_usuario);
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
@@ -86,11 +86,11 @@ public class Helper
 	 * @devuelve flag de error
 	 * @ejemplo	$h->quitar_recursos(3, "animo", 30);
 	 */
-	public int quitar_recursos($id_usuario, $columna, $cantidad)
+	public function quitar_recursos($id_usuario, $columna, $cantidad)
 	{
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
-		$usuario=Usuario::model()->findByPK($id_usuario);
+		$usuario=Usuarios::model()->findByPK($id_usuario);
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
