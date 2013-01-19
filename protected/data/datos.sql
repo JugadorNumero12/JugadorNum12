@@ -159,11 +159,11 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
  (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10), (14, 10);
 
 TRUNCATE `equipos`;
-INSERT INTO `equipos` (`id_equipo`, `nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (1, 'Rojos',   1, 3000, 400, 12, 7, 6),
- (2, 'Verdes',  1, 3000, 500, 10, 7, 6),
- (3, 'Negros',  1, 3600, 400, 10, 7, 7),
- (4, 'Blancos', 1, 4000, 400, 9,  6, 8);
+INSERT INTO `equipos` (`id_equipo`, `partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
+ (1, 7, 'Rojos',   1, 3000, 400, 12, 7, 6),
+ (2, 7, 'Verdes',  1, 3000, 500, 10, 7, 6),
+ (3, 8, 'Negros',  1, 3600, 400, 10, 7, 7),
+ (4, 8, 'Blancos', 1, 4000, 400, 9,  6, 8);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
