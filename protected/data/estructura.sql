@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `cooldown` int(11) unsigned NOT NULL,
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
-  KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`)
+  KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
+  PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -96,7 +97,8 @@ CREATE TABLE IF NOT EXISTS `desbloqueadas` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   KEY `desbloqueadas_FKIndex1` (`usuarios_id_usuario`),
-  KEY `desbloqueadas_FKIndex2` (`habilidades_id_habilidad`)
+  KEY `desbloqueadas_FKIndex2` (`habilidades_id_habilidad`),  
+  PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -138,7 +140,6 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
 
 DROP TABLE IF EXISTS `participaciones`;
 CREATE TABLE IF NOT EXISTS `participaciones` (
-  `participaciones_id_participacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `acciones_grupales_id_accion_grupal` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `dinero_aportado` int(10) unsigned NOT NULL,
@@ -146,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `participaciones` (
   `animo_aportado` int(10) unsigned NOT NULL,
   KEY `participantes_FKIndex1` (`usuarios_id_usuario`),
   KEY `participaciones_FKIndex2` (`acciones_grupales_id_accion_grupal`),
-  PRIMARY KEY (`participaciones_id_participacion`)
+  PRIMARY KEY (`acciones_grupales_id_accion_grupal`,`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
