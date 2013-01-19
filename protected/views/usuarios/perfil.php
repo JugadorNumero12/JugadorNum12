@@ -76,7 +76,6 @@
 						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_animo ?> </td> </tr>
 						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_influencias ?> </td> </tr>
 	
-					</tr> 
 				</table>
 			</div>
 		</div>
