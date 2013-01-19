@@ -191,6 +191,7 @@ class AccionesController extends Controller
 		$accionGrupal = AccionesGrupales::model()
 			->with('habilidades')
 			->with('participaciones')
+			->with('usuarios')
 			->findByPk($id_accion);
 
 		// Saco el usuario
