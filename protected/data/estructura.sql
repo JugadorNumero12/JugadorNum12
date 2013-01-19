@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 -- ---------- DEFINICION DE LAS TABLAS --------------------
 -- --------------------------------------------------------
 
-
+DROP TABLE IF EXISTS `acciones_turno`;
 DROP TABLE IF EXISTS `acciones_grupales`;
 CREATE TABLE IF NOT EXISTS `acciones_grupales` (
   `id_accion_grupal` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -58,21 +58,6 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
   KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
   PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-DROP TABLE IF EXISTS `acciones_turno`;
-CREATE TABLE IF NOT EXISTS `acciones_turno` (
-  `usuarios_id_usuario` int(10) unsigned NOT NULL,
-  `habilidades_id_habilidad` int(10) unsigned NOT NULL,
-  `partidos_id_partido` int(10) unsigned NOT NULL,
-  `equipos_id_equipo` int(10) unsigned NOT NULL,
-  `turno` smallint(5) unsigned NOT NULL,
-  KEY `acciones_turno_FKIndex3` (`equipos_id_equipo`),
-  KEY `acciones_turno_FKIndex4` (`partidos_id_partido`),
-  KEY `acciones_turno_FKIndex2` (`habilidades_id_habilidad`),
-  KEY `acciones_turno_FKIndex1` (`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -106,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `desbloqueadas` (
 DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE IF NOT EXISTS `equipos` (
   `id_equipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `partidos_id_partido` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `categoria` int(10) unsigned NOT NULL,
   `aforo_max` int(10) unsigned NOT NULL,
@@ -113,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `nivel_equipo` smallint(5) unsigned NOT NULL,
   `factor_ofensivo` int(10) unsigned NOT NULL,
   `factor_defensivo` int(10) unsigned NOT NULL,
+  KEY `equipos_FKIndex1` (`partidos_id_partido`),
   PRIMARY KEY (`id_equipo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
@@ -164,6 +151,16 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `nivel_visitante` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_local` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_visitante` int(10) unsigned NOT NULL DEFAULT '0',
+  `turno` int(11) NOT NULL DEFAULT '0',
+  `goles_local` int(11) NOT NULL DEFAULT '0',
+  `goles_visitante` int(11) NOT NULL DEFAULT '0',
+  `moral_local` int(11) NOT NULL DEFAULT '0',
+  `moral_visitante` int(11) NOT NULL DEFAULT '0',
+  `ofensivo_local` int(11) NOT NULL DEFAULT '0',
+  `ofensivo_visitante` int(11) NOT NULL DEFAULT '0',
+  `defensivo_local` int(11) NOT NULL DEFAULT '0',
+  `defensivo_visitante` int(11) NOT NULL DEFAULT '0',
+  `estado` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_partido`),
   KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
   KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)
@@ -187,25 +184,6 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `bonus_animo` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
-DROP TABLE IF EXISTS `turnos`;
-CREATE TABLE IF NOT EXISTS `turnos` (
-  `partidos_id_partido` int(10) unsigned NOT NULL,
-  `turno` int(11) NOT NULL DEFAULT '0',
-  `goles_local` int(11) NOT NULL DEFAULT '0',
-  `goles_visitante` int(11) NOT NULL DEFAULT '0',
-  `moral_local` int(11) NOT NULL DEFAULT '0',
-  `moral_visitante` int(11) NOT NULL DEFAULT '0',
-  `ofensivo_local` int(11) NOT NULL DEFAULT '0',
-  `ofensivo_visitante` int(11) NOT NULL DEFAULT '0',
-  `defensivo_local` int(11) NOT NULL DEFAULT '0',
-  `defensivo_visitante` int(11) NOT NULL DEFAULT '0',
-  `estado` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`partidos_id_partido`),
-  KEY `turnos_FKIndex1` (`partidos_id_partido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
