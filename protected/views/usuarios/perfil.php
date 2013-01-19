@@ -37,7 +37,7 @@
 
 				<div class="perfil-grupo-arriba-izquierda-equipo">
 				
-				<?php switch ($modeloU->equipos->id_equipo)
+				 <?php switch ($modeloU->equipos->id_equipo)
 								{
 								case 1: ?>
 								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=100 height=100 border=0 alt="Escudo rojo"> 
@@ -51,7 +51,7 @@
 								  case 4:?>
 								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=100 height=100 border=0 alt="Escudo blanco"> 
 								  <?php break;
-								} ?>
+								} ?> 
 				</div>
 
 			</div>

@@ -40,12 +40,6 @@
 					  <?php break;
 				} ?>	
 
-				
-
-				</div>
-
-				<div class="perfil-grupo-arriba-izquierda-equipo">
-				
 				</div>
 
 			</div>
@@ -109,7 +103,10 @@
 					<?php foreach ($equipo->usuarios as $e){ ?>
 						
 						<tr> 
-							<td><?php echo  $e->nick; ?> 	</td>
+							<td><a href="<?php echo $this->createUrl( '/usuarios/ver', array('id_usuario' => $e->id_usuario) ); ?>">  
+
+										<?php echo $e->nick ?></td>
+								</a> 	
 							<td><?php echo  $e->nivel; ?> 	</td>
 							<td><?php switch($e->personaje){
 									case Usuarios::PERSONAJE_ULTRA:
@@ -127,6 +124,7 @@
 				</table>
 
 			<?php }  ?>
+
 		
 
 		</div>
