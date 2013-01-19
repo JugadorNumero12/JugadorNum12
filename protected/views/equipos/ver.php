@@ -10,42 +10,128 @@
 
 <!-- codigo HTML -->
 
-<h1>Equipo: <?php echo $equipo->nombre ?></h1>
-<ul>
-	<li>Aforo maximo del estadio -> <?php echo $equipo->aforo_max ?></li>
-	<li>Aforo basico del estadio -> <?php echo $equipo->aforo_base ?></li>
-	<li>Nivel del equipo -> <?php echo $equipo->nivel_equipo ?></li>
-	
-		<?php if($mi_equipo){ ?>
-		<li> <?php
-			if(empty($equipo['accionesGrupales'])) {
-				echo "No hay acciones grupales.";
-			} else {
-				echo "Numero de acciones grupales -> ". sizeof($equipo['accionesGrupales']);
-			}
-			?>
-		</li>
-		<li><ul>
-			<?php
-			foreach ($equipo['accionesGrupales'] as $accion) { ?>
-			<li>
-				<? echo "Accion con ID " . $accion['id_accion_grupal']; ?>
-			</li>
-			<? } ?>
-		</ul></li>
-		<?php } ?>
+<head>
 
-		<!-- TODO: Lista de usuarios -->
-		<!-- Usad la variables $equipo['usuarios'] -->
-	
-</ul>
+</head>
 
-<?php 
-	if(!$mi_equipo){
-		echo "Pulsa el botón para cambiarte a este equipo";	
-		//echo CHtml::button('Cambiar de equipo', array('submit' => array('equipos/ver', 'id_equipo'=>$equipos->id_equipo)));
-		//echo CHtml::link('Link Text',array('equipos/cambiar','id_equipo'=>$equipos->id_equipo));
-		//EquiposController::actionCambiar($equipos->id_equipo);
-?>
-<!-- 	<button id="b" type="button" onClick="EquiposController::actionCambiar($equipos->id_equipo)";>Cambiar de equipo</button> -->
-<!-- <?php } ?> -->
+<body>
+
+<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
+
+		<div class="perfil-grupo-arriba">
+
+			<div class="perfil-grupo-arriba-izquierda">
+
+				<div class="perfil-grupo-arriba-izquierda-personaje">
+				
+				<?php switch ($equipo->id_equipo)
+				{
+					case 1: ?>
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=200 height=200 border=0 alt="Escudo rojo"> 
+					  <?php break;
+					case 2:?>
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=200 height=200 border=0 alt="Escudo verde"> 
+					  <?php break;
+					case 3:?>
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=200 height=200 border=0 alt="Escudo negro"> 
+					  <?php break;
+					  case 4:?>
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=200 height=200 border=0 alt="Escudo blanco"> 
+					  <?php break;
+				} ?>	
+
+				</div>
+
+			</div>
+
+			<div class="perfil-grupo-arriba-derecha">
+				<?php if($mi_equipo){ ?>
+					<h1> Tu equipo </h1>
+				<?php } ?>
+
+				<table>
+					<tr><th>Nombre equipo: </th> <td><?php echo $equipo->nombre ?></td> </tr> 
+					<tr><th>Nivel del equipo: </th> <td><?php echo $equipo->nivel_equipo ?></td> </tr>
+					<tr><th>Aforo m&aacute;ximo del estadio: </th> <td><?php echo $equipo->aforo_max ?> </td> </tr> 	
+					<tr><th>Aforo b&aacute;sico del estadio: </th> <td><?php echo $equipo->aforo_base ?> </td> </tr> 					 
+				</table>
+
+			</div>
+		</div>
+
+		<div class="perfil-abajo-pasivas">
+
+			<?php if($mi_equipo){ ?>
+
+				<?php if(empty($equipo->accionesGrupales)){ ?>
+					<h1> No hay acciones grupales abiertas </h1>
+				<?php } else 
+				{?>
+
+					<h1> Acciones grupales abiertas </h1>
+					<table > 
+						<tr> 
+							<th>C&oacute;digo</th>
+							<th>Creador</th>
+							<th>Num. participantes</th>
+						</tr>
+					<?php foreach ($equipo->accionesGrupales as $ag){ ?> 
+							<tr> 
+								<td><?php echo  $ag->habilidades->codigo; ?> 	</td>
+								<td><?php echo  $ag->usuarios->nick; ?> 	</td>
+								<td><?php echo  $ag->jugadores_acc; ?> 	</td>								
+							</tr>				
+					 <?php } ?>
+					</table>
+				<?php } ?>
+			<?php } ?>
+			
+		</div>
+
+		<div class="perfil-abajo-partido">
+			<?php if(empty($equipo->usuarios)){ ?>
+				<h1>Este equipo no tiene jugadores</h1>
+			<?php } else 
+			{?>
+				<h1> Jugadores </h1>
+				<table > 
+					<tr> 
+						<th>Jugador</th>
+						<th>Nivel</th>
+						<th>Personaje</th>
+					</tr>
+					<?php foreach ($equipo->usuarios as $e){ ?>
+						
+						<tr> 
+							<td><a href="<?php echo $this->createUrl( '/usuarios/ver', array('id_usuario' => $e->id_usuario) ); ?>">  
+
+										<?php echo $e->nick ?></td>
+								</a> 	
+							<td><?php echo  $e->nivel; ?> 	</td>
+							<td><?php switch($e->personaje){
+									case Usuarios::PERSONAJE_ULTRA:
+										echo "Ultra";
+										break;
+									case Usuarios::PERSONAJE_MOVEDORA:	
+										echo "Animadora";
+										break;
+									case Usuarios::PERSONAJE_EMPRESARIO:
+										echo "Empresario";
+										break;	
+								}; ?> 	</td>								
+						</tr>	
+					<?php } ?>
+				</table>
+
+			<?php }  ?>
+
+		
+
+		</div>
+
+
+	</div></div> <!--ENVOLTORIOS-->
+
+</body>
+
+</html>

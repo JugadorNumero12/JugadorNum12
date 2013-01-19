@@ -4,8 +4,6 @@
 
 // codigo PHP
 
-//arraglar tipo
-
 ?>
 
 <div class="envoltorio-todo">
@@ -19,7 +17,20 @@
 			</tr>
 			<tr>
 				<td>Tipo habilidad: </td>
-				<td><?php echo ($habilidad['tipo']==Habilidades::TIPO_INDIVIDUAL) ? 'Individual' : 'Grupal' ?></td>
+				<td><?php switch ($habilidad['tipo']){
+					case Habilidades::TIPO_INDIVIDUAL:
+						echo 'Individual';
+					  break;
+					case Habilidades::TIPO_GRUPAL:
+					  	echo 'Grupal';
+					  break;
+					case Habilidades::TIPO_PARTIDO:
+					  	echo 'De Partido';
+					  break;
+					case Habilidades::TIPO_PASIVA:
+					  	echo 'Pasiva';
+					  break;
+				} ?></td>
 			</tr>
 			<tr>
 				<td>Coste: </td>

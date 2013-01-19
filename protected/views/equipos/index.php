@@ -5,9 +5,9 @@
 
 <!-- codigo HTML -->
 
-  <div class="cabecera-clasificacion"> <h1> CLASIFICACIÓN</h1> </div>
+<div class="cabecera-clasificacion"> <h1> CLASIFICACIÓN</h1> </div>
 
-<table>
+<div class="clasificacion"> <table cellspacing="0">
 	<tr>
 		<th>Equipo</th>
 		<th>Posicion</th>
@@ -17,7 +17,7 @@
 		<th>Perdidos</th>
 	</tr> 
 	<?php foreach ($modeloC as $m ) { ?>
-	<tr>
+	<tr <?php if (Yii::app()->user->usAfic == $m->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
 		<td> <a href=
 									"<?php echo $this->createUrl( '/equipos/ver', 
 									array('id_equipo' => $m->equipos_id_equipo) ); ?>">  
@@ -32,4 +32,4 @@
 	</tr>
 	<?php } ?>
 	<tr></tr>
-</table>
+</table> </div>

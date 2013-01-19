@@ -75,13 +75,10 @@ class EquiposController extends Controller
 
 		// Obtenemos el equipo junto a todos sus usuarios y,
 		// si hacen falta, sus acciones grupales
-		$modeloEquipos = Equipos::model();
-		$modeloEquipos->with('usuarios');
+		$equipo = Equipos::model()->with('usuarios')->findByPK($id_equipo);
 		if ( $miEquipo ) {
-			$modeloEquipos->with('accionesGrupales');
+			$equipo->with('accionesGrupales');
 		}
-
-		$equipo = $modeloEquipos->findByPk($id_equipo);
 
 		//Enviar datos a la vista
 		$this->render('ver', array(

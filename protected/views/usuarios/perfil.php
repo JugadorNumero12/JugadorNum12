@@ -1,6 +1,7 @@
 <?php
-/* @var $modeloU */
-/* @var $accionesPas */
+/* @var $modeloU Modelo del usuario*/
+/* @var $accionesPas array con las acciones pasivas desbloqueadas por el usuario*/
+/* @var $accionesPas array con las acciones de partido desbloqueadas por el usuario*/
 
 // codigo PHP 
 
@@ -36,7 +37,7 @@
 
 				<div class="perfil-grupo-arriba-izquierda-equipo">
 				
-				<?php switch ($modeloU->equipos->id_equipo)
+				 <?php switch ($modeloU->equipos->id_equipo)
 								{
 								case 1: ?>
 								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=100 height=100 border=0 alt="Escudo rojo"> 
@@ -50,13 +51,13 @@
 								  case 4:?>
 								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=100 height=100 border=0 alt="Escudo blanco"> 
 								  <?php break;
-								} ?>
+								} ?> 
 				</div>
 
 			</div>
 
 			<div class="perfil-grupo-arriba-derecha">
-				<table>
+				<table >
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
@@ -66,15 +67,63 @@
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->animo_max ?></td> </tr> 
 						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_max ?> </td> </tr> 
-						
-					</tr> 
+						<tr><th> <br></th> <td> </td> <br></tr> 
+						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->dinero_gen ?></td> </tr> 
+						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->animo_gen ?> </td> </tr>
+						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_gen ?> </td> </tr>
+						<tr><th> <br></th> <td> </td> <br></tr> 
+						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->bonus_dinero ?></td> </tr> 
+						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_animo ?> </td> </tr>
+						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_influencias ?> </td> </tr>
+	
 				</table>
 			</div>
 		</div>
 
-		<div class="perfil-grupo-abajo">
+		<div class="perfil-abajo-pasivas">
+
+			<?php if(empty($accionesPas)){ ?>
+				<h1> No hay habilidades pasivas desbloqueadas </h1>
+			<?php } else 
+			{?>
+
+				<h1> Habilidades pasivas desbloqueadas </h1>
+				<table > 
+				<?php foreach ($accionesPas as $accion){ ?> 
+						<tr> 
+							<td><?php echo $accion->nombre; ?> 	
+							 </td>
+							<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/habilidades/ver','id_habilidad'=>$accion->id_habilidad),'class'=>"button small black"));?> </td>
+						</tr>				
+				 <?php } ?>
+				</table>
+
+			<?php } ?>
+			
+		</div>
+
+		<div class="perfil-abajo-partido">
+
+			<?php if(empty($accionesPar)){ ?>
+				<h1> No hay habilidades pasivas desbloqueadas </h1>
+			<?php } else 
+			{?>
+
+				<h1> Habilidades de partido desbloqueadas </h1>
+				<table > 
+				<?php foreach ($accionesPar as $accion){ ?> 
+						<tr> 
+							<td><?php echo $accion->nombre; ?> 	
+							 </td>
+							<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/habilidades/ver','id_habilidad'=>$accion->id_habilidad),'class'=>"button small black"));?> </td>
+						</tr>				
+				 <?php } ?>
+				</table>
+
+			<?php } ?>
 
 		</div>
+
 
 	</div></div> <!--ENVOLTORIOS-->
 
