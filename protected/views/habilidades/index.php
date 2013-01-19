@@ -5,7 +5,7 @@
 ?>
 
 <div class="envoltorio">
-<div class="encabezado"> <h1>Arbol de habilidades</h1> </div>
+<div class="encabezado"> <h1>&Aacute;rbol de habilidades</h1> </div>
 
 <?php 
 foreach ( $habilidades as $habilidad ){ ?>
