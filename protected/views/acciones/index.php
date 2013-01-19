@@ -9,6 +9,7 @@
 <?php 
 foreach ( $acciones as $accion ){ ?>
     <div class="datos-accion">
+    <div <?php if ( $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero']){ echo 'class="remarcado"'; } ?>>
 	<li>
     <!-- Muestro el nombre de la accion -->
     <div class="nombre-accion">
@@ -43,10 +44,15 @@ foreach ( $acciones as $accion ){ ?>
     </div>
     <!-- Enlace para poder ver la habilidad con mas detalle en /habilidades/ver/{id_habilidad} -->
     <div class="botones-accion">
-    <a href="<?php echo $this->createUrl('habilidades/ver', array('id_habilidad' => $accion['id_habilidad']));?>">
-    <input type="button" value="Ver detalles"/> </a>
+    <?php if ( $recursosUsuario['dinero'] > $accion['dinero'] && $recursosUsuario['dinero'] > $accion['dinero'] && $recursosUsuario['dinero'] > $accion['dinero']){
+        echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad'])));
+    } else { ?>
+        <div class="mensaje"> <?php echo "<b>No tienes suficientes recursos para usar la habilidad</b>"; ?> </div>
+    <?php } ?>
+    <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$accion['id_habilidad']))); ?>
     </div>
     </li>
+    </div>
     </div>
 <?php } ?>
 </div>

@@ -138,13 +138,15 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
 
 DROP TABLE IF EXISTS `participaciones`;
 CREATE TABLE IF NOT EXISTS `participaciones` (
+  `participaciones_id_participacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `acciones_grupales_id_accion_grupal` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `dinero_aportado` int(10) unsigned NOT NULL,
   `influencias_aportadas` int(10) unsigned NOT NULL,
   `animo_aportado` int(10) unsigned NOT NULL,
   KEY `participantes_FKIndex1` (`usuarios_id_usuario`),
-  KEY `participaciones_FKIndex2` (`acciones_grupales_id_accion_grupal`)
+  KEY `participaciones_FKIndex2` (`acciones_grupales_id_accion_grupal`),
+  PRIMARY KEY (`participaciones_id_participacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
