@@ -22,7 +22,7 @@
 	      	<p>
 	      		</br>
 	      	</p>
-			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="boton-negro">Reg&iacute;strate</a>
+			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="button large black">Reg&iacute;strate</a>
 	   	</div>
 
 	   	<div id="grupo-derecha-login"> 
