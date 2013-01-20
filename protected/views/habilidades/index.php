@@ -46,11 +46,11 @@ foreach ( $habilidades as $habilidad ){ ?>
 
     <div class="botones-accion">
     <?php if (true){
-        echo CHtml::button('Adquirir habilidad', array('submit' => array('acciones/adquirir', 'id_accion'=>$habilidad['id_habilidad'])));
+        echo CHtml::button('Adquirir habilidad', array('submit' => array('acciones/adquirir', 'id_accion'=>$habilidad['id_habilidad']),'class'=>"button small black"));
     } else { ?>
         <div class="mensaje"> <?php echo "<b>Ya has adquirido esta habilidad</b>"; ?> </div>
     <?php } ?>
-    <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$habilidad['id_habilidad']))); ?>
+    <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$habilidad['id_habilidad']),'class'=>"button small black")); ?>
     </div>
     </li>
     </div>
