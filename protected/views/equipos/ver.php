@@ -77,7 +77,7 @@
 						</tr>
 					<?php foreach ($equipo->accionesGrupales as $ag){ ?> 
 							<tr> 
-								<td><?php echo  $ag->habilidades->codigo; ?> 	</td>
+								<td><?php echo  $ag->habilidades->nombre; ?> 	</td>
 								<td><?php echo  $ag->usuarios->nick; ?> 	</td>
 								<td><?php echo  $ag->jugadores_acc; ?> 	</td>	
 								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->habilidades->id_habilidad),'class'=>"button small black"));?> 	</td>							
