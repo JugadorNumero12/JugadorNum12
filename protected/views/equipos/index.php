@@ -5,7 +5,7 @@
 
 <!-- codigo HTML -->
 
-<div class="cabecera-clasificacion"> <h1> CLASIFICACI&Oacute;N</h1> </div>
+<div class="cabecera-clasificacion"> <h1> Clasificaci&oacute;n</h1> </div>
 
 <div class="clasificacion"> <table cellspacing="0">
 	<tr>
