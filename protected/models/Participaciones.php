@@ -64,7 +64,7 @@ class Participaciones extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			'usuario' => array( self::HAS_ONE, 'Usuarios', 'usuarios_id_usuario'),
+			'usuario' => array( self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
 			'accionGrupal' => array( self::HAS_ONE, 'AccionesGrupales', 'acciones_grupales_id_accion_grupal'),
 		);
 	}
