@@ -32,51 +32,26 @@ class PartidosController extends Controller
 	}
 
 	/**
-	 * Muestra los partidos de la jornada que se esta jugando
+	 * Muestra dl calendario de la liga. Resalta los partidos del usuario y
+	 * en especial el próximo partido del usuario
 	 *
 	 * @ruta 	jugadorNum12/partidos
 	 */
 	public function actionIndex()
 	{
-		/* ARTURO */
-		//Obtener el equipo del usuario
-		$id_usuario = Yii::app()->user->usIdent;        
-        $equipo_usuario = Usuarios::model()->findByPk($id_usuario)->equipos_id_equipo;
+		// Obtener el id del proximo partido del usuario
+		$id_equipo_usuario = Yii::app()->user->usAfic;
+		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
+		$id_proximoPartido = $equipoUsuario->partidos_id_partido;
 
-		//TODO Obtener fecha actual (min)
-		//TODO Sumarle la duracion de la jornada (max)
-		$min = 130;
-		$max = 230;
+		// Obtener la lista de partidos
+		$listaPartidos = Partidos::model()->findAll();
 
-		//Obtener el modelo de Partidos
-		//deben cumplir la condicion (hora > min AND hora < max)
-		$modeloPartidos = Partidos::model()->findAll('hora >:horaMin AND 
-													  hora <:horaMax',
-													array(':horaMin'=>$min,
-														  ':horaMax'=>$max));
+		echo "equipo del usuario: ".$id_equipo_usuario." proximo partido: ".$id_proximoPartido;
 
-		//Por cada partido obtener los equipos locales y visitantes
-		//y averiguar si el equipo del usuario juega en dicho partido
-		$esPartidoUsuario = array();
-		$equiposLocal = array();
-		$equiposVisit = array();
-		$idPartidos = array();
-		
-		foreach ($modeloPartidos as $partido){
-			$id_equipo1 = $partido['equipos_id_equipo_1'];
-			$id_equipo2 = $partido['equipos_id_equipo_2'];
-			$esPartidoUsuario[] = $id_equipo1 == $equipo_usuario || $id_equipo2 == $equipo_usuario; 
-			$equiposLocal[] = Equipos::model()->findByPk($id_equipo1);
-			$equiposVisit[] = Equipos::model()->findByPk($id_equipo2);
-			$idPartidos[] = $partido->id_partido;
-		}
-
-		//pasar los datos de cada partido a la vista index
-		$this->render('index',array('esDeUsuario'=>$esPartidoUsuario,
-									'equiposL'=>$equiposLocal,
-									'equiposV'=>$equiposVisit,
-									'idPartidos'=>$idPartidos
-									));
+		//pasar los datos a la vista y renderizarla
+		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 'proximo_partido'=>$id_proximoPartido);
+		$this->render('index', $datosVista);
 	}
 
 	/** 
@@ -178,24 +153,38 @@ class PartidosController extends Controller
 		// Nota: dejar con un simple mensaje indicativo una pantalla 
 		// con un texto similar a "has asistido al partido" 
 
-		// obtener el id del equipo del usuario
-		$id_equipo_usuario = Yii::appp()->user->usAfic;
+		// obtener el equipo del usuario
+		$id_equipo_usuario = Yii::app()->user->usAfic;
+		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
 
 		// obtener la informacion del partido, 
 		// en $partido participan $equipo_local y $equipo_visitante
 		$partido 			= Partidos::model()->findByPk($id_partido);
-		$equipo_local     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
-		$equipo_visitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
+		$equipoLocal     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
+		$equipoVisitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
 		// un usuario no puede asisitir a un partido en el que su equipo no participa
-		if ( ($equipo_local->id_equipo != $id_equipo_usuario) || 
-			 ($equipo_visitante->id_equipo != $id_equipo_usuario) ) {
+		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
+			
 			/* TODO */
-		} else {
+			echo "No Puedes asistir a un partido entre otros equipos";
+		
+		} 
+		// un usuario solo puede asistir al próximo partido de su equipo
+		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
+			
+			/* TODO */
+			echo "Ese no es el proximo partido de tu equipo";
+
+		} 
+		// Intentamos asistir a un partido valido
+		else {
+			
 			//pasar los datos del partido y los equipos
-			$this->render('asistir', array(	'equipo_local'		=> $equipo_local,
-											'equipo_visitante'	=> $equipo_visitante,
-									   		'partido'			=> $partido));
+			$datosVista = array( 'equipo_local'		=> $equipoLocal,
+								 'equipo_visitante'	=> $equipoVisitante,
+								 'partido'			=> $partido);
+			$this->render('asistir', $datosVista);
 		}	
 	}
 
