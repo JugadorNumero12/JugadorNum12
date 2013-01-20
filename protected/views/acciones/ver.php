@@ -38,7 +38,7 @@
 		<?php foreach ($accionGrupal->participaciones as $participacion){ ?>
 			<li class="lista-participantes">
 				<?php 
-					printf('<b>Usuario:</b> %s',  $participacion->usuario->nick); ?>
+					printf('<b>Usuario:</b> %s',  $participacion->usuarios->nick); ?>
 					&nbsp;
 					<?php printf('<b>Dinero aportado:</b> %d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?>
 					&nbsp;
