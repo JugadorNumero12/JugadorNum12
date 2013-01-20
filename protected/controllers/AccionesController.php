@@ -68,7 +68,7 @@ class AccionesController extends Controller
 	 * cantidad inicial de recursos que aporta el jugador (podría no aportar recursos), 
 	 * Los datos del formulario se recogen por $_POST y se crea una 
 	 * nueva accion grupal en el equipo al que pertenece el usuario
-	 *   Si es una accion individual o pasiva se ejecuta al momento
+	 *   Si es una accion individual se ejecuta al momento
 	 * 
 	 * El id del jugador y la aficion a la que pertence se recogen de 
 	 * la variable de sesion
@@ -78,98 +78,111 @@ class AccionesController extends Controller
 	 * @redirige 	jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
 	 * @redirige	jugadorNum12/usuarios/perfil 			si es accion individual
 	 */
-	public function actionUsar($id_accion)
-	{
-		// El parámetro $id_accion es en realidad el ID de la habilidad
-
-		// echo '<pre>'.print_r(Yii::app()->user,true).'</pre>';
+	public function actionUsar($id_habilidad)
+	{		
+		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
-		$habilidad = Habilidades::model()->findByPk($id_accion);
 
-		if ( $habilidad == null ) {
-			// Habilidad no encontrada
+		//Obtener modelo de Habilidades
+		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+
+		//Habilidad no encontrada
+		if ( $habilidad == null ) {			
 			$trans->rollback();
 			throw new CHttpException(404,'Acción inexistente.');
-
-		} else {
-			// TODO Comprobar que el usuario ha desbloqueado la acción
-
-			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) {
-				if ( Yii::app()->request->isPostRequest ) {
-					// Petición POST: Procesar la acción
-					$formDin = Yii::app()->request->getPost('dinero');
-					$formAni = Yii::app()->request->getPost('animo');
-					$formInf = Yii::app()->request->getPost('influencia');
-
-					// Si no son suficientes recursos, pedir otra entrada al usuario
-					if ( $formDin < $habilidad['dinero']
-					  || $formAni < $habilidad['animo']
-					  || $formInf < $habilidad['influencias']
-					) {
-						$trans->rollback();
-
-						Yii::app()->user->setFlash('error', 'Recursos demasiado bajos');
-						$this->refresh();
-					}
-
-					// Comprobar ahora que el usuario tiene recursos suficientes
-					$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->id));
-					$actDin = $res['dinero'];
-					$actAni = $res['animo'];
-					$actInf = $res['influencias'];
-
-					if ($actDin < $formDin || $actAni < $formAni || $actInf < $formInf) {
-						$trans->rollback();
-
-						Yii::app()->user->setFlash('error', 'No tienes suficientes recursos');
-						$this->refresh();
-					}
-
-					try {
-						$res['dinero'] = $actDin - $formDin;
-						$res['animo'] = $actAni - $formAni;
-						$res['influencias'] = $actInf - $formInf;
-						$res->save();
-
-						$idUsuario = Yii::app()->user->id;
-						$idAficion = 0;
-
-						$accion = new AccionesGrupales();
-						$accion['usuarios_id_usuario'] = $idUsuario;
-						$accion['habilidades_id_habilidad'] = $habilidad['id_habilidad'];
-						$accion['equipos_id_equipo'] = $idAficion;
-						$accion['dinero_acc'] = $formDin;
-						$accion['animo_acc'] = $formAni;
-						$accion['influencias_acc'] = $formInf;
-						/* TODO Resto de cosas que no sé qué son
-						$accion['jugadores_acc'] = <?>;
-						$accion['finalizacion'] = <?>;
-						*/
-						$accion->save();
-
-						$trans->commit();
-
-					} catch ( Exception $exc ) {
-						$trans->rollback();
-						throw $exc;
-					}
-
-				} else {
-					// Petición GET: Mostrar formulario de recursos
-					$trans->commit();
-					$this->render('usar', array('habilidad'=>$habilidad));
-				}
-
-			} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
-				// Habilidad Grupal: TODO
-				$trans->rollback();
-
-			} else {
-				// La acción no es de ningún tipo conocido
-				// TODO Soltar un error de tres pares de huevos
-				$trans->rollback();
-			}
 		}
+
+		//Habilidad encontrada
+		//Obtener modelo de Desbloqueadas		
+		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+																   	   'habilidades_id_habilidad' => $id_habilidad ));			
+		//Si no esta desbloqueada para el usuario, error
+		if( $desbloqueada == null){				
+			$trans->rollback();
+			throw new CHttpException(404,'No tienes desbloqueada la acción.');
+		} 
+		
+		//Si esta desbloqueada
+		//Obtener modelo de Recursos
+		$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent));
+		
+		//Si no son suficientes recursos cancelar transaccion y notificar al usuario
+		if ( $res['dinero'] 	 < $habilidad['dinero'] ||
+		     $res['animo'] 		 < $habilidad['animo']  ||
+		     $res['influencias'] < $habilidad['influencias']){
+			
+			$trans->rollback();
+			throw new CHttpException(404,'No tienes suficientes recursos');
+		}
+
+		//Si tenemos suficientes recursos miramos si es individual o grupal
+		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
+			
+			//Sacar la accion individual
+			$accion_ind = AccionesIndividuales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+																				'habilidades_id_habilidad' => $id_habilidad ));
+			
+			//Si no estaba creada, crear con cooldown = 0 
+			if($accion_ind == null){
+				$accion_ind = new AccionesIndividuales();
+				$accion_ind->setAttributes(	array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+				   							  	  'habilidades_id_habilidad' => $id_habilidad,
+				   							  	  'cooldown' => 0 ));
+			}
+
+			// TODO Sacar la hora actual
+			//$hora_act = time();
+			$hora_act = 130; //ejemplo para debug
+
+			// TODO Sacar el cooldown de la accion individual
+			$cooldown = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
+			$hora_cooldown = $accion_ind['cooldown']; 	//hora en la que acaba de regenerarse
+
+			// Si  hora < hora_cooldown,
+			// cancelar transaccion y notificar al usuario
+			if ( $hora_act < $hora_cooldown ){
+					$trans->rollback();
+					throw new CHttpException(404,'La habilidad no se ha regenerado todavía.');
+			} 
+
+			//Si hora >= hora_cooldown			
+			//restar recursos al usuario			
+			$res['dinero'] 		-= $habilidad['dinero'];
+			$res['animo']  		-= $habilidad['animo'];
+			$res['influencias'] -= $habilidad['influencias'];
+
+			//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+
+			//actualizar la hora en que acaba de regenerarse la accion
+			$accion_ind['cooldown'] = $hora_act + $cooldown;
+
+			//guardar en los modelos
+			$res->save();
+			$accion_ind->save();
+			/* 
+				FIXME:
+				Si la accion ya estaba en la tabla de AccionesIndividuales y se puede ejecutar
+			   	lanza el siguiente error: El nombre de la columna debe ser una cadena o un array.
+				En el Stack Trace intenta hacer CActiveRecord->updateByPk(null, ...)
+			*/
+
+		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
+				//sacar la accion grupal
+				//$accion_grupal = AccionesGrupales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+				//																     'habilidades_id_habilidad' => $id_habilidad ));
+				//TODO hacer que al usuario se le resten los recursos si tiene (igual que antes)
+
+				//TODO despues se debe mostrar el formulario de participar en la accion recien usada
+
+		} else { 
+				//tipo erroneo
+				$trans->rollback();
+				throw new CHttpException(404,'No puedes usar esa acción.');
+		}
+
+		$trans->commit();
+		$this->render('usar', array('habilidad'=>$habilidad));
+
 	}
 
 	/**
