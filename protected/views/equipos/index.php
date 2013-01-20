@@ -15,20 +15,22 @@
 		<th>Ganados</th>
 		<th>Empatados</th>
 		<th>Perdidos</th>
+		<th>Diferencia de goles</th>
 	</tr> 
-	<?php foreach ($modeloC as $m ) { ?>
-	<tr <?php if (Yii::app()->user->usAfic == $m->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
+	<?php foreach ($modeloC as $filaClasificacion) { ?>
+	<tr <?php if (Yii::app()->user->usAfic == $filaClasificacion->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
 		<td> <a href=
 									"<?php echo $this->createUrl( '/equipos/ver', 
-									array('id_equipo' => $m->equipos_id_equipo) ); ?>">  
+									array('id_equipo' => $filaClasificacion->equipos_id_equipo) ); ?>">  
 
-							<?php echo $m->equipos->nombre ?></td>
+							<?php echo $filaClasificacion->equipos->nombre ?></td>
 							</a>
-		<td><?php echo $m->posicion ?></td>
-		<td><?php echo $m->puntos ?></td>
-		<td><?php echo $m->ganados ?></td>
-		<td><?php echo $m->empatados ?></td>
-		<td><?php echo $m->perdidos ?></td>
+		<td><?php echo $filaClasificacion->posicion ?></td>
+		<td><?php echo $filaClasificacion->puntos ?></td>
+		<td><?php echo $filaClasificacion->ganados ?></td>
+		<td><?php echo $filaClasificacion->empatados ?></td>
+		<td><?php echo $filaClasificacion->perdidos ?></td>
+		<td><?php echo $filaClasificacion->diferencia_goles ?></td>
 	</tr>
 	<?php } ?>
 	<tr></tr>

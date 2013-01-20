@@ -178,24 +178,38 @@ class PartidosController extends Controller
 		// Nota: dejar con un simple mensaje indicativo una pantalla 
 		// con un texto similar a "has asistido al partido" 
 
-		// obtener el id del equipo del usuario
-		$id_equipo_usuario = Yii::appp()->user->usAfic;
+		// obtener el equipo del usuario
+		$id_equipo_usuario = Yii::app()->user->usAfic;
+		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
 
 		// obtener la informacion del partido, 
 		// en $partido participan $equipo_local y $equipo_visitante
 		$partido 			= Partidos::model()->findByPk($id_partido);
-		$equipo_local     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
-		$equipo_visitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
+		$equipoLocal     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
+		$equipoVisitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
 		// un usuario no puede asisitir a un partido en el que su equipo no participa
-		if ( ($equipo_local->id_equipo != $id_equipo_usuario) || 
-			 ($equipo_visitante->id_equipo != $id_equipo_usuario) ) {
+		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
+			
 			/* TODO */
-		} else {
+			echo "No Puedes asistir a un partido entre otros equipos";
+		
+		} 
+		// un usuario solo puede asistir al próximo partido de su equipo
+		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
+			
+			/* TODO */
+			echo "Ese no es el proximo partido de tu equipo";
+
+		} 
+		// Intentamos asistir a un partido valido
+		else {
+			
 			//pasar los datos del partido y los equipos
-			$this->render('asistir', array(	'equipo_local'		=> $equipo_local,
-											'equipo_visitante'	=> $equipo_visitante,
-									   		'partido'			=> $partido));
+			$datosVista = array( 'equipo_local'		=> $equipoLocal,
+								 'equipo_visitante'	=> $equipoVisitante,
+								 'partido'			=> $partido);
+			$this->render('asistir', $datosVista);
 		}	
 	}
 
