@@ -44,7 +44,7 @@
 				</th>
 				<?php foreach ($accionGrupal->participaciones as $participacion){ ?>
 					<tr>
-						<td><?php echo 'usuario'; ?></td>
+						<td><?php echo $participacion->usuario->nick; ?></td>
 						<td><?php printf('%d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?> </td>
 						<td><?php printf('%d / %d', $participacion->influencias_aportadas, $accionGrupal->habilidades->influencias_max); ?> </td>
 						<td><?php printf('%d / %d', $participacion->animo_aportado, $accionGrupal->habilidades->animo_max); ?> </td>
