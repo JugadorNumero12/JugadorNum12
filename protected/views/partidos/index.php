@@ -1,44 +1,49 @@
 
 <?php
-/* @var $esDeUsuario indica si el equipo del usuario juega en cada partido */
-/* @var $equiposL contiene los equipos locales de cada partido */
-/* @var $equiposL contiene los equipos visitantes de cada partido */
-/* @var $idPartidos los id de los partidos en los que participa el equipo del usuario */
- 
+/*
+ * @var lista_partidos: lista completa de partidos
+ * @var equipo_usuario: id del equipo del usuario
+ * @var proximo_partido: id del proximo partido del equipo del usuario
+ */
 ?>
 
+<div class="clasificacion"> 
+	<table>
+		<tr>
+			<th>Equipo Local</th>
+			<th>Equipo Visitante</th>
+			<th>Hora</th>
+			<th>Informaci&oacute;n</th>
+		</tr>
 
-<table cellspacing="5px">
-	<?php 
-	$count = count($equiposL);
-	for ($i = 0; $i < $count; $i++) { 
+	<?php foreach ($lista_partidos as $partido) { ?>
+		<tr>
+			<td>
+				<a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$partido->local->id_equipo) )?>">
+					<?php echo $partido->local->nombre ?> 
+				</a>
+			</td>
+			
+			<td>
+				<a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$partido->visitante->id_equipo) )?>">
+					<?php echo $partido->visitante->nombre ?>
+				</a>
+			</td>
+			
+			<td>
+				<?php echo $partido->hora ?>
+			</td>
 
-		//creamos un string con el nombre de los 2 equipos concatenados con un 'vs'
-		$local      = $equiposL[$i];
-		$visitante  = $equiposV[$i];
-		$strPartido = $local['nombre'].' vs '.$visitante['nombre'].'</br>'; 
-		?>
-	<tr>
-		<td align="center"> <a href=
-									"<?php echo $this->createUrl( '/partidos/previa', 
-									array('id_partido' => $idPartidos[$i]) ); ?>">  
+			<td>
+				<?php if($partido->id_partido == $proximo_partido) { ?>
+					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> </td>
+				
+				<?php } else { ?>
+					<?php echo $partido->cronica ?>
 
-							<?php if($esDeUsuario[$i]) 
-									{ 
-										echo '<b>'.$strPartido.'</b>';
-									}
-									else
-									{ 
-										echo $strPartido;		
-									} ?></td>
-							</a>
-		<td align="center"> <a href=
-									"<?php echo $this->createUrl( '/partidos/asistir', 
-									array('id_partido' => $idPartidos[$i]) ); ?>">  
-
-							 		<input type="button" value="Asistir"/> </td>
-							</a>
-	</tr>
+				<?php } ?>
+			</td>
+		</tr>
 	<?php } ?>
-	<tr></tr>
-</table>
+	</table>
+</div>

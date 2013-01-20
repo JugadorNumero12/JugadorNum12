@@ -19,12 +19,10 @@
 	</tr> 
 	<?php foreach ($modeloC as $filaClasificacion) { ?>
 	<tr <?php if (Yii::app()->user->usAfic == $filaClasificacion->equipos_id_equipo) { echo 'class="remarcado"'; } ?>>
-		<td> <a href=
-									"<?php echo $this->createUrl( '/equipos/ver', 
-									array('id_equipo' => $filaClasificacion->equipos_id_equipo) ); ?>">  
-
-							<?php echo $filaClasificacion->equipos->nombre ?></td>
-							</a>
+		<td> <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $filaClasificacion->equipos_id_equipo) ); ?>">  
+				<?php echo $filaClasificacion->equipos->nombre ?>
+			 </a>
+		</td>
 		<td><?php echo $filaClasificacion->posicion ?></td>
 		<td><?php echo $filaClasificacion->puntos ?></td>
 		<td><?php echo $filaClasificacion->ganados ?></td>
