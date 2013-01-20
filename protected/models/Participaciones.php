@@ -65,7 +65,7 @@ class Participaciones extends CActiveRecord
 	{
 		return array(
 			'usuario' => array( self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
-			'accionGrupal' => array( self::HAS_ONE, 'AccionesGrupales', 'acciones_grupales_id_accion_grupal'),
+			'accionGrupal' => array( self::BELONGS_TO, 'AccionesGrupales', 'acciones_grupales_id_accion_grupal'),
 		);
 	}
 
