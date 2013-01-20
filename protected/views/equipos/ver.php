@@ -64,22 +64,30 @@
 			<?php if($mi_equipo){ ?>
 
 				<?php if(empty($equipo->accionesGrupales)){ ?>
-					<h1> No hay acciones grupales abiertas </h1>
+					<h1> No hay acciones grupales </h1>
 				<?php } else 
 				{?>
 
-					<h1> Acciones grupales abiertas </h1>
+					<h1> Acciones grupales  </h1>
 					<table > 
 						<tr> 
-							<th>C&oacute;digo</th>
+							<th>Nombre</th>
 							<th>Creador</th>
 							<th>Num. participantes</th>
+							<th>Completada</th>
+
 						</tr>
 					<?php foreach ($equipo->accionesGrupales as $ag){ ?> 
 							<tr> 
 								<td><?php echo  $ag->habilidades->nombre; ?> 	</td>
 								<td><?php echo  $ag->usuarios->nick; ?> 	</td>
 								<td><?php echo  $ag->jugadores_acc; ?> 	</td>	
+								<td> <?php if($ag->completada) {?>
+										S&iacute; 
+									<?php } else {?>
+										No 
+									<?php }?>
+									</td>
 								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>							
 							</tr>				
 					 <?php } ?>
