@@ -78,13 +78,13 @@ class AccionesController extends Controller
 	 * @redirige 	jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
 	 * @redirige	jugadorNum12/usuarios/perfil 			si es accion individual
 	 */
-	public function actionUsar($id_habilidad)
+	public function actionUsar($id_accion)
 	{		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
 
 		//Obtener modelo de Habilidades
-		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+		$habilidad = Habilidades::model()->findByPk($id_accion);
 
 		//Habilidad no encontrada
 		if ( $habilidad == null ) {			
@@ -95,7 +95,7 @@ class AccionesController extends Controller
 		//Habilidad encontrada
 		//Obtener modelo de Desbloqueadas		
 		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-																   	   'habilidades_id_habilidad' => $id_habilidad ));			
+																   	   'habilidades_id_habilidad' => $id_accion ));			
 		//Si no esta desbloqueada para el usuario, error
 		if( $desbloqueada == null){				
 			$trans->rollback();
@@ -120,13 +120,13 @@ class AccionesController extends Controller
 			
 			//Sacar la accion individual
 			$accion_ind = AccionesIndividuales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-																				'habilidades_id_habilidad' => $id_habilidad ));
+																				'habilidades_id_habilidad' => $id_accion ));
 			
 			//Si no estaba creada, crear con cooldown = 0 
 			if($accion_ind == null){
 				$accion_ind = new AccionesIndividuales();
 				$accion_ind->setAttributes(	array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-				   							  	  'habilidades_id_habilidad' => $id_habilidad,
+				   							  	  'habilidades_id_habilidad' => $id_accion,
 				   							  	  'cooldown' => 0 ));
 			}
 
@@ -169,7 +169,7 @@ class AccionesController extends Controller
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				//sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-				//																     'habilidades_id_habilidad' => $id_habilidad ));
+				//																     'habilidades_id_habilidad' => $id_accion ));
 				//TODO hacer que al usuario se le resten los recursos si tiene (igual que antes)
 
 				//TODO despues se debe mostrar el formulario de participar en la accion recien usada
