@@ -1,57 +1,85 @@
 //ENVOLTORIOS
-#envoltorio1{
+div#envoltorio1{
 	min-height: 100%;
-	height: auto !important;
 	height: 100%;
-	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
+	margin: 0 auto ;
 	width:100%;
 	background: white;
-}
 
-#envoltorio2{
-	width:95%;
-	text-align: left;
-	background: white;
-	margin: 0 auto;	
-}
+	div#envoltorio2{
+		width:95%;
+		text-align: left;
+		background: white;
+		margin: 0 auto;	
 
-//CABECERA
-#cabecera {
-	background: white;
-	float: left;
-	width:100%
-}
+		//CABECERA
+		#cabecera {
+			background: white;
+			float: left;
+			width:100%;
 
-#logo {
-	background: transparent;
-	float: left;
-	margin: 1em 1em 1em 1em;
-	border: 0px white;
-}
+			#logo {
+			background: transparent;
+			float: left;
+			margin: 1em 1em 1em 1em;
+			border: 0px white;
+			}//#logo
 
-#titulo-jugador {
-	background: transparent;
-	float: left;
-	margin: 1em 1em 1em 1em;
-	border: 0px white;
-	padding: 15px 0px 0px 0px;
+			#titulo-jugador {
+			background: transparent;
+			float: left;
+			margin: 1em 1em 1em 1em;
+			border: 0px white;
+			padding: 15px 0px 0px 0px;
+			}//#titulo-jugador
+		}//#cabecera
 
-}
+		//CENTRO DE LA PAGINA
+
+		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
+		#menu-izquierdo{
+			 width:15%; 
+			 height: 20,5em;
+			 float:left; 
+			 position:relative; 
+		}//#menu-izquierdo
+
+		//Incluye el div del contenido y el menu derecho(menu de cuenta)
+		#grupo-derecha{
+			width:85%;
+			background: white;
+			float:right;
+
+			//Menu derecho (cuenta)
+			#menu-derecho{
+				width:13%;
+				float:right;
+			}//#menu-derecho
+
+			#contenido{
+				background-color: white;  
+			 	float:left;
+			 	width:87%;
+			 	text-align: center;
+			}//#contenido
+		}//#grupo-derecha
+
+	}//#envoltorio2
+}//#envoltorio1
+
+
 
 //PIE DE PAGINA
-* {
-	margin: 0; //Importante para que el pie de pagina se vea abajo siempre
-}
 
 #pie-pagina {
 	position: relative;
 	width: 100%;
 	margin: 0 auto;
 	background: transparent;
+	clear: both;
 }
 
 #pie-pagina{
-	position: absolute;
 	left: 0;
 	bottom: 4px;
 	width: 100%;
@@ -66,41 +94,9 @@
 	text-decoration: none;
 }
 
-//CENTRO DE LA PAGINA
-
-//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
-#menu-izquierdo{
-	 width:15%; 
-	 height: 20,5em;
-	 float:left; 
-	 position:relative; 
-
-}
-
-//Incluye el div del contenido y el menu derecho(menu de cuenta)
-#grupo-derecha{
-	width:85%;
-	background: white;
-	float:right;
-
-}
-
-//Menu derecho (cuenta)
-#menu-derecho{
-	width:13%;
-	float:right;
-
-}
-
-#contenido{
-	background-color: white;  
- 	float:left;
- 	width:87%;
- 	text-align: center;
-}
 
 
-#contenido table{
- 	float:center;
-}
+
+
+
 

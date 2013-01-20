@@ -1,60 +1,77 @@
-.envoltorio-perfil{
+div.envoltorio-perfil{
 	background-color: white;
 	width:100%;
 	color:black;
-}
-.envoltorio2-perfil{
-	background-color: white;
-	width:95%;
 
-}
+	div.envoltorio2-perfil{
+		background-color: white;
+		width:95%;
 
-//DIVISION GENERAL
-.perfil-grupo-arriba{
-	float:left;
-	background-color: white;
-	width: 100%
-}
+		//DIVISION GENERAL
+		div.perfil-grupo-arriba{
+			float:left;
+			background-color: white;
+			width: 100%;
 
-.perfil-grupo-abajo{
-	float:left;
-	background-color: white;
-	width: 100%
-}
+			//DIVISION GENERAL DEL GRUPO DE ARRIBA
+			div.perfil-grupo-arriba-izquierda{
+				float:left;
+				background-color: white;
+				
 
-//DIVISION GENERAL DEL GRUPO DE ARRIBA
-.perfil-grupo-arriba-izquierda{
-	float:left;
-	background-color: white;
-	width: 420px;
-}
+					//DIVISION DE GRUPO ARRIBA IZQUIERDA PARA LAS FOTOS DEL PERFIL
+					div.perfil-grupo-arriba-izquierda-personaje{
+						float:left;
+						background-color: white;
+						width: 305px;
+					}//#perfil-grupo-arriba-izquierda-personaje	
 
-.perfil-grupo-arriba-derecha{
-	float:right;
-	background-color: white;
-	width: 50%;
-}
+					div.perfil-grupo-arriba-izquierda-equipo{
+						float:right;
+						background-color: white;
+						width: 105px;
+					}//#perfil-grupo-arriba-izquierda-equipo
+			}//#perfil-grupo-arriba-izquierda
 
-//DIVISION DE GRUPO ARRIBA IZQUIERDA PARA LAS FOTOS DEL PERFIL
-.perfil-grupo-arriba-izquierda-personaje{
-	float:left;
-	background-color: white;
-	width: 305px;
-}
+			div.perfil-grupo-arriba-derecha{
+				float:right;
+				background-color: white;
+				width: 50%;
 
-.perfil-grupo-arriba-izquierda-equipo{
-	float:right;
-	background-color: white;
-	margin-top:3%;
-	width: 105px;
+				table{
+					text-align: right;
+					border-spacing: 0.7em;
+				}
+			}//#perfil-grupo-arriba-derecha	
+		}//#perfil-grupo-arriba
 
-}
+		div.perfil-abajo-pasivas{
+			float:left;
+			background-color: white;
+			width: 100%;
+			padding: 3%;
+			table{
+				padding-top:1%;
+				width: 50%;
+				border-spacing: 2em;
+				
+			}
 
-//CSS PARA PONER BONITAS LAS COSAS
-.perfil-grupo-arriba-derecha table{
-	padding-top:3em; 
-	text-align: right;
-}
+		}//#perfil-abajo-pasivas
 
+		div.perfil-abajo-partido{
+			float:left;
+			background-color: white;
+			width: 100%;
+			padding: 2%;
+			table{
+				padding-top:1%;
+				width: 50%;
+				border-spacing: 2em;
 
+			}
 
+		}//#perfil-abajo-partido
+
+	}//#envoltorio2-perfil	
+}//#envoltorio-perfil

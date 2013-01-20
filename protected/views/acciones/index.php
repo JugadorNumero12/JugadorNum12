@@ -3,27 +3,56 @@
 // @var $recursosUsuario
 ?>
 
-<h1>Acciones desbloqueadas por el usuario</h1>
+<div class="envoltorio">
+<div class="encabezado"> <h1>Habilidades desbloqueadas</h1> </div>
 
 <?php 
 foreach ( $acciones as $accion ){ ?>
+    <div class="datos-accion">
+    <div <?php if ( $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero']){ echo 'class="remarcado"'; } ?>>
 	<li>
-	<!-- Comprobamos si el usuario puede realizar la acción o no puede por falta de recursos -->
-	<?php if ($recursosUsuario['dinero'] > $accion['dinero'] &&
-				$recursosUsuario['animo'] > $accion['animo'] &&
-				$recursosUsuario['influencias'] > $accion['influencias']
-				 ) { ?>
-		<!-- Si tiene recursos suficientes se enlaza para poder usar la acción -->
-		<a href="<?php echo $this->createUrl('acciones/usar', array('id_accion' => $accion['id_habilidad']));?>">
-    	<?php echo $accion['nombre'];?>
-    	</a>
-    <?php } else {
-    	//Si no puede por falta de recursos, se muestra la acción sin enlace
-    	echo $accion['nombre'];
-    }
-    printf('(D:%d, A:%d, I:%d)', $accion['dinero'], $accion['animo'], $accion['influencias']); ?>
+    <!-- Muestro el nombre de la accion -->
+    <div class="nombre-accion">
+        <?php echo $accion['nombre'];?>
+    </div>
+    <!-- Muestro el tipo de accion -->
+    <div class="tipo-accion">
+        <?php
+            switch($accion['tipo']){
+                case Habilidades::TIPO_GRUPAL:
+                    echo "Accion grupal";
+                    break;
+                case Habilidades::TIPO_INDIVIDUAL:
+                    echo "Accion individual";
+                    break;
+                case Habilidades::TIPO_PARTIDO:
+                    echo "Accion de partido";
+                    break;
+                case Habilidades::TIPO_PASIVA:
+                    echo "Accion pasiva";
+                    break;
+            }; 
+        ?>
+    </div>
+    <!--Añado la descripcion de la habilidad -->
+    <div class="descripcion-accion"> <?php echo $accion['descripcion'];?> </div>    
+    <!-- Muestro los recursos de la accion -->
+    <div class="recursos-accion">
+    <?php 
+    printf('<b>Dinero:</b>%d <b>Animo</b>:%d <b>Influencias:</b>%d', $accion['dinero'], $accion['animo'], $accion['influencias']);
+    ?>
+    </div>
     <!-- Enlace para poder ver la habilidad con mas detalle en /habilidades/ver/{id_habilidad} -->
-    <a href="<?php echo $this->createUrl('habilidades/ver', array('id_habilidad' => $accion['id_habilidad']));?>">
-    <input type="button" value="Ver habilidad"/> </a>
+    <div class="botones-accion">
+    <?php if ( $recursosUsuario['dinero'] > $accion['dinero'] && $recursosUsuario['dinero'] > $accion['dinero'] && $recursosUsuario['dinero'] > $accion['dinero']){
+        echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad'])));
+    } else { ?>
+        <div class="mensaje"> <?php echo "<b>No tienes suficientes recursos para usar la habilidad</b>"; ?> </div>
+    <?php } ?>
+    <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$accion['id_habilidad']))); ?>
+    </div>
     </li>
+    </div>
+    </div>
 <?php } ?>
+</div>

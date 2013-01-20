@@ -31,7 +31,7 @@
 	    <td colspan="2"><?php echo $form->error($model,'password'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Entrar',array('class'=>"boton-negro"));?></td>
+	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Entrar',array('class'=>"button large black"));?></td>
 	  </tr>
 	</table>
 	<?php $this->endWidget(); ?>

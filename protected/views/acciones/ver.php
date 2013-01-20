@@ -10,83 +10,74 @@
 
 // codigo PHP
 ?>
+<div class="envoltorio-acciones-ver">
 
-<h1>ACCION GRUPAL: <?php echo $habilidad['nombre']; ?></h1>
+	<div class="encabezado"><?php echo $accionGrupal['habilidades']['nombre']; ?></div>
 
-<p> <b>USUARIO QUE HA CREADO LA ACCION => </b>
-		<?php echo $accionGrupal['usuarios_id_usuario']; ?>
-		&nbsp;
-		<?php if($propietarioAccion == $usuario){
-			echo "(Eres el creador de esta accion)";
-		} ?>
-</p>
+	<div class="datos-accion">
+		<table class="tablas-acciones-ver">
+			<tr><th>Creador: </th><td><?php echo $accionGrupal->usuarios->nick; ?></td></tr>
+			<tr><th>Equipo creador: </th><td><?php echo $accionGrupal->equipos->nombre; ?> </td></tr>
+			<tr><th>Numero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc']; ?></td></tr>
+			<!--<tr><th>Efecto que se consigue: </th><td><?php echo $accionGrupal['habilidades']['descripcion']; ?></td></tr>-->
+			<tr><th>Finalizacion: </h><td><?php echo $accionGrupal['finalizacion']; ?></td></tr>
+		</table>
+	</div>
 
-<p> <b>NUMERO DE PARTICIPANTES => </b>
-		<?php echo $accionGrupal['jugadores_acc']; ?>
-</p>
+	<div class="encabezado2"> Recursos añadidos </div>
+		<div class="recursos-aniadidos">
+			<table class="tablas-acciones-ver">
+				<tr><th>Dinero: </th><td><?php echo $accionGrupal['dinero_acc'];?> / <?php echo$accionGrupal['habilidades']['dinero_max']; ?> </td></tr>
+				<tr><th>Influencias: </th><td><?php echo $accionGrupal['influencias_acc'];?> / <?php echo $accionGrupal['habilidades']['influencias_max']; ?> </td></tr>
+				<tr><th>Animo: </th><td><?php echo $accionGrupal['animo_acc'];?> / <?php echo $accionGrupal['habilidades']['animo_max']; ?> </td></tr>
+			</table>
+	</div>
 
-<p> <b>EQUIPO CREADOR DE LA ACCION => </b>
-		<?php echo $equipoAccion; ?>
-		&nbsp;
-		<?php if($equipoAccion == $equipoUsuario){
-			echo "(Este es tu equipo)";
-		} ?>
-</p>
-
-<p> <b>TOTAL DE RECURSOS AÑADIDOS => </b>
-		<?php printf('<b>Dinero:</b> %d / %d', $accionGrupal['dinero_acc'], $habilidad['dinero_max']); ?>
-		&nbsp;
-		<?php printf('<b>Influencias:</b> %d / %d', $accionGrupal['influencias_acc'], $habilidad['influencias_max']); ?>
-		&nbsp;
-		<?php printf('<b>Animo:</b> %d / %d', $accionGrupal['animo_acc'], $habilidad['animo_max']); ?>
-</p>
-
-<p> <b>EFECTO QUE SE CONSIGUE => </b>
-		<?php echo $habilidad['descripcion']; ?>
-</p>
-
-<p> <b>PARTICIPANTES Y RECURSOS AÑADIDOS POR CADA UNO </b> </p>
-
-<p> 
-<?php foreach ($participaciones as $participacion){ ?>
-	<li>
-		<?php printf('<b>Usuario:</b> %d', $participacion['usuarios_id_usuario']); ?>
-		&nbsp;
-		<?php printf('<b>Dinero aportado:</b> %d / %d', $participacion['dinero_aportado'], $habilidad['dinero_max']); ?>
-		&nbsp;
-		<?php printf('<b>Influencias aportadas:</b> %d / %d', $participacion['influencias_aportadas'], $habilidad['influencias_max']); ?>
-		&nbsp;
-		<?php printf('<b>Animo aportado:</b> %d / %d', $participacion['animo_aportado'], $habilidad['animo_max']);
-		if ($propietarioAccion == $usuario){ ?>
-		<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
-		<a href="<?php echo $this->createUrl('acciones/expulsar', array('id_accion'=>$accionGrupal['id_accion_grupal'], 'id_jugador'=>$participacion['usuarios_id_usuario'])); ?>">
-		<input type="button" value="Expulsar jugador"/> </a>
+	<div class="encabezado2"> Participantes </div>
+	<div class="participantes"> 
+		<?php foreach ($accionGrupal->participaciones as $participacion){ ?>
+			<li class="lista-participantes">
+				<?php 
+					printf('<b>Usuario:</b> %s',  $participacion->usuarios->nick); ?>
+					&nbsp;
+					<?php printf('<b>Dinero aportado:</b> %d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?>
+					&nbsp;
+					<?php printf('<b>Influencias aportadas:</b> %d / %d', $participacion->influencias_aportadas, $accionGrupal->habilidades->influencias_max); ?>
+					&nbsp;
+					<?php printf('<b>Animo aportado:</b> %d / %d', $participacion->animo_aportado, $accionGrupal->habilidades->animo_max);
+					if ($propietarioAccion == $usuario && $propietarioAccion != $participacion->usuarios_id_usuario){ ?>
+					<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
+					<div class="boton-expulsar">
+						<?php echo CHtml::button('Expulsar jugador', array('submit' => array('acciones/expulsar', 'id_accion'=>$accionGrupal->id_accion_grupal, 'id_jugador'=>$participacion->usuarios_id_usuario))); ?>
+					</div>
+					<?php } ?>
+			</li>
 		<?php } ?>
-	</li>
-<?php } ?>
-</p>
+	</div>
 
-<p> <b>FINALIZACION DE LA ACCION => </b>
-	<?php echo $accionGrupal['finalizacion']; ?>
-</p>
+	<div class="mensaje">
+		<?php if ($esParticipante == true){
+			echo "Ya has participado en la accion";} ?>
+	</div>
 
-<p><b> <?php if ($esParticipante == true){
-	echo "Has participado en la accion";
-} ?> </b></p>
+	<!-- Compruebo si la accion ha alcanzado el numero maximo de participantes -->
+	<div class="mensaje">
+		<?php if ($accionGrupal['jugadores_acc'] >= $accionGrupal['habilidades']['participantes_max']){
+			echo 'La accion ha alcanzado el número máximo de participantes';
+		} ?>
+	</div>
 
-<!-- Compruebo si la accion ha alcanzado el numero maximo de participantes -->
-<p><b><?php if ($accionGrupal['jugadores_acc'] >= $habilidad['participantes_max']){
-	echo 'La accion ha alcanzado el número máximo de participantes';
-} ?> </b></p>
+	<div class="mensaje">
+		<?php if ($accionGrupal['completada'] == 1){
+			echo "La accion se ha completado";
+		} ?>
+	</div>
 
-<p><b><?php if ($accionGrupal['completada'] == 1){
-		echo "La accion se ha completado";
-	} ?> </b>
-</p>
-
-<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
-<p><?php if($accionGrupal['jugadores_acc'] < $habilidad['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
-	<!--El usuario no es participante ni creador, así que puede participar en la accion -->
-	<a href="<?php echo $this->createUrl('acciones/participar', array('id_accion'=>$accionGrupal['id_accion_grupal']));?>"> 
-	<input type="button" value="Participar"/> </a>
-<?php } ?></p>
+	<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
+	<div class="boton-participar">
+		<?php if($accionGrupal['jugadores_acc'] < $accionGrupal['habilidades']['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
+		<!--El usuario no es participante ni creador, así que puede participar en la accion -->
+			<?php echo CHtml::button('Participar', array('submit' => array('acciones/participar', 'id_accion'=>$accionGrupal->id_accion_grupal))); ?>
+		<?php } ?>
+	</div>
+</div>

@@ -39,7 +39,9 @@ class EquiposController extends Controller
 	public function actionIndex()
 	{
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
-		$modeloClasificacion = Clasificacion::model()->findAll();
+		$modeloClasificacion = Clasificacion::model()->findAll(
+			array('order'=>'posicion ASC')
+		);
 
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
@@ -65,21 +67,24 @@ class EquiposController extends Controller
 	 */
 	public function actionVer($id_equipo)
 	{
-		// Nota: en comentarios "aficion" y "equipo" son sinonimos
-		$id= Yii::app()->user->usIdent;
-		$modeloEquipos = Equipos::model()->findByPk($id_equipo);
-		//Sacar lista de acciones grupales del equipo
-		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+		$uid = Yii::app()->user->usIdent; // ID de usuario
+		$eid = Yii::app()->user->usAfic; // ID de la afición del usuario
 
-		$mi_equipo = false;
-		$modeloUsuario = Usuarios:: model()->findByPk($id);
-		if($modeloUsuario->equipos_id_equipo == $id_equipo)
-			$mi_equipo = true;
+		// Si el equipo es el del usuario
+		$miEquipo = ($eid == $id_equipo);
+
+		// Obtenemos el equipo junto a todos sus usuarios y,
+		// si hacen falta, sus acciones grupales
+		$equipo = Equipos::model()->with('usuarios')->findByPK($id_equipo);
+		if ( $miEquipo ) {
+			$equipo->with('accionesGrupales');
+		}
 
 		//Enviar datos a la vista
-		$this->render('ver', array('equipos'=>$modeloEquipos, 
-									 'grupales'=>$accionesGrupales,
-									 'mi_equipo'=>$mi_equipo));
+		$this->render('ver', array(
+			'equipo'=>$equipo,
+			'mi_equipo'=>$miEquipo
+		));
 	}
 
 	/**
@@ -94,16 +99,72 @@ class EquiposController extends Controller
 	 */
 	public function actionCambiar($id_nuevo_equipo)
 	{
-		/* SAM */
-		//No hace falta modificar la tabla <<equipos>>
-		$id = Yii::app()->user->usIdent;
-		$id_equipo = Yii::app()->user->usAfic;
-		$modeloUsuario = Usuarios::model()->findByPk($id);
+		Yii::import('application.components.Helper');
 
-		if(!($modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo))))
-				throw new Exception("Error Processing Request", 1);
 		
-		$this->redirect(array('equipos/ver/','id_equipo'=>$id_equipo));
+		//Coger id de usuario y creo un helper
+		$helper=new Helper();
+		$id_usuario = Yii::app()->user->usIdent;
+		$modeloUsuario=Usuarios::model()->findByPk($id_usuario);
+		$modeloEquipo=Equipos::model()->findByPk($id_nuevo_equipo);
+		//Si el id del nuevo equipo corresponde con el mismo en el que estaba error
+		//Si el id nuevo no corresponde a ningun equipo tambien devuelve error
+		if($id_nuevo_equipo == $modeloUsuario->equipos_id_equipo)
+		{
+			throw new CHttpException(500,'Tienes que cambiarte a un equipo diferente al actual');
+
+		}else if ($modeloEquipo==null)
+				{
+					throw new CHttpException(500,'No existe el equipo al que quiere cambiarse');
+
+				}else 
+					{
+
+
+						//Coger de <<acciones_grupales>> todos los registros con id_usuario
+						$acciones_grupales=AccionesGrupales::model()->findAllByAttributes(array('usuarios_id_usuario'=>$id_usuario));
+
+						/* Recorrer todas las entradas de la tabla, buscando en <<Participaciones>>
+							devolviendo todos los recursos a la gente que participo, borrando esos registros,
+							para después borrar esa accion grupal de la tabla <<acciones_grupales>>*/
+						foreach ($acciones_grupales as $accion_grupal)
+						{
+							/*Devuelvo los recursos de los participantes*/
+							//Cojo de <<Participaciones>> todos los registros para devolver los recursos
+							$participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $accion_grupal->id_accion_grupal));
+
+							//Recorro todos los participantes devolviendoles sus recursos
+							foreach ($participantes as $participante)
+							{
+								//Cojo el dinero,influencia y animo aportado por el usuario
+								$dinero=$participante->dinero_aportado;
+								$influencia=$participante->influencias_aportadas;
+								$animo=$participante->animo_aportado;
+
+								//Utilizo el helper para ingresarle al usuario los recursos
+								$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+								$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+								$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
+
+								//Eliminar ese modelo
+								Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $accion_grupal->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));
+								//$participantes->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $accion_grupal->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));
+							}
+							//Borro esa accion grupal iniciada por el usuario que quiere cambiar de equipo
+							AccionesGrupales::model()->deleteByPk($accion_grupal->id_accion_grupal);
+						}
+						/*ATENCION las acciones en las que el participa ya se encarga el usuario que las creo de borrarlas
+						sino le interesa tener ese aportacion de recursos*/
+						//Una vez devuelto los recursos a la gente que participo en las acciones que creo el usuario
+						//Cambio el id del equipo al que pertenece
+						//Y guardo el modelo modificado
+						$modeloUsuario = Usuarios::model()->findByPk($id_usuario);
+						$modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo));
+						$modeloUsuario->save();	
+						//Cambiar variable de sesion
+						Yii::app()->session['usAfic'] = $id_nuevo_equipo;
+						$this->redirect(array('equipos/ver/','id_equipo'=>$id_nuevo_equipo));
+					}
 	}
 
 	/**

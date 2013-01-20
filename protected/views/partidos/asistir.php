@@ -1,12 +1,11 @@
 <?php
-/* @var $equipoL modelo del equipo local */
-/* @var $equipoV modelo del equipo visitante */
-/* @var $cronica cronica del partido */
-/* @var $sigPartido modelo del siguiente partido al que se puede asistir */
-// codigo PHP
-
+/* @var $equipo_local el equipo local */
+/* @var $equipo_visitante el equipo visitante */
+/* @var $partido el partido a mostrar */
 ?>
 
-<h3>Cr&oacute;nica del partido: <?php echo $equipoL['nombre'].' vs '.$equipoV['nombre']; ?></h3>
-</br>
-<?php echo $cronica; ?>
+<h3> 
+	Has asistido al partido entre <i> <?php echo $equipo_local->nombre ?> </i>
+	y <i> <?php echo $equipo_visitante->nombre ?> </i> </br>
+	Coming soon.
+</h3>

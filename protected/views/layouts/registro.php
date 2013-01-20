@@ -13,35 +13,17 @@
 
 <body>
 
-	<div class="envoltorio-login"> <div class="envoltorio2-login">
+	<div class="envoltorio-registro"> <div class="envoltorio2-registro">
 
-		<div id="descripcion-login">
-			<h1>Bienvenido a Jugador n&uacute;mero 12</h1>
-			<p> </b>Un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
-	      		Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</br></b></p>
-	      	<p>
-	      		</br>
-	      	</p>
-			<a href="<?php echo Yii::app()->createUrl('/registro/index', array());?>" class="button large black">Reg&iacute;strate</a>
-	   	</div>
-
-	   	<div id="grupo-derecha-login"> 
-
-			<div id="columna-vacia-central-login"> </div>
-
-	   		<div id="entrada-login">
+	   		<div id="entrada-registro">
 				<p><?php echo $content; ?></p>
 	   		</div>
-	
-		</div>
-
-   	
 
 		<div class="push"></div>
 
 	</div> </div> <!--ENVOLTORIOS-->
 
-		<div class="pie-pagina-login">
+		<div class="pie-pagina-registro">
 			<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 			All Rights Reserved.<br/>
 			<?php echo Yii::powered(); ?>

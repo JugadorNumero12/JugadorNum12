@@ -68,14 +68,19 @@ class HabilidadesController extends Controller
 	{
 		// Obtiene la acción a consultar
 		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+		if($habilidad <> null){
 
-		// Prepara los datos a enviar a la vista
-		$datosVista = array(
-			'habilidad' => $habilidad
-		);
+			// Prepara los datos a enviar a la vista
+			$datosVista = array(
+				'habilidad' => $habilidad
+			);
 
-		// Manda pintar la habilidad en la vista
-		$this->render('ver', $datosVista);
+			// Manda pintar la habilidad en la vista
+			$this->render('ver', $datosVista);
+		}
+		else{
+			echo "La habilidad no existe";
+		}
 	}
 
 	/**
