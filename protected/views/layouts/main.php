@@ -34,7 +34,7 @@
 			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Habilidades desbloqueadas</span></a></li>
 			   <li><a href="<?php echo $this->createUrl( '/equipos/ver', 
 									array('id_equipo' => Yii::app()->user->usAfic) ); ?>"><span>Afici&oacute;n</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/partidos/index');?>"><span>Calendario de partidos</span></a></li>
+			   <!--<li><a href="<?php echo Yii::app()->createUrl('/partidos/index');?>"><span>Calendario de partidos</span></a></li>-->
 			   <li><a href="<?php echo Yii::app()->createUrl('/habilidades');?>"><span>&Aacute;rbol de habilidades</span></a></li>
 			   <li><a href="<?php echo Yii::app()->createUrl('/equipos');?>"><span>Clasificaci&oacute;n</span></a></li>
 			</ul>
