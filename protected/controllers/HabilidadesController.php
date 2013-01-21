@@ -39,12 +39,29 @@ class HabilidadesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$idUsuario = Yii::app()->user->usIdent;
+
 		// Obtiene una lista con todas las habilidades
-		$habilidades = Habilidades::model()->findAll();
+		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
+
+		// FIXME: Hacerlo mínimamente eficiente -- esto es O(N²)
+		$desbloqueadas = array();
+		foreach ($habilidades as $ih => $h) {
+			$desb = false;
+
+			foreach ($h['desbloqueadas'] as $id => $d) {
+				if ( $d['usuarios_id_usuario'] == $idUsuario) {
+					$desb = true;
+				}
+			}
+
+			$desbloqueadas[$ih] = $desb;
+		}
 
 		// Prepara los datos a enviar a la vista
 		$datosVista = array(
-			'habilidades' => $habilidades
+			'habilidades' => $habilidades,
+			'desbloqueadas' => $desbloqueadas
 		);
 
 		// Manda pintar la lista a la vista
