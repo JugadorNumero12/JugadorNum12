@@ -5,28 +5,6 @@ div.envoltorio-ver-habilidad {
 div.envoltorio-ver-habilidad div.separador {
   padding-top: 3%;
 }
-div.envoltorio-ver-habilidad div.encabezado {
-  margin: 0 0 1em 0;
-}
-div.envoltorio-ver-habilidad div.datos-accion {
-  border: 1px solid black;
-}
-div.envoltorio-ver-habilidad div.remarcado {
-  background-color: grey;
-}
-div.envoltorio-ver-habilidad div.nombre-accion {
-  font-weight: bold;
-  font-size: 1.2em;
-  margin: 0 0 1em 0;
-  padding: 1em 0 0 0;
-}
-div.envoltorio-ver-habilidad div.tipo-accion {
-  font-size: 1.1em;
-  margin: 0 0 1em 0;
-}
-div.envoltorio-ver-habilidad div.descripcion-accion {
-  margin: 0 0 1em 0;
-}
-div.envoltorio-ver-habilidad div.recursos-accion {
-  margin: 0 0 1em 0;
+div.envoltorio-ver-habilidad table.tabla-ver-habilidad {
+  border-spacing: 2em 1em;
 }
