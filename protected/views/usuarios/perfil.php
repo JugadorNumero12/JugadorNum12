@@ -72,9 +72,9 @@
 						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->animo_gen ?> </td> </tr>
 						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_gen ?> </td> </tr>
 						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->bonus_dinero ?></td> </tr> 
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_animo ?> </td> </tr>
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->bonus_influencias ?> </td> </tr>
+						<tr><th>Bonus dinero: </th> <td><?php echo $modeloU->recursos->bonus_dinero ?></td> </tr> 
+						<tr><th>Bonus &aacute;nimo: </th> <td><?php echo $modeloU->recursos->bonus_animo ?> </td> </tr>
+						<tr><th>Bonus influencias: </th> <td><?php echo $modeloU->recursos->bonus_influencias ?> </td> </tr>
 	
 				</table>
 			</div>
