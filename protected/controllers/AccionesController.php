@@ -253,7 +253,7 @@ class AccionesController extends Controller
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] == $equipoUsuario ) {
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
 			throw new CHttpException( 403, 'La acción no es de tu equipo');
 		}
 
