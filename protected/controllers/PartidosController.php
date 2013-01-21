@@ -83,8 +83,9 @@ class PartidosController extends Controller
 		//Saco la información de las acciones grupales previstas para el partido por el equipo visitante
 		$modeloGrupalesVisitante = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_2));
 
-		//TODO
-
+		
+		//TODO Obtener hora actual
+		$hora_actual = 130;
 
 		//Obtener el equipo del usuario
 		$id_usuario = Yii::app()->user->usIdent;        
@@ -107,8 +108,7 @@ class PartidosController extends Controller
 
 		//Declaracion de todas las variables que usa el render
 		$pasado=$presente=false;
-		//TODO Obtener hora actual
-		$hora_actual = 130;
+		$cronica_partido="ESTO ESTÁ MAL";
 		if($hora_actual > $modeloPartido->hora)
 		{
 			//si el partido se jugo, obtener cronica
