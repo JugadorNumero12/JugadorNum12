@@ -176,7 +176,9 @@ class AccionesController extends Controller
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
 				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
-				  															       'habilidades_id_habilidad' => $id_accion ));
+				  															       'habilidades_id_habilidad' => $id_accion,
+				  															       'usuarios_id_usuario' =>  Yii::app()->user->usIdent,
+				  															        ));
 				
 				//Si no esta creada
 				if($accion_grupal == null){
