@@ -221,8 +221,7 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		$this->render('usar', array('habilidad'=>$habilidad));
-
+		$this->render('usar', array('habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
