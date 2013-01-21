@@ -2,15 +2,16 @@
 /* @var $this HabilidadesController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $habilidades Array con todas las habilidades, obtenidas de la BDD */
+// @var $desbloqueadas
 ?>
 
 <div class="envoltorio">
 <div class="encabezado"> <h1>&Aacute;rbol de habilidades</h1> </div>
 
 <?php 
-foreach ( $habilidades as $habilidad ){ ?>
+foreach ( $habilidades as $i=>$habilidad ){ ?>
     <div class="datos-accion">
-    <div <?php if (true){ echo 'class="remarcado"'; } ?>>
+    <div <?php if (!$desbloqueadas[$i]){ echo 'class="remarcado"'; } ?>>
     <li>
     <!-- Muestro el nombre de la accion -->
     <div class="nombre-accion">
@@ -45,7 +46,7 @@ foreach ( $habilidades as $habilidad ){ ?>
     </div>
 
     <div class="botones-accion">
-    <?php if (true){
+    <?php if (!$desbloqueadas[$i]){
         echo CHtml::button('Adquirir habilidad', array('submit' => array('acciones/adquirir', 'id_accion'=>$habilidad['id_habilidad']),'class'=>"button small black"));
     } else { ?>
         <div class="mensaje"> <?php echo "<b>Ya has adquirido esta habilidad</b>"; ?> </div>

@@ -3,10 +3,10 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm */
 ?>
-<div class='envoltorio-cuenta'>
-<table>
+<div class="envoltorio-cuenta">
+<table class="tabla-cuenta">
 	  <tr>
-	    <h1><?php echo 'Datos del usuario'?></h1>
+	    <h1><?php echo 'Cuenta del usuario'?></h1>
 	  </tr>
 	  
 	  <tr>
