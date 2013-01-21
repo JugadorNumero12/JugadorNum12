@@ -53,15 +53,15 @@ class RegistroController extends Controller
 					$selected_radio = $_POST['pers'];
 					if ($selected_radio === 'animadora') {
 						$animadora_status = true;
-						$modelo->setAttributes(array('personaje'=>0));
+						$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_MOVEDORA));
 
 					}else if ($selected_radio === 'empresario') {
 						$empresario_status = true;
-						$modelo->setAttributes(array('personaje'=>1));
+						$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_EMPRESARIO));
 
 					}else if($selected_radio === 'ultra'){
 						$ultra_status = true;
-						$modelo->setAttributes(array('personaje'=>2));
+						$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_ULTRA));
 					}
 
 					$modelo->setAttributes(array('equipos_id_equipo'=>$_POST['ocup']));
@@ -86,7 +86,7 @@ class RegistroController extends Controller
 		$rec=new Recursos;
 		$rec->setAttributes(array('usuarios_id_usuario'=>$id_usuario));
 		switch ($personaje) {
-			case '0': //animadora
+			case Usuarios::PERSONAJE_MOVEDORA: //animadora
 				echo "animadora";
 				$rec->setAttributes(array('dinero'=>0));
 				$rec->setAttributes(array('dinero_gen'=>0.0));
@@ -97,7 +97,7 @@ class RegistroController extends Controller
 				$rec->setAttributes(array('animo_max'=>0));
 				$rec->setAttributes(array('animo_gen'=>0.0));
 				break;
-			case '1': //empresario
+			case Usuarios::PERSONAJE_EMPRESARIO: //empresario
 				echo "empresario";
 				$rec->setAttributes(array('dinero'=>0));
 				$rec->setAttributes(array('dinero_gen'=>0.0));
@@ -108,7 +108,7 @@ class RegistroController extends Controller
 				$rec->setAttributes(array('animo_max'=>0));
 				$rec->setAttributes(array('animo_gen'=>0.0));
 				break;
-			case '2': //ultra
+			case Usuarios::PERSONAJE_ULTRA: //ultra
 				echo "ultra";
 				$rec->setAttributes(array('dinero'=>0));
 				$rec->setAttributes(array('dinero_gen'=>0.0));
