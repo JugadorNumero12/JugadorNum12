@@ -84,20 +84,27 @@ class HabilidadesController extends Controller
 	public function actionVer($id_habilidad)
 	{
 		// Obtiene la acción a consultar
-		$habilidad = Habilidades::model()->findByPk($id_habilidad);
-		if($habilidad <> null){
+		$idUsuario = Yii::app()->user->usIdent;
+		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
-			// Prepara los datos a enviar a la vista
-			$datosVista = array(
-				'habilidad' => $habilidad
-			);
+		if ($habilidad == null) {
+			throw new CHttpException( 404, 'Habilidad inexistente');
+		}
 
-			// Manda pintar la habilidad en la vista
-			$this->render('ver', $datosVista);
+		foreach ($haqbilidad['desbloqueadas'] as $id => $d) {
+			if ( $d['usuarios_id_usuario'] == $idUsuario) {
+				$desb = true;
+			}
 		}
-		else{
-			echo "La habilidad no existe";
-		}
+
+		// Prepara los datos a enviar a la vista
+		$datosVista = array(
+			'habilidad' => $habilidad,
+			'desbloqueada' => $desb
+		);
+
+		// Manda pintar la habilidad en la vista
+		$this->render('ver', $datosVista);
 	}
 
 	/**
