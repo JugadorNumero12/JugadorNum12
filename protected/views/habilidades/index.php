@@ -47,7 +47,7 @@ foreach ( $habilidades as $i=>$habilidad ){ ?>
 
     <div class="botones-accion">
     <?php if (!$desbloqueadas[$i]){
-        echo CHtml::button('Adquirir habilidad', array('submit' => array('acciones/adquirir', 'id_accion'=>$habilidad['id_habilidad']),'class'=>"button small black"));
+        echo CHtml::button('Adquirir habilidad', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$habilidad['id_habilidad']),'class'=>"button small black"));
     } else { ?>
         <div class="mensaje"> <?php echo "<b>Ya has adquirido esta habilidad</b>"; ?> </div>
     <?php } ?>
