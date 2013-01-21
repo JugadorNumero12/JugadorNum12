@@ -42,7 +42,7 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
-        $this-> redirect(array('usuarios/perfil'));
+        $this->redirect(array('usuarios/perfil'));
     }
 
     /*
@@ -102,7 +102,21 @@ class UsuariosController extends Controller
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
-        $this->render('ver',array('modeloU'=>$modeloUsuario));    
+        if ($modeloUsuario == null)
+        {
+            echo "El usuario no existe.";
+        }
+        else
+        {
+            if (Yii::app()->user->usIdent == $id_usuario)
+            {
+                $this->redirect(array('usuarios/perfil'));
+            }
+            else
+            {
+                $this->render('ver',array('modeloU'=>$modeloUsuario)); 
+            }
+        }   
     }
 
     /*
