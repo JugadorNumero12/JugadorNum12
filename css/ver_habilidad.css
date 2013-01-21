@@ -1,10 +1,1 @@
-div.envoltorio-ver-habilidad {
-  width: 90%;
-  margin: 0 auto;
-}
-div.envoltorio-ver-habilidad div.separador {
-  padding-top: 3%;
-}
-div.envoltorio-ver-habilidad table.tabla-ver-habilidad {
-  border-spacing: 2em 1em;
-}
+div.envoltorio-ver-habilidad{width:90%;margin:0 auto}div.envoltorio-ver-habilidad div.separador{padding-top:3%}div.envoltorio-ver-habilidad table.tabla-ver-habilidad{border-spacing:2em 1em}
