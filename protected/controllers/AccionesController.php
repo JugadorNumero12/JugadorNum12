@@ -146,33 +146,73 @@ class AccionesController extends Controller
 			} 
 
 			//Si hora >= hora_cooldown			
-			//restar recursos al usuario			
-			$res['dinero'] 		-= $habilidad['dinero'];
-			$res['animo']  		-= $habilidad['animo'];
-			$res['influencias'] -= $habilidad['influencias'];
+			//restar recursos al usuario
+			try{			
+				$res['dinero'] 		-= $habilidad['dinero'];
+				$res['animo']  		-= $habilidad['animo'];
+				$res['influencias'] -= $habilidad['influencias'];
 
-			//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
 
-			//actualizar la hora en que acaba de regenerarse la accion
-			$accion_ind['cooldown'] = $hora_act + $cooldown;
+				//actualizar la hora en que acaba de regenerarse la accion
+				$accion_ind['cooldown'] = $hora_act + $cooldown;
 
-			//guardar en los modelos
-			$res->save();
-			$accion_ind->save();
-			/* 
-				FIXME:
-				Si la accion ya estaba en la tabla de AccionesIndividuales y se puede ejecutar
-			   	lanza el siguiente error: El nombre de la columna debe ser una cadena o un array.
-				En el Stack Trace intenta hacer CActiveRecord->updateByPk(null, ...)
-			*/
-
+				//guardar en los modelos
+				$res->save();
+				$accion_ind->save();
+			} catch ( Exception $exc ) {
+					$trans->rollback();
+					throw $exc;
+			}
+			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
-				//sacar la accion grupal
-				//$accion_grupal = AccionesGrupales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-				//																     'habilidades_id_habilidad' => $id_accion ));
-				//TODO hacer que al usuario se le resten los recursos si tiene (igual que antes)
-
-				//TODO despues se debe mostrar el formulario de participar en la accion recien usada
+				/*
+					Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
+					Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
+					para obtener la accion grupal debo buscar por id_equipo y id_habilidad
+					NOTA: no se contempla la posibilidad de en un mismo equipo haya varias acciones iguales
+					pero con distinto creador (aunque dicha posibilidad existe) ya que debe arreglarse la redireccion
+				*/
+				//Sacar la accion grupal
+				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
+				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
+				  															       'habilidades_id_habilidad' => $id_accion ));
+				
+				//Si no esta creada
+				if($accion_grupal == null){
+					//restar recursos al usuario (recursos iniciales)	
+					try{	
+						$res['dinero'] 		-= $habilidad['dinero'];
+						$res['animo']  		-= $habilidad['animo'];
+						$res['influencias'] -= $habilidad['influencias'];
+						
+						//sumarselos al crear nueva accion grupal
+						$accion_grupal = new AccionesGrupales();
+						$accion_grupal->setAttributes( array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+					   							  	         'habilidades_id_habilidad' => $id_accion,
+					   							  	         'equipos_id_equipo' => Yii::app()->user->usAfic,
+					   							  	         'influencias_acc'   => $habilidad['influencias'],
+					   							  	         'animo_acc' 	     => $habilidad['animo'],
+															 'dinero_acc' 	     => $habilidad['dinero'],
+															 'jugadores_acc'     => 1,
+															 'finalizacion'      => 201,													 
+					   							  	         'completada' 	     => 0 ));
+						//guardar en los modelos
+						$res->save();
+						$accion_grupal->save();
+					} catch ( Exception $exc ) {
+						$trans->rollback();
+						throw $exc;
+				    } 
+					// sacar el id de accion grupal (pk)
+					// TODO pasar a la vista algun parametro,
+					// para que en este caso muestre al usuario un boton para poder ser el primero en participar				
+				} else {
+					//Si esta creada 
+					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+					$this-> redirect(array('acciones/participar',
+										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
+				}				
 
 		} else { 
 				//tipo erroneo
