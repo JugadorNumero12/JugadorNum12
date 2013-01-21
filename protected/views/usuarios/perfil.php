@@ -105,7 +105,7 @@
 		<div class="perfil-abajo-partido">
 
 			<?php if(empty($accionesPar)){ ?>
-				<h1> No hay habilidades pasivas desbloqueadas </h1>
+				<h1> No hay habilidades de partido desbloqueadas </h1>
 			<?php } else 
 			{?>
 
