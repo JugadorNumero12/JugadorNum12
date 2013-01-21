@@ -91,9 +91,11 @@ class HabilidadesController extends Controller
 			throw new CHttpException( 404, 'Habilidad inexistente');
 		}
 
-		foreach ($haqbilidad['desbloqueadas'] as $id => $d) {
+		foreach ($habilidad['desbloqueadas'] as $id => $d) {
 			if ( $d['usuarios_id_usuario'] == $idUsuario) {
 				$desb = true;
+			} else {
+				$desb = false;
 			}
 		}
 

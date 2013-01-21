@@ -63,5 +63,15 @@
 			?>
 		</tr></div>
 
+		<div class="boton-mensaje"><tr>
+			<?php
+				if ($desbloqueada){ ?>
+					<div class="mensaje-adquirido"> <?php echo "Ya has adquirido esta habilidad"; ?></div>
+				<?php } else { ?>
+					<div class="boton-adquirir"> <?php echo CHtml::button('Adquirir habilidad', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$habilidad['id_habilidad']),'class'=>"button small black")); ?> </div>
+				<?php }
+			?>
+		</tr></div>
+
 	</table>
 </div>
