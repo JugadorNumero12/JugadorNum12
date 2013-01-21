@@ -162,7 +162,7 @@ class EquiposController extends Controller
 						$modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo));
 						$modeloUsuario->save();	
 						//Cambiar variable de sesion
-						Yii::app()->session['usAfic'] = $id_nuevo_equipo;
+						Yii::app()->user->setState('usAfic', $id_nuevo_equipo);
 						$this->redirect(array('equipos/ver/','id_equipo'=>$id_nuevo_equipo));
 					}
 	}
