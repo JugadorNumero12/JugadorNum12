@@ -31,14 +31,14 @@
 		?>
 	</div>
 
-	<div class='separador'>
+	<div class="separador">
 		<?php echo '<b>Recursos necesarios para activar la habilidad: </b>'?>
 		<?php printf('<b>Dinero: </b>%d <b>Animo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']); ?>
 	</div>
 
 
 
-	<div class = 'separador'>
+	<div class ="separador">
 		<?php 
 		if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL){
 			printf('<b>Número máximo de participantes: </b>%d',$habilidad['participantes_max']);?>
@@ -46,7 +46,7 @@
 
 
 
-	<div class = 'separador'>
+	<div class ="separador">
 			<?php echo '<b>Valores máximos que los recursos pueden sumar: </b>';
 			printf('<b>Dinero: </b>%d <b>Animo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero_max'], $habilidad['animo_max'], $habilidad['influencias_max']);
 		}
@@ -55,7 +55,7 @@
 
 
 
-	<div class='separador'>
+	<div class="separador">
 		<?php
 		if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL || 
 			$habilidad['tipo'] == Habilidades::TIPO_PARTIDO || 
