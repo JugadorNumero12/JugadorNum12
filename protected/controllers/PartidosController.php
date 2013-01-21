@@ -47,8 +47,6 @@ class PartidosController extends Controller
 		// Obtener la lista de partidos
 		$listaPartidos = Partidos::model()->findAll();
 
-		echo "equipo del usuario: ".$id_equipo_usuario." proximo partido: ".$id_proximoPartido;
-
 		//pasar los datos a la vista y renderizarla
 		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 'proximo_partido'=>$id_proximoPartido);
 		$this->render('index', $datosVista);
