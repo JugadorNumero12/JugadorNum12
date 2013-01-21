@@ -6,9 +6,11 @@
  * @var proximo_partido: id del proximo partido del equipo del usuario
  */
 ?>
+<div class="calendario"> 
 
-<div class="clasificacion"> 
-	<table>
+	<h1> Calendario de partidos </h1>
+
+	<table border=0>
 		<tr>
 			<th>Equipo Local</th>
 			<th>Equipo Visitante</th>
@@ -46,4 +48,10 @@
 		</tr>
 	<?php } ?>
 	</table>
+
+	
+
 </div>
+
+
+	
