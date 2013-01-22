@@ -176,7 +176,9 @@ class AccionesController extends Controller
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
 				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
-				  															       'habilidades_id_habilidad' => $id_accion ));
+				  															       'habilidades_id_habilidad' => $id_accion,
+				  															       'usuarios_id_usuario' =>  Yii::app()->user->usIdent,
+				  															        ));
 				
 				//Si no esta creada
 				if($accion_grupal == null){
@@ -221,8 +223,7 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		$this->render('usar', array('habilidad'=>$habilidad));
-
+		$this->render('usar', array('habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
@@ -251,12 +252,17 @@ class AccionesController extends Controller
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
+		// Si el usuario no es del equipo de la acción, no tenemos permiso
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
+			throw new CHttpException( 403, 'La acción no es de tu equipo');
+		}
+
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 
 		// Saco el equipo que ha creado la accion
 		$equipoAccion = $accionGrupal['equipos_id_equipo'];
-
+ 
 		// Compruebo si el usuario ha participado ya en la accion
 		// FIXME Esto es lento como su puta madre
 		$esParticipante = false;
@@ -466,12 +472,18 @@ class AccionesController extends Controller
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
 			//Se comprueba la coherencia de la petición
-			if($acc == null)
+			if ($acc == null) {
 				throw new CHttpException(404,'Acción inexistente.');
-			if($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) 
+			}
+			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
 				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
-			if($part == null)
-				throw new CHttpException(404,'El jugador indicado no partricipa en la acción.');
+			}
+			if ($id_jugador == Yii::app()->user->usIden) {
+				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
+			}
+			if ($part == null) {
+				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
+			}
 
 			$actAni = $rec['animo'];
 			$actInf = $rec['influencias'];
@@ -503,7 +515,7 @@ class AccionesController extends Controller
 
 			$trans->commit();
 
-		}catch(Exception $exc) {
+		} catch (Exception $exc) {
     		$trans->rollback();
     		throw $exc;
 		}

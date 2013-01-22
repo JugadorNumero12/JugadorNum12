@@ -12,7 +12,7 @@
 ?>
 <div class="envoltorio-acciones-ver">
 
-	<div class="encabezado"><?php echo $accionGrupal['habilidades']['nombre']; ?></div>
+	<div class="encabezado"><h1><?php echo $accionGrupal['habilidades']['nombre']; ?></h1></div>
 
 	<div class="datos-accion">
 		<table class="tablas-acciones-ver">
@@ -24,7 +24,7 @@
 		</table>
 	</div>
 
-	<div class="encabezado2"> Recursos añadidos </div>
+	<div class="encabezado2"> <h2>Recursos añadidos</h2> </div>
 		<div class="recursos-aniadidos">
 			<table class="tablas-acciones-ver">
 				<tr><th>Dinero: </th><td><?php echo $accionGrupal['dinero_acc'];?> / <?php echo$accionGrupal['habilidades']['dinero_max']; ?> </td></tr>
@@ -33,7 +33,7 @@
 			</table>
 	</div>
 
-	<div class="encabezado2"> Participantes </div>
+	<div class="encabezado2"> <h2>Participantes</h2> </div>
 	<div class="participantes"> 
 			<table class="tabla-participantes">
 				<tr> 

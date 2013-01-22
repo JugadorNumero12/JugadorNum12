@@ -75,9 +75,15 @@ class EquiposController extends Controller
 
 		// Obtenemos el equipo junto a todos sus usuarios y,
 		// si hacen falta, sus acciones grupales
-		$equipo = Equipos::model()->with('usuarios')->findByPK($id_equipo);
+		$modeloEquipo = Equipos::model()->with('usuarios');
 		if ( $miEquipo ) {
-			$equipo->with('accionesGrupales');
+			$modeloEquipo->with('accionesGrupales');
+		}
+
+		$equipo = $modeloEquipo->findByPK($id_equipo);
+
+		if ( $equipo === null ) {
+			throw new CHttpException( 404, 'Equipo inexistente');
 		}
 
 		//Enviar datos a la vista
@@ -162,7 +168,7 @@ class EquiposController extends Controller
 						$modeloUsuario->setAttributes(array('equipos_id_equipo'=>$id_nuevo_equipo));
 						$modeloUsuario->save();	
 						//Cambiar variable de sesion
-						Yii::app()->session['usAfic'] = $id_nuevo_equipo;
+						Yii::app()->user->setState('usAfic', $id_nuevo_equipo);
 						$this->redirect(array('equipos/ver/','id_equipo'=>$id_nuevo_equipo));
 					}
 	}

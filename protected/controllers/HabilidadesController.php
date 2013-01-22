@@ -39,12 +39,29 @@ class HabilidadesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$idUsuario = Yii::app()->user->usIdent;
+
 		// Obtiene una lista con todas las habilidades
-		$habilidades = Habilidades::model()->findAll();
+		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
+
+		// FIXME: Hacerlo mínimamente eficiente -- esto es O(N²)
+		$desbloqueadas = array();
+		foreach ($habilidades as $ih => $h) {
+			$desb = false;
+
+			foreach ($h['desbloqueadas'] as $id => $d) {
+				if ( $d['usuarios_id_usuario'] == $idUsuario) {
+					$desb = true;
+				}
+			}
+
+			$desbloqueadas[$ih] = $desb;
+		}
 
 		// Prepara los datos a enviar a la vista
 		$datosVista = array(
-			'habilidades' => $habilidades
+			'habilidades' => $habilidades,
+			'desbloqueadas' => $desbloqueadas
 		);
 
 		// Manda pintar la lista a la vista
@@ -67,20 +84,28 @@ class HabilidadesController extends Controller
 	public function actionVer($id_habilidad)
 	{
 		// Obtiene la acción a consultar
-		$habilidad = Habilidades::model()->findByPk($id_habilidad);
-		if($habilidad <> null){
+		$idUsuario = Yii::app()->user->usIdent;
+		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
-			// Prepara los datos a enviar a la vista
-			$datosVista = array(
-				'habilidad' => $habilidad
-			);
+		if ($habilidad == null) {
+			throw new CHttpException( 404, 'Habilidad inexistente');
+		}
 
-			// Manda pintar la habilidad en la vista
-			$this->render('ver', $datosVista);
+		$desb = false;
+		foreach ($habilidad['desbloqueadas'] as $id => $d) {
+			if ( $d['usuarios_id_usuario'] == $idUsuario) {
+				$desb = true;
+			}
 		}
-		else{
-			echo "La habilidad no existe";
-		}
+
+		// Prepara los datos a enviar a la vista
+		$datosVista = array(
+			'habilidad' => $habilidad,
+			'desbloqueada' => $desb
+		);
+
+		// Manda pintar la habilidad en la vista
+		$this->render('ver', $datosVista);
 	}
 
 	/**

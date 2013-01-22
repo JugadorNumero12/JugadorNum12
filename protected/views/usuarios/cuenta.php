@@ -3,32 +3,30 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm */
 ?>
-<table cellspacing="5px">
-	<tr></tr>
-	
+<div class="envoltorio-cuenta">
+<table class="tabla-cuenta">
 	  <tr>
-	    <td colspan="2" align="center"><span class="under">DATOS DE USUARIO</span></td>
+	    <h1><?php echo 'Cuenta del usuario'?></h1>
 	  </tr>
-	  <tr></tr>
+	  
 	  <tr>
-	  	<th>Nick : </th>
+	  	<th><?php echo 'Nick : '?></th>
 	  	<td><?php echo $modelo['nick'] ?></td>
 	  </tr>
+
 	  <tr>
-	  	<th>eMail : </th>
+	  	<th><?php echo 'eMail : '?></th>
 	  	<td><?php echo $modelo['email'] ?></td>
 	  </tr>
 
 	  <tr>
-	    <td colspan="2">
-	    	<?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave')));?>
+	    <td>
+	    	<?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?>
 	    </td>
-	    
-	    <td colspan="2">
-	    	<?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail')));?>
+	    <td>
+	    	<?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail'),'class'=>"button small black"));?>
 	    </td>
 	  </tr>
-
-	  <tr></tr>
 	 
 </table>
+</div>
