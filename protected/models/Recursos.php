@@ -60,7 +60,7 @@ class Recursos extends CActiveRecord
 	{
 		/* ALEX */
 		return array( 
-			'usuarios'=>array(self::HAS_ONE, 'Usuarios', 'usuarios_id_usuario')
+			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario')
 		);
 	}
 

@@ -64,7 +64,7 @@ class Habilidades extends CActiveRecord
 			//Relación entre "habilidades" y "acciones_grupales"
 			'accionesGrupales' => array(self::HAS_MANY, 'AccionesGrupales', 'habilidades_id_habilidad'),
 			//Relación entre "habilidades" y "acciones_turno"
-			'accionesTurno' => array(self::HAS_MANY, 'AccionesTurno', 'habilidades_id_habilidad'),
+			//'accionesTurno' => array(self::HAS_MANY, 'AccionesTurno', 'habilidades_id_habilidad'),
 		);
 	}
 
