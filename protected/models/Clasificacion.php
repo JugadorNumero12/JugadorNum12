@@ -39,11 +39,11 @@ class Clasificacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos', 'required'),
-			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos', 'length', 'max'=>10),
+			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos, diferencia_goles', 'required'),
+			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos, diferencia_goles', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos', 'safe', 'on'=>'search'),
+			array('equipos_id_equipo, posicion, puntos, ganados, empatados, perdidos, diferencia_goles', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,6 +73,7 @@ class Clasificacion extends CActiveRecord
 			'ganados' => 'Ganados',
 			'empatados' => 'Empatados',
 			'perdidos' => 'Perdidos',
+			'diferencia_goles' => 'Diferencia de goles',
 		);
 	}
 
@@ -93,6 +94,7 @@ class Clasificacion extends CActiveRecord
 		$criteria->compare('ganados',$this->ganados,true);
 		$criteria->compare('empatados',$this->empatados,true);
 		$criteria->compare('perdidos',$this->perdidos,true);
+		$criteria->compare('diferencia_goles',$this->perdidos,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
