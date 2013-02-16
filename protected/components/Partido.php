@@ -67,7 +67,8 @@ public class Partido
             /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
             /*
             *
-            *  ¿VALORES DE TABLA EQUIPOS?
+            *  ¿VALORES DE TABLA EQUIPOS? -> No, aquí solo se carga. se INICIALIZA en 
+            * la sección de inicializaEncuentro
             */
             $ofensivo_local = $partido->ofensivo_local;
             $ofensivo_visitante = $partido->ofensivo_visitante;
@@ -199,11 +200,17 @@ public class Partido
             $moral_local = 0;
             $moral_visitante = 0;
 
+            /*
+            * ¿Cambiar estado al inicio del partido? Implicaría poder empezar con un gol.
+            */
             generar_estado(); //se supone que cambia la variable $estado pero dudo que lo haga
             //revisar cuando acaben la fórmula
 			/*y lo almacena en la tabla turnos.
 			/*A partir de la diferencia de niveles, almacena el primer estado del partido.*/
-			guardaEstado();
+			//guardaEstado();
+			/*
+			* Guardar manualmente el estado: transacción dentro de transacción falla!
+			*/
 		}catch(Exception $e){
 			$transaction->rollback();
 			throw $e;
