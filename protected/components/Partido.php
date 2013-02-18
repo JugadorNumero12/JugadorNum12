@@ -47,13 +47,13 @@ public class Partido
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
 
-            $local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+            /*$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
             $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
 
             if ($local == null)
                 throw new CHttpException(404,'Equipo local inexistente.');
             if ($visitante == null)
-                throw new CHttpException(404,'Equipo visitante inexistente.');
+                throw new CHttpException(404,'Equipo visitante inexistente.');*/
 
             $this->$id_partido = $id_partido;
             $this->$id_local = $partido->equipos_id_equipo_1;
@@ -64,21 +64,15 @@ public class Partido
             $this->$dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
             $this->$aforo_local = $partido->aforo_local;
             $this->$aforo_visitante = $partido->aforo_visitante;
-            /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
-            /*
-            *
-            *  ¿VALORES DE TABLA EQUIPOS? -> No, aquí solo se carga. se INICIALIZA en 
-            * la sección de inicializaEncuentro
-            */
-            $ofensivo_local = $partido->ofensivo_local;
-            $ofensivo_visitante = $partido->ofensivo_visitante;
-            $defensivo_local = $partido->defensivo_local;
-            $defensivo_visitante = $partido->defensivo_visitante;
-            $goles_local = $partido->goles_local;
-            $goles_visitante = $partido->goles_visitante;
-            $estado = $partido->estado;
-            $moral_local = $partido->moral_local;
-            $moral_visitante = $partido->moral_visitante;
+            $this->$ofensivo_local = $partido->ofensivo_local;
+            $this->$ofensivo_visitante = $partido->ofensivo_visitante;
+            $this->$defensivo_local = $partido->defensivo_local;
+            $this->$defensivo_visitante = $partido->defensivo_visitante;
+            $this->$goles_local = $partido->goles_local;
+            $this->$goles_visitante = $partido->goles_visitante;
+            $this->$estado = $partido->estado;
+            $this->$moral_local = $partido->moral_local;
+            $this->$moral_visitante = $partido->moral_visitante;
             
             $transaction->commit();
         }catch(Exception $e){
@@ -128,8 +122,8 @@ public class Partido
         try{
             $partido = Partidos::findByPk($id_partido);
 
-            if ($turn == null)
-                throw new CHttpException(404,'Turno inexistente.');
+            if ($partido == null)
+                throw new CHttpException(404,'Partido inexistente.');
 
             $partido->ofensivo_local = $ofensivo_local;
             $partido->ofensivo_visitante = $ofensivo_visitante;
@@ -238,8 +232,9 @@ public class Partido
 		* Falta: 
 		* - Mover turno (turno++)
 		* - Actualizar goles en función del estado
-		*
+		* - generar cronica del turno
 		*/
+		generaCronicaTurno();
 	}
 
 	/*
@@ -450,7 +445,7 @@ public class Partido
 		    	//cargaEstado();
 				//recogeAccionesTurno();
 				generar_estado();
-				generaCronicaTurno();
+				//generaCronicaTurno();
 				guardaEstado();
 		        break;
 		    case ULTIMO_TURNO:
@@ -459,7 +454,7 @@ public class Partido
 		    	//cargaEstado();
 				//recogeAccionesTurno();
 				generar_estado();
-				generaCronicaTurno();
+				//generaCronicaTurno();
 				finalizaEncuentro();
 				guardaEstado();
 		    	break;
