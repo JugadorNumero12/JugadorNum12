@@ -47,35 +47,32 @@ public class Partido
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
 
-            $local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
+            /*$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
             $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
 
             if ($local == null)
                 throw new CHttpException(404,'Equipo local inexistente.');
             if ($visitante == null)
-                throw new CHttpException(404,'Equipo visitante inexistente.');
+                throw new CHttpException(404,'Equipo visitante inexistente.');*/
 
             $this->$id_partido = $id_partido;
-            $this->$id_local = $partido->$equipos_id_equipo_1;
-            $this->$id_visitante = $partido->$equipos_id_equipo_2;
-            $this->$turno = 0;
-            $this->$cronica = $partido->$cronica;
-            $this->$ambiente = $partido->$ambiente;
-            /*niveles de la tabla partidos o de la tabla equipos ?*/
-            $this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
-            $this->$aforo_local = $partido->$aforo_local;
-            $this->$aforo_visitante = $partido->$aforo_visitante;
-            /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
-            $ofensivo_local = $local->$factor_ofensivo;
-            $ofensivo_visitante = $visitante->$factor_ofensivo;
-            $defensivo_local = $local->$factor_defensivo;
-            $defensivo_visitante = $visitante->$factor_defensivo;
-            $goles_local = 0;
-            $goles_visitante = 0;
-            //TODO
-            $estado = 0;
-            $moral_local = 0;
-            $moral_visitante = 0;
+            $this->$id_local = $partido->equipos_id_equipo_1;
+            $this->$id_visitante = $partido->equipos_id_equipo_2;
+            $this->$turno = $partido->turno;
+            $this->$cronica = $partido->cronica;
+            $this->$ambiente = $partido->ambiente;
+            $this->$dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
+            $this->$aforo_local = $partido->aforo_local;
+            $this->$aforo_visitante = $partido->aforo_visitante;
+            $this->$ofensivo_local = $partido->ofensivo_local;
+            $this->$ofensivo_visitante = $partido->ofensivo_visitante;
+            $this->$defensivo_local = $partido->defensivo_local;
+            $this->$defensivo_visitante = $partido->defensivo_visitante;
+            $this->$goles_local = $partido->goles_local;
+            $this->$goles_visitante = $partido->goles_visitante;
+            $this->$estado = $partido->estado;
+            $this->$moral_local = $partido->moral_local;
+            $this->$moral_visitante = $partido->moral_visitante;
             
             $transaction->commit();
         }catch(Exception $e){
@@ -89,9 +86,8 @@ public class Partido
      *  estado, moral, ofensivo, defensivo y goles
      * cargandolos desde la tabla turnos 
      */
-    private void cargaEstado()
+    /*private void cargaEstado()
     {
-        /* ALEX */
         $transaction = Yii::app()->db->beginTransaction();
         try{
             $turn = Turnos::findByPk($id_partido);
@@ -115,32 +111,33 @@ public class Partido
             $transaction->rollback();
             throw $e;
         }
-    }
+    }*/
     
     /*
      * Guarda toda la información del estado actual en la base de datos.
      */
     private void guardaEstado()
     {
-        /* ALEX */
         $transaction = Yii::app()->db->beginTransaction();
         try{
-            $turn = Turnos::findByPk($id_partido);
+            $partido = Partidos::findByPk($id_partido);
 
-            if ($turn == null)
-                throw new CHttpException(404,'Turno inexistente.');
+            if ($partido == null)
+                throw new CHttpException(404,'Partido inexistente.');
 
-            $turn->$ofensivo_local = $ofensivo_local;
-            $turn->$ofensivo_visitante = $ofensivo_visitante;
-            $turn->$defensivo_local = $defensivo_local;
-            $turn->$defensivo_visitante = $defensivo_visitante;
+            $partido->ofensivo_local = $ofensivo_local;
+            $partido->ofensivo_visitante = $ofensivo_visitante;
+            $partido->defensivo_local = $defensivo_local;
+            $partido->defensivo_visitante = $defensivo_visitante;
 
-            $turn->goles_local = $goles_local;
-            $turn->$goles_visitante = $goles_visitante;
-            $turn->estado = $estado;
-            $turn->$moral_local = $moral_local;
-            $turn->$moral_visitante = $moral_visitante;
-            if(!$turno->save()) 
+            $partido->goles_local = $goles_local;
+            $partido->goles_visitante = $goles_visitante;
+            $partido->estado = $estado;
+            $partido->moral_local = $moral_local;
+            $partido->moral_visitante = $moral_visitante;
+			$partido->turno = $turno;
+			$partido->cronica = $cronica;
+            if(!$partido->save()) 
                 throw new Exception('No se ha podido guardar el turno actual.');
             $transaction->commit();
         }catch(Exception $e){
@@ -197,11 +194,17 @@ public class Partido
             $moral_local = 0;
             $moral_visitante = 0;
 
+            /*
+            * ¿Cambiar estado al inicio del partido? Implicaría poder empezar con un gol.
+            */
             generar_estado(); //se supone que cambia la variable $estado pero dudo que lo haga
             //revisar cuando acaben la fórmula
 			/*y lo almacena en la tabla turnos.
 			/*A partir de la diferencia de niveles, almacena el primer estado del partido.*/
-			guardaEstado();
+			//guardaEstado();
+			/*
+			* Guardar manualmente el estado: transacción dentro de transacción falla!
+			*/
 		}catch(Exception $e){
 			$transaction->rollback();
 			throw $e;
@@ -222,16 +225,31 @@ public class Partido
 		$estado = Formula::siguienteEstado(array($estado, $dif_niveles, $aforo_local ,$aforo_visitante,
 							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
 							$defensivo_local ,$defensivo_visitante ));
+
+		/*
+		*
+		* La función genera TODO lo necesario para el estado siguiente.
+		* Falta: 
+		* - Mover turno (turno++)
+		* - Actualizar goles en función del estado
+		* - generar cronica del turno
+		*/
+		generaCronicaTurno();
 	}
 
 	/*
 	 * Genera la crónica para este turno en función de la crónica acumulada en la BBDD y 
-	 * la guarda en la variable $cronica y en la BBDD
+	 * la guarda en la variable $cronica
 	 */
 	private void generaCronicaTurno()
 	{
 		/* MARCOS */
-		$trans = Yii::app()->db->beginTransaction();
+		/*
+		*
+		* rehacer, no guarda la crónica en la bbdd
+		*/
+
+		/*$trans = Yii::app()->db->beginTransaction();
 		try{
 			$partido=Partidos::model()->findByPk($id_partido);
 			$partido['cronica'] += $cronica;
@@ -240,7 +258,7 @@ public class Partido
 		}catch(Exception $exc){
 			$trans->roollback();
 			throw new Exception("Error al guardar la cronica", 1);
-		}
+		}*/
 	}
 
 	/*
@@ -248,7 +266,7 @@ public class Partido
 	 */
 	private void generaCronicaBase()
 	{
-		/* PEDRO */
+		
 	}
 
 	/*
@@ -294,6 +312,12 @@ public class Partido
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
+
+		  /*
+		  *
+		  * REVISAR, NO HAY ACCIONESTURNO -> ¿Cómo marcar los que han participado?
+		  *
+		  */
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido)),
@@ -323,7 +347,6 @@ public class Partido
 	 */
 	private void actualizaClasificacion()
 	{			
-		/* MARCOS */
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$loc=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_local));
@@ -419,19 +442,19 @@ public class Partido
 		        break;
 		    case (($turno > PRIMER_TURNO) && ($turno < ULTIMO_TURNO)):	
 		    	//Turnos de partido
-		    	cargaEstado();
+		    	//cargaEstado();
 				//recogeAccionesTurno();
 				generar_estado();
-				generaCronicaTurno();
+				//generaCronicaTurno();
 				guardaEstado();
 		        break;
 		    case ULTIMO_TURNO:
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
-		    	cargaEstado();
+		    	//cargaEstado();
 				//recogeAccionesTurno();
 				generar_estado();
-				generaCronicaTurno();
+				//generaCronicaTurno();
 				finalizaEncuentro();
 				guardaEstado();
 		    	break;

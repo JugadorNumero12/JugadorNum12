@@ -69,6 +69,8 @@ SET time_zone = "+00:00";
  -- -----------------------------------------------------
  -- NOTA: todas las acciones en curso estan completadas al 50%
  -- -----------------------------------------------------
+SET FOREIGN_KEY_CHECKS = 0; 
+
 TRUNCATE `acciones_grupales`;
 INSERT INTO `acciones_grupales` (`id_accion_grupal`, `usuarios_id_usuario`, `habilidades_id_habilidad`, `equipos_id_equipo`, `influencias_acc`, `animo_acc`, `dinero_acc`, `jugadores_acc`, `finalizacion`, `completada`) VALUES
  -- arturo, habilidad 2 (hab. de perfil empresarial)
@@ -334,6 +336,8 @@ INSERT INTO `usuarios` (`id_usuario`, `equipos_id_equipo`, `nick`, `pass`, `emai
  (9, 2, 'alex', 'alex', 'alex@alex.com', 1, 5),
  -- samu: ultra
  (10, 3, 'samu', 'samu', 'samu@samu.com', 0, 5);
+
+ SET FOREIGN_KEY_CHECKS = 1; 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
