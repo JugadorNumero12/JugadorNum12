@@ -221,14 +221,9 @@ public class Partido
 	 */
 	private void generar_estado()
 	{	
-		/*$foo = new Formula(	$estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-							$defensivo_local ,$defensivo_visitante );
-		$estado = $foo->siguiente_estado();*/
-		//completar con los nombres que se usen en la Formula
-		$estado = Formula::siguienteEstado(array($estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-							$defensivo_local ,$defensivo_visitante ));
+
+		$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
 
 		if($estado == null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
@@ -252,8 +247,14 @@ public class Partido
 
 		self::generaCronicaTurno();
 
+		//Si estamos en el descanso del partido. Nivelamos el $estado del partido
+		if($this->$turno == 5){
+			//TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
+		}
+
 		//Aumentamos turno
 		$this->$turno = $this->$turno+1;
+
 		
 	}
 
