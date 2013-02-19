@@ -372,14 +372,26 @@ public class Partido
 							$local->setAttributes(array('puntos'=>$puntosLocal)); 
 							$visit->setAttributes(array('puntos'=>$puntosVisitante));							
 						}
+
 			//una vez actualizado los puntos, toca actualizar las diferencia de goles
 			$difLocal=$goles_local-$goles_visitante;
 			$difVisit=$goles_visitante-$goles_local;
 			$local->setAttributes(array('diferencia_goles'=>$difLocal)); 
 			$visit->setAttributes(array('diferencia_goles'=>$difVisit));
 			$visit->save();
-			$local->save(); 			
+			$local->save(); 	
+
 			//Una vez hecho esto,voy a la clasificacion y recalculo las posiciones
+			//Para ello voy a coger ahora todos los registros de clasificacion
+			//Y utilizando ORDER BY en la consulta voy a ir colocando las posiciones
+			//Con respecto a los puntos y a la diferencia de goles
+			$criteria = new CDbCriteria();
+			$criteria->order = 'puntos ASC, diferencia_goles DESC';
+
+			/*Otra opcion puede ser esta
+			$Puestos = Clasificacion::model()->findAll(
+			array('order'=>'puntos ASC,diferencia_goles DESC'));*/
+			$puestos=Clasificacion::model()->findAll($criteria);
 			
 			$trans->commit();	
 		}catch(Exception $exc){
