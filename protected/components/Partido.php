@@ -349,25 +349,38 @@ public class Partido
 	{			
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$loc=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_local));
-			$vis=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_visitante));
+			$local=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_local));
+			$visit=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_visitante));
+			//Miro quien ha ganado el partido 
+			//Sumo los puntos y los goles a favor y en contra de cada equipo
+			if($goles_local>$goles_visitante)
+			{
+				$puntosLocal=$local->puntos;
+				$puntosLocal=$puntosLocal+3;
+				$local->setAttributes(array('puntos'=>$puntosLocal));         
+			}else if($goles_local<$goles_visitante)
+					{
+						$puntosVisitante=$visit->puntos;
+						$puntosVisitante=$puntosVisitante+3;
+						$visit->setAttributes(array('puntos'=>$puntosVisitante)); 
+					}else 
+						{
+							$puntosLocal=$local->puntos;
+							$puntosLocal=$puntosLocal+1;							
+							$puntosVisitante=$visit->puntos;
+							$puntosVisitante=$puntosVisitante+1;
+							$local->setAttributes(array('puntos'=>$puntosLocal)); 
+							$visit->setAttributes(array('puntos'=>$puntosVisitante));							
+						}
+			//una vez actualizado los puntos, toca actualizar las diferencia de goles
+			$difLocal=$goles_local-$goles_visitante;
+			$difVisit=$goles_visitante-$goles_local;
+			$local->setAttributes(array('diferencia_goles'=>$difLocal)); 
+			$visit->setAttributes(array('diferencia_goles'=>$difVisit));
+			$visit->save();
+			$local->save(); 			
+			//Una vez hecho esto,voy a la clasificacion y recalculo las posiciones
 			
-			if($goles_local>$goles_visitante){
-				$suCl=sumaCalisf($id_local, 3, $trans);
-				$loc['ganados']+=1;
-				$vis['perdidos']+=1;
-			}elseif($goles_visitante>$goles_local){
-				$suCl=sumaCalisf($id_visitante, 3, $trans);
-				$loc['perdidos']+=1;
-				$vis['ganados']+=1;	
-			}else{
-				$suCl= sumaCalisf($id_local, 1, $trans) && sumaCalisf($id_visitante, 1, $trans);
-				$loc['empatados']+=1;
-				$vis['empatados']+=1;	
-			}
-			$loc->save();
-			$vis->save();
-			if(!$suCl)throw new Exception("Error en sumaCalisf");
 			$trans->commit();	
 		}catch(Exception $exc){
 			$trans->rollback();
@@ -376,59 +389,7 @@ public class Partido
 
 	}
 	
-	/*
-	 * Se usa exclusivamente como paso intermedio de actualizaClasificacion.
-	 *
-	 * Suma $puntos a $id_equipo en la tabla de clasificacion y reordena.
-	 * 
-	 * @returns si la transaccion ha terminado con exito o no.
-	 *
-	 * Si se le pasa una transaccion activa, no commita los cambios 
-	 * (espera a que los commite quien inició la transacion).
-	 */
-	private bool sumaCalisf($id_equipo, int $puntos, &$transaction=null)
-	{	
-		if($transaction==null) {
-			$transaction= Yii::app()->db->beginTransaction();
-			$autocommit=true;
-		}else $autocommit=false;
-
-		if(!($transaction instaceof CDbTransaction && $transaction->getActive()) )
-			return false;
-
-		try{
-			//sumar puntos
-			$eq= Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=>$id_equipo));
-			$puntosAnt= $eq['puntos'];
-			$puntosAct= ($eq['puntos']+=$puntos);
-
-			//Actualizar todos los equipos desplazados
-			$criteria= new CDbCriteria();
-			$criteria->condition=("puntos>=:puntosAnt && puntos< :puntosAct");
-			$criteria->params=array(':puntosAnt'=>$puntosAnt, ':puntosAct'=>$puntosAct);
-			$clas= Clasificacion::model()->findAll($criteria);
-			foreach ($clas as $e){
-				 $e['posicion']+=1;
-				 $e->save();
-			}
-
-			//Calcula la nueva 'posicion' del equipo
-			$criteria= new CDbCriteria();
-			$criteria->select='MAX(posicion) as posMax';
-			$criteria->condition='puntos>:puntosAct';
-			$criteria->params=array(':puntosAct'=>$puntosAct);
-			$clas= Clasificacion::model()->find($criteria);
-			$eq['posicion']= ($clas==null)? 1: $clas['posMax']+1;
-
-			$eq->save();
-			if($autocommit)$transaction->commit();
-
-		}catch(Exception $exc){
-			if($autocommit)$transaction->rollback();
-			return false;
-		}
-		return true;
-	}
+	
 
 	public void jugarse()
 	{
