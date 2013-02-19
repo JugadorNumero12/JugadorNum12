@@ -29,10 +29,6 @@ SET time_zone = "+00:00";
 -- ---------- DEFINICION DE LAS TABLAS --------------------
 -- --------------------------------------------------------
 
--- ELIMINAR CUANDO LA GENTE YA NO TENGA ESTA TABLA --
-DROP TABLE IF EXISTS `acciones_turno`;
---                      --                         --
-
 -- --------------------------------------------------------
 -- ELIMINACION DE FOREIGN KEYS
 -- --------------------------------------------------------
@@ -69,6 +65,19 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
   KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
   PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `acciones_turno`;
+CREATE TABLE IF NOT EXISTS `acciones_turno` (
+  `partidos_id_partido` int(10) unsigned NOT NULL,
+  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  KEY `acciones_turno_FKIndex1` (`partidos_id_partido`),
+  KEY `acciones_turno_FKIndex2` (`equipos_id_equipo`),  
+  KEY `acciones_turno_FKIndex3` (`usuarios_id_usuario`),  
+  PRIMARY KEY (`partidos_id_partido`,`equipos_id_equipo`,`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -162,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `nivel_visitante` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_local` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_visitante` int(10) unsigned NOT NULL DEFAULT '0',
-  `turno` int(11) NOT NULL DEFAULT '0',
+  `turno` int(11) NOT NULL DEFAULT '-1',
   `goles_local` int(11) NOT NULL DEFAULT '0',
   `goles_visitante` int(11) NOT NULL DEFAULT '0',
   `moral_local` int(11) NOT NULL DEFAULT '0',
@@ -232,6 +241,9 @@ ALTER TABLE partidos ADD FOREIGN KEY (equipos_id_equipo_1) REFERENCES equipos(id
 ALTER TABLE partidos ADD FOREIGN KEY (equipos_id_equipo_2) REFERENCES equipos(id_equipo);
 ALTER TABLE recursos ADD FOREIGN KEY (usuarios_id_usuario) REFERENCES usuarios(id_usuario);
 ALTER TABLE usuarios ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipo);
+ALTER TABLE acciones_turno ADD FOREIGN KEY (partidos_id_partido) REFERENCES partidos(id_partido);
+ALTER TABLE acciones_turno ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipos);
+ALTER TABLE acciones_turno ADD FOREIGN KEY (usuarios_id_usuario) REFERENCES usuarios(id_usuario);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
