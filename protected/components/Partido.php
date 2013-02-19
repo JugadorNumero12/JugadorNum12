@@ -351,6 +351,7 @@ public class Partido
 		try{
 			$local=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_local));
 			$visit=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_visitante));
+
 			//Miro quien ha ganado el partido 
 			//Sumo los puntos y los goles a favor y en contra de cada equipo
 			if($goles_local>$goles_visitante)
@@ -374,10 +375,12 @@ public class Partido
 						}
 
 			//una vez actualizado los puntos, toca actualizar las diferencia de goles
-			$difLocal=$goles_local-$goles_visitante;
-			$difVisit=$goles_visitante-$goles_local;
-			$local->setAttributes(array('diferencia_goles'=>$difLocal)); 
-			$visit->setAttributes(array('diferencia_goles'=>$difVisit));
+			$difPartidoLocal=$goles_local-$goles_visitante;
+			$difPartidoVisit=$goles_visitante-$goles_local;
+			$difTablaLocal=$local->diferencia_goles;
+			$difTablaVisit=$visit->diferencia_goles;
+			$local->setAttributes(array('diferencia_goles'=>$difTablaLocal+$difPartidoLocal)); 
+			$visit->setAttributes(array('diferencia_goles'=>$difTablaVisit+$difPartidoVisit));
 			$visit->save();
 			$local->save(); 	
 
@@ -392,7 +395,13 @@ public class Partido
 			$Puestos = Clasificacion::model()->findAll(
 			array('order'=>'puntos ASC,diferencia_goles DESC'));*/
 			$puestos=Clasificacion::model()->findAll($criteria);
-			
+			$i=1;
+			foreach ($puestos as $puesto)
+			{
+				$puesto->posicion=$i;
+				$i++;
+				$puesto->save();
+			}
 			$trans->commit();	
 		}catch(Exception $exc){
 			$trans->rollback();
