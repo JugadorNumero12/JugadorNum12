@@ -213,28 +213,49 @@ public class Partido
 
 	/*
 	 * En función de los datos recogidos para este turno y el estado anterior,
-	 * pasa al estado siguiente llamando a un objeto Formula
+	 * pasa al estado siguiente llamando a un objeto Formula.
+	 * Además:
+	 * - Actualizar goles en función del estado
+	 * - generar cronica del turno
+	 *- Mover turno (turno++)
 	 */
 	private void generar_estado()
 	{	
-		/*$foo = new Formula(	$estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-							$defensivo_local ,$defensivo_visitante );
-		$estado = $foo->siguiente_estado();*/
-		//completar con los nombres que se usen en la Formula
-		$estado = Formula::siguienteEstado(array($estado, $dif_niveles, $aforo_local ,$aforo_visitante,
-							$moral_local ,$moral_visitante ,$ofensivo_local ,$ofensivo_visitante,
-							$defensivo_local ,$defensivo_visitante ));
 
-		/*
-		*
-		* La función genera TODO lo necesario para el estado siguiente.
-		* Falta: 
-		* - Mover turno (turno++)
-		* - Actualizar goles en función del estado
-		* - generar cronica del turno
-		*/
-		generaCronicaTurno();
+		$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
+
+		if($estado == null){
+			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
+		}
+
+		
+		switch ($estado) {
+		    case 10: { //Gol del equipo local
+		        $this->$goles_local = $this->$goles_local+1;
+		        //TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
+		        break;
+		    }
+		    case -10:{ //Gol del equipo visitante
+		        $this->$goles_visitante = $this->$goles_visitante+1;
+		        //TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
+		        break;
+		    }
+		    //Default: No ha habido gol, por tanto $this->$estado se queda igual
+
+		}
+
+		self::generaCronicaTurno();
+
+		//Si estamos en el descanso del partido. Nivelamos el $estado del partido
+		if($this->$turno == 5){
+			//TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
+		}
+
+		//Aumentamos turno
+		$this->$turno = $this->$turno+1;
+
+		
 	}
 
 	/*
