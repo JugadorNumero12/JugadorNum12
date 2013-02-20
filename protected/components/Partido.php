@@ -6,9 +6,13 @@
 */
 public class Partido
 {
-	/* Un partido se juega entre los turnos 1 - 10 */
+	/* Un partido se juega entre los turnos 1 - 10 
+	* El turno 0 es inicialización de partido.
+	* El turno 6 es de descanso del partido.
+	*/
 	const PRIMER_TURNO = 0;
-	const ULTIMO_TURNO = 10;
+	const ULTIMO_TURNO = 11;
+	const TURNO_DESCANSO = 6;
 
 	private $id_partido;
 	private $id_local;
@@ -46,22 +50,13 @@ public class Partido
             $partido = Partidos::model()->findByPk($id_partido);
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
-
-            /*$local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
-            $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
-
-            if ($local == null)
-                throw new CHttpException(404,'Equipo local inexistente.');
-            if ($visitante == null)
-                throw new CHttpException(404,'Equipo visitante inexistente.');*/
-
             $this->$id_partido = $id_partido;
             $this->$id_local = $partido->equipos_id_equipo_1;
             $this->$id_visitante = $partido->equipos_id_equipo_2;
             $this->$turno = $partido->turno;
             $this->$cronica = $partido->cronica;
             $this->$ambiente = $partido->ambiente;
-            $this->$dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
+            $this->$dif_niveles = $partido->dif_niveles;
             $this->$aforo_local = $partido->aforo_local;
             $this->$aforo_visitante = $partido->aforo_visitante;
             $this->$ofensivo_local = $partido->ofensivo_local;
@@ -157,58 +152,52 @@ public class Partido
 	 */
 	private void inicializaEncuentro()
 	{
-		/* ALEX */
-		// NOTA: en la tabla <<equipos>> estan los atributos
-		// nivel_equipo, factor_ofensivo y factor_defensivo
-		$transaction = Yii::app()->db->beginTransaction();
-		try{
-		/*carga las acciones preparatorias y calcula por primera vez 
-		las variables AMBIENTE, AFOROS, DIFERENCIA DE NIVELES 
-		y VALOR OFENSIVO y DEFENSIVO basico de los equipos.*/
-			$partido = Partidos::model()->findByPk($id_partido);
-            if ($partido == null)
-                throw new CHttpException(404,'Partido inexistente.');
+		//Fijar turno inicial
+		$this->turno = 1;
+		//Fijar goles iniciales por seguridad
+		$this->goles_local = 0;
+		$this->goles_visitante = 0;
+		//Generamos estado inicial del partido
+		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		//Tomar fijos datos locales y visitantes
+		$local = Equipos::model()->findByPk($this->id_local);
+        $visitante = Equipos::model()->findByPk($this->id_visitante);
+        //Comprobación de existencia de equipos por seguridad
+        if ($local == null)
+            throw new CHttpException(404,'Equipo local inexistente.');
+        if ($visitante == null)
+            throw new CHttpException(404,'Equipo visitante inexistente.');
+        //Fijar diferencia de niveles
+        /*
+        *
+        * Acciones grupales ejecutadas mediante script o 
+        * recopiladas todas las finalizadas antes de un partido.
+        * En caso de ser recopiladas hay que tomar la dif. niveles de
+        * la tabla de Partido y en caso de ser ejecutadas por script
+        * tomadas de la tabla correspondiente del equipo local o visitante.
+		*
+		* En caso de ser por script, revisar campos de aforo en Equipos!!!!
+        *
+        *
+        */
+        $this->dif_niveles = $local->nivel_equipo - $visitante->nivel_equipo;
+        //Fijar aforos local y visitante
 
-            $local = Equipos::model()->findByPk($partido->$equipos_id_equipo_1);
-            $visitante = Equipos::model()->findByPk($partido->$equipos_id_equipo_2);
 
-            if ($local == null)
-                throw new CHttpException(404,'Equipo local inexistente.');
-            if ($visitante == null)
-                throw new CHttpException(404,'Equipo visitante inexistente.');
+        //TODO
 
-            $this->$ambiente = $partido->$ambiente;
-            /*niveles de la tabla partidos o de la tabla equipos ?*/
-            $this->$dif_niveles = $partido->$nivel_local - $partido->$nivel_visitante;
-            $this->$aforo_local = $partido->$aforo_local;
-            $this->$aforo_visitante = $partido->$aforo_visitante;
-            /*ofensivo y defensivo se inicializan con el valor de la tabal equipos*/
-            $ofensivo_local = $local->$factor_ofensivo;
-            $ofensivo_visitante = $visitante->$factor_ofensivo;
-            $defensivo_local = $local->$factor_defensivo;
-            $defensivo_visitante = $visitante->$factor_defensivo;
-            $goles_local = 0;
-            $goles_visitante = 0;
-            //TODO
-            $estado = 0; //pelota en medio
-            $moral_local = 0;
-            $moral_visitante = 0;
 
-            /*
-            * ¿Cambiar estado al inicio del partido? Implicaría poder empezar con un gol.
-            */
-            generar_estado(); //se supone que cambia la variable $estado pero dudo que lo haga
-            //revisar cuando acaben la fórmula
-			/*y lo almacena en la tabla turnos.
-			/*A partir de la diferencia de niveles, almacena el primer estado del partido.*/
-			//guardaEstado();
-			/*
-			* Guardar manualmente el estado: transacción dentro de transacción falla!
-			*/
-		}catch(Exception $e){
-			$transaction->rollback();
-			throw $e;
-		}
+
+        //Fijar factores ofensivo y defensivo
+        $this->ofensivo_local = $local->factor_ofensivo;
+        $this->defensivo_local = $local->factor_defensivo;
+        $this->ofensivo_visitante = $visitante->factor_ofensivo;
+        $this->defensivo_visitante = $visitante->factor_defensivo;
+        //Moral inicial
+        $this->moral_local = 0;
+        $this->moral_visitante = 0;
+
+        //Ambiente ya tomado en la constructora
 	}
 
 	/*
@@ -443,21 +432,22 @@ public class Partido
 		    	generaCronicaBase();
 		    	guardaEstado();      
 		        break;
-		    case (($turno > PRIMER_TURNO) && ($turno < ULTIMO_TURNO)):	
+		    case TURNO_DESCANSO:
+		    	//TODO Revisar!!!
+		    	generaEstadoDescanso();
+		    	generaCronicaDescanso();
+		    	guardaEstado();
+		    	break;
+		    case (($turno > PRIMER_TURNO) && ($turno < ULTIMO_TURNO) && ($turno != TURNO_DESCANSO)):	
+		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
-		    	//cargaEstado();
-				//recogeAccionesTurno();
 				generar_estado();
-				//generaCronicaTurno();
 				guardaEstado();
 		        break;
 		    case ULTIMO_TURNO:
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
-		    	//cargaEstado();
-				//recogeAccionesTurno();
 				generar_estado();
-				//generaCronicaTurno();
 				finalizaEncuentro();
 				guardaEstado();
 		    	break;
