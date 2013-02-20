@@ -415,7 +415,7 @@ public class Partido
 	
 	private function generaCronicaDescanso()
 	{
-
+		//Indicar fin del descanso y reanudación del partido
 	}
 
 	private function generaEstadoDescanso()
