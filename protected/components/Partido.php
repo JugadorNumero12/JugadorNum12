@@ -187,7 +187,6 @@ public class Partido
         //TODO
 
 
-
         //Fijar factores ofensivo y defensivo
         $this->ofensivo_local = $local->factor_ofensivo;
         $this->defensivo_local = $local->factor_defensivo;
@@ -421,7 +420,7 @@ public class Partido
 
 	private function generaEstadoDescanso()
 	{
-		
+
 	}
 
 	public function jugarse()
