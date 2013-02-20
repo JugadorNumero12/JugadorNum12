@@ -322,12 +322,6 @@ public class Partido
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
-
-		  /*
-		  *
-		  * REVISAR, NO HAY ACCIONESTURNO -> ¿Cómo marcar los que han participado?
-		  *
-		  */
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido)),
@@ -341,7 +335,7 @@ public class Partido
 			}
 			foreach ($participantes as $user){//Esta se le da solo a los participantes
 				$rec=Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>$user));
-				$rec['animo']= min(round(2*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
+				$rec['animo']= min(round(3*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			$trans->commit();
