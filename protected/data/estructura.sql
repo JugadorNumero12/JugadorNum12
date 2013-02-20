@@ -242,7 +242,7 @@ ALTER TABLE partidos ADD FOREIGN KEY (equipos_id_equipo_2) REFERENCES equipos(id
 ALTER TABLE recursos ADD FOREIGN KEY (usuarios_id_usuario) REFERENCES usuarios(id_usuario);
 ALTER TABLE usuarios ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipo);
 ALTER TABLE acciones_turno ADD FOREIGN KEY (partidos_id_partido) REFERENCES partidos(id_partido);
-ALTER TABLE acciones_turno ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipos);
+ALTER TABLE acciones_turno ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipo);
 ALTER TABLE acciones_turno ADD FOREIGN KEY (usuarios_id_usuario) REFERENCES usuarios(id_usuario);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
