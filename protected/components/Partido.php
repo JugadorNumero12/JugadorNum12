@@ -111,7 +111,7 @@ public class Partido
     /*
      * Guarda toda la información del estado actual en la base de datos.
      */
-    private void guardaEstado()
+    private function guardaEstado()
     {
         $transaction = Yii::app()->db->beginTransaction();
         try{
@@ -150,7 +150,7 @@ public class Partido
 	 * A partir de la diferencia de niveles, almacena el primer estado
 	 * del partido.
 	 */
-	private void inicializaEncuentro()
+	private function inicializaEncuentro()
 	{
 		//Fijar turno inicial
 		$this->turno = 1;
@@ -208,7 +208,7 @@ public class Partido
 	 * - generar cronica del turno
 	 *- Mover turno (turno++)
 	 */
-	private void generar_estado()
+	private function generar_estado()
 	{	
 
 		$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
@@ -251,7 +251,7 @@ public class Partido
 	 * Genera la crónica para este turno en función de la crónica acumulada en la BBDD y 
 	 * la guarda en la variable $cronica
 	 */
-	private void generaCronicaTurno()
+	private function generaCronicaTurno()
 	{
 		/* MARCOS */
 		/*
@@ -274,7 +274,7 @@ public class Partido
 	/*
 	 * Genera una crónica inicial para el partido.
 	 */
-	private void generaCronicaBase()
+	private function generaCronicaBase()
 	{
 		
 	}
@@ -284,7 +284,7 @@ public class Partido
 	 * 2. Desactiva las entradas compradas por los usuarios -> DE MOMENTO OLVIDARLO
 	 * 3. Actualizar clasificación
 	 */
-	private void finalizaEncuentro()
+	private function finalizaEncuentro()
 	{
 		generaBonificacion();
 		actualizaClasificacion();
@@ -294,7 +294,7 @@ public class Partido
 	 * Genera una bonificación de recursos a los participantes del partido en 
 	 * función del resultado y el ambiente.
 	 */
-	private void generaBonificacion()
+	private function generaBonificacion()
 	{
 		/* MARCOS */
 		/*$bonifGanador = 28;
@@ -318,7 +318,7 @@ public class Partido
 	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
 	 * bonificacion = [(1.5^(ambiente+1))/(4+.7*ambiente)] * bonus * (haParticipado?3:1)
 	 */
-	private void bonifAnimo($equipo, int $bonus)
+	private function bonifAnimo($equipo, int $bonus)
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
@@ -349,7 +349,7 @@ public class Partido
 	/*
 	 * Recalcula los puntos y actualiza la clasificación.
 	 */
-	private void actualizaClasificacion()
+	private function actualizaClasificacion()
 	{			
 		$trans = Yii::app()->db->beginTransaction();
 		try{
@@ -414,9 +414,17 @@ public class Partido
 
 	}
 	
-	
+	private function generaCronicaDescanso()
+	{
 
-	public void jugarse()
+	}
+
+	private function generaEstadoDescanso()
+	{
+		
+	}
+
+	public function jugarse()
 	{
 		switch ($turno) 
 		{
