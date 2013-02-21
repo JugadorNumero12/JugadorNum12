@@ -161,9 +161,6 @@ class Partido
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
 		//Generamos estado inicial del partido
-<<<<<<< HEAD
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
-=======
 
 
 
@@ -173,8 +170,6 @@ class Partido
 
 
 
-
->>>>>>> c9b6f53534cc3a88ad50d70b6be478435f6c9acf
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
