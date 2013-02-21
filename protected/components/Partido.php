@@ -233,28 +233,26 @@ public class Partido
 		switch ($estado) {
 		    case 10: { //Gol del equipo local
 		        $this->$goles_local = $this->$goles_local+1;
-		        //TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
 		        break;
 		    }
 		    case -10:{ //Gol del equipo visitante
 		        $this->$goles_visitante = $this->$goles_visitante+1;
-		        //TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
 		        break;
 		    }
 		    //Default: No ha habido gol, por tanto $this->$estado se queda igual
-
 		}
 
+		//Si ha habido gol o nos vamos al descanso llamamos a la formula para volver a equilibrar el partido (var $estado)
+		//El valor del estado es null porque asi la formula sabe que estamos en estos casos (no podemos volver a meter gol)
+		if($estado == 10 || $estado == -10 || $turno == 5){ 
+			$estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
+		}
+ 
 		self::generaCronicaTurno();
-
-		//Si estamos en el descanso del partido. Nivelamos el $estado del partido
-		if($this->$turno == 5){
-			//TODO llamada a la fórmula para volver a equilibrar el partido (var $estado)
-		}
 
 		//Aumentamos turno
 		$this->$turno = $this->$turno+1;
-
 		
 	}
 
@@ -264,6 +262,16 @@ public class Partido
 	 */
 	private void generaCronicaTurno()
 	{
+
+
+		/*Marina*/
+		/*
+		Traerse el estado anterior para comparar y decir como fue la jugada.
+		Ver si se ha metido algún gol y comentarlo
+		En el turno 5 comentar que nos vamos al descanso y en el 6 que volvemos del descanso
+		*/
+
+
 		/* MARCOS */
 		/*
 		*
