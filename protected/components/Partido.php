@@ -515,6 +515,7 @@ class Partido
 	{
 		//Generamos estado tras el descanso
 		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		$this->turno++;
 	}
 
 	public function jugarse()
