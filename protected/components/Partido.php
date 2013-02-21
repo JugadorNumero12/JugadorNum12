@@ -14,6 +14,8 @@ public class Partido
 	const ULTIMO_TURNO = 11;
 	const TURNO_DESCANSO = 6;
 
+	const AMBIENTE_MEDIO = 500;
+
 	private $id_partido;
 	private $id_local;
 	private $id_visitante;
@@ -161,32 +163,18 @@ public class Partido
 		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
-        $visitante = Equipos::model()->findByPk($this->id_visitante);
-        //Comprobación de existencia de equipos por seguridad
+        $visitante = Equipos::model()->findByPk($this->id_visitante);   
+        $partido = Partidos::model()->findByPk($this->$id_partido);
+        //Comprobación de existencia de datos por seguridad
         if ($local == null)
             throw new CHttpException(404,'Equipo local inexistente.');
         if ($visitante == null)
-            throw new CHttpException(404,'Equipo visitante inexistente.');
-        //Fijar diferencia de niveles
-        /*
-        *
-        * Acciones grupales ejecutadas mediante script o 
-        * recopiladas todas las finalizadas antes de un partido.
-        * En caso de ser recopiladas hay que tomar la dif. niveles de
-        * la tabla de Partido y en caso de ser ejecutadas por script
-        * tomadas de la tabla correspondiente del equipo local o visitante.
-		*
-		* En caso de ser por script, revisar campos de aforo en Equipos!!!!
-        *
-        *
-        */
-        $this->dif_niveles = $local->nivel_equipo - $visitante->nivel_equipo;
-        //Fijar aforos local y visitante
-
-
-        //TODO
-
-
+            throw new CHttpException(404,'Equipo visitante inexistente.');     
+        if ($partido == null)
+            throw new CHttpException(404,'Partido inexistente.');
+        //Fijar diferencia de niveles.
+        //IMPORTANTE: dif. niveles -> Local +, Visitante -
+        $this->dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
         //Fijar factores ofensivo y defensivo
         $this->ofensivo_local = $local->factor_ofensivo;
         $this->defensivo_local = $local->factor_defensivo;
@@ -196,7 +184,8 @@ public class Partido
         $this->moral_local = 0;
         $this->moral_visitante = 0;
 
-        //Ambiente ya tomado en la constructora
+        //Ambiente, aforo local y visitante ya tomados en la constructora.
+        //Pertenecen a Partidos desde el comienzo.
 	}
 
 	/*
@@ -275,7 +264,23 @@ public class Partido
 	 */
 	private function generaCronicaBase()
 	{
-		
+		//Tomar fijos datos locales y visitantes
+		$local = Equipos::model()->findByPk($this->id_local);
+        $visitante = Equipos::model()->findByPk($this->id_visitante);  
+        //Comprobación de existencia de datos por seguridad
+        if ($local == null)
+            throw new CHttpException(404,'Equipo local inexistente.');
+        if ($visitante == null)
+            throw new CHttpException(404,'Partido inexistente.');
+		$cBase = "Comienza el encuentro entre los ".$local->nombre." como locales 
+		y los ".$visitante->nombre." en posición de visitantes. "
+		$cBase .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
+		en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
+		$cBase .= ($this->ambiente > AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
+		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
+		$cBase .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
+		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido.";  
+		return $cBase;
 	}
 
 	/*
