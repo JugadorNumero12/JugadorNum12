@@ -117,23 +117,23 @@ class Partido
     {
         $transaction = Yii::app()->db->beginTransaction();
         try{
-            $partido = Partidos::findByPk($id_partido);
+            $partido = Partidos::model()->findByPk($this->id_partido);
 
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
 
-            $partido->ofensivo_local = $ofensivo_local;
-            $partido->ofensivo_visitante = $ofensivo_visitante;
-            $partido->defensivo_local = $defensivo_local;
-            $partido->defensivo_visitante = $defensivo_visitante;
+            $partido->ofensivo_local = $this->ofensivo_local;
+            $partido->ofensivo_visitante = $this->ofensivo_visitante;
+            $partido->defensivo_local = $this->defensivo_local;
+            $partido->defensivo_visitante = $this->defensivo_visitante;
 
-            $partido->goles_local = $goles_local;
-            $partido->goles_visitante = $goles_visitante;
-            $partido->estado = $estado;
-            $partido->moral_local = $moral_local;
-            $partido->moral_visitante = $moral_visitante;
-			$partido->turno = $turno;
-			$partido->cronica = $cronica;
+            $partido->goles_local = $this->goles_local;
+            $partido->goles_visitante = $this->goles_visitante;
+            $partido->estado = $this->estado;
+            $partido->moral_local = $this->moral_local;
+            $partido->moral_visitante = $this->moral_visitante;
+			$partido->turno = $this->turno;
+			$partido->cronica = $this->cronica;
             if(!$partido->save()) 
                 throw new Exception('No se ha podido guardar el turno actual.');
             $transaction->commit();
@@ -160,7 +160,16 @@ class Partido
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
 		//Generamos estado inicial del partido
-		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+
+
+
+
+		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+
+
+
+
+
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
