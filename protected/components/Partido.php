@@ -117,23 +117,24 @@ class Partido
     {
         $transaction = Yii::app()->db->beginTransaction();
         try{
-            $partido = Partidos::model()->findByPk($id_partido);
+            $partido = Partidos::model()->findByPk($this->$id_partido);
+
 
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
 
-            $partido->ofensivo_local = $ofensivo_local;
-            $partido->ofensivo_visitante = $ofensivo_visitante;
-            $partido->defensivo_local = $defensivo_local;
-            $partido->defensivo_visitante = $defensivo_visitante;
+            $partido->ofensivo_local = $this->ofensivo_local;
+            $partido->ofensivo_visitante = $this->ofensivo_visitante;
+            $partido->defensivo_local = $this->defensivo_local;
+            $partido->defensivo_visitante = $this->defensivo_visitante;
 
-            $partido->goles_local = $goles_local;
-            $partido->goles_visitante = $goles_visitante;
-            $partido->estado = $estado;
-            $partido->moral_local = $moral_local;
-            $partido->moral_visitante = $moral_visitante;
-			$partido->turno = $turno;
-			$partido->cronica = $cronica;
+            $partido->goles_local = $this->goles_local;
+            $partido->goles_visitante = $this->goles_visitante;
+            $partido->estado = $this->estado;
+            $partido->moral_local = $this->moral_local;
+            $partido->moral_visitante = $this->moral_visitante;
+			$partido->turno = $this->turno;
+			$partido->cronica = $this->cronica;
             if(!$partido->save()) 
                 throw new Exception('No se ha podido guardar el turno actual.');
             $transaction->commit();
@@ -160,7 +161,20 @@ class Partido
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
 		//Generamos estado inicial del partido
+<<<<<<< HEAD
 		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+=======
+
+
+
+
+		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+
+
+
+
+
+>>>>>>> c9b6f53534cc3a88ad50d70b6be478435f6c9acf
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
@@ -357,15 +371,14 @@ class Partido
             throw new CHttpException(404,'Equipo local inexistente.');
         if ($visitante == null)
             throw new CHttpException(404,'Partido inexistente.');
-		$cBase = "Comienza el encuentro entre los ".$local->nombre." como locales 
+		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales 
 		y los ".$visitante->nombre." en posición de visitantes. ";
-		$cBase .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
+		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
 		en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
-		$cBase .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
+		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
-		$cBase .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
+		$this->cronica .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
 		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
-		return $cBase;
 	}
 
 	/*
@@ -506,10 +519,9 @@ class Partido
 	private function generaCronicaDescanso()
 	{
 		//Indicar fin del descanso y reanudación del partido
-		$cDescanso = "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
-		$cDescanso .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		$this->cronica .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
+		$this->cronica .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
-		return $cDescanso;
 	}
 
 	private function generaEstadoDescanso()
@@ -534,7 +546,9 @@ class Partido
 		    	$this->generaCronicaDescanso();
 		    	$this->guardaEstado();
 		    	break;
-		    case (($turno > self::PRIMER_TURNO) && ($turno < self::ULTIMO_TURNO) && ($turno != self::TURNO_DESCANSO)):	
+		    case (($this->turno > self::PRIMER_TURNO) 
+		    	&& ($this->turno < self::ULTIMO_TURNO) 
+		    	&& ($this->turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
 				$this->generar_estado();
