@@ -366,15 +366,14 @@ class Partido
             throw new CHttpException(404,'Equipo local inexistente.');
         if ($visitante == null)
             throw new CHttpException(404,'Partido inexistente.');
-		$cBase = "Comienza el encuentro entre los ".$local->nombre." como locales 
+		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales 
 		y los ".$visitante->nombre." en posición de visitantes. ";
-		$cBase .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
+		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
 		en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
-		$cBase .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
+		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
-		$cBase .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
+		$this->cronica .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
 		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
-		return $cBase;
 	}
 
 	/*
@@ -515,10 +514,9 @@ class Partido
 	private function generaCronicaDescanso()
 	{
 		//Indicar fin del descanso y reanudación del partido
-		$cDescanso = "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
-		$cDescanso .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		$this->cronica .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
+		$this->cronica .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
-		return $cDescanso;
 	}
 
 	private function generaEstadoDescanso()
@@ -543,7 +541,9 @@ class Partido
 		    	$this->generaCronicaDescanso();
 		    	$this->guardaEstado();
 		    	break;
-		    case (($turno > self::PRIMER_TURNO) && ($turno < self::ULTIMO_TURNO) && ($turno != self::TURNO_DESCANSO)):	
+		    case (($this->turno > self::PRIMER_TURNO) 
+		    	&& ($this->turno < self::ULTIMO_TURNO) 
+		    	&& ($this->turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
 				$this->generar_estado();
