@@ -221,6 +221,8 @@ public class Partido
 	 */
 	private void generar_estado()
 	{	
+		//Guardamos el estado antiguo para poder generar unas cronicas mejores
+		$estado_antiguo = $estado;
 
 		$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
 											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
@@ -242,6 +244,8 @@ public class Partido
 		    //Default: No ha habido gol, por tanto $this->$estado se queda igual
 		}
 
+		self::generaCronicaTurno($estado_antiguo);
+
 		//Si ha habido gol o nos vamos al descanso llamamos a la formula para volver a equilibrar el partido (var $estado)
 		//El valor del estado es null porque asi la formula sabe que estamos en estos casos (no podemos volver a meter gol)
 		if($estado == 10 || $estado == -10 || $turno == 5){ 
@@ -249,8 +253,6 @@ public class Partido
 											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
 		}
  
-		self::generaCronicaTurno();
-
 		//Aumentamos turno
 		$this->$turno = $this->$turno+1;
 		
@@ -260,34 +262,108 @@ public class Partido
 	 * Genera la crónica para este turno en función de la crónica acumulada en la BBDD y 
 	 * la guarda en la variable $cronica
 	 */
-	private void generaCronicaTurno()
+	private void generaCronicaTurno($estado_antiguo)
 	{
+		//variables que necesitamos
+		$partido = Partidos::model()->findByPk($id_partido);
+
+		//Decimos en que turno estamos para situar
+		$cronica_turno = "Estamos en el turno ".$turno." del partido. ";
 
 
-		/*Marina*/
-		/*
-		Traerse el estado anterior para comparar y decir como fue la jugada.
-		Ver si se ha metido algún gol y comentarlo
-		En el turno 5 comentar que nos vamos al descanso y en el 6 que volvemos del descanso
-		*/
+		//Miramos a ver si se ha metido algun gol 
+		switch ($estado) {
+		    case 10: { //Gol del equipo local
+		        $cronica_gol = "La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        break;
+		    }
+		    case -10:{ //Gol del equipo visitante
+		        $cronica_gol = "La aficion del equipo ".$partido->visitante->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        break;
+		    }
+		}
 
+		//Miramos quien va ganando y quien va perdiendo
+		switch ($estado) {
+			 case ($estado > 0):{ //Va ganando el equipo local
+		        $equipo_ganando = $partido->local->nombre.; $equipo_perdiendo = $partido->visitante->nombre.;
+		        break;
+		    }
+		     case ($estado < 0):{ //Va ganando el equipo visitante
+		        $equipo_ganando = $partido->visitante->nombre.; $equipo_perdiendo = $partido->local->nombre.;
+		        break;
+		    }
+		    case 0: { //Estan igual
+		        $equipo_ganando = ""; $equipo_perdiendo = "";
+		        break;
+		    }		   
+		}
 
-		/* MARCOS */
-		/*
-		*
-		* rehacer, no guarda la crónica en la bbdd
-		*/
+		//Comentamos el estado del partido 
+		$cronica_estado;
+		$dif_estado = abs($estado - $estado_antiguo);
+		switch ($estado) {
+		    case 0: { //Gol del equipo local
+		        $cronica_estado = "El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
+		        break;
+		    }
+		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
+		        $cronica_estado = "El partido esta prácticamente igualado ".$equipo_ganando." tiene una ligera ventaja";
+		        break;
+		    }
+		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia normal
+				$cronica_estado = "El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo;
+		        break;
+		    }
+		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Muy favorable
+				$cronica_estado = "El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas";
+		        break;
+		    }
+		}
 
-		/*$trans = Yii::app()->db->beginTransaction();
-		try{
-			$partido=Partidos::model()->findByPk($id_partido);
-			$partido['cronica'] += $cronica;
-			$partido->save();
-			$trans->commit();
-		}catch(Exception $exc){
-			$trans->roollback();
-			throw new Exception("Error al guardar la cronica", 1);
-		}*/
+		//Comentamos la diferencia entre el estado antiguo y el actual
+		$cronica_dif_estado;
+		$dif_estado = abs($estado - $estado_antiguo);
+		switch ($dif_estado) {
+		    case ($dif_estado == 0): { //El partido sigue igual
+		    	$cronica_dif_estado = "El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido"
+		        break;
+		    }
+		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
+				$cronica_dif_estado = "El partido está muy reñido. EL equipo ha mejorado su posicion ligeramente"
+		        break;
+		    }
+		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
+				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion."
+		        break;
+		    }
+		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Ventaja para alguien
+				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion notablemente."
+		        break;
+		    }
+		    case ($dif_estado >=10 && $dif_estado <=13):{ //[10,11,12,13] Remontada 
+				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Pero deben estar atentos si no quieren que el esfuerzo caiga en saco roto."
+		        break;
+		    }
+		    case ($dif_estado >=14 && $dif_estado <=16):{ //[14,15,16] Remontada importante 
+				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Si se esfuerzan un poco más conseguiran gol"
+		        break;
+		    }
+		    case ($dif_estado >=17 && $dif_estado <=19):{ //[17,18,19] Remontada brutal
+				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal. Ya se huele el gol"
+		        break;
+		    }
+		    case ($dif_estado == 20 ):{ //[20] En el estado antetior unos metiron gol y ahora los otros han remontado. 
+				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal que hace que el gol de antes quede en nada."
+		        break;
+		    }
+		}
+
+		//TODO comentar la diferencia de goles
+
+		
+		$this->$cronica = $cronica_turno." ".$cronica_gol." ".$cronica_estado." ".$cronica_dif_estado;
+		
 	}
 
 	/*
