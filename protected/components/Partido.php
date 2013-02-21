@@ -117,7 +117,7 @@ class Partido
     {
         $transaction = Yii::app()->db->beginTransaction();
         try{
-            $partido = Partidos::findByPk($id_partido);
+            $partido = Partidos::model()->findByPk($id_partido);
 
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
@@ -160,7 +160,7 @@ class Partido
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
 		//Generamos estado inicial del partido
-		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
@@ -201,8 +201,8 @@ class Partido
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
 		$estado_antiguo = $estado;
 
-		$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
+		/*$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
 
 		if($estado == null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
@@ -226,8 +226,8 @@ class Partido
 		//Si ha habido gol o nos vamos al descanso llamamos a la formula para volver a equilibrar el partido (var $estado)
 		//El valor del estado es null porque asi la formula sabe que estamos en estos casos (no podemos volver a meter gol)
 		if($estado == 10 || $estado == -10 || $turno == 5){ 
-			$estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante));
+			/*$estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
 		}
  
 		//Aumentamos turno
@@ -515,7 +515,7 @@ class Partido
 	private function generaEstadoDescanso()
 	{
 		//Generamos estado tras el descanso
-		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
 	}
 
 	public function jugarse()
