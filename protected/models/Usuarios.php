@@ -142,6 +142,8 @@ class Usuarios extends CActiveRecord
 			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<acciones_grupales>> */
 			'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<acciones_turno>>*/
+			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 		);
 	}
 
