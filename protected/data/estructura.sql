@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `dif_niveles` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_local` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_visitante` int(10) unsigned NOT NULL DEFAULT '0',
-  `turno` int(11) NOT NULL DEFAULT '-1',
+  `turno` int(11) NOT NULL DEFAULT '0',
   `goles_local` int(11) NOT NULL DEFAULT '0',
   `goles_visitante` int(11) NOT NULL DEFAULT '0',
   `moral_local` int(11) NOT NULL DEFAULT '0',
