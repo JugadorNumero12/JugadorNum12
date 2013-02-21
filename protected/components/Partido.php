@@ -376,7 +376,7 @@ class Partido
 	private function finalizaEncuentro()
 	{
 		$this->generaBonificacion();
-		//$this->actualizaClasificacion();
+		$this->actualizaClasificacion();
 	}
 
 	/*
