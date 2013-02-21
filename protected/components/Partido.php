@@ -442,8 +442,8 @@ class Partido
 	{			
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$local=Clasificacion::model()->find(array('equipos_id_equipo'=> $this->id_local));
-			$visit=Clasificacion::model()->find(array('equipos_id_equipo'=> $this->id_visitante));
+			$local=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=> $this->id_local));
+			$visit=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=> $this->id_visitante));
 
 			//Miro quien ha ganado el partido 
 			//Sumo los puntos y los goles a favor y en contra de cada equipo
@@ -495,9 +495,13 @@ class Partido
 				$i++;
 				$puesto->save();
 			}
+
+
+
 			$trans->commit();	
 		}catch(Exception $exc){
 			$trans->rollback();
+			echo $exc; Yii::app()->end();
 			throw new Exception("Error al recalcular la clasificación", 1);
 		}
 
