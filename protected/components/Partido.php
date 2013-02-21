@@ -343,7 +343,7 @@ class Partido
 		//TODO comentar la diferencia de goles
 
 		
-		$this->cronica = $cronica_turno;
+		$this->cronica .= $cronica_turno;
 		
 	}
 
@@ -375,8 +375,8 @@ class Partido
 	 */
 	private function finalizaEncuentro()
 	{
-		generaBonificacion();
-		actualizaClasificacion();
+		$this->generaBonificacion();
+		$this->actualizaClasificacion();
 	}
 
 	/*
@@ -389,15 +389,15 @@ class Partido
 		/*$bonifGanador = 28;
 		  $bonifEmpate = 14;
 		  $bonifPerdedor = 7;*/
-		if($goles_local>$goles_visitante){
-			bonifAnimo($id_local, 28);
-			bonifAnimo($id_visitante, 7);
-		}elseif($goles_visitante>$goles_local){
-			bonifAnimo($id_visitante, 28);
-			bonifAnimo($id_local, 7);
+		if($this->goles_local>$this->goles_visitante){
+			$this->bonifAnimo($this->id_local, 28);
+			$this->bonifAnimo($this->id_visitante, 7);
+		}elseif($this->goles_visitante>$this->goles_local){
+			$this->bonifAnimo($this->id_visitante, 28);
+			$this->bonifAnimo($this->id_local, 7);
 		}else{
-			bonifAnimo($id_local, 14);
-			bonifAnimo($id_visitante, 14);
+			$this->bonifAnimo($this->id_local, 14);
+			$this->bonifAnimo($this->id_visitante, 14);
 		}
 	}
 
@@ -407,7 +407,7 @@ class Partido
 	 * Dado un $id_equipo y un $bonus, da una bonificación de animo a los miembros del $id_equipo. 
 	 * bonificacion = [(1.5^(ambiente+1))/(4+.7*ambiente)] * bonus * (haParticipado?3:1)
 	 */
-	private function bonifAnimo($equipo, int $bonus)
+	private function bonifAnimo($equipo, $bonus)
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
@@ -546,7 +546,7 @@ class Partido
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
 				$this->generar_estado();
-				$this->finalizaEncuentro();
+				//$this->finalizaEncuentro();
 				$this->guardaEstado();
 		    	break;
 		    default:
