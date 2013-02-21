@@ -360,10 +360,8 @@ class Partido
             throw new CHttpException(404,'Equipo local inexistente.');
         if ($visitante == null)
             throw new CHttpException(404,'Partido inexistente.');
-		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales 
-		y los ".$visitante->nombre." en posición de visitantes. ";
-		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
-		en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
+		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
+		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
 		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
 		$this->cronica .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
