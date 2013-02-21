@@ -422,7 +422,8 @@ class Partido
 				$rec['animo']= min(round(  $bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
-			foreach ($participantes as $user){//Esta se le da solo a los participantes
+			foreach ($participantes as $participante){//Esta se le da solo a los participantes
+				$user=$participante->usuarios;
 				$rec=$user->recursos;
 				$rec['animo']= min(round(3*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
@@ -430,6 +431,7 @@ class Partido
 			$trans->commit();
 		}catch(Exception $exc){
 			$trans->rollback();
+			echo $exc; Yii::app()->end();
 			//Yii::log('[MATCH_ERROR].'.$exc->getMessage(), 'error');
 			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
@@ -500,8 +502,7 @@ class Partido
 
 			$trans->commit();	
 		}catch(Exception $exc){
-			$trans->rollback();
-			echo $exc; Yii::app()->end();
+			$trans->rollback();			
 			throw new Exception("Error al recalcular la clasificación", 1);
 		}
 
