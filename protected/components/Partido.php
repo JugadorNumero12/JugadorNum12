@@ -117,7 +117,7 @@ class Partido
     {
         $transaction = Yii::app()->db->beginTransaction();
         try{
-            $partido = Partidos::model()->findByPk($this->$id_partido);
+            $partido = Partidos::model()->findByPk($this->id_partido);
 
 
             if ($partido == null)
@@ -161,20 +161,9 @@ class Partido
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
 		//Generamos estado inicial del partido
-<<<<<<< HEAD
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
-=======
-
-
-
 
 		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
 
-
-
-
-
->>>>>>> c9b6f53534cc3a88ad50d70b6be478435f6c9acf
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
@@ -225,14 +214,14 @@ class Partido
 		
 		switch ($estado) {
 		    case 10: { //Gol del equipo local
-		        $this->$goles_local = $this->$goles_local+1;
+		        $this->goles_local = $this->goles_local+1;
 		        break;
 		    }
 		    case -10:{ //Gol del equipo visitante
-		        $this->$goles_visitante = $this->$goles_visitante+1;
+		        $this->goles_visitante = $this->goles_visitante+1;
 		        break;
 		    }
-		    //Default: No ha habido gol, por tanto $this->$estado se queda igual
+		    //Default: No ha habido gol, por tanto $this->estado se queda igual
 		}
 
 		self::generaCronicaTurno($estado_antiguo);
@@ -245,7 +234,7 @@ class Partido
 		}
  
 		//Aumentamos turno
-		$this->$turno = $this->$turno+1;
+		$this->turno = $this->turno+1;
 		
 	}
 
@@ -354,7 +343,7 @@ class Partido
 		//TODO comentar la diferencia de goles
 
 		
-		$this->$cronica = $cronica_turno." ".$cronica_gol." ".$cronica_estado." ".$cronica_dif_estado;
+		$this->cronica = $cronica_turno." ".$cronica_gol." ".$cronica_estado." ".$cronica_dif_estado;
 		
 	}
 
