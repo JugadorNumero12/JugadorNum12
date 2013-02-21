@@ -38,20 +38,19 @@
 			<?php printf('<b>Dinero: </b>%d <b>&Aacute;nimo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']); ?>
 		</tr></div>
 
+		<?php 
+			if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL) {?>
+				<div class ="separador"><tr>
+					<?php printf('<b>N&uacute;mero m&aacute;ximo de participantes: </b>%d',$habilidad['participantes_max']); ?>
+				</tr></div>	
 
-		<div class ="separador"><tr>
-			<?php 
-				if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL){
-					printf('<b>N&uacute;mero m&aacute;ximo de participantes: </b>%d',$habilidad['participantes_max']);
-			?>
-		</tr></div>	
-
-		<div class ="separador"><tr>
-			<?php echo '<b>Valores m&aacute;ximos que los recursos pueden sumar: </b>';
-			printf('<b>Dinero: </b>%d <b>&Aacute;nimo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero_max'], $habilidad['animo_max'], $habilidad['influencias_max']);
-			}
-			?>
-		</tr></div>
+				<div class ="separador"><tr>
+					<?php echo '<b>Valores m&aacute;ximos que los recursos pueden sumar: </b>';
+					printf('<b>Dinero: </b>%d <b>&Aacute;nimo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero_max'], $habilidad['animo_max'], $habilidad['influencias_max']);?>
+				</tr></div>
+			<?php }
+		?>
+		
 
 		<div class="separador"><tr>
 			<?php
