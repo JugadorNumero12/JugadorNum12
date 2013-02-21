@@ -202,17 +202,17 @@ class Partido
 	private function generar_estado()
 	{	
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
-		$estado_antiguo = $estado;
+		$estado_antiguo = $this->estado;
 
-		/*$estado = Formula::siguienteEstado(array('estado'=>$estado, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
+		/*$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante)); */
 
-		if($estado == null){
+		if($this->estado == null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
 		}
 
 		
-		switch ($estado) {
+		switch ($this->estado) {
 		    case 10: { //Gol del equipo local
 		        $this->goles_local = $this->goles_local+1;
 		        break;
@@ -228,7 +228,7 @@ class Partido
 
 		//Si ha habido gol o nos vamos al descanso llamamos a la formula para volver a equilibrar el partido (var $estado)
 		//El valor del estado es null porque asi la formula sabe que estamos en estos casos (no podemos volver a meter gol)
-		if($estado == 10 || $estado == -10 || $turno == 5){ 
+		if($this->estado == 10 || $this->estado == -10 || $this->turno == 5){ 
 			/*$estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
 											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
 		}
@@ -246,14 +246,15 @@ class Partido
 	private function generaCronicaTurno($estado_antiguo)
 	{
 		//variables que necesitamos
-		$partido = Partidos::model()->findByPk($id_partido);
+		$partido = Partidos::model()->findByPk($this->id_partido);
 
 		//Decimos en que turno estamos para situar
-		$cronica_turno = "Estamos en el turno ".$turno." del partido. ";
+		$cronica_turno = "Estamos en el turno ".$this->turno." del partido. ";
 
 
 		//Miramos a ver si se ha metido algun gol 
-		switch ($estado) {
+		$cronica_gol;
+		switch ($this->estado) {
 		    case 10: { //Gol del equipo local
 		        $cronica_gol = "La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha medido un gol";
 		        break;
@@ -265,12 +266,12 @@ class Partido
 		}
 
 		//Miramos quien va ganando y quien va perdiendo
-		switch ($estado) {
-			 case ($estado > 0):{ //Va ganando el equipo local
+		switch ($this->estado) {
+			 case ($this->estado > 0):{ //Va ganando el equipo local
 		        $equipo_ganando = $partido->local->nombre; $equipo_perdiendo = $partido->visitante->nombre;
 		        break;
 		    }
-		     case ($estado < 0):{ //Va ganando el equipo visitante
+		     case ($this->estado  < 0):{ //Va ganando el equipo visitante
 		        $equipo_ganando = $partido->visitante->nombre; $equipo_perdiendo = $partido->local->nombre;
 		        break;
 		    }
@@ -282,8 +283,8 @@ class Partido
 
 		//Comentamos el estado del partido 
 		$cronica_estado;
-		$dif_estado = abs($estado - $estado_antiguo);
-		switch ($estado) {
+		$dif_estado = abs($this->estado - $estado_antiguo);
+		switch ($this->estado) {
 		    case 0: { //Gol del equipo local
 		        $cronica_estado = "El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
 		        break;
@@ -304,7 +305,6 @@ class Partido
 
 		//Comentamos la diferencia entre el estado antiguo y el actual
 		$cronica_dif_estado;
-		$dif_estado = abs($estado - $estado_antiguo);
 		switch ($dif_estado) {
 		    case ($dif_estado == 0): { //El partido sigue igual
 		    	$cronica_dif_estado = "El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido";
@@ -343,7 +343,7 @@ class Partido
 		//TODO comentar la diferencia de goles
 
 		
-		$this->cronica = $cronica_turno." ".$cronica_gol." ".$cronica_estado." ".$cronica_dif_estado;
+		$this->cronica = $cronica_turno;
 		
 	}
 
