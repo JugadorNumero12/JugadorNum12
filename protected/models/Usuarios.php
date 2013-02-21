@@ -85,7 +85,7 @@ class Usuarios extends CActiveRecord
 	public function clavesIguales($antigua_clave)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->pass != $this->$antigua_clave)
+	    if ( $usuario->pass != $this->antigua_clave)
 	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
 	}
 
@@ -93,14 +93,14 @@ class Usuarios extends CActiveRecord
 	public function emailIguales($antigua_email)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->email != $this->$antigua_email)
+	    if ( $usuario->email != $this->antigua_email)
 	        $this->addError($antigua_email, 'Introduzca correctamente el email actual');
 	}
 
 	/*Comprueba que ese email sea único*/
 	public function comprobarEmail($nueva_email1)
 	{
-	    $registro=Usuarios::model()->findByAttributes(array('email'=>$this->$nueva_email1));
+	    $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
 
 	    if($registro <> null){
 	        $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
@@ -110,7 +110,7 @@ class Usuarios extends CActiveRecord
 	/*Comprobar que el nombre sea único*/
 	public function comprobarNick($nuevo_nick)
 	{
-	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->$nuevo_nick));
+	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
 
 	    if($registro <> null){
 	        $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
