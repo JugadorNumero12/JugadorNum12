@@ -240,7 +240,7 @@ class Partido
 	 * la guarda en la variable $cronica
 	 */
 
-	private void generaCronicaTurno($estado_antiguo)
+	private function generaCronicaTurno($estado_antiguo)
 	{
 		//variables que necesitamos
 		$partido = Partidos::model()->findByPk($id_partido);
@@ -264,11 +264,11 @@ class Partido
 		//Miramos quien va ganando y quien va perdiendo
 		switch ($estado) {
 			 case ($estado > 0):{ //Va ganando el equipo local
-		        $equipo_ganando = $partido->local->nombre.; $equipo_perdiendo = $partido->visitante->nombre.;
+		        $equipo_ganando = $partido->local->nombre; $equipo_perdiendo = $partido->visitante->nombre;
 		        break;
 		    }
 		     case ($estado < 0):{ //Va ganando el equipo visitante
-		        $equipo_ganando = $partido->visitante->nombre.; $equipo_perdiendo = $partido->local->nombre.;
+		        $equipo_ganando = $partido->visitante->nombre; $equipo_perdiendo = $partido->local->nombre;
 		        break;
 		    }
 		    case 0: { //Estan igual
@@ -304,35 +304,35 @@ class Partido
 		$dif_estado = abs($estado - $estado_antiguo);
 		switch ($dif_estado) {
 		    case ($dif_estado == 0): { //El partido sigue igual
-		    	$cronica_dif_estado = "El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido"
+		    	$cronica_dif_estado = "El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido";
 		        break;
 		    }
 		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
-				$cronica_dif_estado = "El partido está muy reñido. EL equipo ha mejorado su posicion ligeramente"
+				$cronica_dif_estado = "El partido está muy reñido. EL equipo ha mejorado su posicion ligeramente.";
 		        break;
 		    }
 		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
-				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion."
+				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion.";
 		        break;
 		    }
 		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Ventaja para alguien
-				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion notablemente."
+				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion notablemente.";
 		        break;
 		    }
 		    case ($dif_estado >=10 && $dif_estado <=13):{ //[10,11,12,13] Remontada 
-				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Pero deben estar atentos si no quieren que el esfuerzo caiga en saco roto."
+				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Pero deben estar atentos si no quieren que el esfuerzo caiga en saco roto.";
 		        break;
 		    }
 		    case ($dif_estado >=14 && $dif_estado <=16):{ //[14,15,16] Remontada importante 
-				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Si se esfuerzan un poco más conseguiran gol"
+				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Si se esfuerzan un poco más conseguiran gol.";
 		        break;
 		    }
 		    case ($dif_estado >=17 && $dif_estado <=19):{ //[17,18,19] Remontada brutal
-				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal. Ya se huele el gol"
+				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal. Ya se huele el gol.";
 		        break;
 		    }
 		    case ($dif_estado == 20 ):{ //[20] En el estado antetior unos metiron gol y ahora los otros han remontado. 
-				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal que hace que el gol de antes quede en nada."
+				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal que hace que el gol de antes quede en nada.";
 		        break;
 		    }
 		}
