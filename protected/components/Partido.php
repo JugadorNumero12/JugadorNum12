@@ -279,7 +279,7 @@ public class Partido
 		$cBase .= ($this->ambiente > AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
 		$cBase .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
-		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido.";  
+		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
 		return $cBase;
 	}
 
@@ -421,11 +421,16 @@ public class Partido
 	private function generaCronicaDescanso()
 	{
 		//Indicar fin del descanso y reanudación del partido
+		$cDescanso = "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. "
+		$cDescanso .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
+		return $cDescanso;
 	}
 
 	private function generaEstadoDescanso()
 	{
-
+		//Generamos estado tras el descanso
+		$this->estado = Formula::siguienteEstado(/*PARAMS*/);
 	}
 
 	public function jugarse()
