@@ -4,7 +4,7 @@
 * CLASE PARA EL PARTIDO
 *
 */
-public class Partido
+class Partido
 {
 	/* Un partido se juega entre los turnos 1 - 10 
 	* El turno 0 es inicialización de partido.
@@ -44,7 +44,7 @@ public class Partido
      *  ambiente, dif_niveles, aforo_local, aforo_visitante
      * a partir del id_partido de la tabla de partidos
      */
-    public Partido($id_partido)
+    function Partido($id_partido)
     {
         /* ALEX */
         $transaction = Yii::app()->db->beginTransaction();
@@ -52,24 +52,24 @@ public class Partido
             $partido = Partidos::model()->findByPk($id_partido);
             if ($partido == null)
                 throw new CHttpException(404,'Partido inexistente.');
-            $this->$id_partido = $id_partido;
-            $this->$id_local = $partido->equipos_id_equipo_1;
-            $this->$id_visitante = $partido->equipos_id_equipo_2;
-            $this->$turno = $partido->turno;
-            $this->$cronica = $partido->cronica;
-            $this->$ambiente = $partido->ambiente;
-            $this->$dif_niveles = $partido->dif_niveles;
-            $this->$aforo_local = $partido->aforo_local;
-            $this->$aforo_visitante = $partido->aforo_visitante;
-            $this->$ofensivo_local = $partido->ofensivo_local;
-            $this->$ofensivo_visitante = $partido->ofensivo_visitante;
-            $this->$defensivo_local = $partido->defensivo_local;
-            $this->$defensivo_visitante = $partido->defensivo_visitante;
-            $this->$goles_local = $partido->goles_local;
-            $this->$goles_visitante = $partido->goles_visitante;
-            $this->$estado = $partido->estado;
-            $this->$moral_local = $partido->moral_local;
-            $this->$moral_visitante = $partido->moral_visitante;
+            $this->id_partido = $id_partido;
+            $this->id_local = $partido->equipos_id_equipo_1;
+            $this->id_visitante = $partido->equipos_id_equipo_2;
+            $this->turno = $partido->turno;
+            $this->cronica = $partido->cronica;
+            $this->ambiente = $partido->ambiente;
+            $this->dif_niveles = $partido->dif_niveles;
+            $this->aforo_local = $partido->aforo_local;
+            $this->aforo_visitante = $partido->aforo_visitante;
+            $this->ofensivo_local = $partido->ofensivo_local;
+            $this->ofensivo_visitante = $partido->ofensivo_visitante;
+            $this->defensivo_local = $partido->defensivo_local;
+            $this->defensivo_visitante = $partido->defensivo_visitante;
+            $this->goles_local = $partido->goles_local;
+            $this->goles_visitante = $partido->goles_visitante;
+            $this->estado = $partido->estado;
+            $this->moral_local = $partido->moral_local;
+            $this->moral_visitante = $partido->moral_visitante;
             
             $transaction->commit();
         }catch(Exception $e){
@@ -164,7 +164,7 @@ public class Partido
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
-        $partido = Partidos::model()->findByPk($this->$id_partido);
+        $partido = Partidos::model()->findByPk($this->id_partido);
         //Comprobación de existencia de datos por seguridad
         if ($local == null)
             throw new CHttpException(404,'Equipo local inexistente.');
@@ -273,10 +273,10 @@ public class Partido
         if ($visitante == null)
             throw new CHttpException(404,'Partido inexistente.');
 		$cBase = "Comienza el encuentro entre los ".$local->nombre." como locales 
-		y los ".$visitante->nombre." en posición de visitantes. "
+		y los ".$visitante->nombre." en posición de visitantes. ";
 		$cBase .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos
 		en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
-		$cBase .= ($this->ambiente > AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
+		$cBase .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
 		$cBase .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
 		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
@@ -328,7 +328,7 @@ public class Partido
 		  $bonifNoParticipante = 1*/
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido)),
+			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido));
 			$usuarios=Usuarios::model()->findAllByAtributes(array('equipos_id_equipo'=>$equipo));
 			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
 			
@@ -421,7 +421,7 @@ public class Partido
 	private function generaCronicaDescanso()
 	{
 		//Indicar fin del descanso y reanudación del partido
-		$cDescanso = "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. "
+		$cDescanso = "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
 		$cDescanso .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
 		return $cDescanso;
@@ -435,32 +435,32 @@ public class Partido
 
 	public function jugarse()
 	{
-		switch ($turno) 
+		switch ($this->turno) 
 		{
-		    case PRIMER_TURNO:	
+		    case self::PRIMER_TURNO:	
 		    	//Turno inicial (preparar partido)		
-		    	inicializaEncuentro();  
-		    	generaCronicaBase();
-		    	guardaEstado();      
+		    	$this->inicializaEncuentro();  
+		    	$this->generaCronicaBase();
+		    	$this->guardaEstado();      
 		        break;
-		    case TURNO_DESCANSO:
+		    case self::TURNO_DESCANSO:
 		    	//TODO Revisar!!!
-		    	generaEstadoDescanso();
-		    	generaCronicaDescanso();
-		    	guardaEstado();
+		    	$this->generaEstadoDescanso();
+		    	$this->generaCronicaDescanso();
+		    	$this->guardaEstado();
 		    	break;
-		    case (($turno > PRIMER_TURNO) && ($turno < ULTIMO_TURNO) && ($turno != TURNO_DESCANSO)):	
+		    case (($turno > self::PRIMER_TURNO) && ($turno < self::ULTIMO_TURNO) && ($turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
-				generar_estado();
-				guardaEstado();
+				$this->generar_estado();
+				$this->guardaEstado();
 		        break;
-		    case ULTIMO_TURNO:
+		    case self::ULTIMO_TURNO:
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
-				generar_estado();
-				finalizaEncuentro();
-				guardaEstado();
+				$this->generar_estado();
+				$this->finalizaEncuentro();
+				$this->guardaEstado();
 		    	break;
 		    default:
 		       	// No debería llegar aquí
