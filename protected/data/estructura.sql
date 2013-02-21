@@ -167,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `hora` int(11) unsigned NOT NULL,
   `cronica` text NOT NULL,
   `ambiente` int(10) unsigned NOT NULL DEFAULT '0',
-  /*`nivel_local` int(10) unsigned NOT NULL DEFAULT '0',
-  `nivel_visitante` int(10) unsigned NOT NULL DEFAULT '0',*/
+  `nivel_local` int(10) unsigned NOT NULL DEFAULT '0',
+  `nivel_visitante` int(10) unsigned NOT NULL DEFAULT '0',
   `dif_niveles` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_local` int(10) unsigned NOT NULL DEFAULT '0',
   `aforo_visitante` int(10) unsigned NOT NULL DEFAULT '0',
