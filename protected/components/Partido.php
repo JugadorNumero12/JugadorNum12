@@ -482,7 +482,7 @@ class Partido
 			//Y utilizando ORDER BY en la consulta voy a ir colocando las posiciones
 			//Con respecto a los puntos y a la diferencia de goles
 			$criteria = new CDbCriteria();
-			$criteria->order = 'puntos ASC, diferencia_goles DESC';
+			$criteria->order = 'puntos DESC,diferencia_goles DESC';
 
 			/*Otra opcion puede ser esta
 			$Puestos = Clasificacion::model()->findAll(
