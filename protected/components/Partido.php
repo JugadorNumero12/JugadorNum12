@@ -413,17 +413,17 @@ class Partido
 		  $bonifNoParticipante = 1*/
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$participantes=AccionesTurno::model()->findByAllAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$id_partido));
-			$usuarios=Usuarios::model()->findAllByAtributes(array('equipos_id_equipo'=>$equipo));
-			$bonusAmbiente = $bonus* (pow(1.5, $ambiente+1)/(4+.7*$ambiente));//(1.5^(a+1))/(4+.7*a)
+			$participantes=AccionesTurno::model()->findAllByAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$this->id_partido));
+			$usuarios=Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$equipo));
+			$bonusAmbiente = $bonus* (pow(1.5, $this->ambiente+1)/(4+.7*$this->ambiente));//(1.5^(a+1))/(4+.7*a)
 			
 			foreach ($usuarios as $user){//Esta bonificacion se le da a todos
-				$rec=Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>$user));
+				$rec=$user->recursos;
 				$rec['animo']= min(round(  $bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
 			foreach ($participantes as $user){//Esta se le da solo a los participantes
-				$rec=Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>$user));
+				$rec=$user->recursos;
 				$rec['animo']= min(round(3*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
@@ -442,17 +442,17 @@ class Partido
 	{			
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$local=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_local));
-			$visit=Clasificacion::model()->find(array('equipos_id_equipo'=> $id_visitante));
+			$local=Clasificacion::model()->find(array('equipos_id_equipo'=> $this->id_local));
+			$visit=Clasificacion::model()->find(array('equipos_id_equipo'=> $this->id_visitante));
 
 			//Miro quien ha ganado el partido 
 			//Sumo los puntos y los goles a favor y en contra de cada equipo
-			if($goles_local>$goles_visitante)
+			if($this->goles_local>$this->goles_visitante)
 			{
 				$puntosLocal=$local->puntos;
 				$puntosLocal=$puntosLocal+3;
 				$local->setAttributes(array('puntos'=>$puntosLocal));         
-			}else if($goles_local<$goles_visitante)
+			}else if($this->goles_local<$this->goles_visitante)
 					{
 						$puntosVisitante=$visit->puntos;
 						$puntosVisitante=$puntosVisitante+3;
@@ -468,8 +468,8 @@ class Partido
 						}
 
 			//una vez actualizado los puntos, toca actualizar las diferencia de goles
-			$difPartidoLocal=$goles_local-$goles_visitante;
-			$difPartidoVisit=$goles_visitante-$goles_local;
+			$difPartidoLocal=$this->goles_local-$this->goles_visitante;
+			$difPartidoVisit=$this->goles_visitante-$this->goles_local;
 			$difTablaLocal=$local->diferencia_goles;
 			$difTablaVisit=$visit->diferencia_goles;
 			$local->setAttributes(array('diferencia_goles'=>$difTablaLocal+$difPartidoLocal)); 
@@ -546,7 +546,7 @@ class Partido
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
 				$this->generar_estado();
-				//$this->finalizaEncuentro();
+				$this->finalizaEncuentro();
 				$this->guardaEstado();
 		    	break;
 		    default:
