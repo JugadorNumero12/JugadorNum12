@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `acciones_grupales` (
   KEY `acciones_grupales_FKIndex1` (`equipos_id_equipo`),
   KEY `acciones_grupales_FKIndex3` (`habilidades_id_habilidad`),
   KEY `acciones_grupales_FKIndex2` (`usuarios_id_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `factor_defensivo` int(10) unsigned NOT NULL,
   KEY `equipos_FKIndex1` (`partidos_id_partido`),
   PRIMARY KEY (`id_equipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
   `participantes_max` int(10) unsigned NOT NULL,
   `cooldown_fin` int(10),
   PRIMARY KEY (`id_habilidad`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   PRIMARY KEY (`id_partido`),
   KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
   KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nivel` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 -- DECLARACIÓN DE LAS FOREIGN KEY
