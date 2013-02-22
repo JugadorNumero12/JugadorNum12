@@ -7,6 +7,7 @@ class Formula
 
 	const PESOS_MIN_CERCA = 10;
 	const PESOS_MIN_LEJOS = 1;
+	const PESOS_INICIAL = 100;
 	const PESOS_MULT = 10000;
 
 	const DIFNIV_NFACT_BASE = 100;
@@ -15,10 +16,11 @@ class Formula
 	 * @param $x Punto en el que calcular la normal
 	 * @return La normal acumulada en el punto $x
 	 */
-	// Algoritmo encontrado en StackOverflow para calcular la normal
-	// acumulada en un punto. Viva StackOverflow.
 	private static function cumnormdist($x)
 	{
+		// Algoritmo encontrado en StackOverflow para calcular la normal
+		// acumulada en un punto. Viva StackOverflow.
+
 		$b1 =  0.319381530;
 		$b2 = -0.356563782;
 		$b3 =  1.781477937;
@@ -53,13 +55,17 @@ class Formula
 	 * @return Media de la función final
 	 */
 	private static function calcMedia (array $params) {
-		// Inicialmente, la media es el estado actual
-		$avg = $params['estado'];
+		// Inicialmente, la media es el estado actual o, si es null, el punto de equilibrio
+		if ($params['estado'] == null) {
+			$avg = $params['difNiv'];
 
-		// Acercamos la media al punto de equilibrio	
-		$factDifNiv = self::DIFNIV_NFACT_BASE + ($params['moralLoc'] + $params['moralVis'])/10;
-		$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
+		} else {
+			$avg = $params['estado'];
 
+			// Acercamos la media al punto de equilibrio	
+			$factDifNiv = self::DIFNIV_NFACT_BASE + ($params['moralLoc'] + $params['moralVis'])/10;
+			$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
+		}
 
 		//Hacemos la diferencia de morales en valor absoluto
 		$difMoral = $params['moralLoc'] -  $params['moralVis'];
@@ -110,7 +116,21 @@ class Formula
 			$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
 
 			$pm = $p * self::PESOS_MULT;
-			$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			if ($params['estado']) {
+				$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			} else {
+				if (abs($i) == 10) {
+					$pm = 0;
+				} else {
+					$pm -= self::PESOS_INICIAL;
+					$pm = max($pm,0);
+					if ( abs($i) == 9) {
+						$pm *= .33;
+					} else if ( abs($i) == 8) {
+						$pm *= .66;
+					}
+				}
+			}
 			$pesos[$i] = (int) $pm;
 		}
 
