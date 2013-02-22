@@ -31,7 +31,7 @@ class Habilidades extends CActiveRecord
 	{
 		return 'habilidades';
 	}
-
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -40,8 +40,9 @@ class Habilidades extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo', 'required'),
-			array('codigo', 'length', 'max'=>10),
+			array('codigo, tipo, nombre, descripcion, dinero, animo, influencias, participantes_max', 'required'),
+			array('codigo, dinero, animo, influencias, participantes_max, dinero_max, animo_max, influencias_max, cooldown_fin', 'length', 'max'=>10),
+			array('dinero', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_habilidad, codigo', 'safe', 'on'=>'search'),
@@ -64,7 +65,7 @@ class Habilidades extends CActiveRecord
 			//Relación entre "habilidades" y "acciones_grupales"
 			'accionesGrupales' => array(self::HAS_MANY, 'AccionesGrupales', 'habilidades_id_habilidad'),
 			//Relación entre "habilidades" y "acciones_turno"
-			'accionesTurno' => array(self::HAS_MANY, 'AccionesTurno', 'habilidades_id_habilidad'),
+			//'accionesTurno' => array(self::HAS_MANY, 'AccionesTurno', 'habilidades_id_habilidad'),
 		);
 	}
 
@@ -98,6 +99,8 @@ class Habilidades extends CActiveRecord
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
+
+		//TDOD -> Añadir resto de campos en search()??
 
 		$criteria=new CDbCriteria;
 

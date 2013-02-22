@@ -267,3 +267,30 @@ Equipos.cambiar
 * Acciones+
 * Habilidades+
 ```
+
+###Últimas semanas de febrero
+
+####Perspectiva general
+
+**Lógica del partido**
+* Xaby 
+* Rober 
+* Marina 
+
+**Fórmula del partido**
+* Dani
+
+**Front-end, estilo**
+* Pedro
+* Sam
+
+**Módulo de actualización de recursos**
+* Alex
+
+**Test**
+* Arturo
+
+**Subir la página**
+* Marcos
+
+

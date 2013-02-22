@@ -41,14 +41,14 @@ class Equipos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'required'),
+			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo, partidos_id_partido', 'required'),
 			array('nivel_equipo', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>45),
-			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo', 'length', 'max'=>10),
+			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo, partidos_id_partido', 'length', 'max'=>10),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_equipo, nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'safe', 'on'=>'search'),
+			array('id_equipo, nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo, partidos_id_partido', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +84,7 @@ class Equipos extends CActiveRecord
 			'nivel_equipo' => 'Nivel Equipo',
 			'factor_ofensivo' => 'Factor Ofensivo',
 			'factor_defensivo' => 'Factor Defensivo',
+			'partidos_id_partido' => 'ID siguiente partido',
 		);
 	}
 
@@ -106,6 +107,7 @@ class Equipos extends CActiveRecord
 		$criteria->compare('nivel_equipo',$this->nivel_equipo);
 		$criteria->compare('factor_ofensivo',$this->factor_ofensivo,true);
 		$criteria->compare('factor_defensivo',$this->factor_defensivo,true);
+		$criteria->compare('partidos_id_partido',$this->factor_defensivo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
