@@ -204,8 +204,23 @@ class Partido
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
 		$estado_antiguo = $this->estado;
 
-		/*$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
-											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante)); */
+		$this->estado = Formula::siguienteEstado(array('estado'=>3, 'difNiv'=>5, 
+											'moralLoc'=>7 ,'moralVis'=>2));
+
+		/*$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
+											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
+
+		 /*$params = array(
+ 			'difNiv'    => (double) 3, 'aforoMax'  => (double) 3,
+ 			'aforoLoc'  => (double) 3 , 'aforoVis'  => (double) 3,
+			'moralLoc'  => (double) 4, 'moralVis'  => (double) 3,
+			'ofensLoc'  => (double) 4, 'ofensVis'  => (double) 3,
+			'defensLoc' => (double) 4, 'defensVis' => (double) 3,
+			'estado'    => (double) 5,
+		);  
+
+
+		$this->estado = Formula::siguienteEstado($params); */
 
 		if($this->estado == null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
