@@ -250,31 +250,31 @@ INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_i
  (10, 9, 6000, 7, 15);
 
 TRUNCATE `partidos`;
-INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`) VALUES
+INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
  -- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
- (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
- (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
+ (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Negros: ganaron los Rojos
  -- Verdes vs. Blancos: empate
- (1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
- (2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
+ (1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Blancos: empate
  -- Negros vs. Verdes: empate
- (1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
- (3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 0),
+ (1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Verdes vs. Rojos: PROXIMO PARTIDO
  -- Blancos vs. Negros: PROXIMO PARTIDO
- (2, 1, 150, NULL, 0),
- (4, 3, 150, NULL, 0),
+ (2, 1, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (4, 3, 150, NULL, 0, 55, 1000, 100, 1, 6, 6, 0, 1, 4),
  -- Negros vs. Rojos
  -- Blancos vs. Verdes
- (3, 1, 200, NULL, 0),
- (4, 2, 200, NULL, 0),
+ (3, 1, 200, NULL, 0, 600, 10, 10, 6, 1, 1, 7, 1, 7),
+ (4, 2, 200, NULL, 0, 7, 1000, 140, 2, 7, 1, 1, 1, 1),
  -- Blancos vs. Rojos
  -- Verdes vs. Negros
- (4, 1, 250, NULL, 0),
- (2, 3, 250, NULL, 0);
+ (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
+ (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9);
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
