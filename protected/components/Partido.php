@@ -253,14 +253,14 @@ class Partido
 
 
 		//Miramos a ver si se ha metido algun gol 
-		$cronica_gol;
+		$cronica_gol = "";
 		switch ($this->estado) {
 		    case 10: { //Gol del equipo local
-		        $cronica_gol = "La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        $cronica_gol = " La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha medido un gol";
 		        break;
 		    }
 		    case -10:{ //Gol del equipo visitante
-		        $cronica_gol = "La aficion del equipo ".$partido->visitante->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        $cronica_gol = " La aficion del equipo ".$partido->visitante->nombre." esta muy emocionada. Su equipo ha medido un gol";
 		        break;
 		    }
 		}
@@ -282,60 +282,69 @@ class Partido
 		}
 
 		//Comentamos el estado del partido 
-		$cronica_estado;
-		$dif_estado = abs($this->estado - $estado_antiguo);
-		switch ($this->estado) {
+		$cronica_estado = "";
+		switch (abs($this->estado)) {
 		    case 0: { //Gol del equipo local
-		        $cronica_estado = "El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
+		        $cronica_estado = " El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
 		        break;
 		    }
-		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
-		        $cronica_estado = "El partido esta prácticamente igualado ".$equipo_ganando." tiene una ligera ventaja";
+		    case ($this->estado >=1 && $this->estado <=3):{ //[1,2,3] Diferencia leve
+		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." tiene una ligera ventaja";
 		        break;
 		    }
-		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia normal
-				$cronica_estado = "El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo;
+		    case ($this->estado >=4 && $this->estado <=6):{ //[4,5,6] Diferencia normal
+				$cronica_estado = " El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo;
 		        break;
 		    }
-		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Muy favorable
-				$cronica_estado = "El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas";
+		    case ($this->estado >=7 && $this->estado <=9):{ //[7,8,9] Muy favorable
+				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas";
 		        break;
 		    }
 		}
 
+		//Miramos quien, en este turno, ha mejorado su posicion
+		if($this->estado > $estado_antiguo ){ // el equipo local ha mejorado su situacion en el partido en la ultima jugada  
+			$equipo_mejorado = $partido->local->nombre; $equipo_empeorado = $partido->visitante->nombre;
+		}
+		else{ //el equipo visitante ha mejorado su situacion en el partido en la ultima jugada
+			$equipo_mejorado = $partido->visitante->nombre; $equipo_empeorado = $partido->local->nombre;
+		}
+
+
 		//Comentamos la diferencia entre el estado antiguo y el actual
-		$cronica_dif_estado;
+		$cronica_dif_estado = "";
+		$dif_estado = abs($this->estado - $estado_antiguo);
 		switch ($dif_estado) {
 		    case ($dif_estado == 0): { //El partido sigue igual
-		    	$cronica_dif_estado = "El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido";
+		    	$cronica_dif_estado = " El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido";
 		        break;
 		    }
 		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
-				$cronica_dif_estado = "El partido está muy reñido. EL equipo ha mejorado su posicion ligeramente.";
+				$cronica_dif_estado = " El partido está muy reñido. El equipo ".$equipo_mejorado." ha mejorado su posicion ligeramente.";
 		        break;
 		    }
 		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
-				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion.";
+				$cronica_dif_estado = " La táctica de juego ha cambiado y el equipo ".$equipo_mejorado." ha mejorado su posicion.";
 		        break;
 		    }
 		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Ventaja para alguien
-				$cronica_dif_estado = "La táctica de juego ha cambiado y el equipo ha mejorado su posicion notablemente.";
+				$cronica_dif_estado = " La táctica de juego ha cambiado y el equipo ".$equipo_mejorado." ha mejorado su posicion notablemente.";
 		        break;
 		    }
 		    case ($dif_estado >=10 && $dif_estado <=13):{ //[10,11,12,13] Remontada 
-				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Pero deben estar atentos si no quieren que el esfuerzo caiga en saco roto.";
+				" El equipo ".$equipo_mejorado." se ha posicionado en la delantera. Una pequeña remontada. Pero deben estar atentos si no quieren que el esfuerzo caiga en saco roto.";
 		        break;
 		    }
 		    case ($dif_estado >=14 && $dif_estado <=16):{ //[14,15,16] Remontada importante 
-				"El equipo se ha posicionado en la delantera. Una pequeña remontada. Si se esfuerzan un poco más conseguiran gol.";
+				" El equipo ".$equipo_mejorado." se ha posicionado en la delantera. Una pequeña remontada. Si se esfuerzan un poco más conseguiran gol.";
 		        break;
 		    }
 		    case ($dif_estado >=17 && $dif_estado <=19):{ //[17,18,19] Remontada brutal
-				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal. Ya se huele el gol.";
+				$cronica_dif_estado = " El equipo ".$equipo_mejorado." ha dado la vuelta al juego de una manera increible. Una remontada brutal. Ya se huele el gol.";
 		        break;
 		    }
 		    case ($dif_estado == 20 ):{ //[20] En el estado antetior unos metiron gol y ahora los otros han remontado. 
-				$cronica_dif_estado = "El equipo ha dado la vuelta al juego de una manera increible. Una remontada brutal que hace que el gol de antes quede en nada.";
+				$cronica_dif_estado =  " El equipo ".$equipo_mejorado." ha dado la vuelta al juego de una manera increible. Una remontada brutal que hace que el gol de ".$equipo_empeorado." quede en nada.";
 		        break;
 		    }
 		}
@@ -343,7 +352,7 @@ class Partido
 		//TODO comentar la diferencia de goles
 
 		
-		$this->cronica .= $cronica_turno;
+		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado;
 		
 	}
 
