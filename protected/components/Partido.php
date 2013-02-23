@@ -160,10 +160,6 @@ class Partido
 		//Fijar goles iniciales por seguridad
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
-		//Generamos estado inicial del partido
-
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
-
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
@@ -186,6 +182,10 @@ class Partido
         //Moral inicial
         $this->moral_local = 0;
         $this->moral_visitante = 0;
+		//Generamos estado inicial del partido
+		$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));
+
 
         //Ambiente, aforo local y visitante ya tomados en la constructora.
         //Pertenecen a Partidos desde el comienzo.
@@ -223,7 +223,7 @@ class Partido
 		$this->estado = Formula::siguienteEstado($params); */
 
 		if($this->estado == null){
-			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
+			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
 		}
 
 		
