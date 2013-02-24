@@ -15,7 +15,7 @@ class IncentivoEconomico extends AccionGrupSingleton
 {
 	
 	/* Aplicar los efectos de la accion */
-	public void ejecutar($id_accion)
+	public function ejecutar($id_accion)
 	{
 	    //Tomar helper para facilitar la modificación
 	    Yii::import('application.components.Helper');
@@ -59,7 +59,7 @@ class IncentivoEconomico extends AccionGrupSingleton
     }
 
 	/* restarurar valores tras el partido. NO ES NECESARIO */
-	public void finalizar()
+	public function finalizar()
 	{
 	}
 }
