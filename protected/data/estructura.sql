@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `desbloqueadas` (
 DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE IF NOT EXISTS `equipos` (
   `id_equipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `partidos_id_partido` int(10) unsigned NOT NULL,
+  `partidos_id_partido` int(10) unsigned,
   `nombre` varchar(45) NOT NULL,
   `categoria` int(10) unsigned NOT NULL,
   `aforo_max` int(10) unsigned NOT NULL,

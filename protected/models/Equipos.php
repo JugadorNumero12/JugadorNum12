@@ -41,7 +41,7 @@ class Equipos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo, partidos_id_partido', 'required'),
+			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'required'),
 			array('nivel_equipo', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>45),
 			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo, partidos_id_partido', 'length', 'max'=>10),

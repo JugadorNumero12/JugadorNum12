@@ -547,6 +547,38 @@ class Partido
 		$this->turno++;
 	}
 
+	private function actualizaSiguientePartido($id_equipo)
+	{
+		$tiempo=time();
+		$primerTurno=Partido::PRIMER_TURNO;
+		$busqueda=new CDbCriteria;
+		$busqueda->addCondition(':bTiempo <= hora');
+		$busqueda->addCondition('turno = :bPrimerTurno');
+		$busqueda->addCondition('((equipos_id_equipo_1 = :bequipo) OR (equipos_id_equipo_2 = :bequipo))');
+		$busqueda->params = array(':bTiempo' => $tiempo,
+								'bPrimerTurno' => $primerTurno,
+								'bequipo' => $id_equipo
+								);
+		$busqueda->order = 'hora ASC';
+		$busqueda->limit = 1;
+		$partidos=Partidos::model()->findAll($busqueda);
+
+		$equipo = Equipos::model()->findByPk($id_equipo);
+		if ($equipo == null)
+			throw new Exception("El equipo no existe (Partido.php).", 404);
+			
+		if ($partidos == null)
+		{
+			$equipo->partidos_id_partido = null;
+		}
+		else
+		{
+			$equipo->partidos_id_partido = $partidos->id_partido;
+		}
+		if (!$equipo->save())
+			throw new Exception("Error al situar proximo partido.", 404);						
+	}
+
 	public function jugarse()
 	{
 		switch ($this->turno) 
@@ -577,6 +609,8 @@ class Partido
 				$this->generar_estado();
 				$this->finalizaEncuentro();
 				$this->guardaEstado();
+				$this->actualizaSiguientePartido($this->id_local);
+				$this->actualizaSiguientePartido($this->id_visitante);
 		    	break;
 		    default:
 		       	// No debería llegar aquí
