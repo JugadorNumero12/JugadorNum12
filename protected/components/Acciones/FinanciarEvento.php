@@ -17,6 +17,9 @@ public class FinanciarEvento extends AccionGrupSingleton
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
   {
+    //Tomar helper para facilitar la modificación
+    Yii::import('application.components.Helper');
+
     $ret = 0;
 
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
@@ -24,24 +27,17 @@ public class FinanciarEvento extends AccionGrupSingleton
       throw new Exception("Accion grupal inexistente.", 404);
       
     $creador = $accGrup->usuarios;
-    $sigPartido = $creador->equipos->sigPartido;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
 
     //1.- Añadir bonificación al partido
-    //Saco el ambiente nuevo y se lo añado
-    $nuevoAmbiente = $sigPartido->ambiente + $datos_acciones['FinanciarEvento']['ambiente'];
-    $sigPartido->setAttributes(array('ambiente'=>$nuevoAmbiente));  
-    //Saco el aforo y se lo añado
-    $nuevoAforo = $sigPartido->aforo + $datos['FinanciarEvento']['aforo'];
-    $sigPartido->setAttributes(array('aforo'=>$nuevoAforo));  
-
-    ($sigPartido->save())? $ret = 0: $ret = -1;
+    $helper = new Helper();
+    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",$datos_acciones['FinanciarEvento']['aforo']));
 
     //2.- Dar bonificación al creador
 
     //3.- Devolver influencias
-
-    //Tomar helper para facilitar la modificación
-    Yii::import('application.components.Helper');
 
     $participantes = $accGrup->participaciones;
     foreach ($participaciones as $participacion)
