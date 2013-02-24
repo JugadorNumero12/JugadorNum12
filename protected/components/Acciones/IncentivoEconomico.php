@@ -11,7 +11,7 @@
  * Bonus al creador:
  *  Recupera de forma inmediata influencias empleadas en otras acciones
  */
-public class IncentivoEconomico extends AccionGrupSingleton
+class IncentivoEconomico extends AccionGrupSingleton
 {
 	
 	/* Aplicar los efectos de la accion */

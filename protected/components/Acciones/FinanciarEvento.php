@@ -12,7 +12,7 @@
  * Bonus al creador
  * 	 ninguno
  */
-public class FinanciarEvento extends AccionGrupSingleton
+class FinanciarEvento extends AccionGrupSingleton
 {	
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
