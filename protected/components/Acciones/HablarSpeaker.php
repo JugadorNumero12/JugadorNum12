@@ -9,25 +9,31 @@
  *  Aumenta el factor de partido "moral_propio"
  *  Aumenta el factor de partido "ofensivo_propio"
  */
-class HablarSpeaker extends AccionSingleton
+class HablarSpeaker extends AccionPartSingleton
 {
 	/* Aplicar los efectos de la accion */
-	public function ejecutar($idAccion)
+	public function ejecutar($id_usuario)
 	{
+		//Tomar helper para facilitar la modificación
+	    Yii::import('application.components.Helper');
 
-		$trans = Yii::app()->db->beginTransaction();
-		try {
-			$accion = Accion::model()->findByPk($idAccion);
-			
-			// FIXME Cambiar los parámetros
-			Helper::getInstance()->aumentar_param(/* params */0, $moral);
-			Helper::getInstance()->aumentar_param(/* params */0, $moral);
+	    $ret = 0;
 
-			$trans->commit();
+	    $creador = Usuarios::model()->findByPk($id_usuario);
+	    if ($creador == null)
+	      throw new Exception("Usuario inexistente.", 404);
+	      
+	    $equipo = $creador->equipos;
+	    $sigPartido = $equipo->sigPartido;
 
-		} catch ( Exception $exc ) {
-			$trans->rollback();
-			throw $exc;
-		}
+	    //1.- Añadir bonificación al partido
+	    $helper = new Helper();
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",$datos_acciones['HablarSpeaker']['moral']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",$datos_acciones['HablarSpeaker']['ofensivo']));
+
+	    //Finalizar función
+	    return $ret;
 	}
+
+	public function finalizar() {}
 }
