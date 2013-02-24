@@ -1,5 +1,5 @@
 <?php 
-public class AccionIndSingleton
+class AccionIndSingleton
 {
    /* Instancia del objeto */
    private static $instancia;   
