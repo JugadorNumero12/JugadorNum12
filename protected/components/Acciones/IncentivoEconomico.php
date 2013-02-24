@@ -11,58 +11,55 @@
  * Bonus al creador:
  *  Recupera de forma inmediata influencias empleadas en otras acciones
  */
-public class IncentivoEconomico extends AccionSingleton
+public class IncentivoEconomico extends AccionGrupSingleton
 {
 	
 	/* Aplicar los efectos de la accion */
-	public void ejecutar()
+	public void ejecutar($id_accion)
 	{
-		/* SAM */
-		 $trans=Yii::app()->db->beginTransaction();
-		 try {
-		 	$helper = new Helper();
+	    //Tomar helper para facilitar la modificación
+	    Yii::import('application.components.Helper');
 
-		 	//Aumentar nivel_equipo
-        	$id_partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
-        	$id_equipo = Yii::app()->user->usAfic;
-        	$columna = 'nivel';
-        	//La cantidad no creo que sea esta
-        	$cantidad = $datos_acciones['IncentivoEconomico']['nivel_equipo'];
-        	$helper->aumentar_factores($id_partido,$id_equipo,$columna,$cantidad);
+	    $ret = 0;
 
-        	//Bonus creador
-        	$creador = AccionesGrupales::model()->findByPk($id_equipo);
-        	//La cantidad no creo que sea esta
-        	$cantidad = $datos_acciones['IncentivoEconomico']['bonus_creador']['influencias'];
-        	$helper->aumentar_recursos($creador['id_usuario'],'influencias',$cantidad);
+	    $accGrup = AccionesGrupales::model()->findByPk($id_accion);
+	    if ($accGrup == null)
+	      throw new Exception("Accion grupal inexistente.", 404);
+	      
+	    $creador = $accGrup->usuarios;
+	    $equipo = $creador->equipos;
+	    $sigPartido = $equipo->sigPartido;
 
-		 	$trans->commit();
-		 	
-		 } catch (Exception $e) {
-		 	$trans->rollBack();
-		 }
-	}
+	    //1.- Añadir bonificación al partido
+	    $helper = new Helper();
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",$datos_acciones['IncentivoEconomico']['nivel_equipo']));
 
-	/* restarurar valores tras el partido */
+	    //2.- Dar bonificación al creador
+		$ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias",$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
+	    
+	    //3.- Devolver influencias
+
+	    $participantes = $accGrup->participaciones;
+	    foreach ($participaciones as $participacion)
+	    {
+	      $infAportadas = $participacion->influencas_aportadas;
+	      $usuario = $participacion->usuarios_id_usuario;
+	      if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+	      {
+	        $ret = min($res,0);
+	      }
+	      else
+	      {
+	        $ret = -1;
+	      }
+	    }
+
+	    //Finalizar función
+	    return $ret;
+    }
+
+	/* restarurar valores tras el partido. NO ES NECESARIO */
 	public void finalizar()
 	{
-		/* SAM */
-		$trans=Yii::app()->db->beginTransaction();
-		 try {
-		 	$helper = new Helper();
-
-		 	//Aumentar nivel_equipo
-        	$id_partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
-        	$id_equipo = Yii::app()->user->usAfic;
-        	$columna = 'nivel';
-        	//La cantidad no creo que sea esta
-        	$cantidad = $datos_acciones['IncentivoEconomico']['nivel_equipo'];
-        	$helper->disminuir_factores($id_partido,$id_equipo,$columna,$cantidad);
-
-		 	$trans->commit();
-		 	
-		 } catch (Exception $e) {
-		 	$trans->rollBack();
-		 }
 	}
 }
