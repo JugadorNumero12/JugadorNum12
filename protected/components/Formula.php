@@ -177,6 +177,7 @@ class Formula
 			}
 		}
 
+		echo '<pre>' . print_r(array($probs,$rnd), true) . '</pre>';
 		return null;
 	}
 }

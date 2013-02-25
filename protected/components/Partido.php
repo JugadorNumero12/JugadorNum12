@@ -204,11 +204,11 @@ class Partido
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
 		$estado_antiguo = $this->estado;
 
-		$this->estado = Formula::siguienteEstado(array('estado'=>3, 'difNiv'=>5, 
-											'moralLoc'=>7 ,'moralVis'=>2));
+		/*$this->estado = Formula::siguienteEstado(array('estado'=>3, 'difNiv'=>5, 
+											'moralLoc'=>7 ,'moralVis'=>2));*/
 
-		/*$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
+		$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante)); 
 
 		 /*$params = array(
  			'difNiv'    => (double) 3, 'aforoMax'  => (double) 3,
