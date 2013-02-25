@@ -209,7 +209,7 @@ class Partido
 
 		$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
 											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante)); 
-
+		
 		 /*$params = array(
  			'difNiv'    => (double) 3, 'aforoMax'  => (double) 3,
  			'aforoLoc'  => (double) 3 , 'aforoVis'  => (double) 3,
@@ -222,7 +222,7 @@ class Partido
 
 		$this->estado = Formula::siguienteEstado($params); */
 
-		if($this->estado == null){
+		if($this->estado === null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
 		}
 
