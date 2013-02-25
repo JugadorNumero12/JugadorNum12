@@ -8,82 +8,53 @@
  * Efectos:
  *  Reduce el coste de influencia de todas las acciones del jugador hasta el proximo partido
  */
-public class ContratarRRPP extends AccionSingleton
+class ContratarRRPP extends AccionIndSingleton
 {
 	/* Aplicar los efectos de la accion  */
-	public void ejecutar()
+	public function ejecutar($id_usuario)
 	{
-		//Voy a modificar la base de datos asi que comienzo una tranasacción
-		$trans=Yii::app()->db->beginTransaction();
-	    try
-	    {
-	    	//Consigo el id de usuarios y los datos de sus recursos
-	      $idUsuario = Yii::app()->user->usIdent;        
-	      $modeloRecursos = $idUsuario->recursos;
-	      //Si da fallo salimos del if (y acabamos el try)
-	      if($modeloRecursos == null)
-	      {
-	      	break;
-	      }
-	      else
-	      {
-	      	//Si no, actualizamos los bonus actuales. 
-	      	//Como esta habilidad nos hace gastar menos influencia restamos el bonus 
-	      	$bonusActuales=$recursos->bonus_influencias;
-			$valor_nuevo=$bonusActuales - 1;
+		//Validar usuario
+		$us = Usuarios::model()->findByPk($id_usuario);
+		if ($us == null)
+			throw new Exception("Usuario incorrecto.", 404);			
 
-			/*Si save() no lanza error entonces se realizo correctamente la actualizacion
-			sino salimos el if (y acabamos el try)*/
-			if($recursos->save())
-			{
-				break;
-			}
+		//Tomar helper para facilitar la modificación
+		Yii::import('application.components.Helper');
 
-	      }
-	      $trans->commit();
-	    }
-	    catch (Exception $e)
-	    {
-	      $trans->rollBack();
-	    }     
+		//Aumentar ánimo
+		$helper = new Helper();
+
+		if ($helper->aumentar_recursos($id_usuario,"bonus_influencias",$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 	/* Restarurar valores tras el partido */
-	public void finalizar()
+	public function finalizar($id_usuario,$id_habilidad)
 	{
-		//Voy a modificar la base de datos asi que comienzo una tranasacción
-		$trans=Yii::app()->db->beginTransaction();
-	    try
-	    {
-	    	//Consigo el id de usuarios y los datos de sus recursos
-	      $idUsuario = Yii::app()->user->usIdent;        
-	      $modeloRecursos = $idUsuario->recursos;
-	      //Si da fallo salimos del if (y acabamos el try)
-	      if($modeloRecursos == null)
-	      {
-	      	break;
-	      }
-	      else
-	      {
-	      	//Si no, actualizamos los bonus actuales. 
-	      	//Como esta habilidad nos hace gastar menos influencia restamos el bonus 
-	      	$bonusActuales=$recursos->bonus_influencias;
-			$valor_nuevo=$bonusActuales + 1;
+		//Comprobaciones de parámetros realizadas e influencias devueltas en la llamada al padre. 
 
-			/*Si save() no lanza error entonces se realizo correctamente la actualizacion
-			sino salimos el if (y acabamos el try)*/
-			if($recursos->save())
-			{
-				break;
-			}
+		//Cuidado, no dura hasta el prox. partido sino mientras dure el cooldown.
 
-	      }
-	      $trans->commit();
-	    }
-	    catch (Exception $e)
-	    {
-	      $trans->rollBack();
-	    }     
-	}
+
+		$res = parent::finalizar($id_usuario,$id_habilidad);
+
+		//Tomar helper para facilitar la modificación
+		Yii::import('application.components.Helper');
+		
+		//Restablecer bonus_influencias
+		if ($helper->quitar_recursos($id_usuario,"bonus_influencias",$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		{
+			return min($res,0);
+		}
+		else
+		{
+			return -1;
+		}
 	}
 }

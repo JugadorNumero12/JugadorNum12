@@ -9,44 +9,36 @@
  *  Aumenta el factor de partido "defensivo"
  *  Aumenta de forma inmediata el recurso animo del jugador
  */
-public class RetransmitirRRSS extends AccionSingleton
+class RetransmitirRRSS extends AccionSingleton
 {
 	/* Aplicar los efectos de la accion */
-	public void ejecutar()
+	public function ejecutar($id_usuario)
 	{
-		/* TODO */
-		 $trans=Yii::app()->db->beginTransaction();
-	    try
-	    {
-	    	$helper = new Helper();
-	      	/*Aumentar el recurso animo del jugador*/
-	    	 $id = Yii::app()->user->usIdent;    		  
-     		 $columna = 'animo';
-     		 $cantidad = $datos_acciones['RetransmitirRRSS']['animo'];
-     		 $help->aumentar_recursos($id, $columna, $cantidad); 
-     		 
-	      	/*Aumentar el factor de partido "defensivo"*/
-     		/*Voy a coger el factor defensivo del equipo y lo voy a aumentar*/
-     		/*Creo que esto lo deberia modificar en Turnos ya que afecta al partido
-     		 si esta accion fallara sera probablemente por eso,cambiarlo si es asi*/
-     		 $id_equipo=Yii::app()->user->usAfic;
-     		 $equipo=Equipos::model()->findByPK($id_equipo);
-     		 //Falta el id_partido que se cogera de la relacion de equipos con partidos
-     		 $cantidad=$datos_acciones['RetransmitirRRSS']['defensivo'];
-     		 $helper->aumentar_factores($id_partido,$id_equipo,'defensivo',$cantidad);
+		//Tomar helper para facilitar la modificación
+	    Yii::import('application.components.Helper');
 
-     		 
-	      	$trans->commit();
-	    }
-	    catch (Exception $e)
-	    {
-	      $trans->rollBack();
-	    }  
+	    $ret = 0;
+
+	    $creador = Usuarios::model()->findByPk($id_usuario);
+	    if ($creador == null)
+	      throw new Exception("Usuario inexistente.", 404);
+	      
+	    $equipo = $creador->equipos;
+	    $sigPartido = $equipo->sigPartido;
+
+	    //1.- Añadir bonificación al partido
+	    $helper = new Helper();
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",$datos_acciones['RetransmitirRRSS']['defensivo']));
+	   
+	    //2.- Dar recursos al creador
+	    $ret = min($ret,$helper->aumentar_recursos($id_usuario,"animo",$datos_acciones['RetransmitirRRSS']['animo']));
+
+	    //Finalizar función
+	    return $ret;
 	}
 
 	/* restarurar valores tras el partido */
-	public void finalizar()
+	public function finalizar()
 	{
-		/* TODO */
 	}
 }

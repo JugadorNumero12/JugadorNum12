@@ -123,11 +123,11 @@ class SiteController extends Controller
 		);
 
 		// Obtenemos los pesos y las probabilidades de todos los estados
-		for ( $i = -9; $i <= 9; $i++ ) {
-			$params['estado'] = $i;
+		for ($i = -10; $i <= 9; $i++) {
+			$params['estado'] = ($i == -10) ? null : $i;
 
-			$pesos[$i] = Formula::pesos($params);
-			$probs[$i] = Formula::probabilidades($params);
+			$pesos[$params['estado']] = Formula::pesos($params);
+			$probs[$params['estado']] = Formula::probabilidades($params);
 		}
 
 		// Calculamos los colores para la tabla

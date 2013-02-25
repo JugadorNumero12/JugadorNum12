@@ -89,7 +89,8 @@ class AccionesController extends Controller
 		//Habilidad no encontrada
 		if ( $habilidad == null ) {			
 			$trans->rollback();
-			throw new CHttpException(404,'Acción inexistente.');
+			Yii::app()->user->setFlash('inexistente', 'Acción inexistente.');
+			$this-> redirect(array('acciones/index'));
 		}
 
 		//Habilidad encontrada
@@ -99,7 +100,8 @@ class AccionesController extends Controller
 		//Si no esta desbloqueada para el usuario, error
 		if( $desbloqueada == null){				
 			$trans->rollback();
-			throw new CHttpException(404,'No tienes desbloqueada la acción.');
+			Yii::app()->user->setFlash('bloqueada', 'No tienes desbloqueada la acción.');
+			$this-> redirect(array('acciones/index'));
 		} 
 		
 		//Si esta desbloqueada
@@ -112,7 +114,8 @@ class AccionesController extends Controller
 		     $res['influencias'] < $habilidad['influencias']){
 			
 			$trans->rollback();
-			throw new CHttpException(404,'No tienes suficientes recursos');
+			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos');
+			$this-> redirect(array('acciones/index'));
 		}
 
 		//Si tenemos suficientes recursos miramos si es individual o grupal
@@ -142,7 +145,8 @@ class AccionesController extends Controller
 			// cancelar transaccion y notificar al usuario
 			if ( $hora_act < $hora_cooldown ){
 					$trans->rollback();
-					throw new CHttpException(404,'La habilidad no se ha regenerado todavía.');
+					Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
+					$this-> redirect(array('acciones/index'));
 			} 
 
 			//Si hora >= hora_cooldown			
@@ -219,7 +223,8 @@ class AccionesController extends Controller
 		} else { 
 				//tipo erroneo
 				$trans->rollback();
-				throw new CHttpException(404,'No puedes usar esa acción.');
+				Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
+				$this-> redirect(array('acciones/index'));
 		}
 
 		$trans->commit();
