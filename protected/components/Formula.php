@@ -3,12 +3,12 @@
 class Formula
 {
 
-	const PESOS_DIST_CERCA = 10;
+	const PESOS_DIST_CERCA = 8;
 
-	const PESOS_MIN_CERCA = 10;
-	const PESOS_MIN_LEJOS = 1;
-	const PESOS_INICIAL = 100;
-	const PESOS_MULT = 10000;
+	const PESOS_MIN_CERCA = 16;
+	const PESOS_MIN_LEJOS = 3;
+	const PESOS_INICIAL = 256;
+	const PESOS_MULT = 12000;
 
 	const DIFNIV_NFACT_BASE = 100;
 
@@ -55,19 +55,24 @@ class Formula
 	 * @return Punto deequilibrio del partido
 	 */
 	private static function equilibrio (array &$params) {
-		// El punto de equilibrio no debería ser la diferencia de niveles por motivos obvios:
-		// No queremos que el partido tienda aun estado donde un equipo SIEMPRE mete gol.
-		// Por tanto, TODO: Cambiar este valor para tener algo más interesante.
-		return $params['difNiv'];
+		// Algunos valores para esta implementación ([difNiv] => equilibrio):
+	    // [0]  => 0.000   [1]  => 1.257
+	    // [2]  => 2.422   [3]  => 3.440
+	    // [4]  => 4.296   [5]  => 5.000
+	    // [7]  => 6.051   [9]  => 6.772
+	    // [11] => 7.284   [15] => 7.952
+	    // Los valores para diferencias de nivel negativas devuelven
+	    // los mismos valores, pero negativos, como es de esperar.
+		return atan($params['difNiv']*0.2) / pi() * 2 * 10;
 
-		// Propuesta DANI:
-		// Utilizar la función matemática arco-tangente:
+		// == DANI ==
+		// Utilizo la función matemática arco-tangente:
 		// * Para una diferencia de niveles de -infinito, el resultado es -PI
 		// * Para una diferencia de niveles de +infinito, el resultado es +PI
 		// * Para una diferencia de niveles de 0, el resultado es 0.
 		// Ajustando los factores para que en lugar de estar entre -PI/+PI esté entre
 		// -10/+10 (En cuyo caso harían falta valores INMENSOS para que el partido siempre
-		// tendiera a gol) podríamos tener una función bastante interesante.
+		// tendiera a gol) tenemos una función bastante interesante.
 	}
 
 	/**
@@ -147,8 +152,12 @@ class Formula
 			$pm = $p * self::PESOS_MULT;
 			if ($params['estado'] !== null) {
 				// Si se trata de un estado normal, sumamos un peso mínimo
+				// NOTA: Sólo se suma peso al gol si estamos "cerca"
 				$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
 				$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+				if ( abs($i) == 10 ) {
+					$pm -= self::PESOS_MIN_LEJOS;
+				}
 
 			} else {
 				// Si el estado es un inicial (Previo al partido, tras el descanso o un gol):
@@ -160,7 +169,6 @@ class Formula
 					$pm = 0;
 				} else {
 					$pm -= self::PESOS_INICIAL;
-					$pm = max($pm,0);
 					if ( abs($i) == 9) {
 						$pm *= .333;
 					} else if ( abs($i) == 8) {
@@ -170,7 +178,7 @@ class Formula
 			}
 
 			// Convertimos el peso a int y lo añadimos al resultado
-			$pesos[$i] = (int) $pm;
+			$pesos[$i] = max( 0, (int) $pm );
 		}
 
 		return $pesos;
