@@ -13,14 +13,14 @@
 		<table class="tablas-usar">
 			<tr><th>Dinero: </th><td><?php echo ($res['dinero'] + $habilidad['dinero']); ?></td></tr>
 			<tr><th>Influencias: </th><td><?php echo ($res['influencias'] + $habilidad['influencias']); ?></td></tr>
-			<tr><th>Animo: </th><td><?php echo ($res['animo'] + $habilidad['animo']); ?></td></tr>
+			<tr><th>&Aacute;nimo: </th><td><?php echo ($res['animo'] + $habilidad['animo']); ?></td></tr>
 		</table>
 
 		<div class="encabezado-pequeño-usar"> <h3>Recursos del usuario después de usar la acción</h3> </div>
 		<table class="tablas-usar">
 			<tr><th>Dinero: </th><td><?php echo $res['dinero']; ?></td></tr>
 			<tr><th>Influencias: </th><td><?php echo $res['influencias']; ?></td></tr>
-			<tr><th>Animo: </th><td><?php echo $res['animo']; ?></td></tr>
+			<tr><th>&Aacute;nimo: </th><td><?php echo $res['animo']; ?></td></tr>
 		</table>
 
 		<div class="botones-usar">
