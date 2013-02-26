@@ -46,102 +46,52 @@ class Partido
      */
     function Partido($id_partido)
     {
-        /* ALEX */
-        $transaction = Yii::app()->db->beginTransaction();
-        try{
-            $partido = Partidos::model()->findByPk($id_partido);
-            if ($partido == null)
-                throw new CHttpException(404,'Partido inexistente.');
-            $this->id_partido = $id_partido;
-            $this->id_local = $partido->equipos_id_equipo_1;
-            $this->id_visitante = $partido->equipos_id_equipo_2;
-            $this->turno = $partido->turno;
-            $this->cronica = $partido->cronica;
-            $this->ambiente = $partido->ambiente;
-            $this->dif_niveles = $partido->dif_niveles;
-            $this->aforo_local = $partido->aforo_local;
-            $this->aforo_visitante = $partido->aforo_visitante;
-            $this->ofensivo_local = $partido->ofensivo_local;
-            $this->ofensivo_visitante = $partido->ofensivo_visitante;
-            $this->defensivo_local = $partido->defensivo_local;
-            $this->defensivo_visitante = $partido->defensivo_visitante;
-            $this->goles_local = $partido->goles_local;
-            $this->goles_visitante = $partido->goles_visitante;
-            $this->estado = $partido->estado;
-            $this->moral_local = $partido->moral_local;
-            $this->moral_visitante = $partido->moral_visitante;
-            
-            $transaction->commit();
-        }catch(Exception $e){
-            $transaction->rollback();
-            throw $e;
-        }
+        $partido = Partidos::model()->findByPk($id_partido);
+        if ($partido == null)
+            throw new CHttpException(404,'Partido inexistente.');
+        $this->id_partido = $id_partido;
+        $this->id_local = $partido->equipos_id_equipo_1;
+        $this->id_visitante = $partido->equipos_id_equipo_2;
+        $this->turno = $partido->turno;
+        $this->cronica = $partido->cronica;
+        $this->ambiente = $partido->ambiente;
+        $this->dif_niveles = $partido->dif_niveles;
+        $this->aforo_local = $partido->aforo_local;
+        $this->aforo_visitante = $partido->aforo_visitante;
+        $this->ofensivo_local = $partido->ofensivo_local;
+        $this->ofensivo_visitante = $partido->ofensivo_visitante;
+        $this->defensivo_local = $partido->defensivo_local;
+        $this->defensivo_visitante = $partido->defensivo_visitante;
+        $this->goles_local = $partido->goles_local;
+        $this->goles_visitante = $partido->goles_visitante;
+        $this->estado = $partido->estado;
+        $this->moral_local = $partido->moral_local;
+        $this->moral_visitante = $partido->moral_visitante;
     }
-
-    /**
-     * Funcion que inicializa los atributos 
-     *  estado, moral, ofensivo, defensivo y goles
-     * cargandolos desde la tabla turnos 
-     */
-    /*private void cargaEstado()
-    {
-        $transaction = Yii::app()->db->beginTransaction();
-        try{
-            $turn = Turnos::findByPk($id_partido);
-
-            if ($turn == null)
-                throw new CHttpException(404,'Turno inexistente.');
-
-            $ofensivo_local = $turn->$ofensivo_local;
-            $ofensivo_visitante = $turn->$ofensivo_visitante;
-            $defensivo_local = $turn->$defensivo_local;
-            $defensivo_visitante = $turn->$defensivo_visitante;
-
-            $goles_local = $turn->goles_local;
-            $goles_visitante = $turn->$goles_visitante;
-            $estado = $turn->estado;
-            $moral_local = $turn->$moral_local;
-            $moral_visitante = $turn->$moral_visitante;
-            
-            $transaction->commit();
-        }catch(Exception $e){
-            $transaction->rollback();
-            throw $e;
-        }
-    }*/
     
     /*
      * Guarda toda la información del estado actual en la base de datos.
      */
     private function guardaEstado()
     {
-        $transaction = Yii::app()->db->beginTransaction();
-        try{
-            $partido = Partidos::model()->findByPk($this->id_partido);
+        $partido = Partidos::model()->findByPk($this->id_partido);
+        if ($partido == null)
+            throw new CHttpException(404,'Partido inexistente.');
 
+        $partido->ofensivo_local = $this->ofensivo_local;
+        $partido->ofensivo_visitante = $this->ofensivo_visitante;
+        $partido->defensivo_local = $this->defensivo_local;
+        $partido->defensivo_visitante = $this->defensivo_visitante;
 
-            if ($partido == null)
-                throw new CHttpException(404,'Partido inexistente.');
-
-            $partido->ofensivo_local = $this->ofensivo_local;
-            $partido->ofensivo_visitante = $this->ofensivo_visitante;
-            $partido->defensivo_local = $this->defensivo_local;
-            $partido->defensivo_visitante = $this->defensivo_visitante;
-
-            $partido->goles_local = $this->goles_local;
-            $partido->goles_visitante = $this->goles_visitante;
-            $partido->estado = $this->estado;
-            $partido->moral_local = $this->moral_local;
-            $partido->moral_visitante = $this->moral_visitante;
-			$partido->turno = $this->turno;
-			$partido->cronica = $this->cronica;
-            if(!$partido->save()) 
-                throw new Exception('No se ha podido guardar el turno actual.');
-            $transaction->commit();
-        }catch(Exception $e){
-            $transaction->rollback();
-            throw $e;
-        }
+        $partido->goles_local = $this->goles_local;
+        $partido->goles_visitante = $this->goles_visitante;
+        $partido->estado = $this->estado;
+        $partido->moral_local = $this->moral_local;
+        $partido->moral_visitante = $this->moral_visitante;
+		$partido->turno = $this->turno;
+		$partido->cronica = $this->cronica;
+        if(!$partido->save()) 
+            throw new Exception('No se ha podido guardar el turno actual.');
     }
 
 	/**
@@ -160,10 +110,6 @@ class Partido
 		//Fijar goles iniciales por seguridad
 		$this->goles_local = 0;
 		$this->goles_visitante = 0;
-		//Generamos estado inicial del partido
-
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
-
 		//Tomar fijos datos locales y visitantes
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
@@ -186,6 +132,10 @@ class Partido
         //Moral inicial
         $this->moral_local = 0;
         $this->moral_visitante = 0;
+		//Generamos estado inicial del partido
+		$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));
+
 
         //Ambiente, aforo local y visitante ya tomados en la constructora.
         //Pertenecen a Partidos desde el comienzo.
@@ -204,26 +154,12 @@ class Partido
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
 		$estado_antiguo = $this->estado;
 
-		$this->estado = Formula::siguienteEstado(array('estado'=>3, 'difNiv'=>5, 
-											'moralLoc'=>7 ,'moralVis'=>2));
-
-		/*$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
-
-		 /*$params = array(
- 			'difNiv'    => (double) 3, 'aforoMax'  => (double) 3,
- 			'aforoLoc'  => (double) 3 , 'aforoVis'  => (double) 3,
-			'moralLoc'  => (double) 4, 'moralVis'  => (double) 3,
-			'ofensLoc'  => (double) 4, 'ofensVis'  => (double) 3,
-			'defensLoc' => (double) 4, 'defensVis' => (double) 3,
-			'estado'    => (double) 5,
-		);  
+		$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));
 
 
-		$this->estado = Formula::siguienteEstado($params); */
-
-		if($this->estado == null){
-			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado');
+		if($this->estado === null){
+			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
 		}
 
 		
@@ -435,8 +371,8 @@ class Partido
 	{
 		/*$bonifParticipante = 3;
 		  $bonifNoParticipante = 1*/
-		$trans = Yii::app()->db->beginTransaction();
-		try{
+		try
+		{
 			$participantes=AccionesTurno::model()->findAllByAttributes(array('equipos_id_equipo'=>$equipo, 'partidos_id_partido'=>$this->id_partido));
 			$usuarios=Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$equipo));
 			$bonusAmbiente = $bonus* (pow(1.5, $this->ambiente+1)/(4+.7*$this->ambiente));//(1.5^(a+1))/(4+.7*a)
@@ -452,11 +388,9 @@ class Partido
 				$rec['animo']= min(round(3*$bonusAmbiente+$rec['animo']), $rec['animo_max']);
 				$rec->save();
 			}
-			$trans->commit();
-		}catch(Exception $exc){
-			$trans->rollback();
-			echo $exc; Yii::app()->end();
-			//Yii::log('[MATCH_ERROR].'.$exc->getMessage(), 'error');
+		}
+		catch(Exception $exc)
+		{
 			throw new Exception("Error al generar la bonificacion al animo de final de partido", 1);
 		}
 	}
@@ -466,8 +400,8 @@ class Partido
 	 */
 	private function actualizaClasificacion()
 	{			
-		$trans = Yii::app()->db->beginTransaction();
-		try{
+		try
+		{
 			$local=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=> $this->id_local));
 			$visit=Clasificacion::model()->findByAttributes(array('equipos_id_equipo'=> $this->id_visitante));
 
@@ -521,12 +455,10 @@ class Partido
 				$i++;
 				$puesto->save();
 			}
-
-
-
-			$trans->commit();	
-		}catch(Exception $exc){
-			$trans->rollback();			
+	
+		}
+		catch(Exception $exc)
+		{		
 			throw new Exception("Error al recalcular la clasificación", 1);
 		}
 
@@ -547,6 +479,38 @@ class Partido
 		$this->turno++;
 	}
 
+	private function actualizaSiguientePartido($id_equipo)
+	{
+		$tiempo=time();
+		$primerTurno=Partido::PRIMER_TURNO;
+		$busqueda=new CDbCriteria;
+		$busqueda->addCondition(':bTiempo <= hora');
+		$busqueda->addCondition('turno = :bPrimerTurno');
+		$busqueda->addCondition('((equipos_id_equipo_1 = :bequipo) OR (equipos_id_equipo_2 = :bequipo))');
+		$busqueda->params = array(':bTiempo' => $tiempo,
+								'bPrimerTurno' => $primerTurno,
+								'bequipo' => $id_equipo
+								);
+		$busqueda->order = 'hora ASC';
+		$busqueda->limit = 1;
+		$partidos=Partidos::model()->findAll($busqueda);
+
+		$equipo = Equipos::model()->findByPk($id_equipo);
+		if ($equipo == null)
+			throw new Exception("El equipo no existe (Partido.php).", 404);
+			
+		if ($partidos == null)
+		{
+			$equipo->partidos_id_partido = null;
+		}
+		else
+		{
+			$equipo->partidos_id_partido = $partidos->id_partido;
+		}
+		if (!$equipo->save())
+			throw new Exception("Error al situar proximo partido.", 404);						
+	}
+
 	public function jugarse()
 	{
 		switch ($this->turno) 
@@ -558,7 +522,6 @@ class Partido
 		    	$this->guardaEstado();      
 		        break;
 		    case self::TURNO_DESCANSO:
-		    	//TODO Revisar!!!
 		    	$this->generaEstadoDescanso();
 		    	$this->generaCronicaDescanso();
 		    	$this->guardaEstado();
@@ -577,6 +540,8 @@ class Partido
 				$this->generar_estado();
 				$this->finalizaEncuentro();
 				$this->guardaEstado();
+				$this->actualizaSiguientePartido($this->id_local);
+				$this->actualizaSiguientePartido($this->id_visitante);
 		    	break;
 		    default:
 		       	// No debería llegar aquí

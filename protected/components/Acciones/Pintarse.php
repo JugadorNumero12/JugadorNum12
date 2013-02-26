@@ -14,62 +14,49 @@
  * Bonus al creador:
  *    Aumento extra del animo
  */
-public class Pintarse extends AccionSingleton
+class Pintarse extends AccionGrupSingleton
 {
 	
   /* Aplica las mejoras inmediatas y para el proximo partido */
   public function ejecutar($id_accion)
   {
-    $trans=Yii::app()->db->beginTransaction();
-    try
-    {
+      //Tomar helper para facilitar la modificación
+      Yii::import('application.components.Helper');
+
+      $ret = 0;
+
+      $accGrup = AccionesGrupales::model()->findByPk($id_accion);
+      if ($accGrup == null)
+        throw new Exception("Accion grupal inexistente.", 404);
+        
+      $creador = $accGrup->usuarios;
+      $equipo = $creador->equipos;
+      $sigPartido = $equipo->sigPartido;
+
+      //1.- Añadir bonificación al partido
       $helper = new Helper();
-  		
-   		/* coleccion usuarios que participaron */
-   		$participantes = Participaciones::model()->findAllByAttributes(array('id_accion_grupal'=>$id_accion));
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",$datos_acciones['Pintarse']['ambiente']));
+      
+      //2.- Dar bonificación al creador
+      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"animo",$datos_acciones['Pintarse']['bonus_creador']['animo']));
+      
+      //3.- Devolver influencias y dar animo de la accion
 
-   		/* aumentar el animo de cada participante */
-   		foreach ($participantes as $participante)
+      $participantes = $accGrup->participaciones;
+      foreach ($participaciones as $participacion)
       {
-  		  $helper->aumentar_recursos($participante['id_usuario'], 'animo', $datos_acciones['Pintarse']['animo']);
-  	  }
+        $infAportadas = $participacion->influencas_aportadas;
+        $usuario = $participacion->usuarios_id_usuario;
+        $ret = min($ret,$helper->aumentar_recursos($usuario,"animo",$datos_acciones['Pintarse']['animo']));
+        $ret = min($ret,$helper->aumentar_recursos($usuario,"influencias",$infAportadas));
+      }
 
-      /* factores de partido */
-      $fac_partido = Partidos::model()-><SELECCIONAR ENCUENTRO> 
-      $nuevo_ambiente = $fac_partido->ambiente + $datos_acciones['Pintarse']['ambiente'];
-      $fac_partido->setAttributes(array('ambiente'=>$nuevo_ambiente));   
-      $fac_partido->save();
-
-      /* bonus del usuario que la inicio */
-   		$creador = AccionesGrupales::model()->findbyPK($id_accion);
-   		$helper->aumentar_recursos($creador['id_usuario'], 'animo', $datos_acciones['Ascender']['bonus_creador']['animo']); 
-      $trans->commit();
-    }
-    catch (Exception $e)
-    {
-      $trans->rollBack();
-    } 
+      //Finalizar función
+      return $ret;
   }
 
-  /* Restaurar valores tras el partido */
+  /* Restaurar valores tras el partido. NO ES NECESARIO */
   public function finalizar()
   {
-    /* TODO: solo restar el ambiente (no restar los recursos) */
-
-    //NO FIJARSE EN ESTA PARTE, ESTÁ MAL
-    $trans=Yii::app()->db->beginTransaction();
-    try
-    {
-      /* factores de partido */
-      $fac_partido = Partidos::model()-><SELECCIONAR ENCUENTRO> 
-      $nuevo_ambiente = $fac_partido->ambiente - $datos_acciones['Pintarse']['ambiente'];
-      $fac_partido->setAttributes(array('ambiente'=>$nuevo_ambiente));   
-      $fac_partido->save();
-      $trans->commit();
-    }
-    catch (Exception $e)
-    {
-      $trans->rollBack();
-    } 
   }	
 }

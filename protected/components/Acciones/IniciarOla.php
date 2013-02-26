@@ -8,38 +8,30 @@
  * Efectos
  *  aumenta el factor de partido "moral"
  */
-public class Apostar extends AccionSingleton
+class IniciarOla extends AccionPartSingleton
 {
-  /* Aplicar el efecto de la accion */
-  public function ejecutar($id_accion)
+  /* Aplicar los efectos de la accion */
+  public function ejecutar($id_usuario)
   {
-  	/*ROBER */ 
-      $trans=Yii::app()->db->beginTransaction();
-      try
-      {
-        /*Aumentar el factor de partido "moral"*/
-        /*Para cambiar el atributo moral en el único sitio que aparece es en la tabla
-         Turnos. Por tanto, como aun no se coger justo el ultimo turno, voy a coger todos
-         los turnos de ese partido y voy a aumentar el atributo moral.Cuando encuentre como
-         coger solo el ultimo optimizare la accion*/
-        $h=new Helper();
-        $id_equipo=Yii::app()->user->usAfic;
-        $equipo=Equipos::model()->findByPK($id_equipo);
-        $cantidad=$datos_acciones['IniciarOla']['moral'];
-        $h->aumentar_factores($id_partido,$id_equipo,'moral',$cantidad);
+    //Tomar helper para facilitar la modificación
+      Yii::import('application.components.Helper');
+
+      $ret = 0;
+
+      $creador = Usuarios::model()->findByPk($id_usuario);
+      if ($creador == null)
+        throw new Exception("Usuario inexistente.", 404);
         
-        
-        $trans->commit();
-      }
-      catch (Exception $e)
-      {
-        $trans->rollBack();
-      }       
+      $equipo = $creador->equipos;
+      $sigPartido = $equipo->sigPartido;
+
+      //1.- Añadir bonificación al partido
+      $helper = new Helper();
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",$datos_acciones['IniciarOla']['moral']));
+
+      //Finalizar función
+      return $ret;
   }
 
-  /* Accion de partido: metodo vacio */
-  public function finalizar()
-  {
-  	/* VACIO */
-  }	
+  public function finalizar() {}
 }

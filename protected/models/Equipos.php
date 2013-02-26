@@ -41,7 +41,7 @@ class Equipos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo, partidos_id_partido', 'required'),
+			array('nombre, categoria, aforo_max, aforo_base, nivel_equipo, factor_ofensivo, factor_defensivo', 'required'),
 			array('nivel_equipo', 'numerical', 'integerOnly'=>true),
 			array('nombre', 'length', 'max'=>45),
 			array('categoria, aforo_max, aforo_base, factor_ofensivo, factor_defensivo, partidos_id_partido', 'length', 'max'=>10),
@@ -61,6 +61,7 @@ class Equipos extends CActiveRecord
 	{
 		/* SAM */
 		return array(
+			'sigPartido'=>array(self::BELONGS_TO, 'Partidos', 'partidos_id_partido'),
 			'local'=>array(self::HAS_MANY, 'Partidos', 'equipos_id_equipo_1'),
 			'visitante'=>array(self::HAS_MANY, 'Partidos', 'equipos_id_equipo_2'),
 			'clasificacion'=>array(self::HAS_ONE, 'Clasificacion', 'equipos_id_equipo'),

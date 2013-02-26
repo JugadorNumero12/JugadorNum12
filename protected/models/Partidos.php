@@ -56,6 +56,7 @@ class Partidos extends CActiveRecord
 	{
 		/* SAM */
 		return array(
+			'esSiguiente'=>array(self::HAS_MANY, 'Equipos', 'partidos_id_partido'),
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'partidos_id_partido'),
 			'local'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo_1'),
 			'visitante'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo_2'),
