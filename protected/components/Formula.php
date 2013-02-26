@@ -49,22 +49,46 @@ class Formula
 	}
 
 	/**
+	 * Calcula el punto de equilibrio al cual debe tender el partido en reposo.
+	 *
+	 * @param $params Array de parámetros de la fórmula
+	 * @return Punto deequilibrio del partido
+	 */
+	private static function equilibrio (array &$params) {
+		// El punto de equilibrio no debería ser la diferencia de niveles por motivos obvios:
+		// No queremos que el partido tienda aun estado donde un equipo SIEMPRE mete gol.
+		// Por tanto, TODO: Cambiar este valor para tener algo más interesante.
+		return $params['difNiv'];
+
+		// Propuesta DANI:
+		// Utilizar la función matemática arco-tangente:
+		// * Para una diferencia de niveles de -infinito, el resultado es -PI
+		// * Para una diferencia de niveles de +infinito, el resultado es +PI
+		// * Para una diferencia de niveles de 0, el resultado es 0.
+		// Ajustando los factores para que en lugar de estar entre -PI/+PI esté entre
+		// -10/+10 (En cuyo caso harían falta valores INMENSOS para que el partido siempre
+		// tendiera a gol) podríamos tener una función bastante interesante.
+	}
+
+	/**
 	 * Calcula la media de la función final dados los parámetros para el turno.
 	 *
 	 * @param $params Array de parámetros de la fórmula
 	 * @return Media de la función final
 	 */
-	private static function calcMedia (array $params) {
+	private static function calcMedia (array &$params) {
+		$equilibrio = equilibrio($params);
+
 		// Inicialmente, la media es el estado actual o, si es null, el punto de equilibrio
 		if ($params['estado'] === null) {
-			$avg = $params['difNiv'];
+			$avg = $equilibrio;
 
 		} else {
 			$avg = $params['estado'];
 
 			// Acercamos la media al punto de equilibrio	
 			$factDifNiv = self::DIFNIV_NFACT_BASE + ($params['moralLoc'] + $params['moralVis'])/10;
-			$avg += ($params['difNiv'] - $params['estado']) * exp(-$factDifNiv/100);
+			$avg += ($equilibrio - $params['estado']) * exp(-$factDifNiv/100);
 		}
 
 		//Hacemos la diferencia de morales en valor absoluto
@@ -81,7 +105,7 @@ class Formula
 	 * @param $params Array de parámetros de la fórmula
 	 * @return Desviación típica de la función final
 	 */
-	private static function calcDesv (array $params) {
+	private static function calcDesv (array &$params) {
 		// Desviación inicial con valor arbitrario
 		$stdev = 2.5;
 
@@ -98,7 +122,7 @@ class Formula
 	 * @param $params Array de parámetros de la fórmula
 	 * @return Pesos de los cambios de estado
 	 */
-	public static function pesos (array $params) {
+	public static function pesos (array &$params) {
 		$pesos = array();
 
 		for ( $i=-10; $i<=10; $i++ ) {
@@ -159,7 +183,7 @@ class Formula
 	 * @param $params Array de parámetros de la fórmula
 	 * @return Probabilidades de los cambios de estado
 	 */
-	public static function probabilidades (array $params) {
+	public static function probabilidades (array &$params) {
 		$pesos = self::pesos($params);
 		$tot = array_sum( $pesos );
 		foreach ( $pesos as $i=>$v ) {
@@ -176,7 +200,7 @@ class Formula
 	 *
 	 * @param $params Array de parámetros de la fórmula
 	 */
-	public static function siguienteEstado (array $params)
+	public static function siguienteEstado (array &$params)
 	{
 		/* DANI & PEDRO ==> Ingenieros de LA FÓRMULA */
 		$probs = self::probabilidades($params);
