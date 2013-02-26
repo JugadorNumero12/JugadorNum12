@@ -207,10 +207,10 @@ class Partido
 		$this->estado = Formula::siguienteEstado(array('estado'=>3, 'difNiv'=>5, 
 											'moralLoc'=>7 ,'moralVis'=>2));
 
-		/*$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
+		/*$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
+											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));*/
 
-		 /*$params = array(
+		/* $params = array(
  			'difNiv'    => (double) 3, 'aforoMax'  => (double) 3,
  			'aforoLoc'  => (double) 3 , 'aforoVis'  => (double) 3,
 			'moralLoc'  => (double) 4, 'moralVis'  => (double) 3,
