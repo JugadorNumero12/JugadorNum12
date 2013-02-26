@@ -11,52 +11,54 @@
  * Bonus al creador:
  *  Aumenta en numero maximo de influencias
  */
-public class OrganizarHomenaje extends AccionSingleton
+public class OrganizarHomenaje extends AccionGrupSingleton
 {
 	/* Aplicar los efectos de la accion */
 	public void ejecutar($id_accion)
-	{
-		$trans = Yii::app()->db->beginTransaction();
+  {
+      //Tomar helper para facilitar la modificación
+      Yii::import('application.components.Helper');
 
-      	try{
-        	$helper = new Helper();
+      $ret = 0;
+
+      $accGrup = AccionesGrupales::model()->findByPk($id_accion);
+      if ($accGrup == null)
+        throw new Exception("Accion grupal inexistente.", 404);
         
-        	//Busco el siguiente partido (Falta seleccionar el partido actual)
-        	$partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
-        	
-        	//Saco el nuevo aforo y se lo sumo al que había
-        	$nuevoAforo = $partido->aforo + $datos_acciones['OrganizarHomenaje']['aforo'];
-        	$partido->setAttributes(array('aforo'=>$nuevoAforo)); 
+      $creador = $accGrup->usuarios;
+      $equipo = $creador->equipos;
+      $sigPartido = $equipo->sigPartido;
 
-        	$partido->save(); 
+      //1.- Añadir bonificación al partido
+      $helper = new Helper();
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",$datos_acciones['OrganizarHomenaje']['aforo']));
 
-        	//Bonus al creador: le aumento las influencias
-        	$creador = AccionesGrupales::model()->findbyPK($id_accion);
-   			  $helper->aumentar_recursos($creador['id_usuario'], 'influencias_max',
-   				$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']); 
+      //2.- Dar bonificación al creador
+      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias_max",$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']));
+      
+      //3.- Devolver influencias
 
-        	$trans->commit();
-      } catch {
-        	$trans->rollBack();
+      $participantes = $accGrup->participaciones;
+      foreach ($participaciones as $participacion)
+      {
+        $infAportadas = $participacion->influencas_aportadas;
+        $usuario = $participacion->usuarios_id_usuario;
+        if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+        {
+          $ret = min($res,0);
+        }
+        else
+        {
+          $ret = -1;
+        }
       }
-	}
 
-	/* Restarurar valores tras el partido */
+      //Finalizar función
+      return $ret;
+    }
+
+	/* Restarurar valores tras el partido. NO ES NECESARIO */
 	public void finalizar($id_accion)
 	{
-		$trans = Yii::app()->db->beginTransaction();
-
-      	try{
-        	$helper = new Helper();
-
-        	//Quitamos el bonus al creador
-        	$creador = AccionesGrupales::model()->findbyPK($id_accion);
-   			$helper->quitar_recursos($creador['id_usuario'], 'influencias_max',
-   					$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']); 
-
-        	$trans->commit();
-      } catch {
-        	$trans->rollBack();
-      }
 	}
 }

@@ -12,33 +12,54 @@
  * Bonus al creador
  * 	 ninguno
  */
-public class FinanciarEvento extends AccionSingleton
+class FinanciarEvento extends AccionGrupSingleton
 {	
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
   {
-      $trans = Yii::app()->db->beginTransaction();
-      try{        
-        //Busco el siguiente partido (Falta seleccionar el partido actual)
-        $partido = Partidos::model()-><SELECCIONAR ENCUENTRO>;
-        //Saco el ambiente nuevo y se lo añado
-        $nuevoAmbiente = $partido->ambiente + $datos_acciones['FinanciarEvento']['ambiente'];
-        $partido->setAttributes(array('ambiente'=>$nuevoAmbiente));  
-        //Saco el aforo y se lo añado
-        $nuevoAforo = $partido->aforo + $datos['FinanciarEvento']['aforo'];
-        $partido->setAttributes(array('aforo'=>$nuevoAforo));  
+    //Tomar helper para facilitar la modificación
+    Yii::import('application.components.Helper');
 
-        $partido->save();
+    $ret = 0;
 
-        $trans->commit();
-      } catch {
-        $trans->rollBack();
+    $accGrup = AccionesGrupales::model()->findByPk($id_accion);
+    if ($accGrup == null)
+      throw new Exception("Accion grupal inexistente.", 404);
+      
+    $creador = $accGrup->usuarios;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
+
+    //1.- Añadir bonificación al partido
+    $helper = new Helper();
+    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",$datos_acciones['FinanciarEvento']['aforo']));
+
+    //2.- Dar bonificación al creador
+
+    //3.- Devolver influencias
+
+    $participantes = $accGrup->participaciones;
+    foreach ($participaciones as $participacion)
+    {
+      $infAportadas = $participacion->influencas_aportadas;
+      $usuario = $participacion->usuarios_id_usuario;
+      if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+      {
+        $ret = min($res,0);
       }
+      else
+      {
+        $ret = -1;
+      }
+    }
+
+    //Finalizar función
+    return $ret;
   }
 
-  /* Restaurar valores tras el partido */
-  public function finalizar($id_accion)
+  /* Restaurar valores tras el partido. NO ES NECESARIO YA. */
+  public function finalizar()
   {
-  	//Aquí no hace falta hacer nada ya que al acabar el partido ya no importan sus valores
   }	
 }
