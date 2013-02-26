@@ -77,7 +77,7 @@ class Formula
 	 * @return Media de la función final
 	 */
 	private static function calcMedia (array &$params) {
-		$equilibrio = equilibrio($params);
+		$equilibrio = self::equilibrio($params);
 
 		// Inicialmente, la media es el estado actual o, si es null, el punto de equilibrio
 		if ($params['estado'] === null) {
