@@ -29,7 +29,21 @@
     			<?php foreach ($clasificacion as $equipo) { ?>
                     <li> 
                         <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
-                            <?php echo $equipo->equipos->nombre ?>
+                            <?php switch ($equipo->equipos->nombre)
+								{
+								case 'Rojos': ?>
+								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos"> 
+								  <?php break;
+								case 'Verdes':?>
+								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes"> 
+								  <?php break;
+								case 'Negros':?>
+								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros"> 
+								  <?php break;
+								case 'Blancos':?>
+								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos"> 
+								  <?php break;
+								} ?>
                         </a>
                     </li>
                 <?php } ?>
