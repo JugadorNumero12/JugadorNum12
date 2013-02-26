@@ -1,41 +1,66 @@
 //Layout que se usa en todas las páginas
 
-div#envoltorio1{
-	min-height: 100%;
-	height: 100%;
-	margin: 0 auto ;
-	width:100%;
-	background: white;
+// COLORES
+// ------------
+@BLANCO_ROTO: #FFFCFB;
+@GRIS: #CED5DE;
+@GRIS_OSCURO: #A0A6AD;
+@VERDE_12: #597f08;
 
-	div#envoltorio2{
-		width:95%;
+// MIXINS
+// ------------
+.propiedades_basicas(){
+    background: transparent;
+    margin: 1em 1em 1em 1em;
+    border: 0px white;
+}
+
+// ------------
+
+div#envoltorio1 {
+    min-height: 100%;
+    height: 100%;
+    margin: 0 auto ;
+    width:100%;
+
+	div#envoltorio2 {
+		width:90%;
+        height: 100%;
 		text-align: left;
-		background: white;
 		margin: 0 auto;	
 
-		//CABECERA
-		#cabecera {
-			background: white;
+		// CABECERA
+		// --------------
+		div#cabecera {
 			float: left;
 			width:100%;
 
-			#logo {
-			background: transparent;
-			float: left;
-			margin: 1em 1em 1em 1em;
-			border: 0px white;
-			}//#logo
+			div#logo {
+				.propiedades_basicas();
+				float: left;
+			}
 
-			#titulo-jugador {
-			background: transparent;
-			float: left;
-			margin: 1em 1em 1em 1em;
-			border: 0px white;
-			padding: 15px 0px 0px 0px;
-			}//#titulo-jugador
-		}//#cabecera
+			div#titulo-jugador {
+				.propiedades_basicas();
+				float: left;
+				padding: 1em 0em 0em 0.5em;
+			}
 
-		//CENTRO DE LA PAGINA
+            div#clasificacion {
+                .propiedades_basicas();
+                float: left;
+                width: 100%;
+                li {
+                    display: inline;
+                    list-style-type: none;
+                    padding: 0em 1.5em 0em 0em;    
+                }
+            }
+		
+        }
+
+		// CENTRO DE LA PAGINA
+        // -----------------------
 
 		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
 		#menu-izquierdo{
@@ -94,10 +119,4 @@ div#envoltorio1{
 	color: black;
 	text-decoration: none;
 }
-
-
-
-
-
-
 

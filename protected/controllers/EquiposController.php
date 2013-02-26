@@ -38,12 +38,11 @@ class EquiposController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
-		$modeloClasificacion = Clasificacion::model()->findAll(
-			array('order'=>'posicion ASC')
-		);
+        $modeloClasificacion = Clasificacion::model()->findAll(
+            array('order'=>'posicion ASC')
+        );
 
-		$this->render('index',array('modeloC'=>$modeloClasificacion));
+        $this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
 
 	/**

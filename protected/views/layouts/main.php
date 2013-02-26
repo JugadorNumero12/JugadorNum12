@@ -23,6 +23,18 @@
     	<div id = "titulo-jugador">
     		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
+    	<div id = "clasificacion">
+            <?php $clasificacion = Clasificacion::model()->findAll(array('order'=>'posicion ASC')); ?>
+    		<ul>
+    			<?php foreach ($clasificacion as $equipo) { ?>
+                    <li> 
+                        <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
+                            <?php echo $equipo->equipos->nombre ?>
+                        </a>
+                    </li>
+                <?php } ?>
+    		</ul>
+    	</div>
  
     </div>
 	
