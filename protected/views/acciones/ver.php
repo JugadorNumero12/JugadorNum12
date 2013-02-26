@@ -14,6 +14,12 @@
 
 	<div class="encabezado"><h1><?php echo $accionGrupal['habilidades']['nombre']; ?></h1></div>
 
+	<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+	?>
+
 	<div class="datos-accion">
 		<table class="tablas-acciones-ver">
 			<tr><th>Creador: </th><td> <a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $accionGrupal->usuarios->id_usuario));?>"> <?php echo $accionGrupal->usuarios->nick; ?> </a></td></tr>
