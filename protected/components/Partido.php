@@ -133,8 +133,17 @@ class Partido
         $this->moral_local = 0;
         $this->moral_visitante = 0;
 		//Generamos estado inicial del partido
-		$this->estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$this->dif_niveles, 
-											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));
+
+        $params = array(
+ 			'difNiv'    => (double) $this->dif_niveles, 'aforoMax'  => (double) 0,
+ 			'aforoLoc'  => (double) $this->aforo_local, 'aforoVis'  => (double) $this->aforo_visitante,
+			'moralLoc'  => (double) $this->moral_local, 'moralVis'  => (double) $this->moral_visitante,
+			'ofensLoc'  => (double) $this->ofensivo_local, 'ofensVis'  => (double) $this->ofensivo_visitante,
+			'defensLoc' => (double) $this->defensivo_local, 'defensVis' => (double) $this->defensivo_visitante,
+			'estado'    => null
+		);
+
+		$this->estado = Formula::siguienteEstado($params);
 
 
         //Ambiente, aforo local y visitante ya tomados en la constructora.
@@ -154,8 +163,16 @@ class Partido
 		//Guardamos el estado antiguo para poder generar unas cronicas mejores
 		$estado_antiguo = $this->estado;
 
-		$this->estado = Formula::siguienteEstado(array('estado'=>$this->estado, 'difNiv'=>$this->dif_niveles, 
-											'moralLoc'=>$this->moral_local ,'moralVis'=>$this->moral_visitante));
+		$params = array(
+ 			'difNiv'    => (double) $this->dif_niveles, 'aforoMax'  => (double) 0,
+ 			'aforoLoc'  => (double) $this->aforo_local, 'aforoVis'  => (double) $this->aforo_visitante,
+			'moralLoc'  => (double) $this->moral_local, 'moralVis'  => (double) $this->moral_visitante,
+			'ofensLoc'  => (double) $this->ofensivo_local, 'ofensVis'  => (double) $this->ofensivo_visitante,
+			'defensLoc' => (double) $this->defensivo_local, 'defensVis' => (double) $this->defensivo_visitante,
+			'estado'    => (double) $this->estado
+		);
+
+		$this->estado = Formula::siguienteEstado($params);
 
 		if($this->estado === null){
 			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
@@ -179,8 +196,17 @@ class Partido
 		//Si ha habido gol o nos vamos al descanso llamamos a la formula para volver a equilibrar el partido (var $estado)
 		//El valor del estado es null porque asi la formula sabe que estamos en estos casos (no podemos volver a meter gol)
 		if($this->estado == 10 || $this->estado == -10 || $this->turno == 5){ 
-			/*$estado = Formula::siguienteEstado(array('estado'=>null, 'difNiv'=>$dif_niveles, 
-											'moralLoc'=>$moral_local ,'moralVis'=>$moral_visitante)); */
+
+			$params = array(
+	 			'difNiv'    => (double) $this->dif_niveles, 'aforoMax'  => (double) 0,
+	 			'aforoLoc'  => (double) $this->aforo_local, 'aforoVis'  => (double) $this->aforo_visitante,
+				'moralLoc'  => (double) $this->moral_local, 'moralVis'  => (double) $this->moral_visitante,
+				'ofensLoc'  => (double) $this->ofensivo_local, 'ofensVis'  => (double) $this->ofensivo_visitante,
+				'defensLoc' => (double) $this->defensivo_local, 'defensVis' => (double) $this->defensivo_visitante,
+				'estado'    => (double) $this->estado
+			);
+
+			$this->estado = Formula::siguienteEstado($params);
 		}
  
 		//Aumentamos turno
@@ -233,8 +259,8 @@ class Partido
 
 		//Comentamos el estado del partido 
 		$cronica_estado = "";
-		switch (abs($this->estado)) {
-		    case 0: { //Gol del equipo local
+		switch (abs(&$this->estado)) {
+		    case 0: { 
 		        $cronica_estado = " El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
 		        break;
 		    }
@@ -301,7 +327,7 @@ class Partido
 
 		//TODO comentar la diferencia de goles
 
-		
+		$this->cronica .= "             Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
 		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado;
 		
 	}
@@ -471,6 +497,12 @@ class Partido
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
 	}
 
+	private function generaCronicaUltimoTurno()
+	{
+		//Indicar fin del descanso y reanudación del partido
+		$this->cronica .= "cronica ultimo turno";
+	}
+
 	private function generaEstadoDescanso()
 	{
 		//Generamos estado tras el descanso
@@ -537,6 +569,7 @@ class Partido
 		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
 		    	//sino que ofrecemos la bonificacion por asistir/ganar.
 				$this->generar_estado();
+				$this->generaCronicaUltimoTurno();
 				$this->finalizaEncuentro();
 				$this->guardaEstado();
 				$this->actualizaSiguientePartido($this->id_local);
