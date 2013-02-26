@@ -56,7 +56,7 @@ class Formula
 	 */
 	private static function calcMedia (array $params) {
 		// Inicialmente, la media es el estado actual o, si es null, el punto de equilibrio
-		if ($params['estado'] == null) {
+		if ($params['estado'] === null) {
 			$avg = $params['difNiv'];
 
 		} else {
@@ -102,35 +102,50 @@ class Formula
 		$pesos = array();
 
 		for ( $i=-10; $i<=10; $i++ ) {
+			// Obtenemos la medio y la desviación típica
 			$avg = self::calcMedia($params);
 			$stdev = self::calcDesv($params);
 
-			//if ( $i == -10 ) {
-			//	$p = self::gauss( -9.5, $avg, $stdev );
-			//} else if ( $i == 10 ) {
-			//	$p = (1 - self::gauss( 9.5, $avg, $stdev ));
-			//} else {
-			$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
-			//}
-
-			$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
-
-			$pm = $p * self::PESOS_MULT;
-			if ($params['estado']) {
-				$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+			// Calculamos la probabilidad, según una normal N($avg,$stdev), de llegar al estado $i:
+			// * Para la prob. entre -9 y +9, calculamos la acumulada entre $i-0.5 e $i+0.5
+			// * Para la prob. de -10, calculamos la acumulada desde -infinito hasta -9.5
+			// * Para la prob. de +10, calculamos la acumulada desde +9.5 hasta +infinito
+			if ( $i == -10 ) {
+				$p = self::gauss( -9.5, $avg, $stdev );
+			} else if ( $i == 10 ) {
+				$p = (1 - self::gauss( 9.5, $avg, $stdev ));
 			} else {
+				$p = self::gauss( $i+0.5, $avg, $stdev ) - self::gauss( $i-0.5, $avg, $stdev );
+			}
+
+			// Multiplicamos el peso por un factor constante para hacerlo
+			// más preciso unavez convertido a int
+			$pm = $p * self::PESOS_MULT;
+			if ($params['estado'] !== null) {
+				// Si se trata de un estado normal, sumamos un peso mínimo
+				$cerca = abs($i-$params['estado']) < self::PESOS_DIST_CERCA;
+				$pm += $cerca ? self::PESOS_MIN_CERCA : self::PESOS_MIN_LEJOS;
+
+			} else {
+				// Si el estado es un inicial (Previo al partido, tras el descanso o un gol):
+				// * Eliminamos por completo la probabilidad de alcanzar el estado +10/-10
+				// * Reducimos por una constante el peso de todos los estados
+				// * Reducimos al 33,3% el peso del estado +9/-9
+				// * reducimos al 66,7% el peso del estado +8/-8
 				if (abs($i) == 10) {
 					$pm = 0;
 				} else {
 					$pm -= self::PESOS_INICIAL;
 					$pm = max($pm,0);
 					if ( abs($i) == 9) {
-						$pm *= .33;
+						$pm *= .333;
 					} else if ( abs($i) == 8) {
-						$pm *= .66;
+						$pm *= .667;
 					}
 				}
 			}
+
+			// Convertimos el peso a int y lo añadimos al resultado
 			$pesos[$i] = (int) $pm;
 		}
 
