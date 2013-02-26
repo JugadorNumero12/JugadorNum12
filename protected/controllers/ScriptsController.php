@@ -54,8 +54,18 @@ class ScriptsController extends Controller
 
 		foreach ($partidos as $partido)
 		{
-			$partido = new Partido($partido->id_partido);
-			$partido->jugarse();
+        	$transaction = Yii::app()->db->beginTransaction();
+        	try
+        	{
+				$partido = new Partido($partido->id_partido);
+				$partido->jugarse();   
+				$transaction->commit();     		
+        	}
+        	catch (Exception $ex)
+        	{
+        		$transaction->rollback();
+        		throw $ex;
+        	}
 		}
 	}
 }

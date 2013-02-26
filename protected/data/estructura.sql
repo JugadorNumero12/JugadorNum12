@@ -59,13 +59,14 @@ CREATE TABLE IF NOT EXISTS `acciones_grupales` (
 
 DROP TABLE IF EXISTS `acciones_individuales`;
 CREATE TABLE IF NOT EXISTS `acciones_individuales` (
+  `id_accion_individual` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `cooldown` int(11) unsigned NOT NULL,
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
   KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
-  PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_accion_individual`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -111,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `desbloqueadas` (
 DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE IF NOT EXISTS `equipos` (
   `id_equipo` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `partidos_id_partido` int(10) unsigned NOT NULL,
+  `partidos_id_partido` int(10) unsigned,
   `nombre` varchar(45) NOT NULL,
   `categoria` int(10) unsigned NOT NULL,
   `aforo_max` int(10) unsigned NOT NULL,
