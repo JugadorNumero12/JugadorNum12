@@ -259,7 +259,7 @@ class Partido
 
 		//Comentamos el estado del partido 
 		$cronica_estado = "";
-		switch (abs(&$this->estado)) {
+		switch (abs($this->estado)) {
 		    case 0: { 
 		        $cronica_estado = " El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
 		        break;

@@ -1,22 +1,5 @@
 <?php
 
-//defined('YII_DEBUG') or define('YII_DEBUG',true);
-
-//defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
- 
-// including Yii
-//require_once('/../framework/yii.php');
- 
-// we'll use a separate config file
-//$configFile='protected/config/cron.php';
- 
-// creating and running console application
-//Yii::createConsoleApplication($configFile)->run();
-
-//
-
-//<?php
-
 // Framework path
 $yii=dirname(__FILE__).'/../framework/yii.php';
 // Config file path

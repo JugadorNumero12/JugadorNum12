@@ -13,6 +13,7 @@
 * IMPORTANTE: este div es el que hay abajo creado. Lo único que falta es darle un 
 * ID o clase con CSS para tamaños y todo eso. No hay que meter nada más en él salvo
 * la llamada que ya tiene dentro (no borrarla).
+
 * 1.- Un <div> bajo este contenedor anterior para meter las acciones de partido.
 */
 ?>
@@ -20,3 +21,6 @@
 <div>
 	<?php $this->renderPartial('_estadoPartido',array('estado' => $partido)); ?>
 </div>
+
+<div><h1>Aqui va la seccion 5 (Las acciones)</h1></div>
+
