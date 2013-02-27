@@ -500,7 +500,11 @@ class AccionesController extends Controller
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
 			//Se comprueba la coherencia de la petición
-			if ($acc == null) {
+			if ($rec === null)
+			{
+				throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
+			}
+			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
@@ -509,7 +513,7 @@ class AccionesController extends Controller
 			if ($id_jugador == Yii::app()->user->usIden) {
 				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
 			}
-			if ($part == null) {
+			if ($part === null) {
 				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
 			}
 
