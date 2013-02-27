@@ -362,6 +362,11 @@ class AccionesController extends Controller
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
+
+		//Comprobación de seguridad
+		if ($recursosUsuario === null)
+			throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
+			
 		$dineroUsuario = $recursosUsuario['dinero'];
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
