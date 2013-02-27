@@ -1,19 +1,31 @@
 @color-fondo:#597f08;
 //Css comun a los dos menus del layout principal (mainLayout)
 #cssmenu{
-	background: @color-fondo;
 	text-align: center;
 	margin:0 auto;
-	border: 0px;
-
 }
 
 #cssmenu li{
-	 padding:1em 1em 1em 1em;
-	 text-decoration: none;
-	 font-size: 97%;
-	 color:white;
-	 background: none;
+	padding:1em 10em 0em 1em;
+	margin: 1em 0;
+	border-color: black;
+   	border-width: 0.3em;
+   	border-style: solid;
+   	border-radius: 1em;
+	text-decoration: none;
+	font-size: 97%;
+	color:black;
+	background: none;
+
+	div.nombre-menu{
+		font-weight:bold;
+		padding: 1em 1em 1em 1em;
+		float:left;
+	}
+
+	img.icono-menu{
+		margin: -4em 1em 1em 13em;
+	}
 }
 
 #cssmenu a{
@@ -23,20 +35,24 @@
 #cssmenu a:link{	
 	 text-decoration: none;
 	 text-transform: uppercase;
-	 color:white;
+	 color:black;
+	 text-align: left;
 
 }
 
 #cssmenu a:visited{	
 	 text-decoration: none;
 	 text-transform: uppercase;
-	 color:white;
+	 color:black;
+}
+
+#cssmenu li:hover{
+	background-color: green;
 }
 
 #cssmenu a:hover{	
 	 text-decoration: none;
 	 text-transform: uppercase;
-	 color:red;
 }
 
 #cssmenu a:active{

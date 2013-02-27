@@ -2,11 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo Yii::app()->language; ?>">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::app()->charset; ?>" />
+	<meta http-equiv="Content-Type" content="text/html" charset="<?php echo Yii::app()->charset; ?>" />
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+
+	<!-- jQuery -->
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
 
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
@@ -29,7 +33,21 @@
     			<?php foreach ($clasificacion as $equipo) { ?>
                     <li> 
                         <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
-                            <?php echo $equipo->equipos->nombre ?>
+                            <?php switch ($equipo->equipos->nombre)
+								{
+								case 'Rojos': ?>
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rojo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos">
+									<?php break;
+								case 'Verdes':?>
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Verde"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes">								  
+									<?php break;
+								case 'Negros':?>
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Negro"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros">
+									<?php break;
+								case 'Blancos':?>				
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Blanco"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos">
+									<?php break;
+								} ?>
                         </a>
                     </li>
                 <?php } ?>
@@ -42,13 +60,55 @@
     <div id="menu-izquierdo">
 		<div id='cssmenu'>
 			<ul>
-			   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>"><span>Perfil</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/acciones');?>"><span>Habilidades desbloqueadas</span></a></li>
-			   <li><a href="<?php echo $this->createUrl( '/equipos/ver', 
-									array('id_equipo' => Yii::app()->user->usAfic) ); ?>"><span>Afici&oacute;n</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/partidos/index');?>"><span>Calendario de partidos</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/habilidades');?>"><span>&Aacute;rbol de habilidades</span></a></li>
-			   <li><a href="<?php echo Yii::app()->createUrl('/equipos');?>"><span>Clasificaci&oacute;n</span></a></li>
+				<?php $personaje = Usuarios::model()->findByPK(Yii::app()->user->usIdent); ?>
+				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
+				   	<li class="elementos-menu"><div class="nombre-menu">Perfil</div>
+				   		<?php
+				   			switch ($personaje->personaje){
+				   				case Usuarios::PERSONAJE_ULTRA: ?>
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
+				   					<?php break;
+				   				case Usuarios::PERSONAJE_EMPRESARIO: ?>
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario.png'; ?>" alt="perfil-empresario">
+				   					<?php break;
+				   				case Usuarios::PERSONAJE_MOVEDORA: ?>
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP.png'; ?>" alt="perfil-RRPP">
+				   					<?php break;
+				   			}
+				   		?>
+				   	</li>
+				</a>
+				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
+				   	<li class="elementos-menu"><div class="nombre-menu">Afici&oacute;n</div>
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+					</li>
+				</a>
+				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
+				   	<li class="elementos-menu"><div class="nombre-menu">&Aacute;rbol de habilidades</div>
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   	</li>
+			    </a>
+			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
+			   		<li class="elementos-menu"><div class="nombre-menu">Habilidades desbloqueadas</div>
+			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+			   		</li>
+			   	</a>			   	
+				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
+				   	<li class="elementos-menu"><div class="nombre-menu">Calendario</div>
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   	</li>
+			  	</a>
+			    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
+				   	<li class="elementos-menu"><div class="nombre-menu">Clasificaci&oacute;n</div>
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   	</li>
+				</a>
+				<a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>>
+				   	<li class="elementos-menu"><div class="nombre-menu">Logout</div>
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   	</li>
+				</a>
+
 			</ul>
 		</div>
     </div>
@@ -66,7 +126,6 @@
 	    	<div id='cssmenu'>
 				<ul>
 				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-				   <li><a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>><span>Logout</span></a></li>
 				</ul>
 			</div>
 	    </div>
