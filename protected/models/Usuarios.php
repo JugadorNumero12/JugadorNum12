@@ -81,6 +81,36 @@ class Usuarios extends CActiveRecord
 		);
 	}
 
+	/**
+	 * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
+	 *
+	 * @param $clave Clave a comprobar
+	 */
+	public function comprobarClave ($clave)
+	{
+		$bcrypt = new Bcrypt(16);
+		return $bcrypt->verify($clave, $this['pass']);
+	}
+
+	/**
+	 * Cambia la clave del usuario a la clave pasada por parámetro.
+	 *
+	 * @param $clave Nueva clase
+	 */
+	public function cambiarClave ($clave)
+	{
+		$bcrypt = new Bcrypt(16);
+		$hash = $bcrypt->hash($clave);
+
+		if ($hash === false) {
+			return false;
+		} else {
+			$this['pass'] = $hash;
+			return true;
+		}
+	}
+
+
 	/*Compara para comprobar que su clave coincide con la de la BBDD*/
 	public function clavesIguales($antigua_clave)
 	{
