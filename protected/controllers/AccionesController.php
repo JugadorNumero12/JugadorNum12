@@ -48,10 +48,21 @@ class AccionesController extends Controller
 		//Sacar una lista con los recursos del usuario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
-		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+
+			//Comprobación de seguridad
+			if ($hab === null)
+				throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
 		//Envía los datos para que los muestre la vista
