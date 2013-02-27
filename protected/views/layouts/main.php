@@ -62,7 +62,7 @@
 			<ul>
 				<?php $personaje = Usuarios::model()->findByPK(Yii::app()->user->usIdent); ?>
 				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
-				   	<li class="elementos-menu"><div class="nombre-menu">Perfil</div>
+				   	<li class="elementos-menu">
 				   		<?php
 				   			switch ($personaje->personaje){
 				   				case Usuarios::PERSONAJE_ULTRA: ?>
@@ -76,36 +76,43 @@
 				   					<?php break;
 				   			}
 				   		?>
+				   		<div class="nombre-menu">Perfil</div>
 				   	</li>
 				</a>
 				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
-				   	<li class="elementos-menu"><div class="nombre-menu">Afici&oacute;n</div>
+				   	<li class="elementos-menu">
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+						<div class="nombre-menu">Afici&oacute;n</div>
 					</li>
 				</a>
 				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
-				   	<li class="elementos-menu"><div class="nombre-menu">&Aacute;rbol de habilidades</div>
+				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<div class="nombre-menu">&Aacute;rbol de <br> habilidades</div>
 				   	</li>
 			    </a>
 			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
-			   		<li class="elementos-menu"><div class="nombre-menu">Habilidades desbloqueadas</div>
+			   		<li class="elementos-menu">
 			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+			   			<div class="nombre-menu">Habilidades <br> desbloqueadas</div>
 			   		</li>
 			   	</a>			   	
 				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-				   	<li class="elementos-menu"><div class="nombre-menu">Calendario</div>
+				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<div class="nombre-menu">Calendario</div>
 				   	</li>
 			  	</a>
 			    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-				   	<li class="elementos-menu"><div class="nombre-menu">Clasificaci&oacute;n</div>
+				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 				   	</li>
 				</a>
 				<a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>>
-				   	<li class="elementos-menu"><div class="nombre-menu">Logout</div>
+				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<div class="nombre-menu">Logout</div>
 				   	</li>
 				</a>
 
@@ -122,14 +129,21 @@
 	    </div>
 
 		<!-- DIVISION DEL MENU DERECHO -->
-	    <div id="menu-derecho">
+	    <!--<div id="menu-derecho">
 	    	<div id='cssmenu'>
 				<ul>
 				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
 				</ul>
 			</div>
-	    </div>
-
+	    </div>-->
+	    <table id="table">
+		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
+			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
+			<tr><th> <br></th> <td> </td> <br></tr> 
+			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
+			<tr><th>&Aacute;nimo: </th> <td id="barrita"><!--<?php echo $personaje->recursos->animo ?>--> </td> </tr> 
+			<tr><th>Influencias: </th> <td id="barrita"><!--<?php echo $personaje->recursos->influencias ?>--></td> </tr> 
+		</table>
 	</div>
 
 	<div class="push"></div>

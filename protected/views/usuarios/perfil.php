@@ -8,7 +8,12 @@
 ?>
 
 <head>
-
+<!-- jQuery -->
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
+			Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 </head>
 
 <body>
@@ -62,20 +67,12 @@
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td><?php echo $modeloU->recursos->animo ?> </td> </tr> 
-						<tr><th>Influencias: </th> <td><?php echo $modeloU->recursos->influencias ?></td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->animo ?>--> </td> </tr> 
+						<tr><th>Influencias: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->influencias ?>--></td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->animo_max ?></td> </tr> 
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_max ?> </td> </tr> 
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->dinero_gen ?></td> </tr> 
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->animo_gen ?> </td> </tr>
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_gen ?> </td> </tr>
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>Bonus dinero: </th> <td><?php echo $modeloU->recursos->bonus_dinero ?></td> </tr> 
-						<tr><th>Bonus &aacute;nimo: </th> <td><?php echo $modeloU->recursos->bonus_animo ?> </td> </tr>
-						<tr><th>Bonus influencias: </th> <td><?php echo $modeloU->recursos->bonus_influencias ?> </td> </tr>
-	
+						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
+						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
+	    				<td><?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail'),'class'=>"button small black"));?></td></tr>
 				</table>
 			</div>
 		</div>
