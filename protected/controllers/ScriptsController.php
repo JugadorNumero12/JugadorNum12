@@ -146,9 +146,13 @@ class ScriptsController extends Controller
 	{
 		$bcrypt = new Bcrypt(12);
 
+		$passes = array(
+			'xaby', 'marina', 'arturo', 'dani', 'pedro',
+			'manu', 'rober', 'marcos', 'alex', 'samu'
+		);
+
 		$result = array();
-		for ( $i = 0; $i < 5; $i++ ) {
-			$pass = 'penepene';
+		foreach ( $passes as $pass ) {
 			$hash = $bcrypt->hash($pass);
 			$check = $bcrypt->verify($pass,  $hash);
 

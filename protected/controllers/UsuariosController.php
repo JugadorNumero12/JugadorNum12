@@ -153,8 +153,8 @@ class UsuariosController extends Controller
         if (isset($_POST['Usuarios'])) 
         {
             //Cojo la clave de post(formulario)       
-            $clave=$_POST['Usuarios']['nueva_clave1'];
-            $modelo->attributes=$_POST['Usuarios'];
+            $clave = $_POST['Usuarios']['nueva_clave1'];
+            $modelo->attributes = $_POST['Usuarios'];
             //Modifico dentro del modelo su pass     
             $modelo->cambiarClave($clave);          
             //Si es valido, se guarda y redirecciono a su cuenta
