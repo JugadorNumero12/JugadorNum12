@@ -134,8 +134,8 @@ class AccionesController extends Controller
 			//y cogiendo la que mayor cooldown tiene de toda la tabla
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-			$criteria->addCondition('habilidades_id_habilidad=:bid_accion';
-			$busqueda->params = array('bid_usuario' => $id_usuario,
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+			$criteria->params = array('bid_usuario' => $id_usuario,
 								'bid_accion' => $id_accion
 								);	
 			$criteria->order = 'cooldown DESC';
@@ -154,9 +154,10 @@ class AccionesController extends Controller
 			// TODO Sacar la hora actual
 			//$hora_act = time();
 			$hora_act = time(); 
+			//echo '<pre>'.print_r($accion_ind).'</pre>';    Yii::app()->end();
 
 			// TODO Sacar el cooldown de la accion individual
-			$hora_cooldown = $accion_ind['cooldown']; 	//hora en la que acaba de regenerarse
+			$hora_cooldown = $accion_ind->usuarios_id_usuario; 	//hora en la que acaba de regenerarse
 
 			// Si  hora < hora_cooldown,
 			// cancelar transaccion y notificar al usuario
