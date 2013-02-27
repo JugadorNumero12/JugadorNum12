@@ -309,21 +309,25 @@ class AccionesController extends Controller
 		//Recojo los datos de la habilidad
 		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
 		if($habilidad==null)
-			throw new CHttpException(501,'La habilidad no existe.');
+			throw new CHttpException(404,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
 		$id_user = Yii::app()->user->usIdent;
 
 		//Compruebo que la acción es del equipo del user
-		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic)
-			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
+		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic){
+			Yii::app()->user->setFlash('equipo', 'No puedes participar en una acción de otro equipo.');
+			$this-> redirect(array('acciones/index'));
+		}
 
 		//Iniciamos la transacción
 		$transaccion = Yii::app()->db->beginTransaction();
 
 		//Compruebo que la acción no ha terminado
-		if ($accion['completada'] != 0)
-			throw new CHttpException(403,'La acción indicada ya ha acabado.');
+		if ($accion['completada'] != 0){
+			Yii::app()->user->setFlash('acabada', 'La acción ya ha acabado.');
+			$this-> redirect(array('acciones/index'));
+		}
 
 		//Compuebo si el jugador ya ha participado en la acción
 		$participacion= Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
@@ -331,8 +335,10 @@ class AccionesController extends Controller
 
 		if($nuevo_participante){
 			//Compruebo que no se sobrepase el límite de jugadores
-			if($accion['jugadores_acc'] >= $habilidad['participantes_max'])
-		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
+			if($accion['jugadores_acc'] >= $habilidad['participantes_max']){
+				Yii::app()->user->setFlash('participantes', 'La acción no permite más participantes.');
+				$this-> redirect(array('acciones/index'));
+			}
 			
 		 	//Saco el modelo que le voy a pasar a la vista
 			$participacion = new Participaciones();
@@ -391,7 +397,8 @@ class AccionesController extends Controller
 				}
 				
 				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
-				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
+				Yii::app()->user->setFlash('aviso', 'Se ha registrado un intento de ataque al sistema. De no ser así, póngase en contacto con el administrador. Ten cuidado o acabarás baneado.');
+				$this-> redirect(array('acciones/index'));
 			}
 
 			//Si no se aporta nada ignoro la petición
@@ -471,13 +478,16 @@ class AccionesController extends Controller
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
-				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
+				Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
 			if ($id_jugador == Yii::app()->user->usIdent) {
-				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
+				Yii::app()->user->setFlash('error', 'No puedes expulsarte a tí mismo.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
 			if ($part == null) {
-				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
+				Yii::app()->user->setFlash('participante', 'El jugador indicado no participa en la acción.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
 
 			$actAni = $rec['animo'];
