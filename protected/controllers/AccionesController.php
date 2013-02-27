@@ -268,14 +268,17 @@ class AccionesController extends Controller
 			->with('usuarios')
 			->findByPk($id_accion);
 
+		//Comprobación de seguridad
+		if ($accionGrupal === null)
+			throw new Exception("La acción grupal no existe.", 404);
+			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
-			throw new CHttpException( 403, 'La acción no es de tu equipo');
-		}
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) 
+					throw new CHttpException( 403, 'La acción no es de tu equipo');
 
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
