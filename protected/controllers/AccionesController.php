@@ -473,7 +473,7 @@ class AccionesController extends Controller
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
 				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
 			}
-			if ($id_jugador == Yii::app()->user->usIden) {
+			if ($id_jugador == Yii::app()->user->usIdent) {
 				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
 			}
 			if ($part == null) {
