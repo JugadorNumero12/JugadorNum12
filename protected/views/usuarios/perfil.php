@@ -8,13 +8,11 @@
 ?>
 
 <head>
-
 <!-- jQuery -->
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
-	
-
 </head>
 
 <body>
@@ -68,8 +66,8 @@
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td id="barrita"><!--<?php echo $modeloU->recursos->animo ?>--> </td> </tr> 
-						<tr><th>Influencias: </th> <td id="barrita"><!--<?php echo $modeloU->recursos->influencias ?>--></td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->animo ?>--> </td> </tr> 
+						<tr><th>Influencias: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->influencias ?>--></td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
 						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
