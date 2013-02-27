@@ -1,5 +1,6 @@
 <?php
 /* @var $estado -> Incluye los datos de la fila correspondiente de "Partidos" */
+	//Estado es un modelo de partidos
 
 /*
 *
@@ -7,3 +8,5 @@
 *
 */
 ?>
+
+<h1>Prueba1</h1>
