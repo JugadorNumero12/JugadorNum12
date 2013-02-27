@@ -122,14 +122,21 @@
 	    </div>
 
 		<!-- DIVISION DEL MENU DERECHO -->
-	    <div id="menu-derecho">
+	    <!--<div id="menu-derecho">
 	    	<div id='cssmenu'>
 				<ul>
 				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
 				</ul>
 			</div>
-	    </div>
-
+	    </div>-->
+	    <table id="table">
+		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
+			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
+			<tr><th> <br></th> <td> </td> <br></tr> 
+			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
+			<tr><th>&Aacute;nimo: </th> <td id="barrita"><!--<?php echo $personaje->recursos->animo ?>--> </td> </tr> 
+			<tr><th>Influencias: </th> <td id="barrita"><!--<?php echo $personaje->recursos->influencias ?>--></td> </tr> 
+		</table>
 	</div>
 
 	<div class="push"></div>
