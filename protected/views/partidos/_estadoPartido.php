@@ -15,4 +15,4 @@
 <div> <h1>Aqui va la seccion 4 (cronica)</h1> <br></div>
 
 
-<?php echo $estado->id_partido; ?>
+<?php echo $estado->estado; ?>
