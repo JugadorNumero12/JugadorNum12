@@ -42,7 +42,9 @@ class EquiposController extends Controller
 		$modeloClasificacion = Clasificacion::model()->findAll(
 			array('order'=>'posicion ASC')
 		);
-
+		if ($modeloClasificacion === null)
+			throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
+			
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
 
