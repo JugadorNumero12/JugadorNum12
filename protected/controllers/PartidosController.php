@@ -186,6 +186,46 @@ class PartidosController extends Controller
 		}	
 	}
 
+	/*
+	*
+	* Función que renderiza el estado completo de un partido (marcador,
+	* tiempo, crónica, etc.)
+	*
+	*/
+	public function actionActPartido($id_partido)
+	{		
+		// Obtener el equipo del usuario
+		$equipoUsuario = Equipos::model()->findByPk(Yii::app()->user->usAfic);
+
+		// Obtener la informacion restante necesaria
+		$partido = Partidos::model()->findByPk($id_partido);
+
+		//Comprobación de datos
+		if (($partido === null) || ($equipoUsuario === null))
+		{
+			throw new Exception("Datos suministrados incorrectos - partido/equipo -. (actionActPartido)", 404);			
+		}
+
+		// Un usuario no puede asisitir a un partido en el que su equipo no participa
+		if (($partido->equipos_id_equipo_1 != $equipoUsuario->id_equipo) && ($partido->equipos_id_equipo_2 != $equipoUsuario->id_equipo)) 
+		{			
+			throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
+		} 
+		// Un usuario solo puede asistir al próximo partido de su equipo
+		else 
+		{
+			if($equipoUsuario->partidos_id_partido != $id_partido ) 
+			{			
+				throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
+			} 
+			// Creamos el renderPartial del estado del partido
+			else 
+			{			
+				$this->renderPartial('_estadoPartido',array('estado' => $partido),false,true);
+			}
+		}
+	}
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
