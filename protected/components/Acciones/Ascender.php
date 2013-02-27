@@ -21,7 +21,7 @@ class Ascender extends AccionPasSingleton
     //Tomar helper para facilitar la modificación
     Yii::import('application.components.Helper');
 
-    //Aumentar ánimo
+    //Aumentar dinero
     $helper = new Helper();
     if ($helper->aumentar_recursos($id_usuario,"dinero_gen",$datos_acciones['Ascender']['dinero_gen']) == 0)
     {

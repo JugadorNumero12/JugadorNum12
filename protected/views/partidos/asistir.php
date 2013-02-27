@@ -19,7 +19,7 @@
 ?>
 
 <div>
-	<?php $this->renderPartial('_estadoPartido',array('estado' => $partido)); ?>
+	<?php $this->renderPartial('_estadoPartido',array('estado' => $estado)); ?>
 </div>
 
 <div><h1>Aqui va la seccion 5 (Las acciones)</h1></div>

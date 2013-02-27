@@ -141,4 +141,26 @@ class ScriptsController extends Controller
 			'estColors'=>$estColors
 		));
 	}
+
+	public function actionPass ()
+	{
+		$bcrypt = new Bcrypt(12);
+
+		$passes = array(
+			'xaby', 'marina', 'arturo', 'dani', 'pedro',
+			'manu', 'rober', 'marcos', 'alex', 'samu'
+		);
+
+		$result = array();
+		foreach ( $passes as $pass ) {
+			$hash = $bcrypt->hash($pass);
+			$check = $bcrypt->verify($pass,  $hash);
+
+			echo '<pre>';
+			print_r(array('pass'=>$pass, 'hash'=>$hash, 'check'=>$check));
+			echo '</pre>';
+		}
+
+
+	}
 }
