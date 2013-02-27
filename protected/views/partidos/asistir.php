@@ -18,11 +18,15 @@
 */
 ?>
 
-<div>
-	<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
+<div id="envoltorio-asistir">
+
+
+	<div id="renderizado-parcial">
+		<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
 								 'nombre_visitante' => $nombre_visitante,
 								 'estado' => $estado)); ?>
-</div>
+	</div> <!--end renderizado parcial-->
 
-<div><h1>Aqui va la seccion 5 (Las acciones)</h1></div>
+	<div id="seccion5">Aqui va la seccion 5 (Las acciones)</div> <!--end seccion5 (habilidades de partido)-->
 
+</div> <!--end envoltorio-asistir -->
