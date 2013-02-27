@@ -42,12 +42,13 @@ class AccionesGrupales extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion', 'required'),
+			array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion, completada', 'required'),
 			array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc', 'length', 'max'=>10),
 			array('finalizacion', 'length', 'max'=>11),
+			array('completada', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_accion_grupal, usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion', 'safe', 'on'=>'search'),
+			array('id_accion_grupal, usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion, completada', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +84,7 @@ class AccionesGrupales extends CActiveRecord
 			'dinero_acc' => 'Dinero Acc',
 			'jugadores_acc' => 'Jugadores Acc',
 			'finalizacion' => 'Finalizacion',
+			'completada' => 'Completada',
 		);
 	}
 
@@ -106,6 +108,7 @@ class AccionesGrupales extends CActiveRecord
 		$criteria->compare('dinero_acc',$this->dinero_acc,true);
 		$criteria->compare('jugadores_acc',$this->jugadores_acc,true);
 		$criteria->compare('finalizacion',$this->finalizacion,true);
+		$criteria->compare('completada',$this->finalizacion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

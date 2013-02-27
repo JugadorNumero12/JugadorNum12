@@ -69,28 +69,30 @@ SET time_zone = "+00:00";
  -- -----------------------------------------------------
  -- NOTA: todas las acciones en curso estan completadas al 50%
  -- -----------------------------------------------------
+SET FOREIGN_KEY_CHECKS = 0; 
+
 TRUNCATE `acciones_grupales`;
-INSERT INTO `acciones_grupales` (`id_accion_grupal`, `usuarios_id_usuario`, `habilidades_id_habilidad`, `equipos_id_equipo`, `influencias_acc`, `animo_acc`, `dinero_acc`, `jugadores_acc`, `finalizacion`, `completada`) VALUES
+INSERT INTO `acciones_grupales` (`usuarios_id_usuario`, `habilidades_id_habilidad`, `equipos_id_equipo`, `influencias_acc`, `animo_acc`, `dinero_acc`, `jugadores_acc`, `finalizacion`, `completada`) VALUES
  -- arturo, habilidad 2 (hab. de perfil empresarial)
- (1, 3, 2, 1, 6, 30, 5000, 2, 50, 0),
+ (3, 2, 1, 6, 30, 5000, 2, 50, 0),
  -- COMPLETADA: xaby, habilidad 1 (hab. de perfil empresarial)
- (2, 1, 1, 1, 12, 60, 10000, 1, 50, 1),
+ (1, 1, 1, 12, 60, 10000, 1, 50, 1),
  -- marina, habilidad 4 (hab. de perfil ultra)
- (3, 2, 4, 2, 1, 300, 400, 2, 50, 0),
+ (2, 4, 2, 1, 300, 400, 2, 50, 0),
  -- alex, habilidad 3 (hab. de perfil movedora)
- (4, 9, 3, 2, 12, 150, 600, 1, 50, 0),
+ (9, 3, 2, 12, 150, 600, 1, 50, 0),
  -- COMPLETADA: manu, habilidad 3 (hab. de perfil movedora)
- (5, 6, 3, 3, 24, 300, 1200, 1, 50, 1),
+ (6, 3, 3, 24, 300, 1200, 1, 50, 1),
  -- samu, habilidad 4 (hab. de perfil ultra)
- (6, 10, 4, 3, 1, 1, 400, 1, 50, 0),
+ (10, 4, 3, 1, 1, 400, 1, 50, 0),
  -- marina, habilidad 5 (hab. de perfil movedora)
- (7, 2, 5, 2, 12, 150, 600, 2, 50, 0),
+ (2, 5, 2, 12, 150, 600, 2, 50, 0),
  -- COMPLETADA: dani, habilidad 4 (hab. de perfil ultra)
- (8, 4, 4, 1, 1, 600, 400, 1, 50, 1),
+ (4, 4, 1, 1, 600, 400, 1, 50, 1),
  -- marcos, habilidad 4 (hab. de perfil ultra)
- (9, 8, 4, 1, 1, 200, 400, 2, 50, 0),
+ (8, 4, 1, 1, 200, 400, 2, 50, 0),
  -- COMPLETADA: pedro, habilidad 1 (hab. de perfil empresario)
- (10, 5, 1, 2, 12, 60, 10000, 1, 50, 1);
+ (5, 1, 2, 12, 60, 10000, 1, 50, 1);
 
  -- -------------------------------------------------
  -- Acciones individuales desbloqeuadas 6,7,8
@@ -159,11 +161,11 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
  (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10), (14, 10);
 
 TRUNCATE `equipos`;
-INSERT INTO `equipos` (`id_equipo`, `partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (1, 7, 'Rojos',   1, 3000, 400, 12, 7, 6),
- (2, 7, 'Verdes',  1, 3000, 500, 10, 7, 6),
- (3, 8, 'Negros',  1, 3600, 400, 10, 7, 7),
- (4, 8, 'Blancos', 1, 4000, 400, 9,  6, 8);
+INSERT INTO `equipos` (`partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
+ (7, 'Rojos',   1, 3000, 400, 12, 7, 6),
+ (7, 'Verdes',  1, 3000, 500, 10, 7, 6),
+ (8, 'Negros',  1, 3600, 400, 10, 7, 7),
+ (8, 'Blancos', 1, 4000, 400, 9,  6, 8);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
@@ -174,7 +176,7 @@ INSERT INTO `equipos` (`id_equipo`, `partidos_id_partido`,`nombre`, `categoria`,
  -- Habilidades "movedora"		=>   60 	15 		1 		 |  1200 		300 		24 			|   3   				200
  -- ----------------------------------------------------------------------------------------------------------------------------------
 TRUNCATE `habilidades`;
-INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, `animo`, `influencias`, `dinero_max`, `animo_max`, `influencias_max`, `participantes_max`, `cooldown_fin`) VALUES
+INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, `animo`, `influencias`, `dinero_max`, `animo_max`, `influencias_max`, `participantes_max`, `cooldown_fin`) VALUES
  -- ---------------------
  -- Tipos de habilidades
  -- ---------------------
@@ -183,20 +185,20 @@ INSERT INTO `habilidades` (`id_habilidad`, `codigo`, `tipo`, `nombre`, `descripc
  -- PARTIDO 		2
  -- PASIVAS 		3
  -- ---------------------
- (1, 'FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 12, 3, 200),
- (2, 'IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 12, 3, 200),
- (3, 'OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 24, 3, 200),
- (4, 'Pintarse', 0, 'Pintarse con los colores del equipo', '"DESCRIPCION PARA PINTARSE"', 200, 30, 0, 400, 600, 1, 3, 200),
- (5, 'PromoverPartido', 0, 'Promover el partido por las redes sociales', '"DESCRIPCION PARA PROMOVER PARTIDO"', 60, 15, 1, 1200, 300, 24, 3, 200),
- (6, 'Apostar', 1, 'Apostar por el partido', '"DESCRIPCION APOSTAR"', 500, 3, 1, NULL, NULL, NULL, 1, 200),
- (7, 'CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
- (8, 'ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"DESCRIPCION CONTRATAR RRPP"', 60, 15, 1, NULL, NULL, NULL, 1, 200),
- (9, 'BeberCerveza', 2, 'Beber cerveza durante el partido', '"DESCRIPCION BEBER CERVEZA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- (10, 'HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"DESCRIPCION HABLAR SPEAKER"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
- (11, 'IniciarOla', 2, 'Iniciar una ola en la grada', '"DESCRIPCION INICIAR OLA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- (12, 'PunteroLaser', 2, 'Molestar con el puntero láser a un jugador', '"DESCRIPCION PUNTERO LASER"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- (13, 'RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"DESCRIPCION RETRANSMITIR RRSS"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
- (14, 'Ascender', 3, 'Ascender en el trabajo', '"DESCRIPCION ASCENDER"', 500, 3, 1, NULL, NULL, NULL, 1, NULL);
+ ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 12, 3, 200),
+ ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 12, 3, 200),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 24, 3, 200),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"DESCRIPCION PARA PINTARSE"', 200, 30, 0, 400, 600, 1, 3, 200),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"DESCRIPCION PARA PROMOVER PARTIDO"', 60, 15, 1, 1200, 300, 24, 3, 200),
+ ('Apostar', 1, 'Apostar por el partido', '"DESCRIPCION APOSTAR"', 500, 3, 1, NULL, NULL, NULL, 1, 200),
+ ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
+ ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"DESCRIPCION CONTRATAR RRPP"', 60, 15, 1, NULL, NULL, NULL, 1, 200),
+ ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"DESCRIPCION BEBER CERVEZA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"DESCRIPCION HABLAR SPEAKER"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
+ ('IniciarOla', 2, 'Iniciar una ola en la grada', '"DESCRIPCION INICIAR OLA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('PunteroLaser', 2, 'Molestar con el puntero láser a un jugador', '"DESCRIPCION PUNTERO LASER"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"DESCRIPCION RETRANSMITIR RRSS"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
+ ('Ascender', 3, 'Ascender en el trabajo', '"DESCRIPCION ASCENDER"', 500, 3, 1, NULL, NULL, NULL, 1, NULL);
 
  -- ----------------------------------------------------
  -- Acciones grupales abiertas y completadas
@@ -248,31 +250,31 @@ INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_i
  (10, 9, 6000, 7, 15);
 
 TRUNCATE `partidos`;
-INSERT INTO `partidos` (`id_partido`, `equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`) VALUES
+INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
  -- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
- (1, 1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
- (2, 3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Negros: ganaron los Rojos
  -- Verdes vs. Blancos: empate
- (3, 1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
- (4, 2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Blancos: empate
  -- Negros vs. Verdes: empate
- (5, 1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
- (6, 3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.'),
+ (1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Verdes vs. Rojos: PROXIMO PARTIDO
  -- Blancos vs. Negros: PROXIMO PARTIDO
- (7, 2, 1, 150, NULL),
- (8, 4, 3, 150, NULL),
+ (2, 1, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (4, 3, 150, NULL, 0, 55, 1000, 100, 1, 6, 6, 0, 1, 4),
  -- Negros vs. Rojos
  -- Blancos vs. Verdes
- (9,  3, 1, 200, NULL),
- (10, 4, 2, 200, NULL),
+ (3, 1, 200, NULL, 0, 600, 10, 10, 6, 1, 1, 7, 1, 7),
+ (4, 2, 200, NULL, 0, 7, 1000, 140, 2, 7, 1, 1, 1, 1),
  -- Blancos vs. Rojos
  -- Verdes vs. Negros
- (11, 4, 1, 250, NULL),
- (12, 2, 3, 250, NULL);
+ (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
+ (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9);
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
@@ -313,27 +315,29 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
  -- ultras: 4
  -- ----------------------
 TRUNCATE `usuarios`;
-INSERT INTO `usuarios` (`id_usuario`, `equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`) VALUES
+INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`) VALUES
  -- xaby: empresario
- (1, 1, 'xaby', 'xaby', 'xaby@xaby.com', 2, 5),
+ (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 5),
  -- marina: movedora
- (2, 2, 'marina', 'marina', 'marina@marina.com', 1, 5),
+ (2, 'marina', '$2a$12$1HGd6WdDNpyG8wHu0vqPr.R7VhFJe7DutNgl06FziDCLV3OSYQvkC', 'marina@marina.com', 1, 5),
  -- arturo: empresario
- (3, 1, 'arturo', 'arturo', 'arturo@arturo.com', 2, 5),
+ (1, 'arturo', '$2a$12$OQPWrk0fNriOXAqM4QW2seZ4.ITU7eTXfPaWR7.ehJViRwfG5L9lu', 'arturo@arturo.com', 2, 5),
  -- dani: ultra
- (4, 1, 'dani', 'dani', 'dani@dani.com', 0, 5),
+ (1, 'dani', '$2a$12$Xqfm1L28HICeWypJtEEaFOcnJayZZXnp8s.tHAGEZzUaxz5.DvHoW', 'dani@dani.com', 0, 5),
  -- pedro: empresario
- (5, 2, 'pedro', 'pedro', 'pedro@pedro.com', 2, 5),
+ (2, 'pedro', '$2a$12$0Z6Q7FdQUMKhz1gCuah4jegHD/mV87SE1TPQdb9O4ouy7Nh/YhF8y', 'pedro@pedro.com', 2, 5),
  -- manu: movedora
- (6, 3, 'manu', 'manu', 'manu@manu.com', 1, 5),
+ (3, 'manu', '$2a$12$WDe3nJqlmi5.Jbvuzroo4.oW1oufdiQNb9cRW.lEXOA5LBmqO/uQ.', 'manu@manu.com', 1, 5),
  -- rober: ultra
- (7, 2, 'rober', 'rober', 'rober@rober.com', 0, 5),
+ (2, 'rober', '$2a$12$EI56YEwNyV395M5rQsuk..HNYXFrOKFkwgzwkwvNoCgkBMe5Z1Nl.', 'rober@rober.com', 0, 5),
  -- marcos: ultra
- (8, 1, 'marcos', 'marcos', 'marcos@marcos.com', 0, 5),
+ (1, 'marcos', '$2a$12$Pqca.CQrIopqmBV/9ON9E.RVOjv33YUX3D.1O8K3rhEa79Q.gDEV6', 'marcos@marcos.com', 0, 5),
  -- alex: movedora
- (9, 2, 'alex', 'alex', 'alex@alex.com', 1, 5),
+ (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 5),
  -- samu: ultra
- (10, 3, 'samu', 'samu', 'samu@samu.com', 0, 5);
+ (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 5);
+
+ SET FOREIGN_KEY_CHECKS = 1; 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

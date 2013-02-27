@@ -82,29 +82,30 @@ class AccionesController extends Controller
 	{		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
-
+		//Cojo el id_usuario
+		$id_usuario=Yii::app()->user->usIdent;
 		//Obtener modelo de Habilidades
 		$habilidad = Habilidades::model()->findByPk($id_accion);
 
 		//Habilidad no encontrada
-		if ( $habilidad == null ) {			
+		if ( $habilidad === null ) {			
 			$trans->rollback();
 			throw new CHttpException(404,'Acción inexistente.');
 		}
 
 		//Habilidad encontrada
 		//Obtener modelo de Desbloqueadas		
-		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario,
 																   	   'habilidades_id_habilidad' => $id_accion ));			
 		//Si no esta desbloqueada para el usuario, error
-		if( $desbloqueada == null){				
+		if( $desbloqueada === null){				
 			$trans->rollback();
 			throw new CHttpException(404,'No tienes desbloqueada la acción.');
 		} 
 		
 		//Si esta desbloqueada
 		//Obtener modelo de Recursos
-		$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent));
+		$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
 		
 		//Si no son suficientes recursos cancelar transaccion y notificar al usuario
 		if ( $res['dinero'] 	 < $habilidad['dinero'] ||
@@ -118,24 +119,32 @@ class AccionesController extends Controller
 		//Si tenemos suficientes recursos miramos si es individual o grupal
 		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
 			
-			//Sacar la accion individual
-			$accion_ind = AccionesIndividuales::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-																				'habilidades_id_habilidad' => $id_accion ));
+			//Sacar la accion individual teniendo en cuenta el id_usuario,e id_habilidad 
+			//y cogiendo la que mayor cooldown tiene de toda la tabla
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion';
+			$busqueda->params = array('bid_usuario' => $id_usuario,
+								'bid_accion' => $id_accion
+								);	
+			$criteria->order = 'cooldown DESC';
+			$criteria->limit = '1';
+			$accion_ind = AccionesIndividuales::model()->findAll($criteria);
+			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
 			//Si no estaba creada, crear con cooldown = 0 
-			if($accion_ind == null){
+			if($accion_ind === null){
 				$accion_ind = new AccionesIndividuales();
-				$accion_ind->setAttributes(	array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
 				   							  	  'cooldown' => 0 ));
 			}
 
 			// TODO Sacar la hora actual
 			//$hora_act = time();
-			$hora_act = 130; //ejemplo para debug
+			$hora_act = time(); 
 
 			// TODO Sacar el cooldown de la accion individual
-			$cooldown = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			$hora_cooldown = $accion_ind['cooldown']; 	//hora en la que acaba de regenerarse
 
 			// Si  hora < hora_cooldown,
@@ -155,7 +164,7 @@ class AccionesController extends Controller
 				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
 
 				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind['cooldown'] = $hora_act + $cooldown;
+				$accion_ind['cooldown'] = $hora_act + $tiempo_reg;
 
 				//guardar en los modelos
 				$res->save();

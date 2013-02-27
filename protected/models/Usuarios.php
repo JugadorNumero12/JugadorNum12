@@ -18,6 +18,8 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
+	const BCRYPT_ROUNDS = 12;
+
 	public $antigua_clave;
 	public $nueva_clave1;
 	public $nueva_clave2;
@@ -81,26 +83,67 @@ class Usuarios extends CActiveRecord
 		);
 	}
 
+	/**
+	 * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
+	 *
+	 * @param $clave Clave a comprobar
+	 */
+	public function comprobarClave ($clave)
+	{
+		echo '<br/>$clave = ' . $clave
+		   . '<br/>$this->pass = ' . $this->pass;
+
+		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
+		$valida = $bcrypt->verify($clave, $this->pass);
+
+		echo '<br/>$valida = ' . ($valida?'true':'false');
+		return $valida;
+	}
+
+	/**
+	 * Cambia la clave del usuario a la clave pasada por parámetro.
+	 *
+	 * @param $clave Nueva clase
+	 */
+	public function cambiarClave ($clave)
+	{
+		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
+		$hash = $bcrypt->hash($clave);
+
+		if ($hash === false) {
+			return false;
+		} else {
+			$this['pass'] = $hash;
+			return true;
+		}
+	}
+
+
 	/*Compara para comprobar que su clave coincide con la de la BBDD*/
 	public function clavesIguales($antigua_clave)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->pass != $this->$antigua_clave)
+	    echo '$usuario->pass = ' . $usuario->pass
+	       . '<br/>$antigua_clave = ' . $antigua_clave
+	       . '<br/>$this->antigua_clave = ' . $this->antigua_clave;
+
+	    if (!$usuario->comprobarClave($this->antigua_clave)) {
 	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
+	    }
 	}
 
 	/*Comprobar que el email coincide con el de la BBDD*/
 	public function emailIguales($antigua_email)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->email != $this->$antigua_email)
+	    if ( $usuario->email != $this->antigua_email)
 	        $this->addError($antigua_email, 'Introduzca correctamente el email actual');
 	}
 
 	/*Comprueba que ese email sea único*/
 	public function comprobarEmail($nueva_email1)
 	{
-	    $registro=Usuarios::model()->findByAttributes(array('email'=>$this->$nueva_email1));
+	    $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
 
 	    if($registro <> null){
 	        $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
@@ -110,7 +153,7 @@ class Usuarios extends CActiveRecord
 	/*Comprobar que el nombre sea único*/
 	public function comprobarNick($nuevo_nick)
 	{
-	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->$nuevo_nick));
+	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
 
 	    if($registro <> null){
 	        $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
@@ -142,6 +185,8 @@ class Usuarios extends CActiveRecord
 			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
 			/*Relacion entre <<usuarios>> y <<acciones_grupales>> */
 			'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<acciones_turno>>*/
+			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 		);
 	}
 

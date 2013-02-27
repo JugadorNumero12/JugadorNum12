@@ -9,18 +9,38 @@
  *  Proporciona animo inmediato para el proximo partido. 
  *  NOTA: aun no implementar que si se gana el partido aporta un extra y se reduce si se pierde el partido
  */
-public class ContratarRRPP extends AccionSingleton
+class CrearseEspectativas extends AccionIndSingleton
 {
 	/* Aplicar los efectos de la accion  */
-	public void ejecutar()
+	public function ejecutar($id_usuario)
 	{
-		/* TODO */
+		//Validar usuario
+		$us = Usuarios::model()->findByPk($id_usuario);
+		if ($us == null)
+			throw new Exception("Usuario incorrecto.", 404);			
+
+		//Tomar helper para facilitar la modificación
+		Yii::import('application.components.Helper');
+
+		//Aumentar ánimo
+		$helper = new Helper();
+		if ($helper->aumentar_recursos($id_usuario,"animo",$datos_acciones['CrearseEspectativas']['animo']) == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return -1;
+		}
 	}
 
 	/* Restarurar valores tras el partido */
-	public void finalizar()
+	public function finalizar($id_usuario,$id_habilidad)
 	{
-		/* TODO */
 		/* NOTA: No hacer todavia que se gane extra de animo si se ganara el partido, ni que se perdiera */
+		//Comprobaciones de parámetros realizadas e influencias devueltas en la llamada al padre. 
+		//No es necesario realizar nada extra.
+		$res = parent::finalizar($id_usuario,$id_habilidad);
+		return $res;
 	}
 }
