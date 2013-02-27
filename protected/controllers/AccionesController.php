@@ -135,12 +135,14 @@ class AccionesController extends Controller
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->params = array('bid_usuario' => $id_usuario,
-								'bid_accion' => $id_accion
-								);	
+			$criteria->addCondition('cooldown <= :bhora');
+			$criteria->params = array(	'bid_usuario' => $id_usuario,
+										'bid_accion' => $id_accion,
+										'bhora' => time()
+										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
-			$accion_ind = AccionesIndividuales::model()->findAll($criteria);
+			$accion_ind = AccionesIndividuales::model()->find($criteria);
 			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
 			//Si no estaba creada, crear con cooldown = 0 
@@ -152,12 +154,11 @@ class AccionesController extends Controller
 			}
 
 			// TODO Sacar la hora actual
-			//$hora_act = time();
 			$hora_act = time(); 
-			//echo '<pre>'.print_r($accion_ind).'</pre>';    Yii::app()->end();
+			
 
 			// TODO Sacar el cooldown de la accion individual
-			$hora_cooldown = $accion_ind->usuarios_id_usuario; 	//hora en la que acaba de regenerarse
+			$hora_cooldown = $accion_ind->cooldown; 	//hora en la que acaba de regenerarse
 
 			// Si  hora < hora_cooldown,
 			// cancelar transaccion y notificar al usuario
@@ -244,7 +245,7 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
