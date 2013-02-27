@@ -2,11 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo Yii::app()->language; ?>">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::app()->charset; ?>" />
+	<meta http-equiv="Content-Type" content="text/html" charset="<?php echo Yii::app()->charset; ?>" />
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+
+	<!-- jQuery -->
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scripts.js'); ?>
+	<!-- <script type="text/javascript" src="<?php // echo Yii::app()->BaseUrl.'/js/scripts.js'; ?>"></script> -->
 
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
@@ -32,17 +37,17 @@
                             <?php switch ($equipo->equipos->nombre)
 								{
 								case 'Rojos': ?>
-								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos"> 
-								  <?php break;
+								  	<img title="<?php echo $equipo->posicion . "º con " . $equipo->puntos . " puntos"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos">
+									<?php break;
 								case 'Verdes':?>
-								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes"> 
-								  <?php break;
+								  	<img title="<?php echo $equipo->posicion . "º con " . $equipo->puntos . " puntos"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes">								  
+									<?php break;
 								case 'Negros':?>
-								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros"> 
-								  <?php break;
-								case 'Blancos':?>
-								  <img class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos"> 
-								  <?php break;
+								  	<img title="<?php echo $equipo->posicion . "º con " . $equipo->puntos . " puntos"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros">
+									<?php break;
+								case 'Blancos':?>				
+								  	<img title="<?php echo $equipo->posicion . "º con " . $equipo->puntos . " puntos"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos">
+									<?php break;
 								} ?>
                         </a>
                     </li>
