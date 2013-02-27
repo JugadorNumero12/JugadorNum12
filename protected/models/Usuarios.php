@@ -18,6 +18,8 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
+	const BCRYPT_ROUNDS = 12;
+
 	public $antigua_clave;
 	public $nueva_clave1;
 	public $nueva_clave2;
@@ -88,8 +90,14 @@ class Usuarios extends CActiveRecord
 	 */
 	public function comprobarClave ($clave)
 	{
-		$bcrypt = new Bcrypt(16);
-		return $bcrypt->verify($clave, $this['pass']);
+		echo '<br/>$clave = ' . $clave
+		   . '<br/>$this->pass = ' . $this->pass;
+
+		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
+		$valida = $bcrypt->verify($clave, $this->pass);
+
+		echo '<br/>$valida = ' . ($valida?'true':'false');
+		return $valida;
 	}
 
 	/**
@@ -99,7 +107,7 @@ class Usuarios extends CActiveRecord
 	 */
 	public function cambiarClave ($clave)
 	{
-		$bcrypt = new Bcrypt(16);
+		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
 		$hash = $bcrypt->hash($clave);
 
 		if ($hash === false) {
@@ -115,8 +123,13 @@ class Usuarios extends CActiveRecord
 	public function clavesIguales($antigua_clave)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->pass != $this->antigua_clave)
+	    echo '$usuario->pass = ' . $usuario->pass
+	       . '<br/>$antigua_clave = ' . $antigua_clave
+	       . '<br/>$this->antigua_clave = ' . $this->antigua_clave;
+
+	    if (!$usuario->comprobarClave($this->antigua_clave)) {
 	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
+	    }
 	}
 
 	/*Comprobar que el email coincide con el de la BBDD*/

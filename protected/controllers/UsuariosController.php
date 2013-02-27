@@ -156,7 +156,7 @@ class UsuariosController extends Controller
             $clave=$_POST['Usuarios']['nueva_clave1'];
             $modelo->attributes=$_POST['Usuarios'];
             //Modifico dentro del modelo su pass     
-            $modelo->setAttributes(array('pass'=>$clave));             
+            $modelo->cambiarClave($clave);          
             //Si es valido, se guarda y redirecciono a su cuenta
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
