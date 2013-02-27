@@ -48,10 +48,21 @@ class AccionesController extends Controller
 		//Sacar una lista con los recursos del usuario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
-		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+
+			//Comprobación de seguridad
+			if ($hab === null)
+				throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
 		//Envía los datos para que los muestre la vista
@@ -257,14 +268,17 @@ class AccionesController extends Controller
 			->with('usuarios')
 			->findByPk($id_accion);
 
+		//Comprobación de seguridad
+		if ($accionGrupal === null)
+			throw new Exception("La acción grupal no existe.", 404);
+			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
-			throw new CHttpException( 403, 'La acción no es de tu equipo');
-		}
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) 
+					throw new CHttpException( 403, 'La acción no es de tu equipo');
 
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
@@ -348,6 +362,11 @@ class AccionesController extends Controller
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
+
+		//Comprobación de seguridad
+		if ($recursosUsuario === null)
+			throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
+			
 		$dineroUsuario = $recursosUsuario['dinero'];
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
@@ -481,7 +500,11 @@ class AccionesController extends Controller
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
 			//Se comprueba la coherencia de la petición
-			if ($acc == null) {
+			if ($rec === null)
+			{
+				throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
+			}
+			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
@@ -490,7 +513,7 @@ class AccionesController extends Controller
 			if ($id_jugador == Yii::app()->user->usIden) {
 				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
 			}
-			if ($part == null) {
+			if ($part === null) {
 				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
 			}
 

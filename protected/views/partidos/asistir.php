@@ -19,7 +19,9 @@
 ?>
 
 <div>
-	<?php $this->renderPartial('_estadoPartido',array('estado' => $estado)); ?>
+	<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
+								 'nombre_visitante' => $nombre_visitante,
+								 'estado' => $estado)); ?>
 </div>
 
 <div><h1>Aqui va la seccion 5 (Las acciones)</h1></div>
