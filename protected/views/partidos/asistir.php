@@ -22,4 +22,5 @@
 	<?php $this->renderPartial('_estadoPartido',array('estado' => $partido)); ?>
 </div>
 
-<h1>Prueba2</h1>
+<div><h1>Aqui va la seccion 5 (Las acciones)</h1></div>
+
