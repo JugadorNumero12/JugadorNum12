@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `cooldown` int(11) unsigned NOT NULL,
+  `devuelto` int(11) unsigned DEFAULT 0,
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
   KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
   PRIMARY KEY (`id_accion_individual`)
