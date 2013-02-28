@@ -10,6 +10,16 @@
  */
 class IniciarOla extends AccionPartSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+   
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario)
   {
@@ -27,7 +37,7 @@ class IniciarOla extends AccionPartSingleton
 
       //1.- Añadir bonificación al partido
       $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",$datos_acciones['IniciarOla']['moral']));
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['IniciarOla']['moral']));
 
       //Finalizar función
       return $ret;

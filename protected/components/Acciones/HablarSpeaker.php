@@ -11,6 +11,16 @@
  */
 class HablarSpeaker extends AccionPartSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
@@ -28,8 +38,8 @@ class HablarSpeaker extends AccionPartSingleton
 
 	    //1.- Añadir bonificación al partido
 	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",$datos_acciones['HablarSpeaker']['moral']));
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",$datos_acciones['HablarSpeaker']['ofensivo']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['HablarSpeaker']['moral']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['HablarSpeaker']['ofensivo']));
 
 	    //Finalizar función
 	    return $ret;

@@ -11,6 +11,16 @@
  */
 class RetransmitirRRSS extends AccionSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
@@ -28,10 +38,10 @@ class RetransmitirRRSS extends AccionSingleton
 
 	    //1.- Añadir bonificación al partido
 	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",$datos_acciones['RetransmitirRRSS']['defensivo']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['RetransmitirRRSS']['defensivo']));
 	   
 	    //2.- Dar recursos al creador
-	    $ret = min($ret,$helper->aumentar_recursos($id_usuario,"animo",$datos_acciones['RetransmitirRRSS']['animo']));
+	    $ret = min($ret,$helper->aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['RetransmitirRRSS']['animo']));
 
 	    //Finalizar función
 	    return $ret;

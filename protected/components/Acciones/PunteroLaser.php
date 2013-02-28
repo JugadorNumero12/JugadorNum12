@@ -10,6 +10,16 @@
  */
 class PunteroLaser extends AccionPartSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario)
   {
@@ -27,7 +37,7 @@ class PunteroLaser extends AccionPartSingleton
 
       //1.- Añadir bonificación al partido
       $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",$datos_acciones['PunteroLaser']['defensivo']));
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['PunteroLaser']['defensivo']));
 
       //Finalizar función
       return $ret;
