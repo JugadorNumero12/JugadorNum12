@@ -42,7 +42,9 @@ class EquiposController extends Controller
 		$modeloClasificacion = Clasificacion::model()->findAll(
 			array('order'=>'posicion ASC')
 		);
-
+		if ($modeloClasificacion === null)
+			throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
+			
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
 
@@ -119,7 +121,7 @@ class EquiposController extends Controller
 		{
 			throw new CHttpException(500,'Tienes que cambiarte a un equipo diferente al actual');
 
-		}else if ($modeloEquipo==null)
+		}else if ($modeloEquipo===null)
 				{
 					throw new CHttpException(500,'No existe el equipo al que quiere cambiarse');
 

@@ -48,10 +48,21 @@ class AccionesController extends Controller
 		//Sacar una lista con los recursos del usuario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
-		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+
+			//Comprobación de seguridad
+			if ($hab === null)
+				throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
 		//Envía los datos para que los muestre la vista
@@ -123,13 +134,14 @@ class AccionesController extends Controller
 			//y cogiendo la que mayor cooldown tiene de toda la tabla
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-			$criteria->addCondition('habilidades_id_habilidad=:bid_accion';
-			$busqueda->params = array('bid_usuario' => $id_usuario,
-								'bid_accion' => $id_accion
-								);	
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+			$criteria->addCondition('devuelto = 0');
+			$criteria->params = array(	'bid_usuario' => $id_usuario,
+										'bid_accion' => $id_accion,
+										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
-			$accion_ind = AccionesIndividuales::model()->findAll($criteria);
+			$accion_ind = AccionesIndividuales::model()->find($criteria);
 			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
 			//Si no estaba creada, crear con cooldown = 0 
@@ -137,15 +149,16 @@ class AccionesController extends Controller
 				$accion_ind = new AccionesIndividuales();
 				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
-				   							  	  'cooldown' => 0 ));
+				   							  	  'cooldown' => 0 ,
+				   							  	  'devuelto'=> 1));
 			}
 
 			// TODO Sacar la hora actual
-			//$hora_act = time();
 			$hora_act = time(); 
+			
 
 			// TODO Sacar el cooldown de la accion individual
-			$hora_cooldown = $accion_ind['cooldown']; 	//hora en la que acaba de regenerarse
+			$hora_cooldown = $accion_ind->cooldown; 	//hora en la que acaba de regenerarse
 
 			// Si  hora < hora_cooldown,
 			// cancelar transaccion y notificar al usuario
@@ -164,8 +177,8 @@ class AccionesController extends Controller
 				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
 
 				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind['cooldown'] = $hora_act + $tiempo_reg;
-
+				$accion_ind->cooldown = $hora_act + $tiempo_reg;
+				$accion_ind->devuelto=0;
 				//guardar en los modelos
 				$res->save();
 				$accion_ind->save();
@@ -184,9 +197,11 @@ class AccionesController extends Controller
 				*/
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
-				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
+				$id_usuario=Yii::app()->user->usIdent;
+				$id_equipo=Yii::app()->user->usAfic;
+				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
 				  															       'habilidades_id_habilidad' => $id_accion,
-				  															       'usuarios_id_usuario' =>  Yii::app()->user->usIdent,
+				  															       'usuarios_id_usuario' =>  $id_usuario,
 				  															        ));
 				
 				//Si no esta creada
@@ -232,7 +247,7 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
@@ -257,14 +272,17 @@ class AccionesController extends Controller
 			->with('usuarios')
 			->findByPk($id_accion);
 
+		//Comprobación de seguridad
+		if ($accionGrupal === null)
+			throw new Exception("La acción grupal no existe.", 404);
+			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
-			throw new CHttpException( 403, 'La acción no es de tu equipo');
-		}
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) 
+					throw new CHttpException( 403, 'La acción no es de tu equipo');
 
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
@@ -348,6 +366,11 @@ class AccionesController extends Controller
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
+
+		//Comprobación de seguridad
+		if ($recursosUsuario === null)
+			throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
+			
 		$dineroUsuario = $recursosUsuario['dinero'];
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
@@ -481,7 +504,11 @@ class AccionesController extends Controller
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
 			//Se comprueba la coherencia de la petición
-			if ($acc == null) {
+			if ($rec === null)
+			{
+				throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
+			}
+			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
@@ -490,7 +517,7 @@ class AccionesController extends Controller
 			if ($id_jugador == Yii::app()->user->usIden) {
 				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
 			}
-			if ($part == null) {
+			if ($part === null) {
 				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
 			}
 
