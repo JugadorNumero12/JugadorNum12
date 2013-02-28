@@ -225,7 +225,7 @@ class Partido
 		$partido = Partidos::model()->findByPk($this->id_partido);
 
 		//Decimos en que turno estamos para situar
-		$cronica_turno = "Estamos en el turno ".$this->turno." del partido. ";
+		$cronica_turno = "Turno: ".$this->turno.".";
 
 
 		//Miramos a ver si se ha metido algun gol 
@@ -247,7 +247,7 @@ class Partido
 		        $equipo_ganando = $partido->local->nombre; $equipo_perdiendo = $partido->visitante->nombre;
 		        break;
 		    }
-		     case ($this->estado  < 0):{ //Va ganando el equipo visitante
+		     case ($this->estado < 0):{ //Va ganando el equipo visitante
 		        $equipo_ganando = $partido->visitante->nombre; $equipo_perdiendo = $partido->local->nombre;
 		        break;
 		    }
@@ -259,21 +259,22 @@ class Partido
 
 		//Comentamos el estado del partido 
 		$cronica_estado = "";
-		switch (abs($this->estado)) {
+		$abs_estado=abs($this->estado);
+		switch ($abs_estado) {
 		    case 0: { 
-		        $cronica_estado = " El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
+		        $cronica_estado = " El partido esta es un punto muerto. Ningun equipo es mejor que el otro.";
 		        break;
 		    }
-		    case ($this->estado >=1 && $this->estado <=3):{ //[1,2,3] Diferencia leve
-		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." tiene una ligera ventaja";
+		    case ($abs_estado >=1 && $abs_estado <=3):{ //[1,2,3] Diferencia leve
+		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." es ligeramente mejor que".$equipo_perdiendo;
 		        break;
 		    }
-		    case ($this->estado >=4 && $this->estado <=6):{ //[4,5,6] Diferencia normal
-				$cronica_estado = " El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo;
+		    case ($abs_estado >=4 && $abs_estado <=6):{ //[4,5,6] Diferencia normal
+				$cronica_estado = " El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo.".";
 		        break;
 		    }
-		    case ($this->estado >=7 && $this->estado <=9):{ //[7,8,9] Muy favorable
-				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas";
+		    case ($abs_estado >=7 && $abs_estado <=9):{ //[7,8,9] Muy favorable
+				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
 		        break;
 		    }
 		}
@@ -296,7 +297,7 @@ class Partido
 		        break;
 		    }
 		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
-				$cronica_dif_estado = " El partido está muy reñido. El equipo ".$equipo_mejorado." ha mejorado su posicion ligeramente.";
+				$cronica_dif_estado = " El equipo ".$equipo_mejorado." ha mejorado su posicion ligeramente.";
 		        break;
 		    }
 		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
@@ -327,9 +328,9 @@ class Partido
 
 		//TODO comentar la diferencia de goles
 
-		$this->cronica .= "             Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
-		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado;
 		
+		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n";
+		//$this->cronica .= "Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
 	}
 
 	/*
@@ -351,6 +352,7 @@ class Partido
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
 		$this->cronica .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
 		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
+		$this->cronica .="\n";
 	}
 
 	/*
@@ -495,11 +497,12 @@ class Partido
 		$this->cronica .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
 		$this->cronica .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
+		$this->cronica .= "\n";
 	}
 
 	private function generaCronicaUltimoTurno()
 	{
-		//Indicar fin del descanso y reanudación del partido
+		//Hablar sobre la diferencia de goles
 		$this->cronica .= "cronica ultimo turno";
 	}
 

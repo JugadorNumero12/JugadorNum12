@@ -16,6 +16,7 @@
 		<h2>Estad&iacute;sticas local visitante</h2> 
 		<table>
 			<tr> <th> </th> <th> Local</th> <th> Visitante </th>  </tr>
+			<tr> <th> Nombre </th> <td> <?php  echo $nombre_local?></td> <td> <?php  echo $nombre_visitante?> </td>  </tr>
 			<tr> <th> Nivel </th> <td> <?php  echo $estado->nivel_local?></td> <td> <?php  echo $estado->nivel_visitante?> </td>  </tr>
 			<tr> <th> Aforo </th> <td> <?php  echo $estado->aforo_local?></td> <td> <?php  echo $estado->aforo_visitante?></td>  </tr>
 			<tr> <th> Moral </th> <td> <?php  echo $estado->moral_local?></td> <td> <?php  echo $estado->moral_visitante?> </td>  </tr>
@@ -33,16 +34,16 @@
 	</div> <!--end seccion 1 (el partido)-->
 
 	<div id="seccion2"> 
-		turno: <?php  echo $estado->turno?>
+		Estamos en el turno: <?php  echo $estado->turno?>
 	</div> <!--end seccion2 (turno en el que estamos)-->
 
 	<div id="seccion3"> 
-		Goles Local: <?php  echo $estado->goles_local?> Visitante: <?php  echo $estado->goles_visitante?>
+		Goles<br> <?php  echo $nombre_local?> Local: <?php  echo $estado->goles_local?> <?php  echo $nombre_visitante?> Visitante: <?php  echo $estado->goles_visitante?>
 	</div> <!--end seccion3 (marcador)-->
 
 	<div id="seccion4">
 		<h2> Cr&oacute;nica </h2> <br>
-		<?php echo $estado->cronica?>
+		<?php echo nl2br($estado->cronica)?>
 	</div> <!--end seccion4 (cronica)-->
 
 
