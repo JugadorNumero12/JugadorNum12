@@ -66,6 +66,64 @@ class ScriptsController extends Controller
 		}
 	}
 
+	/*
+	*
+	* Selecciona las acciones individuales pendientes de devolución
+	* de recursos (finalización) y ejecuta el método oportuno de cada 
+	* una de ellas.
+	*
+	*/
+	public function actionFinalizaIndividuales()
+	{
+		Yii::import('application.components.Acciones.*');
+
+		$tiempo = time();
+		$busqueda=new CDbCriteria;
+		$busqueda->addCondition(':bTiempo >= cooldown');
+		$busqueda->addCondition('devuelto >= :bDevuelto');
+		$busqueda->params = array(':bTiempo' => $tiempo,
+								'bDevuelto' => 0,
+								);
+		$individuales = AccionesIndividuales::model()->findAll($busqueda);
+
+		//Iterar sobre cada individual y finalizarla
+		foreach ($individuales as $ind)
+		{
+			$transaction = Yii::app()->db->beginTransaction();
+        	try
+        	{
+        		//Tomar nombre de habilidad para instanciación dinámica
+        		$hab = Habilidades::model()->findByPk($ind->habilidades_id_habilidad);
+        		if ($hab === null)
+        		{
+        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			
+        		}        		
+        		$nombreHabilidad =  $hab->codigo;
+
+        		//Llamar al singleton correspondiente y finalizar dicha acción
+        		$nombreHabilidad::getInstance()->finalizar($ind->usuarios_id_usuario,$ind->habilidades_id_habilidad);
+
+        		//Actualizar la base de datos para permitir un nuevo uso de la acción
+        		$ind->devuelto = 1;
+
+        		if (!$ind->save())
+        		{
+        			throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
+        			
+        		}
+
+				//Finalizar correctamente la transacción  
+				$transaction->commit();     		
+        	}
+        	catch (Exception $ex)
+        	{
+        		//Rollback de la transacción en caso de error
+        		$transaction->rollback();
+        		throw $ex;
+        	}
+		}
+	}
 
 	/**
 	 * Simulador de la fórmula

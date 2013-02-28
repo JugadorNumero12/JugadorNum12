@@ -4,9 +4,6 @@ class AccionIndSingleton
    /* Instancia del objeto */
    private static $instancia;   
 
-   /* Incluir tabla de efectos */
-   include('tabla_efectos.php');
-
    /* Constructora privada para evitar instanciación externa */
    private function __construct()
    {
@@ -24,11 +21,18 @@ class AccionIndSingleton
    }
 
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. */
-   public function ejecutar($id_usuario){ }
+   public function ejecutar($id_usuario)
+   {       
+      /* Incluir tabla de efectos */
+      Yii::import('application.components.acciones.tabla_efectos.php');
+   }
 
    /* Codigo asociado a finalizar dicha acción. P. ej.: devolver X influencias al jugador. */
    public function finalizar($id_usuario,$id_habilidad)
-   {
+   {      
+      /* Incluir tabla de efectos */
+      Yii::import('application.components.acciones.tabla_efectos.php');
+
       //Validar usuario
       $us = Usuarios::model()->findByPk($id_usuario);
       if ($us === null)
@@ -46,7 +50,14 @@ class AccionIndSingleton
 
       //Aumentar ánimo
       $helper = new Helper();
-      ($helper->aumentar_recursos($id_usuario,"influencias",$influencias) == 0)? return 0 : return -1;
+      if ($helper->aumentar_recursos($id_usuario,"influencias",$influencias) == 0)
+      {
+         return 0;
+      }
+      else
+      {
+         return -1;
+      }
    }
 
    /* Evita que el objeto se pueda clonar */
