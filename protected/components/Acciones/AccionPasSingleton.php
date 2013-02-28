@@ -2,10 +2,10 @@
 class AccionPasSingleton
 {
    /* Instancia del objeto */
-   private static $instancia;   
+   protected static $instancia;   
 
    /* Constructora privada para evitar instanciación externa */
-   private function __construct()
+   protected function __construct()
    {
       //echo "Creado singletonDeAccionPasiva";
    }
@@ -23,14 +23,10 @@ class AccionPasSingleton
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. */
    public function ejecutar($id_usuario)
    {
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
    }
 
    public function finalizar() 
    {
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
    }
 
    /* Evita que el objeto se pueda clonar */
