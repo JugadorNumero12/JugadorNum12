@@ -90,13 +90,9 @@ class Usuarios extends CActiveRecord
 	 */
 	public function comprobarClave ($clave)
 	{
-		echo '<br/>$clave = ' . $clave
-		   . '<br/>$this->pass = ' . $this->pass;
-
 		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
 		$valida = $bcrypt->verify($clave, $this->pass);
 
-		echo '<br/>$valida = ' . ($valida?'true':'false');
 		return $valida;
 	}
 
