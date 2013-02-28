@@ -30,7 +30,7 @@ class Equipos extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'equipos';
+		return '{{equipos}}';
 	}
 
 	/**

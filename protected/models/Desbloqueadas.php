@@ -24,7 +24,7 @@ class Desbloqueadas extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'desbloqueadas';
+		return '{{desbloqueadas}}';
 	}
 
 	/**
