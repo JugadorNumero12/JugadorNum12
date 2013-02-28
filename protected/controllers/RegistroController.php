@@ -26,8 +26,8 @@ class RegistroController extends Controller
 		foreach ($equip as $equipo){
 			$equipos[$equipo['id_equipo']] = $equipo['nombre'];
 		}
-		$modelo = new Usuarios ;
-		$seleccionado =0;
+		$modelo = new Usuarios();
+		$seleccionado = 0;
 		
 		$modelo->scenario='registro';
 		$transaction = Yii::app()->db->beginTransaction();
@@ -44,7 +44,8 @@ class RegistroController extends Controller
 				$modelo->attributes=$_POST['Usuarios'];
 				//modifico modelo con los datos del formulario
 				$modelo->setAttributes(array('nick'=>$_POST['Usuarios']['nuevo_nick']));
-				$modelo->setAttributes(array('pass'=>$_POST['Usuarios']['nueva_clave1']));
+				//$modelo->setAttributes(array('pass'=>$_POST['Usuarios']['nueva_clave1']));
+				$modelo->cambiarClave($_POST['Usuarios']['nueva_clave1']);
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 				$modelo->setAttributes(array('nivel'=>0));
 
