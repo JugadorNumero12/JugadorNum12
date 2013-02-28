@@ -68,8 +68,8 @@
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td class="barrita" id="bar" data-valor="<?php echo $modeloU->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"></td> </tr> 
-						<tr><th>Influencias: </th> <td class="barrita" id="bar2" data-valor="<?php echo $modeloU->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"></td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td class="barrita" id="bar" data-valor="<?php echo $modeloU->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
+						<tr><th>Influencias: </th> <td class="barrita" id="bar2" data-valor="<?php echo $modeloU->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
 						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
