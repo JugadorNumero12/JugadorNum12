@@ -10,6 +10,16 @@
  */
 class Ascender extends AccionPasSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario)
   {
@@ -23,7 +33,7 @@ class Ascender extends AccionPasSingleton
 
     //Aumentar dinero
     $helper = new Helper();
-    if ($helper->aumentar_recursos($id_usuario,"dinero_gen",$datos_acciones['Ascender']['dinero_gen']) == 0)
+    if ($helper->aumentar_recursos($id_usuario,"dinero_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']) == 0)
     {
       return 0;
     }
