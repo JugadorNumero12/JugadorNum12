@@ -57,7 +57,7 @@ class Usuarios extends CActiveRecord
 			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
 			array('personaje', 'numerical', 'integerOnly'=>true),
 			array('equipos_id_equipo, nivel', 'length', 'max'=>10),
-			array('nick', 'length', 'max'=>45),
+			array('nick', 'length', 'max'=>20),
 			array('pass, email', 'length', 'max'=>255),
 			/*Validaciones para cambio de contraseña*/
 			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
