@@ -27,16 +27,16 @@
 				<?php switch ($equipo->id_equipo)
 				{
 					case 1: ?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=200 height=200 border=0 alt="Escudo rojo"> 
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-rojo.png'; ?>" width=150 height=150 border=0 alt="Escudo rojo"> 
 					  <?php break;
 					case 2:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=200 height=200 border=0 alt="Escudo verde"> 
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-verde.png'; ?>" width=150 height=150 border=0 alt="Escudo verde"> 
 					  <?php break;
 					case 3:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=200 height=200 border=0 alt="Escudo negro"> 
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-negro.png'; ?>" width=150 height=150 border=0 alt="Escudo negro"> 
 					  <?php break;
 					  case 4:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=200 height=200 border=0 alt="Escudo blanco"> 
+					  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/escudos/escudo-blanco.png'; ?>" width=150 height=150 border=0 alt="Escudo blanco"> 
 					  <?php break;
 				} ?>	
 
