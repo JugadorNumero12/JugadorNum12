@@ -1,3 +1,5 @@
 $(document).ready(function(){
-	$("td.barrita").progressbar({value: 50});
+	$("td.barrita").progressbar({max: 1000});
+	var maximo = $("td.barrita").progressbar("option", "max");
+	console.log(maximo);
 });

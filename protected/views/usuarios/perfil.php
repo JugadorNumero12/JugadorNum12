@@ -12,7 +12,7 @@
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
-			Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 </head>
 
@@ -67,7 +67,7 @@
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->animo ?>--> </td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td class="barrita" id="bar" data-valor="<?php echo $modeloU->recursos->animo?>"><!--<?php //echo $modeloU->recursos->animo ?>--> </td> </tr> 
 						<tr><th>Influencias: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->influencias ?>--></td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
