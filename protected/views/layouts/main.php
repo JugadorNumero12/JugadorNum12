@@ -25,7 +25,7 @@
     		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "titulo-jugador">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=800 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "clasificacion">
             <?php $clasificacion = Clasificacion::model()->findAll(array('order'=>'posicion ASC')); ?>
@@ -69,10 +69,10 @@
 				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
 				   					<?php break;
 				   				case Usuarios::PERSONAJE_EMPRESARIO: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario.png'; ?>" alt="perfil-empresario">
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="perfil-empresario">
 				   					<?php break;
 				   				case Usuarios::PERSONAJE_MOVEDORA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP.png'; ?>" alt="perfil-RRPP">
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="perfil-RRPP">
 				   					<?php break;
 				   			}
 				   		?>
@@ -88,13 +88,13 @@
 				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">&Aacute;rbol de <br> habilidades</div>
+				   		<div class="nombre-menu">Habilidades</div>
 				   	</li>
 			    </a>
 			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
 			   		<li class="elementos-menu">
 			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-			   			<div class="nombre-menu">Habilidades <br> desbloqueadas</div>
+			   			<div class="nombre-menu">Desbloqueadas</div>
 			   		</li>
 			   	</a>			   	
 				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
