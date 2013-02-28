@@ -205,7 +205,7 @@ class AccionesController extends Controller
 				  															        ));
 				
 				//Si no esta creada
-				if($accion_grupal == null){
+				if($accion_grupal === null){
 					//restar recursos al usuario (recursos iniciales)	
 					try{	
 						$res['dinero'] 		-= $habilidad['dinero'];
@@ -325,12 +325,12 @@ class AccionesController extends Controller
 		/* PEDRO pero cualquier duda preguntar a MARCOS*/
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
-		if($accion==null)
+		if($accion===null)
 			throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
 		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
-		if($habilidad==null)
+		if($habilidad===null)
 			throw new CHttpException(501,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
@@ -349,7 +349,7 @@ class AccionesController extends Controller
 
 		//Compuebo si el jugador ya ha participado en la acción
 		$participacion= Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
-		$nuevo_participante= $participacion==null;
+		$nuevo_participante= $participacion===null;
 
 		if($nuevo_participante){
 			//Compruebo que no se sobrepase el límite de jugadores

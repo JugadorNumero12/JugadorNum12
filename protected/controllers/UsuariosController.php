@@ -102,7 +102,7 @@ class UsuariosController extends Controller
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
-        if ($modeloUsuario == null)
+        if ($modeloUsuario === null)
         {
             echo "El usuario no existe.";
         }

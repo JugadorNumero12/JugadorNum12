@@ -87,7 +87,7 @@ class HabilidadesController extends Controller
 		$idUsuario = Yii::app()->user->usIdent;
 		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
-		if ($habilidad == null) {
+		if ($habilidad === null) {
 			throw new CHttpException( 404, 'Habilidad inexistente');
 		}
 
@@ -132,7 +132,7 @@ class HabilidadesController extends Controller
 																	  ));
 
 		//realizar transaccion con la base de datos
-		if($habilidad == null){
+		if($habilidad === null){
 			//si la habilidad que quieres desbloquear existe como tal
 			$trans->rollback();
 			throw new CHttpException(404,'La habilidad no existe.');

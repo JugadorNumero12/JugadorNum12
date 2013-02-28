@@ -16,7 +16,7 @@ class CrearseEspectativas extends AccionIndSingleton
 	{
 		//Validar usuario
 		$us = Usuarios::model()->findByPk($id_usuario);
-		if ($us == null)
+		if ($us === null)
 			throw new Exception("Usuario incorrecto.", 404);			
 
 		//Tomar helper para facilitar la modificación

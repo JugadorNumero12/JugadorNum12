@@ -47,7 +47,7 @@ class Partido
     function Partido($id_partido)
     {
         $partido = Partidos::model()->findByPk($id_partido);
-        if ($partido == null)
+        if ($partido === null)
             throw new CHttpException(404,'Partido inexistente.');
         $this->id_partido = $id_partido;
         $this->id_local = $partido->equipos_id_equipo_1;
@@ -75,7 +75,7 @@ class Partido
     private function guardaEstado()
     {
         $partido = Partidos::model()->findByPk($this->id_partido);
-        if ($partido == null)
+        if ($partido === null)
             throw new CHttpException(404,'Partido inexistente.');
 
         $partido->ofensivo_local = $this->ofensivo_local;
@@ -115,11 +115,11 @@ class Partido
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
         $partido = Partidos::model()->findByPk($this->id_partido);
         //Comprobación de existencia de datos por seguridad
-        if ($local == null)
+        if ($local === null)
             throw new CHttpException(404,'Equipo local inexistente.');
-        if ($visitante == null)
+        if ($visitante === null)
             throw new CHttpException(404,'Equipo visitante inexistente.');     
-        if ($partido == null)
+        if ($partido === null)
             throw new CHttpException(404,'Partido inexistente.');
         //Fijar diferencia de niveles.
         //IMPORTANTE: dif. niveles -> Local +, Visitante -
@@ -341,9 +341,9 @@ class Partido
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);  
         //Comprobación de existencia de datos por seguridad
-        if ($local == null)
+        if ($local === null)
             throw new CHttpException(404,'Equipo local inexistente.');
-        if ($visitante == null)
+        if ($visitante === null)
             throw new CHttpException(404,'Partido inexistente.');
 		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
 		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
@@ -527,10 +527,10 @@ class Partido
 		$partidos=Partidos::model()->findAll($busqueda);
 
 		$equipo = Equipos::model()->findByPk($id_equipo);
-		if ($equipo == null)
+		if ($equipo === null)
 			throw new Exception("El equipo no existe (Partido.php).", 404);
 			
-		if ($partidos == null)
+		if ($partidos === null)
 		{
 			$equipo->partidos_id_partido = null;
 		}

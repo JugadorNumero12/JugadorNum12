@@ -19,7 +19,7 @@ class IniciarOla extends AccionPartSingleton
       $ret = 0;
 
       $creador = Usuarios::model()->findByPk($id_usuario);
-      if ($creador == null)
+      if ($creador === null)
         throw new Exception("Usuario inexistente.", 404);
         
       $equipo = $creador->equipos;

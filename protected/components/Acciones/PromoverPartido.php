@@ -23,7 +23,7 @@ class PromoverPartido extends AccionSingleton
 	    $ret = 0;
 
 	    $accGrup = AccionesGrupales::model()->findByPk($id_accion);
-	    if ($accGrup == null)
+	    if ($accGrup === null)
 	      throw new Exception("Accion grupal inexistente.", 404);
 	      
 	    $creador = $accGrup->usuarios;

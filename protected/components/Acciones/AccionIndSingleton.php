@@ -31,12 +31,12 @@ class AccionIndSingleton
    {
       //Validar usuario
       $us = Usuarios::model()->findByPk($id_usuario);
-      if ($us == null)
+      if ($us === null)
          throw new Exception("Usuario incorrecto.", 404); 
 
       //Tomar y validar habilidad
       $hab = Habilidades::model()->findByPk($id_habilidad); 
-      if ($hab == null)
+      if ($hab === null)
          throw new Exception("Habilidad incorrecta.", 404); 
       //Coger influencias a devolver
       $influencias = $hab->influencias;   
