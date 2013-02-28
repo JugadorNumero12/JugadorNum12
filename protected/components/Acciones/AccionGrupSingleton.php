@@ -2,10 +2,10 @@
 class AccionGrupSingleton
 {
    /* Instancia del objeto */
-   private static $instancia;   
+   protected static $instancia;   
 
    /* Constructora privada para evitar instanciación externa */
-   private function __construct()
+   protected function __construct()
    {
       //echo "Creado singletonDeAccionGrupal";
    }
@@ -25,14 +25,10 @@ class AccionGrupSingleton
    Se llamará al crear una grupal o participar en ella, siempre y cuando los recursos hayan sido alcanzados. */
    public function ejecutar($id_accion)
    {
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
    }
 
    public function finalizar() 
    {
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
    }
 
    /* Evita que el objeto se pueda clonar */

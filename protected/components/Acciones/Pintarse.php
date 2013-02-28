@@ -16,6 +16,15 @@
  */
 class Pintarse extends AccionGrupSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
 	
   /* Aplica las mejoras inmediatas y para el proximo partido */
   public function ejecutar($id_accion)
@@ -35,10 +44,10 @@ class Pintarse extends AccionGrupSingleton
 
       //1.- Añadir bonificación al partido
       $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",$datos_acciones['Pintarse']['ambiente']));
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['Pintarse']['ambiente']));
       
       //2.- Dar bonificación al creador
-      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"animo",$datos_acciones['Pintarse']['bonus_creador']['animo']));
+      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"animo",Efectos::$datos_acciones['Pintarse']['bonus_creador']['animo']));
       
       //3.- Devolver influencias y dar animo de la accion
 
@@ -47,7 +56,7 @@ class Pintarse extends AccionGrupSingleton
       {
         $infAportadas = $participacion->influencas_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
-        $ret = min($ret,$helper->aumentar_recursos($usuario,"animo",$datos_acciones['Pintarse']['animo']));
+        $ret = min($ret,$helper->aumentar_recursos($usuario,"animo",Efectos::$datos_acciones['Pintarse']['animo']));
         $ret = min($ret,$helper->aumentar_recursos($usuario,"influencias",$infAportadas));
       }
 

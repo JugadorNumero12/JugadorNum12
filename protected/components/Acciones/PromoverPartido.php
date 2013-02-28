@@ -14,6 +14,16 @@
  */
 class PromoverPartido extends AccionSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+   
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_accion)
 	{
@@ -32,8 +42,8 @@ class PromoverPartido extends AccionSingleton
 
 	    //1.- Añadir bonificación al partido
 	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",$datos_acciones['PromoverPartido']['ambiente']));
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",$datos_acciones['PromoverPartido']['aforo']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['PromoverPartido']['ambiente']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['PromoverPartido']['aforo']));
 
 	    //2.- Dar bonificación al creador
 	    
