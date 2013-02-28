@@ -26,12 +26,12 @@ class AccionesGrupales extends CActiveRecord
 		return parent::model($className);
 	}
 
-	/**
+		/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'acciones_grupales';
+		return '{{acciones_grupales}}';
 	}
 
 	/**

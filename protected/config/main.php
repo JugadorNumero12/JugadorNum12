@@ -57,11 +57,12 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=juego',
+			'connectionString' => 'mysql:host=localhost;dbname=darkhogg_main',
 			'emulatePrepare' => true,
-			'username' => 'juego',
-			'password' => 'juego',
+			'username' => 'darkh_jug12',
+			'password' => 'jugador12is',
 			'charset' => 'utf8',
+			'tablePrefix' => 'j12_'
 		),
 		
 		'errorHandler'=>array(
@@ -89,6 +90,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'darkhogg@gmail.com',
 	),
 );

@@ -25,7 +25,7 @@ class AccionesIndividuales extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'acciones_individuales';
+		return '{{acciones_individuales}}';
 	}
 
 	/**
