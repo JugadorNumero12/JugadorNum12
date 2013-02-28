@@ -135,7 +135,7 @@ class AccionesController extends Controller
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			//$criteria->addCondition('devuelto = 0');
+			$criteria->addCondition('devuelto = 0');
 			$criteria->params = array(	'bid_usuario' => $id_usuario,
 										'bid_accion' => $id_accion,
 										);	
@@ -149,7 +149,8 @@ class AccionesController extends Controller
 				$accion_ind = new AccionesIndividuales();
 				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
-				   							  	  'cooldown' => 0 ));
+				   							  	  'cooldown' => 0 ,
+				   							  	  'devuelto'=> 1));
 			}
 
 			// TODO Sacar la hora actual
@@ -176,8 +177,8 @@ class AccionesController extends Controller
 				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
 
 				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind['cooldown'] = $hora_act + $tiempo_reg;
-
+				$accion_ind->cooldown = $hora_act + $tiempo_reg;
+				$accion_ind->devuelto=0;
 				//guardar en los modelos
 				$res->save();
 				$accion_ind->save();
@@ -196,9 +197,11 @@ class AccionesController extends Controller
 				*/
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
-				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
+				$id_usuario=Yii::app()->user->usIdent;
+				$id_equipo=Yii::app()->user->usAfic;
+				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
 				  															       'habilidades_id_habilidad' => $id_accion,
-				  															       'usuarios_id_usuario' =>  Yii::app()->user->usIdent,
+				  															       'usuarios_id_usuario' =>  $id_usuario,
 				  															        ));
 				
 				//Si no esta creada
