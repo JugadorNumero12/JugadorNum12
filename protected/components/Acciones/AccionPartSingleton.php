@@ -7,7 +7,7 @@ class AccionPartSingleton
    /* Constructora privada para evitar instanciación externa */
    private function __construct()
    {
-      echo "Creado singletonDeAccionDePartido"; //Eliminar!!
+      //echo "Creado singletonDeAccionDePartido";
    }
 
    /* Función a través de la cual se accederá al Singleton */

@@ -7,7 +7,7 @@ class AccionGrupSingleton
    /* Constructora privada para evitar instanciación externa */
    private function __construct()
    {
-      echo "Creado singletonDeAccionGrupal"; //Eliminar!!
+      //echo "Creado singletonDeAccionGrupal";
    }
 
    /* Función a través de la cual se accederá al Singleton */

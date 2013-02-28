@@ -7,7 +7,7 @@ class AccionPasSingleton
    /* Constructora privada para evitar instanciación externa */
    private function __construct()
    {
-      echo "Creado singletonDeAccionPasiva"; //Eliminar!!
+      //echo "Creado singletonDeAccionPasiva";
    }
 
    /* Función a través de la cual se accederá al Singleton */
