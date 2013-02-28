@@ -10,9 +10,22 @@
  */
 class ContratarRRPP extends AccionIndSingleton
 {
-	/* Aplicar los efectos de la accion  */
+	/* Función a través de la cual se accederá al Singleton */
+	public static function getInstance()
+	{
+	   if (!self::$instancia instanceof self)
+	   {
+	      self::$instancia = new self;
+	   }
+	   return self::$instancia;
+	}
+
+	/* Ningun efecto al ejecutar la accion */
 	public function ejecutar($id_usuario)
 	{
+	    //Traer el array de efectos
+	    parent::ejecutar($id_usuario);
+
 		//Validar usuario
 		$us = Usuarios::model()->findByPk($id_usuario);
 		if ($us === null)
@@ -24,7 +37,7 @@ class ContratarRRPP extends AccionIndSingleton
 		//Aumentar ánimo
 		$helper = new Helper();
 
-		if ($helper->aumentar_recursos($id_usuario,"bonus_influencias",$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		if ($helper->aumentar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
 		{
 			return 0;
 		}
@@ -48,7 +61,7 @@ class ContratarRRPP extends AccionIndSingleton
 		Yii::import('application.components.Helper');
 		
 		//Restablecer bonus_influencias
-		if ($helper->quitar_recursos($id_usuario,"bonus_influencias",$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		if ($helper->quitar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
 		{
 			return min($res,0);
 		}

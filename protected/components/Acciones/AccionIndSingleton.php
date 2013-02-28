@@ -23,16 +23,11 @@ class AccionIndSingleton
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. */
    public function ejecutar($id_usuario) 
    {
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
    }
 
    /* Codigo asociado a finalizar dicha acción. P. ej.: devolver X influencias al jugador. */
    public function finalizar($id_usuario,$id_habilidad)
    {      
-      /* Incluir tabla de efectos */
-      Yii::import('application.components.acciones.tabla_efectos.php');
-
       //Validar usuario
       $us = Usuarios::model()->findByPk($id_usuario);
       if ($us === null)
