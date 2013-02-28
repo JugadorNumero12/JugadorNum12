@@ -93,6 +93,7 @@ class AccionesController extends Controller
 	{		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
+		Yii::import('application.components.Acciones.*');
 		//Cojo el id_usuario
 		$id_usuario=Yii::app()->user->usIdent;
 		//Obtener modelo de Habilidades
@@ -175,6 +176,17 @@ class AccionesController extends Controller
 				$res['influencias'] -= $habilidad['influencias'];
 
 				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+				//Tomar nombre de habilidad para instanciación dinámica
+        		$hab = Habilidades::model()->findByPk($id_accion);
+        		if ($hab === null)
+        		{
+        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			
+        		}        		
+        		$nombreHabilidad =  $hab->codigo;
+
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
 
 				//actualizar la hora en que acaba de regenerarse la accion
 				$accion_ind->cooldown = $hora_act + $tiempo_reg;
