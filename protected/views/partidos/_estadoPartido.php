@@ -41,7 +41,7 @@
 	</div> <!--end seccion3 (marcador)-->
 
 	<div id="seccion4">
-		Aqui va la seccion 4 (cronica)<br>
+		<h2> Cr&oacute;nica </h2> <br>
 		<?php echo $estado->cronica?>
 	</div> <!--end seccion4 (cronica)-->
 
