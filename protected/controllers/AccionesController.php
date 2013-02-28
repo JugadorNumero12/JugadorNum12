@@ -135,10 +135,9 @@ class AccionesController extends Controller
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->addCondition('cooldown <= :bhora');
+			//$criteria->addCondition('devuelto = 0');
 			$criteria->params = array(	'bid_usuario' => $id_usuario,
 										'bid_accion' => $id_accion,
-										'bhora' => time()
 										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
