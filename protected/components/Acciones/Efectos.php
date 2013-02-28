@@ -59,7 +59,7 @@ class Efectos
 		), 
 		
 		'CrearseEspectativas' => array (
-			'animo' => 0.15
+			'animo' => 1
 		),
 			
 		'ContratarRRPP' => array (

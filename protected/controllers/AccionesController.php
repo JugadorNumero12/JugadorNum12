@@ -155,8 +155,7 @@ class AccionesController extends Controller
 			}
 
 			// TODO Sacar la hora actual
-			$hora_act = time(); 
-			
+			$hora_act = time(); 			
 
 			// TODO Sacar el cooldown de la accion individual
 			$hora_cooldown = $accion_ind->cooldown; 	//hora en la que acaba de regenerarse
@@ -174,26 +173,28 @@ class AccionesController extends Controller
 				$res['dinero'] 		-= $habilidad['dinero'];
 				$res['animo']  		-= $habilidad['animo'];
 				$res['influencias'] -= $habilidad['influencias'];
+				$res->save();
+
+				//actualizar la hora en que acaba de regenerarse la accion
+				$accion_ind->cooldown = $hora_act + $tiempo_reg;
+				$accion_ind->devuelto=0;
+				
+				//guardar en los modelo				
+				$accion_ind->save();
 
 				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
 				//Tomar nombre de habilidad para instanciación dinámica
         		$hab = Habilidades::model()->findByPk($id_accion);
         		if ($hab === null)
         		{
-        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
         			
-        		}        		
-        		$nombreHabilidad =  $hab->codigo;
+        		}      
+        		  		
+        		$nombreHabilidad = $hab->codigo;
 
         		//Llamar al singleton correspondiente y ejecutar dicha acción
         		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
-
-				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind->cooldown = $hora_act + $tiempo_reg;
-				$accion_ind->devuelto=0;
-				//guardar en los modelos
-				$res->save();
-				$accion_ind->save();
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
