@@ -227,14 +227,14 @@ class AccionesController extends Controller
 						
 						//sumarselos al crear nueva accion grupal
 						$accion_grupal = new AccionesGrupales();
-						$accion_grupal->setAttributes( array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+						$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
 					   							  	         'habilidades_id_habilidad' => $id_accion,
-					   							  	         'equipos_id_equipo' => Yii::app()->user->usAfic,
+					   							  	         'equipos_id_equipo' => $id_equipo,
 					   							  	         'influencias_acc'   => $habilidad['influencias'],
 					   							  	         'animo_acc' 	     => $habilidad['animo'],
 															 'dinero_acc' 	     => $habilidad['dinero'],
 															 'jugadores_acc'     => 1,
-															 'finalizacion'      => 201,													 
+															 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
 					   							  	         'completada' 	     => 0 ));
 						//guardar en los modelos
 						$res->save();
