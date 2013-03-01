@@ -59,6 +59,8 @@ class ContratarRRPP extends AccionIndSingleton
 
 		//Tomar helper para facilitar la modificación
 		Yii::import('application.components.Helper');
+
+		$helper = new Helper();
 		
 		//Restablecer bonus_influencias
 		if ($helper->quitar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
