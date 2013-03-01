@@ -29,13 +29,13 @@
 				<?php switch ($modeloU->personaje)
 								{
 								case Usuarios::PERSONAJE_ULTRA: ?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/ultra.jpg'; ?>" width=300 height=300 border=0 alt="Ultra"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/ultra.jpg'; ?>" width=150 height=150 border=0 alt="Ultra"> 
 								  <?php break;
 								case Usuarios::PERSONAJE_MOVEDORA:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/animadora.jpg'; ?>" width=300 height=300 border=0 alt="Animadora"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/animadora.jpg'; ?>" width=150 height=150 border=0 alt="Animadora"> 
 								  <?php break;
 								case Usuarios::PERSONAJE_EMPRESARIO:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/empresario.jpg'; ?>" width=300 height=300 border=0 alt="Empresario"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/perfil/empresario.jpg'; ?>" width=150 height=150 border=0 alt="Empresario"> 
 								  <?php break;
 								} ?>
 				</div>

@@ -25,7 +25,7 @@
     		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "titulo-jugador">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=1000 height=100 border=0 alt="Logo Jugador numero 12">
+    		<img src="<?php echo Yii::app()->BaseUrl.'/less/imagenes/logos/Jugador_Num_12_Verde.png'; ?>" width=800 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "clasificacion">
             <?php $clasificacion = Clasificacion::model()->findAll(array('order'=>'posicion ASC')); ?>
@@ -53,6 +53,31 @@
                 <?php } ?>
     		</ul>
     	</div>
+
+    	<?php $personaje = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent); ?>
+    	<!--<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>-->
+	    <div id="datos-cabecera">
+		    <div class="elemento-dato-cabecera">
+		    	<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nick">
+		    	<div class="texto-nick-dato-cabecera"> <?php echo $personaje->nick ?> </div>
+		    </div>
+			<div class="elemento-dato-cabecera">
+				<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nivel">
+				<div class="texto-nivel-dato-cabecera"> <?php echo $personaje->nivel ?> </div>
+			</div> 
+			<div class="elemento-dato-cabecera">
+				<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+				<div class="texto-dinero-dato-cabecera"> <?php echo $personaje->recursos->dinero ?> </div>
+			</div>
+			<div class="elemento2-dato-cabecera">
+				<img class="imagen2-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+				<div id="bar" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></div>
+			</div> 
+			<div class="elemento2-dato-cabecera">
+				<img class="imagen2-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+				<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></div>
+			</div> 
+		</div>
  
     </div>
 	
@@ -60,7 +85,6 @@
     <div id="menu-izquierdo">
 		<div id='cssmenu'>
 			<ul>
-				<?php $personaje = Usuarios::model()->findByPK(Yii::app()->user->usIdent); ?>
 				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
 				   	<li class="elementos-menu">
 				   		<?php
@@ -69,10 +93,10 @@
 				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
 				   					<?php break;
 				   				case Usuarios::PERSONAJE_EMPRESARIO: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario.png'; ?>" alt="perfil-empresario">
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="perfil-empresario">
 				   					<?php break;
 				   				case Usuarios::PERSONAJE_MOVEDORA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP.png'; ?>" alt="perfil-RRPP">
+				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="perfil-RRPP">
 				   					<?php break;
 				   			}
 				   		?>
@@ -88,13 +112,13 @@
 				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">&Aacute;rbol de <br> habilidades</div>
+				   		<div class="nombre-menu">Habilidades</div>
 				   	</li>
 			    </a>
 			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
 			   		<li class="elementos-menu">
 			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-			   			<div class="nombre-menu">Habilidades <br> desbloqueadas</div>
+			   			<div class="nombre-menu">Desbloqueadas</div>
 			   		</li>
 			   	</a>			   	
 				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
@@ -121,32 +145,22 @@
     </div>
     
     <!-- DIVISION PARA FLOTAR -->
-    <div id="grupo-derecha">
+    <div id="grupo-centro">
 
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
 	      <?php echo $content; ?>
 	    </div>
 
-		<!-- DIVISION DEL MENU DERECHO -->
-	    <!--<div id="menu-derecho">
-	    	<div id='cssmenu'>
-				<ul>
-				   <li><a href="<?php echo Yii::app()->createUrl('/usuarios/cuenta');?>"><span>Mi Cuenta</span></a></li>
-				</ul>
-			</div>
-	    </div>-->
-
-		<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>
-	    <table id="table">
+	    <!-- <table id="table">
 		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
 			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
 			<tr><th> <br></th> <td> </td> <br></tr> 
 			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
 			<tr><th>&Aacute;nimo: </th> <td id="bar" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
 			<tr><th>Influencias: </th> <td id="bar2" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
-		</table>
-	</div>
+		</table> -->
+
 
 	<div class="push"></div>
   	

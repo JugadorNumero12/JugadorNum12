@@ -24,17 +24,17 @@ div#envoltorio1 {
     width:100%;
 
 	div#envoltorio2 {
-		width:90%;
         height: 100%;
 		text-align: left;
-		margin: 0 auto;	
+		margin: 0 auto;
+		width: 960px;
 
 		// CABECERA
 		// --------------
 		div#cabecera {
 			float: left;
 			width:100%;
-			margin: 0 0 5em 0;
+			margin: 0 0 3em 0;
 
 			div#logo {
 				.propiedades_basicas();
@@ -45,21 +45,89 @@ div#envoltorio1 {
 				.propiedades_basicas();
 				float: left;
 				margin: 1em 0em 0em 0.5em;
+				width: 800px;
+				height: 100px;
 			}
 
             div#clasificacion {
                 .propiedades_basicas();
-                margin: 10em 0 0 20em;
                 li {
                     display: inline;
                     list-style-type: none;
-                    margin: 0em 5em 0em 5em; 
+                    margin: 0 12em 0 2em;
                     img.escudos-clasificacion{
                     	width: 50px; 
                     	height: 50px; 
                     }  
                 }
             }
+
+            #datos-cabecera{
+				background-color: blue;
+				width: 800px;
+				margin: 0px 0px 3em 10em;
+
+				div.elemento-dato-cabecera{
+					width: 10%;
+					margin: 1.25em 1.3em;
+					float:left;
+				}
+
+				div.elemento2-dato-cabecera{
+					width: 25%;
+					margin: 1em 1em;
+					float:left;
+				}
+
+				img.imagen1-dato-cabecera{
+					width:25px;
+					height:25px;
+				}
+
+				img.imagen2-dato-cabecera{
+					width:25px;
+					height:25px;
+					margin: 0.25em 0 0 0;
+				}
+
+				div.texto-nick-dato-cabecera{
+					float:right;
+					margin: 0.3em 0.5em 0 0;
+				}
+
+				div.texto-nivel-dato-cabecera{
+					float:right;
+					margin: 0.3em 3em 0 0;
+				}
+
+				div.texto-dinero-dato-cabecera{
+					float:right;
+					margin: 0.3em 1em 0 0;
+				}
+
+				div.progressbar-cabecera{
+					width: 80%;
+					float:right;
+				}
+
+				//TEXTO DE LAS BARRAS DE PROGRESO
+				.label1{
+					float: right;
+					margin-right: 30%;
+					margin-top: 5px;
+					font-weight: bold;
+					text-shadow: 1px 1px 0 #fff;
+				}//#label1
+
+				.label2{
+				    float: left;
+				    margin-left: 40%;
+				    margin-top: 5px;
+				    font-weight: bold;
+				    text-shadow: 1px 1px 0 #fff;
+				}//#label2
+					
+			}//#table
 		
         }
 
@@ -68,52 +136,19 @@ div#envoltorio1 {
 
 		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
 		#menu-izquierdo{
-			width: 17em;
-			float:left; 
-			position:relative;
+			width: 17%;
+			float:left;
 		}//#menu-izquierdo
 
 		//Incluye el div del contenido y el menu derecho(menu de cuenta)
-		#grupo-derecha{
-			width:85%;
-			background: white;
+		#grupo-centro{
+			width:80%;
 			float:left;
-
-			//Tabla cuenta
-			#table{
-				float: right;
-				text-align: right;
-				width: 13%;
-
-				//TEXTO DE LAS BARRAS DE PROGRESO
-					.label1{
-					    float: right;
-					    margin-right: 20%;
-					    margin-top: 5px;
-					    font-weight: bold;
-					    text-shadow: 1px 1px 0 #fff;
-					}//#label1
-
-					.label2{
-					    float: left;
-					    margin-left: 40%;
-					    margin-top: 5px;
-					    font-weight: bold;
-					    text-shadow: 1px 1px 0 #fff;
-					}//#label2
-					
-			}//#table
-
-			//Menu derecho (cuenta)
-			#menu-derecho{
-				width:13%;
-				float:right;
-			}//#menu-derecho
+			margin: 1em 0em 0em 1em;
 
 			#contenido{
 				background-color: white;  
 			 	float:left;
-			 	width:87%;
 			 	text-align: center;
 			}//#contenido
 		}//#grupo-derecha
