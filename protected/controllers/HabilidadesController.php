@@ -88,7 +88,7 @@ class HabilidadesController extends Controller
 		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
 		if ($habilidad == null) {
-			throw new CHttpException( 404, 'Habilidad inexistente');
+			throw new CHttpException( 404, 'La habilidad no existe.');
 		}
 
 		$desb = false;
@@ -136,39 +136,39 @@ class HabilidadesController extends Controller
 			//si la habilidad que quieres desbloquear existe como tal
 			$trans->rollback();
 			throw new CHttpException(404,'La habilidad no existe.');
+		}
 
-		}elseif ( $desbloqueada != null){
+		if ( $desbloqueada != null){
 			//si esta desbloqueada 
 			$trans->rollback();
-			throw new CHttpException(404,'La habilidad ya ha sido desbloqueada.');
+			Yii::app()->user->setFlash('desbloqueada', 'La habilidad ya ha sido desbloqueada.');
+			$this-> redirect(array('habilidades/index'));
+		} 
 
-		} else {
-			//si no esta desbloqueada y existe
-			//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
-			if(isset($_POST['aceptarBtn'])){
-        		try{        			
-        			$desbloqueada = new Desbloqueadas();
-        			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
-        			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
-        			$desbloqueada->save();
-        			$trans->commit(); 
-        			$this->redirect(array('habilidades/index'));       			
-        		} catch ( Exception $exc ) {
-					$trans->rollback();
-					throw $exc;
-				  }
-        		
-        	}       
-        	//si el usuario cancela, rollback 	
-      		if(isset($_POST['cancelarBtn'])){
-        		$trans->rollback();
-        		$this->redirect(array('habilidades/index'));
-        	}
+		//si no esta desbloqueada y existe
+		//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
+		if(isset($_POST['aceptarBtn'])){
+    		try{        			
+    			$desbloqueada = new Desbloqueadas();
+    			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
+    			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
+    			$desbloqueada->save();
+    			$trans->commit(); 
+    			$this->redirect(array('habilidades/index'));       			
+    		} catch ( Exception $exc ) {
+				$trans->rollback();
+				throw $exc;
+			}
+    		
+    	}       
+    	//si el usuario cancela, rollback 	
+  		if(isset($_POST['cancelarBtn'])){
+    		$trans->rollback();
+    		$this->redirect(array('habilidades/index'));
+    	}
 
-        	//pasar la habilidad a la vista para mostrar que habilidad se esta desboqueando
-        	$this->render('adquirir', array('habilidad'=>$habilidad));
-		}
-		
+    	//pasar la habilidad a la vista para mostrar que habilidad se esta desboqueando
+    	$this->render('adquirir', array('habilidad'=>$habilidad));		
 	}
 
 	/**

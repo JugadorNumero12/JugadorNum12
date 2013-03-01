@@ -8,6 +8,12 @@
 <div class="envoltorio">
 <div class="encabezado"> <h1>&Aacute;rbol de habilidades</h1> </div>
 
+<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+?>
+
 <?php 
 foreach ( $habilidades as $i=>$habilidad ){ ?>
     <div class="datos-accion">
