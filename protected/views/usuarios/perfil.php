@@ -12,7 +12,7 @@
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
-			Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 </head>
 
@@ -62,13 +62,14 @@
 			</div>
 
 			<div class="perfil-grupo-arriba-derecha">
+				<?php $recursos = Recursos::model()->findByPk($modeloU->id_usuario) ?>
 				<table >
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->animo ?>--> </td> </tr> 
-						<tr><th>Influencias: </th> <td class="barrita"><!--<?php //echo $modeloU->recursos->influencias ?>--></td> </tr> 
+						<tr><th>&Aacute;nimo: </th> <td class="barrita" id="bar" data-valor="<?php echo $modeloU->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
+						<tr><th>Influencias: </th> <td class="barrita" id="bar2" data-valor="<?php echo $modeloU->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
 						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>

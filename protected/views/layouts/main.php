@@ -136,13 +136,15 @@
 				</ul>
 			</div>
 	    </div>-->
+
+		<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>
 	    <table id="table">
 		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
 			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
 			<tr><th> <br></th> <td> </td> <br></tr> 
 			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
-			<tr><th>&Aacute;nimo: </th> <td id="barrita"><!--<?php echo $personaje->recursos->animo ?>--> </td> </tr> 
-			<tr><th>Influencias: </th> <td id="barrita"><!--<?php echo $personaje->recursos->influencias ?>--></td> </tr> 
+			<tr><th>&Aacute;nimo: </th> <td id="bar" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
+			<tr><th>Influencias: </th> <td id="bar2" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
 		</table>
 	</div>
 
