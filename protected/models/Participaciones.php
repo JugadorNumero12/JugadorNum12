@@ -32,7 +32,7 @@ class Participaciones extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{participaciones}}';
+		return 'participaciones';
 	}
 
 	/**

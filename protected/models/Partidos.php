@@ -27,7 +27,7 @@ class Partidos extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{partidos}}';
+		return 'partidos';
 	}
 
 	/**

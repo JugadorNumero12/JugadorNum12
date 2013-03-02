@@ -31,7 +31,7 @@ class AccionesGrupales extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{acciones_grupales}}';
+		return 'acciones_grupales';
 	}
 
 	/**

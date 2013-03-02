@@ -27,7 +27,7 @@ class AccionesTurno extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{acciones_turno}}';
+		return 'acciones_turno';
 	}
 
 	/**

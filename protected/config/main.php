@@ -57,12 +57,12 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=darkhogg_main',
+			'connectionString' => 'mysql:host=localhost;dbname=juego',
 			'emulatePrepare' => true,
-			'username' => 'darkh_jug12',
-			'password' => 'jugador12is',
+			'username' => 'juego',
+			'password' => 'juego',
 			'charset' => 'utf8',
-			'tablePrefix' => 'j12_'
+//			'tablePrefix' => 'j12_'
 		),
 		
 		'errorHandler'=>array(

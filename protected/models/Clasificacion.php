@@ -28,7 +28,7 @@ class Clasificacion extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{clasificacion}}';
+		return 'clasificacion';
 	}
 
 	/**

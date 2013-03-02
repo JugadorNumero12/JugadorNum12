@@ -31,7 +31,7 @@ class Recursos extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{recursos}}';
+		return 'recursos';
 	}
 
 	/**

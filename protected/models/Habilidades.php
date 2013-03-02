@@ -29,7 +29,7 @@ class Habilidades extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{habilidades}}';
+		return 'habilidades';
 	}
 	
 	/**
