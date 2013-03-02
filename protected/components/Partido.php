@@ -11,7 +11,7 @@ class Partido
 	* El turno 6 es de descanso del partido.
 	*/
 	const PRIMER_TURNO = 0;
-	const ULTIMO_TURNO = 11;
+	const ULTIMO_TURNO = 12;
 	const TURNO_DESCANSO = 6;
 
 	const AMBIENTE_MEDIO = 500;
@@ -359,11 +359,13 @@ class Partido
 	 * 1. Da una bonificacion por el encuentro
 	 * 2. Desactiva las entradas compradas por los usuarios -> DE MOMENTO OLVIDARLO
 	 * 3. Actualizar clasificación
+	 * 4. Mover turno para finalizar encuentro.
 	 */
 	private function finalizaEncuentro()
 	{
 		$this->generaBonificacion();
 		$this->actualizaClasificacion();
+		$this->turno++;
 	}
 
 	/*
@@ -568,11 +570,15 @@ class Partido
 				$this->generar_estado();
 				$this->guardaEstado();
 		        break;
-		    case self::ULTIMO_TURNO:
-		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
-		    	//sino que ofrecemos la bonificacion por asistir/ganar.
+		    case self::ULTIMO_TURNO-1:
+		    	//Turno para generar el estado y crónica finales
 				$this->generar_estado();
 				$this->generaCronicaUltimoTurno();
+				$this->guardaEstado();
+		    	break;
+		    case self::ULTIMO_TURNO:
+		    	//Turno para permitir visualizar el fin de partido durante un tiempo extra
+		    	//y cambiar los datos del siguiente partido
 				$this->finalizaEncuentro();
 				$this->guardaEstado();
 				$this->actualizaSiguientePartido($this->id_local);
