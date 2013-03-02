@@ -169,7 +169,7 @@
 
 <!-- DIVISION DEL PIE DE PÁGINA -->
     <div id="pie-pagina">
-        <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+        Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
     </div>
