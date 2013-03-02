@@ -10,7 +10,10 @@
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
+	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
+	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
