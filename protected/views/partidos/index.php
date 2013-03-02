@@ -38,7 +38,7 @@
 
 			<td>
 				<?php if($partido->id_partido == $proximo_partido) { ?>
-					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> </td>
+					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> 
 				
 				<?php } else { ?>
 					<?php echo $partido->cronica ?>
