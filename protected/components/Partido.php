@@ -326,7 +326,7 @@ class Partido
 		//TODO comentar la diferencia de goles
 
 		
-		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n";
+		$this->cronica = $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n".$this->cronica;
 		//$this->cronica .= "Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
 	}
 
@@ -495,11 +495,13 @@ class Partido
 	*/
 	private function generaCronicaDescanso()
 	{
+		$cronicaDesc="";
 		//Indicar fin del descanso y reanudación del partido
-		$this->cronica .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
-		$this->cronica .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		$cronicaDesc .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
-		$this->cronica .= "\n";
+		$cronicaDesc .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. \n ";
+
+		$this->cronica=$cronicaDesc.$this->cronica;
 	}
 
 	/*
@@ -516,7 +518,7 @@ class Partido
         if ($visitante === null)
             throw new Exception('Partido inexistente.',404);
 
-		//Inicializar variable $cronAux
+         //Inicializar variable $cronAux
 		$cronAux = "Finaliza el encuentro entre los ".$local->nombre." y los ".$visitante->nombre." con un marcador final de ".$this->goles_local." a ".$this->goles_visitante.". ";
 		
         //Generar crónica final
@@ -538,7 +540,9 @@ class Partido
         		$cronAux .= "Por el empate, ambos equipos suman tan sólo un punto más en la clasificación.";
         	}
         }
-		$this->cronica .= $cronAux;
+       
+
+		$this->cronica = $cronAux.$this->cronica;
 	}
 
 	/*
