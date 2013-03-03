@@ -11,7 +11,7 @@
 
 <div id="envoltorio_estadoPartido"> 
 
-	<div id="seccion1"> 
+	 <div id="seccion1"> 
 
 		<h2>Estad&iacute;sticas local visitante</h2> 
 		<table>
@@ -45,7 +45,6 @@
 		<h2> Cr&oacute;nica </h2> <br>
 		<?php echo nl2br($estado->cronica)?>
 	</div> <!--end seccion4 (cronica)-->
-
 
 </div> <!--end envoltorio_estadoPartido -->
 
