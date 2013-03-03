@@ -4,7 +4,17 @@ $(document).ready(function(){
 	$("img.escudos-clasificacion").show(texto);
   });
 
-  	var maxAnimo = parseInt(document.getElementById("bar").getAttribute("data-max"));
+  $("img.imagen1-datos-cabecera").hover(function(){
+    var texto = $("img.imagen1-datos-cabecera").val();
+	$("img.imagen1-datos-cabecera").show(texto);
+  });
+
+  $("img.imagen2-datos-cabecera").hover(function(){
+    var texto = $("img.imagen2-datos-cabecera").val();
+	$("img.imagen2-datos-cabecera").show(texto);
+  });
+
+	var maxAnimo = parseInt(document.getElementById("bar").getAttribute("data-max"));
 	$("td#bar").progressbar({max: maxAnimo});
 	var valorAnimo = parseInt(document.getElementById("bar").getAttribute("data-valor"));
 	$("td#bar").progressbar({value: valorAnimo});

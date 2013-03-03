@@ -5,8 +5,6 @@
 
 <!-- codigo HTML -->
 
-<div class="cabecera-clasificacion"> <h1> Clasificaci&oacute;n</h1> </div>
-
 <div class="clasificacion"> <table cellspacing="0">
 	<tr>
 		<th>Equipo</th>

@@ -50,6 +50,18 @@
 								case 'Blancos':?>				
 								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Blanco"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos">
 									<?php break;
+								case 'Naranjas':?>				
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Naranja"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" alt="Naranjas">
+									<?php break;
+								case 'Amarillos':?>				
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Amarillo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" alt="Amarillos">
+									<?php break;
+								case 'Azules':?>				
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Azul"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-azul.png'; ?>" alt="Azules">
+									<?php break;
+								case 'Rosas':?>				
+								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rosa"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" alt="Rosas">
+									<?php break;
 								} ?>
                         </a>
                     </li>
@@ -60,24 +72,20 @@
     	<?php $personaje = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent); ?>
     	<!--<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>-->
 	    <div id="datos-cabecera">
-		    <div class="elemento-dato-cabecera">
-		    	<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nick">
-		    	<div class="texto-nick-dato-cabecera"> <?php echo $personaje->nick ?> </div>
-		    </div>
-			<div class="elemento-dato-cabecera">
-				<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nivel">
+			<div class="elemento-nivel-dato-cabecera">
+				<img class="imagen1-dato-cabecera" title="Nivel" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nivel">
 				<div class="texto-nivel-dato-cabecera"> <?php echo $personaje->nivel ?> </div>
 			</div> 
-			<div class="elemento-dato-cabecera">
-				<img class="imagen1-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+			<div class="elemento-dinero-dato-cabecera">
+				<img class="imagen1-dato-cabecera" title="Dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
 				<div class="texto-dinero-dato-cabecera"> <?php echo $personaje->recursos->dinero ?> </div>
 			</div>
-			<div class="elemento2-dato-cabecera">
-				<img class="imagen2-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+			<div class="elemento-barras-dato-cabecera">
+				<img class="imagen2-dato-cabecera" title="&Aacute;nimo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
 				<div id="bar" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></div>
 			</div> 
-			<div class="elemento2-dato-cabecera">
-				<img class="imagen2-dato-cabecera" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+			<div class="elemento-barras-dato-cabecera">
+				<img class="imagen2-dato-cabecera" title="Influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
 				<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></div>
 			</div> 
 		</div>
