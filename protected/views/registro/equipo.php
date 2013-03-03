@@ -17,7 +17,7 @@
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-azul.png'; ?>" class="escudos" alt="Azules"></td>
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" class="escudos" alt="Rosas"></td>
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" class="escudos" alt="Naranjas"></td>
-			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" class="escudos" alt="Blancos"></td>
+			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" class="escudos" alt="Amarillos"></td>
 		</tr>		
 	</table>
 	<div><?php echo CHtml::submitButton('Siguiente',array('submit'=>array('/registro/personaje'),'class'=>"button large black")); ?></div>
