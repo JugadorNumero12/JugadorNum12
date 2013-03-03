@@ -145,18 +145,35 @@ class HabilidadesController extends Controller
 		} else {
 			//si no esta desbloqueada y existe
 			//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
-			if(isset($_POST['aceptarBtn'])){
-        		try{        			
+			if(isset($_POST['aceptarBtn']))
+			{
+        		try
+        		{        			
         			$desbloqueada = new Desbloqueadas();
         			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
         			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
         			$desbloqueada->save();
+
+        			//Si es pasiva, debemos aplicar el beneficio de la misma
+        			if ($habilidad->tipo === Habilidades::TIPO_PASIVA)
+        			{		        		  		
+						Yii::import('application.components.Acciones.*');
+
+						//Tomar nombre de habilidad
+		        		$nombreHabilidad = $habilidad->codigo;
+
+		        		//Llamar al singleton correspondiente y ejecutar dicha acción
+		        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+        			}
+
         			$trans->commit(); 
         			$this->redirect(array('habilidades/index'));       			
-        		} catch ( Exception $exc ) {
+        		} 
+        		catch ( Exception $exc ) 
+        		{
 					$trans->rollback();
 					throw $exc;
-				  }
+				}
         		
         	}       
         	//si el usuario cancela, rollback 	
