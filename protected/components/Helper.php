@@ -3,7 +3,7 @@
 class Helper
 {
 	/*Sirve para cambiar más facilmente los factores de partido*/
-	public static $datos_factores = array (	
+	public  static $datos_factores = array (	
 		//Si es local
 		'local' => array (
 			'ambiente'=> 'ambiente',
@@ -157,7 +157,7 @@ class Helper
 		//Comrpuebo si juega de local o de visitante
 		if($partido->equipos_id_equipo_1 == $id_equipo)
 		{
-			$factor=$this->datos_factores['local'][$columna];
+			$factor=self::$datos_factores['local'][$columna];
 			$valor_nuevo=$partido->$factor + $cantidad;
 			//Si fallara tiene que ser por el $factor,comprobar si es asi 
 			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
@@ -165,7 +165,7 @@ class Helper
 
 		}else if($partido->equipos_id_equipo_2 == $id_equipo)
 				{
-					$factor=$this->datos_factores['visitante'][$columna];
+					$factor=self::$datos_factores['visitante'][$columna];
 					$valor_nuevo=$partido->$factor + $cantidad;
 					//Si fallara tiene que ser por el $factor,comprobar si es asi 
 					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
