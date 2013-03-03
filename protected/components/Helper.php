@@ -37,6 +37,13 @@ class Helper
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
 		$usuario=Usuarios::model()->findByPK($id_usuario);
+
+		//Comprobación de seguridad
+		if ($usuario === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_recursos,Helper.php)");
+			
+		}
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
@@ -91,6 +98,13 @@ class Helper
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
 		$usuario=Usuarios::model()->findByPK($id_usuario);
+
+		//Comprobación de seguridad
+		if ($usuario === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (quitar_recursos,Helper.php)");
+			
+		}
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
@@ -133,6 +147,13 @@ class Helper
 		//Cojo el modelo correspondiente a ese id
 		$partido=Partidos::model()->findByPK($id_partido);
 
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_factores,Helper.php)");
+			
+		}
+
 		//Comrpuebo si juega de local o de visitante
 		if($partido->equipos_id_equipo_1 == $id_equipo)
 		{
@@ -170,6 +191,13 @@ class Helper
 	{
 		//Cojo el modelo correspondiente a ese id
 		$partido=Partidos::model()->findByPK($id_partido);
+
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (disminuir_factores,Helper.php)");
+			
+		}
 
 		//Comrpuebo si juega de local o de visitante
 		if($partido->equipos_id_equipo_1 == $id_equipo)
