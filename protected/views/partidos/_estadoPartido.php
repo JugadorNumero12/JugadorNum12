@@ -34,7 +34,22 @@
 	</div> <!--end seccion 1 (el partido)-->
 
 	<div id="seccion2"> 
-		Estamos en el turno: <?php  echo $estado->turno?>
+		<?php switch ($estado->turno)
+			{
+			case 0: ?>
+			  El partido aun no ha empezado. 
+			  <?php break;
+			case 6:?>
+			  Descanso.
+			  <?php break; 
+			case 12:?>
+			  Fin del partido. 
+			  <?php break;
+			default:?>
+				Estamos en el turno <?php echo $estado->turno?> del partido  
+			<?php } ?>
+
+		
 	</div> <!--end seccion2 (turno en el que estamos)-->
 
 	<div id="seccion3"> 
