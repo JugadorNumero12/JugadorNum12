@@ -198,7 +198,7 @@ class AccionesController extends Controller
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}
+			}										   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
