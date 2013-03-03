@@ -48,7 +48,7 @@ class Partido
     {
         $partido = Partidos::model()->findByPk($id_partido);
         if ($partido === null)
-            throw new CHttpException(404,'Partido inexistente.');
+            throw new Exception('Partido inexistente.',404);
         $this->id_partido = $id_partido;
         $this->id_local = $partido->equipos_id_equipo_1;
         $this->id_visitante = $partido->equipos_id_equipo_2;
@@ -76,7 +76,7 @@ class Partido
     {
         $partido = Partidos::model()->findByPk($this->id_partido);
         if ($partido === null)
-            throw new CHttpException(404,'Partido inexistente.');
+            throw new Exception('Partido inexistente.',404);
 
         $partido->ofensivo_local = $this->ofensivo_local;
         $partido->ofensivo_visitante = $this->ofensivo_visitante;
@@ -116,11 +116,11 @@ class Partido
         $partido = Partidos::model()->findByPk($this->id_partido);
         //Comprobación de existencia de datos por seguridad
         if ($local === null)
-            throw new CHttpException(404,'Equipo local inexistente.');
+            throw new Exception('Equipo local inexistente.',404);
         if ($visitante === null)
-            throw new CHttpException(404,'Equipo visitante inexistente.');     
+            throw new Exception('Equipo visitante inexistente.',404);     
         if ($partido === null)
-            throw new CHttpException(404,'Partido inexistente.');
+            throw new Exception('Partido inexistente.',404);
         //Fijar diferencia de niveles.
         //IMPORTANTE: dif. niveles -> Local +, Visitante -
         $this->dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
@@ -175,7 +175,7 @@ class Partido
 		$this->estado = Formula::siguienteEstado($params);
 
 		if($this->estado === null){
-			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
+			throw new Exception('Error en la formula. No se ha calculado bien el siguiente estado. NULL',404);
 		}
 
 		
@@ -343,9 +343,9 @@ class Partido
         $visitante = Equipos::model()->findByPk($this->id_visitante);  
         //Comprobación de existencia de datos por seguridad
         if ($local === null)
-            throw new CHttpException(404,'Equipo local inexistente.');
+            throw new Exception('Equipo local inexistente.',404);
         if ($visitante === null)
-            throw new CHttpException(404,'Partido inexistente.');
+            throw new Exception('Partido inexistente.',404);
 		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
 		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
 		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
@@ -528,8 +528,7 @@ class Partido
 								'bequipo' => $id_equipo
 								);
 		$busqueda->order = 'hora ASC';
-		$busqueda->limit = 1;
-		$partidos=Partidos::model()->findAll($busqueda);
+		$partidos=Partidos::model()->find($busqueda);
 
 		$equipo = Equipos::model()->findByPk($id_equipo);
 		if ($equipo === null)
@@ -545,6 +544,54 @@ class Partido
 		}
 		if (!$equipo->save())
 			throw new Exception("Error al situar proximo partido.", 404);						
+	}
+
+	private function rellenaSiguientePartido($id_equipo)
+	{
+		//Tomar datos del equipo
+		$equipo = Equipos::model()->findByPk($id_equipo);
+
+		//Tomar datos del siguiente partido
+		$sigPartido = $equipo->sigPartido;
+
+		//Si sigPartido === null, entonces no existe siguiente partido. Se corresponde, por
+		//ejemplo, al estado tras el último partido de temporada.
+		if ($sigPartido !== null)
+		{
+			//Comprobamos si el equipo será local o visitante y asignamos
+			//los datos iniciales de dicho encuentro.
+			if ($sigPartido->equipos_id_equipo_1 === $id_equipo)
+			{
+				//Caso local
+				$sigPartido->nivel_local = $equipo->nivel_equipo;
+				$sigPartido->ofensivo_local = $equipo->factor_ofensivo;
+				$sigPartido->defensivo_local = $equipo->factor_defensivo;
+				$sigPartido->aforo_local = $equipo->aforo_base;
+			}
+			else
+			{
+				if ($sigPartido->equipos_id_equipo_2 === $id_equipo)
+				{
+					//Caso visitante
+					$sigPartido->nivel_visitante = $equipo->nivel_equipo;
+					$sigPartido->ofensivo_visitante = $equipo->factor_ofensivo;
+					$sigPartido->defensivo_visitante = $equipo->factor_defensivo;
+					$sigPartido->aforo_visitante = $equipo->aforo_base;
+				}
+				else
+				{
+					throw new Exception(404, "No se juega como local ni visitante en ese partido. (rellenaSiguientePartido,Partido.php)");
+					
+				}
+			}
+
+			//Guardar datos del partido
+			if (!$sigPartido->save())
+			{
+				throw new Exception(404, "No se ha podido guardar el estado del partido. (rellenaSiguientePartido,Partido.php)");
+				
+			}
+		}
 	}
 
 	public function jugarse()
@@ -563,7 +610,7 @@ class Partido
 		    	$this->guardaEstado();
 		    	break;
 		    case (($this->turno > self::PRIMER_TURNO) 
-		    	&& ($this->turno < self::ULTIMO_TURNO) 
+		    	&& ($this->turno < self::ULTIMO_TURNO-1) 
 		    	&& ($this->turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
@@ -583,6 +630,8 @@ class Partido
 				$this->guardaEstado();
 				$this->actualizaSiguientePartido($this->id_local);
 				$this->actualizaSiguientePartido($this->id_visitante);
+				$this->rellenaSiguientePartido($this->id_local);
+				$this->rellenaSiguientePartido($this->id_visitante);
 		    	break;
 		    default:
 		       	// No debería llegar aquí
