@@ -129,13 +129,21 @@ INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_us
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
  -- rojos
- (1, 1, 7, 2, 1, 0, 4),
+ (1, 1, 12, 4, 0, 0, 4),
  -- verdes
- (2, 3, 2, 0, 2, 1, 2),
+ (2, 3, 9, 0, 2, 1, 2),
  -- negros
- (3, 2, 4, 1, 1, 1, -1),
+ (3, 2, 10, 1, 1, 1, -1),
  -- blancos
- (4, 4, 2, 0, 2, 1, -2);
+ (4, 4, 7, 0, 2, 1, -2),
+ -- azules
+ (5, 5, 5, 1, 2, 0, 2),
+ -- rosas
+ (6, 6, 4, 1, 1, 1, 1),
+ -- naranjas
+ (7, 7, 2, 0, 2, 3, -3),
+ -- amarillos
+ (8, 8, 1, 0, 1, 4, -5);
 
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
@@ -162,10 +170,14 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (7, 'Rojos',   1, 3000, 400, 12, 7, 6),
- (7, 'Verdes',  1, 3000, 500, 10, 7, 6),
- (8, 'Negros',  1, 3600, 400, 10, 7, 7),
- (8, 'Blancos', 1, 4000, 400, 9,  6, 8);
+ (7, 'Rojos',    1, 3000, 400, 12, 7, 6),
+ (7, 'Verdes',   1, 3000, 500, 10, 7, 6),
+ (8, 'Negros',   1, 3600, 400, 10, 7, 7),
+ (8, 'Blancos',  1, 4000, 400, 9,  6, 8),
+ (9, 'Azules',   1, 3500, 300, 11, 6, 7),
+ (9, 'Rosas',    1, 4000, 450, 10, 5, 5),
+ (10,'Naranjas', 1, 3600, 500, 12, 7, 7),
+ (10,'Amarillos',1, 3000, 350, 10, 6, 6);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
