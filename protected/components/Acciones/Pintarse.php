@@ -54,7 +54,7 @@ class Pintarse extends AccionGrupSingleton
       $participantes = $accGrup->participaciones;
       foreach ($participantes as $participacion)
       {
-        $infAportadas = $participacion->influencas_aportadas;
+        $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
         $ret = min($ret,$helper->aumentar_recursos($usuario,"animo",Efectos::$datos_acciones['Pintarse']['animo']));
         $ret = min($ret,$helper->aumentar_recursos($usuario,"influencias",$infAportadas));

@@ -198,7 +198,7 @@ class AccionesController extends Controller
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}
+			}										   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
@@ -260,7 +260,7 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
