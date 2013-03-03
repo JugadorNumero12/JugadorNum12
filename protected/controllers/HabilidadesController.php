@@ -155,7 +155,7 @@ class HabilidadesController extends Controller
         			$desbloqueada->save();
 
         			//Si es pasiva, debemos aplicar el beneficio de la misma
-        			if ($habilidad->tipo === Habilidades::TIPO_PASIVA)
+        			if ($habilidad->tipo == Habilidades::TIPO_PASIVA)
         			{		        		  		
 						Yii::import('application.components.Acciones.*');
 
@@ -163,7 +163,7 @@ class HabilidadesController extends Controller
 		        		$nombreHabilidad = $habilidad->codigo;
 
 		        		//Llamar al singleton correspondiente y ejecutar dicha acción
-		        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+		        		$nombreHabilidad::getInstance()->ejecutar(Yii::app()->user->usIdent);
         			}
 
         			$trans->commit(); 

@@ -93,7 +93,7 @@ class Efectos
 		// PASIVAS
 		// -------------------------------------------------
 			'Ascender' => array (
-			'dinero_gen' => 0.12
+			'dinero_gen' => 12
 		), 
 	);
 }
