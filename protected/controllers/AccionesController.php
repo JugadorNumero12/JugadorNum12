@@ -459,15 +459,8 @@ class AccionesController extends Controller
 			if($nuevo_participante)
 				$accion['jugadores_acc'] += 1;
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
-			{
-				$accion['completada'] = 1;
-				Yii::import('application.components.Acciones.*');
-				$nombreHabilidad = $habilidad->codigo;
-        		//Llamar al singleton correspondiente y ejecutar dicha acción
-        		$nombreHabilidad::getInstance()->ejecutar($id_accion);
-			}
-					
-			$accion->save();
+				$accion['completada'] = 1;					
+			
 			
 			//Actualizo la participación
 			if($nuevo_participante){
@@ -487,6 +480,19 @@ class AccionesController extends Controller
 					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
 			}
+			//Si la accion esta completada con esa aportacion, ejecutas la accion sino es asi guardas los cambios en la accion
+			if($accion['completada'] == 1)
+			{
+				$accion->save();
+				Yii::import('application.components.Acciones.*');
+				$nombreHabilidad = $habilidad->codigo;
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_accion);
+
+			}else
+				{
+					$accion->save();
+				}
 
 			$transaccion->commit();
 			

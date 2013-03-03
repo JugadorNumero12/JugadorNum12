@@ -52,7 +52,7 @@ class Pintarse extends AccionGrupSingleton
       //3.- Devolver influencias y dar animo de la accion
 
       $participantes = $accGrup->participaciones;
-      foreach ($participaciones as $participacion)
+      foreach ($participantes as $participacion)
       {
         $infAportadas = $participacion->influencas_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
