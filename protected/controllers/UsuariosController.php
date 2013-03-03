@@ -80,11 +80,14 @@ class UsuariosController extends Controller
                 $accionesPar[] = $infoDesbloqueada[0];
             }
         }
+        //Saco los recursos disponibles del usuario
+        $recursos = Recursos::model()->findByPk($id);
 
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario, 
                         'accionesPas'=>$accionesPas,
-                        'accionesPar'=>$accionesPar) );
+                        'accionesPar'=>$accionesPar,
+                        'recursos'=>$recursos) );
     }
 
     /*

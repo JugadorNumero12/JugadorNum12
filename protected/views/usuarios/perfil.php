@@ -62,7 +62,6 @@
 			</div>
 
 			<div class="perfil-grupo-arriba-derecha">
-				<?php $recursos = Recursos::model()->findByPk($modeloU->id_usuario) ?>
 				<table >
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
