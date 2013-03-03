@@ -16,7 +16,9 @@ class RegistroController extends Controller
 	 */
 	public function actionIndex()
 	{
-		/* ALEX */
+
+		$this->redirect(array('registro/equipo'));
+		/* ALEX 
 		$animadora_status=false;
 		$empresario_status=false;
 		$ultra_status=false;
@@ -80,7 +82,7 @@ class RegistroController extends Controller
 		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos , 
 			'animadora_status'=>$animadora_status , 
 			'empresario_status'=>$empresario_status , 
-			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );
+			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );*/
 	}
 	
 	public function crearRecursos($id_usuario, $personaje){
@@ -128,6 +130,12 @@ class RegistroController extends Controller
 		$rec->save();
 	}
 
+	public function actionEquipo(){
+		$this->render('equipo');
+	}
+	public function actionPersonaje(){
+		$this->render('personaje');
+	}
 	/**
 	 * @return array de filtros para actions
 	 */
