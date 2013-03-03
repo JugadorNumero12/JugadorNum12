@@ -274,7 +274,9 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  -- Blancos vs. Rojos
  -- Verdes vs. Negros
  (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
- (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9);
+ (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
+ -- Partido para comprobar si los datos son reintroducidos correctamente
+ (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
