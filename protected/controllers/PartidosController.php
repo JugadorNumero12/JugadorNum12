@@ -43,16 +43,12 @@ class PartidosController extends Controller
 		$id_equipo_usuario = Yii::app()->user->usAfic;
 		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
 		$proximoPartido = $equipoUsuario->sigPartido;
-		$grupalesLocal=AccionesGrupales::model()->find('equipos_id_equipo = :equipo AND completada=1',
-													array(':equipo'=>$proximoPartido->equipos_id_equipo_1));
-		$grupalesVisitante=AccionesGrupales::model()->find('equipos_id_equipo = :equipo AND completada=1',
-													array(':equipo'=>$proximoPartido->equipos_id_equipo_2));
 		// Obtener la lista de partidos
 		$listaPartidos = Partidos::model()->findAll();
 
 		//pasar los datos a la vista y renderizarla
 		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 
-			'proximo_partido'=>$proximoPartido,'grupalesL'=>$grupalesLocal,'grupalesV'=>$grupalesVisitante);
+			'proximo_partido'=>$proximoPartido);
 		$this->render('index', $datosVista);
 	}
 

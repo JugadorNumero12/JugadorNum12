@@ -40,8 +40,7 @@
 				<?php if($partido->id_partido == $proximo_partido->id_partido && $proximo_partido->hora >= time()) { ?>
 					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> 
 				<?php } else if ($partido->id_partido == $proximo_partido->id_partido && $proximo_partido->hora < time()) {?>
-					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','modeloP'=>$proximo_partido,'modeloL'=>$proximo_partido->local
-							,'modeloV'=>$proximo_partido->visitante,'modeloGL'=>$grupalesL,'modeloGV'=>$grupalesV),'class'=>"button small black")) ?>
+					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximo_partido->id_partido),'class'=>"button small black")) ?>
 				<?php } else { ?>
 					<?php echo $partido->cronica ?>
 
