@@ -40,15 +40,18 @@ class PartidosController extends Controller
 	public function actionIndex()
 	{
 		// Obtener el id del proximo partido del usuario
+		Yii::import('application.components.Partido');		
 		$id_equipo_usuario = Yii::app()->user->usAfic;
 		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
 		$proximoPartido = $equipoUsuario->sigPartido;
+		$primer_turno=Partido::PRIMER_TURNO;
+		$ultimo_turno=Partido::ULTIMO_TURNO;
 		// Obtener la lista de partidos
 		$listaPartidos = Partidos::model()->findAll();
 
 		//pasar los datos a la vista y renderizarla
 		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 
-			'proximo_partido'=>$proximoPartido);
+			'proximo_partido'=>$proximoPartido,'primer_turno'=>$primer_turno,'ultimo_turno'=>$ultimo_turno);
 		$this->render('index', $datosVista);
 	}
 
