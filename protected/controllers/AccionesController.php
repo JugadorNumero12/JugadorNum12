@@ -260,7 +260,17 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+
+		//Redireccionar tras la ejecución
+		if ($habilidad->tipo == Habilidades::TIPO_INDIVIDUAL)
+		{			
+        		$this->redirect(array('acciones/index'));
+		}
+		else
+		{
+			//COMPLETAR
+		}
+		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
