@@ -38,11 +38,8 @@ class Partido
 	private $moral_visitante;
 
 	/**
-     * Constructora: Inicializar 
-     *  id_partido,
-     *  local, visitante, turno cronica
-     *  ambiente, dif_niveles, aforo_local, aforo_visitante
-     * a partir del id_partido de la tabla de partidos
+     * Constructora: Inicializar todos los datos de la clase
+     * en función de la fila correspondiente de la tabla Partidos.
      */
     function Partido($id_partido)
     {
@@ -493,6 +490,9 @@ class Partido
 
 	}
 	
+	/*
+	* Esta función genera una breve crónica para el descanso del encuentro.
+	*/
 	private function generaCronicaDescanso()
 	{
 		//Indicar fin del descanso y reanudación del partido
@@ -502,23 +502,79 @@ class Partido
 		$this->cronica .= "\n";
 	}
 
+	/*
+	* Genera una crónica para el último turno de partido (fin de partido)
+	*/
 	private function generaCronicaUltimoTurno()
 	{
-		//Hablar sobre la diferencia de goles
-		$this->cronica .= "cronica ultimo turno";
+		//Tomar fijos datos locales y visitantes
+		$local = Equipos::model()->findByPk($this->id_local);
+        $visitante = Equipos::model()->findByPk($this->id_visitante);  
+        //Comprobación de existencia de datos por seguridad
+        if ($local === null)
+            throw new Exception('Equipo local inexistente.',404);
+        if ($visitante === null)
+            throw new Exception('Partido inexistente.',404);
+
+		//Inicializar variable $cronAux
+		$cronAux = "Finaliza el encuentro entre los ".$local->nombre." y los ".$visitante->nombre." con un marcador final de ".$this->goles_local." a ".$this->goles_visitante.". ";
+		
+        //Generar crónica final
+        if ($this->goles_local > $this->goles_visitante)
+        {
+        	//Ganador local
+        	$cronAux .= "Clara victoria para los locales, que ganan puntos adicionales en la clasificación.";
+        }
+        else 
+        {
+        	if ($this->goles_local < $this->goles_visitante)
+        	{
+        		//Ganador visitante
+        		$cronAux .= "Clara victoria para los visitantes, que ganan puntos adicionales en la clasificación.";
+        	}
+        	else
+        	{
+        		//Empate
+        		$cronAux .= "Por el empate, ambos equipos suman tan sólo un punto más en la clasificación.";
+        	}
+        }
+		$this->cronica .= $cronAux;
 	}
 
+	/*
+	* Genera el estado tras el descanso y aumenta el turno para continuar el encuentro
+	*/
 	private function generaEstadoDescanso()
 	{
-		//Generamos estado tras el descanso
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		//Generamos estado tras el descanso		
+        $params = array(
+ 			'difNiv'    => (double) $this->dif_niveles, 'aforoMax'  => (double) 0,
+ 			'aforoLoc'  => (double) $this->aforo_local, 'aforoVis'  => (double) $this->aforo_visitante,
+			'moralLoc'  => (double) $this->moral_local, 'moralVis'  => (double) $this->moral_visitante,
+			'ofensLoc'  => (double) $this->ofensivo_local, 'ofensVis'  => (double) $this->ofensivo_visitante,
+			'defensLoc' => (double) $this->defensivo_local, 'defensVis' => (double) $this->defensivo_visitante,
+			'estado'    => null
+		);
+
+		$this->estado = Formula::siguienteEstado($params);
+
+		//Aumentamos el turno
 		$this->turno++;
 	}
 
+	/*
+	* Esta función calcula el siguiente partido de un equipo dado y lo asigna a dicho
+	* equipo. En caso de que no haya más partidos, colocará un NULL en la fila correspondiente
+	* de la tabla Equipos.
+	*/
 	private function actualizaSiguientePartido($id_equipo)
 	{
+		//Tomar hora actual
 		$tiempo=time();
+
 		$primerTurno=Partido::PRIMER_TURNO;
+
+		//Generar criterio de búsqueda para conocer el siguiente encuentro
 		$busqueda=new CDbCriteria;
 		$busqueda->addCondition(':bTiempo <= hora');
 		$busqueda->addCondition('turno = :bPrimerTurno');
@@ -528,6 +584,8 @@ class Partido
 								'bequipo' => $id_equipo
 								);
 		$busqueda->order = 'hora ASC';
+
+		//Buscamos el siguiente partido
 		$partidos=Partidos::model()->find($busqueda);
 
 		$equipo = Equipos::model()->findByPk($id_equipo);
@@ -536,16 +594,25 @@ class Partido
 			
 		if ($partidos === null)
 		{
+			//Si no hay más partidos que jugar esta temporada, el siguiente será NULL
 			$equipo->partidos_id_partido = null;
 		}
 		else
 		{
+			//Asignamos el siguiente partido
 			$equipo->partidos_id_partido = $partidos->id_partido;
 		}
+
+		//Guardamos los datos
 		if (!$equipo->save())
 			throw new Exception("Error al situar proximo partido.", 404);						
 	}
 
+	/*
+	* Esta función rellena los datos (aforo base, nivel de equipo, etc.) del siguiente encuentro
+	* de un equipo a partir de los datos almacenados en la fila correspondiente de la tabla
+	* Equipos.
+	*/
 	private function rellenaSiguientePartido($id_equipo)
 	{
 		//Tomar datos del equipo
@@ -594,6 +661,9 @@ class Partido
 		}
 	}
 
+	/*
+	* Esta función ejecuta un turno completo del partido cargado en la constructora
+	*/
 	public function jugarse()
 	{
 		switch ($this->turno) 
