@@ -459,7 +459,14 @@ class AccionesController extends Controller
 			if($nuevo_participante)
 				$accion['jugadores_acc'] += 1;
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
-					$accion['completada'] = 1;
+			{
+				$accion['completada'] = 1;
+				Yii::import('application.components.Acciones.*');
+				$nombreHabilidad = $habilidad->codigo;
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_accion);
+			}
+					
 			$accion->save();
 			
 			//Actualizo la participación
