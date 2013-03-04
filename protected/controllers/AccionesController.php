@@ -259,7 +259,8 @@ class AccionesController extends Controller
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
 		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
-			throw new CHttpException( 403, 'La acción no es de tu equipo');
+			Yii::app()->user->setFlash('otro_equipo', 'La acción no es de tu equipo.');
+			$this-> redirect(array('acciones/index'));
 		}
 
 		// Saco el propietario de la acción
