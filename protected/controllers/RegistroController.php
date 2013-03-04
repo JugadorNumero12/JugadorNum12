@@ -40,7 +40,7 @@ class RegistroController extends Controller
 			}
 
 			if (isset($_POST['Usuarios']) ) {
-				$seleccionado = $_POST['ocup'];
+				//$seleccionado = $_POST['ocup'];
 				
 				$modelo->attributes=$_POST['Usuarios'];
 				//modifico modelo con los datos del formulario
@@ -50,7 +50,18 @@ class RegistroController extends Controller
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 				$modelo->setAttributes(array('nivel'=>0));
 
-				if(isset($_POST['pers'])){
+				$modelo->setAttributes(array('personaje'=>NULL));
+				$seleccionado = 1;
+				$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
+				
+
+				if($modelo->save()){
+					$transaction->commit();
+					$this->redirect(array('registro/equipo','id_usuario'=>$modelo->id_usuario));
+				}else $error = true;
+				
+
+				/*if(isset($_POST['pers'])){
 					$error = false;
 					$selected_radio = $_POST['pers'];
 					if ($selected_radio === 'animadora') {
@@ -72,16 +83,54 @@ class RegistroController extends Controller
 						$transaction->commit();
 						$this->redirect(array('site/login'));
 					} else $error = true;
-				}else $error = true;
-			}
+				}else $error = true;*/
+			} else $error = true;
 		}catch(Exception $e){
 			$transaction->rollback();
+			$error = true;
 		}
 
 		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos , 
 			'animadora_status'=>$animadora_status , 
 			'empresario_status'=>$empresario_status , 
 			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );
+	}
+
+	public function actionEquipo($id_usuario){
+		$modelo = Usuarios::model()->findByPk($id_usuario);
+		$modelo->scenario='insert';
+		$error = false;
+		$transaction = Yii::app()->db->beginTransaction();
+		try {
+			$seleccionado = 2;//$_POST['ocup'];
+			$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
+			if($modelo->save()){
+				$transaction->commit();
+				$this->redirect(array('registro/personaje','id_usuario'=>$modelo->id_usuario));
+			}else $error = true;
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+
+		$this->render('equipo',array('error'=>$error));
+	}
+	public function actionPersonaje($id_usuario){
+		$modelo = Usuarios::model()->findByPk($id_usuario);
+		$modelo->scenario='insert';
+		$error = false;
+		$transaction = Yii::app()->db->beginTransaction();
+		try {
+			$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_MOVEDORA));
+			if($modelo->save()){
+				//$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
+				$transaction->commit();
+				$this->redirect(array('site/login'));
+			}else $error = true;
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+
+		$this->render('personaje',array('error'=>$error));
 	}
 	
 	public function crearRecursos($id_usuario, $personaje){
@@ -129,12 +178,7 @@ class RegistroController extends Controller
 		$rec->save();
 	}
 
-	public function actionEquipo(){
-		$this->render('equipo');
-	}
-	public function actionPersonaje(){
-		$this->render('personaje');
-	}
+	
 	/**
 	 * @return array de filtros para actions
 	 */

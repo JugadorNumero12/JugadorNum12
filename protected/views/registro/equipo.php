@@ -18,7 +18,12 @@
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" class="escudos" alt="Rosas"></td>
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" class="escudos" alt="Naranjas"></td>
 			<td><img title="Lorem ipsum dolor sit amet, consectetur adipiscing elit." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" class="escudos" alt="Amarillos"></td>
-		</tr>		
+		</tr>	
+
+		<tr><?php if($error): ?>
+	   	<td>¡Error!</td>
+	  	<?php endif; ?></tr>	
+
 	</table>
-	<div><?php echo CHtml::submitButton('Siguiente',array('submit'=>array('/registro/personaje'),'class'=>"button large black")); ?></div>
+	<div><?php echo CHtml::submitButton('Siguiente',array(/*'submit'=>array('/registro/personaje'),*/'class'=>"button large black")); ?></div>
 </div>
