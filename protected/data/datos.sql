@@ -317,25 +317,25 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
 TRUNCATE `usuarios`;
 INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`) VALUES
  -- xaby: empresario
- (1, 'xaby', 'xaby', 'xaby@xaby.com', 2, 5),
+ (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 5),
  -- marina: movedora
- (2, 'marina', 'marina', 'marina@marina.com', 1, 5),
+ (2, 'marina', '$2a$12$1HGd6WdDNpyG8wHu0vqPr.R7VhFJe7DutNgl06FziDCLV3OSYQvkC', 'marina@marina.com', 1, 5),
  -- arturo: empresario
- (1, 'arturo', 'arturo', 'arturo@arturo.com', 2, 5),
+ (1, 'arturo', '$2a$12$OQPWrk0fNriOXAqM4QW2seZ4.ITU7eTXfPaWR7.ehJViRwfG5L9lu', 'arturo@arturo.com', 2, 5),
  -- dani: ultra
- (1, 'dani', 'dani', 'dani@dani.com', 0, 5),
+ (1, 'dani', '$2a$12$Xqfm1L28HICeWypJtEEaFOcnJayZZXnp8s.tHAGEZzUaxz5.DvHoW', 'dani@dani.com', 0, 5),
  -- pedro: empresario
- (2, 'pedro', 'pedro', 'pedro@pedro.com', 2, 5),
+ (2, 'pedro', '$2a$12$0Z6Q7FdQUMKhz1gCuah4jegHD/mV87SE1TPQdb9O4ouy7Nh/YhF8y', 'pedro@pedro.com', 2, 5),
  -- manu: movedora
- (3, 'manu', 'manu', 'manu@manu.com', 1, 5),
+ (3, 'manu', '$2a$12$WDe3nJqlmi5.Jbvuzroo4.oW1oufdiQNb9cRW.lEXOA5LBmqO/uQ.', 'manu@manu.com', 1, 5),
  -- rober: ultra
- (2, 'rober', 'rober', 'rober@rober.com', 0, 5),
+ (2, 'rober', '$2a$12$EI56YEwNyV395M5rQsuk..HNYXFrOKFkwgzwkwvNoCgkBMe5Z1Nl.', 'rober@rober.com', 0, 5),
  -- marcos: ultra
- (1, 'marcos', 'marcos', 'marcos@marcos.com', 0, 5),
+ (1, 'marcos', '$2a$12$Pqca.CQrIopqmBV/9ON9E.RVOjv33YUX3D.1O8K3rhEa79Q.gDEV6', 'marcos@marcos.com', 0, 5),
  -- alex: movedora
- (2, 'alex', 'alex', 'alex@alex.com', 1, 5),
+ (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 5),
  -- samu: ultra
- (3, 'samu', 'samu', 'samu@samu.com', 0, 5);
+ (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 5);
 
  SET FOREIGN_KEY_CHECKS = 1; 
 
