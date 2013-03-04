@@ -104,7 +104,7 @@ class UsuariosController extends Controller
 
         if ($modeloUsuario == null)
         {
-            echo "El usuario no existe.";
+            throw new CHttpException( 404, 'El usuario no existe.');
         }
         else
         {
