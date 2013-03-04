@@ -5,7 +5,7 @@
  */
 class RegistroController extends Controller
 {
-	public $layout='//layouts/registro';
+	public $layout='//layouts/login';
 	/**
 	 * Muestra el formulario para registrarse en la pagina
 	 * Si hay datos en $_POST procesa el formulario 
@@ -17,8 +17,7 @@ class RegistroController extends Controller
 	public function actionIndex()
 	{
 
-		$this->redirect(array('registro/equipo'));
-		/* ALEX 
+		//$this->redirect(array('registro/equipo')); 
 		$animadora_status=false;
 		$empresario_status=false;
 		$ultra_status=false;
@@ -82,7 +81,7 @@ class RegistroController extends Controller
 		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos , 
 			'animadora_status'=>$animadora_status , 
 			'empresario_status'=>$empresario_status , 
-			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );*/
+			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );
 	}
 	
 	public function crearRecursos($id_usuario, $personaje){
