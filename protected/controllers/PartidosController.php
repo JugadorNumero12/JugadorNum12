@@ -165,14 +165,16 @@ class PartidosController extends Controller
 		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
 			
 			/* TODO */
-			echo "No Puedes asistir a un partido entre otros equipos";
+			Yii::app()->user->setFlash('propio_equipo', 'No puedes asistir a un partido que no sea de tu propio equipo.');
+			$this-> redirect(array('partidos/index'));
 		
 		} 
 		// un usuario solo puede asistir al próximo partido de su equipo
 		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
 			
 			/* TODO */
-			echo "Ese no es el proximo partido de tu equipo";
+			Yii::app()->user->setFlash('sig_partido', 'Ese no es el proximo partido de tu equipo.');
+			$this-> redirect(array('partidos/index'));
 
 		} 
 		// Intentamos asistir a un partido valido

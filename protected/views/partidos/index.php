@@ -10,6 +10,12 @@
 
 	<h1> Calendario de partidos </h1>
 
+	<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+	?>
+
 	<table border=0>
 		<tr>
 			<th>Equipo Local</th>
