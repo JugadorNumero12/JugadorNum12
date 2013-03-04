@@ -26,7 +26,7 @@ else{
 		<th>Ambiente</th>
 	</tr> 
 	<tr>
-		<td align="center"><?php echo $modeloP->hora ?></td>
+		<td align="center"><?php echo Yii::app()->format->formatDatetime($modeloP->hora) ?></td>
 		<td align="center"><?php echo $modeloP->ambiente ?></td>
 	</tr>
 	<tr></tr>
