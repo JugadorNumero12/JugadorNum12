@@ -69,6 +69,10 @@ class EquiposController extends Controller
 	 */
 	public function actionVer($id_equipo)
 	{
+		//Generar recursos y finalizar individuales/grupales
+		AccionesIndividuales::model()->finalizaIndividuales(Yii::app()->user->usIdent);
+
+
 		$uid = Yii::app()->user->usIdent; // ID de usuario
 		$eid = Yii::app()->user->usAfic; // ID de la afición del usuario
 

@@ -584,8 +584,8 @@ class Partido
 		$busqueda->addCondition('turno = :bPrimerTurno');
 		$busqueda->addCondition('((equipos_id_equipo_1 = :bequipo) OR (equipos_id_equipo_2 = :bequipo))');
 		$busqueda->params = array(':bTiempo' => $tiempo,
-								'bPrimerTurno' => $primerTurno,
-								'bequipo' => $id_equipo
+								':bPrimerTurno' => $primerTurno,
+								':bequipo' => $id_equipo
 								);
 		$busqueda->order = 'hora ASC';
 
