@@ -50,8 +50,6 @@ class RegistroController extends Controller
 				$modelo->setAttributes(array('nivel'=>0));
 
 				
-				$seleccionado = 1;
-				$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
 				
 
 				if($modelo->save()){

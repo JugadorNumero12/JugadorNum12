@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `equipos_id_equipo` int(10) unsigned NOT NULL,
+  `equipos_id_equipo` int(10) unsigned,
   `nick` varchar(20) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
