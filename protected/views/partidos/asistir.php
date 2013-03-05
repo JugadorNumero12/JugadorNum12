@@ -19,33 +19,6 @@
 ?>
 
 <div id="envoltorio-asistir">
-	<script>
-		var myVar = setInterval(function(){actPartido()},3000);
-
-		function actPartido()
-		{
-			if (window.XMLHttpRequest)
-			{
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp = new XMLHttpRequest();
-			}
-			else
-			{
-				// code for IE6, IE5
-				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			xmlhttp.onreadystatechange = function()
-			{
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-				{
-					document.getElementById("renderizado-parcial").innerHTML = xmlhttp.responseText;
-				}
-			}
-			xmlhttp.open("GET","http://localhost<?php echo Yii::app()->createUrl('partidos/actpartido',array('id_partido' => $estado->id_partido)); ?>",true);
-			xmlhttp.send();
-		}
-	</script>
-
 	
 	<div id="renderizado-parcial">
 		<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
