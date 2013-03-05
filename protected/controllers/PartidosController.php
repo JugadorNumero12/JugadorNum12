@@ -178,6 +178,11 @@ class PartidosController extends Controller
 		{
 			throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
 		}
+		//Comprobación de datos
+		if ($partido->turno < 1 ||  $partido->turno > 12)
+		{
+			throw new Exception("El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
 		if (($partido->equipos_id_equipo_1 != $id_equipo_usuario) && ($partido->equipos_id_equipo_2 != $id_equipo_usuario)) 
