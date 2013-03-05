@@ -181,11 +181,19 @@ class PartidosController extends Controller
 			} 
 			// Creamos el renderPartial del estado del partido
 			else 
-			{			
+			{	
+
+				//fixme no se si esto va aqui
+				//Calculo del porcertage para mostrar en el grafico cirular
+				$porcentage;
+				$porcentage = ((($partido->estado + 10) * 100) / 20);
+
+
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
-								 'estado' => $partido);
+								 'estado' => $partido,
+								 'porcentage' => $porcentage);
 				$this->render('asistir', $datosVista);
 			}
 		}
@@ -231,7 +239,8 @@ class PartidosController extends Controller
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
-								 'estado' => $partido);
+								 'estado' => $partido,
+								 'porcentage' => $porcentage);
 				$this->renderPartial('_estadoPartido',$datosVista,false,true);
 			}
 		}

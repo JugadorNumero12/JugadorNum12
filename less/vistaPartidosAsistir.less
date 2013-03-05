@@ -13,24 +13,75 @@ div#envoltorio-asistir{ //Envoltorio Principal
 			width: 100%;
 			height: 40em;
 
-			div#seccion1{
-				height: 25em;
+			div#seccion1{ //Estadisticas y grafico
+				height: 21em;
 				overflow: auto;
+
+				div#estadisticas{
+					width: 520px;
+					float: left;
+				}
+
+				div.chart{
+					width: 240px;
+					float: right;
+					margin:0 auto;
+
+					.easyPieChart {
+					    position: relative;
+					    text-align: center;
+					}
+
+					.easyPieChart canvas {
+					    position: absolute;
+					    top: 0;
+					    left: 0;
+					}
+
+					.percentage,
+					.label {
+					    text-align: center;
+					    color: #333;
+					    font-weight: 100;
+					    font-size: 1.2em;
+					    margin-bottom: 0.3em;
+					}
+
+				}
+
 			}//end seccion1
 
-			div#seccion2{
+			div#seccion2{ //Turno
 				height: 2em;
 				overflow: auto;
 				background-color: @GRIS;
 			}//end seccion2
 
-			div#seccion3{
-				height: 3em;
+			div#seccion3{ //Marcador
+				width: 27em;
+				height: 5em;
 				overflow: auto;
+				margin: 0 auto;
+
+				.label-marcador{
+					float: left;
+
+					p{
+						font-size: 1.5em;
+						padding-top: 0.5em;
+					}
+
+				}
+
+				.escudos-marcador{
+					padding-top: 0.5em;
+					float:left;
+				}
+
 			}//end seccion 3
 
-			div#seccion4{
-				height: 10em;
+			div#seccion4{ //Cronica
+				height: 13em;
 				overflow: auto;
 				text-align: left;
 				background-color: @GRIS;
@@ -48,6 +99,7 @@ div#envoltorio-asistir{ //Envoltorio Principal
 
 
 }//end envoltorio-asistir
+
 
 
 

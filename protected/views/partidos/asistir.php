@@ -46,10 +46,12 @@
 		}
 	</script>
 
+	
 	<div id="renderizado-parcial">
 		<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
 								 'nombre_visitante' => $nombre_visitante,
-								 'estado' => $estado)); ?>
+								 'estado' => $estado,
+								 'porcentage' => $porcentage)); ?>
 	</div> <!--end renderizado parcial-->
 
 
