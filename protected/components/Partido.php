@@ -666,6 +666,19 @@ class Partido
 	}
 
 	/*
+	* Esta función elimina las acciones grupales finalizadas asociadas al equipo.
+	*/
+	public function eliminaGrupales($id_equipo)
+	{
+		$grupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=> $id_equipo,'completada'=> 1));	
+		foreach ($grupales as $gp)
+		{		
+			Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
+			AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
+		}
+	}
+
+	/*
 	* Esta función ejecuta un turno completo del partido cargado en la constructora
 	*/
 	public function jugarse()
@@ -706,6 +719,8 @@ class Partido
 				$this->actualizaSiguientePartido($this->id_visitante);
 				$this->rellenaSiguientePartido($this->id_local);
 				$this->rellenaSiguientePartido($this->id_visitante);
+				$this->eliminaGrupales($this->id_local);
+				$this->eliminaGrupales($this->id_visitante);
 		    	break;
 		    default:
 		       	// No debería llegar aquí
