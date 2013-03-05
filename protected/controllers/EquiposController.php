@@ -71,7 +71,8 @@ class EquiposController extends Controller
 	{
 		//Generar recursos y finalizar individuales/grupales
 		AccionesIndividuales::model()->finalizaIndividuales(Yii::app()->user->usIdent);
-
+		AccionesGrupales::model()->finalizaGrupales();
+		Recursos::model()->actualizaRecursos(Yii::app()->user->usIdent);
 
 		$uid = Yii::app()->user->usIdent; // ID de usuario
 		$eid = Yii::app()->user->usAfic; // ID de la afición del usuario
