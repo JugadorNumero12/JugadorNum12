@@ -42,6 +42,10 @@ class AccionesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Sacar una lista de las acciones desbloqueadas de un usuario
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
@@ -91,6 +95,10 @@ class AccionesController extends Controller
 	 */
 	public function actionUsar($id_accion)
 	{		
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
 		Yii::import('application.components.Acciones.*');
@@ -288,6 +296,10 @@ class AccionesController extends Controller
 	 */
 	public function actionVer($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Cojo la acción de la tabla acciones_grupales
 		$accionGrupal = AccionesGrupales::model()
 			->with('habilidades')
@@ -345,6 +357,10 @@ class AccionesController extends Controller
 	 */
 	public function actionParticipar($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* PEDRO pero cualquier duda preguntar a MARCOS*/
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
@@ -530,6 +546,10 @@ class AccionesController extends Controller
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* MARCOS */
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
