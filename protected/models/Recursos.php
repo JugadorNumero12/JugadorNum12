@@ -142,14 +142,14 @@ class Recursos extends CActiveRecord
 				$influencias_nuevas = round($rec->influencias_gen * $dif_minutos);
 
 				//Ultima actualización (para precisión total)
-				if ($rec->ultima_act == 0)
-				{
-					$rec->ultima_act = time();
-				}
-				else
-				{
-					$rec->ultima_act + ($dif_minutos*60);
-				}
+				//if ($rec->ultima_act == 0)
+				//{
+					$rec->ultima_act = $ahora;
+				//}
+				//else
+				//{
+				//	$rec->ultima_act + ($dif_minutos*60);
+				//}
 
 				if (!$rec->save())
 					throw new Exception("Imposible guardar modelo de recursos. (actualizaRecursos,RecusosModel)", 500);					
