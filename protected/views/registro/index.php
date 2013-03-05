@@ -91,10 +91,10 @@
 	   		<?php echo CHtml::dropDownList('ocup', $seleccionado, $equipos); ?>
 	   	</td>
 	  </tr>
--->
+
 	  <tr><?php if($error): ?>
 	   	<td>¡Debe escoger un personaje y un equipo!</td>
-	  <?php endif; ?></tr>
+	  <?php endif; ?></tr>-->
 
 	  <tr>
 	    <td >

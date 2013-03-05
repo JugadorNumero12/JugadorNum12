@@ -16,8 +16,7 @@ class RegistroController extends Controller
 	 */
 	public function actionIndex()
 	{
-
-		//$this->redirect(array('registro/equipo')); 
+ 
 		$animadora_status=false;
 		$empresario_status=false;
 		$ultra_status=false;
@@ -50,7 +49,7 @@ class RegistroController extends Controller
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 				$modelo->setAttributes(array('nivel'=>0));
 
-				$modelo->setAttributes(array('personaje'=>NULL));
+				
 				$seleccionado = 1;
 				$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
 				
@@ -98,39 +97,78 @@ class RegistroController extends Controller
 
 	public function actionEquipo($id_usuario){
 		$modelo = Usuarios::model()->findByPk($id_usuario);
-		$modelo->scenario='insert';
+		$modelo->scenario='update';
 		$error = false;
+
+
+		$equip = Equipos::model()->findAll();
+		foreach ($equip as $equipo){
+			$equipos[$equipo['id_equipo']] = $equipo['nombre'];
+		}
+		$seleccionado=0;
+
 		$transaction = Yii::app()->db->beginTransaction();
+		
 		try {
-			$seleccionado = 2;//$_POST['ocup'];
-			$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
-			if($modelo->save()){
-				$transaction->commit();
-				$this->redirect(array('registro/personaje','id_usuario'=>$modelo->id_usuario));
+			if(isset($_POST['ocup'])){
+				$seleccionado = $_POST['ocup'];
+				$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
+				if($modelo->save()){
+					$transaction->commit();
+					$this->redirect(array('registro/personaje','id_usuario'=>$modelo->id_usuario));
+				}else $error = true;
 			}else $error = true;
 		} catch (Exception $e) {
 			$transaction->rollback();
 		}
-
-		$this->render('equipo',array('error'=>$error));
+		
+			
+		$this->render('equipo',array('error'=>$error,'equipos'=>$equipos, 'seleccionado'=>$seleccionado));
+		
 	}
 	public function actionPersonaje($id_usuario){
 		$modelo = Usuarios::model()->findByPk($id_usuario);
-		$modelo->scenario='insert';
+		$modelo->scenario='update';
 		$error = false;
+
+		$animadora_status=false;
+		$empresario_status=false;
+		$ultra_status=false;
+
+
 		$transaction = Yii::app()->db->beginTransaction();
 		try {
-			$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_MOVEDORA));
-			if($modelo->save()){
-				//$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
-				$transaction->commit();
-				$this->redirect(array('site/login'));
+			if(isset($_POST['pers'])){
+
+
+				$selected_radio = $_POST['pers'];
+				if ($selected_radio === 'animadora') {
+					$animadora_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_MOVEDORA));
+
+				}else if ($selected_radio === 'empresario') {
+					$empresario_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_EMPRESARIO));
+
+				}else if($selected_radio === 'ultra'){
+					$ultra_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_ULTRA));
+				}
+
+
+				if($modelo->save()){
+					//$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
+					$transaction->commit();
+					$this->redirect(array('site/login'));
+				}else $error = true;
 			}else $error = true;
 		} catch (Exception $e) {
 			$transaction->rollback();
 		}
 
-		$this->render('personaje',array('error'=>$error));
+		$this->render('personaje',array('error'=>$error,'animadora_status'=>$animadora_status , 
+														'empresario_status'=>$empresario_status , 
+														'ultra_status'=>$ultra_status));
 	}
 	
 	public function crearRecursos($id_usuario, $personaje){
