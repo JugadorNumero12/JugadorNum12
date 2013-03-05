@@ -278,7 +278,7 @@ class AccionesController extends Controller
 		{
 			//COMPLETAR
 		}
-		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
