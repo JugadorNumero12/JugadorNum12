@@ -197,7 +197,7 @@ class PartidosController extends Controller
 
 				//fixme no se si esto va aqui
 				//Calculo del porcertage para mostrar en el grafico cirular
-				$porcentage;
+				$porcentage = 0;
 				$porcentage = ((($partido->estado + 10) * 100) / 20);
 
 
@@ -248,6 +248,10 @@ class PartidosController extends Controller
 			// Creamos el renderPartial del estado del partido
 			else 
 			{	
+				//fixme no se si esto va aqui
+				//Calculo del porcertage para mostrar en el grafico cirular
+				$porcentage = 0;
+				$porcentage = ((($partido->estado + 10) * 100) / 20);
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
