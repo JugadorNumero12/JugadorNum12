@@ -114,4 +114,65 @@ class AccionesGrupales extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	/*
+	* Esta función finaliza todas las acciones grupales no terminadas a tiempo.
+	*/
+	public function finalizaGrupales()
+	{
+		try
+		{
+			//Traer acciones y Helper	
+			Yii::import('application.components.Acciones.*');
+			Yii::import('application.components.Helper');
+
+			$helper = new Helper();
+
+			$tiempo = time();
+			$busqueda=new CDbCriteria;
+			$busqueda->addCondition(':bTiempo >= finalizacion');
+			$busqueda->addCondition('completada = :bCompletada');
+			$busqueda->params = array(':bTiempo' => $tiempo,
+									':bCompletada' => 0,
+									);
+			$transaction = Yii::app()->db->beginTransaction();
+
+			$grupales = AccionesGrupales::model()->findAll($busqueda);
+
+			//Iterar sobre las acciones grupales resultantes de la búsqueda
+			foreach ($grupales as $gp)
+			{		
+				//Tomar participaciones
+				$participantes = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
+				//Recorro todos los participantes devolviendoles sus recursos.
+				//Esto incluye el creador de la acción.
+				foreach ($participantes as $participante)
+				{
+					//Cojo el dinero,influencia y animo aportado por el usuario
+					$dinero=$participante->dinero_aportado;
+					$influencia=$participante->influencias_aportadas;
+					$animo=$participante->animo_aportado;
+
+					//Utilizo el helper para ingresarle al usuario los recursos
+					$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+					$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+					$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
+
+					//Eliminar ese modelo
+					Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));
+				}
+
+				//Borro esa accion grupal iniciada por el usuario que quiere cambiar de equipo
+				AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
+			}
+			//Finalizar transacción con éxito
+			$transaction->commit();  
+		}
+    	catch (Exception $ex)
+    	{
+    		//Rollback de la transacción en caso de error
+    		$transaction->rollback();
+    		//throw $ex;
+    	}		
+	}
 }

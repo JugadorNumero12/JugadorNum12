@@ -45,8 +45,8 @@ class ScriptsController extends Controller
 		$busqueda->addCondition('turno >= :bPrimerTurno');
 		$busqueda->addCondition('turno <= :bUltimoTurno');
 		$busqueda->params = array(':bTiempo' => $tiempo,
-								'bPrimerTurno' => $primerTurno,
-								'bUltimoTurno' => $ultimoTurno);
+								':bPrimerTurno' => $primerTurno,
+								':bUltimoTurno' => $ultimoTurno);
 		$partidos=Partidos::model()->findAll($busqueda);
 
 		foreach ($partidos as $partido)
@@ -82,7 +82,7 @@ class ScriptsController extends Controller
 		$busqueda->addCondition(':bTiempo >= cooldown');
 		$busqueda->addCondition('devuelto = :bDevuelto');
 		$busqueda->params = array(':bTiempo' => $tiempo,
-								'bDevuelto' => 0,
+								':bDevuelto' => 0,
 								);
 		$individuales = AccionesIndividuales::model()->findAll($busqueda);
 
@@ -144,7 +144,7 @@ class ScriptsController extends Controller
 		$busqueda->addCondition(':bTiempo >= finalizacion');
 		$busqueda->addCondition('completada = :bCompletada');
 		$busqueda->params = array(':bTiempo' => $tiempo,
-								'bCompletada' => 0,
+								':bCompletada' => 0,
 								);
 		$grupales = AccionesGrupales::model()->findAll($busqueda);
 
