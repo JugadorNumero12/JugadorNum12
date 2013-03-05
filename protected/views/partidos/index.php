@@ -33,7 +33,7 @@
 			</td>
 			
 			<td>
-				<?php echo $partido->hora ?>
+				<?php echo Yii::app()->format->formatDatetime($partido->hora)?>
 			</td>
 
 			<td>

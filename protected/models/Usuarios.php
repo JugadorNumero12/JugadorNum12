@@ -225,4 +225,16 @@ class Usuarios extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	/*
+	* Esta función se encarga de generar recursos y finalizar individuales/grupales
+	* Se llamará antes de cada acción que lo necesite (prácticamente todas)
+	*/
+	public function actualizaDatos($id_usuario)
+	{
+		//Actualizar todos los datos necesarios
+		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
+		AccionesGrupales::model()->finalizaGrupales();
+		Recursos::model()->actualizaRecursos($id_usuario);
+	}
 }

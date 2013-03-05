@@ -39,6 +39,10 @@ class HabilidadesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		$idUsuario = Yii::app()->user->usIdent;
 
 		// Obtiene una lista con todas las habilidades
@@ -83,6 +87,10 @@ class HabilidadesController extends Controller
 	 */
 	public function actionVer($id_habilidad)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Obtiene la acción a consultar
 		$idUsuario = Yii::app()->user->usIdent;
 		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
@@ -120,6 +128,10 @@ class HabilidadesController extends Controller
 	 */
 	public function actionAdquirir($id_habilidad)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//empezamos la transaccion
 		$trans = Yii::app()->db->beginTransaction();
 

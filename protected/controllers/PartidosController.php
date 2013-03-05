@@ -39,6 +39,10 @@ class PartidosController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Obtener el id del proximo partido del usuario
 		Yii::import('application.components.Partido');		
 		$id_equipo_usuario = Yii::app()->user->usAfic;
@@ -73,6 +77,10 @@ class PartidosController extends Controller
 	 */
 	public function actionPrevia($id_partido)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Saco la informacion del partido
 		$modeloPartidos = Partidos:: model()->findByPk($id_partido);
 
@@ -151,6 +159,10 @@ class PartidosController extends Controller
 	 */
 	public function actionAsistir($id_partido)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Obtener el equipo del usuario
 		$id_equipo_usuario = Yii::app()->user->usAfic;
 		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
