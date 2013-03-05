@@ -12,7 +12,7 @@
  * Bonus al creador:
  *  Ninguo 
  */
-class PromoverPartido extends AccionSingleton
+class PromoverPartido extends AccionGrupSingleton
 {
    /* Función a través de la cual se accederá al Singleton */
    public static function getInstance()
