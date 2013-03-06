@@ -17,11 +17,8 @@
 <body>
 
 <div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
-
 		<div class="perfil-grupo-arriba">
-
 			<div class="perfil-grupo-arriba-izquierda">
-
 				<div class="perfil-grupo-arriba-izquierda-personaje">
 					<img
 						src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"

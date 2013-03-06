@@ -23,6 +23,13 @@
 
 <div id="envoltorio1"><div id="envoltorio2">
 
+	<!-- Barra Superior -->
+	<div id="barrasup">
+		<div id="barrasup-envoltorio">
+			
+		</div>
+	</div>
+
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
     	<div id = "logo">
