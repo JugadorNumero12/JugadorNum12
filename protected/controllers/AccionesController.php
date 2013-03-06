@@ -251,7 +251,7 @@ class AccionesController extends Controller
 						//guardar en los modelos
 						$res->save();
 						$accion_grupal->save();
-
+						
 						//Crear participación del creador
 						$participacion = new Participaciones();
 						$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
