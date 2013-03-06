@@ -57,7 +57,7 @@ static $datos_acciones = array (
 	), 
 	
 	'CrearseEspectativas' => array (
-		'animo' => 0.15
+		'animo' => 3
 	),
 		
 	'ContratarRRPP' => array (

@@ -61,6 +61,10 @@ class UsuariosController extends Controller
      */
     public function actionPerfil()
     {    
+        /* Actualizar datos de usuario (recuros,individuales y grupales) */
+        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+        /* Fin de actualización */
+        
         //Busco el id del usuario actual y saco los datos el usuario
         $id= Yii::app()->user->usIdent;
         $modeloUsuario = Usuarios:: model()->findByPk($id); 
@@ -80,11 +84,14 @@ class UsuariosController extends Controller
                 $accionesPar[] = $infoDesbloqueada[0];
             }
         }
+        //Saco los recursos disponibles del usuario
+        $recursos = Recursos::model()->findByPk($id);
 
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario, 
                         'accionesPas'=>$accionesPas,
-                        'accionesPar'=>$accionesPar) );
+                        'accionesPar'=>$accionesPar,
+                        'recursos'=>$recursos) );
     }
 
     /*
@@ -99,10 +106,14 @@ class UsuariosController extends Controller
      */
     public function actionVer($id_usuario)
     {
+        /* Actualizar datos de usuario (recuros,individuales y grupales) */
+        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+        /* Fin de actualización */
+        
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
-        if ($modeloUsuario == null)
+        if ($modeloUsuario === null)
         {
             echo "El usuario no existe.";
         }
@@ -130,6 +141,10 @@ class UsuariosController extends Controller
      */
     public function actionCuenta()
     {
+        /* Actualizar datos de usuario (recuros,individuales y grupales) */
+        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+        /* Fin de actualización */
+        
         $id= Yii::app()->user->usIdent;
         $modelo = Usuarios:: model()->findByPk($id);
         
@@ -146,6 +161,10 @@ class UsuariosController extends Controller
      */
     public function actionCambiarClave()
     {
+        /* Actualizar datos de usuario (recuros,individuales y grupales) */
+        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+        /* Fin de actualización */
+        
         $id= Yii::app()->user->usIdent;        
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
@@ -179,6 +198,10 @@ class UsuariosController extends Controller
      */
     public function actionCambiarEmail()
     {
+        /* Actualizar datos de usuario (recuros,individuales y grupales) */
+        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+        /* Fin de actualización */
+        
         // Nota: el email es unico para cada usuario
         //Hay que realizar una transaccion por si dos usuarios guardan al mismo tiempo el email
         //ya que les daria que son validos y no es asi 

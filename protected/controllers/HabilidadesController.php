@@ -39,6 +39,10 @@ class HabilidadesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		$idUsuario = Yii::app()->user->usIdent;
 
 		// Obtiene una lista con todas las habilidades
@@ -83,11 +87,15 @@ class HabilidadesController extends Controller
 	 */
 	public function actionVer($id_habilidad)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Obtiene la acción a consultar
 		$idUsuario = Yii::app()->user->usIdent;
 		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
-		if ($habilidad == null) {
+		if ($habilidad === null) {
 			throw new CHttpException( 404, 'Habilidad inexistente');
 		}
 
@@ -120,6 +128,10 @@ class HabilidadesController extends Controller
 	 */
 	public function actionAdquirir($id_habilidad)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//empezamos la transaccion
 		$trans = Yii::app()->db->beginTransaction();
 
@@ -132,7 +144,7 @@ class HabilidadesController extends Controller
 																	  ));
 
 		//realizar transaccion con la base de datos
-		if($habilidad == null){
+		if($habilidad === null){
 			//si la habilidad que quieres desbloquear existe como tal
 			$trans->rollback();
 			throw new CHttpException(404,'La habilidad no existe.');
@@ -145,18 +157,35 @@ class HabilidadesController extends Controller
 		} else {
 			//si no esta desbloqueada y existe
 			//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
-			if(isset($_POST['aceptarBtn'])){
-        		try{        			
+			if(isset($_POST['aceptarBtn']))
+			{
+        		try
+        		{        			
         			$desbloqueada = new Desbloqueadas();
         			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
         			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
         			$desbloqueada->save();
+
+        			//Si es pasiva, debemos aplicar el beneficio de la misma
+        			if ($habilidad->tipo == Habilidades::TIPO_PASIVA)
+        			{		        		  		
+						Yii::import('application.components.Acciones.*');
+
+						//Tomar nombre de habilidad
+		        		$nombreHabilidad = $habilidad->codigo;
+
+		        		//Llamar al singleton correspondiente y ejecutar dicha acción
+		        		$nombreHabilidad::getInstance()->ejecutar(Yii::app()->user->usIdent);
+        			}
+
         			$trans->commit(); 
         			$this->redirect(array('habilidades/index'));       			
-        		} catch ( Exception $exc ) {
+        		} 
+        		catch ( Exception $exc ) 
+        		{
 					$trans->rollback();
 					throw $exc;
-				  }
+				}
         		
         	}       
         	//si el usuario cancela, rollback 	

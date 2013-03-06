@@ -10,12 +10,25 @@
  */
 class Apostar extends AccionIndSingleton
 {
+  /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
   /* Ningun efecto al ejecutar la accion */
   public function ejecutar($id_usuario)
   {
+    //Traer el array de efectos
+    parent::ejecutar($id_usuario);
+
     //Validar usuario
     $us = Usuarios::model()->findByPk($id_usuario);
-    if ($us == null)
+    if ($us === null)
       throw new Exception("Usuario incorrecto.", 404);      
 
     //Tomar helper para facilitar la modificación
@@ -23,7 +36,7 @@ class Apostar extends AccionIndSingleton
 
     //Aumentar ánimo
     $helper = new Helper();
-    if ($helper->aumentar_recursos($id_usuario,"dinero",$datos_acciones['Apostar']['dinero']) == 0)
+    if ($helper->aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0)
     {
       return 0;
     }

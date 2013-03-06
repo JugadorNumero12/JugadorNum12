@@ -129,13 +129,21 @@ INSERT INTO `acciones_individuales` (`habilidades_id_habilidad`, `usuarios_id_us
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
  -- rojos
- (1, 1, 7, 2, 1, 0, 4),
+ (1, 1, 12, 4, 0, 0, 4),
  -- verdes
- (2, 3, 2, 0, 2, 1, 2),
+ (2, 3, 9, 0, 2, 1, 2),
  -- negros
- (3, 2, 4, 1, 1, 1, -1),
+ (3, 2, 10, 1, 1, 1, -1),
  -- blancos
- (4, 4, 2, 0, 2, 1, -2);
+ (4, 4, 7, 0, 2, 1, -2),
+ -- azules
+ (5, 5, 5, 1, 2, 0, 2),
+ -- rosas
+ (6, 6, 4, 1, 1, 1, 1),
+ -- naranjas
+ (7, 7, 2, 0, 2, 3, -3),
+ -- amarillos
+ (8, 8, 1, 0, 1, 4, -5);
 
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
@@ -162,10 +170,14 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (7, 'Rojos',   1, 3000, 400, 12, 7, 6),
- (7, 'Verdes',  1, 3000, 500, 10, 7, 6),
- (8, 'Negros',  1, 3600, 400, 10, 7, 7),
- (8, 'Blancos', 1, 4000, 400, 9,  6, 8);
+ (7, 'Rojos',    1, 3000, 400, 12, 7, 6),
+ (7, 'Verdes',   1, 3000, 500, 10, 7, 6),
+ (8, 'Negros',   1, 3600, 400, 10, 7, 7),
+ (8, 'Blancos',  1, 4000, 400, 9,  6, 8),
+ (9, 'Azules',   1, 3500, 300, 11, 6, 7),
+ (9, 'Rosas',    1, 4000, 450, 10, 5, 5),
+ (10,'Naranjas', 1, 3600, 500, 12, 7, 7),
+ (10,'Amarillos',1, 3000, 350, 10, 6, 6);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
@@ -253,16 +265,16 @@ TRUNCATE `partidos`;
 INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
  -- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
- (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
- (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Negros: ganaron los Rojos
  -- Verdes vs. Blancos: empate
- (1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
- (2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (1, 3, 50, 'Rojos(2) - Negros (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (2, 4, 50, 'Verdes(0) - Blancos(0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Rojos vs. Blancos: empate
  -- Negros vs. Verdes: empate
- (1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
- (3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 12, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (1, 4, 100, 'Rojos (3) - Blancos (3); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
+ (3, 2, 100, 'Negros (1) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  -- Verdes vs. Rojos: PROXIMO PARTIDO
  -- Blancos vs. Negros: PROXIMO PARTIDO
  (2, 1, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
@@ -274,7 +286,9 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  -- Blancos vs. Rojos
  -- Verdes vs. Negros
  (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
- (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9);
+ (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
+ -- Partido para comprobar si los datos son reintroducidos correctamente
+ (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales

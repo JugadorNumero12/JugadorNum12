@@ -11,7 +11,7 @@ class Partido
 	* El turno 6 es de descanso del partido.
 	*/
 	const PRIMER_TURNO = 0;
-	const ULTIMO_TURNO = 11;
+	const ULTIMO_TURNO = 12;
 	const TURNO_DESCANSO = 6;
 
 	const AMBIENTE_MEDIO = 500;
@@ -38,17 +38,14 @@ class Partido
 	private $moral_visitante;
 
 	/**
-     * Constructora: Inicializar 
-     *  id_partido,
-     *  local, visitante, turno cronica
-     *  ambiente, dif_niveles, aforo_local, aforo_visitante
-     * a partir del id_partido de la tabla de partidos
+     * Constructora: Inicializar todos los datos de la clase
+     * en función de la fila correspondiente de la tabla Partidos.
      */
     function Partido($id_partido)
     {
         $partido = Partidos::model()->findByPk($id_partido);
-        if ($partido == null)
-            throw new CHttpException(404,'Partido inexistente.');
+        if ($partido === null)
+            throw new Exception('Partido inexistente.',404);
         $this->id_partido = $id_partido;
         $this->id_local = $partido->equipos_id_equipo_1;
         $this->id_visitante = $partido->equipos_id_equipo_2;
@@ -75,8 +72,8 @@ class Partido
     private function guardaEstado()
     {
         $partido = Partidos::model()->findByPk($this->id_partido);
-        if ($partido == null)
-            throw new CHttpException(404,'Partido inexistente.');
+        if ($partido === null)
+            throw new Exception('Partido inexistente.',404);
 
         $partido->ofensivo_local = $this->ofensivo_local;
         $partido->ofensivo_visitante = $this->ofensivo_visitante;
@@ -115,12 +112,12 @@ class Partido
         $visitante = Equipos::model()->findByPk($this->id_visitante);   
         $partido = Partidos::model()->findByPk($this->id_partido);
         //Comprobación de existencia de datos por seguridad
-        if ($local == null)
-            throw new CHttpException(404,'Equipo local inexistente.');
-        if ($visitante == null)
-            throw new CHttpException(404,'Equipo visitante inexistente.');     
-        if ($partido == null)
-            throw new CHttpException(404,'Partido inexistente.');
+        if ($local === null)
+            throw new Exception('Equipo local inexistente.',404);
+        if ($visitante === null)
+            throw new Exception('Equipo visitante inexistente.',404);     
+        if ($partido === null)
+            throw new Exception('Partido inexistente.',404);
         //Fijar diferencia de niveles.
         //IMPORTANTE: dif. niveles -> Local +, Visitante -
         $this->dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
@@ -175,7 +172,7 @@ class Partido
 		$this->estado = Formula::siguienteEstado($params);
 
 		if($this->estado === null){
-			throw new CHttpException(404,'Error en la formula. No se ha calculado bien el siguiente estado. NULL');
+			throw new Exception('Error en la formula. No se ha calculado bien el siguiente estado. NULL',404);
 		}
 
 		
@@ -225,7 +222,7 @@ class Partido
 		$partido = Partidos::model()->findByPk($this->id_partido);
 
 		//Decimos en que turno estamos para situar
-		$cronica_turno = "Estamos en el turno ".$this->turno." del partido. ";
+		$cronica_turno = "Turno: ".$this->turno.".";
 
 
 		//Miramos a ver si se ha metido algun gol 
@@ -247,7 +244,7 @@ class Partido
 		        $equipo_ganando = $partido->local->nombre; $equipo_perdiendo = $partido->visitante->nombre;
 		        break;
 		    }
-		     case ($this->estado  < 0):{ //Va ganando el equipo visitante
+		     case ($this->estado < 0):{ //Va ganando el equipo visitante
 		        $equipo_ganando = $partido->visitante->nombre; $equipo_perdiendo = $partido->local->nombre;
 		        break;
 		    }
@@ -259,21 +256,22 @@ class Partido
 
 		//Comentamos el estado del partido 
 		$cronica_estado = "";
-		switch (abs($this->estado)) {
+		$abs_estado=abs($this->estado);
+		switch ($abs_estado) {
 		    case 0: { 
-		        $cronica_estado = " El partido esta es un punto muerto. Nigun equipo es mejor que el otro";
+		        $cronica_estado = " El partido esta es un punto muerto. Ningun equipo es mejor que el otro.";
 		        break;
 		    }
-		    case ($this->estado >=1 && $this->estado <=3):{ //[1,2,3] Diferencia leve
-		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." tiene una ligera ventaja";
+		    case ($abs_estado >=1 && $abs_estado <=3):{ //[1,2,3] Diferencia leve
+		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." es ligeramente mejor que".$equipo_perdiendo;
 		        break;
 		    }
-		    case ($this->estado >=4 && $this->estado <=6):{ //[4,5,6] Diferencia normal
-				$cronica_estado = " El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo;
+		    case ($abs_estado >=4 && $abs_estado <=6):{ //[4,5,6] Diferencia normal
+				$cronica_estado = " El equipo ".$equipo_ganando." es notablemente superior a ".$equipo_perdiendo.".";
 		        break;
 		    }
-		    case ($this->estado >=7 && $this->estado <=9):{ //[7,8,9] Muy favorable
-				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas";
+		    case ($abs_estado >=7 && $abs_estado <=9):{ //[7,8,9] Muy favorable
+				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
 		        break;
 		    }
 		}
@@ -296,7 +294,7 @@ class Partido
 		        break;
 		    }
 		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
-				$cronica_dif_estado = " El partido está muy reñido. El equipo ".$equipo_mejorado." ha mejorado su posicion ligeramente.";
+				$cronica_dif_estado = " El equipo ".$equipo_mejorado." ha mejorado su posicion ligeramente.";
 		        break;
 		    }
 		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
@@ -327,9 +325,9 @@ class Partido
 
 		//TODO comentar la diferencia de goles
 
-		$this->cronica .= "             Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
-		$this->cronica .= $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado;
 		
+		$this->cronica = $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n".$this->cronica;
+		//$this->cronica .= "Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
 	}
 
 	/*
@@ -341,27 +339,30 @@ class Partido
 		$local = Equipos::model()->findByPk($this->id_local);
         $visitante = Equipos::model()->findByPk($this->id_visitante);  
         //Comprobación de existencia de datos por seguridad
-        if ($local == null)
-            throw new CHttpException(404,'Equipo local inexistente.');
-        if ($visitante == null)
-            throw new CHttpException(404,'Partido inexistente.');
+        if ($local === null)
+            throw new Exception('Equipo local inexistente.',404);
+        if ($visitante === null)
+            throw new Exception('Partido inexistente.',404);
 		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
 		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
 		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
 		$this->cronica .= ($this->estado > 0) ? "El equipo local empieza con superioridad, esperemos que aguanten así todo el partido." : 
 		"El equipo visitante empieza con superioridad, esperemos que aguanten así todo el partido. ";  
+		$this->cronica .="\n";
 	}
 
 	/*
 	 * 1. Da una bonificacion por el encuentro
 	 * 2. Desactiva las entradas compradas por los usuarios -> DE MOMENTO OLVIDARLO
 	 * 3. Actualizar clasificación
+	 * 4. Mover turno para finalizar encuentro.
 	 */
 	private function finalizaEncuentro()
 	{
 		$this->generaBonificacion();
 		$this->actualizaClasificacion();
+		$this->turno++;
 	}
 
 	/*
@@ -489,59 +490,197 @@ class Partido
 
 	}
 	
+	/*
+	* Esta función genera una breve crónica para el descanso del encuentro.
+	*/
 	private function generaCronicaDescanso()
 	{
+		$cronicaDesc="";
 		//Indicar fin del descanso y reanudación del partido
-		$this->cronica .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. ";
-		$this->cronica .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		$cronicaDesc .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
 		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
+		$cronicaDesc .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. \n ";
+
+		$this->cronica=$cronicaDesc.$this->cronica;
 	}
 
+	/*
+	* Genera una crónica para el último turno de partido (fin de partido)
+	*/
 	private function generaCronicaUltimoTurno()
 	{
-		//Indicar fin del descanso y reanudación del partido
-		$this->cronica .= "cronica ultimo turno";
+		//Tomar fijos datos locales y visitantes
+		$local = Equipos::model()->findByPk($this->id_local);
+        $visitante = Equipos::model()->findByPk($this->id_visitante);  
+        //Comprobación de existencia de datos por seguridad
+        if ($local === null)
+            throw new Exception('Equipo local inexistente.',404);
+        if ($visitante === null)
+            throw new Exception('Partido inexistente.',404);
+
+         //Inicializar variable $cronAux
+		$cronAux = "Finaliza el encuentro entre los ".$local->nombre." y los ".$visitante->nombre." con un marcador final de ".$this->goles_local." a ".$this->goles_visitante.". ";
+		
+        //Generar crónica final
+        if ($this->goles_local > $this->goles_visitante)
+        {
+        	//Ganador local
+        	$cronAux .= "Clara victoria para los locales, que ganan puntos adicionales en la clasificación.";
+        }
+        else 
+        {
+        	if ($this->goles_local < $this->goles_visitante)
+        	{
+        		//Ganador visitante
+        		$cronAux .= "Clara victoria para los visitantes, que ganan puntos adicionales en la clasificación.";
+        	}
+        	else
+        	{
+        		//Empate
+        		$cronAux .= "Por el empate, ambos equipos suman tan sólo un punto más en la clasificación.";
+        	}
+        }
+       
+
+		$this->cronica = $cronAux.$this->cronica;
 	}
 
+	/*
+	* Genera el estado tras el descanso y aumenta el turno para continuar el encuentro
+	*/
 	private function generaEstadoDescanso()
 	{
-		//Generamos estado tras el descanso
-		//$this->estado = Formula::siguienteEstado(/*PARAMS*/);
+		//Generamos estado tras el descanso		
+        $params = array(
+ 			'difNiv'    => (double) $this->dif_niveles, 'aforoMax'  => (double) 0,
+ 			'aforoLoc'  => (double) $this->aforo_local, 'aforoVis'  => (double) $this->aforo_visitante,
+			'moralLoc'  => (double) $this->moral_local, 'moralVis'  => (double) $this->moral_visitante,
+			'ofensLoc'  => (double) $this->ofensivo_local, 'ofensVis'  => (double) $this->ofensivo_visitante,
+			'defensLoc' => (double) $this->defensivo_local, 'defensVis' => (double) $this->defensivo_visitante,
+			'estado'    => null
+		);
+
+		$this->estado = Formula::siguienteEstado($params);
+
+		//Aumentamos el turno
 		$this->turno++;
 	}
 
+	/*
+	* Esta función calcula el siguiente partido de un equipo dado y lo asigna a dicho
+	* equipo. En caso de que no haya más partidos, colocará un NULL en la fila correspondiente
+	* de la tabla Equipos.
+	*/
 	private function actualizaSiguientePartido($id_equipo)
 	{
+		//Tomar hora actual
 		$tiempo=time();
+
 		$primerTurno=Partido::PRIMER_TURNO;
+
+		//Generar criterio de búsqueda para conocer el siguiente encuentro
 		$busqueda=new CDbCriteria;
 		$busqueda->addCondition(':bTiempo <= hora');
 		$busqueda->addCondition('turno = :bPrimerTurno');
 		$busqueda->addCondition('((equipos_id_equipo_1 = :bequipo) OR (equipos_id_equipo_2 = :bequipo))');
 		$busqueda->params = array(':bTiempo' => $tiempo,
-								'bPrimerTurno' => $primerTurno,
-								'bequipo' => $id_equipo
+								':bPrimerTurno' => $primerTurno,
+								':bequipo' => $id_equipo
 								);
 		$busqueda->order = 'hora ASC';
-		$busqueda->limit = 1;
-		$partidos=Partidos::model()->findAll($busqueda);
+
+		//Buscamos el siguiente partido
+		$partidos=Partidos::model()->find($busqueda);
 
 		$equipo = Equipos::model()->findByPk($id_equipo);
-		if ($equipo == null)
+		if ($equipo === null)
 			throw new Exception("El equipo no existe (Partido.php).", 404);
 			
-		if ($partidos == null)
+		if ($partidos === null)
 		{
+			//Si no hay más partidos que jugar esta temporada, el siguiente será NULL
 			$equipo->partidos_id_partido = null;
 		}
 		else
 		{
+			//Asignamos el siguiente partido
 			$equipo->partidos_id_partido = $partidos->id_partido;
 		}
+
+		//Guardamos los datos
 		if (!$equipo->save())
 			throw new Exception("Error al situar proximo partido.", 404);						
 	}
 
+	/*
+	* Esta función rellena los datos (aforo base, nivel de equipo, etc.) del siguiente encuentro
+	* de un equipo a partir de los datos almacenados en la fila correspondiente de la tabla
+	* Equipos.
+	*/
+	private function rellenaSiguientePartido($id_equipo)
+	{
+		//Tomar datos del equipo
+		$equipo = Equipos::model()->findByPk($id_equipo);
+
+		//Tomar datos del siguiente partido
+		$sigPartido = $equipo->sigPartido;
+
+		//Si sigPartido === null, entonces no existe siguiente partido. Se corresponde, por
+		//ejemplo, al estado tras el último partido de temporada.
+		if ($sigPartido !== null)
+		{
+			//Comprobamos si el equipo será local o visitante y asignamos
+			//los datos iniciales de dicho encuentro.
+			if ($sigPartido->equipos_id_equipo_1 === $id_equipo)
+			{
+				//Caso local
+				$sigPartido->nivel_local = $equipo->nivel_equipo;
+				$sigPartido->ofensivo_local = $equipo->factor_ofensivo;
+				$sigPartido->defensivo_local = $equipo->factor_defensivo;
+				$sigPartido->aforo_local = $equipo->aforo_base;
+			}
+			else
+			{
+				if ($sigPartido->equipos_id_equipo_2 === $id_equipo)
+				{
+					//Caso visitante
+					$sigPartido->nivel_visitante = $equipo->nivel_equipo;
+					$sigPartido->ofensivo_visitante = $equipo->factor_ofensivo;
+					$sigPartido->defensivo_visitante = $equipo->factor_defensivo;
+					$sigPartido->aforo_visitante = $equipo->aforo_base;
+				}
+				else
+				{
+					throw new Exception(404, "No se juega como local ni visitante en ese partido. (rellenaSiguientePartido,Partido.php)");
+					
+				}
+			}
+
+			//Guardar datos del partido
+			if (!$sigPartido->save())
+			{
+				throw new Exception(404, "No se ha podido guardar el estado del partido. (rellenaSiguientePartido,Partido.php)");
+				
+			}
+		}
+	}
+
+	/*
+	* Esta función elimina las acciones grupales finalizadas asociadas al equipo.
+	*/
+	public function eliminaGrupales($id_equipo)
+	{
+		$grupales = AccionesGrupales::model()->findAllByAttributes(array('equipos_id_equipo'=> $id_equipo,'completada'=> 1));	
+		foreach ($grupales as $gp)
+		{		
+			Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
+			AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
+		}
+	}
+
+	/*
+	* Esta función ejecuta un turno completo del partido cargado en la constructora
+	*/
 	public function jugarse()
 	{
 		switch ($this->turno) 
@@ -558,22 +697,30 @@ class Partido
 		    	$this->guardaEstado();
 		    	break;
 		    case (($this->turno > self::PRIMER_TURNO) 
-		    	&& ($this->turno < self::ULTIMO_TURNO) 
+		    	&& ($this->turno < self::ULTIMO_TURNO-1) 
 		    	&& ($this->turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
 				$this->generar_estado();
 				$this->guardaEstado();
 		        break;
-		    case self::ULTIMO_TURNO:
-		    	//Turno final, la diferencia es que ya no ofrecemos el extra de recursos
-		    	//sino que ofrecemos la bonificacion por asistir/ganar.
+		    case self::ULTIMO_TURNO-1:
+		    	//Turno para generar el estado y crónica finales
 				$this->generar_estado();
 				$this->generaCronicaUltimoTurno();
+				$this->guardaEstado();
+		    	break;
+		    case self::ULTIMO_TURNO:
+		    	//Turno para permitir visualizar el fin de partido durante un tiempo extra
+		    	//y cambiar los datos del siguiente partido
 				$this->finalizaEncuentro();
 				$this->guardaEstado();
 				$this->actualizaSiguientePartido($this->id_local);
 				$this->actualizaSiguientePartido($this->id_visitante);
+				$this->rellenaSiguientePartido($this->id_local);
+				$this->rellenaSiguientePartido($this->id_visitante);
+				$this->eliminaGrupales($this->id_local);
+				$this->eliminaGrupales($this->id_visitante);
 		    	break;
 		    default:
 		       	// No debería llegar aquí

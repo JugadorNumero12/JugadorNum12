@@ -39,16 +39,23 @@ class PartidosController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Obtener el id del proximo partido del usuario
+		Yii::import('application.components.Partido');		
 		$id_equipo_usuario = Yii::app()->user->usAfic;
 		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
-		$id_proximoPartido = $equipoUsuario->partidos_id_partido;
-
+		$proximoPartido = $equipoUsuario->sigPartido;
+		$primer_turno=Partido::PRIMER_TURNO;
+		$ultimo_turno=Partido::ULTIMO_TURNO;
 		// Obtener la lista de partidos
 		$listaPartidos = Partidos::model()->findAll();
 
 		//pasar los datos a la vista y renderizarla
-		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 'proximo_partido'=>$id_proximoPartido);
+		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 
+			'proximo_partido'=>$proximoPartido,'primer_turno'=>$primer_turno,'ultimo_turno'=>$ultimo_turno);
 		$this->render('index', $datosVista);
 	}
 
@@ -70,6 +77,10 @@ class PartidosController extends Controller
 	 */
 	public function actionPrevia($id_partido)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Saco la informacion del partido
 		$modeloPartidos = Partidos:: model()->findByPk($id_partido);
 
@@ -148,42 +159,61 @@ class PartidosController extends Controller
 	 */
 	public function actionAsistir($id_partido)
 	{
-		// Nota: dejar con un simple mensaje indicativo una pantalla 
-		// con un texto similar a "has asistido al partido" 
-
-		// obtener el equipo del usuario
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
+		// Obtener el equipo del usuario
 		$id_equipo_usuario = Yii::app()->user->usAfic;
 		$equipoUsuario = Equipos::model()->findByPk($id_equipo_usuario);
 
-		// obtener la informacion del partido, 
-		// en $partido participan $equipo_local y $equipo_visitante
-		$partido 			= Partidos::model()->findByPk($id_partido);
-		$equipoLocal     	= Equipos::model()->findByPk($partido->equipos_id_equipo_1);
-		$equipoVisitante 	= Equipos::model()->findByPk($partido->equipos_id_equipo_2);
+		// Obtener la informacion del partido, 
+		// En $partido participan $equipo_local y $equipo_visitante
+		$partido = Partidos::model()->findByPk($id_partido);
+		$equipoLocal = Equipos::model()->findByPk($partido->equipos_id_equipo_1);
+		$equipoVisitante = Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
-		// un usuario no puede asisitir a un partido en el que su equipo no participa
-		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
-			
-			/* TODO */
-			echo "No Puedes asistir a un partido entre otros equipos";
-		
-		} 
-		// un usuario solo puede asistir al próximo partido de su equipo
-		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
-			
-			/* TODO */
-			echo "Ese no es el proximo partido de tu equipo";
+		//Comprobación de datos
+		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
+		{
+			throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+		}
+		//Comprobación de datos
+		if ($partido->turno < 1 ||  $partido->turno > 12)
+		{
+			throw new Exception("El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+		}
 
+		// Un usuario no puede asisitir a un partido en el que su equipo no participa
+		if (($partido->equipos_id_equipo_1 != $id_equipo_usuario) && ($partido->equipos_id_equipo_2 != $id_equipo_usuario)) 
+		{			
+			throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
 		} 
-		// Intentamos asistir a un partido valido
-		else {
-			
-			//pasar los datos del partido y los equipos
-			$datosVista = array( 'equipo_local'		=> $equipoLocal,
-								 'equipo_visitante'	=> $equipoVisitante,
-								 'partido'			=> $partido);
-			$this->render('asistir', $datosVista);
-		}	
+		// Un usuario solo puede asistir al próximo partido de su equipo
+		else 
+		{
+			if($equipoUsuario->partidos_id_partido != $id_partido ) 
+			{			
+				throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
+			} 
+			// Creamos el renderPartial del estado del partido
+			else 
+			{	
+
+				//fixme no se si esto va aqui
+				//Calculo del porcertage para mostrar en el grafico cirular
+				$porcentage = 0;
+				$porcentage = ((($partido->estado + 10) * 100) / 20);
+
+
+				//pasar los datos del partido y los equipos
+				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
+								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'estado' => $partido,
+								 'porcentage' => $porcentage);
+				$this->render('asistir', $datosVista);
+			}
+		}
 	}
 
 	/*
@@ -199,11 +229,13 @@ class PartidosController extends Controller
 
 		// Obtener la informacion restante necesaria
 		$partido = Partidos::model()->findByPk($id_partido);
+		$equipoLocal = Equipos::model()->findByPk($partido->equipos_id_equipo_1);
+		$equipoVisitante = Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
 		//Comprobación de datos
-		if (($partido === null) || ($equipoUsuario === null))
+		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
 		{
-			throw new Exception("Datos suministrados incorrectos - partido/equipo -. (actionActPartido)", 404);			
+			throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
@@ -220,8 +252,17 @@ class PartidosController extends Controller
 			} 
 			// Creamos el renderPartial del estado del partido
 			else 
-			{			
-				$this->renderPartial('_estadoPartido',array('estado' => $partido),false,true);
+			{	
+				//fixme no se si esto va aqui
+				//Calculo del porcertage para mostrar en el grafico cirular
+				$porcentage = 0;
+				$porcentage = ((($partido->estado + 10) * 100) / 20);
+				//pasar los datos del partido y los equipos
+				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
+								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'estado' => $partido,
+								 'porcentage' => $porcentage);
+				$this->renderPartial('_estadoPartido',$datosVista,false,true);
 			}
 		}
 	}

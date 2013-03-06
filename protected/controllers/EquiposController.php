@@ -38,11 +38,17 @@ class EquiposController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Nota: utilizar la info de los modelos <<equipos>> y <<clasificacion>>
 		$modeloClasificacion = Clasificacion::model()->findAll(
 			array('order'=>'posicion ASC')
 		);
-
+		if ($modeloClasificacion === null)
+			throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
+			
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
 
@@ -67,6 +73,10 @@ class EquiposController extends Controller
 	 */
 	public function actionVer($id_equipo)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+
 		$uid = Yii::app()->user->usIdent; // ID de usuario
 		$eid = Yii::app()->user->usAfic; // ID de la afición del usuario
 
@@ -105,6 +115,10 @@ class EquiposController extends Controller
 	 */
 	public function actionCambiar($id_nuevo_equipo)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		Yii::import('application.components.Helper');
 
 		
@@ -119,7 +133,7 @@ class EquiposController extends Controller
 		{
 			throw new CHttpException(500,'Tienes que cambiarte a un equipo diferente al actual');
 
-		}else if ($modeloEquipo==null)
+		}else if ($modeloEquipo===null)
 				{
 					throw new CHttpException(500,'No existe el equipo al que quiere cambiarse');
 

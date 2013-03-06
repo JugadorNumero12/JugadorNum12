@@ -5,7 +5,7 @@
  */
 class RegistroController extends Controller
 {
-	public $layout='//layouts/registro';
+	public $layout='//layouts/login';
 	/**
 	 * Muestra el formulario para registrarse en la pagina
 	 * Si hay datos en $_POST procesa el formulario 
@@ -16,7 +16,7 @@ class RegistroController extends Controller
 	 */
 	public function actionIndex()
 	{
-		/* ALEX */
+ 
 		$animadora_status=false;
 		$empresario_status=false;
 		$ultra_status=false;
@@ -39,7 +39,7 @@ class RegistroController extends Controller
 			}
 
 			if (isset($_POST['Usuarios']) ) {
-				$seleccionado = $_POST['ocup'];
+				//$seleccionado = $_POST['ocup'];
 				
 				$modelo->attributes=$_POST['Usuarios'];
 				//modifico modelo con los datos del formulario
@@ -49,7 +49,16 @@ class RegistroController extends Controller
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 				$modelo->setAttributes(array('nivel'=>0));
 
-				if(isset($_POST['pers'])){
+				
+				
+
+				if($modelo->save()){
+					$transaction->commit();
+					$this->redirect(array('registro/equipo','id_usuario'=>$modelo->id_usuario));
+				}else $error = true;
+				
+
+				/*if(isset($_POST['pers'])){
 					$error = false;
 					$selected_radio = $_POST['pers'];
 					if ($selected_radio === 'animadora') {
@@ -71,16 +80,93 @@ class RegistroController extends Controller
 						$transaction->commit();
 						$this->redirect(array('site/login'));
 					} else $error = true;
-				}else $error = true;
-			}
+				}else $error = true;*/
+			} else $error = true;
 		}catch(Exception $e){
 			$transaction->rollback();
+			$error = true;
 		}
 
 		$this->render('index',array('modelo'=>$modelo , 'equipos'=>$equipos , 
 			'animadora_status'=>$animadora_status , 
 			'empresario_status'=>$empresario_status , 
 			'ultra_status'=>$ultra_status , 'error'=>$error, 'seleccionado'=>$seleccionado ) );
+	}
+
+	public function actionEquipo($id_usuario){
+		$modelo = Usuarios::model()->findByPk($id_usuario);
+		$modelo->scenario='update';
+		$error = false;
+
+
+		$equip = Equipos::model()->findAll();
+		foreach ($equip as $equipo){
+			$equipos[$equipo['id_equipo']] = $equipo['nombre'];
+		}
+		$seleccionado=0;
+
+		$transaction = Yii::app()->db->beginTransaction();
+		
+		try {
+			if(isset($_POST['ocup'])){
+				$seleccionado = $_POST['ocup'];
+				$modelo->setAttributes(array('equipos_id_equipo'=>$seleccionado));
+				if($modelo->save()){
+					$transaction->commit();
+					$this->redirect(array('registro/personaje','id_usuario'=>$modelo->id_usuario));
+				}else $error = true;
+			}else $error = true;
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+		
+			
+		$this->render('equipo',array('error'=>$error,'equipos'=>$equipos, 'seleccionado'=>$seleccionado));
+		
+	}
+	public function actionPersonaje($id_usuario){
+		$modelo = Usuarios::model()->findByPk($id_usuario);
+		$modelo->scenario='update';
+		$error = false;
+
+		$animadora_status=false;
+		$empresario_status=false;
+		$ultra_status=false;
+
+
+		$transaction = Yii::app()->db->beginTransaction();
+		try {
+			if(isset($_POST['pers'])){
+
+
+				$selected_radio = $_POST['pers'];
+				if ($selected_radio === 'animadora') {
+					$animadora_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_MOVEDORA));
+
+				}else if ($selected_radio === 'empresario') {
+					$empresario_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_EMPRESARIO));
+
+				}else if($selected_radio === 'ultra'){
+					$ultra_status = true;
+					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_ULTRA));
+				}
+
+
+				if($modelo->save()){
+					//$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
+					$transaction->commit();
+					$this->redirect(array('site/login'));
+				}else $error = true;
+			}else $error = true;
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+
+		$this->render('personaje',array('error'=>$error,'animadora_status'=>$animadora_status , 
+														'empresario_status'=>$empresario_status , 
+														'ultra_status'=>$ultra_status));
 	}
 	
 	public function crearRecursos($id_usuario, $personaje){
@@ -128,6 +214,7 @@ class RegistroController extends Controller
 		$rec->save();
 	}
 
+	
 	/**
 	 * @return array de filtros para actions
 	 */

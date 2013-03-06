@@ -10,12 +10,22 @@
  */
 class BeberCerveza extends AccionPartSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
+
 	/* Aplicar efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
 		//Validar usuario
 		$us = Usuarios::model()->findByPk($id_usuario);
-		if ($us == null)
+		if ($us === null)
 			throw new Exception("Usuario incorrecto.", 404);			
 
 		//Tomar helper para facilitar la modificación
@@ -23,7 +33,7 @@ class BeberCerveza extends AccionPartSingleton
 
 		//Aumentar ánimo
 		$helper = new Helper();
-		if ($helper->aumentar_recursos($id_usuario,"animo",$datos_acciones['BeberCerveza']['animo']) == 0)
+		if ($helper->aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['BeberCerveza']['animo']) == 0)
 		{
 			return 0;
 		}

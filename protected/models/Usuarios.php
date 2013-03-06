@@ -53,11 +53,11 @@ class Usuarios extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('equipos_id_equipo, nick, pass, email', 'required'),
+			array('nick, pass, email', 'required'),
 			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
 			array('personaje', 'numerical', 'integerOnly'=>true),
 			array('equipos_id_equipo, nivel', 'length', 'max'=>10),
-			array('nick', 'length', 'max'=>45),
+			array('nick', 'length', 'max'=>20),
 			array('pass, email', 'length', 'max'=>255),
 			/*Validaciones para cambio de contraseña*/
 			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
@@ -90,13 +90,9 @@ class Usuarios extends CActiveRecord
 	 */
 	public function comprobarClave ($clave)
 	{
-		echo '<br/>$clave = ' . $clave
-		   . '<br/>$this->pass = ' . $this->pass;
-
 		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
 		$valida = $bcrypt->verify($clave, $this->pass);
 
-		echo '<br/>$valida = ' . ($valida?'true':'false');
 		return $valida;
 	}
 
@@ -228,5 +224,17 @@ class Usuarios extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/*
+	* Esta función se encarga de generar recursos y finalizar individuales/grupales
+	* Se llamará antes de cada acción que lo necesite (prácticamente todas)
+	*/
+	public function actualizaDatos($id_usuario)
+	{
+		//Actualizar todos los datos necesarios
+		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
+		AccionesGrupales::model()->finalizaGrupales();
+		Recursos::model()->actualizaRecursos($id_usuario);
 	}
 }

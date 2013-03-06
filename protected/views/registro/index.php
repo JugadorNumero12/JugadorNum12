@@ -58,7 +58,7 @@
 	    <td><?php echo $form->error($modelo,'nueva_clave2'); ?></td>
 	  </tr>
 
-	  <tr>
+	 <!-- <tr>
 	   	<td>Personajes disponibles</td>
 	  </tr>
 
@@ -94,11 +94,11 @@
 
 	  <tr><?php if($error): ?>
 	   	<td>¡Debe escoger un personaje y un equipo!</td>
-	  <?php endif; ?></tr>
+	  <?php endif; ?></tr>-->
 
 	  <tr>
 	    <td >
-	    	<?php echo CHtml::submitButton('REGISTRAR',array('class'=>"button large black"));?>
+	    	<?php echo CHtml::submitButton('Siguiente',array(/*'submit'=>array('/registro/equipo'),*/'class'=>"button large black"));?>
 	    </td>
 	    <td >
 	    	<?php echo CHtml::resetButton('REINICIAR',array('class'=>"button large black"));?>

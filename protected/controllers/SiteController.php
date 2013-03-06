@@ -78,25 +78,39 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		$model=new LoginForm;
+		$modelo=new LoginForm;
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
-			echo CActiveForm::validate($model);
+			echo CActiveForm::validate($modelo);
 			Yii::app()->end();
 		}
 
 		// collect user input data
 		if(isset($_POST['LoginForm']))
 		{
-			$model->attributes=$_POST['LoginForm'];
+			$modelo->attributes=$_POST['LoginForm'];
+		
+
+
+
+			$usuario = Usuarios::model()->findByAttributes(array('nick'=>$modelo->username));
+			//die(var_dump($usuario));
+			//Comprobaciones
+			if($usuario->equipos_id_equipo === NULL){
+				$this->redirect(array('registro/equipo','id_usuario'=>$usuario->id_usuario));
+			}else if($usuario->personaje === NULL){
+				$this->redirect(array('registro/personaje','id_usuario'=>$usuario->id_usuario));
+			}
+
+
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
+			if($modelo->validate() && $modelo->login())
 				$this->redirect(array('usuarios/index'));
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('login',array('model'=>$modelo));
 	}
 
 	/**

@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS `acciones_individuales` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
   `cooldown` int(11) unsigned NOT NULL,
+  `devuelto` int(11) unsigned DEFAULT 0,
   KEY `acciones_individuales_FKIndex1` (`usuarios_id_usuario`),
   KEY `acciones_individuales_FKIndex2` (`habilidades_id_habilidad`),  
   PRIMARY KEY (`id_accion_individual`)
@@ -204,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `bonus_dinero` int(10) unsigned NOT NULL DEFAULT 0,
   `bonus_influencias` int(10) unsigned NOT NULL DEFAULT 0,
   `bonus_animo` int(10) unsigned NOT NULL DEFAULT 0,
+  `ultima_act` int(11) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -213,8 +215,8 @@ CREATE TABLE IF NOT EXISTS `recursos` (
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `equipos_id_equipo` int(10) unsigned NOT NULL,
-  `nick` varchar(45) NOT NULL,
+  `equipos_id_equipo` int(10) unsigned,
+  `nick` varchar(20) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `personaje` tinyint(4) unsigned DEFAULT NULL,

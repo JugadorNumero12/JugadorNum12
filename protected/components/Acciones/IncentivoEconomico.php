@@ -13,6 +13,15 @@
  */
 class IncentivoEconomico extends AccionGrupSingleton
 {
+   /* Función a través de la cual se accederá al Singleton */
+   public static function getInstance()
+   {
+      if (!self::$instancia instanceof self)
+      {
+         self::$instancia = new self;
+      }
+      return self::$instancia;
+   }
 	
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_accion)
@@ -23,7 +32,7 @@ class IncentivoEconomico extends AccionGrupSingleton
 	    $ret = 0;
 
 	    $accGrup = AccionesGrupales::model()->findByPk($id_accion);
-	    if ($accGrup == null)
+	    if ($accGrup === null)
 	      throw new Exception("Accion grupal inexistente.", 404);
 	      
 	    $creador = $accGrup->usuarios;
@@ -32,21 +41,21 @@ class IncentivoEconomico extends AccionGrupSingleton
 
 	    //1.- Añadir bonificación al partido
 	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",$datos_acciones['IncentivoEconomico']['nivel_equipo']));
+	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['IncentivoEconomico']['nivel_equipo']));
 
 	    //2.- Dar bonificación al creador
-		$ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias",$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
+		$ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
 	    
 	    //3.- Devolver influencias
 
 	    $participantes = $accGrup->participaciones;
-	    foreach ($participaciones as $participacion)
+	    foreach ($participantes as $participacion)
 	    {
-	      $infAportadas = $participacion->influencas_aportadas;
+	      $infAportadas = $participacion->influencias_aportadas;
 	      $usuario = $participacion->usuarios_id_usuario;
 	      if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
 	      {
-	        $ret = min($res,0);
+	        $ret = min($ret,0);
 	      }
 	      else
 	      {

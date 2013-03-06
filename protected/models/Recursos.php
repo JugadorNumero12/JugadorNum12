@@ -113,4 +113,62 @@ class Recursos extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function actualizaRecursos($id_usuario)
+	{
+		Yii::import('application.components.Helper');
+
+		try
+		{
+			$helper = new Helper();
+
+			$ahora = time();
+
+			$transaction = Yii::app()->db->beginTransaction();
+
+			$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
+
+			if ($rec === null)
+				throw new Exception("Recursos inexistentes. ModeloRecursos (actualizaRecursos)", 404);
+
+			//Tomar diferencia de minutos
+			$dif_minutos = floor(($ahora - $rec->ultima_act)/60);
+
+			if ($dif_minutos > 0)
+			{
+				//Solo actualizamos si han pasado ciertos minutos
+				$animo_nuevo = round($rec->animo_gen * $dif_minutos);
+				$dinero_nuevo = round($rec->dinero_gen * $dif_minutos);
+				$influencias_nuevas = round($rec->influencias_gen * $dif_minutos);
+
+				//Ultima actualización (para precisión total)
+				//if ($rec->ultima_act == 0)
+				//{
+					$rec->ultima_act = $ahora;
+				//}
+				//else
+				//{
+				//	$rec->ultima_act + ($dif_minutos*60);
+				//}
+
+				if (!$rec->save())
+					throw new Exception("Imposible guardar modelo de recursos. (actualizaRecursos,RecusosModel)", 500);					
+
+				//influencias
+				$helper->aumentar_recursos($rec->usuarios_id_usuario, "influencias", $influencias_nuevas);
+				//dinero
+				$helper->aumentar_recursos($rec->usuarios_id_usuario, "dinero", $dinero_nuevo);
+				//animo
+				$helper->aumentar_recursos($rec->usuarios_id_usuario, "animo", $animo_nuevo);
+			}
+
+			//Finalizar transacción con éxito
+			$transaction->commit();  
+		}
+		catch (Exception $e)
+		{
+			$transaction->rollback();
+			//throw $e;			
+		}	
+	}
 }

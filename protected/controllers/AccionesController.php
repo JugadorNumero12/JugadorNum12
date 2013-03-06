@@ -42,16 +42,31 @@ class AccionesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Sacar una lista de las acciones desbloqueadas de un usuario
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Sacar una lista con los recursos del usuario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
-		foreach ($accionesDesbloqueadas as $habilidad){
-			$acciones[] = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
+
+			//Comprobación de seguridad
+			if ($hab === null)
+				throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
 		//Envía los datos para que los muestre la vista
@@ -80,8 +95,13 @@ class AccionesController extends Controller
 	 */
 	public function actionUsar($id_accion)
 	{		
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
+		Yii::import('application.components.Acciones.*');
 		//Cojo el id_usuario
 		$id_usuario=Yii::app()->user->usIdent;
 		//Obtener modelo de Habilidades
@@ -123,13 +143,14 @@ class AccionesController extends Controller
 			//y cogiendo la que mayor cooldown tiene de toda la tabla
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-			$criteria->addCondition('habilidades_id_habilidad=:bid_accion';
-			$busqueda->params = array('bid_usuario' => $id_usuario,
-								'bid_accion' => $id_accion
-								);	
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+			$criteria->addCondition('devuelto = 0');
+			$criteria->params = array(	'bid_usuario' => $id_usuario,
+										'bid_accion' => $id_accion,
+										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
-			$accion_ind = AccionesIndividuales::model()->findAll($criteria);
+			$accion_ind = AccionesIndividuales::model()->find($criteria);
 			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
 			//Si no estaba creada, crear con cooldown = 0 
@@ -137,15 +158,15 @@ class AccionesController extends Controller
 				$accion_ind = new AccionesIndividuales();
 				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
-				   							  	  'cooldown' => 0 ));
+				   							  	  'cooldown' => 0 ,
+				   							  	  'devuelto'=> 1));
 			}
 
 			// TODO Sacar la hora actual
-			//$hora_act = time();
-			$hora_act = time(); 
+			$hora_act = time(); 			
 
 			// TODO Sacar el cooldown de la accion individual
-			$hora_cooldown = $accion_ind['cooldown']; 	//hora en la que acaba de regenerarse
+			$hora_cooldown = $accion_ind->cooldown; 	//hora en la que acaba de regenerarse
 
 			// Si  hora < hora_cooldown,
 			// cancelar transaccion y notificar al usuario
@@ -160,19 +181,32 @@ class AccionesController extends Controller
 				$res['dinero'] 		-= $habilidad['dinero'];
 				$res['animo']  		-= $habilidad['animo'];
 				$res['influencias'] -= $habilidad['influencias'];
-
-				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+				$res->save();
 
 				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind['cooldown'] = $hora_act + $tiempo_reg;
-
-				//guardar en los modelos
-				$res->save();
+				$accion_ind->cooldown = $hora_act + $tiempo_reg;
+				$accion_ind->devuelto=0;
+				
+				//guardar en los modelo				
 				$accion_ind->save();
+
+				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+				//Tomar nombre de habilidad para instanciación dinámica
+        		$hab = Habilidades::model()->findByPk($id_accion);
+        		if ($hab === null)
+        		{
+        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+        			
+        		}      
+        		  		
+        		$nombreHabilidad = $hab->codigo;
+
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}
+			}										   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
@@ -184,13 +218,15 @@ class AccionesController extends Controller
 				*/
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
-				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => Yii::app()->user->usAfic,
+				$id_usuario=Yii::app()->user->usIdent;
+				$id_equipo=Yii::app()->user->usAfic;
+				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
 				  															       'habilidades_id_habilidad' => $id_accion,
-				  															       'usuarios_id_usuario' =>  Yii::app()->user->usIdent,
+				  															       'usuarios_id_usuario' =>  $id_usuario,
 				  															        ));
 				
 				//Si no esta creada
-				if($accion_grupal == null){
+				if($accion_grupal === null){
 					//restar recursos al usuario (recursos iniciales)	
 					try{	
 						$res['dinero'] 		-= $habilidad['dinero'];
@@ -199,14 +235,14 @@ class AccionesController extends Controller
 						
 						//sumarselos al crear nueva accion grupal
 						$accion_grupal = new AccionesGrupales();
-						$accion_grupal->setAttributes( array('usuarios_id_usuario' => Yii::app()->user->usIdent,
+						$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
 					   							  	         'habilidades_id_habilidad' => $id_accion,
-					   							  	         'equipos_id_equipo' => Yii::app()->user->usAfic,
+					   							  	         'equipos_id_equipo' => $id_equipo,
 					   							  	         'influencias_acc'   => $habilidad['influencias'],
 					   							  	         'animo_acc' 	     => $habilidad['animo'],
 															 'dinero_acc' 	     => $habilidad['dinero'],
 															 'jugadores_acc'     => 1,
-															 'finalizacion'      => 201,													 
+															 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
 					   							  	         'completada' 	     => 0 ));
 						//guardar en los modelos
 						$res->save();
@@ -232,6 +268,16 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
+
+		//Redireccionar tras la ejecución
+		if ($habilidad->tipo == Habilidades::TIPO_INDIVIDUAL)
+		{			
+        		$this->redirect(array('acciones/index'));
+		}
+		else
+		{
+			//COMPLETAR
+		}
 		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
@@ -250,6 +296,10 @@ class AccionesController extends Controller
 	 */
 	public function actionVer($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Cojo la acción de la tabla acciones_grupales
 		$accionGrupal = AccionesGrupales::model()
 			->with('habilidades')
@@ -257,14 +307,17 @@ class AccionesController extends Controller
 			->with('usuarios')
 			->findByPk($id_accion);
 
+		//Comprobación de seguridad
+		if ($accionGrupal === null)
+			throw new Exception("La acción grupal no existe.", 404);
+			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
-			throw new CHttpException( 403, 'La acción no es de tu equipo');
-		}
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) 
+					throw new CHttpException( 403, 'La acción no es de tu equipo');
 
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
@@ -304,15 +357,19 @@ class AccionesController extends Controller
 	 */
 	public function actionParticipar($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* PEDRO pero cualquier duda preguntar a MARCOS*/
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
-		if($accion==null)
+		if($accion===null)
 			throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
 		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
-		if($habilidad==null)
+		if($habilidad===null)
 			throw new CHttpException(501,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
@@ -331,7 +388,7 @@ class AccionesController extends Controller
 
 		//Compuebo si el jugador ya ha participado en la acción
 		$participacion= Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
-		$nuevo_participante= $participacion==null;
+		$nuevo_participante= $participacion===null;
 
 		if($nuevo_participante){
 			//Compruebo que no se sobrepase el límite de jugadores
@@ -348,6 +405,11 @@ class AccionesController extends Controller
 
 		//Saco los recursos del ususario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_user));
+
+		//Comprobación de seguridad
+		if ($recursosUsuario === null)
+			throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
+			
 		$dineroUsuario = $recursosUsuario['dinero'];
 		$influenciasUsuario = $recursosUsuario['influencias'];
 		$animoUsuario = $recursosUsuario['animo'];
@@ -423,8 +485,8 @@ class AccionesController extends Controller
 			if($nuevo_participante)
 				$accion['jugadores_acc'] += 1;
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
-					$accion['completada'] = 1;
-			$accion->save();
+				$accion['completada'] = 1;					
+			
 			
 			//Actualizo la participación
 			if($nuevo_participante){
@@ -444,6 +506,19 @@ class AccionesController extends Controller
 					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
 			}
+			//Si la accion esta completada con esa aportacion, ejecutas la accion sino es asi guardas los cambios en la accion
+			if($accion['completada'] == 1)
+			{
+				$accion->save();
+				Yii::import('application.components.Acciones.*');
+				$nombreHabilidad = $habilidad->codigo;
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_accion);
+
+			}else
+				{
+					$accion->save();
+				}
 
 			$transaccion->commit();
 			
@@ -471,6 +546,10 @@ class AccionesController extends Controller
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* MARCOS */
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
@@ -481,7 +560,11 @@ class AccionesController extends Controller
 			$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 			
 			//Se comprueba la coherencia de la petición
-			if ($acc == null) {
+			if ($rec === null)
+			{
+				throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
+			}
+			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
@@ -490,7 +573,7 @@ class AccionesController extends Controller
 			if ($id_jugador == Yii::app()->user->usIden) {
 				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
 			}
-			if ($part == null) {
+			if ($part === null) {
 				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
 			}
 

@@ -1,0 +1,184 @@
+//Layout que se usa en todas las páginas
+
+// COLORES
+// ------------
+@BLANCO_ROTO: #FFFCFB;
+@GRIS: #CED5DE;
+@GRIS_OSCURO: #A0A6AD;
+@VERDE_12: #597f08;
+
+// MIXINS
+// ------------
+.propiedades_basicas(){
+    background: transparent;
+    margin: 1em 1em 1em 1em;
+    border: 0px white;
+}
+
+// ------------
+
+div#envoltorio1 {
+    min-height: 100%;
+    height: 100%;
+    margin: 0 auto ;
+    width:100%;
+
+	div#envoltorio2 {
+        height: 100%;
+		text-align: left;
+		margin: 0 auto;
+		width: 960px;
+
+		// CABECERA
+		// --------------
+		div#cabecera {
+			float: left;
+			width:100%;
+			margin: 0 0 3em 0;
+
+			div#logo {
+				.propiedades_basicas();
+				float: left;
+			}
+
+			div#titulo-jugador {
+				.propiedades_basicas();
+				float: left;
+				margin: 1em 0em 0em 0.5em;
+				width: 800px;
+				height: 100px;
+			}
+
+            div#clasificacion {
+                .propiedades_basicas();
+                li {
+                    display: inline;
+                    list-style-type: none;
+                    margin: 0em 1.5em 0em 2em;
+                    img.escudos-clasificacion{
+                    	width: 50px; 
+                    	height: 50px; 
+                    }  
+                }
+            }
+
+            #datos-cabecera{
+				background-color: blue;
+				width: 800px;
+				margin: 0px 0px 3em 15em;
+
+				div.elemento-nivel-dato-cabecera{
+					width: 10%;
+					margin: 1.25em 0.5em 1.25em 0.8em;
+					float:left;
+				}
+
+				div.elemento-dinero-dato-cabecera{
+					width: 10%;
+					margin: 1.25em 2.5em 1.25em 1.3em;
+					float:left;
+				}
+
+				div.elemento-barras-dato-cabecera{
+					width: 25%;
+					margin: 1em 1em;
+					float:left;
+				}
+
+				img.imagen1-dato-cabecera{
+					width:25px;
+					height:25px;
+				}
+
+				img.imagen2-dato-cabecera{
+					width:25px;
+					height:25px;
+					margin: 0.25em 0 0 0;
+				}
+
+				div.texto-nivel-dato-cabecera{
+					float:right;
+					margin: 0.3em 3em 0 0;
+				}
+
+				div.texto-dinero-dato-cabecera{
+					float:right;
+					margin: 0.3em 1em 0 0;
+				}
+
+				div.progressbar-cabecera{
+					width: 80%;
+					float:right;
+				}
+
+				//TEXTO DE LAS BARRAS DE PROGRESO
+				.label1{
+					float: right;
+					margin-right: 30%;
+					margin-top: 5px;
+					font-weight: bold;
+					text-shadow: 1px 1px 0 #fff;
+				}//#label1
+
+				.label2{
+				    float: left;
+				    margin-left: 40%;
+				    margin-top: 5px;
+				    font-weight: bold;
+				    text-shadow: 1px 1px 0 #fff;
+				}//#label2
+					
+			}//#table
+		
+        }
+
+		// CENTRO DE LA PAGINA
+        // -----------------------
+
+		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
+		#menu-izquierdo{
+			width: 17%;
+			float:left;
+		}//#menu-izquierdo
+
+		//Incluye el div del contenido 
+		#grupo-centro{
+			width:80%;
+			float:left;
+			margin: 1em 0em 0em 1em;
+
+			#contenido{
+			 	text-align: center;
+			}//#contenido
+		}//#grupo-derecha
+
+	}//#envoltorio2
+}//#envoltorio1
+
+
+
+//PIE DE PAGINA
+
+#pie-pagina {
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	background: transparent;
+	clear: both;
+}
+
+#pie-pagina{
+	left: 0;
+	bottom: 4px;
+	width: 100%;
+	padding: 0;
+	color: black;
+	font: 0.8em helvetica,arial,sans-serif;
+	text-align: center;
+}
+
+#pie-pagina a {
+	color: black;
+	text-decoration: none;
+}
+

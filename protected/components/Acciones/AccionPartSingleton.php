@@ -2,15 +2,12 @@
 class AccionPartSingleton
 {
    /* Instancia del objeto */
-   private static $instancia;   
-
-   /* Incluir tabla de efectos */
-   include('tabla_efectos.php');
+   protected static $instancia;   
 
    /* Constructora privada para evitar instanciación externa */
-   private function __construct()
+   protected function __construct()
    {
-      echo "Creado singletonDeAccionGrupal"; //Eliminar!!
+      //echo "Creado singletonDeAccionDePartido";
    }
 
    /* Función a través de la cual se accederá al Singleton */
@@ -26,9 +23,13 @@ class AccionPartSingleton
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. 
    Tambien devuelve las influencias aportadas.
    Se llamará al crear una grupal o participar en ella, siempre y cuando los recursos hayan sido alcanzados. */
-   public function ejecutar($id_usuario){ }
+   public function ejecutar($id_usuario)
+   {
+   }
 
-   public function finalizar() { }
+   public function finalizar() 
+   {
+   }
 
    /* Evita que el objeto se pueda clonar */
    public function __clone()
