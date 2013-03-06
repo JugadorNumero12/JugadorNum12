@@ -241,7 +241,7 @@ class AccionesController extends Controller
 					   							  	         'influencias_acc'   => $habilidad['influencias'],
 					   							  	         'animo_acc' 	     => $habilidad['animo'],
 															 'dinero_acc' 	     => $habilidad['dinero'],
-															 'jugadores_acc'     => 0,
+															 'jugadores_acc'     => 1,
 															 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
 					   							  	         'completada' 	     => 0 ));
 						//guardar en los modelos
