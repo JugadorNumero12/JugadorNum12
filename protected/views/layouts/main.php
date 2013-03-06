@@ -32,38 +32,16 @@
     		<img src="<?php echo Yii::app()->BaseUrl.'/images/logos/Jugador_Num_12_Verde.png'; ?>" width=800 height=100 border=0 alt="Logo Jugador numero 12">
     	</div>
     	<div id = "clasificacion">
-            <?php $clasificacion = Clasificacion::model()->findAll(array('order'=>'posicion ASC')); ?>
+            <?php $clasificacion = Clasificacion::model()->with('equipos')->findAll(array('order'=>'posicion ASC')); ?>
     		<ul>
     			<?php foreach ($clasificacion as $equipo) { ?>
                     <li> 
                         <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
-                            <?php switch ($equipo->equipos->nombre)
-								{
-								case 'Rojos': ?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rojo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos">
-									<?php break;
-								case 'Verdes':?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Verde"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes">								  
-									<?php break;
-								case 'Negros':?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Negro"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros">
-									<?php break;
-								case 'Blancos':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Blanco"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos">
-									<?php break;
-								case 'Naranjas':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Naranja"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" alt="Naranjas">
-									<?php break;
-								case 'Amarillos':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Amarillo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" alt="Amarillos">
-									<?php break;
-								case 'Azules':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Azul"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-azul.png'; ?>" alt="Azules">
-									<?php break;
-								case 'Rosas':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rosa"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" alt="Rosas">
-									<?php break;
-								} ?>
+                            <img
+                            	title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rojo"; ?>",
+                            	class="escudos-clasificacion"
+                            	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
+                            	alt="<?php echo $equipo->equipos->nombre; ?>">		
                         </a>
                     </li>
                 <?php } ?>
