@@ -1,10 +1,4 @@
 <?php
-/* @var $this UsuariosController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm  */
-?>
-
-<?php
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'emails-form',
 			    'enableAjaxValidation'=>false,

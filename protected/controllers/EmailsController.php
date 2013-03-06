@@ -39,6 +39,8 @@ class EmailsController extends Controller
 		$id= Yii::app()->user->usIdent; //id de usuario
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>$id));
 		foreach ($emails as $i=>$email){
+			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
+			//tmbn mirar si queremos la lista de los usuarios de su aficion
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
 			$niks[$i] = $usuario->nick;
 		}
