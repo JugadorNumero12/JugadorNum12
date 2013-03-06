@@ -129,24 +129,23 @@ class PartidosController extends Controller
 		elseif($id_partido == $modeloSigPartido->id_partido)
 		{
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
-			$presente = true;
+			//Renderizo la vista que me muestra la previa
+			$this->render('previa',array('modeloP'=>$modeloPartidos,
+									 'modeloL'=>$modeloEquipoLocal,
+									 'modeloV'=>$modeloEquipoVisitante,
+									 'modeloGL'=>$modeloGrupalesLocal,
+									 'modeloGV'=>$modeloGrupalesVisitante
+									 )); 
 			
 		}
 		else
 		{
 			//TODO enviar un error y redirigir,
 			//no se puede asistir a un partido que esta despues del siguiente partido
-			$cronica_partido = 'No hay informacion acerca del partido';
+			Yii::app()->user->setFlash('Partido', 'No hay informacion acerca del partido');
+			$this-> redirect(array('partidos/index'));
 		}
-
-		$this->render('previa',array('modeloP'=>$modeloPartidos,
-									 'modeloL'=>$modeloEquipoLocal,
-									 'modeloV'=>$modeloEquipoVisitante,
-									 'modeloGL'=>$modeloGrupalesLocal,
-									 'modeloGV'=>$modeloGrupalesVisitante,
-									 'partido_pasado'=>$pasado,
-									 'cronica'=>$cronica_partido,
-									 'partido_presente'=>$presente)); 
+		
 	}
 
 	/**
