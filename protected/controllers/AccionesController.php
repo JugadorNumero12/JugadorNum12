@@ -147,7 +147,7 @@ class AccionesController extends Controller
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->addCondition('devuelto = 0');
+			$criteria->addCondition('devuelto = 1');
 			$criteria->params = array(	'bid_usuario' => $id_usuario,
 										'bid_accion' => $id_accion,
 										);	
@@ -162,7 +162,7 @@ class AccionesController extends Controller
 				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
 				   							  	  'cooldown' => 0 ,
-				   							  	  'devuelto'=> 1));
+				   							  	  'devuelto'=> 0));
 			}
 
 			// TODO Sacar la hora actual
