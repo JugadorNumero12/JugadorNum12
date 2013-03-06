@@ -131,11 +131,12 @@ class EquiposController extends Controller
 		//Si el id nuevo no corresponde a ningun equipo tambien devuelve error
 		if($id_nuevo_equipo == $modeloUsuario->equipos_id_equipo)
 		{
-			throw new CHttpException(500,'Tienes que cambiarte a un equipo diferente al actual');
+			Yii::app()->user->setFlash('equipo_actual', 'Tienes que cambiarte a un equipo diferente al actual.');
+			$this->redirect(array('equipos/ver/','id_equipo'=>$id_nuevo_equipo));
 
 		}else if ($modeloEquipo===null)
 				{
-					throw new CHttpException(500,'No existe el equipo al que quiere cambiarse');
+					throw new CHttpException(404,'No existe el equipo al que quiere cambiarse.');
 
 				}else 
 					{

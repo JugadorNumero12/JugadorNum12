@@ -173,6 +173,7 @@ class PartidosController extends Controller
 		$equipoLocal = Equipos::model()->findByPk($partido->equipos_id_equipo_1);
 		$equipoVisitante = Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
+
 		//Comprobación de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
 		{
@@ -199,6 +200,23 @@ class PartidosController extends Controller
 			// Creamos el renderPartial del estado del partido
 			else 
 			{	
+				
+/* PARTE DE MASTER
+		// un usuario no puede asisitir a un partido en el que su equipo no participa
+		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
+			
+			// TODO
+			Yii::app()->user->setFlash('propio_equipo', 'No puedes asistir a un partido que no sea de tu propio equipo.');
+			$this-> redirect(array('partidos/index'));
+		
+		} 
+		// un usuario solo puede asistir al próximo partido de su equipo
+		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
+			
+			// TODO 
+			Yii::app()->user->setFlash('sig_partido', 'Ese no es el proximo partido de tu equipo.');
+			$this-> redirect(array('partidos/index'));
+*/
 
 				//fixme no se si esto va aqui
 				//Calculo del porcertage para mostrar en el grafico cirular
