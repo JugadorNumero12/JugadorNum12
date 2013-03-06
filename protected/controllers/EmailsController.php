@@ -38,7 +38,11 @@ class EmailsController extends Controller
 	public function actionIndex(){
 		$id= Yii::app()->user->usIdent; //id de usuario
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>$id));
-		$this->render('index',array('emails'=>$emails));
+		foreach ($emails as $i=>$email){
+			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
+			$niks[$i] = $usuario->nick;
+		}
+		$this->render('index',array('emails'=>$emails,'niks'=>$niks));
 	}
 
 	/**
