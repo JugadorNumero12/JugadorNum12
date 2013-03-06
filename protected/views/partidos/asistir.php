@@ -19,14 +19,21 @@
 ?>
 
 <div id="envoltorio-asistir">
-
-
+	
 	<div id="renderizado-parcial">
 		<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
 								 'nombre_visitante' => $nombre_visitante,
-								 'estado' => $estado)); ?>
+								 'estado' => $estado,
+								 'porcentage' => $porcentage)); ?>
 	</div> <!--end renderizado parcial-->
 
-	<div id="seccion5">Aqui va la seccion 5 (Las acciones)</div> <!--end seccion5 (habilidades de partido)-->
 
-</div> <!--end envoltorio-asistir -->
+	<div id="seccion5">
+		Aqui va la seccion 5 (Las acciones)
+		<br>
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dictum euismod risus, in imperdiet velit pharetra sed. Donec iaculis massa nec dui dignissim pellentesque. Etiam nec sem enim, et ullamcorper tortor. Vestibulum vitae sem id purus sagittis mattis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras ullamcorper magna condimentum velit viverra sed tincidunt nulla bibendum. Nam sed massa ac massa tempor aliquam nec ut eros. Quisque et diam eget erat ornare ultricies.
+
+Nam fringilla mauris sit amet justo lacinia porta. Pellentesque nec tortor quam, ac hendrerit purus. Quisque non nisl dui, in dapibus nunc. Quisque pretium nulla id nibh posuere mattis. Aenean luctus libero nec nibh euismod viverra. Curabitur imperdiet nisl vitae sapien dictum posuere. Aliquam non tristique lorem. Suspendisse placerat ante molestie libero pulvinar dictum. Suspendisse ultrices cursus hendrerit. Nulla a mauris ut urna mollis ullamcorper eu eget lorem.
+	</div> <!--end seccion5 (habilidades de partido)-->
+
+</div>

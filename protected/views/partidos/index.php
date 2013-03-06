@@ -33,13 +33,14 @@
 			</td>
 			
 			<td>
-				<?php echo $partido->hora ?>
+				<?php echo Yii::app()->format->formatDatetime($partido->hora)?>
 			</td>
 
 			<td>
-				<?php if($partido->id_partido == $proximo_partido) { ?>
+				<?php if($partido->id_partido == $proximo_partido->id_partido &&  $proximo_partido->turno >= $primer_turno+1 && $proximo_partido->turno < $ultimo_turno) { ?>
 					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> 
-				
+				<?php } else if ($partido->id_partido == $proximo_partido->id_partido ) {?>
+					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximo_partido->id_partido),'class'=>"button small black")) ?>
 				<?php } else { ?>
 					<?php echo $partido->cronica ?>
 

@@ -42,6 +42,10 @@ class AccionesController extends Controller
 	 */
 	public function actionIndex()
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Sacar una lista de las acciones desbloqueadas de un usuario
 		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
@@ -91,6 +95,10 @@ class AccionesController extends Controller
 	 */
 	public function actionUsar($id_accion)
 	{		
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
 		Yii::import('application.components.Acciones.*');
@@ -198,7 +206,7 @@ class AccionesController extends Controller
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}
+			}										   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
@@ -260,7 +268,17 @@ class AccionesController extends Controller
 		}
 
 		$trans->commit();
-		//$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+
+		//Redireccionar tras la ejecución
+		if ($habilidad->tipo == Habilidades::TIPO_INDIVIDUAL)
+		{			
+        		$this->redirect(array('acciones/index'));
+		}
+		else
+		{
+			//COMPLETAR
+		}
+		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
 	/**
@@ -278,6 +296,10 @@ class AccionesController extends Controller
 	 */
 	public function actionVer($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		// Cojo la acción de la tabla acciones_grupales
 		$accionGrupal = AccionesGrupales::model()
 			->with('habilidades')
@@ -335,6 +357,10 @@ class AccionesController extends Controller
 	 */
 	public function actionParticipar($id_accion)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* PEDRO pero cualquier duda preguntar a MARCOS*/
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
@@ -459,8 +485,8 @@ class AccionesController extends Controller
 			if($nuevo_participante)
 				$accion['jugadores_acc'] += 1;
 			if ($accion['dinero_acc'] == $habilidad['dinero_max'] && $accion['influencias_acc'] == $habilidad['influencias_max'] && $accion['animo_acc'] == $habilidad['animo_max'])
-					$accion['completada'] = 1;
-			$accion->save();
+				$accion['completada'] = 1;					
+			
 			
 			//Actualizo la participación
 			if($nuevo_participante){
@@ -480,6 +506,19 @@ class AccionesController extends Controller
 					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
 			}
+			//Si la accion esta completada con esa aportacion, ejecutas la accion sino es asi guardas los cambios en la accion
+			if($accion['completada'] == 1)
+			{
+				$accion->save();
+				Yii::import('application.components.Acciones.*');
+				$nombreHabilidad = $habilidad->codigo;
+        		//Llamar al singleton correspondiente y ejecutar dicha acción
+        		$nombreHabilidad::getInstance()->ejecutar($id_accion);
+
+			}else
+				{
+					$accion->save();
+				}
 
 			$transaccion->commit();
 			
@@ -507,6 +546,10 @@ class AccionesController extends Controller
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
+		/* Actualizar datos de usuario (recuros,individuales y grupales) */
+		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
+		/* Fin de actualización */
+		
 		/* MARCOS */
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();

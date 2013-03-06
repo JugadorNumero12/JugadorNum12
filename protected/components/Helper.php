@@ -3,7 +3,7 @@
 class Helper
 {
 	/*Sirve para cambiar más facilmente los factores de partido*/
-	static $datos_factores = array (	
+	public  static $datos_factores = array (	
 		//Si es local
 		'local' => array (
 			'ambiente'=> 'ambiente',
@@ -37,6 +37,13 @@ class Helper
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
 		$usuario=Usuarios::model()->findByPK($id_usuario);
+
+		//Comprobación de seguridad
+		if ($usuario === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_recursos,Helper.php)");
+			
+		}
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
@@ -91,6 +98,13 @@ class Helper
 		/* ROBER */
 		/*Recupero el usuario del que voy a aumentar los recursos*/
 		$usuario=Usuarios::model()->findByPK($id_usuario);
+
+		//Comprobación de seguridad
+		if ($usuario === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (quitar_recursos,Helper.php)");
+			
+		}
 		/*Recupero de la tabla recursos la fila correspondiente a este usuario
 		  Compruebo si hay una instancia para ese usuario, sino la hay es null y devuelvo error*/
 		$recursos=$usuario->recursos;
@@ -120,7 +134,7 @@ class Helper
 			}
 	} 
 
-	/** Funcion auxiliar que modifica la tabla de recursos
+	/** Funcion auxiliar que modifica la tabla de partidos
 	 * 
 	 * @paremetro partido en el que modificamos sus factores
 	 * @paremetro equipo al que pertenece
@@ -133,10 +147,17 @@ class Helper
 		//Cojo el modelo correspondiente a ese id
 		$partido=Partidos::model()->findByPK($id_partido);
 
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_factores,Helper.php)");
+			
+		}
+
 		//Comrpuebo si juega de local o de visitante
 		if($partido->equipos_id_equipo_1 == $id_equipo)
 		{
-			$factor=$datos_factores['local'][$columna];
+			$factor=self::$datos_factores['local'][$columna];
 			$valor_nuevo=$partido->$factor + $cantidad;
 			//Si fallara tiene que ser por el $factor,comprobar si es asi 
 			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
@@ -144,7 +165,7 @@ class Helper
 
 		}else if($partido->equipos_id_equipo_2 == $id_equipo)
 				{
-					$factor=$datos_factores['visitante'][$columna];
+					$factor=self::$datos_factores['visitante'][$columna];
 					$valor_nuevo=$partido->$factor + $cantidad;
 					//Si fallara tiene que ser por el $factor,comprobar si es asi 
 					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
@@ -157,7 +178,8 @@ class Helper
 						return -1;
 					}
 	}
-	/** Funcion auxiliar que modifica la tabla de recursos
+
+	/** Funcion auxiliar que modifica la tabla de partidos
 	 * 
 	 * @paremetro partido en el que modificamos sus factores
 	 * @paremetro equipo al que pertenece
@@ -170,10 +192,17 @@ class Helper
 		//Cojo el modelo correspondiente a ese id
 		$partido=Partidos::model()->findByPK($id_partido);
 
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (disminuir_factores,Helper.php)");
+			
+		}
+
 		//Comrpuebo si juega de local o de visitante
 		if($partido->equipos_id_equipo_1 == $id_equipo)
 		{
-			$factor=$datos_factores['local'][$columna];
+			$factor=self::$datos_factores['local'][$columna];
 			$valor_nuevo=$partido->$factor - $cantidad;
 			//Si fallara tiene que ser por el $factor,comprobar si es asi 
 			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
@@ -181,7 +210,7 @@ class Helper
 
 		}else if($partido->equipos_id_equipo_2 == $id_equipo)
 				{
-					$factor=$datos_factores['visitante'][$columna];
+					$factor=self::$datos_factores['visitante'][$columna];
 					$valor_nuevo=$partido->$factor - $cantidad;
 					//Si fallara tiene que ser por el $factor,comprobar si es asi 
 					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
@@ -192,6 +221,78 @@ class Helper
 						//los id de los equipo del partido
 						return -1;
 					}
+	}
+
+
+	/** Funcion auxiliar que modifica la tabla de partidos. A diferencia del
+	 * aumento normal de factores, éste se hace de forma proporcional.
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro proporción de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public function aumentar_factores_prop($id_partido,$id_equipo, $columna, $proporcion)
+	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
+
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_factores_prop,Helper.php)");
+			
+		}
+
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=self::$datos_factores['local'][$columna];
+
+			//Aumentar proporcionalmente
+			$valor_nuevo = $partido->$factor + ($partido->$factor * $proporcion);
+
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		
+     		if ($partido->save())
+     		{ 
+     			return 0;
+     		}
+     		else
+     		{
+     		 	return -1;
+     		}
+
+		}
+		else 
+		{
+			if($partido->equipos_id_equipo_2 == $id_equipo)
+			{
+				$factor=self::$datos_factores['visitante'][$columna];
+				//Aumentar proporcionalmente
+				$valor_nuevo = $partido->$factor + ($partido->$factor * $proporcion);
+
+				//Si fallara tiene que ser por el $factor,comprobar si es asi 
+				$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+	     		
+	     		if ($partido->save())
+	     		{ 
+	     			return 0;
+	     		}
+	     		else
+	     		{
+	     		 	return -1;
+	     		}
+			}
+			else
+			{
+				//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+				//los id de los equipo del partido
+				return -1;
+			}
+		}
 	}
 }
 
