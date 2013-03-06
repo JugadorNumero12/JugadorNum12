@@ -321,7 +321,7 @@ class AccionesController extends Controller
 
 		//Comprobación de seguridad
 		if ($accionGrupal === null)
-			throw new Exception("La acción grupal no existe.", 404);
+			throw new CHttpException(404,"La acción grupal no existe.");
 			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
