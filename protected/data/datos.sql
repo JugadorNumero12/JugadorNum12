@@ -197,11 +197,11 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  -- PARTIDO 		2
  -- PASIVAS 		3
  -- ---------------------
- ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 12, 3, 200),
- ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 12, 3, 200),
- ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 24, 3, 200),
- ('Pintarse', 0, 'Pintarse con los colores del equipo', '"DESCRIPCION PARA PINTARSE"', 200, 30, 0, 400, 600, 1, 3, 200),
- ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"DESCRIPCION PARA PROMOVER PARTIDO"', 60, 15, 1, 1200, 300, 24, 3, 200),
+ ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 12, 3, 600),
+ ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 12, 3, 600),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 24, 3, 600),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"DESCRIPCION PARA PINTARSE"', 200, 30, 0, 400, 600, 1, 3, 600),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"DESCRIPCION PARA PROMOVER PARTIDO"', 60, 15, 1, 1200, 300, 24, 3, 600),
  ('Apostar', 1, 'Apostar por el partido', '"DESCRIPCION APOSTAR"', 500, 3, 1, NULL, NULL, NULL, 1, 200),
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
  ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"DESCRIPCION CONTRATAR RRPP"', 60, 15, 1, NULL, NULL, NULL, 1, 200),

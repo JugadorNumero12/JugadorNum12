@@ -42,5 +42,5 @@
 	  <tr>
 	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Cambiar email');?></td>
 	  </tr>
-	</table>
+</table>
 	<?php $this->endWidget(); ?>

@@ -14,13 +14,19 @@
 
 	<div class="encabezado"><h1><?php echo $accionGrupal['habilidades']['nombre']; ?></h1></div>
 
+	<?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+	?>
+
 	<div class="datos-accion">
 		<table class="tablas-acciones-ver">
 			<tr><th>Creador: </th><td> <a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $accionGrupal->usuarios->id_usuario));?>"> <?php echo $accionGrupal->usuarios->nick; ?> </a></td></tr>
 			<tr><th>Equipo creador: </th><td><a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo' => $accionGrupal->equipos->id_equipo));?>"><?php echo $accionGrupal->equipos->nombre; ?></a></td></tr>
-			<tr><th>Numero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc']; ?></td></tr>
+			<tr><th>N&uacute;mero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc']; ?></td></tr>
 			<!--<tr><th>Efecto que se consigue: </th><td><?php echo $accionGrupal['habilidades']['descripcion']; ?></td></tr>-->
-			<tr><th>Finalizacion: </h><td><?php echo $accionGrupal['finalizacion']; ?></td></tr>
+			<tr><th>Finalizaci&oacute;n: </h><td><?php echo Yii::app()->format->formatDatetime($accionGrupal['finalizacion']); ?></td></tr>
 		</table>
 	</div>
 
@@ -29,7 +35,7 @@
 			<table class="tablas-acciones-ver">
 				<tr><th>Dinero: </th><td><?php echo $accionGrupal['dinero_acc'];?> / <?php echo$accionGrupal['habilidades']['dinero_max']; ?> </td></tr>
 				<tr><th>Influencias: </th><td><?php echo $accionGrupal['influencias_acc'];?> / <?php echo $accionGrupal['habilidades']['influencias_max']; ?> </td></tr>
-				<tr><th>Animo: </th><td><?php echo $accionGrupal['animo_acc'];?> / <?php echo $accionGrupal['habilidades']['animo_max']; ?> </td></tr>
+				<tr><th>&Aacute;nimo: </th><td><?php echo $accionGrupal['animo_acc'];?> / <?php echo $accionGrupal['habilidades']['animo_max']; ?> </td></tr>
 			</table>
 	</div>
 
@@ -40,9 +46,9 @@
 					<th>Usuario</th>
 					<th>Dinero</th>
 					<th>Influencias</th>
-					<th>Animo</th>
+					<th>&Aacute;nimo</th>
 				</th>
-				<?php foreach ($accionGrupal->participaciones as $participacion){ ?>
+				<?php foreach ($accionGrupal['participaciones'] as $participacion){ ?>
 					<tr>
 						<td><a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $participacion->usuario->id_usuario));?>"><?php echo $participacion->usuario->nick; ?></a></td>
 						<td><?php printf('%d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?> </td>
@@ -61,19 +67,19 @@
 
 	<div class="mensaje">
 		<?php if ($esParticipante == true){
-			echo "Ya has participado en la accion";} ?>
+			echo "Ya has participado en la acción";} ?>
 	</div>
 
 	<!-- Compruebo si la accion ha alcanzado el numero maximo de participantes -->
 	<div class="mensaje">
 		<?php if ($accionGrupal['jugadores_acc'] >= $accionGrupal['habilidades']['participantes_max']){
-			echo 'La accion ha alcanzado el número máximo de participantes';
+			echo 'La acción ha alcanzado el número máximo de participantes';
 		} ?>
 	</div>
 
 	<div class="mensaje">
 		<?php if ($accionGrupal['completada'] == 1){
-			echo "La accion se ha completado";
+			echo "La acción se ha completado";
 		} ?>
 	</div>
 
