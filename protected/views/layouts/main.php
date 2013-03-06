@@ -38,8 +38,8 @@
                     <li> 
                         <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
                             <img
-                            	title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rojo"; ?>",
-                            	class="escudos-clasificacion"
+                            	title="<?php echo $equipo->posicion . '&ordm; con ' . $equipo->puntos . ' puntos'; ?>",
+                            	class="escudos-clasificacion equipo-<?php echo $equipo->equipos->token ?>"
                             	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
                             	alt="<?php echo $equipo->equipos->nombre; ?>">		
                         </a>

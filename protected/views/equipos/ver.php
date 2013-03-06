@@ -23,35 +23,10 @@
 			<div class="perfil-grupo-arriba-izquierda">
 
 				<div class="perfil-grupo-arriba-izquierda-personaje">
-				
-				<?php switch ($equipo->id_equipo)
-				{
-					case 1: ?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" width=150 height=150 border=0 alt="Escudo rojo"> 
-					  <?php break;
-					case 2:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" width=150 height=150 border=0 alt="Escudo verde"> 
-					  <?php break;
-					case 3:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" width=150 height=150 border=0 alt="Escudo negro"> 
-					  <?php break;
-					  case 4:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" width=150 height=150 border=0 alt="Escudo blanco"> 
-					  <?php break;
-					  case 5:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-azul.png'; ?>" width=150 height=150 border=0 alt="Escudo azul"> 
-					  <?php break;
-					  case 6:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" width=150 height=150 border=0 alt="Escudo rosa"> 
-					  <?php break;
-					  case 7:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" width=150 height=150 border=0 alt="Escudo naranja"> 
-					  <?php break;
-					  case 8:?>
-					  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" width=150 height=150 border=0 alt="Escudo amarillo"> 
-					  <?php break;
-				} ?>	
-
+					<img
+						src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
+						width=150 height=150 
+						alt="<?php echo $equipo->nombre ?>"> 
 				</div>
 
 			</div>

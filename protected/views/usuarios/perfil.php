@@ -41,22 +41,11 @@
 				</div>
 
 				<div class="perfil-grupo-arriba-izquierda-equipo">
-				
-				 <?php switch ($modeloU->equipos->id_equipo)
-								{
-								case 1: ?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" width=100 height=100 border=0 alt="Escudo rojo"> 
-								  <?php break;
-								case 2:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" width=100 height=100 border=0 alt="Escudo verde"> 
-								  <?php break;
-								case 3:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" width=100 height=100 border=0 alt="Escudo negro"> 
-								  <?php break;
-								  case 4:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" width=100 height=100 border=0 alt="Escudo blanco"> 
-								  <?php break;
-								} ?> 
+					<img
+						src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$modeloU->equipos->token.'.png'; ?>"
+						width="100" height="100"
+						alt="<?php echo $modeloU->equipos->nombre; ?>"> 
+						
 				</div>
 
 			</div>
