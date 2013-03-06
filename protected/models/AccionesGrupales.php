@@ -163,7 +163,7 @@ class AccionesGrupales extends CActiveRecord
 				}
 
 				//Borro esa accion grupal iniciada por el usuario que quiere cambiar de equipo
-				//AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
+				AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
 			}
 			//Finalizar transacción con éxito
 			$transaction->commit();  

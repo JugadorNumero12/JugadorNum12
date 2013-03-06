@@ -4,7 +4,8 @@ class PartidoCommand extends CConsoleCommand
     public function run($args) 
     {
         //Ejecutamos un turno de partido        
-        Yii::import('application.components.Partido');
+        /*Yii::import('application.components.*');
+        Yii::import('application.models.*');
 
         $tiempo=time();
         $primerTurno=Partido::PRIMER_TURNO;
@@ -32,7 +33,8 @@ class PartidoCommand extends CConsoleCommand
                 $transaction->rollback();
                 throw $ex;
             }
-        }
+        }*/
+        $xml = file_get_contents("http://localhost/yii/JugadorNum12/scripts/ejecutarturno");
     }
 }
 ?>
