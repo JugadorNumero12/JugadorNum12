@@ -17,7 +17,7 @@
 * 1.- Un <div> bajo este contenedor anterior para meter las acciones de partido.
 */
 ?>
-
+ 
 <div id="envoltorio-asistir">
 	
 	<div id="renderizado-parcial">
