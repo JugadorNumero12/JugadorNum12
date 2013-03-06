@@ -155,7 +155,7 @@ class RegistroController extends Controller
 
 
 				if($modelo->save()){
-					//$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
+					$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
 					$transaction->commit();
 					$this->redirect(array('site/login'));
 				}else $error = true;
