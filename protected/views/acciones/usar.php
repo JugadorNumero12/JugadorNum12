@@ -1,6 +1,7 @@
 <?php
-/* @var habilidad La habilidad (acción) que se está intentando usar y toda su info */
-// @var $res -> Recursos del usuario
+/* 	@var $id_acc: id de acción grupal para poder participar
+	@var $habilidad La habilidad (acción) que se está intentando usar y toda su info */
+// 	@var $res -> Recursos del usuario
 ?>
 
 <div class="envoltorio-acciones-usar">
@@ -23,7 +24,10 @@
 			<tr><th>&Aacute;nimo: </th><td><?php echo $res['animo']; ?></td></tr>
 		</table>
 
-		<div class="botones-usar">			
+		<div class="botones-usar">	
+			<?php if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ){ ?>
+        			<?php echo CHtml::button('Participar', array('submit' => array('acciones/participar', 'id_accion'=>$id_acc),'class'=>"button small black")); ?>
+	     	<?php } ?>  		
 			<?php echo CHtml::button('Volver', array('submit' => array('acciones/index'),'class'=>"button small black")); ?>
 		</div>
 </div>

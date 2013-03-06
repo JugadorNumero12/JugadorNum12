@@ -274,19 +274,16 @@ class AccionesController extends Controller
 
 		$trans->commit();
 
-		//Redireccionar tras la ejecución
-		if ($habilidad->tipo == Habilidades::TIPO_INDIVIDUAL)
-		{			
-        		$this->redirect(array('acciones/index'));
+		//Renderizar acción individual 
+		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
+			/* 	como no está definido el id_accion_grupal, le damos cualquier valor
+				porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
+			$id_acc = -1;
+			$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
 		}
-		else
-		{
-			//COMPLETAR
-		}
+
+		//Renderizar acción grupal
 		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
-/* MASTER
-		$this->render('usar', array('habilidad'=>$habilidad, 'res'=>$res));
->>>>>>> master*/
 	}
 
 	/**
