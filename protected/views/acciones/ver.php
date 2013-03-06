@@ -18,9 +18,9 @@
 		<table class="tablas-acciones-ver">
 			<tr><th>Creador: </th><td> <a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $accionGrupal->usuarios->id_usuario));?>"> <?php echo $accionGrupal->usuarios->nick; ?> </a></td></tr>
 			<tr><th>Equipo creador: </th><td><a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo' => $accionGrupal->equipos->id_equipo));?>"><?php echo $accionGrupal->equipos->nombre; ?></a></td></tr>
-			<tr><th>Numero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc']; ?></td></tr>
+			<tr><th>Numero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc'] . "/" . $accionGrupal->habilidades->participantes_max; ?></td></tr>
 			<!--<tr><th>Efecto que se consigue: </th><td><?php echo $accionGrupal['habilidades']['descripcion']; ?></td></tr>-->
-			<tr><th>Finalizacion: </h><td><?php echo $accionGrupal['finalizacion']; ?></td></tr>
+			<tr><th>Finalizacion: </h><td><?php echo Yii::app()->format->formatDateTime($accionGrupal['finalizacion']); ?></td></tr>
 		</table>
 	</div>
 
