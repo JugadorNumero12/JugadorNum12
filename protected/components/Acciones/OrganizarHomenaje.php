@@ -41,7 +41,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
 
       //1.- Añadir bonificación al partido
       $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['OrganizarHomenaje']['aforo']));
+      $ret = min($ret,$helper->aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['OrganizarHomenaje']['aforo']));
 
       //2.- Dar bonificación al creador
       $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias_max",Efectos::$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']));
@@ -49,13 +49,13 @@ class OrganizarHomenaje extends AccionGrupSingleton
       //3.- Devolver influencias
 
       $participantes = $accGrup->participaciones;
-      foreach ($participaciones as $participacion)
+      foreach ($participantes as $participacion)
       {
-        $infAportadas = $participacion->influencas_aportadas;
+        $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
         if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
         {
-          $ret = min($res,0);
+          $ret = min($ret,0);
         }
         else
         {

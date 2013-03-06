@@ -9,7 +9,7 @@
  *  Aumenta el factor de partido "defensivo"
  *  Aumenta de forma inmediata el recurso animo del jugador
  */
-class RetransmitirRRSS extends AccionSingleton
+class RetransmitirRRSS extends AccionPartSingleton
 {
    /* Función a través de la cual se accederá al Singleton */
    public static function getInstance()

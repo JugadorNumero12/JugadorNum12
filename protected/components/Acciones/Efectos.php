@@ -42,7 +42,7 @@ class Efectos
 		), 
 			
 		'Pintarse' => array (
-			'ambiente' => 1,
+			'ambiente' => 2,
 			'animo' => 30,
 			'bonus_creador' => array ('animo' => 15)
 		), 
@@ -93,7 +93,7 @@ class Efectos
 		// PASIVAS
 		// -------------------------------------------------
 			'Ascender' => array (
-			'dinero_gen' => 0.12
+			'dinero_gen' => 12
 		), 
 	);
 }

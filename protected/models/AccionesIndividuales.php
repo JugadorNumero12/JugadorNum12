@@ -92,4 +92,61 @@ class AccionesIndividuales extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	/*
+	* Esta función finaliza las acciones grupales de un usuario concreto.
+	*/
+	public function finalizaIndividuales($id_usuario)
+	{
+		$transaction = Yii::app()->db->beginTransaction();
+    	try
+    	{
+			Yii::import('application.components.Acciones.*');
+
+			$tiempo = time();
+			$busqueda=new CDbCriteria;
+			$busqueda->addCondition(':bTiempo >= cooldown');
+			$busqueda->addCondition('devuelto = :bDevuelto');
+			$busqueda->addCondition('usuarios_id_usuario = :bUsuario');
+			$busqueda->params = array(':bTiempo' => $tiempo,
+									':bUsuario' => $id_usuario,
+									':bDevuelto' => 0,
+									);
+			$individuales = AccionesIndividuales::model()->findAll($busqueda);
+
+			//Iterar sobre cada individual y finalizarla
+			foreach ($individuales as $ind)
+			{
+        		//Tomar nombre de habilidad para instanciación dinámica
+        		$hab = Habilidades::model()->findByPk($ind->habilidades_id_habilidad);
+        		if ($hab === null)
+        		{
+        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			
+        		}        		
+        		$nombreHabilidad =  $hab->codigo;
+
+        		//Llamar al singleton correspondiente y finalizar dicha acción
+        		$nombreHabilidad::getInstance()->finalizar($ind->usuarios_id_usuario,$ind->habilidades_id_habilidad);
+
+        		//Actualizar la base de datos para permitir un nuevo uso de la acción
+        		$ind->devuelto = 1;
+
+        		if (!$ind->save())
+        		{
+        			throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
+        			
+        		}
+			}
+
+			//Finalizar correctamente la transacción  
+			$transaction->commit();     		
+    	}
+    	catch (Exception $ex)
+    	{
+    		//Rollback de la transacción en caso de error
+    		$transaction->rollback();
+    		//throw $ex; -> Deshabilitado para no dar fallos continuamente. Justificado.
+    	}
+	}
 }

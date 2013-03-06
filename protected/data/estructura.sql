@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `bonus_dinero` int(10) unsigned NOT NULL DEFAULT 0,
   `bonus_influencias` int(10) unsigned NOT NULL DEFAULT 0,
   `bonus_animo` int(10) unsigned NOT NULL DEFAULT 0,
+  `ultima_act` int(11) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`usuarios_id_usuario`),
   KEY `recursos_FKIndex1` (`usuarios_id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
