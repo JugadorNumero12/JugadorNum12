@@ -175,36 +175,36 @@ class RegistroController extends Controller
 		switch ($personaje) {
 			case Usuarios::PERSONAJE_MOVEDORA: //animadora
 				echo "animadora";
-				$rec->setAttributes(array('dinero'=>0));
-				$rec->setAttributes(array('dinero_gen'=>0.0));
-				$rec->setAttributes(array('influencias'=>0));
-				$rec->setAttributes(array('influencias_max'=>0));
-				$rec->setAttributes(array('influencias_gen'=>0.0));
-				$rec->setAttributes(array('animo'=>0));
-				$rec->setAttributes(array('animo_max'=>0));
-				$rec->setAttributes(array('animo_gen'=>0.0));
+				$rec->setAttributes(array('dinero'=>600));
+				$rec->setAttributes(array('dinero_gen'=>2.0));
+				$rec->setAttributes(array('influencias'=>5));
+				$rec->setAttributes(array('influencias_max'=>12));
+				$rec->setAttributes(array('influencias_gen'=>3.0));
+				$rec->setAttributes(array('animo'=>50));
+				$rec->setAttributes(array('animo_max'=>250));
+				$rec->setAttributes(array('animo_gen'=>9.0));
 				break;
 			case Usuarios::PERSONAJE_EMPRESARIO: //empresario
 				echo "empresario";
-				$rec->setAttributes(array('dinero'=>0));
-				$rec->setAttributes(array('dinero_gen'=>0.0));
-				$rec->setAttributes(array('influencias'=>0));
-				$rec->setAttributes(array('influencias_max'=>0));
-				$rec->setAttributes(array('influencias_gen'=>0.0));
-				$rec->setAttributes(array('animo'=>0));
-				$rec->setAttributes(array('animo_max'=>0));
-				$rec->setAttributes(array('animo_gen'=>0.0));
+				$rec->setAttributes(array('dinero'=>5000));
+				$rec->setAttributes(array('dinero_gen'=>16.0));
+				$rec->setAttributes(array('influencias'=>3));
+				$rec->setAttributes(array('influencias_max'=>8));
+				$rec->setAttributes(array('influencias_gen'=>2.0));
+				$rec->setAttributes(array('animo'=>15));
+				$rec->setAttributes(array('animo_max'=>50));
+				$rec->setAttributes(array('animo_gen'=>1.0));
 				break;
 			case Usuarios::PERSONAJE_ULTRA: //ultra
 				echo "ultra";
-				$rec->setAttributes(array('dinero'=>0));
-				$rec->setAttributes(array('dinero_gen'=>0.0));
-				$rec->setAttributes(array('influencias'=>0));
-				$rec->setAttributes(array('influencias_max'=>0));
-				$rec->setAttributes(array('influencias_gen'=>0.0));
-				$rec->setAttributes(array('animo'=>0));
-				$rec->setAttributes(array('animo_max'=>0));
-				$rec->setAttributes(array('animo_gen'=>0.0));
+				$rec->setAttributes(array('dinero'=>2000));
+				$rec->setAttributes(array('dinero_gen'=>5.0));
+				$rec->setAttributes(array('influencias'=>1));
+				$rec->setAttributes(array('influencias_max'=>2));
+				$rec->setAttributes(array('influencias_gen'=>1.0));
+				$rec->setAttributes(array('animo'=>100));
+				$rec->setAttributes(array('animo_max'=>400));
+				$rec->setAttributes(array('animo_gen'=>15.0));
 				break;
 			
 			default:
