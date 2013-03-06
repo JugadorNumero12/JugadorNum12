@@ -95,7 +95,7 @@ class PartidosController extends Controller
 		$modeloGrupalesVisitante = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_2));
 
 		
-		//TODO Obtener hora actual
+		//Obtener hora actual,de momento 130 porque no estan ajustadas las horas en la tabla
 		$hora_actual = 130;
 
 		//Obtener el equipo del usuario
@@ -107,26 +107,25 @@ class PartidosController extends Controller
 		//Obtener el partido a consultar y
 		//el siguiente partido del equipo del usuario
 		$modeloPartido    = Partidos::model()->findByPk($id_partido);
-		$modeloSigPartido = Partidos::model()->find('(equipos_id_equipo_1 =:equipo OR 
-													  equipos_id_equipo_2 =:equipo) AND 
-													  hora >:horaAct',
-													array(':equipo'=>$id_equipo,
-														  ':horaAct'=>$hora_actual));
+		$modeloSigPartido = Equipos::model()->findByPk(Yii::app()->user->usAfic)->sigPartido;
 
-		//Saco la información de los equipos para mostrar el nombre en la vista
-		$modeloEquipoLocal     = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_1);
-		$modeloEquipoVisitante = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_2);
+		//Si el partido se encuentra en su ultimo turno muestro la cronica
+		///Sino muestro la previa del partido, si es el siguiente que juega el equipo
+		//Sino cumple ninguna de esas condiciones muestro que no tengo informacion
 
-		//Declaracion de todas las variables que usa el render
-		$pasado=$presente=false;
-		$cronica_partido="ESTO ESTÁ MAL";
-		if($hora_actual > $modeloPartido->hora)
+		Yii::import('application.components.Partido');
+		$ultimo_turno=Partido::ULTIMO_TURNO;
+	
+		if($modeloPartido->turno == $ultimo_turno+1)
 		{
 			//si el partido se jugo, obtener cronica
-			$pasado = true;
-			$cronica_partido = $modeloPartido->cronica;			
+			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
+									 		'modeloL'=>$modeloEquipoLocal,
+									 		'modeloV'=>$modeloEquipoVisitante
+									 		)); 	
+
 		}
-		elseif($id_partido == $modeloSigPartido->id_partido)
+		elseif($id_partido == $modeloSigPartido->id_partido && $modeloSigPartido->turno == 0)
 		{
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
 			//Renderizo la vista que me muestra la previa
@@ -145,6 +144,7 @@ class PartidosController extends Controller
 			Yii::app()->user->setFlash('Partido', 'No hay informacion acerca del partido');
 			$this-> redirect(array('partidos/index'));
 		}
+		
 		
 	}
 
