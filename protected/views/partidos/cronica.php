@@ -48,3 +48,13 @@
 	</tr>
 	<tr></tr>
 </table>
+
+<table cellspacing="5px">
+	<tr>
+		<th>Cr&oacute;nica del partido</th>
+	</tr> 
+	<tr>
+		<td align="center"><?php echo $modeloP->cronica ?></td>
+	</tr>
+	<tr></tr>
+</table>
