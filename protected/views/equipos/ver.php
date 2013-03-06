@@ -16,7 +16,14 @@
 
 <body>
 
-<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
+<div class="envoltorio-perfil"> <div class="envoltorio2-perfil">
+
+		<?php
+    			foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        			echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    			}
+		?>
+
 		<div class="perfil-grupo-arriba">
 			<div class="perfil-grupo-arriba-izquierda">
 				<div class="perfil-grupo-arriba-izquierda-personaje">

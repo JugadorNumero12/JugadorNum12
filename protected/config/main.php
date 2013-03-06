@@ -62,6 +62,7 @@ return array(
 			'username' => 'juego',
 			'password' => 'juego',
 			'charset' => 'utf8',
+//			'tablePrefix' => 'j12_'
 		),
 		
 		'errorHandler'=>array(
@@ -89,6 +90,6 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'darkhogg@gmail.com',
 	),
 );

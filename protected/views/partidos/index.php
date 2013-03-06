@@ -10,6 +10,12 @@
 
 	<h1> Calendario de partidos </h1>
 
+	<h2><?php
+    foreach(Yii::app()->user->getFlashes() as $key => $message) {
+        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    }
+	?></h2>
+
 	<table border=0>
 		<tr>
 			<th>Equipo Local</th>
@@ -41,8 +47,8 @@
 					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> 
 				<?php } else if ($partido->id_partido == $proximo_partido->id_partido ) {?>
 					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximo_partido->id_partido),'class'=>"button small black")) ?>
-				<?php } else { ?>
-					<?php echo $partido->cronica ?>
+				<?php } else if ($partido->turno == $ultimo_turno+1 ){ ?>
+					<?php echo CHtml::submitButton('Cronica', array('submit' => array('/partidos/previa','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?>
 
 				<?php } ?>
 			</td>

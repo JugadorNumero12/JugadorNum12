@@ -41,5 +41,6 @@
 	  </tr>
 </table>
 	<td><?php echo CHtml::submitButton('Participar',array('class'=>"button large black")); ?></td>
+	<td><?php echo CHtml::button('Volver', array('class'=>"button large black", 'onclick' => "history.go(-1)")); ?></td>
 
 <?php $this->endWidget(); ?>
