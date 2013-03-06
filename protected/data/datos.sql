@@ -170,14 +170,14 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (7, 'Rojos',    1, 3000, 400, 12, 7, 6),
- (7, 'Verdes',   1, 3000, 500, 10, 7, 6),
- (8, 'Negros',   1, 3600, 400, 10, 7, 7),
- (8, 'Blancos',  1, 4000, 400, 9,  6, 8),
- (9, 'Azules',   1, 3500, 300, 11, 6, 7),
- (9, 'Rosas',    1, 4000, 450, 10, 5, 5),
- (10,'Naranjas', 1, 3600, 500, 12, 7, 7),
- (10,'Amarillos',1, 3000, 350, 10, 6, 6);
+ (7, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
+ (7, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
+ (8, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
+ (8, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
+ (9, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
+ (9, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
+ (10,'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
+ (10,'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
