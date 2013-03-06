@@ -1,7 +1,7 @@
 <?php
 return array(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-        'name'=>'Cron',
+        'name'=>'CronPartido',
         'preload'=>array('log'),
          'import'=>array(
                 'application.components.*',
