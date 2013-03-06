@@ -26,7 +26,7 @@
 			<tr><th>Equipo creador: </th><td><a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo' => $accionGrupal->equipos->id_equipo));?>"><?php echo $accionGrupal->equipos->nombre; ?></a></td></tr>
 			<tr><th>N&uacute;mero de participantes: </th><td><?php echo $accionGrupal['jugadores_acc']; ?></td></tr>
 			<!--<tr><th>Efecto que se consigue: </th><td><?php echo $accionGrupal['habilidades']['descripcion']; ?></td></tr>-->
-			<tr><th>Finalizaci&oacute;n: </h><td><?php echo $accionGrupal['finalizacion']; ?></td></tr>
+			<tr><th>Finalizaci&oacute;n: </h><td><?php echo Yii::app()->format->formatDatetime($accionGrupal['finalizacion']); ?></td></tr>
 		</table>
 	</div>
 
@@ -48,7 +48,7 @@
 					<th>Influencias</th>
 					<th>&Aacute;nimo</th>
 				</th>
-				<?php foreach ($accionGrupal->participaciones as $participacion){ ?>
+				<?php foreach ($accionGrupal['participaciones'] as $participacion){ ?>
 					<tr>
 						<td><a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $participacion->usuario->id_usuario));?>"><?php echo $participacion->usuario->nick; ?></a></td>
 						<td><?php printf('%d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?> </td>

@@ -245,12 +245,16 @@ class AccionesController extends Controller
 					   							  	         'influencias_acc'   => $habilidad['influencias'],
 					   							  	         'animo_acc' 	     => $habilidad['animo'],
 															 'dinero_acc' 	     => $habilidad['dinero'],
-															 'jugadores_acc'     => 0,
+															 'jugadores_acc'     => 1,
 															 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
 					   							  	         'completada' 	     => 0 ));
+						$participacion = new Participaciones();
+						$participacion['acciones_grupales_id_accion_grupal'] = $accion_grupal->id_accion_grupal;
+						$participacion['usuarios_id_usuario'] = $id_usuario;
 						//guardar en los modelos
 						$res->save();
 						$accion_grupal->save();
+						$participacion->save();
 					} catch ( Exception $exc ) {
 						$trans->rollback();
 						throw $exc;
