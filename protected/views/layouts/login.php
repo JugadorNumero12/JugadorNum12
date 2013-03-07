@@ -7,7 +7,25 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-
+	<!-- LESS import script -->
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/main.less" />
+	<script type="text/javascript">
+	    less = {
+	        env: "development", // or "production"
+	        async: false,       // load imports async
+	        fileAsync: false,   // load imports async when in a page under
+	                            // a file protocol
+	        poll: 1000,         // when in watch mode, time in ms between polls
+	        functions: {},      // user functions, keyed by name
+	        dumpLineNumbers: "comments", // or "mediaquery" or "all"
+	        relativeUrls: false,// whether to adjust url's to be relative
+	                            // if false, url's are already relative to the
+	                            // entry less file
+	        rootpath: ":/a.com/"// a path to add on to the start of every url
+	                            //resource
+	    };
+	</script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
