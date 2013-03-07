@@ -9,7 +9,7 @@
  ?>
 
 <h3>boton redactar<h3>
-<h3>boton enviados<h3>
+<h3>boton recibidos<h3>
 <?php foreach ( $emails as $i=>$email ){ 
 	//en funcion de si se ha leido o no que muestre un color diferente o lo que sea
 	echo $niks[$i];
