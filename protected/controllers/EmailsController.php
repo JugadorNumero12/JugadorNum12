@@ -98,6 +98,20 @@ class EmailsController extends Controller
 	public function actionLeerEmail($id){
 		$email = Emails::model()->findByPk($id);
 		if($email === null) throw new CHttpException( 404, 'Email inexistente');
+		
+		//Si el email no ha sido leido anteriormente guardamos en la base de datos que se leyo
+		if($email->leido == 0){
+			$id= Yii::app()->user->usIdent;
+			$trans = Yii::app()->db->beginTransaction();
+			try{
+					$email->setAttributes(array('leido'=>1));
+					if($email->save()){
+						$trans->commit();
+					}
+			}catch(Exception $e){
+				$trans->rollback();
+				}	
+		}
 		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
