@@ -36,7 +36,7 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails
 	 */
 	public function actionIndex(){
-		$id= Yii::app()->user->usIdent; //id de usuario
+		$id= Yii::app()->user->usIdent;
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>$id));
 		foreach ($emails as $i=>$email){
 			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
@@ -54,14 +54,39 @@ class EmailsController extends Controller
 	 * @redirige juagdorNum12/emails
 	 */
 	public function actionRedactar(){
+		$id= Yii::app()->user->usIdent;
 		$trans = Yii::app()->db->beginTransaction();
 		try{
+			$email = new Emails;
 			if (isset($_POST['Emails']) ) {
-				//TODO
+				$email->scenario='redactar';
+				$email->attributes=$_POST['Emails'];
+				$email->setAttributes(array('id_usuario_from'=>$id));
+
+
+
+				// FIXME
+				$email->setAttributes(array('fecha'=>" FIXME"));
+
+
+
+				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
+				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
+				
+				//FIXME   que muestre algo en el formulario
+
+				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));
+
+				if($email->save()){
+					$trans->commit();
+					$this->redirect(array('index'));
+				}
+
 			}
 		}catch(Exception $e){
 			$trans->rollback();
 		}
+		$this->render('redactar',array('email'=>$email));
 	}
 
 	/**
