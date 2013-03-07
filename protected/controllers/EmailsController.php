@@ -64,12 +64,7 @@ class EmailsController extends Controller
 				$email->scenario='redactar';
 				$email->attributes=$_POST['Emails'];
 				$email->setAttributes(array('id_usuario_from'=>$id));
-
-
-
 				$email->setAttributes(array('fecha'=>time()));
-
-
 
 				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
 				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
@@ -113,6 +108,7 @@ class EmailsController extends Controller
 	public function actionEnviados(){
 		$id= Yii::app()->user->usIdent;
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>$id));
+		$niks = array();
 		foreach ($emails as $i=>$email){
 			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
 			//tmbn mirar si queremos la lista de los usuarios de su aficion
