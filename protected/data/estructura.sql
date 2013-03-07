@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
 `id_email` int(10) unsigned NOT NULL AUTO_INCREMENT,
 `id_usuario_to` int(10) unsigned NOT NULL,
 `id_usuario_from` int(10) unsigned NOT NULL,
-`fecha` datetime NOT NULL,
+`fecha` int(11) unsigned NOT NULL DEFAULT 0,
 `contenido` text NOT NULL,
 `leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
 `borrado_to` tinyint(1) unsigned NOT NULL DEFAULT 0,

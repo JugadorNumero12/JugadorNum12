@@ -8,12 +8,12 @@
 			    ));
  ?>
 
-<h1>boton redactar<h1>
-<h1>boton recibidos<h1>
+<h1>boton redactar</h1> 
+<h1>boton recibidos</h1>
 <?php
 	echo $from;
 	echo $to;
-	echo $email->fecha;
+	echo Yii::app()->dateFormatter->formatDateTime($email->fecha, 'medium', 'short');
 	echo $email->asunto;
 	echo $email->contenido;
 ?>

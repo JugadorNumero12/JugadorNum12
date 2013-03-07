@@ -88,7 +88,7 @@ class Emails extends CActiveRecord
 			'contenido' => 'Contenido',
 			'leido' => 'Leido',
 			'asunto' => 'Asunto',
-			'borrado_to' => 'Borrado To'
+			'borrado_to' => 'Borrado To',
 			'borrado_from' => 'Borrado From'
 		);
 	}
