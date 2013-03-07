@@ -169,7 +169,7 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
  (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10), (14, 10);
 
 TRUNCATE `equipos`;
-INSERT INTO `equipos` (`partidos_id_partido`,`nombre`, `categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
+INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
  (7, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
  (7, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
  (8, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
