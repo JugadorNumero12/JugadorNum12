@@ -18,22 +18,23 @@
 // ------------
 
 #barrasup {
-	
 	position: fixed;
 
 	padding: 0;
 	margin: 0;
 
 	top: 0;
-	left: 0;
+	left: -5%;
 
-	width: 100%;
+	width: 110%;
 	height: auto;
 
-	background: #EEE;
+	.gradient(@VERDE_12, darken(@VERDE_12, 5%), lighten(@VERDE_12, 5%));
+	.drop-shadow(0, 0, 16px, 1);
 
 	#barrasup-envoltorio {
 		width: 960px;
+		height: @BarraSupAlto;
 
 		margin: 0 auto;
 		padding: 0;
