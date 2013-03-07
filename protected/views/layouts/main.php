@@ -5,8 +5,26 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="<?php echo Yii::app()->charset; ?>" />
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+
+	<!-- LESS import script -->
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/main.less" />
+	<script type="text/javascript">
+	    less = {
+	        env: "development", // or "production"
+	        async: false,       // load imports async
+	        fileAsync: false,   // load imports async when in a page under
+	                            // a file protocol
+	        poll: 1000,         // when in watch mode, time in ms between polls
+	        functions: {},      // user functions, keyed by name
+	        dumpLineNumbers: "comments", // or "mediaquery" or "all"
+	        relativeUrls: false,// whether to adjust url's to be relative
+	                            // if false, url's are already relative to the
+	                            // entry less file
+	        rootpath: ":/a.com/"// a path to add on to the start of every url
+	                            //resource
+	    };
+	</script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -26,6 +44,7 @@
 	<!-- Barra Superior -->
 	<div id="barrasup">
 		<div id="barrasup-envoltorio">
+			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
 			
 		</div>
 	</div>
@@ -54,27 +73,6 @@
                 <?php } ?>
     		</ul>
     	</div>
-
-    	<?php $personaje = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent); ?>
-    	<!--<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>-->
-	    <div id="datos-cabecera">
-			<div class="elemento-nivel-dato-cabecera">
-				<img class="imagen1-dato-cabecera" title="Nivel" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nivel">
-				<div class="texto-nivel-dato-cabecera"> <?php echo $personaje->nivel ?> </div>
-			</div> 
-			<div class="elemento-dinero-dato-cabecera">
-				<img class="imagen1-dato-cabecera" title="Dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
-				<div class="texto-dinero-dato-cabecera"> <?php echo $personaje->recursos->dinero ?> </div>
-			</div>
-			<div class="elemento-barras-dato-cabecera">
-				<img class="imagen2-dato-cabecera" title="&Aacute;nimo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
-				<div id="bar" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></div>
-			</div> 
-			<div class="elemento-barras-dato-cabecera">
-				<img class="imagen2-dato-cabecera" title="Influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
-				<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></div>
-			</div> 
-		</div>
  
     </div>
 	
@@ -85,7 +83,7 @@
 				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
 				   	<li class="elementos-menu">
 				   		<?php
-				   			switch ($personaje->personaje){
+				   			switch (Yii::app()->getParams()->usuario->personaje){
 				   				case Usuarios::PERSONAJE_ULTRA: ?>
 				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
 				   					<?php break;
@@ -148,16 +146,6 @@
 	    <div id="contenido">
 	      <?php echo $content; ?>
 	    </div>
-
-	    <!-- <table id="table">
-		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
-			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
-			<tr><th> <br></th> <td> </td> <br></tr> 
-			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
-			<tr><th>&Aacute;nimo: </th> <td id="bar" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
-			<tr><th>Influencias: </th> <td id="bar2" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
-		</table> -->
-
 
 	<div class="push"></div>
   	
