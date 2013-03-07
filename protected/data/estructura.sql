@@ -35,7 +35,7 @@ SET time_zone = "+00:00";
 
 SET FOREIGN_KEY_CHECKS = 0; 
 
--- --------------------------------------------------------
+-- -----------------------------------------d---------------
 
 DROP TABLE IF EXISTS `acciones_grupales`;
 CREATE TABLE IF NOT EXISTS `acciones_grupales` (
@@ -229,8 +229,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 DROP TABLE IF EXISTS `emails`;
 CREATE TABLE IF NOT EXISTS `emails` (
 `id_email` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`id_usuario_to` int(10) unsigned,
-`id_usuario_from` int(10) unsigned,
+`id_usuario_to` int(10) unsigned NOT NULL,
+`id_usuario_from` int(10) unsigned NOT NULL,
 `fecha` datetime NOT NULL,
 `contenido` text NOT NULL,
 `leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
