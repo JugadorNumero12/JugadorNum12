@@ -11,6 +11,8 @@
  * string 	$contenido
  * string	$leido
  * string 	$asunto
+ * string 	$borrado_to
+ * string 	$borrado_from
  */
 class Emails extends CActiveRecord
 {
@@ -43,10 +45,10 @@ class Emails extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto', 'required'),
+			array('id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto,borrado_to,borrado_from', 'required'),
 			array('asunto', 'length', 'max'=>50),
 			array('id_email, id_usuario_to, id_usuario_from', 'length', 'max'=>10),
-			array('leido', 'length', 'max'=>1),
+			array('leido,borrado_to,borrado_from', 'length', 'max'=>1),
 			array('fecha', 'length', 'max'=>19),
 
 			/*Validaciones para redactar email*/
@@ -54,7 +56,7 @@ class Emails extends CActiveRecord
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_email, id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto', 'safe', 'on'=>'search'),
+			array('id_email, id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto,borrado_to,borrado_from', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -86,6 +88,8 @@ class Emails extends CActiveRecord
 			'contenido' => 'Contenido',
 			'leido' => 'Leido',
 			'asunto' => 'Asunto',
+			'borrado_to' => 'Borrado To'
+			'borrado_from' => 'Borrado From'
 		);
 	}
 
@@ -107,6 +111,8 @@ class Emails extends CActiveRecord
 		$criteria->compare('contenido',$this->contenido,true);
 		$criteria->compare('leido',$this->leido);
 		$criteria->compare('asunto',$this->asunto,true);
+		$criteria->compare('borrado_to',$this->borrado_to,true);
+		$criteria->compare('borrado_from',$this->borrado_from,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
