@@ -3,4 +3,6 @@ protected/runtime/
 themes/classic/views/
 *.sublime-project
 *.sublime-workspace
+css/
+
 lessc.sh
