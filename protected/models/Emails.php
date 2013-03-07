@@ -45,7 +45,6 @@ class Emails extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto,borrado_to,borrado_from', 'required'),
 			array('asunto', 'length', 'max'=>50),
 			array('id_email, id_usuario_to, id_usuario_from', 'length', 'max'=>10),
 			array('leido,borrado_to,borrado_from', 'length', 'max'=>1),
