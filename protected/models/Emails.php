@@ -14,6 +14,9 @@
  */
 class Emails extends CActiveRecord
 {
+	public $nombre;
+	//public $cont;
+	//public $asun;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -45,6 +48,9 @@ class Emails extends CActiveRecord
 			array('id_email, id_usuario_to, id_usuario_from', 'length', 'max'=>10),
 			array('leido', 'length', 'max'=>1),
 			array('fecha', 'length', 'max'=>19),
+
+			/*Validaciones para redactar email*/
+			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
