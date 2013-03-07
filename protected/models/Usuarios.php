@@ -119,9 +119,6 @@ class Usuarios extends CActiveRecord
 	public function clavesIguales($antigua_clave)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    echo '$usuario->pass = ' . $usuario->pass
-	       . '<br/>$antigua_clave = ' . $antigua_clave
-	       . '<br/>$this->antigua_clave = ' . $this->antigua_clave;
 
 	    if (!$usuario->comprobarClave($this->antigua_clave)) {
 	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
