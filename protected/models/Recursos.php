@@ -42,9 +42,10 @@ class Recursos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, bonus_dinero, bonus_influencias, bonus_animo', 'required'),
+			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, bonus_dinero, bonus_influencias, bonus_animo, ultima_act', 'required'),
 			array('dinero_gen, influencias_gen, animo_gen', 'numerical'),
 			array('usuarios_id_usuario, dinero, influencias, influencias_max, animo, animo_max, bonus_dinero, bonus_influencias, bonus_animo', 'length', 'max'=>10),
+			array('ultima_act', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen', 'safe', 'on'=>'search'),

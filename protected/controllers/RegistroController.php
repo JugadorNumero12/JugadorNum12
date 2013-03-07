@@ -47,7 +47,7 @@ class RegistroController extends Controller
 				//$modelo->setAttributes(array('pass'=>$_POST['Usuarios']['nueva_clave1']));
 				$modelo->cambiarClave($_POST['Usuarios']['nueva_clave1']);
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
-				$modelo->setAttributes(array('nivel'=>0));
+				$modelo->setAttributes(array('nivel'=>1));
 
 				
 				
@@ -211,6 +211,7 @@ class RegistroController extends Controller
 				# code...
 				break;
 		}
+		$rec->setAttributes(array('ultima_act'=> time()));
 		$rec->save();
 	}
 
