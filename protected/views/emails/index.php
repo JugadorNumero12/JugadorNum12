@@ -28,6 +28,7 @@
 		<td> <?php echo Yii::app()->dateFormatter->formatDateTime($email->fecha, 'medium', 'short'); ?> </td> 
 		<td> <?php if ($email->leido == 0) {echo 'No';} else {echo 'Sí';}?> </td> 
 		<td> <?php echo CHtml::button('Leer', array('submit' => array('emails/leerEmail', 'id'=>$email->id_email),'class'=>"button small black")); ?> </td> 
+		<td> <?php echo CHtml::button('borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email->id_email,'antes'=>'entrada'),'class'=>"button small black")); ?> </td>
 	</tr>
 		
 <?php }?>
