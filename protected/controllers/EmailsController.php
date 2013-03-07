@@ -36,13 +36,9 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails
 	 */
 	public function actionIndex(){
-		$id= Yii::app()->user->usIdent;
-		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>$id));
-
-		$niks= array();
+		$niks = array();
+		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent,'borrado_to'=>0));
 		foreach ($emails as $i=>$email){
-			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
-			//tmbn mirar si queremos la lista de los usuarios de su aficion
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
 			$niks[$i] = $usuario->nick;
 		}
@@ -56,33 +52,31 @@ class EmailsController extends Controller
 	 * @redirige juagdorNum12/emails
 	 */
 	public function actionRedactar(){
-		$id= Yii::app()->user->usIdent;
 		$trans = Yii::app()->db->beginTransaction();
+		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
+		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
 		try{
 			$email = new Emails;
 			if (isset($_POST['Emails']) ) {
 				$email->scenario='redactar';
-				$email->attributes=$_POST['Emails'];
-				$email->setAttributes(array('id_usuario_from'=>$id));
-				$email->setAttributes(array('fecha'=>time()));
-
+				$email->attributes=$_POST['Emails']; //asunto y contenido
+				$email->setAttributes(array('id_usuario_from'=>$yo->id_usuario)); //remitente
+				$email->setAttributes(array('fecha'=>time()));//fecha
 				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
 				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
 
 				//FIXME   que muestre algo en el formulario
 
-				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));
-
+				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
 				if($email->save()){
 					$trans->commit();
 					$this->redirect(array('index'));
 				}
-
 			}
 		}catch(Exception $e){
 			$trans->rollback();
 		}
-		$this->render('redactar',array('email'=>$email));
+		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion));
 	}
 
 	/**
@@ -92,26 +86,51 @@ class EmailsController extends Controller
 	 */
 	public function actionLeerEmail($id){
 		$email = Emails::model()->findByPk($id);
-		if($email === null) throw new CHttpException( 404, 'Email inexistente');
-		
-		//Si el email no ha sido leido anteriormente guardamos en la base de datos que se leyo
-		if($email->leido == 0){
-			$id= Yii::app()->user->usIdent;
-			$trans = Yii::app()->db->beginTransaction();
-			try{
-					$email->setAttributes(array('leido'=>1));
-					if($email->save()){
-						$trans->commit();
-					}
-			}catch(Exception $e){
-				$trans->rollback();
-				}	
-		}
+		if($email === NULL) throw new CHttpException( 404, 'Email inexistente');
 		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
-		$to = $usuario_to->nick;
+		$to = $usuario_to->nick; 
+		if($email->id_usuario_to == Yii::app()->user->usIdent && !$email->leido){
+			$trans = Yii::app()->db->beginTransaction();
+			try{
+				$email->leido = !$email->leido;
+				$email->save();
+				$trans->commit();
+			}catch(Exception $e){
+				$trans->rollback();
+			}
+		}
 		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to));
+	}
+
+	/**
+	 * Elimina un email
+	 *
+	 * @ruta jugadorNum12/emails/leerEmail 
+	 */ 
+	public function actionEliminarEmail($id,$antes){
+		$email = Emails::model()->findByPk($id);
+		if($email === null) throw new CHttpException( 404, 'Email inexistente');
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			$id_usr= Yii::app()->user->usIdent;
+			if(($email->id_usuario_to == $id_usr && $email->borrado_from) || ($email->id_usuario_from == $id_usr && $email->borrado_to) || ($email->id_usuario_from == $id_usr && $email->id_usuario_to == $id_usr )) 
+				$email->delete();
+			else{
+				if($email->id_usuario_to == $id_usr) 
+					$email->borrado_to = !$email->borrado_to;
+				else 
+					$email->borrado_from = !$email->borrado_from;
+			}
+
+			$email->save();
+			$trans->commit();
+			if($antes == 'entrada') $this->redirect(array('emails/index'));
+			else $this->redirect(array('emails/enviados'));
+		}catch(Exception $e){
+			$trans->rollback();
+		}		
 	}
 
 	/**
@@ -120,12 +139,9 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails/enviados
 	 */
 	public function actionEnviados(){
-		$id= Yii::app()->user->usIdent;
-		$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>$id));
 		$niks = array();
+		$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>Yii::app()->user->usIdent,'borrado_from'=>0));
 		foreach ($emails as $i=>$email){
-			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
-			//tmbn mirar si queremos la lista de los usuarios de su aficion
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_to);
 			$niks[$i] = $usuario->nick;
 		}
