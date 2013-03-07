@@ -229,11 +229,13 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 DROP TABLE IF EXISTS `emails`;
 CREATE TABLE IF NOT EXISTS `emails` (
 `id_email` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`id_usuario_to` int(10) unsigned NOT NULL,
-`id_usuario_from` int(10) unsigned NOT NULL,
+`id_usuario_to` int(10) unsigned,
+`id_usuario_from` int(10) unsigned,
 `fecha` datetime NOT NULL,
 `contenido` text NOT NULL,
 `leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
+`borrado_to` tinyint(1) unsigned NOT NULL DEFAULT 0,
+`borrado_from` tinyint(1) unsigned NOT NULL DEFAULT 0,
 `asunto` varchar(50) NOT NULL,
 PRIMARY KEY (`id_email`),
 KEY `emails_FKIndex1` (`id_usuario_to`),
