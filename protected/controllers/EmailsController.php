@@ -65,14 +65,14 @@ class EmailsController extends Controller
 
 
 
-				// FIXME
+				// FIXME y tmbn mirar si queremos la lista de su afición aquí
 				$email->setAttributes(array('fecha'=>" FIXME"));
 
 
 
 				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
 				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
-				
+
 				//FIXME   que muestre algo en el formulario
 
 				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));
@@ -95,6 +95,21 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails/leerEmail
 	 */
 	public function actionLeerEmail($id){
+		$email = Emails::model()->findByPk($id);
+		if($email === null) throw new CHttpException( 404, 'Email inexistente');
+		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
+		$from = $usuario_from->nick;
+		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
+		$to = $usuario_to->nick;
+		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to));
+	}
+
+	/**
+	 * Muestra la bandeja de salida del usuario
+	 *
+	 * @ruta jugadorNum12/emails/enviados
+	 */
+	public function actionEnviados(){
 
 	}
 
