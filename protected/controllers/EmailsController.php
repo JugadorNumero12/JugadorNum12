@@ -110,7 +110,15 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails/enviados
 	 */
 	public function actionEnviados(){
-
+		$id= Yii::app()->user->usIdent;
+		$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>$id));
+		foreach ($emails as $i=>$email){
+			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
+			//tmbn mirar si queremos la lista de los usuarios de su aficion
+			$usuario=Usuarios::model()->findByPk($email->id_usuario_to);
+			$niks[$i] = $usuario->nick;
+		}
+		$this->render('enviados',array('emails'=>$emails,'niks'=>$niks));
 	}
 
 	/**
