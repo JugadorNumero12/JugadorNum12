@@ -141,28 +141,133 @@ class AccionesController extends Controller
 
 		//Si tenemos suficientes recursos miramos si es individual o grupal
 		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
-			
+
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+			$criteria->params = array(	':bid_usuario' => $id_usuario,
+										':bid_accion' => $id_accion,
+										);	
+			$accion_ind = AccionesIndividuales::model()->find($criteria);
+			$tiempo_reg = $habilidad['cooldown_fin'];
+
+			if($accion_ind===null)
+			{
+				$accion_ind = new AccionesIndividuales();
+				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
+				   							  	  'habilidades_id_habilidad' => $id_accion,
+				   							  	  'cooldown' => 0 ,
+				   							  	  'devuelto'=> 0));
+				try
+				{			
+					$res['dinero'] 		-= $habilidad['dinero'];
+					$res['animo']  		-= $habilidad['animo'];
+					$res['influencias'] -= $habilidad['influencias'];
+					$res->save();
+
+					//actualizar la hora en que acaba de regenerarse la accion
+					$accion_ind->cooldown = time() + $tiempo_reg;
+					$accion_ind->devuelto=0;
+					
+					//guardar en los modelo				
+					$accion_ind->save();
+
+					//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+					//Tomar nombre de habilidad para instanciación dinámica
+	        		$hab = Habilidades::model()->findByPk($id_accion);
+	        		if ($hab === null)
+	        		{
+	        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+	        			
+	        		}      
+	        		  		
+	        		$nombreHabilidad = $hab->codigo;
+
+	        		//Llamar al singleton correspondiente y ejecutar dicha acción
+	        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+				} catch ( Exception $exc ) {
+					$trans->rollback();
+					throw $exc;
+				}	
+
+			}elseif($accion_ind->devuelto == 1)
+				{
+					try
+					{			
+						$res['dinero'] 		-= $habilidad['dinero'];
+						$res['animo']  		-= $habilidad['animo'];
+						$res['influencias'] -= $habilidad['influencias'];
+						$res->save();
+
+						//actualizar la hora en que acaba de regenerarse la accion
+						$accion_ind->cooldown = time() + $tiempo_reg;
+						$accion_ind->devuelto=0;
+						
+						//guardar en los modelo				
+						$accion_ind->save();
+
+						//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+						//Tomar nombre de habilidad para instanciación dinámica
+		        		$hab = Habilidades::model()->findByPk($id_accion);
+		        		if ($hab === null)
+		        		{
+		        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+		        			
+		        		}      
+		        		  		
+		        		$nombreHabilidad = $hab->codigo;
+
+		        		//Llamar al singleton correspondiente y ejecutar dicha acción
+		        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+					} catch ( Exception $exc ) {
+						$trans->rollback();
+						throw $exc;
+					}	
+
+				}else
+					{
+						$trans->rollback();
+						Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
+						$this-> redirect(array('acciones/index'));
+					}
+
+			/*
 			//Sacar la accion individual teniendo en cuenta el id_usuario,e id_habilidad 
 			//y cogiendo la que mayor cooldown tiene de toda la tabla
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
 			$criteria->addCondition('devuelto = 1');
-			$criteria->params = array(	'bid_usuario' => $id_usuario,
-										'bid_accion' => $id_accion,
+			$criteria->params = array(	':bid_usuario' => $id_usuario,
+										':bid_accion' => $id_accion,
 										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
 			$accion_ind = AccionesIndividuales::model()->find($criteria);
 			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
-			//Si no estaba creada, crear con cooldown = 0 
+
+			//Si es null, puede ser porque no este creada o porque devuelto este aún a 0
 			if($accion_ind === null){
-				$accion_ind = new AccionesIndividuales();
-				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+				$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+				$criteria->params = array(	':bid_usuario' => $id_usuario,
+											':bid_accion' => $id_accion,
+											);	
+				$criteria->order = 'cooldown DESC';
+				$criteria->limit = '1';
+				$accion_indCreada = AccionesIndividuales::model()->find($criteria);
+
+				if($accion_indCreada===null)
+				{
+					$accion_ind = new AccionesIndividuales();
+					$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
 				   							  	  'cooldown' => 0 ,
 				   							  	  'devuelto'=> 0));
+				}
+				
 			}
 
 			// TODO Sacar la hora actual
@@ -210,7 +315,7 @@ class AccionesController extends Controller
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}										   
+			}	*/									   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
