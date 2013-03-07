@@ -18,7 +18,7 @@
 
 
 <table>
-	<tr> <th>Enviado por </th> <th> Asunto </th> <th> Fecha </th> <th> Leido </th> <th> &nbsp; </th> </tr>
+	<tr> <th>Enviado por </th> <th> Asunto </th> <th> Fecha </th> <th> Le&iacute;do </th> <th> &nbsp; </th> </tr>
 
 <?php foreach ( $emails as $i=>$email ){ ?>
 	
