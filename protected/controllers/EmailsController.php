@@ -38,6 +38,8 @@ class EmailsController extends Controller
 	public function actionIndex(){
 		$id= Yii::app()->user->usIdent;
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>$id));
+
+		$niks= array();
 		foreach ($emails as $i=>$email){
 			//OJO mirar si nos conviene esto o insertamos los nombres de los usuarios en la tabla
 			//tmbn mirar si queremos la lista de los usuarios de su aficion
@@ -65,8 +67,7 @@ class EmailsController extends Controller
 
 
 
-				// FIXME y tmbn mirar si queremos la lista de su afición aquí
-				$email->setAttributes(array('fecha'=>" FIXME"));
+				$email->setAttributes(array('fecha'=>time()));
 
 
 
