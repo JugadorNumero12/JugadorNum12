@@ -45,7 +45,9 @@
 	<div id="barrasup">
 		<div id="barrasup-envoltorio">
 			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
-			
+			<div id="barrasup-izquierda">Izquierda</div>
+			<div id="barrasup-centro">Centro</div>
+			<div id="barrasup-derecha">Derecha</div>
 		</div>
 	</div>
 

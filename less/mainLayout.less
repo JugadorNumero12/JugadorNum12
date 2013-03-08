@@ -27,17 +27,46 @@
 	left: -5%;
 
 	width: 110%;
-	height: auto;
+	height: @BarraSupAlto;
 
 	.gradient(@VERDE_12, darken(@VERDE_12, 5%), lighten(@VERDE_12, 5%));
 	.drop-shadow(0, 0, 16px, 1);
 
 	#barrasup-envoltorio {
+		position: absolute;
+
 		width: 960px;
 		height: @BarraSupAlto;
 
-		margin: 0 auto;
+		margin: 0;
 		padding: 0;
+
+		left: 50%;
+		margin-left: (-960px/2);
+
+		#barrasup-izquierda {
+			position: absolute;
+
+			left: 0;
+			top: 0;
+		}
+
+		#barrasup-derecha {
+			position: absolute;
+
+			right: 0;
+			top: 0;
+		}
+		
+		#barrasup-centro {
+			position: absolute;
+
+			left: 50%;
+			top: 0;
+
+			width: 100px;
+			margin-left: -50px;
+		}
 	}
 }
 
@@ -58,7 +87,7 @@ div#envoltorio1 {
 		div#cabecera {
 			float: left;
 			width:100%;
-			margin: 0 0 3em 0;
+			margin: @BarraSupAlto 0 3em 0;
 
 			div#logo {
 				.propiedades_basicas();
