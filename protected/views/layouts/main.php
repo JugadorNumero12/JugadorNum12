@@ -46,7 +46,24 @@
 		<div id="barrasup-envoltorio">
 			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
 			<div id="barrasup-izquierda">Izquierda</div>
-			<div id="barrasup-centro">Centro</div>
+			<div id="barrasup-centro">
+				<div class="barrasup-recursos">
+					<img class="barrasup-icono" title="Dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+					<div> <?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?> </div>
+				</div>
+				<div class="barrasup-recursos">
+					<img class="barrasup-icono" title="&Aacute;nimo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+					<div id="bar" class="progressbar-cabecera" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
+						<div class="label1">Label</div>
+					</div>
+				</div> 
+				<div class="barrasup-recursos">
+					<img class="barrasup-icono" title="Influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+					<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
+						<div class="label2">Label</div>
+					</div>
+				</div> 
+			</div>
 			<div id="barrasup-derecha">Derecha</div>
 		</div>
 	</div>
