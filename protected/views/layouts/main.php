@@ -47,7 +47,19 @@
 			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
 			<div id="barrasup-izquierda">Izquierda</div>
 			<div id="barrasup-centro">Centro</div>
-			<div id="barrasup-derecha">Derecha</div>
+			
+			<div id="barrasup-derecha">
+				<ul id="barrasup-perfil">
+					<li class="barrasup-menu">
+						<img src="" width="24" height="24">
+						Penepene
+					</li>
+					<li class="barrasup-submenu"><ul>
+						<li>Pene1</li>
+						<li>Pene2</li>
+					</ul></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

@@ -56,8 +56,37 @@
 
 			right: 0;
 			top: 0;
+
+			height: @BarraSupAlto;
+
+			#barrasup-perfil {
+				display: block;
+
+				margin: 4px;
+
+				.barrasup-menu {
+					padding: 5px;
+
+					width: 120px;
+					height: 20px;
+
+					.gradient( lighten(@VERDE_12, 5%), lighten(@VERDE_12, 12%), lighten(@VERDE_12, 8%));
+					.box-shadow(inset 0 1px 1px rgba(255,255,255,.3));
+					.rounded(4px);
+
+					border: 1px solid darken(@VERDE_12, 5%);
+				}
+
+				.barrasup-submenu {
+					display: none;
+				}
+
+				&:hover .barrasup-submenu {
+					display: block;
+				}
+			}
 		}
-		
+
 		#barrasup-centro {
 			position: absolute;
 
