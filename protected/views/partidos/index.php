@@ -41,8 +41,8 @@
 					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?> 
 				<?php } else if ($partido->id_partido == $proximo_partido->id_partido ) {?>
 					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximo_partido->id_partido),'class'=>"button small black")) ?>
-				<?php } else { ?>
-					<?php echo $partido->cronica ?>
+				<?php } else if ($partido->turno == $ultimo_turno+1 ){ ?>
+					<?php echo CHtml::submitButton('Cronica', array('submit' => array('/partidos/previa','id_partido'=>$partido->id_partido),'class'=>"button small black")) ?>
 
 				<?php } ?>
 			</td>

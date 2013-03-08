@@ -110,7 +110,8 @@ class AccionesController extends Controller
 		//Habilidad no encontrada
 		if ( $habilidad === null ) {			
 			$trans->rollback();
-			throw new CHttpException(404,'Acción inexistente.');
+			Yii::app()->user->setFlash('inexistente', 'Acción inexistente.');
+			$this-> redirect(array('acciones/index'));
 		}
 
 		//Habilidad encontrada
@@ -120,7 +121,8 @@ class AccionesController extends Controller
 		//Si no esta desbloqueada para el usuario, error
 		if( $desbloqueada === null){				
 			$trans->rollback();
-			throw new CHttpException(404,'No tienes desbloqueada la acción.');
+			Yii::app()->user->setFlash('bloqueada', 'No tienes desbloqueada la acción.');
+			$this-> redirect(array('acciones/index'));
 		} 
 		
 		//Si esta desbloqueada
@@ -133,33 +135,139 @@ class AccionesController extends Controller
 		     $res['influencias'] < $habilidad['influencias']){
 			
 			$trans->rollback();
-			throw new CHttpException(404,'No tienes suficientes recursos');
+			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos');
+			$this-> redirect(array('acciones/index'));
 		}
 
 		//Si tenemos suficientes recursos miramos si es individual o grupal
 		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
-			
+
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+			$criteria->params = array(	':bid_usuario' => $id_usuario,
+										':bid_accion' => $id_accion,
+										);	
+			$accion_ind = AccionesIndividuales::model()->find($criteria);
+			$tiempo_reg = $habilidad['cooldown_fin'];
+
+			if($accion_ind===null)
+			{
+				$accion_ind = new AccionesIndividuales();
+				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
+				   							  	  'habilidades_id_habilidad' => $id_accion,
+				   							  	  'cooldown' => 0 ,
+				   							  	  'devuelto'=> 0));
+				try
+				{			
+					$res['dinero'] 		-= $habilidad['dinero'];
+					$res['animo']  		-= $habilidad['animo'];
+					$res['influencias'] -= $habilidad['influencias'];
+					$res->save();
+
+					//actualizar la hora en que acaba de regenerarse la accion
+					$accion_ind->cooldown = time() + $tiempo_reg;
+					$accion_ind->devuelto=0;
+					
+					//guardar en los modelo				
+					$accion_ind->save();
+
+					//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+					//Tomar nombre de habilidad para instanciación dinámica
+	        		$hab = Habilidades::model()->findByPk($id_accion);
+	        		if ($hab === null)
+	        		{
+	        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+	        			
+	        		}      
+	        		  		
+	        		$nombreHabilidad = $hab->codigo;
+
+	        		//Llamar al singleton correspondiente y ejecutar dicha acción
+	        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+				} catch ( Exception $exc ) {
+					$trans->rollback();
+					throw $exc;
+				}	
+
+			}elseif($accion_ind->devuelto == 1)
+				{
+					try
+					{			
+						$res['dinero'] 		-= $habilidad['dinero'];
+						$res['animo']  		-= $habilidad['animo'];
+						$res['influencias'] -= $habilidad['influencias'];
+						$res->save();
+
+						//actualizar la hora en que acaba de regenerarse la accion
+						$accion_ind->cooldown = time() + $tiempo_reg;
+						$accion_ind->devuelto=0;
+						
+						//guardar en los modelo				
+						$accion_ind->save();
+
+						//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
+						//Tomar nombre de habilidad para instanciación dinámica
+		        		$hab = Habilidades::model()->findByPk($id_accion);
+		        		if ($hab === null)
+		        		{
+		        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+		        			
+		        		}      
+		        		  		
+		        		$nombreHabilidad = $hab->codigo;
+
+		        		//Llamar al singleton correspondiente y ejecutar dicha acción
+		        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+					} catch ( Exception $exc ) {
+						$trans->rollback();
+						throw $exc;
+					}	
+
+				}else
+					{
+						$trans->rollback();
+						Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
+						$this-> redirect(array('acciones/index'));
+					}
+
+			/*
 			//Sacar la accion individual teniendo en cuenta el id_usuario,e id_habilidad 
 			//y cogiendo la que mayor cooldown tiene de toda la tabla
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
 			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->addCondition('devuelto = 0');
-			$criteria->params = array(	'bid_usuario' => $id_usuario,
-										'bid_accion' => $id_accion,
+			$criteria->addCondition('devuelto = 1');
+			$criteria->params = array(	':bid_usuario' => $id_usuario,
+										':bid_accion' => $id_accion,
 										);	
 			$criteria->order = 'cooldown DESC';
 			$criteria->limit = '1';
 			$accion_ind = AccionesIndividuales::model()->find($criteria);
 			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
 			
-			//Si no estaba creada, crear con cooldown = 0 
+
+			//Si es null, puede ser porque no este creada o porque devuelto este aún a 0
 			if($accion_ind === null){
-				$accion_ind = new AccionesIndividuales();
-				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+				$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+				$criteria->params = array(	':bid_usuario' => $id_usuario,
+											':bid_accion' => $id_accion,
+											);	
+				$criteria->order = 'cooldown DESC';
+				$criteria->limit = '1';
+				$accion_indCreada = AccionesIndividuales::model()->find($criteria);
+
+				if($accion_indCreada===null)
+				{
+					$accion_ind = new AccionesIndividuales();
+					$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
 				   							  	  'habilidades_id_habilidad' => $id_accion,
 				   							  	  'cooldown' => 0 ,
-				   							  	  'devuelto'=> 1));
+				   							  	  'devuelto'=> 0));
+				}
+				
 			}
 
 			// TODO Sacar la hora actual
@@ -172,7 +280,8 @@ class AccionesController extends Controller
 			// cancelar transaccion y notificar al usuario
 			if ( $hora_act < $hora_cooldown ){
 					$trans->rollback();
-					throw new CHttpException(404,'La habilidad no se ha regenerado todavía.');
+					Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
+					$this-> redirect(array('acciones/index'));
 			} 
 
 			//Si hora >= hora_cooldown			
@@ -206,7 +315,7 @@ class AccionesController extends Controller
 			} catch ( Exception $exc ) {
 					$trans->rollback();
 					throw $exc;
-			}										   
+			}	*/									   
 			
 		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
 				/*
@@ -247,6 +356,17 @@ class AccionesController extends Controller
 						//guardar en los modelos
 						$res->save();
 						$accion_grupal->save();
+						
+						//Crear participación del creador
+						$participacion = new Participaciones();
+						$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
+						$participacion->usuarios_id_usuario = $id_usuario;
+						$participacion->dinero_aportado = $habilidad['dinero'];
+						$participacion->influencias_aportadas = $habilidad['influencias'];
+						$participacion->animo_aportado = $habilidad['animo'];
+						if (!$participacion->save())
+							throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
+							
 					} catch ( Exception $exc ) {
 						$trans->rollback();
 						throw $exc;
@@ -264,20 +384,21 @@ class AccionesController extends Controller
 		} else { 
 				//tipo erroneo
 				$trans->rollback();
-				throw new CHttpException(404,'No puedes usar esa acción.');
+				Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
+				$this-> redirect(array('acciones/index'));
 		}
 
 		$trans->commit();
 
-		//Redireccionar tras la ejecución
-		if ($habilidad->tipo == Habilidades::TIPO_INDIVIDUAL)
-		{			
-        		$this->redirect(array('acciones/index'));
+		//Renderizar acción individual 
+		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
+			/* 	como no está definido el id_accion_grupal, le damos cualquier valor
+				porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
+			$id_acc = -1;
+			$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
 		}
-		else
-		{
-			//COMPLETAR
-		}
+
+		//Renderizar acción grupal
 		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	}
 
@@ -309,15 +430,17 @@ class AccionesController extends Controller
 
 		//Comprobación de seguridad
 		if ($accionGrupal === null)
-			throw new Exception("La acción grupal no existe.", 404);
+			throw new CHttpException(404,"La acción grupal no existe.");
 			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
 		$equipoUsuario = Yii::app()->user->usAfic;
 
 		// Si el usuario no es del equipo de la acción, no tenemos permiso
-		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) 
-					throw new CHttpException( 403, 'La acción no es de tu equipo');
+		if ( $accionGrupal['equipos_id_equipo'] != $equipoUsuario ) {
+			Yii::app()->user->setFlash('otro_equipo', 'La acción no es de tu equipo.');
+			$this-> redirect(array('acciones/index'));
+		}
 
 		// Saco el propietario de la acción
 		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
@@ -369,22 +492,27 @@ class AccionesController extends Controller
 
 		//Recojo los datos de la habilidad
 		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
-		if($habilidad===null)
-			throw new CHttpException(501,'La habilidad no existe.');
+
+		if($habilidad==null)
+			throw new CHttpException(404,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
 		$id_user = Yii::app()->user->usIdent;
 
 		//Compruebo que la acción es del equipo del user
-		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic)
-			throw new CHttpException(403,'Por favor limitese a las acciones de su equipo.');
+		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic){
+			Yii::app()->user->setFlash('equipo', 'No puedes participar en una acción de otro equipo.');
+			$this-> redirect(array('acciones/index'));
+		}
 
 		//Iniciamos la transacción
 		$transaccion = Yii::app()->db->beginTransaction();
 
 		//Compruebo que la acción no ha terminado
-		if ($accion['completada'] != 0)
-			throw new CHttpException(403,'La acción indicada ya ha acabado.');
+		if ($accion['completada'] != 0){
+			Yii::app()->user->setFlash('acabada', 'La acción ya ha acabado.');
+			$this-> redirect(array('acciones/index'));
+		}
 
 		//Compuebo si el jugador ya ha participado en la acción
 		$participacion= Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_user));
@@ -392,9 +520,11 @@ class AccionesController extends Controller
 
 		if($nuevo_participante){
 			//Compruebo que no se sobrepase el límite de jugadores
-			if($accion['jugadores_acc'] >= $habilidad['participantes_max'])
-		 		throw new CHttpException(403,'La acción ha alcanzado el número máximo de participantes.');
-			
+			if($accion['jugadores_acc'] >= $habilidad['participantes_max']){
+				Yii::app()->user->setFlash('participantes', 'La acción no permite más participantes.');
+				$this-> redirect(array('acciones/index'));
+			}
+			//die("dadsfa");
 		 	//Saco el modelo que le voy a pasar a la vista
 			$participacion = new Participaciones();
 			$participacion['acciones_grupales_id_accion_grupal'] = $id_accion;
@@ -431,15 +561,10 @@ class AccionesController extends Controller
 
 		//Compruebo que el usuario tiene suficientes recursos
 		if ( $dineroAportado > $dineroUsuario || $animoAportado > $animoUsuario || $influenciasAportadas > $influenciasUsuario){
-			//script equivalente al flash y el redirect
-			$url_redirecct = $this->createUrl('acciones/participar', array('id_accion'=>$id_accion));
-			echo '<script type="text/javascript">'.
-				 'alert("Recursos insuficientes.");'.
-				 'window.location = "'.
-				  $url_redirecct.
-				 '"</script>';
+			//no tiene suficientes recursos
 			$transaccion->rollback();
-			return;
+			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos.');
+			$this-> redirect(array('acciones/index'));
 		}
 			
 		try {
@@ -462,7 +587,8 @@ class AccionesController extends Controller
 				}
 				
 				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
-				throw new CHttpException(403,'Ten cuidado o acabarás baneado');
+				Yii::app()->user->setFlash('aviso', 'Se ha registrado un intento de ataque al sistema. De no ser así, póngase en contacto con el administrador. Ten cuidado o acabarás baneado.');
+				$this-> redirect(array('acciones/index'));
 			}
 
 			//Si no se aporta nada ignoro la petición
@@ -521,14 +647,9 @@ class AccionesController extends Controller
 				}
 
 			$transaccion->commit();
-			
-			//script equivalente al flash y el redirect
-			$url_redirecct = $this->createUrl('acciones/ver', array('id_accion'=>$id_accion));
-			echo '<script type="text/javascript">'.
-				 'alert("Tu equipo agradece tu generosa contribucion.");'.
-				 'window.location = "'.
-				  $url_redirecct.
-				 '"</script>';
+			Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
+			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
 			throw $exc;
@@ -568,13 +689,17 @@ class AccionesController extends Controller
 				throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
-				throw new CHttpException(401,'No tienes privilegios sobre la acción.');
+				Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
-			if ($id_jugador == Yii::app()->user->usIden) {
-				throw new CHttpException(401,'No puedes expulsarte a ti mismo.');
+			if ($id_jugador == Yii::app()->user->usIdent) {
+				Yii::app()->user->setFlash('error', 'No puedes expulsarte a tí mismo.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
-			if ($part === null) {
-				throw new CHttpException(401,'El jugador indicado no partricipa en la acción.');
+
+			if ($part == null) {
+				Yii::app()->user->setFlash('participante', 'El jugador indicado no participa en la acción.');
+				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 			}
 
 			$actAni = $rec['animo'];

@@ -95,7 +95,7 @@ class PartidosController extends Controller
 		$modeloGrupalesVisitante = AccionesGrupales:: model()->findAllByAttributes(array('equipos_id_equipo'=>$modeloPartidos->equipos_id_equipo_2));
 
 		
-		//TODO Obtener hora actual
+		//Obtener hora actual,de momento 130 porque no estan ajustadas las horas en la tabla
 		$hora_actual = 130;
 
 		//Obtener el equipo del usuario
@@ -107,46 +107,45 @@ class PartidosController extends Controller
 		//Obtener el partido a consultar y
 		//el siguiente partido del equipo del usuario
 		$modeloPartido    = Partidos::model()->findByPk($id_partido);
-		$modeloSigPartido = Partidos::model()->find('(equipos_id_equipo_1 =:equipo OR 
-													  equipos_id_equipo_2 =:equipo) AND 
-													  hora >:horaAct',
-													array(':equipo'=>$id_equipo,
-														  ':horaAct'=>$hora_actual));
+		$modeloSigPartido = Equipos::model()->findByPk(Yii::app()->user->usAfic)->sigPartido;
 
-		//Saco la información de los equipos para mostrar el nombre en la vista
-		$modeloEquipoLocal     = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_1);
-		$modeloEquipoVisitante = Equipos::model()->findByPk($modeloPartido->equipos_id_equipo_2);
+		//Si el partido se encuentra en su ultimo turno muestro la cronica
+		///Sino muestro la previa del partido, si es el siguiente que juega el equipo
+		//Sino cumple ninguna de esas condiciones muestro que no tengo informacion
 
-		//Declaracion de todas las variables que usa el render
-		$pasado=$presente=false;
-		$cronica_partido="ESTO ESTÁ MAL";
-		if($hora_actual > $modeloPartido->hora)
+		Yii::import('application.components.Partido');
+		$ultimo_turno=Partido::ULTIMO_TURNO;
+	
+		if($modeloPartido->turno == $ultimo_turno+1)
 		{
 			//si el partido se jugo, obtener cronica
-			$pasado = true;
-			$cronica_partido = $modeloPartido->cronica;			
+			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
+									 		'modeloL'=>$modeloEquipoLocal,
+									 		'modeloV'=>$modeloEquipoVisitante
+									 		)); 	
+
 		}
-		elseif($id_partido == $modeloSigPartido->id_partido)
+		elseif($id_partido == $modeloSigPartido->id_partido && $modeloSigPartido->turno == 0)
 		{
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
-			$presente = true;
+			//Renderizo la vista que me muestra la previa
+			$this->render('previa',array('modeloP'=>$modeloPartidos,
+									 'modeloL'=>$modeloEquipoLocal,
+									 'modeloV'=>$modeloEquipoVisitante,
+									 'modeloGL'=>$modeloGrupalesLocal,
+									 'modeloGV'=>$modeloGrupalesVisitante
+									 )); 
 			
 		}
 		else
 		{
 			//TODO enviar un error y redirigir,
 			//no se puede asistir a un partido que esta despues del siguiente partido
-			$cronica_partido = 'No hay informacion acerca del partido';
+			Yii::app()->user->setFlash('Partido', 'No hay informacion acerca del partido');
+			$this-> redirect(array('partidos/index'));
 		}
-
-		$this->render('previa',array('modeloP'=>$modeloPartidos,
-									 'modeloL'=>$modeloEquipoLocal,
-									 'modeloV'=>$modeloEquipoVisitante,
-									 'modeloGL'=>$modeloGrupalesLocal,
-									 'modeloGV'=>$modeloGrupalesVisitante,
-									 'partido_pasado'=>$pasado,
-									 'cronica'=>$cronica_partido,
-									 'partido_presente'=>$presente)); 
+		
+		
 	}
 
 	/**
@@ -172,6 +171,7 @@ class PartidosController extends Controller
 		$partido = Partidos::model()->findByPk($id_partido);
 		$equipoLocal = Equipos::model()->findByPk($partido->equipos_id_equipo_1);
 		$equipoVisitante = Equipos::model()->findByPk($partido->equipos_id_equipo_2);
+
 
 		//Comprobación de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
@@ -199,6 +199,23 @@ class PartidosController extends Controller
 			// Creamos el renderPartial del estado del partido
 			else 
 			{	
+				
+/* PARTE DE MASTER
+		// un usuario no puede asisitir a un partido en el que su equipo no participa
+		if ( ($equipoLocal->id_equipo != $id_equipo_usuario) && ($equipoVisitante->id_equipo != $id_equipo_usuario) ) {
+			
+			// TODO
+			Yii::app()->user->setFlash('propio_equipo', 'No puedes asistir a un partido que no sea de tu propio equipo.');
+			$this-> redirect(array('partidos/index'));
+		
+		} 
+		// un usuario solo puede asistir al próximo partido de su equipo
+		else if( $equipoUsuario->partidos_id_partido != $partido->id_partido ) {
+			
+			// TODO 
+			Yii::app()->user->setFlash('sig_partido', 'Ese no es el proximo partido de tu equipo.');
+			$this-> redirect(array('partidos/index'));
+*/
 
 				//fixme no se si esto va aqui
 				//Calculo del porcertage para mostrar en el grafico cirular

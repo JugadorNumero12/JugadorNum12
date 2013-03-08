@@ -41,7 +41,8 @@ foreach ( $habilidades as $i=>$habilidad ){ ?>
     <!-- Muestro los recursos de la accion -->
     <div class="recursos-accion">
     <?php 
-    printf('<b>Dinero:</b>%d <b>Animo</b>:%d <b>Influencias:</b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']);
+    if ($habilidad['tipo'] != Habilidades::TIPO_PASIVA)
+        printf('<b>Dinero:</b>%d <b>Animo</b>:%d <b>Influencias:</b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']);
     ?>
     </div>
 
