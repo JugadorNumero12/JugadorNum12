@@ -6,12 +6,6 @@
 <div class="envoltorio">
 <div class="encabezado"> <h1>Habilidades desbloqueadas</h1> </div>
 
-<?php
-    foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
-    }
-?>
-
 <?php 
 foreach ( $acciones as $accion ){ ?>
     <div class="datos-accion">
