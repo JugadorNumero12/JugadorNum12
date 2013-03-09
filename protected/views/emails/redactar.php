@@ -9,7 +9,8 @@
  ?>
 <table>
   <tr>
-	    <td><?php echo $form->labelEx($email,'Nombre'); ?>:</td>
+  	<?php if($destinatario != "") $email->nombre=$destinatario; if($tema != "")	$email->asunto=$tema; ?> 
+	    <td><?php echo $destinatario; echo $form->labelEx($email,'Nombre'); ?>:</td>
 	    <td><?php echo $form->textField($email,'nombre'); ?></td>
 	  </tr>
 	  <tr>

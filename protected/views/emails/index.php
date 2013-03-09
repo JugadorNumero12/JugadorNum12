@@ -36,7 +36,7 @@
 </table>
 
 <br> <br>
-<?php echo CHtml::button('Redactar mensaje', array('submit' => array('emails/redactar'),'class'=>"button small black")); ?> <br> <br>
+<?php echo CHtml::button('Redactar mensaje', array('submit' => array('emails/redactar', 'destinatario'=>"" , 'tema'=>""),'class'=>"button small black")); ?> <br> <br>
 <?php echo CHtml::button('Enviados', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> <br> <br>
 
 
