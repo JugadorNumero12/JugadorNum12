@@ -688,6 +688,9 @@ class AccionesController extends Controller
 			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
 			}
+			if ($acc->completada == 1) {
+				throw new CHttpException(404,'Acción completada.No puedes expulsar.');
+			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
 				Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
 				$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));

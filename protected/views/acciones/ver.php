@@ -50,7 +50,7 @@
 						<td><?php printf('%d / %d', $participacion->animo_aportado, $accionGrupal->habilidades->animo_max); ?> </td>
 						<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
 						<td>
-						<?php if($propietarioAccion == $usuario && $participacion->usuario->id_usuario != $usuario){
+						<?php if($propietarioAccion == $usuario && $participacion->usuario->id_usuario != $usuario && $accionGrupal->completada != 1){
 							echo CHtml::button('Expulsar jugador', array('submit' => array('acciones/expulsar', 'id_accion'=>$accionGrupal->id_accion_grupal, 'id_jugador'=>$participacion->usuarios_id_usuario), 'class'=>"button small black"));
 						} ?>
 						</td>
