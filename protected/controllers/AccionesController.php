@@ -461,6 +461,7 @@ class AccionesController extends Controller
 		$this->render('ver', array(
 			'accionGrupal'=>$accionGrupal,
 			'usuario'=>$usuario,
+			'habilidad'=>$accionGrupal->habilidades,
 			'propietarioAccion'=>$propietarioAccion,
 			'esParticipante'=>$esParticipante,
 			'equipoAccion' => $equipoAccion,
