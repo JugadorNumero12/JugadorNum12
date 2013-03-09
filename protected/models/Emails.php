@@ -48,7 +48,7 @@ class Emails extends CActiveRecord
 			array('asunto', 'length', 'max'=>50),
 			array('id_email, id_usuario_to, id_usuario_from', 'length', 'max'=>10),
 			array('leido,borrado_to,borrado_from', 'length', 'max'=>1),
-			array('fecha', 'length', 'max'=>19),
+			array('fecha', 'length', 'max'=>11),
 
 			/*Validaciones para redactar email*/
 			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
