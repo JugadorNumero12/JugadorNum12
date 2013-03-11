@@ -60,25 +60,52 @@
 			height: @BarraSupAlto;
 
 			#barrasup-perfil {
-				display: block;
+				@MenuBG: #F5F5F5;
+				@MenuBorder: darken(@MenuBG, 25%);
+				@Radius: 3px;
 
+				display: block;
 				margin: 4px;
 
+				font-weight: bold;
+				color: (darken(@VERDE_12, 10%) + #888);
+				text-shadow: 0 1px 0 darken(@VERDE_12, 20%);
+
+				&:hover {
+					.box-shadow( 0 0 16px fade(darken(@VERDE_12, 10%), 10%) );
+
+					color: fade(#666,95%);
+					text-shadow: 0 1px 0 white;
+				}
+
 				.barrasup-menu {
-					padding: 5px;
+					padding: 3px;
 
 					width: 120px;
-					height: 20px;
+					height: 24px;
 
-					.gradient( lighten(@VERDE_12, 5%), lighten(@VERDE_12, 12%), lighten(@VERDE_12, 8%));
+					.gradient( fade(lighten(@VERDE_12, 5%), 50%), fade(lighten(@VERDE_12, 12%), 50%), fade(lighten(@VERDE_12, 8%), 50%));
 					.box-shadow(inset 0 1px 1px rgba(255,255,255,.3));
-					.rounded(4px);
+					.border-radius(@Radius, @Radius, @Radius, @Radius);
 
-					border: 1px solid darken(@VERDE_12, 5%);
+					border: 1px solid rgba(0,0,0, .2);
+				}
+
+				&:hover .barrasup-menu {
+					.gradient( @MenuBG, lighten(@MenuBG,2%), darken(@MenuBG,2%));
+					.box-shadow(inset 0 0 0 black);
+					.border-radius(@Radius, 0, 0, @Radius);
+					border-color: @MenuBorder;
 				}
 
 				.barrasup-submenu {
 					display: none;
+					background-color: lighten(@MenuBG, 2%);
+					
+					li {
+						border: 1px solid @MenuBorder;
+						border-top-width: 0;
+					}
 				}
 
 				&:hover .barrasup-submenu {
