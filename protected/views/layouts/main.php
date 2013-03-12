@@ -69,12 +69,19 @@
 			<div id="barrasup-derecha">
 				<ul id="barrasup-perfil">
 					<li class="barrasup-menu">
-						<img src="" width="24" height="24">
+						<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
+						     src="" width="24" height="24">
 						<?php echo Yii::app()->getParams()->usuario->nick; ?>
 					</li>
 					<li class="barrasup-submenu"><ul>
-						<li>Pene1</li>
-						<li>Pene2</li>
+						<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>"><li>
+							<img alt="Perfil" src="images/barra-perfil.png" width="24" height="24"/>
+							Perfil
+						</li></a>
+						<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>"><li>
+							<img alt="Perfil" src="images/barra-logout.png" width="24" height="24"/>
+							Logout
+						</li></a>
 					</ul></li>
 				</ul>
 			</div>
