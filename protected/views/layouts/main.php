@@ -70,7 +70,7 @@
 				<ul id="barrasup-perfil">
 					<li class="barrasup-menu">
 						<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
-						     src="" width="24" height="24">
+						     src="" width="26" height="26">
 						<?php echo Yii::app()->getParams()->usuario->nick; ?>
 					</li>
 					<li class="barrasup-submenu"><ul>
