@@ -461,6 +461,7 @@ class AccionesController extends Controller
 		$this->render('ver', array(
 			'accionGrupal'=>$accionGrupal,
 			'usuario'=>$usuario,
+			'habilidad'=>$accionGrupal->habilidades,
 			'propietarioAccion'=>$propietarioAccion,
 			'esParticipante'=>$esParticipante,
 			'equipoAccion' => $equipoAccion,
@@ -687,6 +688,9 @@ class AccionesController extends Controller
 			}
 			if ($acc === null) {
 				throw new CHttpException(404,'Acción inexistente.');
+			}
+			if ($acc->completada == 1) {
+				throw new CHttpException(404,'Acción completada.No puedes expulsar.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
 				Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
