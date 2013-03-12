@@ -32,6 +32,7 @@
 				<?php if ($estado->turno > 0 && $estado->turno < 12)
 				{
 					echo 'document.getElementById("renderizado-parcial").innerHTML = xmlhttp.responseText;';	
+					echo 'abc();';
 				}
 				?>
 			}
@@ -45,6 +46,8 @@
 		
 	}
 </script>	
+<script type="text/javascript">
+</script>
 
 	 <div id="seccion1"> 
 
