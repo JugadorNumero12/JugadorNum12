@@ -100,6 +100,14 @@ class Formula
 		$difMoral = $params['moralLoc'] -  $params['moralVis'];
 		$avg += atan($difMoral/1000) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
 
+		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
+		$difIndOfen=$params['ofensLoc']-$params['defensVis'];
+		$avg += atan($difIndOfen/10) * 0.6 * ($difIndOfen>0 ? 10 - $avg : -10 - $avg );
+
+		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
+		$difIndDef=$params['ofensVis']-$params['defensLoc'];
+		$avg += atan($difIndDef/10) * 0.6 * ($difIndDef>0 ? 10 - $avg : -10 - $avg );
+
 		return $avg;
 	}
 
