@@ -31,6 +31,7 @@
 	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
 	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
@@ -48,20 +49,22 @@
 			<div id="barrasup-izquierda">Izquierda</div>
 
 			<div id="barrasup-centro">
-				<div class="barrasup-recursos">
-					<img class="barrasup-icono" title="Dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
-					<div> <?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?> </div>
+				<div class="barrasup-recursos" title="Dinero">
+					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+					<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
+						<div id="progressbar-label-dinero"></div>
+					</div>
 				</div>
-				<div class="barrasup-recursos">
-					<img class="barrasup-icono" title="&Aacute;nimo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
-					<div id="bar" class="progressbar-cabecera" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
-						<div class="label1">Label</div>
+				<div class="barrasup-recursos" title="&Aacute;nimo">
+					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+					<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
+						<div id="progressbar-label-animo"></div>
 					</div>
 				</div> 
-				<div class="barrasup-recursos">
-					<img class="barrasup-icono" title="Influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
-					<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
-						<div class="label2">Label</div>
+				<div class="barrasup-recursos" title="Influencias">
+					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+					<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
+						<div id="progressbar-label-influencias"></div>
 					</div>
 				</div> 
 			</div>
