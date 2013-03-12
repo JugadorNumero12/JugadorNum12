@@ -70,7 +70,7 @@
 				<ul id="barrasup-perfil">
 					<li class="barrasup-menu">
 						<img src="" width="24" height="24">
-						Penepene
+						<?php echo Yii::app()->getParams()->usuario->nick; ?>
 					</li>
 					<li class="barrasup-submenu"><ul>
 						<li>Pene1</li>
