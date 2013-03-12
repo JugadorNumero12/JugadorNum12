@@ -65,12 +65,15 @@
 					text-shadow: 0 1px 0 white;
 				}
 
-				.barrasup-menu {
+				.barrasup-menu, .barrasup-submenu li {
 					padding: 3px;
 					padding-right: 9px;
 
-					min-width: 100px;
+					min-width: 120px;
 					height: 24px;
+				}
+
+				.barrasup-menu {
 					line-height: 24px;
 
 					.gradient( fade(lighten(@VERDE_12, 5%), 50%), fade(lighten(@VERDE_12, 12%), 50%), fade(lighten(@VERDE_12, 8%), 50%));
@@ -94,6 +97,18 @@
 					li {
 						border: 1px solid @MenuBorder;
 						border-top-width: 0;
+
+						img {
+							.opacity(.2);
+						}
+
+						&:hover {
+							background-color: white;
+
+							img {
+								.opacity(.5);
+							}
+						}
 					}
 				}
 
