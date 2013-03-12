@@ -1,0 +1,141 @@
+#barrasup {
+	position: fixed;
+
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: -5%;
+
+	width: 110%;
+	height: @BarraSupAlto;
+
+	.gradient(@VERDE_12, darken(@VERDE_12, 5%), lighten(@VERDE_12, 5%));
+	.drop-shadow(0, 0, 16px, 1);
+
+	#barrasup-envoltorio {
+		position: absolute;
+
+		width: 960px;
+		height: @BarraSupAlto;
+
+		margin: 0;
+		padding: 0;
+
+		left: 50%;
+		margin-left: (-960px/2);
+
+		#barrasup-izquierda {
+			position: absolute;
+
+			left: 0;
+			top: 0;
+		}
+
+		#barrasup-derecha {
+			position: absolute;
+
+			right: 0;
+			top: 0;
+
+			height: @BarraSupAlto;
+
+			#barrasup-perfil {
+				@MenuBG: #F5F5F5;
+				@MenuBorder: darken(@MenuBG, 25%);
+				@Radius: 3px;
+
+				display: block;
+				margin: 4px;
+
+				font-weight: bold;
+				color: (darken(@VERDE_12, 10%) + #888);
+				text-shadow: 0 1px 0 darken(@VERDE_12, 20%);
+
+				img {
+					border: 0;
+					outline: 0;
+					margin-right: 6px;
+				}
+
+				&:hover {
+					.box-shadow( 0 0 16px fade(darken(@VERDE_12, 10%), 30%) );
+
+					color: fade(#666,95%);
+					text-shadow: 0 1px 0 white;
+				}
+
+				.barrasup-menu {
+					padding: 3px;
+					padding-right: 9px;
+
+					min-width: 100px;
+					height: 24px;
+					line-height: 24px;
+
+					.gradient( fade(lighten(@VERDE_12, 5%), 50%), fade(lighten(@VERDE_12, 12%), 50%), fade(lighten(@VERDE_12, 8%), 50%));
+					.box-shadow(inset 0 1px 1px rgba(255,255,255,.3));
+					.border-radius(@Radius, @Radius, @Radius, @Radius);
+
+					border: 1px solid rgba(0,0,0, .2);
+				}
+
+				&:hover .barrasup-menu {
+					.gradient( @MenuBG, lighten(@MenuBG,2%), darken(@MenuBG,2%));
+					.box-shadow(inset 0 0 0 black);
+					.border-radius(@Radius, 0, 0, @Radius);
+					border-color: @MenuBorder;
+				}
+
+				.barrasup-submenu {
+					display: none;
+					background-color: lighten(@MenuBG, 2%);
+					
+					li {
+						border: 1px solid @MenuBorder;
+						border-top-width: 0;
+					}
+				}
+
+				&:hover .barrasup-submenu {
+					display: block;
+				}
+			}
+		}
+
+		#barrasup-centro {
+			position: absolute;
+
+			left: 50%;
+			top: 0;
+
+			width: 100px;
+			margin-left: -50px;
+
+			div.barrasup-recursos{
+				display: inline;
+			}
+
+			img.barrasup-icono{
+				height: 24px;
+				width: 24px;
+			}
+
+			.label1{
+				float: right;
+				margin-right: 30%;
+				margin-top: 5px;
+				font-weight: bold;
+				text-shadow: 1px 1px 0 #fff;
+			}//#label1
+
+			.label2{
+			    float: left;
+			    margin-left: 40%;
+			    margin-top: 5px;
+			    font-weight: bold;
+			    text-shadow: 1px 1px 0 #fff;
+			}//#label2
+		}
+	}
+}
