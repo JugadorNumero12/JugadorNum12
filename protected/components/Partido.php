@@ -122,10 +122,14 @@ class Partido
         //IMPORTANTE: dif. niveles -> Local +, Visitante -
         $this->dif_niveles = $partido->nivel_local - $partido->nivel_visitante;
         //Fijar factores ofensivo y defensivo
-        $this->ofensivo_local = $local->factor_ofensivo;
+        /*$this->ofensivo_local = $local->factor_ofensivo;
         $this->defensivo_local = $local->factor_defensivo;
         $this->ofensivo_visitante = $visitante->factor_ofensivo;
-        $this->defensivo_visitante = $visitante->factor_defensivo;
+        $this->defensivo_visitante = $visitante->factor_defensivo;*/
+        $this->ofensivo_local = $this->ofensivo_local;
+        $this->defensivo_local = $this->defensivo_local;
+        $this->ofensivo_visitante = $this->ofensivo_visitante;
+        $this->defensivo_visitante = $this->defensivo_visitante;
         //Moral inicial
         $this->moral_local = 0;
         $this->moral_visitante = 0;
