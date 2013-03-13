@@ -34,8 +34,14 @@
 		</tr></div>
 
 		<div class="separador"><tr>
-			<?php echo '<b>Recursos necesarios para activar la habilidad: </b>'?>
-			<?php printf('<b>Dinero: </b>%d <b>&Aacute;nimo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']); ?>
+			<?php if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL
+					|| $habilidad['tipo'] == Habilidades::TIPO_GRUPAL
+					|| $habilidad['tipo'] == Habilidades::TIPO_PARTIDO)
+					{
+						echo '<b>Recursos necesarios para activar la habilidad: </b>';
+						printf('<b>Dinero: </b>%d <b>&Aacute;nimo</b>: %d <b>Influencias: </b>%d', $habilidad['dinero'], $habilidad['animo'], $habilidad['influencias']);
+					} 
+			?>
 		</tr></div>
 
 		<?php 
@@ -54,10 +60,13 @@
 
 		<div class="separador"><tr>
 			<?php
-				if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL || 
-					$habilidad['tipo'] == Habilidades::TIPO_PARTIDO || 
-					$habilidad['tipo'] == Habilidades::TIPO_GRUPAL){
+				if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL)
+				{
 					printf('<b>Cooldown: </b>%d',$habilidad['cooldown_fin']);
+				}
+				if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+				{
+					printf('<b>Finalizaci&oacute;n: </b>%d',$habilidad['cooldown_fin']);
 				}
 			?>
 		</tr></div>

@@ -20,16 +20,16 @@ foreach ( $acciones as $accion ){ ?>
         <?php
             switch($accion['tipo']){
                 case Habilidades::TIPO_GRUPAL:
-                    echo "Accion grupal";
+                    echo "Acción grupal";
                     break;
                 case Habilidades::TIPO_INDIVIDUAL:
-                    echo "Accion individual";
+                    echo "Acción individual";
                     break;
                 case Habilidades::TIPO_PARTIDO:
-                    echo "Accion de partido";
+                    echo "Acción de partido";
                     break;
                 case Habilidades::TIPO_PASIVA:
-                    echo "Accion pasiva";
+                    echo "Acción pasiva";
                     break;
             }; 
         ?>
@@ -39,7 +39,7 @@ foreach ( $acciones as $accion ){ ?>
     <!-- Muestro los recursos de la accion -->
     <div class="recursos-accion">
     <?php 
-    printf('<b>Dinero:</b>%d <b>Animo</b>:%d <b>Influencias:</b>%d', $accion['dinero'], $accion['animo'], $accion['influencias']);
+    printf('<b>Dinero:</b>%d <b>&Aacute;nimo</b>:%d <b>Influencias:</b>%d', $accion['dinero'], $accion['animo'], $accion['influencias']);
     ?>
     </div>
     <!-- Enlace para poder ver la habilidad con mas detalle en /habilidades/ver/{id_habilidad} -->
