@@ -74,7 +74,7 @@
 					<li class="user-menu-item">
 						<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
 						     src="<?php echo Yii::app()->createUrl('/images/perfil/animadora.jpg') ?>"
-						     width="24" height="24"><span class="user-menu-txt"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+						     width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
 					</li>
 
 					<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
