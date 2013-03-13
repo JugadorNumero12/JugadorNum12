@@ -51,7 +51,7 @@ class EmailsController extends Controller
 	 * @ruta jugadorNum12/emails/redactar
 	 * @redirige juagdorNum12/emails
 	 */
-	public function actionRedactar(){
+	public function actionRedactar($destinatario, $tema){
 		$trans = Yii::app()->db->beginTransaction();
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
 		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
@@ -64,9 +64,6 @@ class EmailsController extends Controller
 				$email->setAttributes(array('fecha'=>time()));//fecha
 				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
 				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
-
-				//FIXME   que muestre algo en el formulario
-
 				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
 				if($email->save()){
 					$trans->commit();
@@ -76,7 +73,7 @@ class EmailsController extends Controller
 		}catch(Exception $e){
 			$trans->rollback();
 		}
-		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion));
+		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
 	}
 
 	/**
@@ -90,7 +87,9 @@ class EmailsController extends Controller
 		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
-		$to = $usuario_to->nick; 
+		$to = $usuario_to->nick;
+		if(Yii::app()->user->usIdent == $email->id_usuario_from) $el_otro = $to;
+		else $el_otro = $from;
 		if($email->id_usuario_to == Yii::app()->user->usIdent && !$email->leido){
 			$trans = Yii::app()->db->beginTransaction();
 			try{
@@ -101,7 +100,7 @@ class EmailsController extends Controller
 				$trans->rollback();
 			}
 		}
-		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to));
+		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to,'el_otro'=>$el_otro));
 	}
 
 	/**
