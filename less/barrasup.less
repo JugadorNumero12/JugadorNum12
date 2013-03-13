@@ -39,83 +39,6 @@
 			top: 0;
 
 			height: @BarraSupAlto;
-
-			#barrasup-perfil {
-				@MenuBG: #F5F5F5;
-				@MenuBorder: darken(@MenuBG, 25%);
-				@Radius: 3px;
-
-				display: block;
-				margin: 2px;
-
-				font-weight: bold;
-				color: (darken(@VERDE_12, 10%) + #888);
-				text-shadow: 0 1px 0 darken(@VERDE_12, 50%);
-
-				img {
-					border: 0;
-					outline: 0;
-					margin: -1px 6px 0 -1px;
-				}
-
-				&:hover {
-					.box-shadow( 0 0 16px fade(darken(@VERDE_12, 10%), 30%) );
-
-					color: fade(#666,95%);
-					text-shadow: 0 1px 0 white;
-				}
-
-				.barrasup-menu, .barrasup-submenu li {
-					padding: 5px;
-					padding-right: 9px;
-
-					min-width: 120px;
-					height: 24px;
-				}
-
-				.barrasup-menu {
-					line-height: 24px;
-
-					.gradient( fade(lighten(@VERDE_12, 5%), 50%), fade(lighten(@VERDE_12, 12%), 50%), fade(lighten(@VERDE_12, 8%), 50%));
-					.box-shadow(inset 0 1px 1px rgba(255,255,255,.3));
-					.border-radius(@Radius, @Radius, @Radius, @Radius);
-
-					border: 1px solid rgba(0,0,0, .2);
-				}
-
-				&:hover .barrasup-menu {
-					.gradient( @MenuBG, lighten(@MenuBG,2%), darken(@MenuBG,2%));
-					.box-shadow(inset 0 0 0 black);
-					.border-radius(@Radius, 0, 0, @Radius);
-					border-color: @MenuBorder;
-				}
-
-				.barrasup-submenu {
-					display: none;
-					background-color: lighten(@MenuBG, 2%);
-					
-					li {
-						border: 1px solid @MenuBorder;
-						border-top-width: 0;
-
-						img {
-							.opacity(.2);
-						}
-
-						&:hover {
-							background-color: white;
-
-							img {
-								.opacity(.5);
-							}
-						}
-					}
-				}
-
-				&:hover .barrasup-submenu {
-					display: block;
-				}
-			}
 		}
 
 		#barrasup-centro {
@@ -152,5 +75,69 @@
 			    text-shadow: 1px 1px 0 #fff;
 			}//#label2
 		}
+	}
+}
+
+@UserMenuBorderColor: rgba(0, 0, 0, .3);
+#user-menu {
+	margin: 4px;
+	min-width: 120px;
+
+	.rounded(4px);
+	border: 1px solid @UserMenuBorderColor;
+
+	@Verde12Trans: fade(@VERDE_12, 50%);
+	.gradient(lighten(@Verde12Trans, 5%), lighten(@Verde12Trans, 10%), @Verde12Trans );
+
+	.drop-shadow(0, 0, 4px, .2);
+
+	// Elementos del menú
+	.user-menu-item {
+		display: block;
+
+		padding: 3px;
+		margin: 0;
+		
+		height: 24px;
+
+		img {
+			margin-right: 8px;
+		}
+
+		.user-menu-txt {
+			position: relative;
+			top: -7px;
+		}
+	}
+
+	// Elementos del menú que se ocultan por defecto
+	.user-menu-hidden {
+		display: none;
+
+		border-top: 1px solid @UserMenuBorderColor;
+
+		img {
+			.opacity(.3);
+		}
+
+		&:hover {
+			background-color: white; 
+			.box-shadow(inset 0 0 16px fade(#DDD,50%));
+
+			img {
+				.opacity(.5);
+			}
+		}
+	}
+}
+
+#user-menu:hover {
+	background: #EEE;
+
+	.drop-shadow(0, 0, 16px, .5);
+	.border-radius(4px, 0, 0, 4px);
+
+	.user-menu-hidden {
+		display: block;
 	}
 }
