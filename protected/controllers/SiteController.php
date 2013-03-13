@@ -30,7 +30,14 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
 		// Redireccionar a login
-		$this->redirect(array('site/login'));
+		if (Yii::app()->user->isGuest)
+		{
+			$this->redirect(array('site/login'));
+		}
+		else
+		{
+			$this->redirect(array('usuarios/perfil'));
+		}
 	}
 
 	/**
