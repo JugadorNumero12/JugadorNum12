@@ -21,7 +21,7 @@
 	        relativeUrls: false,// whether to adjust url's to be relative
 	                            // if false, url's are already relative to the
 	                            // entry less file
-	        rootpath: ":/a.com/"// a path to add on to the start of every url
+	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
 	                            //resource
 	    };
 	</script>

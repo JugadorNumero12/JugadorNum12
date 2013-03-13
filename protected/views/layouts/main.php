@@ -20,7 +20,7 @@
 	        relativeUrls: false,// whether to adjust url's to be relative
 	                            // if false, url's are already relative to the
 	                            // entry less file
-	        rootpath: ":/a.com/"// a path to add on to the start of every url
+	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
 	                            //resource
 	    };
 	</script>
@@ -73,7 +73,8 @@
 				<ul id="user-menu">
 					<li class="user-menu-item">
 						<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
-						     src="" width="24" height="24"><span class="user-menu-txt"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+						     src="<?php echo Yii::app()->createUrl('/images/perfil/animadora.jpg') ?>"
+						     width="24" height="24"><span class="user-menu-txt"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
 					</li>
 
 					<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
