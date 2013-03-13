@@ -1,6 +1,46 @@
+@ButtonBorderColor: darken(@VERDE_12, 15%);
+@ButtonBgColor: lighten(@VERDE_12, 0%);
+@ButtonBgGradTop: lighten(@ButtonBgColor, 10%);
+@ButtonBgGradBottom: darken(@ButtonBgColor, 0%);
+@ButtonInsetColor: lighten(@ButtonBgGradTop, 20%);
+@ButtonTextColor: darken(@VERDE_12, 30%);
+@ButtonTextShadow: lighten(@VERDE_12, 15%);
+
+input[type="button"], input[type="reset"], input[type="submit"], .button, .button:visited {
+	padding: 6px 16px;
+
+	border: 1px solid @ButtonBorderColor;
+	.rounded(5px);
+
+	.gradient(@ButtonBgColor, @ButtonBgGradBottom, @ButtonBgGradTop);
+	.box-shadow(inset 0 1px 0 @ButtonInsetColor);
+
+	color: fade(@ButtonTextColor, 50%);
+	font-weight: bold;
+	font-size: 14px;
+	font-family: Verdana, sans;
+	text-shadow: 0 1px 0 @ButtonTextShadow;
+
+	cursor: pointer;
+
+	&:hover {
+		.gradient(@ButtonBgColor, @ButtonBgGradTop, @ButtonBgGradBottom);
+		color: fade(@ButtonTextColor,80%);
+	}
+
+	&:active {
+		.box-shadow(inset 0 0 12px fade(@ButtonInsetColor, 75%));
+		.gradient(@ButtonBgColor, @ButtonBgColor, @ButtonBgColor);
+
+		color: darken(@ButtonInsetColor, 10%);
+		text-shadow: 0 0 4px black;
+	}
+}
+
+/*
 @color-basico-pagina:#597f08;
 
-.button, .button:visited { /* botones genéricos */
+.button, .button:visited {
 display: inline-block;
 padding: 5px 10px 6px;
 color: #FFF;
@@ -26,26 +66,26 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 border: none;
 }
 
-.button:hover { /* el efecto hover */
+.button:hover { // el efecto hover 
 background-color: white;
 color: white;
 }
 
-.button:active{ /* el efecto click */
+.button:active{ // el efecto click
 top: 1px;
 }
 
-/* botones pequeños */
+// botones pequeños 
 .small.button, .small.button:visited {
 font-size: 11px ;
 }
 
-/* botones muy pequeños */
+// botones muy pequeños
 .verysmall.button, .verysmall.button:visited {
 font-size: 5px ;
 }
 
-/* botones medianos */
+// botones medianos
 .button, .button:visited,.medium.button, .medium.button:visited {
 font-size: 13px;
 font-weight: bold;
@@ -53,13 +93,13 @@ line-height: 1;
 text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
 }
 
-/* botones grandes */
+// botones grandes
 .large.button, .large.button:visited {
 font-size:14px;
 padding: 8px 14px 9px;
 }
 
-/* botones extra grandes */
+// botones extra grandes 
 .super.button, .super.button:visited {
 font-size: 34px;
 padding: 8px 14px 9px;
@@ -85,3 +125,5 @@ padding: 8px 14px 9px;
 
 .black.button, .black.button:visited { background-color: #000; }
 .black.button:hover{ background-color: @color-basico-pagina; }
+
+//*/
