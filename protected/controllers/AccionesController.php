@@ -548,7 +548,8 @@ class AccionesController extends Controller
 		if( !isset($_POST['Participaciones'])){
 			$transaccion->rollback();
 			//Petición GET: Muestro el formulario
-			$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion));
+			$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion,
+												'accion'=> $accion));
 			return;
 		}
 
