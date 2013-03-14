@@ -28,8 +28,9 @@
 		<div class="recursos-aniadidos">
 			<table class="tablas-acciones-ver">
 				<tr><th>Dinero: </th><td><?php echo $accionGrupal['dinero_acc'];?> / <?php echo$accionGrupal['habilidades']['dinero_max']; ?> </td></tr>
-				<tr><th>Influencias: </th><td><?php echo $accionGrupal['influencias_acc'];?> / <?php echo $accionGrupal['habilidades']['influencias_max']; ?> </td></tr>
 				<tr><th>&Aacute;nimo: </th><td><?php echo $accionGrupal['animo_acc'];?> / <?php echo $accionGrupal['habilidades']['animo_max']; ?> </td></tr>
+				<tr><th>Influencias: </th><td><?php echo $accionGrupal['influencias_acc'];?> / <?php echo $accionGrupal['habilidades']['influencias_max']; ?> </td></tr>
+				
 			</table>
 	</div>
 
@@ -39,15 +40,15 @@
 				<tr> 
 					<th>Usuario</th>
 					<th>Dinero</th>
-					<th>Influencias</th>
 					<th>&Aacute;nimo</th>
+					<th>Influencias</th>
 				</th>
 				<?php foreach ($accionGrupal['participaciones'] as $participacion){ ?>
 					<tr>
 						<td><a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $participacion->usuario->id_usuario));?>"><?php echo $participacion->usuario->nick; ?></a></td>
 						<td><?php printf('%d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?> </td>
-						<td><?php printf('%d / %d', $participacion->influencias_aportadas, $accionGrupal->habilidades->influencias_max); ?> </td>
 						<td><?php printf('%d / %d', $participacion->animo_aportado, $accionGrupal->habilidades->animo_max); ?> </td>
+						<td><?php printf('%d / %d', $participacion->influencias_aportadas, $accionGrupal->habilidades->influencias_max); ?> </td>
 						<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
 						<td>
 						<?php if($propietarioAccion == $usuario && $participacion->usuario->id_usuario != $usuario && $accionGrupal->completada != 1){
@@ -79,7 +80,7 @@
 
 	<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
 	<div class="boton-participar">
-		<?php if($accionGrupal['jugadores_acc'] < $accionGrupal['habilidades']['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
+		<?php if(($accionGrupal['jugadores_acc'] < $accionGrupal['habilidades']['participantes_max'] || $esParticipante) && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
 		<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 			<?php echo CHtml::button('Participar', array('submit' => array('acciones/participar', 'id_accion'=>$accionGrupal->id_accion_grupal),'class'=>"button small black")); ?>
 		<?php } ?>
