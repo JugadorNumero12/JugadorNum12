@@ -32,7 +32,6 @@
 	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
 	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
 	<title><?php echo Yii::app()->name; ?></title>
@@ -46,7 +45,9 @@
 	<div id="barrasup">
 		<div id="barrasup-envoltorio">
 			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
-			<div id="barrasup-izquierda">Izquierda</div>
+			<div id="barrasup-izquierda">
+				<img id="barrasup-logo" src= "<?php echo Yii::app()->BaseUrl.'/images/logos/Jugador_Num_12_Verde.png';?>" alt="logo">
+			</div>
 
 			<div id="barrasup-centro">
 				<div class="barrasup-recursos" title="Dinero">
@@ -119,24 +120,6 @@
     <div id="menu-izquierdo">
 		<div id='cssmenu'>
 			<ul>
-				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
-				   	<li class="elementos-menu">
-				   		<?php
-				   			switch (Yii::app()->getParams()->usuario->personaje){
-				   				case Usuarios::PERSONAJE_ULTRA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
-				   					<?php break;
-				   				case Usuarios::PERSONAJE_EMPRESARIO: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="perfil-empresario">
-				   					<?php break;
-				   				case Usuarios::PERSONAJE_MOVEDORA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="perfil-RRPP">
-				   					<?php break;
-				   			}
-				   		?>
-				   		<div class="nombre-menu">Perfil</div>
-				   	</li>
-				</a>
 				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 				   	<li class="elementos-menu">
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
@@ -167,13 +150,6 @@
 				   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 				   	</li>
 				</a>
-				<a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>>
-				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">Logout</div>
-				   	</li>
-				</a>
-
 			</ul>
 		</div>
     </div>
