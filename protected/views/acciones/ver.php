@@ -80,7 +80,7 @@
 
 	<!-- si la acción no ha pasado de jugadores máximos, ni ha terminado, y la acción es de su equipo, entonces puede participar -->
 	<div class="boton-participar">
-		<?php if($accionGrupal['jugadores_acc'] < $accionGrupal['habilidades']['participantes_max'] && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
+		<?php if(($accionGrupal['jugadores_acc'] < $accionGrupal['habilidades']['participantes_max'] || $esParticipante) && $accionGrupal['completada'] == 0 && $equipoUsuario == $equipoAccion){ ?>
 		<!--El usuario no es participante ni creador, así que puede participar en la accion -->
 			<?php echo CHtml::button('Participar', array('submit' => array('acciones/participar', 'id_accion'=>$accionGrupal->id_accion_grupal),'class'=>"button small black")); ?>
 		<?php } ?>
