@@ -84,6 +84,18 @@ class Formula
 	private static function calcMedia (array &$params) {
 		$equilibrio = self::equilibrio($params);
 
+		//Valores iniciales a la hora de meter variabilidad con el aforo
+		$aforo_total=$params['aforoLoc']+$params['aforoVis'];
+		$porAforoLocal=1;
+		$porAforoVist=1;
+		//Si es 0 se queda en el valor por defecto
+		/*if($aforo_total != 0)
+		{
+			$porAforoLocal=$params['aforoLoc']/$aforo_total;
+			$porAforoVist=$params['aforoVis']/$aforo_total;
+		}*/
+
+		
 		// Inicialmente, la media es el estado actual o, si es null, el punto de equilibrio
 		if ($params['estado'] === null) {
 			$avg = $equilibrio;
@@ -98,16 +110,11 @@ class Formula
 
 		//Hacemos la diferencia de morales en valor absoluto
 		$difMoral = $params['moralLoc'] -  $params['moralVis'];
+		$difOfensivos=$params['ofensLoc'] -  $params['ofensVis'];
+		$difDefensivos=$params['defensLoc'] -  $params['defensVis'];
+		
+		
 		$avg += atan($difMoral/1000) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
-
-		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
-		$difIndOfen=$params['ofensLoc']-$params['defensVis'];
-		$avg += atan($difIndOfen/10) * 0.6 * ($difIndOfen>0 ? 10 - $avg : -10 - $avg );
-
-		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
-		$difIndDef=$params['ofensVis']-$params['defensLoc'];
-		$avg += atan($difIndDef/10) * 0.6 * ($difIndDef>0 ? 10 - $avg : -10 - $avg );
-
 		return $avg;
 	}
 
@@ -123,7 +130,7 @@ class Formula
 		$stdev = 2.5;
 
 		// La curva es más aplastada en el centro
-		$stdev *= 1 - abs($params['estado'])*0.07;
+		$stdev *= 1 - abs($params['estado'])*0.05;
 
 		return $stdev;
 	}
