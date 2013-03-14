@@ -96,12 +96,6 @@
 
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
-    	<div id = "logo">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/images/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
-    	</div>
-    	<div id = "titulo-jugador">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/images/logos/Jugador_Num_12_Verde.png'; ?>" width=800 height=100 border=0 alt="Logo Jugador numero 12">
-    	</div>
     	<div id = "clasificacion">
             <?php $clasificacion = Clasificacion::model()->with('equipos')->findAll(array('order'=>'posicion ASC')); ?>
     		<ul>
