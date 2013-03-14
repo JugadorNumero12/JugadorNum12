@@ -15,75 +15,58 @@
     border: 0px white;
 }
 
-// ------------
+// Envoltorio
+#envoltorio-main {
+	min-height: 100%;
 
-div#envoltorio1 {
-    min-height: 100%;
-    height: 100%;
-    margin: 0 auto ;
-    width:100%;
+	clear: both;
 
-	div#envoltorio2 {
-        height: 100%;
-		text-align: left;
-		margin: 0 auto;
+    margin: @BarrasupAlto auto 0;
+    padding: 0;
+
+    width: 960px;
+
+	// Cabecera
+	#cabecera {
+		float: left;
+
 		width: 960px;
+		margin: 0;
 
-		// CABECERA
-		// --------------
-		div#cabecera {
-			float: left;
-			width:100%;
-			margin: @BarraSupAlto 0 3em 0;
+        div#clasificacion {
+            .propiedades_basicas();
+            li {
+                display: inline;
+                list-style-type: none;
+                margin: 0em 1.5em 0em 2em;
+                img.escudos-clasificacion{
+                	width: 50px; 
+                	height: 50px; 
+                }  
+            }
+        }					
+    }
 
-			div#logo {
-				.propiedades_basicas();
-				float: left;
-			}
+	// CENTRO DE LA PAGINA
+    // -----------------------
 
-			div#titulo-jugador {
-				.propiedades_basicas();
-				float: left;
-				margin: 1em 0em 0em 0.5em;
-				width: 800px;
-				height: 100px;
-			}
+	//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
+	#menu-izquierdo{
+		width: 17%;
+		float:left;
+	}//#menu-izquierdo
 
-            div#clasificacion {
-                .propiedades_basicas();
-                li {
-                    display: inline;
-                    list-style-type: none;
-                    margin: 0em 1.5em 0em 2em;
-                    img.escudos-clasificacion{
-                    	width: 50px; 
-                    	height: 50px; 
-                    }  
-                }
-            }					
-        }
+	//Incluye el div del contenido 
+	#grupo-centro{
+		width:80%;
+		float:left;
+		margin: 1em 0em 0em 1em;
 
-		// CENTRO DE LA PAGINA
-        // -----------------------
+		#contenido{
+		 	text-align: center;
+		}//#contenido
+	}//#grupo-derecha
 
-		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
-		#menu-izquierdo{
-			width: 17%;
-			float:left;
-		}//#menu-izquierdo
-
-		//Incluye el div del contenido 
-		#grupo-centro{
-			width:80%;
-			float:left;
-			margin: 1em 0em 0em 1em;
-
-			#contenido{
-			 	text-align: center;
-			}//#contenido
-		}//#grupo-derecha
-
-	}//#envoltorio2
 }//#envoltorio1
 
 

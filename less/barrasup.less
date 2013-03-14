@@ -110,6 +110,7 @@
 	}
 }
 
+// Menú de usuario ubicado a la derecha de la barra
 @UserMenuBorderColor: rgba(0, 0, 0, .3);
 #user-menu {
 	margin: 4px;
@@ -141,6 +142,12 @@
 			top: -7px;
 
 			color: #666;
+		}
+
+		.user-menu-title {
+			font-weight: bold;
+			color: lighten(@VERDE_12, 25%);
+			text-shadow: 0 1px 0 darken(@VERDE_12, 25%);
 		}
 	}
 
@@ -176,6 +183,11 @@
 
 		.user-menu-hidden {
 			display: block;
+		}
+
+		.user-menu-title {
+			color: #666;
+			text-shadow: 0 1px 0 white;
 		}
 	}
 }

@@ -40,59 +40,72 @@
 
 <body>
 
-<div id="envoltorio1"><div id="envoltorio2">
+<!-- Barra Superior -->
+<div id="barrasup">
+	<div id="barrasup-envoltorio">
+		<!-- Parte izquierda de la barra -->
+		<div id="barrasup-izquierda">Izquierda</div>
 
-	<!-- Barra Superior -->
-	<div id="barrasup">
-		<div id="barrasup-envoltorio">
-			<!-- Nivel / Recursos / Notificaciones / Equipo / Perfil -->
-			<div id="barrasup-izquierda">Izquierda</div>
+		<!-- Parte central de la barra -->
+		<div id="barrasup-centro">
 
-			<div id="barrasup-centro">
-				<div class="barrasup-recursos" title="Dinero">
-					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
-					<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
-						<div id="progressbar-label-dinero"></div>
-					</div>
+			<!-- Barra del dinero -->
+			<div class="barrasup-recursos" title="Dinero">
+				<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+				<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
+					<div id="progressbar-label-dinero"></div>
 				</div>
-				<div class="barrasup-recursos" title="&Aacute;nimo">
-					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
-					<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
-						<div id="progressbar-label-animo"></div>
-					</div>
-				</div> 
-				<div class="barrasup-recursos" title="Influencias">
-					<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
-					<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
-						<div id="progressbar-label-influencias"></div>
-					</div>
-				</div> 
 			</div>
 
-			<div id="barrasup-derecha">
-				<ul id="user-menu">
-					<li class="user-menu-item">
-						<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
-						     src="<?php echo Yii::app()->createUrl('/images/perfil/animadora.jpg') ?>"
-						     width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+			<!-- Barra de ánimo -->
+			<div class="barrasup-recursos" title="&Aacute;nimo">
+				<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+				<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
+					<div id="progressbar-label-animo"></div>
+				</div>
+			</div>
+
+			<!-- Barra de influencias -->
+			<div class="barrasup-recursos" title="Influencias">
+				<img class="barrasup-icono" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+				<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
+					<div id="progressbar-label-influencias"></div>
+				</div>
+			</div> 
+		</div>
+
+		<!-- Parte derecha de la barra -->
+		<div id="barrasup-derecha">
+			<!-- Menú de usuario -->
+			<ul id="user-menu">
+				<!-- Avatar + Nombre -->
+				<li class="user-menu-item">
+					<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
+					     src="<?php echo Yii::app()->createUrl('/images/perfil/animadora.jpg') ?>"
+					     width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+				</li>
+
+				<!-- Link al perfil -->
+				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
+						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
 					</li>
+				</a>
 
-					<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
-						<li class="user-menu-item user-menu-hidden">
-							<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
-							     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
-						</li>
-					</a>
-					<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>">
-						<li class="user-menu-item user-menu-hidden">
-							<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-logout.png"
-							     width="24" height="24"/><span class="user-menu-txt">Logout</span>
-						</li>
-					</a>
-				</ul>
-			</div>
+				<!-- Logout -->
+				<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-logout.png"
+						     width="24" height="24"/><span class="user-menu-txt">Logout</span>
+					</li>
+				</a>
+			</ul>
 		</div>
 	</div>
+</div>
+
+<div id="envoltorio-main">
 
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
