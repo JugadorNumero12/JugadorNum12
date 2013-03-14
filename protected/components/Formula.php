@@ -118,6 +118,22 @@ class Formula
 		// La curva es más aplastada en el centro
 		$stdev *= 1 - abs($params['estado'])*0.07;
 
+		//Los dos equipos son muy ofensivos
+		if($params['ofensLoc']>20 && $params['ofensVis']>20)
+		{
+			$stdev *= 0.4;
+		}elseif($params['ofensLoc']>10 && $params['ofensVis']>10)
+				{
+					$stdev *= 0.7;
+				}
+		if($params['defensLoc'] >20 && $params['defensVis']>20)
+		{
+			$stdev *= 1.7;
+		}elseif($params['defensLoc']>10 && $params['defensVis']>10)
+				{
+					$stdev *= 1.3;
+				}
+
 		return $stdev;
 	}
 
