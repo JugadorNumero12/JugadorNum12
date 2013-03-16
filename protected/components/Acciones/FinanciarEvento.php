@@ -44,6 +44,7 @@ class FinanciarEvento extends AccionGrupSingleton
     $helper = new Helper();
     $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
     $ret = min($ret,$helper->aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['FinanciarEvento']['aforo']));
+    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['FinanciarEvento']['moral']));
 
     //2.- Dar bonificación al creador
 
