@@ -39,8 +39,9 @@ class UsuariosController extends Controller
      *
      * Informacion a mostrar
      *  Equipo del usuario
+     *  Enlace al proximo partido del jugador
+     *  Enlace a crear una nueva habilidad grupal
      *  Acciones grupales activas del equipo del usuario
-     *  Proximo partido del equipo del usuario
      * 
      * @ruta        jugadorNum12/usuarios
      */
@@ -57,8 +58,20 @@ class UsuariosController extends Controller
         $modeloEquipo = Equipos::model()->with('accionesGrupales');
         $equipo = $modeloEquipo->findByPK($idEquipo);
 
-        // 4) renderizar la vista
-        $this->render( 'index', array('equipo'=>$equipo) );
+        // 4) obtenemos el proximo partido
+        Yii::import('application.components.Partido');      
+        $equipoUsuario = Equipos::model()->findByPk($idEquipo);
+        $proximoPartido = $equipoUsuario->sigPartido;
+        $primerTurno=Partido::PRIMER_TURNO;
+        $ultimoTurno=Partido::ULTIMO_TURNO;
+
+        // *) renderizar la vista
+        $this->render( 'index', array(
+            'equipo' => $equipo,
+            'proximoPartido' => $proximoPartido,
+            'primerTurno' => $primerTurno,
+            'ultimoTurno' => $ultimoTurno 
+        ));
     }
 
     /*
