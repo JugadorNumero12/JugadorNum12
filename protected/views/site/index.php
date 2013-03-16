@@ -1,5 +1,1 @@
-<?php
-/* @var $this SiteController */
-
-//UNUSED
-?>
+<!-- Nunca se mostrara esta vista -->

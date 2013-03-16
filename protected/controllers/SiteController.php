@@ -26,17 +26,16 @@ class SiteController extends Controller
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
+     *
+     * @redirect    jugadorNum12/usuarios
 	 */
 	public function actionIndex()
 	{
-		// Redireccionar a login
-		if (Yii::app()->user->isGuest)
-		{
+		// Usuario Invitado => Redireccionar a login
+		if (Yii::app()->user->isGuest) {
 			$this->redirect(array('site/login'));
-		}
-		else
-		{
-			$this->redirect(array('usuarios/perfil'));
+		} else {
+            $this->redirect(array('usuarios/index'));
 		}
 	}
 
