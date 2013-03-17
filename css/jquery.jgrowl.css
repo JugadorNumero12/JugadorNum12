@@ -1,8 +1,12 @@
 
 div.jGrowl {
-	z-index: 			9999;
-	color: 				#fff;
-	font-size: 			12px;
+	z-index: 				9999;
+	color: 				 	#fff;
+	font-size: 				12px;
+	-moz-border-radius: 	5px;
+	-webkit-border-radius:	5px;
+	background-image:url("/yii/JugadorNum12/images/fondo_azul.jpeg");
+
 }
 
 /** Special IE6 Style Positioning **/
@@ -68,7 +72,7 @@ div.jGrowl.bottom-right {
 }
 
 div.jGrowl.center {
-	top: 				0px;
+	top: 				50%;
 	width: 				50%;
 	left: 				25%;
 }
@@ -80,21 +84,24 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 }
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-	background-color: 		#000;
-	opacity: 				.85;
+	
+z-index: 				9999;
+	color: 				 	#fff;
+	background-color: 		white;
 	-ms-filter: 			"progid:DXImageTransform.Microsoft.Alpha(Opacity=85)"; 
 	filter: 				progid:DXImageTransform.Microsoft.Alpha(Opacity=85); 
-	zoom: 					1;
-	width: 					235px;
+	zoom: 					1.2;
+	width: 					490px;
 	padding: 				10px;
 	margin-top: 			5px;
 	margin-bottom: 			5px;
 	font-family: 			Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 				1em;
-	text-align: 			left;
+	font-size: 				1.5em;
+	text-align: 			center;
 	display: 				none;
 	-moz-border-radius: 	5px;
 	-webkit-border-radius:	5px;
+	color: 					blue;
 }
 
 div.jGrowl div.jGrowl-notification {
