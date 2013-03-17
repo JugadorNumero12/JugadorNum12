@@ -7,6 +7,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.jgrowl.css" />
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -16,6 +17,8 @@
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
+    
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
