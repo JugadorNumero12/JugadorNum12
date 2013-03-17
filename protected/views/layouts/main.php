@@ -44,7 +44,9 @@
 <div id="barrasup">
 	<div id="barrasup-envoltorio">
 		<!-- Parte izquierda de la barra -->
-		<div id="barrasup-izquierda">Izquierda</div>
+		<div id="barrasup-izquierda">
+			<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl.'/images/logos/Jugador_Num_12_verde.png';?>" alt="logo">
+		</div>
 
 		<!-- Parte central de la barra -->
 		<div id="barrasup-centro">
