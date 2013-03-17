@@ -35,7 +35,9 @@ class Controller extends CController
 			$usuario = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent);
 			Yii::app()->setParams(array('usuario'=>$usuario));
 		}
-    	
+		
+		Yii::app()->setParams(array('bgclass'=>'bg-estadio-fuera'));
+
 		return true;
 	}
 }

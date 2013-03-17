@@ -3,6 +3,17 @@
 /* pagina con la informacion de las jornadas y previas a los partidos */
 class PartidosController extends Controller
 {
+
+	public function beforeAction ($action) {
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+
+		Yii::app()->setParams(array('bgclass'=>'bg-estadio-dentro'));
+
+		return true;
+	}
+
 	/**
 	 * @return array de filtros para actions
 	 */
