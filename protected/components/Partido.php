@@ -131,8 +131,8 @@ class Partido
         $this->ofensivo_visitante = $this->ofensivo_visitante;
         $this->defensivo_visitante = $this->defensivo_visitante;
         //Moral inicial
-        $this->moral_local = 0;
-        $this->moral_visitante = 0;
+        $this->moral_local = $this->moral_local;
+        $this->moral_visitante = $this->moral_visitante;
 		//Generamos estado inicial del partido
 
         $params = array(

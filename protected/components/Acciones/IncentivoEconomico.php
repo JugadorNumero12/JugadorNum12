@@ -41,7 +41,8 @@ class IncentivoEconomico extends AccionGrupSingleton
 
 	    //1.- Añadir bonificación al partido
 	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['IncentivoEconomico']['nivel_equipo']));
+		$ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['IncentivoEconomico']['nivel_equipo']));
+		$ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['IncentivoEconomico']['moral']));
 
 	    //2.- Dar bonificación al creador
 		$ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
