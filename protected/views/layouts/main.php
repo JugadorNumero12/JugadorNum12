@@ -183,20 +183,25 @@
     			echo '<div class="flash-' . $key . '">' . $message . '</div>';
 			}
 		  ?>
-	      <?php echo $content; ?>
-	    </div>
+		     <?php echo $content; ?>
 
-	<div class="push"></div>
+
+	    </div>
   	
-    
-</div></div> <!-- envoltorios -->
+
+	</div>
+
+	<!-- TODO Quitar esto mejorando CSS -->
+	<div style="clear:both"></div>
+
+</div>
 
 <!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="pie-pagina">
+<!--    <div id="pie-pagina">
         Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
-    </div>
+    </div>-->
 
 </body>
 
