@@ -6,12 +6,6 @@
 // codigo PHP 
 
 ?>
-
-<head>
-</head>
-
-<body>
-
 	<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
 
 		<div class="perfil-grupo-arriba">
@@ -103,7 +97,3 @@
 
 
 	</div></div> <!--ENVOLTORIOS-->
-
-</body>
-
-</html>
