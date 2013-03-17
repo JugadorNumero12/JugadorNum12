@@ -11,7 +11,7 @@
 
 ?>
 
-
+<div class="envoltorio2-registro">
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'usuarios-form',
@@ -30,32 +30,33 @@
 	    <td><?php echo $form->labelEx($modelo,'Nickname'); ?>:</td>
 	    <td><?php echo $form->textField($modelo,'nuevo_nick'); ?></td>
 	  </tr>
-	  <tr>
-	    <td><?php echo $form->error($modelo,'nuevo_nick'); ?></td>
-	  </tr>
 
 	  <tr>
 	    <td><?php echo $form->labelEx($modelo,'Correo Electr&oacute;nico'); ?>:</td>
-	    <td><?php echo $form->emailField($modelo,'nueva_email1'); ?></td>
-	  </tr>
-	  <tr>
-	    <td><?php echo $form->error($modelo,'nueva_email1'); ?></td>
+	    <td><?php echo $form->emailField($modelo,'nueva_email1'); ?></td>	    
 	  </tr>
 
 	  <tr>
 	    <td><?php echo $form->labelEx($modelo,'Contrase&ntilde;a'); ?>:</td>
-	    <td><?php echo $form->passwordField($modelo,'nueva_clave1'); ?></td>
-	  </tr>
-	  <tr>
-	    <td><?php echo $form->error($modelo,'nueva_clave1'); ?></td>
+	    <td><?php echo $form->passwordField($modelo,'nueva_clave1'); ?></td>	    
 	  </tr>
 
 	  <tr>
 	    <td><?php echo $form->labelEx($modelo,'Repetir contrase&ntilde;a'); ?>:</td>
 	    <td><?php echo $form->passwordField($modelo,'nueva_clave2'); ?></td>
 	  </tr>
+
 	  <tr>
-	    <td><?php echo $form->error($modelo,'nueva_clave2'); ?></td>
+	  	<td colspan="2">
+	  	<div class="envoltorio-errores">
+	  		<ul>
+	    		<li><?php echo $form->error($modelo,'nuevo_nick'); ?></li>
+	  			<li><?php echo $form->error($modelo,'nueva_email1'); ?></li>
+	  			<li><?php echo $form->error($modelo,'nueva_clave1'); ?></li>
+	  			<li><?php echo $form->error($modelo,'nueva_clave2'); ?></li>
+	  		</ul>
+	  	</div>
+	  </td>
 	  </tr>
 
 	 <!-- <tr>
@@ -98,14 +99,15 @@
 
 	  <tr>
 	    <td >
-	    	<?php echo CHtml::submitButton('Siguiente',array(/*'submit'=>array('/registro/equipo'),*/'class'=>"button large black"));?>
+	    	<?php echo CHtml::resetButton('Reiniciar',array('class'=>"button large black"));?>
 	    </td>
 	    <td >
-	    	<?php echo CHtml::resetButton('REINICIAR',array('class'=>"button large black"));?>
+	    	<?php echo CHtml::submitButton('Siguiente',array(/*'submit'=>array('/registro/equipo'),*/'class'=>"button large black"));?>
 	    </td>
 	  </tr>
 
 	</table>
 </div>
 
-	<?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
+</div>

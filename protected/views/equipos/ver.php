@@ -10,12 +10,6 @@
 
 <!-- codigo HTML -->
 
-<head>
-
-</head>
-
-<body>
-
 <div class="envoltorio-perfil"> <div class="envoltorio2-perfil">
 
 		<div class="perfil-grupo-arriba">
@@ -73,7 +67,7 @@
 										No 
 									<?php }?>
 									</td>
-								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
+								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal, 'aux'=>""),'class'=>"button small black"));?> 	</td>		
 							</tr>				
 					 <?php } ?>
 					</table>
@@ -131,7 +125,3 @@
 		
 
 	</div></div> <!--ENVOLTORIOS-->
-
-</body>
-
-</html>

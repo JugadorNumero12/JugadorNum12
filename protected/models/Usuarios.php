@@ -74,7 +74,10 @@ class Usuarios extends CActiveRecord
 			/*Validaciones para registrar usuario*/
 			array('nueva_email1','comprobarEmail','on'=>'registro'),
 			array('nuevo_nick','comprobarNick','on'=>'registro'),
-			array('nuevo_nick,nueva_email1,nueva_clave1,nueva_clave2','required','on'=>'registro','message'=>'Tienes que rellenar estos campos'),
+			array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
+			array('nueva_email1','required','on'=>'registro','message'=>'Introduzca un e-mail válido.'),
+			array('nueva_clave1','required','on'=>'registro','message'=>'Introduzca una contraseña.'),
+			array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
 			
 			// The following rule is used by search().

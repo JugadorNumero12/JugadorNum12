@@ -415,7 +415,7 @@ class AccionesController extends Controller
 	 * @parametro 	id de la accion grupal que se muestra
 	 * @ruta 		jugadorNum12/acciones/ver/{$id_accion}
 	 */
-	public function actionVer($id_accion)
+	public function actionVer($id_accion, $aux)
 	{
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
@@ -465,7 +465,8 @@ class AccionesController extends Controller
 			'propietarioAccion'=>$propietarioAccion,
 			'esParticipante'=>$esParticipante,
 			'equipoAccion' => $equipoAccion,
-			'equipoUsuario' => $equipoUsuario));
+			'equipoUsuario' => $equipoUsuario,
+			'aux' => $aux));
 	}
 
 	/**
@@ -596,7 +597,7 @@ class AccionesController extends Controller
 			//Si no se aporta nada ignoro la petición
 			if($dineroAportado==0 && $animoAportado==0 && $influenciasAportadas==0){
 				$transaccion->rollback();
-				$this->redirect(array('ver', 'id_accion'=>$id_accion));
+				$this->redirect(array('ver', 'id_accion'=>$id_accion, 'aux'=>"nada"));
 				return;
 			}
 
@@ -649,8 +650,8 @@ class AccionesController extends Controller
 				}
 
 			$transaccion->commit();
-			Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+			//Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
+			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion, 'aux'=>"algo"));
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
