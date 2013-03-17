@@ -513,7 +513,7 @@ class AccionesController extends Controller
 
 		//Compruebo que la acción es del equipo del user
 		if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic){
-			Yii::app()->user->setFlash('equipo', 'No puedes participar en una acción de otro equipo.');
+			Yii::app()->user->setFlash('equipo', 'No puedes participar en esta acción.');
 			$this-> redirect(array('acciones/index'));
 		}
 
