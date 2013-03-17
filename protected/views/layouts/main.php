@@ -166,8 +166,11 @@
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
 	      <?php
-    			foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        			echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    			foreach(Yii::app()->user->getFlashes() as $key => $message) { ?>
+    				<script type="text/javascript">
+    				$.jGrowl( "<?php echo $message; ?>", { sticky: true });
+    				</script>
+        		<?php	//echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     			}
 		  ?>
 	      <?php echo $content; ?>
