@@ -38,7 +38,7 @@
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
-<body>
+<body class="<?php echo Yii::app()->getParams()->bgclass ?>">
 
 <!-- Barra Superior -->
 <div id="barrasup">
@@ -177,9 +177,9 @@
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
 	      <?php
-    			foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        			echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
-    			}
+			foreach (Yii::app()->user->getFlashes() as $key => $message) {
+    			echo '<div class="flash-' . $key . '">' . $message . '</div>';
+			}
 		  ?>
 	      <?php echo $content; ?>
 	    </div>

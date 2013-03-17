@@ -26,10 +26,12 @@ class Controller extends CController
 			return false;
 		}
 
-		$clasificacion = Clasificacion::model()->with('equipos')->findAll(array('order'=>'posicion ASC'));
-		Yii::app()->setParams(array('clasificacion'=>$clasificacion));
-
 		if (isset(Yii::app()->user->usIdent)) {
+			// Obtiene la clasificación de los equipos
+			$clasificacion = Clasificacion::model()->with('equipos')->findAll(array('order'=>'posicion ASC'));
+			Yii::app()->setParams(array('clasificacion'=>$clasificacion));
+
+			// Obtiene la información del usuario
 			$usuario = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent);
 			Yii::app()->setParams(array('usuario'=>$usuario));
 		}
