@@ -650,7 +650,7 @@ class AccionesController extends Controller
 				}
 
 			$transaccion->commit();
-			Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
+			//Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
 			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion, 'aux'=>"algo"));
 
 		} catch ( Exception $exc ) {
