@@ -109,10 +109,9 @@
 
   	<!-- DIVISION DE CABECERA -->
     <div id="cabecera">
-    	<div id = "clasificacion">
-            <?php $clasificacion = Clasificacion::model()->with('equipos')->findAll(array('order'=>'posicion ASC')); ?>
-    		<ul>
-    			<?php foreach ($clasificacion as $equipo) { ?>
+    	<div id="clasificacion">
+            <ul>
+    			<?php foreach (Yii::app()->getParams()->clasificacion as $equipo) { ?>
                     <li> 
                         <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
                             <img
