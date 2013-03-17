@@ -97,17 +97,18 @@ class SiteController extends Controller
 		if(isset($_POST['LoginForm']))
 		{
 			$modelo->attributes=$_POST['LoginForm'];
-		
-
-
-
 			$usuario = Usuarios::model()->findByAttributes(array('nick'=>$modelo->username));
-			//die(var_dump($usuario));
-			//Comprobaciones
-			if($usuario->equipos_id_equipo === NULL){
-				$this->redirect(array('registro/equipo','id_usuario'=>$usuario->id_usuario));
-			}else if($usuario->personaje === NULL){
-				$this->redirect(array('registro/personaje','id_usuario'=>$usuario->id_usuario));
+
+			// Comprobaciones
+			if ($usuario !== null) {
+				// TODO Comprobación de que el usuario existe
+				// Si no existe, no sé qué habría que hacer
+
+				if ($usuario->equipos_id_equipo === null) {
+					$this->redirect(array('registro/equipo','id_usuario'=>$usuario->id_usuario));
+				} else if ($usuario->personaje === null) {
+					$this->redirect(array('registro/personaje','id_usuario'=>$usuario->id_usuario));
+				}
 			}
 
 
@@ -115,6 +116,7 @@ class SiteController extends Controller
 			if($modelo->validate() && $modelo->login())
 				$this->redirect(array('usuarios/index'));
 		}
+
 		// display the login form
 		$this->render('login',array('model'=>$modelo));
 	}
