@@ -47,7 +47,8 @@ class EquiposController extends Controller
 			array('order'=>'posicion ASC')
 		);
 		if ($modeloClasificacion === null)
-			throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
+			Yii::app()->user->setFlash('clasificacion', 'Clasificacion incorrecta. (actionIndex, EquiposController)');
+			//throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
 			
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
 	}
@@ -93,7 +94,8 @@ class EquiposController extends Controller
 		$equipo = $modeloEquipo->findByPK($id_equipo);
 
 		if ( $equipo === null ) {
-			throw new CHttpException( 404, 'Equipo inexistente');
+			Yii::app()->user->setFlash('equipo', 'Equipo inexistente.');
+			//throw new CHttpException( 404, 'Equipo inexistente');
 		}
 
 		//Enviar datos a la vista
@@ -136,7 +138,8 @@ class EquiposController extends Controller
 
 		}else if ($modeloEquipo===null)
 				{
-					throw new CHttpException(404,'No existe el equipo al que quiere cambiarse.');
+					Yii::app()->user->setFlash('equipo', 'No existe el equipo al que quiere cambiarse.');
+					//throw new CHttpException(404,'No existe el equipo al que quiere cambiarse.');
 
 				}else 
 					{

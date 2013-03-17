@@ -115,7 +115,8 @@ class UsuariosController extends Controller
 
         if ($modeloUsuario === null)
         {
-            throw new CHttpException( 404, 'El usuario no existe.');
+            Yii::app()->user->setFlash('usuario', 'Usuario inexistente.');
+            //throw new CHttpException( 404, 'El usuario no existe.');
         }
         else
         {

@@ -54,7 +54,8 @@ class AccionesController extends Controller
 
 		//Comprobaciones de seguridad
 		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
-			throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
+			//throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
 			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
@@ -64,7 +65,8 @@ class AccionesController extends Controller
 
 			//Comprobación de seguridad
 			if ($hab === null)
-				throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				Yii::app()->user->setFlash('hamilidad', 'Habilidad no encontrada. (actionIndex,AccionesController).');
+				//throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
 				
 			$acciones[] = $hab;
 		}
@@ -177,7 +179,8 @@ class AccionesController extends Controller
 	        		$hab = Habilidades::model()->findByPk($id_accion);
 	        		if ($hab === null)
 	        		{
-	        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+	        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController)');
+	        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
 	        			
 	        		}      
 	        		  		
@@ -211,7 +214,8 @@ class AccionesController extends Controller
 		        		$hab = Habilidades::model()->findByPk($id_accion);
 		        		if ($hab === null)
 		        		{
-		        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
+		        			Yii::app()->user->setFlash('grupal', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
+		        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
 		        			
 		        		}      
 		        		  		
@@ -415,7 +419,7 @@ class AccionesController extends Controller
 	 * @parametro 	id de la accion grupal que se muestra
 	 * @ruta 		jugadorNum12/acciones/ver/{$id_accion}
 	 */
-	public function actionVer($id_accion, $aux)
+	public function actionVer($id_accion)
 	{
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
@@ -430,7 +434,8 @@ class AccionesController extends Controller
 
 		//Comprobación de seguridad
 		if ($accionGrupal === null)
-			throw new CHttpException(404,"La acción grupal no existe.");
+			Yii::app()->user->setFlash('grupal', 'La acción grupal no existe.');
+			//throw new CHttpException(404,"La acción grupal no existe.");
 			
 		// Saco el usuario
 		$usuario = Yii::app()->user->usIdent;
@@ -456,6 +461,10 @@ class AccionesController extends Controller
 				$esParticipante = true;
 			}
 		}
+
+		if($accionGrupal['completada'] == 1){
+			Yii::app()->user->setFlash('completada', 'La acción se ha completado');
+		}
 		
 		// Envío los datos a la vista
 		$this->render('ver', array(
@@ -465,8 +474,7 @@ class AccionesController extends Controller
 			'propietarioAccion'=>$propietarioAccion,
 			'esParticipante'=>$esParticipante,
 			'equipoAccion' => $equipoAccion,
-			'equipoUsuario' => $equipoUsuario,
-			'aux' => $aux));
+			'equipoUsuario' => $equipoUsuario));
 	}
 
 	/**
@@ -490,13 +498,15 @@ class AccionesController extends Controller
 		//Recojo los datos de la acción
 		$accion = AccionesGrupales::model()->findByPK($id_accion);
 		if($accion===null)
-			throw new CHttpException(404,'Acción inexistente.');
+			Yii::app()->user->setFlash('accion', 'Acción inexistente.');
+			//throw new CHttpException(404,'Acción inexistente.');
 
 		//Recojo los datos de la habilidad
 		$habilidad = Habilidades::model()->findByPk($accion['habilidades_id_habilidad']);
 
 		if($habilidad==null)
-			throw new CHttpException(404,'La habilidad no existe.');
+			Yii::app()->user->setFlash('habilidad', 'Habilidad inexistente.');
+			//throw new CHttpException(404,'La habilidad no existe.');
 
 		//Saco el usuario que quiere participar en la acción
 		$id_user = Yii::app()->user->usIdent;
@@ -540,7 +550,8 @@ class AccionesController extends Controller
 
 		//Comprobación de seguridad
 		if ($recursosUsuario === null)
-			throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
+			Yii::app()->user->setFlash('recursos', 'No se puede obtener el modelo de recursos. (actionParticipar,AccionesController).');
+			//throw new CHttpException(404,"No se puede obtener el modelo de recursos. (actionParticipar,AccionesController)");
 			
 		$dineroUsuario = $recursosUsuario['dinero'];
 		$influenciasUsuario = $recursosUsuario['influencias'];
@@ -597,6 +608,7 @@ class AccionesController extends Controller
 			//Si no se aporta nada ignoro la petición
 			if($dineroAportado==0 && $animoAportado==0 && $influenciasAportadas==0){
 				$transaccion->rollback();
+				Yii::app()->user->setFlash('aporte', 'No has aportado nada a la acción.');
 				$this->redirect(array('ver', 'id_accion'=>$id_accion, 'aux'=>"nada"));
 				return;
 			}
@@ -650,7 +662,12 @@ class AccionesController extends Controller
 				}
 
 			$transaccion->commit();
-			//Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
+
+			if($accion['completada'] == 1){
+				Yii::app()->user->setFlash('completada', '¡Enhorabuena, has completado la acción¡');
+			}else{
+				Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
+			}
 			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion, 'aux'=>"algo"));
 
 		} catch ( Exception $exc ) {
@@ -686,13 +703,16 @@ class AccionesController extends Controller
 			//Se comprueba la coherencia de la petición
 			if ($rec === null)
 			{
-				throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
+				Yii::app()->user->setFlash('recursos', 'Recursos inexistentes. (actionExpulsar,AccionesController).');
+				//throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
 			}
 			if ($acc === null) {
-				throw new CHttpException(404,'Acción inexistente.');
+				Yii::app()->user->setFlash('recursos', 'Acción inexistente.');
+				//throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc->completada == 1) {
-				throw new CHttpException(404,'Acción completada.No puedes expulsar.');
+				Yii::app()->user->setFlash('recursos', 'Acción completada.No puedes expulsar.');
+				//throw new CHttpException(404,'Acción completada.No puedes expulsar.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
 				Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');

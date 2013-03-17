@@ -15,24 +15,6 @@
 
 	<div class="encabezado"><h1><?php echo $accionGrupal['habilidades']['nombre']; ?></h1></div>
 
-<script type="text/javascript">
-	<?php if($aux == "algo" && $accionGrupal['completada'] == 1){ ?>
-		$.jGrowl("¡Enhorabuena, has completado la acción¡", { sticky: true });
-	<?php } ?>
-
-	<?php if ($accionGrupal['completada'] == 1 && $aux != "algo"){ ?>
-		$.jGrowl("La acción se ha completado", { sticky: true });
-	<?php } ?>
-
-	<?php if($aux == "nada" && $accionGrupal['completada'] != 1){ ?>
-		$.jGrowl("No has aportado nada a la acción.", { sticky: true });
-	<?php } ?>
-
-	<?php if($aux == "algo" && $accionGrupal['completada'] != 1){ ?>
-		$.jGrowl("Tu equipo agradece tu generosa contribución.", { sticky: true });
-	<?php } ?>
-</script>
-
 	<div class="datos-accion">
 		<table class="tablas-acciones-ver">
 			<tr><th>Creador: </th><td> <a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $accionGrupal->usuarios->id_usuario));?>"> <?php echo $accionGrupal->usuarios->nick; ?> </a></td></tr>
