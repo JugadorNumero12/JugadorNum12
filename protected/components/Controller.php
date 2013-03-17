@@ -31,6 +31,8 @@ class Controller extends CController
 			Yii::app()->setParams(array('usuario'=>$usuario));
 		}
 
+		Yii::app()->setParams(array('bgclass'=>'bg-estadio-fuera'));
+
 		return true;
 	}
 }
