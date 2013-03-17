@@ -11,7 +11,12 @@
 @VERDE_12: #597f08;
 
 // ------------
-
+.background-size (@size) { 
+  -webkit-background-size: @size;
+  -moz-background-size: @size;
+  -o-background-size: @size;
+  background-size: @size;
+}
 
 html, body {
 	height: 100%;
@@ -30,10 +35,16 @@ body{
 
 .bg-estadio-fuera {
 	background-image: url('images/fondos/estadio_fuera.jpg');
+	background-attachment: fixed;
+	background-position: center center;
+	.background-size(cover);
 }
 
 .bg-estadio-dentro {
 	background-image: url('images/fondos/estadio_dentro.jpg');
+	background-attachment: fixed;
+	background-position: center center;
+	.background-size(cover);
 }
 
 h1, h2, h3, ul, li, form{
