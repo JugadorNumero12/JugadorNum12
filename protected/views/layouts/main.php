@@ -120,6 +120,12 @@
     <div id="menu-izquierdo">
 		<div id='cssmenu'>
 			<ul>
+				<a href="<?php echo $this->createUrl( '/usuarios/index', array() ); ?>">
+					<li class="elementos-menu">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+						<div class="nombre-menu">Principal</div>
+					</li>
+				</a>
 				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 				   	<li class="elementos-menu">
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">

@@ -10,17 +10,28 @@
 
 <div class = "envoltorio-perfil"> <div class="envoltorio2-perfil">
     <div class = "perfil-izquierda">
+        <h3 class="titulo-subrayado"> Tu equipo </h3>
+
         <div class = "perfil-izquierda-equipo">
-            
-            <h3> Tu equipo </h3>
             <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
              width=150 height=150 alt="<?php echo $equipo->nombre ?>" >
-       
         </div>
 
         <div class = "perfil-izquierda-partido">
           
-          <h3> Pr&oacute;ximo partido </h3>
+          <h4> Pr&oacute;ximo partido </h4>
+            <div class = "info-proximo-partido">
+              <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->local->id_equipo) )?>">
+                <?php echo $proximoPartido->local->nombre ?> 
+              </a>
+
+              <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->visitante->id_equipo) )?>">
+                <?php echo $proximoPartido->visitante->nombre ?>
+              </a>
+    
+              <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
+            </div>
+
             <?php if($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
               <?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$proximoPartido->id_partido),'class'=>"button small black")) ?> 
             <?php } else {?>
@@ -31,16 +42,16 @@
     </div>
 
     <div class = "perfil-derecha">
+      <h3 class = "titulo-subrayado"> Tu afici&oacute;n </h3>
+
       <div class = "perfil-derecha-iniciar">
-
-        <h3> Iniciar una nueva acci&oacute;n </h3>
+        <h4> Iniciar nueva acci&oacute;n </h4>
         <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/acciones/index',),'class'=>"button small black")) ?> 
-
       </div>
 
       <div class = "perfil-derecha-acciones">
 
-            <h3> Acciones grupales activas </h3>
+            <h4> Acciones grupales activas </h4>
             <table> 
                 <tr> 
                     <th>Nombre</th>
