@@ -41,9 +41,9 @@
 
     	width: @ClasifWidth;
 
-    	border: @ClasifBorder solid #DDD;
+    	border: @ClasifBorder solid @VERDE_12_CLARO;
     	.rounded(10px);
-    	background: white;
+    	background: @VERDE_12_BLANCO;
 
     	text-align: center;
 
@@ -51,22 +51,22 @@
             display: inline;
             list-style: none;
 
-            margin: 0 10px;
+            margin: 0 12px;
             padding: 0;
 
-            .opacity(.6);
+            .opacity(.7);
 
         	.clasif-posicion, .clasif-hash {
         		font-style: italic;
         		font-size: 28px;
         		font-weight: bold;
         		font-family: Georgia, serif;
-        		color: #AAA;
+        		color: fade(darken(@VERDE_12, 10%), 70%);
         	}
 
         	.clasif-hash {
         		font-size: 20px;
-        		color: #BBB;
+        		color: fade(darken(@VERDE_12, 10%), 40%);
         	}
 
         	&:hover {
