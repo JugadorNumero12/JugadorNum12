@@ -134,19 +134,30 @@
 			<ul>
 				<a href="<?php echo $this->createUrl( '/usuarios/index', array() ); ?>">
 					<li class="elementos-menu">
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-						<div class="nombre-menu">Principal</div>
+						<?php switch (Yii::app()->getParams()->usuario->equipos_id_equipo){
+							case Usuarios::PERSONAJE_EMPRESARIO: ?>
+								<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
+								<?php break;
+							case Usuarios::PERSONAJE_MOVEDORA: ?>
+								<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="menu-inicio-movedora">
+								<?php break;
+							case Usuarios::PERSONAJE_ULTRA: ?>
+								<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="menu-inicio-ultra">
+								<?php break;
+									
+						} ?>
+						<div class="nombre-menu">Inicio</div>
 					</li>
 				</a>
 				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 				   	<li class="elementos-menu">
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="manu-aficion">
 						<div class="nombre-menu">Afici&oacute;n</div>
 					</li>
 				</a>
 				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="perfil-sin-definir">
 				   		<div class="nombre-menu">Habilidades</div>
 				   	</li>
 			    </a>
@@ -158,13 +169,13 @@
 			   	</a>			   	
 				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
 				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/tabla.png'; ?>" alt="menu-calendario">
 				   		<div class="nombre-menu">Calendario</div>
 				   	</li>
 			  	</a>
 			    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
 				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
+				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/clasificacion.png'; ?>" alt="menu-clasificacion">
 				   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 				   	</li>
 				</a>
