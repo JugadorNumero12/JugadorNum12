@@ -233,11 +233,11 @@ class Partido
 		$cronica_gol = "";
 		switch ($this->estado) {
 		    case 10: { //Gol del equipo local
-		        $cronica_gol = " La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        $cronica_gol = " La aficion del equipo ".$partido->local->nombre." esta muy emocionada. Su equipo ha metido un gol.";
 		        break;
 		    }
 		    case -10:{ //Gol del equipo visitante
-		        $cronica_gol = " La aficion del equipo ".$partido->visitante->nombre." esta muy emocionada. Su equipo ha medido un gol";
+		        $cronica_gol = " La aficion del equipo ".$partido->visitante->nombre." esta muy emocionada. Su equipo ha metido un gol.";
 		        break;
 		    }
 		}
@@ -263,11 +263,11 @@ class Partido
 		$abs_estado=abs($this->estado);
 		switch ($abs_estado) {
 		    case 0: { 
-		        $cronica_estado = " El partido esta es un punto muerto. Ningun equipo es mejor que el otro.";
+		        $cronica_estado = " El partido está en un punto muerto. Ningún equipo es mejor que el otro.";
 		        break;
 		    }
 		    case ($abs_estado >=1 && $abs_estado <=3):{ //[1,2,3] Diferencia leve
-		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." es ligeramente mejor que".$equipo_perdiendo;
+		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." es ligeramente mejor que ".$equipo_perdiendo;
 		        break;
 		    }
 		    case ($abs_estado >=4 && $abs_estado <=6):{ //[4,5,6] Diferencia normal
@@ -275,7 +275,7 @@ class Partido
 		        break;
 		    }
 		    case ($abs_estado >=7 && $abs_estado <=9):{ //[7,8,9] Muy favorable
-				$cronica_estado = " El partido esta siendo dominado por .".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
+				$cronica_estado = " El partido esta siendo dominado por ".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
 		        break;
 		    }
 		}
@@ -327,10 +327,16 @@ class Partido
 		    }
 		}
 
+		$cronica_descanso = "";
+		if ($this->turno == self::TURNO_DESCANSO-1)
+		{
+			$cronica_descanso = "\nDescanso: Comienza el descanso y ambos equipos se van a los vestuarios. Es hora de tomar un descanso y esperar a ver qué nos depara la segunda mitad de juego.\n";
+		}
+
 		//TODO comentar la diferencia de goles
 
 		
-		$this->cronica = $cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n".$this->cronica;
+		$this->cronica = $cronica_descanso."\n".$cronica_turno.$cronica_gol.$cronica_estado.$cronica_dif_estado."\n".$this->cronica;
 		//$this->cronica .= "Estado Antiguo".$estado_antiguo."/Estado Actual".$this->estado;
 	}
 
@@ -347,7 +353,7 @@ class Partido
             throw new Exception('Equipo local inexistente.',404);
         if ($visitante === null)
             throw new Exception('Partido inexistente.',404);
-		$this->cronica .= "Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
+		$this->cronica .= "\nInicio del partido: Comienza el encuentro entre los ".$local->nombre." como locales y los ".$visitante->nombre." en posición de visitantes. ";
 		$this->cronica .= ($this->aforo_local > 2*$this->aforo_visitante) ? "Por lo visto no ha habido demasiados desplazamientos en el equipo visitante. El estadio se llena con los colores de los ".$local->nombre.". " : "";  
 		$this->cronica .= ($this->ambiente > self::AMBIENTE_MEDIO) ? "El ambiente está caldeado y la afición espera con ganas ver a su equipo en acción. " : 
 		"Los ánimos brillan por su ausencia. Ambas aficiones parecen estar apagadas. Parece que no se jueguen mucho en este encuentro. "; 
@@ -512,12 +518,12 @@ class Partido
 	private function generaCronicaDescanso()
 	{
 		$cronicaDesc="";
+		$cronicaDesc .= "\nSegunda parte: Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda.";
 		//Indicar fin del descanso y reanudación del partido
-		$cronicaDesc .= ($this->estado > 0) ? "El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
-		"El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
-		$cronicaDesc .= "Finaliza el descanso y ambos equipos vuelven al terreno de juego. El partido se reanuda. \n ";
+		$cronicaDesc .= ($this->estado > 0) ? " El equipo local continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte." : 
+		" El equipo visitante continua el juego con superioridad, esperemos que aguanten así el resto de la segunda parte. "; 
 
-		$this->cronica=$cronicaDesc.$this->cronica;
+		$this->cronica=$cronicaDesc."\n".$this->cronica;
 	}
 
 	/*
@@ -535,7 +541,7 @@ class Partido
             throw new Exception('Partido inexistente.',404);
 
          //Inicializar variable $cronAux
-		$cronAux = "Finaliza el encuentro entre los ".$local->nombre." y los ".$visitante->nombre." con un marcador final de ".$this->goles_local." a ".$this->goles_visitante.". ";
+		$cronAux = "Fin del partido: Finaliza el encuentro entre los ".$local->nombre." y los ".$visitante->nombre." con un marcador final de ".$this->goles_local." a ".$this->goles_visitante.". ";
 		
         //Generar crónica final
         if ($this->goles_local > $this->goles_visitante)
@@ -558,7 +564,7 @@ class Partido
         }
        
 
-		$this->cronica = $cronAux.$this->cronica;
+		$this->cronica = $cronAux."\n".$this->cronica;
 	}
 
 	/*
