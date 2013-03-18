@@ -29,7 +29,7 @@ class Efectos
 		'FinanciarEvento' => array (
 			'aforo'=> 0.15,
 			'ambiente' => 2,
-			'moral'=> 250
+			'moral'=> 250,
 		), 
 			
 		'IncentivoEconomico' => array (
@@ -47,6 +47,7 @@ class Efectos
 			'ambiente' => 2,
 			'animo' => 30,
 			'moral'=> 200,
+			'ofensivo'=>2,
 			'bonus_creador' => array ('animo' => 15)
 		), 
 		

@@ -25,6 +25,6 @@
 		</table>
 
 		<div class="botones-usar">	
-			<?php echo CHtml::button('Aceptar', array('submit' => array('acciones/ver', 'id_accion'=>$id_acc, 'aux'=>"algo"),'class'=>"button small black")); ?>
+			<?php echo CHtml::button('Aceptar', array('submit' => array('acciones/ver', 'id_accion'=>$id_acc),'class'=>"button small black")); ?>
 		</div>
 </div>

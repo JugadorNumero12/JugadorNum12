@@ -441,11 +441,19 @@ class Partido
 			{
 				$puntosLocal=$local->puntos;
 				$puntosLocal=$puntosLocal+3;
-				$local->setAttributes(array('puntos'=>$puntosLocal));         
+				$ganadosLocal=$local->ganados;
+				$perdidosVisit=$visit->perdidos;
+				$local->setAttributes(array('puntos'=>$puntosLocal));
+				$local->setAttributes(array('ganados'=>$ganadosLocal+1));
+				$visit->setAttributes(array('perdidos'=>$perdidosVisit+1));       
 			}else if($this->goles_local<$this->goles_visitante)
 					{
 						$puntosVisitante=$visit->puntos;
 						$puntosVisitante=$puntosVisitante+3;
+						$ganadosVisit=$visit->ganados;
+						$perdidosLocal=$local->perdidos;
+						$local->setAttributes(array('perdidos'=>$perdidosLocal+1));
+						$visit->setAttributes(array('ganados'=>$ganadosVisit+1));
 						$visit->setAttributes(array('puntos'=>$puntosVisitante)); 
 					}else 
 						{
@@ -453,6 +461,10 @@ class Partido
 							$puntosLocal=$puntosLocal+1;							
 							$puntosVisitante=$visit->puntos;
 							$puntosVisitante=$puntosVisitante+1;
+							$empatadosVisit=$visit->empatados;
+							$empatadosLocal=$local->empatados;
+							$local->setAttributes(array('empatados'=>$empatadosLocal+1));
+							$visit->setAttributes(array('empatados'=>$empatadosVisit+1));
 							$local->setAttributes(array('puntos'=>$puntosLocal)); 
 							$visit->setAttributes(array('puntos'=>$puntosVisitante));							
 						}
