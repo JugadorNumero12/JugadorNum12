@@ -111,24 +111,22 @@
 <div id="envoltorio-main">
 
   	<!-- DIVISION DE CABECERA -->
-    <div id="cabecera">
-    	<div id="clasificacion">
-            <ul>
-    			<?php foreach (Yii::app()->getParams()->clasificacion as $equipo) { ?>
-                    <li> 
-                        <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
-                            <img
-                            	title="<?php echo $equipo->posicion . '&ordm; con ' . $equipo->puntos . ' puntos'; ?>",
-                            	class="escudos-clasificacion equipo-<?php echo $equipo->equipos->token ?>"
-                            	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
-                            	alt="<?php echo $equipo->equipos->nombre; ?>">		
-                        </a>
-                    </li>
-                <?php } ?>
-    		</ul>
-    	</div>
- 
-    </div>
+	<div id="clasificacion">
+        <ul>
+		<?php foreach (Yii::app()->getParams()->clasificacion as $equipo): ?>
+            <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
+            <li class="clasif-item">
+            	<span class="clasif-hash">#</span><span class="clasif-posicion"><?php echo $equipo->posicion ?></span>
+            	<img
+                	title="<?php echo $equipo->posicion . '&ordm; con ' . $equipo->puntos . ' puntos'; ?>",
+                	class="clasif-escudo equipo-<?php echo $equipo->equipos->token ?>"
+                	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
+                	alt="<?php echo $equipo->equipos->nombre; ?>"
+                	width="40" height="40" />
+            </li></a>
+        <?php endforeach ?>
+		</ul>
+	</div>
 	
     <!-- DIVISION DEL MENU IZQUIERDO -->
     <div id="menu-izquierdo">

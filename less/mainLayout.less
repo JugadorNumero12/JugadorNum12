@@ -17,36 +17,62 @@
 
 // Envoltorio
 #envoltorio-main {
-    margin: @BarraSupAlto auto 0;
+    margin: 0 auto;
     padding: 0;
+
+    padding-top: @BarraSupAlto;
 
     width: 960px;
     min-height: 100%;
-    background-color: fade(white, 75%);
-    .box-shadow(0 0 32px white);
-
 	height: auto !important;
 	height: 100%;
 
-	// Cabecera
-	#cabecera {
-		float: left;
+    background-color: fade(white, 75%);
+    .box-shadow(0 0 32px white);
 
-		width: 960px;
-		margin: 0;
+    #clasificacion {
+    	@ClasifMargin: 10px;
+    	@ClasifPadding: 10px;
+    	@ClasifBorder: 1px;
+    	@ClasifWidth: 960px - (@ClasifMargin+@ClasifPadding+@ClasifBorder)*2;
 
-        div#clasificacion {
-            .propiedades_basicas();
-            li {
-                display: inline;
-                list-style-type: none;
-                margin: 0em 1.5em 0em 2em;
-                img.escudos-clasificacion{
-                	width: 50px; 
-                	height: 50px; 
-                }  
-            }
-        }					
+    	margin: @ClasifMargin;
+    	padding: @ClasifPadding;
+
+    	width: @ClasifWidth;
+
+    	border: @ClasifBorder solid #DDD;
+    	.rounded(10px);
+    	background: white;
+
+    	text-align: center;
+
+        .clasif-item {
+            display: inline;
+            list-style: none;
+
+            margin: 0 10px;
+            padding: 0;
+
+            .opacity(.6);
+
+        	.clasif-posicion, .clasif-hash {
+        		font-style: italic;
+        		font-size: 28px;
+        		font-weight: bold;
+        		font-family: Georgia, serif;
+        		color: #AAA;
+        	}
+
+        	.clasif-hash {
+        		font-size: 20px;
+        		color: #BBB;
+        	}
+
+        	&:hover {
+        		.opacity(1);
+        	}
+        }
     }
 
 	// CENTRO DE LA PAGINA
