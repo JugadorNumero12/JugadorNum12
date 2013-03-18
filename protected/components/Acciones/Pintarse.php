@@ -46,6 +46,7 @@ class Pintarse extends AccionGrupSingleton
       $helper = new Helper();
       $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,'ambiente',Efectos::$datos_acciones['Pintarse']['ambiente']));
       $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['Pintarse']['moral']));
+      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['Pintarse']['ofensivo']));
 
       //2.- Dar bonificación al creador
       $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,'animo',Efectos::$datos_acciones['Pintarse']['bonus_creador']['animo']));

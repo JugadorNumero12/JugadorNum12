@@ -96,7 +96,8 @@ class ScriptsController extends Controller
         		$hab = Habilidades::model()->findByPk($ind->habilidades_id_habilidad);
         		if ($hab === null)
         		{
-        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)');
+        			//throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
         			
         		}        		
         		$nombreHabilidad =  $hab->codigo;
@@ -109,7 +110,8 @@ class ScriptsController extends Controller
 
         		if (!$ind->save())
         		{
-        			throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
+        			Yii::app()->user->setFlash('guardar', 'Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)');
+        			//throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
         			
         		}
 
