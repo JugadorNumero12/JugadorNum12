@@ -118,7 +118,7 @@
             <li class="clasif-item">
             	<span class="clasif-hash">#</span><span class="clasif-posicion"><?php echo $equipo->posicion ?></span>
             	<img
-                	title="<?php echo $equipo->posicion . '&ordm; con ' . $equipo->puntos . ' puntos'; ?>",
+                	title="<?php echo $equipo->equipos->nombre . ' &ndash; ' . $equipo->puntos . ' puntos'; ?>",
                 	class="clasif-escudo equipo-<?php echo $equipo->equipos->token ?>"
                 	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
                 	alt="<?php echo $equipo->equipos->nombre; ?>"

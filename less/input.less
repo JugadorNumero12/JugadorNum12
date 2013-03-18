@@ -18,6 +18,24 @@
 @InputFocusBgGradBottom: lighten(@InputFocusBgColor, 3%);
 @InputFocusInsetColor: fade(darken(@VERDE_12, 10%), 60%);
 
+
+
+input {
+	padding: 4px 8px;
+
+	border: 1px solid @InputBorderColor;
+	.rounded(5px);
+
+	.gradient(@InputBgColor, @InputBgGradBottom, @InputBgGradTop);
+	.box-shadow(inset 0 2px 2px @InputInsetColor);
+
+	&:focus {
+		border-color: @InputFocusBorderColor;
+		.gradient(@InputFocusBgColor, @InputFocusBgGradBottom, @InputFocusBgGradTop);
+		.box-shadow(inset 0 2px 2px @InputFocusInsetColor);
+	}
+}
+
 input[type="button"], input[type="reset"], input[type="submit"], .button, .button:visited {
 	padding: 4px 14px;
 
@@ -46,22 +64,6 @@ input[type="button"], input[type="reset"], input[type="submit"], .button, .butto
 
 		color: darken(@ButtonInsetColor, 10%);
 		text-shadow: 0 0 4px black;
-	}
-}
-
-input[type="text"], input[type="password"], {
-	padding: 4px 8px;
-
-	border: 1px solid @InputBorderColor;
-	.rounded(5px);
-
-	.gradient(@InputBgColor, @InputBgGradBottom, @InputBgGradTop);
-	.box-shadow(inset 0 2px 2px @InputInsetColor);
-
-	&:focus {
-		border-color: @InputFocusBorderColor;
-		.gradient(@InputFocusBgColor, @InputFocusBgGradBottom, @InputFocusBgGradTop);
-		.box-shadow(inset 0 2px 2px @InputFocusInsetColor);
 	}
 }
 
