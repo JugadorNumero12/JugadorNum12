@@ -400,11 +400,14 @@ class AccionesController extends Controller
 				porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 			$id_acc = -1;
 			$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
-		}
+		}else
+			{
+				//Renderizar acción grupal
+				$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+	
+			}
 
-		//Renderizar acción grupal
-		$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
-	}
+		}
 
 	/**
 	 * Muestra la informacion relativa a una accion grupal abierta
