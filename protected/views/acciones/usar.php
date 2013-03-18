@@ -25,6 +25,15 @@
 		</table>
 
 		<div class="botones-usar">	
-			<?php echo CHtml::button('Aceptar', array('submit' => array('acciones/ver', 'id_accion'=>$id_acc),'class'=>"button small black")); ?>
+			<?php 
+				if ($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL)
+				{
+					echo CHtml::button('Aceptar', array('submit' => array('acciones/index'),'class'=>"button small black")); 
+				}
+				else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+				{
+					echo CHtml::button('Aceptar', array('submit' => array('acciones/ver', 'id_accion'=>$id_acc),'class'=>"button small black")); 
+				}
+			?>
 		</div>
 </div>
