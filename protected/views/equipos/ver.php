@@ -14,7 +14,7 @@
 
 		<div class="perfil-grupo-arriba">
 			<div class="perfil-grupo-arriba-izquierda">
-				<div class="perfil-grupo-arriba-izquierda-personaje">
+				<div class="perfil-grupo-arriba-izquierda-equipo">
 					<img
 						src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
 						width=150 height=150 
