@@ -67,7 +67,7 @@
 										No 
 									<?php }?>
 									</td>
-								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal, 'aux'=>""),'class'=>"button small black"));?> 	</td>		
+								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
 							</tr>				
 					 <?php } ?>
 					</table>

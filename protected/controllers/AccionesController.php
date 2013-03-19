@@ -676,7 +676,7 @@ class AccionesController extends Controller
 			}else{
 				Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
 			}
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion, 'aux'=>"algo"));
+			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
