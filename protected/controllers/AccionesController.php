@@ -137,7 +137,7 @@ class AccionesController extends Controller
 		     $res['influencias'] < $habilidad['influencias']){
 			
 			$trans->rollback();
-			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos');
+			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos.');
 			$this-> redirect(array('acciones/index'));
 		}
 
@@ -179,7 +179,7 @@ class AccionesController extends Controller
 	        		$hab = Habilidades::model()->findByPk($id_accion);
 	        		if ($hab === null)
 	        		{
-	        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController)');
+	        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
 	        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
 	        			
 	        		}      
@@ -214,7 +214,7 @@ class AccionesController extends Controller
 		        		$hab = Habilidades::model()->findByPk($id_accion);
 		        		if ($hab === null)
 		        		{
-		        			Yii::app()->user->setFlash('grupal', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
+		        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
 		        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
 		        			
 		        		}      
@@ -369,7 +369,8 @@ class AccionesController extends Controller
 						$participacion->influencias_aportadas = $habilidad['influencias'];
 						$participacion->animo_aportado = $habilidad['animo'];
 						if (!$participacion->save())
-							throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
+							Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
+							//throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
 							
 					} catch ( Exception $exc ) {
 						$trans->rollback();
@@ -594,13 +595,16 @@ class AccionesController extends Controller
 			if($dineroAportado<0 || $animoAportado<0 || $influenciasAportadas<0){
 				if($habilidad['dinero_max'] < $accion['dinero_acc']){
 					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más dinero del maximo ('.$accion['dinero_acc'].'/'.$habilidad['dinero_max'].').','error');
-					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+					Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+					//throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}elseif($habilidad['animo_max'] < $accion['animo_acc']){
 					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más animo del maximo ('.$accion['animo_acc'].'/'.$habilidad['animo_max'].').','error');
-					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+					Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+					//throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}elseif($habilidad['influencias_max'] < $accion['influencias_acc']){
 					Yii::log('[DATABASE_ERROR] La accion '.$id_accion.' más influencia del maximo ('.$accion['influencias_acc'].'/'.$habilidad['influencias_max'].').','error');
-					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+					Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+					//throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
 				
 				Yii::log('[MALICIOUS_REQUEST] El usuario '.$id_user.' se ha saltado una validación de seguridad, intentando robar recursos de la accion '.$id_accion, 'warning');
@@ -647,7 +651,8 @@ class AccionesController extends Controller
 				if($n!=1){
 					//Si salta esto es que había más de una participación del mismo usuario en la acción
 					Yii::log('[DATABASE_ERROR] El usuario '.$id_user.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
-					throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+					Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+					//throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 				}
 			}
 			//Si la accion esta completada con esa aportacion, ejecutas la accion sino es asi guardas los cambios en la accion
@@ -710,11 +715,11 @@ class AccionesController extends Controller
 				//throw new CHttpException(404,'Recursos inexistentes. (actionExpulsar,AccionesController)');
 			}
 			if ($acc === null) {
-				Yii::app()->user->setFlash('recursos', 'Acción inexistente.');
+				Yii::app()->user->setFlash('accion', 'Acción inexistente.');
 				//throw new CHttpException(404,'Acción inexistente.');
 			}
 			if ($acc->completada == 1) {
-				Yii::app()->user->setFlash('recursos', 'Acción completada.No puedes expulsar.');
+				Yii::app()->user->setFlash('expulsar', 'Acción completada.No puedes expulsar.');
 				//throw new CHttpException(404,'Acción completada.No puedes expulsar.');
 			}
 			if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
@@ -756,7 +761,8 @@ class AccionesController extends Controller
 			if($n != 1) {
 				//Si salta esto es que había más de una participación del mismo usuario en la acción
 				Yii::log('[DATABASE_ERROR] El usuario '.$id_jugador.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
-				throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
+				Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+				//throw new CHttpException(500,'Error en la base de datos. Pongase en contacto con un administrador.');
 			}
 
 			$trans->commit();
