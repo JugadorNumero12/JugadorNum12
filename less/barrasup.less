@@ -30,7 +30,7 @@
 		#barrasup-izquierda {
 			position: absolute;
 
-			left: 0;
+			left: @TopBlockMargin;
 			top: 0;
 
 			#barrasup-logo{
@@ -43,7 +43,7 @@
 		#barrasup-derecha {
 			position: absolute;
 
-			right: 0;
+			right: (@TopBlockMargin - 1px);
 			top: 0;
 
 			height: @BarraSupAlto;
@@ -137,6 +137,8 @@
 @UserMenuBorderColor: rgba(0, 0, 0, .3);
 #user-menu {
 	margin: 4px;
+	margin-right: 0;
+
 	min-width: 150px;
 
 	.rounded(4px);
