@@ -1,3 +1,7 @@
+@ColorRecursoDinero: limegreen;
+@ColorRecursoAnimo: orangered;
+@ColorRecursoInfluencia: dodgerblue;
+
 #barrasup {
 	position: fixed;
 
@@ -60,7 +64,7 @@
 
 			div.barrasup-recursos{
 				float:left;
-				margin: 0.4em 2em 0 0;
+				margin: 0.4em 1em 0 1em;
 			}
 
 			img.barrasup-icono{
@@ -75,18 +79,20 @@
 				height: 24px;
 				float:left;
 				background: fade(black, 10%);
-
+				border-color: darken(@ColorRecursoDinero, 25%);
 				div.ui-progressbar-value{
-					background: limegreen;
+					background: @ColorRecursoDinero;
+					border-color: darken(@ColorRecursoDinero, 25%);
 				}
 
 				#progressbar-label-dinero{
 					width: 100%;
 					text-align: center;
 					float: left;
-    				margin-top: 5px;
+    				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px white;
+    				text-shadow: 0 0 3px black;
+    				color: lighten(@ColorRecursoDinero, 40%);
 				}
 			}
 
@@ -95,17 +101,20 @@
 				height: 24px;
 				float:left;
 				background: fade(black, 10%);
+				border-color: darken(@ColorRecursoAnimo, 25%);
 				div.ui-progressbar-value{
-					background: orangered
+					background: @ColorRecursoAnimo;
+					border-color: darken(@ColorRecursoAnimo, 25%);
 				}
 
 				#progressbar-label-animo{
 					width: 100%;
 					text-align: center;
 					float: left;
-    				margin-top: 5px;
+    				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px white;
+    				text-shadow: 0 0 3px black;
+    				color: lighten(@ColorRecursoAnimo, 40%);
 				}
 			}
 
@@ -114,9 +123,10 @@
 				height: 24px;
 				float:left;
 				background: fade(black, 10%);
-
+				border-color: darken(@ColorRecursoInfluencia, 25%);
 				div.ui-progressbar-value{
-					background: lightskyblue;
+					background: @ColorRecursoInfluencia;
+					border-color: darken(@ColorRecursoInfluencia, 25%);
 				}
 
 
@@ -124,9 +134,10 @@
 					width: 100%;
 					text-align: center;
 					float: left;
-    				margin-top: 5px;
+    				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px white;
+    				text-shadow: 0 0 3px black;
+    				color: lighten(@ColorRecursoInfluencia, 40%);
 				}
 			}
 		}
