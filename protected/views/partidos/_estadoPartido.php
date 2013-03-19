@@ -102,7 +102,7 @@
 		
 		<div class="label-marcador"> <p>Local&nbsp;&nbsp;<?php echo $estado->goles_local?>&nbsp;&nbsp;</p></div>
 
-		 <?php switch ($nombre_local)
+		 <?php /*switch ($nombre_local)
 			{
 			case 'Rojos': ?>
 			  	<img title="El equipo local lleva <?php echo $estado->goles_local ?> goles", class="escudos-marcador"  src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" width="50px" height="50px" alt="Rojos">
@@ -116,12 +116,18 @@
 			case 'Blancos':?>				
 			  	<img title="El equipo local lleva <?php echo $estado->goles_local ?> goles", class="escudos-marcador" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>"  width="50px" height="50px" alt="Blancos">
 				<?php break;
-			} ?>
+			}*/ ?>
+		<img
+		title="<?php echo $equipoLocal->nombre; ?>",
+		class="escudos-marcador"
+		src="<?php echo Yii::app()->BaseUrl . '/images/escudos/40px/' . $equipoLocal->token . '.png'; ?>"
+		alt="<?php echo $equipoLocal->nombre; ?>"
+		width="40" height="40" />
 
 		<div class="label-marcador"> <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visitante&nbsp;&nbsp;<?php echo $estado->goles_visitante?>&nbsp;&nbsp;</p> </div>
 
 
-		 <?php switch ($nombre_visitante)
+		 <?php /*switch ($nombre_visitante)
 			{
 			case 'Rojos': ?>
 			  	<img title="El equipo visitante lleva <?php echo $estado->goles_visitante ?> goles", class="escudos-marcador" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" width="50px" height="50px" alt="Rojos">
@@ -135,7 +141,14 @@
 			case 'Blancos':?>				
 			  	<img title="El equipo visitante lleva <?php echo $estado->goles_visitante ?> goles", class="escudos-marcador"  src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>"  width="50px" height="50px" alt="Blancos">
 				<?php break;
-			} ?>
+			}*/ ?>
+		<img
+		title="<?php echo $equipoVisitante->nombre; ?>",
+		class="escudos-marcador"
+		src="<?php echo Yii::app()->BaseUrl . '/images/escudos/40px/' . $equipoVisitante->token . '.png'; ?>"
+		alt="<?php echo $equipoVisitante->nombre; ?>"
+		width="40" height="40" />
+
 	</div> <!--end seccion3 (marcador)-->
 
 	<div id="seccion4">

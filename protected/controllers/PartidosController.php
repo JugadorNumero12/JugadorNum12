@@ -241,6 +241,8 @@ class PartidosController extends Controller
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'equipoLocal' => $equipoLocal,
+								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $partido,
 								 'porcentage' => $porcentage);
 				$this->render('asistir', $datosVista);
@@ -295,6 +297,8 @@ class PartidosController extends Controller
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'equipoLocal' => $equipoLocal,
+								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $partido,
 								 'porcentage' => $porcentage);
 				$this->renderPartial('_estadoPartido',$datosVista,false,true);
