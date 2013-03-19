@@ -158,27 +158,27 @@
 		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 		   	<li class="menu-item">
 				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="menu-aficion">
-				<div class="nombre-menu">Afici&oacute;n</div>
+				<div class="nombre-menu">Mi Afici&oacute;n</div>
 			</li>
 		</a>
-		<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
-		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
-		   		<div class="nombre-menu">&Aacute;rbol</div>
-		   	</li>
-	    </a>
-	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
-	   		<li class="menu-item">
-	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
-	   			<div class="nombre-menu">Habilidades</div>
-	   		</li>
-	   	</a>			   	
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
 		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>
+	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
+	   		<li class="menu-item">
+	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
+	   			<div class="nombre-menu">Mis Habilidades</div>
+	   		</li>
+	   	</a>
+	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
+		   	<li class="menu-item">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
+		   		<div class="nombre-menu">&Aacute;rbol Habilidades</div>
+		   	</li>
+	    </a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
 		   	<li class="menu-item menu-item-last">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/clasificacion.png'; ?>" alt="menu-clasificacion">
