@@ -132,7 +132,7 @@
     <ul id="menu-izquierdo" class="top-block">
 		<a href="<?php echo $this->createUrl( '/usuarios/index', array() ); ?>">
 			<li class="menu-item menu-item-first">
-				<?php switch (Yii::app()->getParams()->usuario->equipos_id_equipo){
+				<?php switch (Yii::app()->getParams()->usuario->personaje){
 					case Usuarios::PERSONAJE_EMPRESARIO: ?>
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
 						<?php break;
@@ -149,25 +149,25 @@
 		</a>
 		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 		   	<li class="menu-item">
-				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="manu-aficion">
+				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="menu-aficion">
 				<div class="nombre-menu">Afici&oacute;n</div>
 			</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="perfil-sin-definir">
-		   		<div class="nombre-menu">Habilidades</div>
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
+		   		<div class="nombre-menu">&Aacute;rbol</div>
 		   	</li>
 	    </a>
 	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
 	   		<li class="menu-item">
-	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-	   			<div class="nombre-menu">Desbloqueadas</div>
+	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
+	   			<div class="nombre-menu">Habilidades</div>
 	   		</li>
 	   	</a>			   	
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
 		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/tabla.png'; ?>" alt="menu-calendario">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>

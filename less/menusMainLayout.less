@@ -15,8 +15,6 @@
 		border: 0 solid @TopBlockBorderColor;
 		border-width: 1px 0 0 0;
 
-	    .opacity(.7);
-
 		.nombre-menu{
 			font-weight:bold;
 			float: right;
@@ -29,16 +27,16 @@
 		}
 
 		&:hover {
-			.opacity(1);
+			background-color: (@VERDE_12_CLARO+#333);
 		}
 	}
 
 	.menu-item-first {
 		border-width: 0;
-		//padding-top: 8px;
+		.border-radius(10px, 0, 0, 10px);
 	}
 
 	.menu-item-last {
-		//padding-bottom: 8px;
+		.border-radius(0, 10px, 10px, 0);
 	}
 }
