@@ -47,7 +47,7 @@ class EquiposController extends Controller
 			array('order'=>'posicion ASC')
 		);
 		if ($modeloClasificacion === null)
-			Yii::app()->user->setFlash('clasificacion', 'Clasificacion incorrecta. (actionIndex, EquiposController)');
+			Yii::app()->user->setFlash('clasificacion', 'Clasificacion incorrecta. (actionIndex, EquiposController).');
 			//throw new CHttpException(404,"Clasificacion incorrecta. (actionIndex, EquiposController)");
 			
 		$this->render('index',array('modeloC'=>$modeloClasificacion));
