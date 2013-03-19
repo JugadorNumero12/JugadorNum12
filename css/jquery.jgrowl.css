@@ -1,12 +1,7 @@
 
 div.jGrowl {
-	z-index: 				9999;
-	color: 				 	#fff;
-	font-size: 				12px;
-	-moz-border-radius: 	5px;
-	-webkit-border-radius:	5px;
-	background-image:url("/yii/JugadorNum12/images/fondo_azul.jpeg");
-
+	padding: 			10px;
+	z-index: 			9999;
 }
 
 /** Special IE6 Style Positioning **/
@@ -18,7 +13,7 @@ div.ie6.top-right {
 	right: 				auto;
 	bottom: 			auto;
 	left: 				expression( ( 0 - jGrowl.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
-	top: 				expression( ( 0 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+  	top: 				expression( ( 0 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
 }
 
 div.ie6.top-left {
@@ -43,36 +38,32 @@ div.ie6.center {
 }
 
 /** Normal Style Positions **/
-div.jGrowl {
-	position:			absolute;
-}
-
 body > div.jGrowl {
 	position:			fixed;
 }
 
-div.jGrowl.top-left {
+body > div.jGrowl.top-left {
 	left: 				0px;
 	top: 				0px;
 }
 
-div.jGrowl.top-right {
+body > div.jGrowl.top-right {
 	right: 				0px;
 	top: 				0px;
 }
 
-div.jGrowl.bottom-left {
+body > div.jGrowl.bottom-left {
 	left: 				0px;
 	bottom:				0px;
 }
 
-div.jGrowl.bottom-right {
+body > div.jGrowl.bottom-right {
 	right: 				0px;
 	bottom: 			0px;
 }
 
-div.jGrowl.center {
-	top: 				50%;
+body > div.jGrowl.center {
+	top: 				0px;
 	width: 				50%;
 	left: 				25%;
 }
@@ -84,60 +75,45 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 }
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-	
-z-index: 				9999;
-	color: 				 	#fff;
-	background-color: 		white;
-	-ms-filter: 			"progid:DXImageTransform.Microsoft.Alpha(Opacity=85)"; 
-	filter: 				progid:DXImageTransform.Microsoft.Alpha(Opacity=85); 
-	zoom: 					1.2;
-	width: 					490px;
+	background-color: 		#000;
+	color: 					#fff;
+	opacity: 				.85;
+	filter: 				alpha(opacity = 85);
+	zoom: 					1;
+	width: 					235px;
 	padding: 				10px;
 	margin-top: 			5px;
 	margin-bottom: 			5px;
 	font-family: 			Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 				1.5em;
-	text-align: 			center;
+	font-size: 				12px;
+	text-align: 			left;
 	display: 				none;
 	-moz-border-radius: 	5px;
 	-webkit-border-radius:	5px;
-	color: 					blue;
 }
 
 div.jGrowl div.jGrowl-notification {
 	min-height: 			40px;
 }
 
-div.jGrowl div.jGrowl-notification,
-div.jGrowl div.jGrowl-closer {
-	margin: 				10px;
-}
-
-div.jGrowl div.jGrowl-notification div.jGrowl-header {
+div.jGrowl div.jGrowl-notification div.header {
 	font-weight: 			bold;
-	font-size:				.85em;
+	font-size:				10px;
 }
 
-div.jGrowl div.jGrowl-notification div.jGrowl-close {
-	z-index:				99;
+div.jGrowl div.jGrowl-notification div.close {
 	float: 					right;
 	font-weight: 			bold;
-	font-size: 				1em;
+	font-size: 				12px;
 	cursor:					pointer;
 }
 
 div.jGrowl div.jGrowl-closer {
+	height: 				15px;
 	padding-top: 			4px;
 	padding-bottom: 		4px;
 	cursor: 				pointer;
-	font-size:				.9em;
+	font-size:				11px;
 	font-weight: 			bold;
 	text-align: 			center;
-}
-
-/** Hide jGrowl when printing **/
-@media print {
-	div.jGrowl {
-		display: 			none;
-	}
 }
