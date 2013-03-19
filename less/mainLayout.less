@@ -15,6 +15,21 @@
     border: 0px white;
 }
 
+@TopBlockPadding: 10px;
+@TopBlockMargin: 10px;
+@TopBlockBorder: 1px;
+@TopBlockBorderColor: @VERDE_12_CLARO;
+@TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
+
+.top-block {
+    padding: @TopBlockPadding;
+    margin: @TopBlockMargin;
+
+    border: @TopBlockBorder solid @TopBlockBorderColor;
+    .rounded(10px);
+    background: white;
+}
+
 // Envoltorio
 #envoltorio-main {
     margin: 0 auto;
@@ -31,19 +46,7 @@
     .box-shadow(0 0 32px white);
 
     #clasificacion {
-    	@ClasifMargin: 10px;
-    	@ClasifPadding: 10px;
-    	@ClasifBorder: 1px;
-    	@ClasifWidth: 960px - (@ClasifMargin+@ClasifPadding+@ClasifBorder)*2;
-
-    	margin: @ClasifMargin;
-    	padding: @ClasifPadding;
-
-    	width: @ClasifWidth;
-
-    	border: @ClasifBorder solid @VERDE_12_CLARO;
-    	.rounded(10px);
-    	background: white;
+    	width: 960px - (@TopBlockExtras);
 
     	text-align: center;
 

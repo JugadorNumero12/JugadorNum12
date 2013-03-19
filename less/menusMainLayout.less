@@ -3,36 +3,42 @@
 
 //Menu izquierdo (menu principal navegacion Perfil, aficion etc)
 #menu-izquierdo{
-	width: 15%;
+	width: 160px;
 	float:left;
-	margin: 0 0 0 2em;
-}//#menu-izquierdo
 
-#cssmenu{
-	text-align: left;
-	margin:0 auto;
-}
+	margin-top: 0;
+	padding: 0;
 
-#cssmenu li{
-	margin: 0.5em 0;
-	padding: 0.4em 0.4em;
-	border: 1px solid @VERDE_12_CLARO;
-    .rounded(10px);
-    background: white;
-    .opacity(.7);
+	.menu-item {
+		padding: 5px 8px;
 
-	div.nombre-menu{
-		font-weight:bold;
-		float:right;
-		margin: 0.4em 0;
+		border: 0 solid @TopBlockBorderColor;
+		border-width: 1px 0 0 0;
+
+	    .opacity(.7);
+
+		.nombre-menu{
+			font-weight:bold;
+			float: right;
+			margin: 0.4em 0;
+		}
+
+		.icono-menu{
+			width:24px;
+			height:24px;
+		}
+
+		&:hover {
+			.opacity(1);
+		}
 	}
 
-	img.icono-menu{
-		width:24px;
-		height:24px;
+	.menu-item-first {
+		border-width: 0;
+		//padding-top: 8px;
 	}
-}
 
-#cssmenu li:hover{
-	.opacity(1);
+	.menu-item-last {
+		//padding-bottom: 8px;
+	}
 }
