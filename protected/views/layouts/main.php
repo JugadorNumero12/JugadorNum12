@@ -84,8 +84,17 @@
 				<!-- Avatar + Nombre -->
 				<li class="user-menu-item">
 					<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
-					     src="<?php echo Yii::app()->createUrl('/images/perfil/animadora.jpg') ?>"
-					     width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+					     src="<?php switch (Yii::app()->getParams()->usuario->personaje) {
+							case Usuarios::PERSONAJE_EMPRESARIO:
+								echo Yii::app()->createUrl('/images/perfil/empresario.jpg');
+							break;
+							case Usuarios::PERSONAJE_MOVEDORA: 
+								echo Yii::app()->createUrl('/images/perfil/animadora.jpg');
+							break;
+							case Usuarios::PERSONAJE_ULTRA:
+								echo Yii::app()->createUrl('/images/perfil/ultra.jpg');
+							break;
+						} ?>" width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
 				</li>
 
 				<!-- Link al perfil -->
@@ -132,18 +141,17 @@
     <ul id="menu-izquierdo" class="top-block">
 		<a href="<?php echo $this->createUrl( '/usuarios/index', array() ); ?>">
 			<li class="menu-item menu-item-first">
-				<?php switch (Yii::app()->getParams()->usuario->personaje){
+				<?php switch (Yii::app()->getParams()->usuario->personaje):
 					case Usuarios::PERSONAJE_EMPRESARIO: ?>
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
-						<?php break;
+					<?php break;
 					case Usuarios::PERSONAJE_MOVEDORA: ?>
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="menu-inicio-movedora">
-						<?php break;
+					<?php break;
 					case Usuarios::PERSONAJE_ULTRA: ?>
 						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="menu-inicio-ultra">
-						<?php break;
-							
-				} ?>
+					<?php break;
+				endswitch ?>
 				<div class="nombre-menu">Inicio</div>
 			</li>
 		</a>
