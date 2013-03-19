@@ -30,7 +30,7 @@
 			<tr>
                 <!-- azules rosas naranjas amarillos -->
 				<td><input type="image" value="5" onclick="$(this).setIdEquipo(this.value)" title="¿C&oacute;mo quieres que te humille?" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/azules.png'; ?>" class="escudos" alt="Azules"></td>
-				<td><input type="image" value="6" onclick="$(this).setIdEquipo(this.value)" title="Descripci&oacute;n del equipo." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/rosas.png'; ?>" class="escudos" alt="Rosas"></td>
+				<td><input type="image" value="6" onclick="$(this).setIdEquipo(this.value)" title="¡Embiste! ¡Destruye!" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/rosas.png'; ?>" class="escudos" alt="Rosas"></td>
 				<td><input type="image" value="7" onclick="$(this).setIdEquipo(this.value)" title="¡Corred ardillas corred!" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/naranjas.png'; ?>" class="escudos" alt="Naranjas"></td>
 				<td><input type="image" value="8" onclick="$(this).setIdEquipo(this.value)" title="Yellow submarine" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/amarillos.png'; ?>" class="escudos" alt="Amarillos"></td>
 			</tr>
