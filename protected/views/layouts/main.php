@@ -86,13 +86,13 @@
 					<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
 					     src="<?php switch (Yii::app()->getParams()->usuario->personaje) {
 							case Usuarios::PERSONAJE_EMPRESARIO:
-								echo Yii::app()->createUrl('/images/perfil/empresario.jpg');
+								echo Yii::app()->createUrl('/images/perfil/empresario-menu.jpg');
 							break;
 							case Usuarios::PERSONAJE_MOVEDORA: 
-								echo Yii::app()->createUrl('/images/perfil/animadora.jpg');
+								echo Yii::app()->createUrl('/images/perfil/animadora-menu.jpg');
 							break;
 							case Usuarios::PERSONAJE_ULTRA:
-								echo Yii::app()->createUrl('/images/perfil/ultra.jpg');
+								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
 							break;
 						} ?>" width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
 				</li>
