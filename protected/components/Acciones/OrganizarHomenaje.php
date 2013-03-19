@@ -68,7 +68,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
     }
 
 	/* Restarurar valores tras el partido. NO ES NECESARIO */
-	public function finalizar($id_accion)
+	public function finalizar()
 	{
 	}
 }
