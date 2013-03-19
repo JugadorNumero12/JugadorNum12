@@ -5,7 +5,7 @@
 ?>
 
 <div id="descripcion-login">
-	<h1>Bienvenido a Jugador n&uacute;mero 12</h1>
+	<h1>Bienvenido a </br>Jugador N&uacute;mero 12</h1>
 	<p> </b>Un juego de estrategia multijugador, centrado en la gesti&oacute;n de pe&ntilde;as de aficionados.
   		Ponte en la piel de un hincha y organiza la afici&oacute;n de tu equipo para llevarlo a lo m&aacute;s alto.</br></b></p>
   	<p>
