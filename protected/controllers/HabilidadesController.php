@@ -183,7 +183,7 @@ class HabilidadesController extends Controller
         			}
 
         			$trans->commit(); 
-        			$this->redirect(array('habilidades/index'));       			
+        			$this->redirect(array('acciones/'));       			
         		} 
         		catch ( Exception $exc ) 
         		{
