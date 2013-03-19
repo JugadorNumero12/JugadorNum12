@@ -24,7 +24,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
    }
 
 	/* Aplicar los efectos de la accion */
-	public ejecutar($id_accion)
+	public function ejecutar($id_accion)
   {
       //Tomar helper para facilitar la modificación
       Yii::import('application.components.Helper');
@@ -68,7 +68,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
     }
 
 	/* Restarurar valores tras el partido. NO ES NECESARIO */
-	public finalizar($id_accion)
+	public function finalizar($id_accion)
 	{
 	}
 }
