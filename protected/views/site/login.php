@@ -36,15 +36,19 @@
 			    <td><?php echo $form->textField($model,'username'); ?></td>
 			  </tr>
 			  <tr>
-			    <td colspan="2"><?php echo $form->error($model,'username'); ?></td>
-			  </tr>
-			  <tr>
 			  <tr>
 			    <td align="center"><?php echo $form->labelEx($model,'Clave'); ?>:</td>
 			    <td><?php echo $form->passwordField($model,'password'); ?></td>
 			  </tr>
 			  <tr>
-			    <td colspan="2"><?php echo $form->error($model,'password'); ?></td>
+			    <td colspan="2">			    	
+			    	<div class="envoltorio-errores">
+				  		<ul>
+				    		<li><?php echo $form->error($model,'username'); ?></li>
+				  			<li><?php echo $form->error($model,'password'); ?></li>
+				  		</ul>
+				  	</div>
+			    </td>
 			  </tr>
 			  <tr>
 			    <td colspan="2" align="center"><?php echo CHtml::submitButton('Entrar',array('class'=>"button large black"));?></td>
