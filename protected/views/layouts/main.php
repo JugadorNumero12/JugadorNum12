@@ -180,7 +180,7 @@
 	</ul>
     
     <!-- DIVISION PARA FLOTAR -->
-    <div id="grupo-centro">
+    <div id="grupo-centro" class="top-block">
 
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">

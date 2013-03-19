@@ -15,6 +15,8 @@
     border: 0px white;
 }
 
+@MenuWidth: 160px;
+
 @TopBlockPadding: 10px;
 @TopBlockMargin: 10px;
 @TopBlockBorder: 1px;
@@ -83,9 +85,9 @@
 
 	//Incluye el div del contenido 
 	#grupo-centro{
-		width:85%;
-		float:left;
-		margin: 1em 0em 0em 1em;
+		width: (960px - @MenuWidth - @TopBlockExtras - @TopBlockPadding - @TopBlockBorder*2);
+		float: left;
+		margin: 0;
 
 		#contenido{
 		 	text-align: center;
