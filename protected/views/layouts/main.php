@@ -129,7 +129,7 @@
             	<img
                 	title="<?php echo $equipo->equipos->nombre . ' &ndash; ' . $equipo->puntos . ' puntos'; ?>",
                 	class="clasif-escudo equipo-<?php echo $equipo->equipos->token ?>"
-                	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/' . $equipo->equipos->token . '.png'; ?>"
+                	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/40px/' . $equipo->equipos->token . '.png'; ?>"
                 	alt="<?php echo $equipo->equipos->nombre; ?>"
                 	width="40" height="40" />
             </li></a>
