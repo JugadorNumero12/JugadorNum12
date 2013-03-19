@@ -1,8 +1,9 @@
-assets/
-protected/runtime/
-themes/classic/views/
+
 *.sublime-project
 *.sublime-workspace
+assets/
 css/
-
 lessc.sh
+protected/runtime/
+themes/classic/views/
+.DS_STORE

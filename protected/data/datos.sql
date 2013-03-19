@@ -197,21 +197,20 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  -- PARTIDO 		2
  -- PASIVAS 		3
  -- ---------------------
- ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 120, 3, 600),
- ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 120, 3, 600),
- ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 240, 3, 600),
- ('Pintarse', 0, 'Pintarse con los colores del equipo', '"DESCRIPCION PARA PINTARSE"', 200, 30, 0, 400, 600, 100, 3, 600),
- ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"DESCRIPCION PARA PROMOVER PARTIDO"', 60, 15, 1, 1200, 300, 240, 3, 600),
- ('Apostar', 1, 'Apostar por el partido', '"DESCRIPCION APOSTAR"', 500, 3, 1, NULL, NULL, NULL, 1, 200),
+ ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 120, 6, 600),
+ ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 120, 6, 600),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 240, 6, 600),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 400, 600, 100, 6, 600),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 240, 6, 600),
+ ('Apostar', 1, 'Apostar por el partido', '"Dale esa pizca extra de emoción."', 500, 3, 1, NULL, NULL, NULL, 1, 200),
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
- ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"DESCRIPCION CONTRATAR RRPP"', 60, 15, 1, NULL, NULL, NULL, 1, 200),
- ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"DESCRIPCION BEBER CERVEZA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"DESCRIPCION HABLAR SPEAKER"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
- ('IniciarOla', 2, 'Iniciar una ola en la grada', '"DESCRIPCION INICIAR OLA"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- ('PunteroLaser', 2, 'Molestar con el puntero láser a un jugador', '"DESCRIPCION PUNTERO LASER"', 100, 30, 0, NULL, NULL, NULL, 1, 10),
- ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"DESCRIPCION RETRANSMITIR RRSS"', 30, 15, 1, NULL, NULL, NULL, 1, 10),
- ('Ascender', 3, 'Ascender en el trabajo', '"DESCRIPCION ASCENDER"', 500, 3, 1, NULL, NULL, NULL, 1, NULL);
-
+ ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"Es muy duro movilizar las redes sociales tú sólo. Contrata temporalmente un ayudante."', 60, 15, 1, NULL, NULL, NULL, 1, 200),
+ ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"Recarga energías, te espera un partido largo."', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"Apoya a tu equipo a lo grande: anímalo con los altavoces del propio estadio."', 30, 15, 1, NULL, NULL, NULL, 1, 10),
+ ('IniciarOla', 2, 'Iniciar una ola en la grada', '"Mueve las gradas durante el partido."', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('PunteroLaser', 2, 'Molestar con el puntero láser a un jugador', '"La mejor defensa contra un lanzamiento de falta del rival. Molesta al jugador con un puntero láser."', 100, 30, 0, NULL, NULL, NULL, 1, 10),
+ ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"Ocúpate de que el partido tenga repercusión."', 30, 15, 1, NULL, NULL, NULL, 1, 10),
+ ('Ascender', 3, 'Ascender en el trabajo', '"A más dinero, más acciones podrás financiar."', 500, 3, 1, NULL, NULL, NULL, 1, NULL);
  -- ----------------------------------------------------
  -- Acciones grupales abiertas y completadas
  -- ----------------------------------------------------
