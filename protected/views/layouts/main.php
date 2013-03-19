@@ -168,13 +168,13 @@
 				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 				   	<li class="elementos-menu">
 				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
-				   		<div class="nombre-menu">Habilidades</div>
+				   		<div class="nombre-menu">&Aacute;rbol</div>
 				   	</li>
 			    </a>
 			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
 			   		<li class="elementos-menu">
 			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
-			   			<div class="nombre-menu">&Aacute;rbol</div>
+			   			<div class="nombre-menu">Habilidades</div>
 			   		</li>
 			   	</a>			   	
 				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
