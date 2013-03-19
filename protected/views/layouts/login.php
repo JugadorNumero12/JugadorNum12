@@ -40,12 +40,13 @@
 		<div class="push"></div>
 
 	</div> </div> <!--ENVOLTORIOS-->
-
+		<!-- PIE DE PAGINA
 		<div class="pie-pagina-login">
 			<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 			All Rights Reserved.<br/>
 			<?php echo Yii::powered(); ?>
 		</div>
+		-->
 
 
 </body>
