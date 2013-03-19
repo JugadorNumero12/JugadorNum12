@@ -67,11 +67,25 @@
 				margin: 0.4em 1em 0 1em;
 			}
 
-			img.barrasup-icono{
+			img.barrasup-icono-dinero{
 				height: 24px;
 				width: 24px;
 				float:left;
-				padding: 0 1em 0 0;
+				padding: 3px 10px 0 0;
+			}
+
+			img.barrasup-icono-animo{
+				height: 24px;
+				width: 24px;
+				float:left;
+				padding: 2px 10px 0 0;
+			}
+
+			img.barrasup-icono-influencias{
+				height: 24px;
+				width: 24px;
+				float:left;
+				padding: 2px 10px 0 0;
 			}
 
 			#barrasup-progressbar-dinero{
@@ -91,7 +105,7 @@
 					float: left;
     				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px black;
+    				text-shadow: 0 0 3px darken(@ColorRecursoDinero, 50%);;
     				color: lighten(@ColorRecursoDinero, 40%);
 				}
 			}
@@ -113,7 +127,7 @@
 					float: left;
     				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px black;
+    				text-shadow: 0 0 3px darken(@ColorRecursoAnimo, 50%);;
     				color: lighten(@ColorRecursoAnimo, 40%);
 				}
 			}
@@ -136,7 +150,7 @@
 					float: left;
     				margin-top: 4px;
     				font-weight: bold;
-    				text-shadow: 0 0 3px black;
+    				text-shadow: 0 0 3px darken(@ColorRecursoInfluencia, 50%);
     				color: lighten(@ColorRecursoInfluencia, 40%);
 				}
 			}
