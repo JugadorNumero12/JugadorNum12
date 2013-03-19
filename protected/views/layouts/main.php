@@ -6,6 +6,7 @@
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
 	<!-- LESS import script -->
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.jgrowl.css" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/main.less" />
 	<script type="text/javascript">
 	    less = {
