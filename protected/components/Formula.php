@@ -120,17 +120,17 @@ class Formula
 		//Los dos equipos son muy ofensivos
 		if($params['ofensLoc']>20 && $params['ofensVis']>20)
 		{
-			$stdev *= 0.4;
+			$stdev *= 0.9;
 		}elseif($params['ofensLoc']>10 && $params['ofensVis']>10)
 				{
-					$stdev *= 0.7;
+					$stdev *= 1.2;
 				}
 		if($params['defensLoc'] >20 && $params['defensVis']>20)
 		{
-			$stdev *= 1.7;
+			$stdev *= 2;
 		}elseif($params['defensLoc']>10 && $params['defensVis']>10)
 				{
-					$stdev *= 1.3;
+					$stdev *= 1.5;
 				}
 
 		return $stdev;

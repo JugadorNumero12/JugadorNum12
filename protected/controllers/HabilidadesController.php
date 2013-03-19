@@ -96,7 +96,8 @@ class HabilidadesController extends Controller
 		$habilidad = Habilidades::model()->with('desbloqueadas')->findByPk($id_habilidad);
 
 		if ($habilidad === null) {
-			throw new CHttpException( 404, 'Habilidad inexistente');
+			Yii::app()->user->setFlash('habilidad', 'Habilidad inexistente.');
+			//throw new CHttpException( 404, 'Habilidad inexistente');
 		}
 
 		$desb = false;
@@ -147,7 +148,8 @@ class HabilidadesController extends Controller
 		if($habilidad === null){
 			//si la habilidad que quieres desbloquear existe como tal
 			$trans->rollback();
-			throw new CHttpException(404,'La habilidad no existe.');
+			Yii::app()->user->setFlash('habilidad', 'Habilidad inexistente.');
+			//throw new CHttpException(404,'La habilidad no existe.');
 		}
 
 		if ( $desbloqueada != null){
@@ -181,7 +183,7 @@ class HabilidadesController extends Controller
         			}
 
         			$trans->commit(); 
-        			$this->redirect(array('habilidades/index'));       			
+        			$this->redirect(array('acciones/'));       			
         		} 
         		catch ( Exception $exc ) 
         		{

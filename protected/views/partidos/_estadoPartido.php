@@ -100,7 +100,7 @@
 
 	<div id="seccion3"> 
 		
-		<div class="label-marcador"> <p>Local&nbsp;&nbsp;<?php echo $estado->goles_visitante?>&nbsp;&nbsp;</p></div>
+		<div class="label-marcador"> <p>Local&nbsp;&nbsp;<?php echo $estado->goles_local?>&nbsp;&nbsp;</p></div>
 
 		 <?php switch ($nombre_local)
 			{
