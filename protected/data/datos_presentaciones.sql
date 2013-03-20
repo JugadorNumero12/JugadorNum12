@@ -109,11 +109,11 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  -- PARTIDO 		2
  -- PASIVAS 		3
  -- ---------------------
- ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 120, 6, 600),
- ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 120, 6, 600),
- ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 240, 6, 600),
- ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 400, 600, 100, 6, 600),
- ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 240, 6, 600),
+ ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 10, 6, 600),
+ ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 15, 6, 600),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 20, 6, 600),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 400, 600, 15, 6, 600),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 30, 6, 600),
  ('Apostar', 1, 'Apostar por el partido', '"Dale esa pizca extra de emoción."', 500, 3, 1, NULL, NULL, NULL, 1, 200),
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
  ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"Es muy duro movilizar las redes sociales tú sólo. Contrata temporalmente un ayudante."', 60, 15, 1, NULL, NULL, NULL, 1, 200),
@@ -154,15 +154,15 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
  -- Partido para comprobar si los datos son reintroducidos correctamente
  (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);*/
- (1, 2, 150, NULL, 0, 10, 400, 500, 12, 10, 7, 6, 7, 6),
- (3, 6, 150, NULL, 0, 10, 400, 450, 10, 10, 7, 7, 5, 5),
- (4, 5, 150, NULL, 0, 10, 400, 300, 9, 11, 6, 8, 6, 7),
- (7, 8, 150, NULL, 0, 10, 500, 350, 12, 10, 7, 7, 6, 6),
+ (1, 2, 1363737600, NULL, 0, 10, 400, 500, 12, 10, 7, 6, 7, 6),
+ (3, 6, 1363737600, NULL, 0, 10, 400, 450, 10, 10, 7, 7, 5, 5),
+ (4, 5, 1363737600, NULL, 0, 10, 400, 300, 9, 11, 6, 8, 6, 7),
+ (7, 8, 1363737600, NULL, 0, 10, 500, 350, 12, 10, 7, 7, 6, 6),
 
- (2, 1, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
- (6, 3, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
- (5, 4, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
- (7, 8, 150, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1);
+ (2, 1, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (6, 3, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (5, 4, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (7, 8, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1);
 
 TRUNCATE `recursos`;
 

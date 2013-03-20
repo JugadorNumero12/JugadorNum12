@@ -62,34 +62,34 @@ TRUNCATE `acciones_individuales`;
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
  -- rojos
- (1, 1, 12, 4, 0, 0, 4),
+ (1, 3, 0, 0, 0, 0, 0),
  -- verdes
- (2, 3, 9, 0, 2, 1, 2),
+ (2, 4, 0, 0, 0, 0, 0),
  -- negros
- (3, 2, 10, 1, 1, 1, -1),
+ (3, 5, 0, 0, 0, 0, 0),
  -- blancos
- (4, 4, 7, 0, 2, 1, -2),
+ (4, 1, 0, 0, 0, 0, 0),
  -- azules
- (5, 5, 5, 1, 2, 0, 2),
+ (5, 2, 0, 0, 0, 0, 0),
  -- rosas
- (6, 6, 4, 1, 1, 1, 1),
+ (6, 6, 0, 0, 0, 0, 0),
  -- naranjas
- (7, 7, 2, 0, 2, 3, -3),
+ (7, 7, 0, 0, 0, 0, 0),
  -- amarillos
- (8, 8, 1, 0, 1, 4, -5);
+ (8, 8, 0, 0, 0, 0, 0);
 
 TRUNCATE `desbloqueadas`;
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (7, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
- (7, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
- (8, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
- (8, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
- (9, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
- (9, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
- (10,'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
- (10,'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
+ (1, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
+ (1, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
+ (2, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
+ (3, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
+ (3, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
+ (2, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
+ (4,'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
+ (4,'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
@@ -109,11 +109,11 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  -- PARTIDO 		2
  -- PASIVAS 		3
  -- ---------------------
- ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 120, 6, 600),
- ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 120, 6, 600),
- ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 240, 6, 600),
- ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 400, 600, 100, 6, 600),
- ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 240, 6, 600),
+ ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 10, 6, 600),
+ ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 15, 6, 600),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 20, 6, 600),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 400, 600, 15, 6, 600),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 30, 6, 600),
  ('Apostar', 1, 'Apostar por el partido', '"Dale esa pizca extra de emoción."', 500, 3, 1, NULL, NULL, NULL, 1, 200),
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200),
  ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"Es muy duro movilizar las redes sociales tú sólo. Contrata temporalmente un ayudante."', 60, 15, 1, NULL, NULL, NULL, 1, 200),
@@ -128,7 +128,7 @@ TRUNCATE `participaciones`;
 
 TRUNCATE `partidos`;
 INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
- -- Rojos vs. Verdes: ganaron los Rojos
+ /*-- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
  (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
  (3, 4, 1, 'Negros(1) - Blancos (0); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
@@ -153,7 +153,16 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
  (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
  -- Partido para comprobar si los datos son reintroducidos correctamente
- (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+ (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);*/
+ (1, 2, 1363737600, NULL, 0, 10, 400, 500, 12, 10, 7, 6, 7, 6),
+ (3, 6, 1363737600, NULL, 0, 10, 400, 450, 10, 10, 7, 7, 5, 5),
+ (4, 5, 1363737600, NULL, 0, 10, 400, 300, 9, 11, 6, 8, 6, 7),
+ (7, 8, 1363737600, NULL, 0, 10, 500, 350, 12, 10, 7, 7, 6, 6),
+
+ (2, 1, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (6, 3, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (5, 4, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1),
+ (7, 8, 1364737600, NULL, 0, 10, 100, 1000, 1, 1, 1, 1, 1, 1);
 
 TRUNCATE `recursos`;
 
