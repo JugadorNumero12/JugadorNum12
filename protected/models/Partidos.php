@@ -17,6 +17,29 @@ class Partidos extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Partidos the static model class
 	 */
+
+	/*Sirve para cambiar más facilmente los factores de partido*/
+	public static $datos_factores = array (	
+		//Si es local
+		'local' => array (
+			'ambiente'=> 'ambiente',
+			'nivel'=> 'nivel_local',
+			'aforo' => 'aforo_local',
+			'moral' => 'moral_local',
+			'ofensivo' => 'ofensivo_local',
+			'defensivo' => 'defensivo_local'
+		), 
+		//Si es visitante
+		'visitante' => array (
+			'ambiente'=> 'ambiente',
+			'nivel'=> 'nivel_visitante',
+			'aforo' => 'aforo_visitante',
+			'moral' => 'moral_visitante',
+			'ofensivo' => 'ofensivo_visitante',
+			'defensivo' => 'defensivo_visitante'
+		), 
+	);
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -99,5 +122,167 @@ class Partidos extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+
+	/** Funcion auxiliar que modifica la tabla de partidos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public static function aumentar_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
+
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_factores,Helper.php)");
+			
+		}
+
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=self::$datos_factores['local'][$columna];
+			$valor_nuevo=$partido->$factor + $cantidad;
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		if($partido->save()) return 0; else return -1;
+
+		}else if($partido->equipos_id_equipo_2 == $id_equipo)
+				{
+					$factor=self::$datos_factores['visitante'][$columna];
+					$valor_nuevo=$partido->$factor + $cantidad;
+					//Si fallara tiene que ser por el $factor,comprobar si es asi 
+					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+		     		if($partido->save()) return 0; else return -1;
+		     		
+				}else
+					{
+						//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+						//los id de los equipo del partido
+						return -1;
+					}
+	}
+
+	/** Funcion auxiliar que modifica la tabla de partidos
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro cantidad de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public static function disminuir_factores($id_partido,$id_equipo, $columna, $cantidad)
+	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
+
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (disminuir_factores,Helper.php)");
+			
+		}
+
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=self::$datos_factores['local'][$columna];
+			$valor_nuevo=$partido->$factor - $cantidad;
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		if($partido->save()) return 0; else return -1;
+
+		}else if($partido->equipos_id_equipo_2 == $id_equipo)
+				{
+					$factor=self::$datos_factores['visitante'][$columna];
+					$valor_nuevo=$partido->$factor - $cantidad;
+					//Si fallara tiene que ser por el $factor,comprobar si es asi 
+					$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+		     		if($partido->save()) return 0; else return -1;
+				}else
+					{
+						//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+						//los id de los equipo del partido
+						return -1;
+					}
+	}
+
+
+	/** Funcion auxiliar que modifica la tabla de partidos. A diferencia del
+	 * aumento normal de factores, éste se hace de forma proporcional.
+	 * 
+	 * @paremetro partido en el que modificamos sus factores
+	 * @paremetro equipo al que pertenece
+	 * @parametro columna sobre la que modificamos (moral,ambiente,ind.ofensivo...)
+	 * @parametro proporción de recursos que aumentamos
+	 * @devuelve flag de error
+	 */
+	public static function aumentar_factores_prop($id_partido,$id_equipo, $columna, $proporcion)
+	{
+		//Cojo el modelo correspondiente a ese id
+		$partido=Partidos::model()->findByPK($id_partido);
+
+		//Comprobación de seguridad
+		if ($partido === null)
+		{
+			throw new CHttpException(404,"Partido no encontrado. (aumentar_factores_prop,Helper.php)");
+			
+		}
+
+		//Comrpuebo si juega de local o de visitante
+		if($partido->equipos_id_equipo_1 == $id_equipo)
+		{
+			$factor=self::$datos_factores['local'][$columna];
+
+			//Aumentar proporcionalmente
+			$valor_nuevo = $partido->$factor + ($partido->$factor * $proporcion);
+
+			//Si fallara tiene que ser por el $factor,comprobar si es asi 
+			$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+     		
+     		if ($partido->save())
+     		{ 
+     			return 0;
+     		}
+     		else
+     		{
+     		 	return -1;
+     		}
+
+		}
+		else 
+		{
+			if($partido->equipos_id_equipo_2 == $id_equipo)
+			{
+				$factor=self::$datos_factores['visitante'][$columna];
+				//Aumentar proporcionalmente
+				$valor_nuevo = $partido->$factor + ($partido->$factor * $proporcion);
+
+				//Si fallara tiene que ser por el $factor,comprobar si es asi 
+				$partido->setAttributes(array(''.$factor.''=>$valor_nuevo));
+	     		
+	     		if ($partido->save())
+	     		{ 
+	     			return 0;
+	     		}
+	     		else
+	     		{
+	     		 	return -1;
+	     		}
+			}
+			else
+			{
+				//Si ha llegado aqui por alguna cosa, es que no coincide con ninguno de 
+				//los id de los equipo del partido
+				return -1;
+			}
+		}
 	}
 }
