@@ -184,7 +184,7 @@ class AccionesGrupales extends CActiveRecord
 		{		
 			Yii::import('application.components.Helper');
 			$helper = new Helper();
-			
+
 			// 1. Devolver recursos a los participantes (incluido el creador)
 			$participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal));
 
@@ -209,6 +209,75 @@ class AccionesGrupales extends CActiveRecord
 		{
 			// Dejar el try/catch para permitir posible logging de excepciones
 			throw $e;
+		}
+	}	
+
+	// Función expulsa a un jugador de una acción grupal dad
+	public static function expulsarJugador($id_accion, $id_jugador)
+	{
+		$acc = AccionesGrupales::model()->findByPk($id_accion);
+		$rec = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_jugador));
+		$part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+		
+		//Se comprueba la coherencia de la petición
+		if ($rec === null)
+		{
+			Yii::app()->user->setFlash('recursos', 'Recursos inexistentes. (actionExpulsar,AccionesController).');
+			throw new Exception('Recursos inexistentes. (actionExpulsar,AccionesController)');
+		}
+		if ($acc === null) {
+			Yii::app()->user->setFlash('accion', 'Acción inexistente.');
+			throw new CHttpException('Acción inexistente.');
+		}
+		if ($acc->completada == 1) {
+			Yii::app()->user->setFlash('expulsar', 'Acción completada.No puedes expulsar.');
+			throw new CHttpException('Acción completada.No puedes expulsar.');
+		}
+		if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
+			Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
+			throw new CHttpException('No tienes privilegios sobre la acción.');
+			//$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+		}
+		if ($id_jugador == Yii::app()->user->usIdent) {
+			Yii::app()->user->setFlash('error', 'No puedes expulsarte a tí mismo.');
+			throw new CHttpException('No puedes expulsarte a tí mismo.');
+			//$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+		}
+
+		if ($part == null) {
+			Yii::app()->user->setFlash('participante', 'El jugador indicado no participa en la acción.');
+			throw new CHttpException('El jugador indicado no participa en la acción.');
+			//$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+		}
+
+		$actAni = $rec['animo'];
+		$actInf = $rec['influencias'];
+		$maxAni = $rec['animo_max'];
+		$maxInf = $rec['influencias_max'];
+		$partDin = $part['dinero_aportado'];
+		$partAni = $part['animo_aportado'];
+		$partInf = $part['influencias_aportadas'];
+
+		$rec['dinero'] += $partDin;
+		$rec['animo'] = min(($actAni + $partAni), $maxAni);
+		$rec['influencias'] = min(($actInf + $partInf), $maxInf);
+		$rec->save();
+
+		$acc['jugadores_acc'] -= 1;
+		$acc['dinero_acc'] -= $partDin;
+		$acc['animo_acc'] -= $partAni;
+		$acc['influencias_acc'] -= $partInf;
+		$acc->save();
+
+		//$part->delete(); // elegante, pero no funciona
+		$n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
+
+		if($n != 1) 
+		{
+			//Si salta esto es que había más de una participación del mismo usuario en la acción
+			Yii::log('[DATABASE_ERROR] El usuario '.$id_jugador.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
+			Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
+			throw new Exception('Error en la base de datos. Pongase en contacto con un administrador.');
 		}
 	}
 }
