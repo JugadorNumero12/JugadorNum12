@@ -485,5 +485,7 @@ class AccionesGrupales extends CActiveRecord
 			Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
 			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
 		}
+
+		return $accion_grupal['id_accion_grupal'];
 	}
 }

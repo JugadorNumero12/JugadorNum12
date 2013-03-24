@@ -167,7 +167,7 @@ class AccionesController extends Controller
 				//Si no esta creada
 				if($accion_grupal === null)
 				{
-					AccionesGrupales::usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad);			
+					$nuevo_id = AccionesGrupales::usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad);			
 				} 
 				else 
 				{
@@ -199,7 +199,7 @@ class AccionesController extends Controller
 			else
 			{
 				//Renderizar acción grupal
-				$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
+				$this->render('usar', array('id_acc'=>$nuevo_id,'habilidad'=>$habilidad, 'res'=>$res));
 			}
 		}
 		catch (Exception $e)
