@@ -103,311 +103,150 @@ class AccionesController extends Controller
 		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();
-		Yii::import('application.components.Acciones.*');
-		//Cojo el id_usuario
-		$id_usuario=Yii::app()->user->usIdent;
-		//Obtener modelo de Habilidades
-		$habilidad = Habilidades::model()->findByPk($id_accion);
 
-		//Habilidad no encontrada
-		if ( $habilidad === null ) {			
-			$trans->rollback();
-			Yii::app()->user->setFlash('inexistente', 'Acción inexistente.');
-			$this-> redirect(array('acciones/index'));
-		}
+		try 
+		{
+			// Importar acciones
+			Yii::import('application.components.Acciones.*');
 
-		//Habilidad encontrada
-		//Obtener modelo de Desbloqueadas		
-		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario,
-																   	   'habilidades_id_habilidad' => $id_accion ));			
-		//Si no esta desbloqueada para el usuario, error
-		if( $desbloqueada === null){				
-			$trans->rollback();
-			Yii::app()->user->setFlash('bloqueada', 'No tienes desbloqueada la acción.');
-			$this-> redirect(array('acciones/index'));
-		} 
-		
-		//Si esta desbloqueada
-		//Obtener modelo de Recursos
-		$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
-		
-		//Si no son suficientes recursos cancelar transaccion y notificar al usuario
-		if ( $res['dinero'] 	 < $habilidad['dinero'] ||
-		     $res['animo'] 		 < $habilidad['animo']  ||
-		     $res['influencias'] < $habilidad['influencias']){
-			
-			$trans->rollback();
-			Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos.');
-			$this-> redirect(array('acciones/index'));
-		}
+			//Cojo el id_usuario
+			$id_usuario=Yii::app()->user->usIdent;
 
-		//Si tenemos suficientes recursos miramos si es individual o grupal
-		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
+			//Obtener modelo de Habilidades
+			$habilidad = Habilidades::model()->findByPk($id_accion);
 
-			$criteria = new CDbCriteria();
-			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->params = array(	':bid_usuario' => $id_usuario,
-										':bid_accion' => $id_accion,
-										);	
-			$accion_ind = AccionesIndividuales::model()->find($criteria);
-			$tiempo_reg = $habilidad['cooldown_fin'];
-
-			if($accion_ind===null)
-			{
-				$accion_ind = new AccionesIndividuales();
-				$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
-				   							  	  'habilidades_id_habilidad' => $id_accion,
-				   							  	  'cooldown' => 0 ,
-				   							  	  'devuelto'=> 0));
-				try
-				{			
-					$res['dinero'] 		-= $habilidad['dinero'];
-					$res['animo']  		-= $habilidad['animo'];
-					$res['influencias'] -= $habilidad['influencias'];
-					$res->save();
-
-					//actualizar la hora en que acaba de regenerarse la accion
-					$accion_ind->cooldown = time() + $tiempo_reg;
-					$accion_ind->devuelto=0;
-					
-					//guardar en los modelo				
-					$accion_ind->save();
-
-					//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
-					//Tomar nombre de habilidad para instanciación dinámica
-	        		$hab = Habilidades::model()->findByPk($id_accion);
-	        		if ($hab === null)
-	        		{
-	        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
-	        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
-	        			
-	        		}      
-	        		  		
-	        		$nombreHabilidad = $hab->codigo;
-
-	        		//Llamar al singleton correspondiente y ejecutar dicha acción
-	        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
-				} catch ( Exception $exc ) {
-					$trans->rollback();
-					throw $exc;
-				}	
-
-			}elseif($accion_ind->devuelto == 1)
-				{
-					try
-					{			
-						$res['dinero'] 		-= $habilidad['dinero'];
-						$res['animo']  		-= $habilidad['animo'];
-						$res['influencias'] -= $habilidad['influencias'];
-						$res->save();
-
-						//actualizar la hora en que acaba de regenerarse la accion
-						$accion_ind->cooldown = time() + $tiempo_reg;
-						$accion_ind->devuelto=0;
-						
-						//guardar en los modelo				
-						$accion_ind->save();
-
-						//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
-						//Tomar nombre de habilidad para instanciación dinámica
-		        		$hab = Habilidades::model()->findByPk($id_accion);
-		        		if ($hab === null)
-		        		{
-		        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (AccionUsar.AccionesController).');
-		        			//throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
-		        			
-		        		}      
-		        		  		
-		        		$nombreHabilidad = $hab->codigo;
-
-		        		//Llamar al singleton correspondiente y ejecutar dicha acción
-		        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
-					} catch ( Exception $exc ) {
-						$trans->rollback();
-						throw $exc;
-					}	
-
-				}else
-					{
-						$trans->rollback();
-						Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
-						$this-> redirect(array('acciones/index'));
-					}
-
-			/*
-			//Sacar la accion individual teniendo en cuenta el id_usuario,e id_habilidad 
-			//y cogiendo la que mayor cooldown tiene de toda la tabla
-			$criteria = new CDbCriteria();
-			$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-			$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-			$criteria->addCondition('devuelto = 1');
-			$criteria->params = array(	':bid_usuario' => $id_usuario,
-										':bid_accion' => $id_accion,
-										);	
-			$criteria->order = 'cooldown DESC';
-			$criteria->limit = '1';
-			$accion_ind = AccionesIndividuales::model()->find($criteria);
-			$tiempo_reg = $habilidad['cooldown_fin'];		//tiempo que tarda en regenerarse (cte.)
-			
-
-			//Si es null, puede ser porque no este creada o porque devuelto este aún a 0
-			if($accion_ind === null){
-				$criteria = new CDbCriteria();
-				$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
-				$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
-				$criteria->params = array(	':bid_usuario' => $id_usuario,
-											':bid_accion' => $id_accion,
-											);	
-				$criteria->order = 'cooldown DESC';
-				$criteria->limit = '1';
-				$accion_indCreada = AccionesIndividuales::model()->find($criteria);
-
-				if($accion_indCreada===null)
-				{
-					$accion_ind = new AccionesIndividuales();
-					$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
-				   							  	  'habilidades_id_habilidad' => $id_accion,
-				   							  	  'cooldown' => 0 ,
-				   							  	  'devuelto'=> 0));
-				}
-				
+			//Habilidad no encontrada
+			if ( $habilidad === null ) 
+			{			
+				$trans->rollback();
+				Yii::app()->user->setFlash('inexistente', 'Acción inexistente.');
+				$this-> redirect(array('acciones/index'));
 			}
 
-			// TODO Sacar la hora actual
-			$hora_act = time(); 			
-
-			// TODO Sacar el cooldown de la accion individual
-			$hora_cooldown = $accion_ind->cooldown; 	//hora en la que acaba de regenerarse
-
-			// Si  hora < hora_cooldown,
-			// cancelar transaccion y notificar al usuario
-			if ( $hora_act < $hora_cooldown ){
-					$trans->rollback();
-					Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
-					$this-> redirect(array('acciones/index'));
-			} 
-
-			//Si hora >= hora_cooldown			
-			//restar recursos al usuario
-			try{			
-				$res['dinero'] 		-= $habilidad['dinero'];
-				$res['animo']  		-= $habilidad['animo'];
-				$res['influencias'] -= $habilidad['influencias'];
-				$res->save();
-
-				//actualizar la hora en que acaba de regenerarse la accion
-				$accion_ind->cooldown = $hora_act + $tiempo_reg;
-				$accion_ind->devuelto=0;
-				
-				//guardar en los modelo				
-				$accion_ind->save();
-
-				//TODO suficientes recursos y hora >= cooldown -> ejecutar accion
-				//Tomar nombre de habilidad para instanciación dinámica
-        		$hab = Habilidades::model()->findByPk($id_accion);
-        		if ($hab === null)
-        		{
-        			throw new CHttpException(404,"Error: habilidad no encontrada. (AccionUsar.AccionesController)");
-        			
-        		}      
-        		  		
-        		$nombreHabilidad = $hab->codigo;
-
-        		//Llamar al singleton correspondiente y ejecutar dicha acción
-        		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
-			} catch ( Exception $exc ) {
-					$trans->rollback();
-					throw $exc;
-			}	*/									   
-			
-		} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
-				/*
-					Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
-					Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
-					para obtener la accion grupal debo buscar por id_equipo y id_habilidad
-					NOTA: no se contempla la posibilidad de en un mismo equipo haya varias acciones iguales
-					pero con distinto creador (aunque dicha posibilidad existe) ya que debe arreglarse la redireccion
-				*/
-				//Sacar la accion grupal
-				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
-				$id_usuario=Yii::app()->user->usIdent;
-				$id_equipo=Yii::app()->user->usAfic;
-				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
-				  															       'habilidades_id_habilidad' => $id_accion,
-				  															       'usuarios_id_usuario' =>  $id_usuario,
-				  															        ));
-				
-				//Si no esta creada
-				if($accion_grupal === null){
-					//restar recursos al usuario (recursos iniciales)	
-					try{	
-						$res['dinero'] 		-= $habilidad['dinero'];
-						$res['animo']  		-= $habilidad['animo'];
-						$res['influencias'] -= $habilidad['influencias'];
-						
-						//sumarselos al crear nueva accion grupal
-						$accion_grupal = new AccionesGrupales();
-						$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
-					   							  	         'habilidades_id_habilidad' => $id_accion,
-					   							  	         'equipos_id_equipo' => $id_equipo,
-					   							  	         'influencias_acc'   => $habilidad['influencias'],
-					   							  	         'animo_acc' 	     => $habilidad['animo'],
-															 'dinero_acc' 	     => $habilidad['dinero'],
-															 'jugadores_acc'     => 1,
-															 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
-					   							  	         'completada' 	     => 0 ));
-						//guardar en los modelos
-						$res->save();
-						$accion_grupal->save();
-						
-						//Crear participación del creador
-						$participacion = new Participaciones();
-						$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
-						$participacion->usuarios_id_usuario = $id_usuario;
-						$participacion->dinero_aportado = $habilidad['dinero'];
-						$participacion->influencias_aportadas = $habilidad['influencias'];
-						$participacion->animo_aportado = $habilidad['animo'];
-						if (!$participacion->save())
-							Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
-							//throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
-							
-					} catch ( Exception $exc ) {
-						$trans->rollback();
-						throw $exc;
-				    } 
-					// sacar el id de accion grupal (pk)
-					// TODO pasar a la vista algun parametro,
-					// para que en este caso muestre al usuario un boton para poder ser el primero en participar				
-				} else {
-					//Si esta creada 
-					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
-					$this-> redirect(array('acciones/participar',
-										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
-				}				
-
-		} else { 
-				//tipo erroneo
+			//Habilidad encontrada
+			//Obtener modelo de Desbloqueadas		
+			$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario,
+																	   	   'habilidades_id_habilidad' => $id_accion ));			
+			//Si no esta desbloqueada para el usuario, error
+			if( $desbloqueada === null)
+			{				
 				$trans->rollback();
-				Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
+				Yii::app()->user->setFlash('bloqueada', 'No tienes desbloqueada la acción.');
 				$this-> redirect(array('acciones/index'));
-		}
+			} 
+			
+			//Si esta desbloqueada
+			//Obtener modelo de Recursos
+			$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
+			
+			//Si no son suficientes recursos cancelar transaccion y notificar al usuario
+			if ( $res['dinero'] 	 < $habilidad['dinero'] ||
+			     $res['animo'] 		 < $habilidad['animo']  ||
+			     $res['influencias'] < $habilidad['influencias'])
+			{			
+				$trans->rollback();
+				Yii::app()->user->setFlash('recursos', 'No tienes suficientes recursos.');
+				$this-> redirect(array('acciones/index'));
+			}
 
-		$trans->commit();
+			//Si tenemos suficientes recursos miramos si es individual o grupal
+			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) 
+			{ 								   
+				AccionesIndividuales::usarIndividual($id_usuario, $id_accion, $res, $habilidad);
+			} 
+			else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
+					/*
+						Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
+						Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
+						para obtener la accion grupal debo buscar por id_equipo y id_habilidad
+						NOTA: no se contempla la posibilidad de en un mismo equipo haya varias acciones iguales
+						pero con distinto creador (aunque dicha posibilidad existe) ya que debe arreglarse la redireccion
+					*/
+					//Sacar la accion grupal
+					//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
+					$id_usuario=Yii::app()->user->usIdent;
+					$id_equipo=Yii::app()->user->usAfic;
+					$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
+					  															       'habilidades_id_habilidad' => $id_accion,
+					  															       'usuarios_id_usuario' =>  $id_usuario,
+					  															        ));
+					
+					//Si no esta creada
+					if($accion_grupal === null){
+						//restar recursos al usuario (recursos iniciales)	
+						try{	
+							$res['dinero'] 		-= $habilidad['dinero'];
+							$res['animo']  		-= $habilidad['animo'];
+							$res['influencias'] -= $habilidad['influencias'];
+							
+							//sumarselos al crear nueva accion grupal
+							$accion_grupal = new AccionesGrupales();
+							$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
+						   							  	         'habilidades_id_habilidad' => $id_accion,
+						   							  	         'equipos_id_equipo' => $id_equipo,
+						   							  	         'influencias_acc'   => $habilidad['influencias'],
+						   							  	         'animo_acc' 	     => $habilidad['animo'],
+																 'dinero_acc' 	     => $habilidad['dinero'],
+																 'jugadores_acc'     => 1,
+																 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
+						   							  	         'completada' 	     => 0 ));
+							//guardar en los modelos
+							$res->save();
+							$accion_grupal->save();
+							
+							//Crear participación del creador
+							$participacion = new Participaciones();
+							$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
+							$participacion->usuarios_id_usuario = $id_usuario;
+							$participacion->dinero_aportado = $habilidad['dinero'];
+							$participacion->influencias_aportadas = $habilidad['influencias'];
+							$participacion->animo_aportado = $habilidad['animo'];
+							if (!$participacion->save())
+								Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
+								//throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
+								
+						} catch ( Exception $exc ) {
+							$trans->rollback();
+							throw $exc;
+					    } 
+						// sacar el id de accion grupal (pk)
+						// TODO pasar a la vista algun parametro,
+						// para que en este caso muestre al usuario un boton para poder ser el primero en participar				
+					} else {
+						//Si esta creada 
+						//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+						$this-> redirect(array('acciones/participar',
+											   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
+					}				
 
-		//Renderizar acción individual 
-		if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
-			/* 	como no está definido el id_accion_grupal, le damos cualquier valor
-				porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
-			$id_acc = -1;
-			$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
-		}else
+			} else { 
+					//tipo erroneo
+					$trans->rollback();
+					Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
+					$this-> redirect(array('acciones/index'));
+			}
+
+			$trans->commit();
+
+			//Renderizar acción individual 
+			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) 
+			{ 
+				/* 	como no está definido el id_accion_grupal, le damos cualquier valor
+					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
+				$id_acc = -1;
+				$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
+			}
+			else
 			{
 				//Renderizar acción grupal
 				$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
 	
 			}
-
+			}
+			catch (Exception $e)
+			{
+				$this-> redirect(array('acciones/index'));
+			}
 		}
 
 	/**
