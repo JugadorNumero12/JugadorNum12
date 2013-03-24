@@ -124,9 +124,6 @@ class AccionesGrupales extends CActiveRecord
 		{
 			//Traer acciones y Helper	
 			Yii::import('application.components.Acciones.*');
-			Yii::import('application.components.Helper');
-
-			$helper = new Helper();
 
 			$tiempo = time();
 			$busqueda=new CDbCriteria;
@@ -154,9 +151,9 @@ class AccionesGrupales extends CActiveRecord
 					$animo=$participante->animo_aportado;
 
 					//Utilizo el helper para ingresarle al usuario los recursos
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
 
 					//Eliminar ese modelo
 					Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));
@@ -182,9 +179,6 @@ class AccionesGrupales extends CActiveRecord
 	{
 		try
 		{		
-			Yii::import('application.components.Helper');
-			$helper = new Helper();
-
 			// 1. Devolver recursos a los participantes (incluido el creador)
 			$participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal));
 
@@ -192,9 +186,9 @@ class AccionesGrupales extends CActiveRecord
 			foreach ($participantes as $participante)
 			{
 				// Aumentar recursos a los participantes
-				$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
-				$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
-				$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
+				Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
+				Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
+				Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
 
 				// 2. Eliminar ese modelo
 				Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));		

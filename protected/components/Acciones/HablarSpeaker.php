@@ -24,9 +24,6 @@ class HablarSpeaker extends AccionPartSingleton
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
-		//Tomar helper para facilitar la modificación
-	    Yii::import('application.components.Helper');
-
 	    $ret = 0;
 
 	    $creador = Usuarios::model()->findByPk($id_usuario);
@@ -37,9 +34,8 @@ class HablarSpeaker extends AccionPartSingleton
 	    $sigPartido = $equipo->sigPartido;
 
 	    //1.- Añadir bonificación al partido
-	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['HablarSpeaker']['moral']));
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['HablarSpeaker']['ofensivo']));
+	    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['HablarSpeaker']['moral']));
+	    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['HablarSpeaker']['ofensivo']));
 
 	    //Finalizar función
 	    return $ret;

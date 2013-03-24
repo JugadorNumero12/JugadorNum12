@@ -24,9 +24,6 @@ class RetransmitirRRSS extends AccionPartSingleton
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
-		//Tomar helper para facilitar la modificación
-	    Yii::import('application.components.Helper');
-
 	    $ret = 0;
 
 	    $creador = Usuarios::model()->findByPk($id_usuario);
@@ -37,11 +34,10 @@ class RetransmitirRRSS extends AccionPartSingleton
 	    $sigPartido = $equipo->sigPartido;
 
 	    //1.- Añadir bonificación al partido
-	    $helper = new Helper();
-	    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['RetransmitirRRSS']['defensivo']));
+	    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['RetransmitirRRSS']['defensivo']));
 	   
 	    //2.- Dar recursos al creador
-	    $ret = min($ret,$helper->aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['RetransmitirRRSS']['animo']));
+	    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['RetransmitirRRSS']['animo']));
 
 	    //Finalizar función
 	    return $ret;

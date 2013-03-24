@@ -175,7 +175,7 @@ class Recursos extends CActiveRecord
 	 * @parametro columna sobre la que modificamos (dinero, dinero_gen, ...)
 	 * @parametro cantidad de recursos que aumentamos
 	 * @devuelve flag de error
-	 * @ejemplo	$h->aumentar_recursos(3, "animo", 30);
+	 * @ejemplo	Recursos::aumentar_recursos(3, "animo", 30);
 	 */
 	public static function aumentar_recursos($id_usuario, $columna, $cantidad)
 	{
@@ -236,7 +236,7 @@ class Recursos extends CActiveRecord
 	 * @parametro columna sobre la que modificamos (dinero, dinero_gen, ...)
 	 * @parametro cantidad de recursos que quitamos
 	 * @devuelve flag de error
-	 * @ejemplo	$h->quitar_recursos(3, "animo", 30);
+	 * @ejemplo	Recursos::quitar_recursos(3, "animo", 30);
 	 */
 	public static function quitar_recursos($id_usuario, $columna, $cantidad)
 	{

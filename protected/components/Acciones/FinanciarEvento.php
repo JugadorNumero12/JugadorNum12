@@ -27,9 +27,6 @@ class FinanciarEvento extends AccionGrupSingleton
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_accion)
   {
-    //Tomar helper para facilitar la modificación
-    Yii::import('application.components.Helper');
-
     $ret = 0;
 
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
@@ -41,10 +38,9 @@ class FinanciarEvento extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
 
     //1.- Añadir bonificación al partido
-    $helper = new Helper();
-    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
-    $ret = min($ret,$helper->aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['FinanciarEvento']['aforo']));
-    $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['FinanciarEvento']['moral']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,Partidos::aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['FinanciarEvento']['aforo']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['FinanciarEvento']['moral']));
 
     //2.- Dar bonificación al creador
 
@@ -55,7 +51,7 @@ class FinanciarEvento extends AccionGrupSingleton
     {
       $infAportadas = $participacion->influencias_aportadas;
       $usuario = $participacion->usuarios_id_usuario;
-      if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+      if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
       {
         $ret = min($ret,0);
       }

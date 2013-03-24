@@ -137,9 +137,6 @@ class ScriptsController extends Controller
 	{
 		//Traer acciones y Helper	
 		Yii::import('application.components.Acciones.*');
-		Yii::import('application.components.Helper');
-
-		$helper = new Helper();
 
 		$tiempo = time();
 		$busqueda=new CDbCriteria;
@@ -168,9 +165,9 @@ class ScriptsController extends Controller
 					$animo=$participante->animo_aportado;
 
 					//Utilizo el helper para ingresarle al usuario los recursos
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
 
 					//Eliminar ese modelo
 					Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));

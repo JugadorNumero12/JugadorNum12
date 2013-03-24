@@ -29,15 +29,9 @@ class ContratarRRPP extends AccionIndSingleton
 		//Validar usuario
 		$us = Usuarios::model()->findByPk($id_usuario);
 		if ($us === null)
-			throw new Exception("Usuario incorrecto.", 404);			
+			throw new Exception("Usuario incorrecto.", 404);	
 
-		//Tomar helper para facilitar la modificación
-		Yii::import('application.components.Helper');
-
-		//Aumentar ánimo
-		$helper = new Helper();
-
-		if ($helper->aumentar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		if (Recursos::aumentar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
 		{
 			return 0;
 		}
@@ -57,13 +51,8 @@ class ContratarRRPP extends AccionIndSingleton
 
 		$res = parent::finalizar($id_usuario,$id_habilidad);
 
-		//Tomar helper para facilitar la modificación
-		Yii::import('application.components.Helper');
-
-		$helper = new Helper();
-		
 		//Restablecer bonus_influencias
-		if ($helper->quitar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
+		if (Recursos::quitar_recursos($id_usuario,"bonus_influencias",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0)
 		{
 			return min($res,0);
 		}
