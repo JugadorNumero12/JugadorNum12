@@ -154,78 +154,38 @@ class AccionesController extends Controller
 			{ 								   
 				AccionesIndividuales::usarIndividual($id_usuario, $id_accion, $res, $habilidad);
 			} 
-			else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
-					/*
-						Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
-						Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
-						para obtener la accion grupal debo buscar por id_equipo y id_habilidad
-						NOTA: no se contempla la posibilidad de en un mismo equipo haya varias acciones iguales
-						pero con distinto creador (aunque dicha posibilidad existe) ya que debe arreglarse la redireccion
-					*/
-					//Sacar la accion grupal
-					//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
-					$id_usuario=Yii::app()->user->usIdent;
-					$id_equipo=Yii::app()->user->usAfic;
-					$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
-					  															       'habilidades_id_habilidad' => $id_accion,
-					  															       'usuarios_id_usuario' =>  $id_usuario,
-					  															        ));
-					
-					//Si no esta creada
-					if($accion_grupal === null){
-						//restar recursos al usuario (recursos iniciales)	
-						try{	
-							$res['dinero'] 		-= $habilidad['dinero'];
-							$res['animo']  		-= $habilidad['animo'];
-							$res['influencias'] -= $habilidad['influencias'];
-							
-							//sumarselos al crear nueva accion grupal
-							$accion_grupal = new AccionesGrupales();
-							$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
-						   							  	         'habilidades_id_habilidad' => $id_accion,
-						   							  	         'equipos_id_equipo' => $id_equipo,
-						   							  	         'influencias_acc'   => $habilidad['influencias'],
-						   							  	         'animo_acc' 	     => $habilidad['animo'],
-																 'dinero_acc' 	     => $habilidad['dinero'],
-																 'jugadores_acc'     => 1,
-																 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
-						   							  	         'completada' 	     => 0 ));
-							//guardar en los modelos
-							$res->save();
-							$accion_grupal->save();
-							
-							//Crear participación del creador
-							$participacion = new Participaciones();
-							$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
-							$participacion->usuarios_id_usuario = $id_usuario;
-							$participacion->dinero_aportado = $habilidad['dinero'];
-							$participacion->influencias_aportadas = $habilidad['influencias'];
-							$participacion->animo_aportado = $habilidad['animo'];
-							if (!$participacion->save())
-								Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
-								//throw new CHttpException("Participación no creada. (AccionesController,actionUsar)", 401);
-								
-						} catch ( Exception $exc ) {
-							$trans->rollback();
-							throw $exc;
-					    } 
-						// sacar el id de accion grupal (pk)
-						// TODO pasar a la vista algun parametro,
-						// para que en este caso muestre al usuario un boton para poder ser el primero en participar				
-					} else {
-						//Si esta creada 
-						//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
-						$this-> redirect(array('acciones/participar',
-											   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
-					}				
-
-			} else { 
-					//tipo erroneo
-					$trans->rollback();
-					Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
-					$this-> redirect(array('acciones/index'));
+			else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) 
+			{
+				//Sacar la accion grupal
+				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
+				$id_usuario=Yii::app()->user->usIdent;
+				$id_equipo=Yii::app()->user->usAfic;
+				$accion_grupal = AccionesGrupales::model()->findByAttributes(array('equipos_id_equipo' => $id_equipo,
+				  															       'habilidades_id_habilidad' => $id_accion,
+				  															       'usuarios_id_usuario' =>  $id_usuario,
+				  															        ));
+				//Si no esta creada
+				if($accion_grupal === null)
+				{
+					AccionesGrupales::usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad);			
+				} 
+				else 
+				{
+					//Si esta creada 
+					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+					$this-> redirect(array('acciones/participar',
+										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
+				}
+			} 
+			else 
+			{ 
+				// Tipo inválido
+				$trans->rollback();
+				Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
+				$this-> redirect(array('acciones/index'));
 			}
 
+			// Finalizar transacción
 			$trans->commit();
 
 			//Renderizar acción individual 
@@ -240,14 +200,13 @@ class AccionesController extends Controller
 			{
 				//Renderizar acción grupal
 				$this->render('usar', array('id_acc'=>$accion_grupal['id_accion_grupal'],'habilidad'=>$habilidad, 'res'=>$res));
-	
-			}
-			}
-			catch (Exception $e)
-			{
-				$this-> redirect(array('acciones/index'));
 			}
 		}
+		catch (Exception $e)
+		{
+			$this-> redirect(array('acciones/index'));
+		}
+	}
 
 	/**
 	 * Muestra la informacion relativa a una accion grupal abierta

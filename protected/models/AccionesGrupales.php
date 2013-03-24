@@ -443,4 +443,47 @@ class AccionesGrupales extends CActiveRecord
 			Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
 		}
 	}
+
+	// Función para usar una acción grupal
+	public static function usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad)
+	{		
+		/*
+			Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
+			Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
+			para obtener la accion grupal debo buscar por id_equipo y id_habilidad
+			NOTA: no se contempla la posibilidad de en un mismo equipo haya varias acciones iguales
+			pero con distinto creador (aunque dicha posibilidad existe) ya que debe arreglarse la redireccion
+		*/	
+		$res['dinero'] 		-= $habilidad['dinero'];
+		$res['animo']  		-= $habilidad['animo'];
+		$res['influencias'] -= $habilidad['influencias'];
+		
+		//sumarselos al crear nueva accion grupal
+		$accion_grupal = new AccionesGrupales();
+		$accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
+	   							  	         'habilidades_id_habilidad' => $id_accion,
+	   							  	         'equipos_id_equipo' => $id_equipo,
+	   							  	         'influencias_acc'   => $habilidad['influencias'],
+	   							  	         'animo_acc' 	     => $habilidad['animo'],
+											 'dinero_acc' 	     => $habilidad['dinero'],
+											 'jugadores_acc'     => 1,
+											 'finalizacion'      => $habilidad['cooldown_fin']+time(),													 
+	   							  	         'completada' 	     => 0 ));
+		//guardar en los modelos
+		$res->save();
+		$accion_grupal->save();
+		
+		//Crear participación del creador
+		$participacion = new Participaciones();
+		$participacion->acciones_grupales_id_accion_grupal = $accion_grupal->id_accion_grupal;
+		$participacion->usuarios_id_usuario = $id_usuario;
+		$participacion->dinero_aportado = $habilidad['dinero'];
+		$participacion->influencias_aportadas = $habilidad['influencias'];
+		$participacion->animo_aportado = $habilidad['animo'];
+		if (!$participacion->save())
+		{
+			Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
+			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
+		}
+	}
 }
