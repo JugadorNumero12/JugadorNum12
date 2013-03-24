@@ -175,4 +175,40 @@ class AccionesGrupales extends CActiveRecord
     		//throw $ex;
     	}		
 	}
+
+	// Función para finalizar una grupal dada y devolver los recursos. Recibe
+	// booleano para indicar si se debe borrar la acción.
+	public static function finalizaGrupal($id_accion_grupal, $eliminar = true)
+	{
+		try
+		{		
+			Yii::import('application.components.Helper');
+			$helper = new Helper();
+			
+			// 1. Devolver recursos a los participantes (incluido el creador)
+			$participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal));
+
+			//Recorrer todos los participantes devolviendoles sus recursos
+			foreach ($participantes as $participante)
+			{
+				// Aumentar recursos a los participantes
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
+				$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
+
+				// 2. Eliminar ese modelo
+				Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));		
+			}
+			// 3. Borrar grupal si es necesario
+			if ($eliminar)
+			{
+				AccionesGrupales::model()->deleteByPk($id_accion_grupal);
+			}
+		}
+		catch (Exception $e)
+		{
+			// Dejar el try/catch para permitir posible logging de excepciones
+			throw $e;
+		}
+	}
 }
