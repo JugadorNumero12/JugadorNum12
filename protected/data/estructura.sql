@@ -244,6 +244,31 @@ KEY `emails_FKIndex2` (`id_usuario_from`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `notificaciones`;
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+`id_notificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`equipos_id_equipo` int(10) unsigned NOT NULL,
+`fecha` int(11) unsigned NOT NULL DEFAULT 0,
+`mensaje` text NOT NULL,
+`url` varchar(50) NOT NULL,
+PRIMARY KEY (`id_notificacion`),
+KEY `notificaciones_FKIndex1` (`equipos_id_equipo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `usrnotif`;
+CREATE TABLE IF NOT EXISTS `usrnotif` (
+  `notificaciones_id_notificacion` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  KEY `usrnotif_FKIndex1` (`notificaciones_id_notificacion`),
+  KEY `usrnotif_FKIndex2` (`usuarios_id_usuario`),  
+  PRIMARY KEY (`notificaciones_id_notificacion`,`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 -- DECLARACIÓN DE LAS FOREIGN KEY
 -- --------------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 1;

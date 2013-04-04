@@ -184,6 +184,8 @@ class Usuarios extends CActiveRecord
 			'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
 			/*Relacion entre <<usuarios>> y <<emails>>*/
 			'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
+			/*Relacion entre <<usuarios>> y <<usrnotif>> */
+			'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
 		);
 	}
 
