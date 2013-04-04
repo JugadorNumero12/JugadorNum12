@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo de la tabla <<notificaciones>>
+ * Modelo de la tabla <<usrnotif>>
  *
  * Columnas disponibles
  * string 	$id_email
