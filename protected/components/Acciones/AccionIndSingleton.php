@@ -40,12 +40,8 @@ class AccionIndSingleton
       //Coger influencias a devolver
       $influencias = $hab->influencias;   
 
-      //Tomar helper para facilitar la modificación
-      Yii::import('application.components.Helper');
-
       //Aumentar ánimo
-      $helper = new Helper();
-      if ($helper->aumentar_recursos($id_usuario,"influencias",$influencias) == 0)
+      if (Recursos::aumentar_recursos($id_usuario,"influencias",$influencias) == 0)
       {
          return 0;
       }

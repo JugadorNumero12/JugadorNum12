@@ -7,18 +7,18 @@ div#envoltorio-asistir{ //Envoltorio Principal
 
 	div#renderizado-parcial{ //Envoltorio del renderizado parcial
 		width: 100%;
-		height: 40em;
+		height: auto;
 
 		div#envoltorio_estadoPartido{ //Envoltorio princi de la vista renderizada
 			width: 100%;
-			height: 40em;
+			height: auto;
 
 			div#seccion1{ //Estadisticas y grafico
 				height: 21em;
 				overflow: auto;
 
 				div#estadisticas{
-					width: 520px;
+					width: 450px;
 					float: left;
 				}
 
@@ -68,7 +68,7 @@ div#envoltorio-asistir{ //Envoltorio Principal
 
 					p{
 						font-size: 1.5em;
-						padding-top: 0.5em;
+						padding-top: 1em;
 					}
 
 				}
@@ -81,9 +81,9 @@ div#envoltorio-asistir{ //Envoltorio Principal
 			}//end seccion 3
 
 			div#seccion4{ //Cronica
-				height: 13em;
+				height: auto;
 				overflow: auto;
-				text-align: left;
+				padding: 1em 0 2em 0;
 				background-color: @GRIS;
 			}//end seccion 4
 
@@ -92,9 +92,12 @@ div#envoltorio-asistir{ //Envoltorio Principal
 	}//end renderizado-parcial
 
 	div#seccion5{ //Seccion en la que se encuentran las habilidades del partido
-		height: 12em;
+		height: auto;
 		overflow: auto;
-		padding-top: 1em;
+		padding: 1em 0 2em 0;
+		div#partido-encabezado-acciones{
+			font-size: 1.5em;
+		}
 	}// end seccion5
 
 

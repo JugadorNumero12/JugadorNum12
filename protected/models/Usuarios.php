@@ -64,8 +64,8 @@ class Usuarios extends CActiveRecord
 			array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
 			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
-			// Contraseña: minimo 6 caracteres, maximo 20. No hay restricciones de numeros o letras
-			array('nueva_clave1,nueva_clave2','match','pattern'=>'/^[a-zA-Z0-9]{6,20}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
+			// Contraseña: minimo 6 caracteres, sin maximo. No hay restricciones de numeros o letras
+			array('nueva_clave1,nueva_clave2','match','pattern'=>'/^.{6,}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
 			/*Validaciones para cambio de email*/
 			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
@@ -74,7 +74,10 @@ class Usuarios extends CActiveRecord
 			/*Validaciones para registrar usuario*/
 			array('nueva_email1','comprobarEmail','on'=>'registro'),
 			array('nuevo_nick','comprobarNick','on'=>'registro'),
-			array('nuevo_nick,nueva_email1,nueva_clave1,nueva_clave2','required','on'=>'registro','message'=>'Tienes que rellenar estos campos'),
+			array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
+			array('nueva_email1','required','on'=>'registro','message'=>'Introduzca un e-mail válido.'),
+			array('nueva_clave1','required','on'=>'registro','message'=>'Introduzca una contraseña.'),
+			array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
 			
 			// The following rule is used by search().

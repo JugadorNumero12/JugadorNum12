@@ -97,17 +97,9 @@ class Formula
 		}
 
 		//Hacemos la diferencia de morales en valor absoluto
-		$difMoral = $params['moralLoc'] -  $params['moralVis'];
-		$avg += atan($difMoral/1000) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
-
-		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
-		$difIndOfen=$params['ofensLoc']-$params['defensVis'];
-		$avg += atan($difIndOfen/10) * 0.6 * ($difIndOfen>0 ? 10 - $avg : -10 - $avg );
-
-		//Hacemos la diferencia de ind.ofensivo local y el ind.defensivo visitante
-		$difIndDef=$params['ofensVis']-$params['defensLoc'];
-		$avg += atan($difIndDef/10) * 0.6 * ($difIndDef>0 ? 10 - $avg : -10 - $avg );
-
+		//tenemos en cuenta el aforo y lo sumamos a la moral que tienen
+		$difMoral = ($params['moralLoc']+$params['aforoLoc'])-  ($params['moralVis']+$params['aforoVis']);
+		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
 		return $avg;
 	}
 
@@ -123,7 +115,23 @@ class Formula
 		$stdev = 2.5;
 
 		// La curva es más aplastada en el centro
-		$stdev *= 1 - abs($params['estado'])*0.07;
+		$stdev *= 1 - abs($params['estado'])*0.05;
+
+		//Los dos equipos son muy ofensivos
+		if($params['ofensLoc']>20 && $params['ofensVis']>20)
+		{
+			$stdev *= 0.9;
+		}elseif($params['ofensLoc']>10 && $params['ofensVis']>10)
+				{
+					$stdev *= 1.2;
+				}
+		if($params['defensLoc'] >20 && $params['defensVis']>20)
+		{
+			$stdev *= 2;
+		}elseif($params['defensLoc']>10 && $params['defensVis']>10)
+				{
+					$stdev *= 1.5;
+				}
 
 		return $stdev;
 	}

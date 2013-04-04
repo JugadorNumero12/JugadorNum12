@@ -35,14 +35,43 @@ class UsuariosController extends Controller
 	}
 
     /**
-     * Redirige al perfil del usuario
+     * Muestra el timeline principal de la pagina
      *
+     * Informacion a mostrar
+     *  Equipo del usuario
+     *  Enlace al proximo partido del jugador
+     *  Enlace a crear una nueva habilidad grupal
+     *  Acciones grupales activas del equipo del usuario
+     * 
      * @ruta        jugadorNum12/usuarios
-     * @redirige    jugadorNum12/usuarios/perfil 
      */
     public function actionIndex()
     {
-        $this->redirect(array('usuarios/perfil'));
+        // 1) recogemos id de la sesion
+        $idUsuario = Yii::app()->user->usIdent; 
+        $idEquipo = Yii::app()->user->usAfic; 
+
+        // 2) actualizar datos de usuario 
+        Usuarios::model()->actualizaDatos($idUsuario);
+
+        // 3) obtenemos las acciones grupales del equipo del usuario
+        $modeloEquipo = Equipos::model()->with('accionesGrupales');
+        $equipo = $modeloEquipo->findByPK($idEquipo);
+
+        // 4) obtenemos el proximo partido
+        Yii::import('application.components.Partido');      
+        $equipoUsuario = Equipos::model()->findByPk($idEquipo);
+        $proximoPartido = $equipoUsuario->sigPartido;
+        $primerTurno=Partido::PRIMER_TURNO;
+        $ultimoTurno=Partido::ULTIMO_TURNO;
+
+        // *) renderizar la vista
+        $this->render( 'index', array(
+            'equipo' => $equipo,
+            'proximoPartido' => $proximoPartido,
+            'primerTurno' => $primerTurno,
+            'ultimoTurno' => $ultimoTurno 
+        ));
     }
 
     /*
@@ -115,7 +144,8 @@ class UsuariosController extends Controller
 
         if ($modeloUsuario === null)
         {
-            throw new CHttpException( 404, 'El usuario no existe.');
+            Yii::app()->user->setFlash('usuario', 'Usuario inexistente.');
+            //throw new CHttpException( 404, 'El usuario no existe.');
         }
         else
         {

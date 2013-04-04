@@ -28,12 +28,9 @@ class Ascender extends AccionPasSingleton
     if ($us === null)
       throw new Exception("Usuario incorrecto.", 404);      
 
-    //Tomar helper para facilitar la modificación
-    Yii::import('application.components.Helper');
-
     //Aumentar dinero
     $helper = new Helper();
-    if ($helper->aumentar_recursos($id_usuario,"dinero_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']) == 0)
+    if (Recursos::aumentar_recursos($id_usuario,"dinero_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']) == 0)
     {
       return 0;
     }

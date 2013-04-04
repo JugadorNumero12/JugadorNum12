@@ -1,0 +1,157 @@
+@ButtonBorderColor: darken(@VERDE_12, 15%);
+@ButtonBgColor: lighten(@VERDE_12, 0%)+#111;
+@ButtonBgGradTop: lighten(@ButtonBgColor, 10%)+#111;
+@ButtonBgGradBottom: darken(@ButtonBgColor, 0%)+#111;
+@ButtonInsetColor: lighten(@ButtonBgGradTop, 20%);
+@ButtonTextColor: darken(@VERDE_12, 30%);
+@ButtonTextShadow: lighten(@VERDE_12, 15%);
+
+@InputBorderColor: #333;
+@InputBgColor: #EEE;
+@InputBgGradTop: darken(@InputBgColor, 3%);
+@InputBgGradBottom: lighten(@InputBgColor, 3%);
+@InputInsetColor: fade(#333, 50%);
+
+@InputFocusBorderColor: darken(@VERDE_12, 20%);
+@InputFocusBgColor: lighten(@VERDE_12+#555, 30%);
+@InputFocusBgGradTop: darken(@InputFocusBgColor, 3%);
+@InputFocusBgGradBottom: lighten(@InputFocusBgColor, 3%);
+@InputFocusInsetColor: fade(darken(@VERDE_12, 10%), 60%);
+
+input {
+	padding: 4px 8px;
+
+	border: 1px solid @InputBorderColor;
+	.rounded(5px);
+
+	.gradient(@InputBgColor, @InputBgGradBottom, @InputBgGradTop);
+	.box-shadow(inset 0 2px 2px @InputInsetColor);
+
+	&:focus {
+		border-color: @InputFocusBorderColor;
+		.gradient(@InputFocusBgColor, @InputFocusBgGradBottom, @InputFocusBgGradTop);
+		.box-shadow(inset 0 2px 2px @InputFocusInsetColor);
+	}
+}
+
+input[type="button"], input[type="reset"], input[type="submit"], .button, .button:visited {
+	padding: 4px 14px;
+
+	border: 1px solid @ButtonBorderColor;
+	.rounded(5px);
+
+	.gradient(@ButtonBgColor, @ButtonBgGradBottom, @ButtonBgGradTop);
+	.box-shadow(inset 0 1px 0 @ButtonInsetColor);
+
+	color: fade(@ButtonTextColor, 70%);
+	font-weight: bold;
+	font-size: 12px;
+	font-family: Verdana, sans;
+	text-shadow: 0 1px 0 @ButtonTextShadow;
+
+	cursor: pointer;
+
+	&:hover {
+		.gradient(@ButtonBgColor, @ButtonBgGradTop, @ButtonBgGradBottom);
+		color: fade(@ButtonTextColor,80%);
+	}
+
+	&:active {
+		.box-shadow(inset 0 0 12px fade(@ButtonInsetColor, 75%));
+		.gradient(@ButtonBgColor, @ButtonBgColor, @ButtonBgColor);
+
+		color: darken(@ButtonInsetColor, 10%);
+		text-shadow: 0 0 4px black;
+	}
+}
+
+/*
+@color-basico-pagina:#597f08;
+
+.button, .button:visited {
+display: inline-block;
+padding: 5px 10px 6px;
+color: #FFF;
+text-decoration: none;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+border-top: 0px;
+border-left: 0px;
+border-right: 0px;
+border-bottom: 1px solid rgba(0,0,0,0.25);
+position: relative;
+cursor:pointer;
+}
+
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+border: none;
+}
+
+.button:hover { // el efecto hover 
+background-color: white;
+color: white;
+}
+
+.button:active{ // el efecto click
+top: 1px;
+}
+
+// botones pequeños 
+.small.button, .small.button:visited {
+font-size: 11px ;
+}
+
+// botones muy pequeños
+.verysmall.button, .verysmall.button:visited {
+font-size: 5px ;
+}
+
+// botones medianos
+.button, .button:visited,.medium.button, .medium.button:visited {
+font-size: 13px;
+font-weight: bold;
+line-height: 1;
+text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+}
+
+// botones grandes
+.large.button, .large.button:visited {
+font-size:14px;
+padding: 8px 14px 9px;
+}
+
+// botones extra grandes 
+.super.button, .super.button:visited {
+font-size: 34px;
+padding: 8px 14px 9px;
+}
+
+.pink.button { background-color: #E22092; }
+.pink.button:hover{ background-color: #C81E82; }
+
+.green.button, .green.button:visited { background-color: #91BD09; }
+.green.button:hover{ background-color: #749A02; }
+
+.red.button, .red.button:visited { background-color: #E62727; }
+.red.button:hover{ background-color: #CF2525; }
+
+.orange.button, .orange.button:visited { background-color: #FF5C00; }
+.orange.button:hover{ background-color: #D45500; }
+
+.blue.button, .blue.button:visited { background-color: #2981E4; }
+.blue.button:hover{ background-color: #2575CF; }
+
+.yellow.button, .yellow.button:visited { background-color: #FFB515; }
+.yellow.button:hover{ background-color: #FC9200; }
+
+.black.button, .black.button:visited { background-color: #000; }
+.black.button:hover{ background-color: @color-basico-pagina; }
+
+//*/

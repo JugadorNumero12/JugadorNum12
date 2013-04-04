@@ -23,9 +23,6 @@ class PunteroLaser extends AccionPartSingleton
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario)
   {
-    //Tomar helper para facilitar la modificación
-      Yii::import('application.components.Helper');
-
       $ret = 0;
 
       $creador = Usuarios::model()->findByPk($id_usuario);
@@ -36,8 +33,7 @@ class PunteroLaser extends AccionPartSingleton
       $sigPartido = $equipo->sigPartido;
 
       //1.- Añadir bonificación al partido
-      $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['PunteroLaser']['defensivo']));
+      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['PunteroLaser']['defensivo']));
 
       //Finalizar función
       return $ret;

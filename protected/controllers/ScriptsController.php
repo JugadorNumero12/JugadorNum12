@@ -96,7 +96,8 @@ class ScriptsController extends Controller
         		$hab = Habilidades::model()->findByPk($ind->habilidades_id_habilidad);
         		if ($hab === null)
         		{
-        			throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
+        			Yii::app()->user->setFlash('habilidad', 'Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController).');
+        			//throw new CHttpException(404,"Error: habilidad no encontrada. (actionFinalizaIndividuales,ScriptsController)");
         			
         		}        		
         		$nombreHabilidad =  $hab->codigo;
@@ -109,7 +110,8 @@ class ScriptsController extends Controller
 
         		if (!$ind->save())
         		{
-        			throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
+        			Yii::app()->user->setFlash('guardar', 'Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController).');
+        			//throw new CHttpException(404,"Error: no se ha podido guardar el modelo de acciones individuales. (actionFinalizaIndividuales,ScriptsController)");
         			
         		}
 
@@ -135,9 +137,6 @@ class ScriptsController extends Controller
 	{
 		//Traer acciones y Helper	
 		Yii::import('application.components.Acciones.*');
-		Yii::import('application.components.Helper');
-
-		$helper = new Helper();
 
 		$tiempo = time();
 		$busqueda=new CDbCriteria;
@@ -166,9 +165,9 @@ class ScriptsController extends Controller
 					$animo=$participante->animo_aportado;
 
 					//Utilizo el helper para ingresarle al usuario los recursos
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
-					$helper->aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero',$dinero);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo',$animo);
+					Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias',$influencia);
 
 					//Eliminar ese modelo
 					Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));

@@ -29,9 +29,6 @@ class Pintarse extends AccionGrupSingleton
   /* Aplica las mejoras inmediatas y para el proximo partido */
   public function ejecutar($id_accion)
   {
-      //Tomar helper para facilitar la modificación
-      Yii::import('application.components.Helper');
-
       $ret = 0;
 
       $accGrup = AccionesGrupales::model()->findByPk($id_accion);
@@ -43,11 +40,12 @@ class Pintarse extends AccionGrupSingleton
       $sigPartido = $equipo->sigPartido;
 
       //1.- Añadir bonificación al partido
-      $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,'ambiente',Efectos::$datos_acciones['Pintarse']['ambiente']));
-      
+      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,'ambiente',Efectos::$datos_acciones['Pintarse']['ambiente']));
+      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['Pintarse']['moral']));
+      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['Pintarse']['ofensivo']));
+
       //2.- Dar bonificación al creador
-      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,'animo',Efectos::$datos_acciones['Pintarse']['bonus_creador']['animo']));
+      $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,'animo',Efectos::$datos_acciones['Pintarse']['bonus_creador']['animo']));
       
       //3.- Devolver influencias y dar animo de la accion
 
@@ -56,8 +54,8 @@ class Pintarse extends AccionGrupSingleton
       {
         $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
-        $ret = min($ret,$helper->aumentar_recursos($usuario,"animo",Efectos::$datos_acciones['Pintarse']['animo']));
-        $ret = min($ret,$helper->aumentar_recursos($usuario,"influencias",$infAportadas));
+        $ret = min($ret,Recursos::aumentar_recursos($usuario,"animo",Efectos::$datos_acciones['Pintarse']['animo']));
+        $ret = min($ret,Recursos::aumentar_recursos($usuario,"influencias",$infAportadas));
       }
 
       //Finalizar función

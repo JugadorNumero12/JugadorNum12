@@ -173,10 +173,11 @@ class RegistroController extends Controller
 		$rec=new Recursos;
 		$rec->setAttributes(array('usuarios_id_usuario'=>$id_usuario));
 		switch ($personaje) {
+
 			case Usuarios::PERSONAJE_MOVEDORA: //animadora
 				echo "animadora";
-				$rec->setAttributes(array('dinero'=>600));
-				$rec->setAttributes(array('dinero_gen'=>2.0));
+				$rec->setAttributes(array('dinero'=>2400));
+				$rec->setAttributes(array('dinero_gen'=>20.0));
 				$rec->setAttributes(array('influencias'=>5));
 				$rec->setAttributes(array('influencias_max'=>12));
 				$rec->setAttributes(array('influencias_gen'=>3.0));
@@ -186,8 +187,8 @@ class RegistroController extends Controller
 				break;
 			case Usuarios::PERSONAJE_EMPRESARIO: //empresario
 				echo "empresario";
-				$rec->setAttributes(array('dinero'=>5000));
-				$rec->setAttributes(array('dinero_gen'=>16.0));
+				$rec->setAttributes(array('dinero'=>20000));
+				$rec->setAttributes(array('dinero_gen'=>160.0));
 				$rec->setAttributes(array('influencias'=>3));
 				$rec->setAttributes(array('influencias_max'=>8));
 				$rec->setAttributes(array('influencias_gen'=>2.0));
@@ -197,8 +198,8 @@ class RegistroController extends Controller
 				break;
 			case Usuarios::PERSONAJE_ULTRA: //ultra
 				echo "ultra";
-				$rec->setAttributes(array('dinero'=>2000));
-				$rec->setAttributes(array('dinero_gen'=>5.0));
+				$rec->setAttributes(array('dinero'=>8000));
+				$rec->setAttributes(array('dinero_gen'=>50.0));
 				$rec->setAttributes(array('influencias'=>1));
 				$rec->setAttributes(array('influencias_max'=>2));
 				$rec->setAttributes(array('influencias_gen'=>1.0));

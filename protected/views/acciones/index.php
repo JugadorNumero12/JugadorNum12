@@ -4,7 +4,7 @@
 ?>
 
 <div class="envoltorio">
-<div class="encabezado"> <h1>Habilidades desbloqueadas</h1> </div>
+<div class="encabezado"> <h1>Mis Habilidades</h1> </div>
 
 <?php 
 foreach ( $acciones as $accion ){ ?>

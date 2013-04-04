@@ -24,11 +24,8 @@ class OrganizarHomenaje extends AccionGrupSingleton
    }
 
 	/* Aplicar los efectos de la accion */
-	public ejecutar($id_accion)
+	public function ejecutar($id_accion)
   {
-      //Tomar helper para facilitar la modificación
-      Yii::import('application.components.Helper');
-
       $ret = 0;
 
       $accGrup = AccionesGrupales::model()->findByPk($id_accion);
@@ -41,10 +38,10 @@ class OrganizarHomenaje extends AccionGrupSingleton
 
       //1.- Añadir bonificación al partido
       $helper = new Helper();
-      $ret = min($ret,$helper->aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['OrganizarHomenaje']['aforo']));
+      $ret = min($ret,Partidos::aumentar_factores_prop($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['OrganizarHomenaje']['aforo']));
 
       //2.- Dar bonificación al creador
-      $ret = min($ret,$helper->aumentar_recursos($creador->id_usuario,"influencias_max",Efectos::$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']));
+      $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias_max",Efectos::$datos_acciones['OrganizarHomenaje']['bonus_creador']['influencias_max']));
       
       //3.- Devolver influencias
 
@@ -53,7 +50,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
       {
         $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
-        if ($helper->aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+        if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
         {
           $ret = min($ret,0);
         }
@@ -68,7 +65,7 @@ class OrganizarHomenaje extends AccionGrupSingleton
     }
 
 	/* Restarurar valores tras el partido. NO ES NECESARIO */
-	public finalizar($id_accion)
+	public function finalizar()
 	{
 	}
 }

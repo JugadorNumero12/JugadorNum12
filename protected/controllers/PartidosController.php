@@ -3,6 +3,17 @@
 /* pagina con la informacion de las jornadas y previas a los partidos */
 class PartidosController extends Controller
 {
+
+	public function beforeAction ($action) {
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+
+		Yii::app()->setParams(array('bgclass'=>'bg-estadio-dentro'));
+
+		return true;
+	}
+
 	/**
 	 * @return array de filtros para actions
 	 */
@@ -176,25 +187,29 @@ class PartidosController extends Controller
 		//Comprobación de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
 		{
-			throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
+			//throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
 		}
 		//Comprobación de datos
 		if ($partido->turno < 1 ||  $partido->turno > 12)
 		{
-			throw new Exception("El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+			Yii::app()->user->setFlash('partido', 'El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido).');
+			//throw new Exception("El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido)", 404);			
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
 		if (($partido->equipos_id_equipo_1 != $id_equipo_usuario) && ($partido->equipos_id_equipo_2 != $id_equipo_usuario)) 
-		{			
-			throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
+		{		
+			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido).');
+			//throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
 		} 
 		// Un usuario solo puede asistir al próximo partido de su equipo
 		else 
 		{
 			if($equipoUsuario->partidos_id_partido != $id_partido ) 
 			{			
-				throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
+				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
+				//throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
 			} 
 			// Creamos el renderPartial del estado del partido
 			else 
@@ -226,6 +241,8 @@ class PartidosController extends Controller
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'equipoLocal' => $equipoLocal,
+								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $partido,
 								 'porcentage' => $porcentage);
 				$this->render('asistir', $datosVista);
@@ -252,20 +269,23 @@ class PartidosController extends Controller
 		//Comprobación de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
 		{
-			throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
+			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
+			//throw new Exception("Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido)", 404);			
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
 		if (($partido->equipos_id_equipo_1 != $equipoUsuario->id_equipo) && ($partido->equipos_id_equipo_2 != $equipoUsuario->id_equipo)) 
 		{			
-			throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
+			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido).');
+			//throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
 		} 
 		// Un usuario solo puede asistir al próximo partido de su equipo
 		else 
 		{
 			if($equipoUsuario->partidos_id_partido != $id_partido ) 
 			{			
-				throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
+				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
+				//throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
 			} 
 			// Creamos el renderPartial del estado del partido
 			else 
@@ -277,6 +297,8 @@ class PartidosController extends Controller
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
+								 'equipoLocal' => $equipoLocal,
+								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $partido,
 								 'porcentage' => $porcentage);
 				$this->renderPartial('_estadoPartido',$datosVista,false,true);

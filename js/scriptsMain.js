@@ -4,28 +4,24 @@ $(document).ready(function(){
 	$("img.escudos-clasificacion").show(texto);
   });
 
-  $("img.imagen1-datos-cabecera").hover(function(){
-    var texto = $("img.imagen1-datos-cabecera").val();
-	$("img.imagen1-datos-cabecera").show(texto);
-  });
+  	var valorDinero = parseInt(document.getElementById("barrasup-progressbar-dinero").getAttribute("data-valor"));
+	$("#barrasup-progressbar-dinero").progressbar({value: valorDinero, max: valorDinero});
 
-  $("img.imagen2-datos-cabecera").hover(function(){
-    var texto = $("img.imagen2-datos-cabecera").val();
-	$("img.imagen2-datos-cabecera").show(texto);
-  });
+	var maxAnimo = parseInt(document.getElementById("barrasup-progressbar-animo").getAttribute("data-max"));
+	$("#barrasup-progressbar-animo").progressbar({max: maxAnimo});
+	var valorAnimo = parseInt(document.getElementById("barrasup-progressbar-animo").getAttribute("data-valor"));
+	$("#barrasup-progressbar-animo").progressbar({value: valorAnimo});
 
-	var maxAnimo = parseInt(document.getElementById("bar").getAttribute("data-max"));
-	$("td#bar").progressbar({max: maxAnimo});
-	var valorAnimo = parseInt(document.getElementById("bar").getAttribute("data-valor"));
-	$("td#bar").progressbar({value: valorAnimo});
+	var maxInflu = parseInt(document.getElementById("barrasup-progressbar-influencias").getAttribute("data-max"));
+	$("#barrasup-progressbar-influencias").progressbar({max: maxInflu});
+	var valorInflu = parseInt(document.getElementById("barrasup-progressbar-influencias").getAttribute("data-valor"));
+	$("#barrasup-progressbar-influencias").progressbar({value: valorInflu});
 
-	var maxInflu = parseInt(document.getElementById("bar2").getAttribute("data-max"));
-	$("td#bar2").progressbar({max: maxInflu});
-	var valorInflu = parseInt(document.getElementById("bar2").getAttribute("data-valor"));
-	$("td#bar2").progressbar({value: valorInflu});
 
-	var label1 = $(".label1");
-	label1.text($("td#bar").progressbar("value") + "/"+ $("td#bar").progressbar("option", "max"));
-	var label2 = $(".label2");
-	label2.text($("td#bar2").progressbar("value") + "/"+ $("td#bar2").progressbar("option", "max"));
+	var labelDinero = $("#progressbar-label-dinero");
+	labelDinero.text($("#barrasup-progressbar-dinero").progressbar("value"));
+	var labelAnimo = $("#progressbar-label-animo");
+	labelAnimo.text($("#barrasup-progressbar-animo").progressbar("value") + "/"+ $("#barrasup-progressbar-animo").progressbar("option", "max"));
+	var labelInfluencias = $("#progressbar-label-influencias");
+	labelInfluencias.text($("#barrasup-progressbar-influencias").progressbar("value") + "/"+ $("#barrasup-progressbar-influencias").progressbar("option", "max"));
 });

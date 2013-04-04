@@ -26,14 +26,10 @@ class BeberCerveza extends AccionPartSingleton
 		//Validar usuario
 		$us = Usuarios::model()->findByPk($id_usuario);
 		if ($us === null)
-			throw new Exception("Usuario incorrecto.", 404);			
-
-		//Tomar helper para facilitar la modificación
-		Yii::import('application.components.Helper');
+			throw new Exception("Usuario incorrecto.", 404);
 
 		//Aumentar ánimo
-		$helper = new Helper();
-		if ($helper->aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['BeberCerveza']['animo']) == 0)
+		if (Recursos::aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['BeberCerveza']['animo']) == 0)
 		{
 			return 0;
 		}

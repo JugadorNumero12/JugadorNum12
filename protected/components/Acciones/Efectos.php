@@ -27,29 +27,34 @@ class Efectos
 		// GRUPALES
 		// ------------------------------------------------
 		'FinanciarEvento' => array (
-			'aforo'=> 0.03,
-			'ambiente' => 2
+			'aforo'=> 0.15,
+			'ambiente' => 2,
+			'moral'=> 250,
 		), 
 			
 		'IncentivoEconomico' => array (
 			'nivel_equipo' => 8,
+			'moral'=> 100,
 			'bonus_creador' => array ('influencias' => 2)
 		), 
 		
 		'OrganizarHomenaje' => array (
-			'aforo' => 0.05,
+			'aforo' => 0.2,
 			'bonus_creador' => array ('influencias_max' => 1)
 		), 
 			
 		'Pintarse' => array (
 			'ambiente' => 2,
 			'animo' => 30,
+			'moral'=> 200,
+			'ofensivo'=>2,
 			'bonus_creador' => array ('animo' => 15)
 		), 
 		
 		'PromoverPartido' => array (
 			'ambiente' => 4,
-			'aforo' => 0.06
+			'aforo' => 0.15,
+			'moral'=> 175
 		), 
 			
 		// INDIVIDUALES

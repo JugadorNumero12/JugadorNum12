@@ -23,13 +23,15 @@
 	<div id="renderizado-parcial">
 		<?php $this->renderPartial('_estadoPartido',array('nombre_local'=> $nombre_local,
 								 'nombre_visitante' => $nombre_visitante,
+								 'equipoLocal' => $equipoLocal,
+								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $estado,
 								 'porcentage' => $porcentage)); ?>
 	</div> <!--end renderizado parcial-->
 
 
 	<div id="seccion5">
-		Aqui va la seccion 5 (Las acciones)
+		<div id="partido-encabezado-acciones"><b>Acciones</b></div>
 		<br>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dictum euismod risus, in imperdiet velit pharetra sed. Donec iaculis massa nec dui dignissim pellentesque. Etiam nec sem enim, et ullamcorper tortor. Vestibulum vitae sem id purus sagittis mattis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras ullamcorper magna condimentum velit viverra sed tincidunt nulla bibendum. Nam sed massa ac massa tempor aliquam nec ut eros. Quisque et diam eget erat ornare ultricies.
 

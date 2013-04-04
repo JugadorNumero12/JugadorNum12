@@ -149,4 +149,75 @@ class AccionesIndividuales extends CActiveRecord
     		//throw $ex; -> Deshabilitado para no dar fallos continuamente. Justificado.
     	}
 	}
+
+	// Función empleada para usar una habilidad individual
+	public static function usarIndividual($id_usuario, $id_accion, $res, $habilidad)
+	{
+		// Importar acciones
+		Yii::import('application.components.Acciones.*');
+
+		// Crear criteria de búsqueda
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('usuarios_id_usuario=:bid_usuario');
+		$criteria->addCondition('habilidades_id_habilidad=:bid_accion');
+		$criteria->params = array(	':bid_usuario' => $id_usuario,
+									':bid_accion' => $id_accion,
+									);	
+		$accion_ind = AccionesIndividuales::model()->find($criteria);
+		$tiempo_reg = $habilidad['cooldown_fin'];
+
+		if($accion_ind===null)
+		{
+			$accion_ind = new AccionesIndividuales();
+			$accion_ind->setAttributes(	array('usuarios_id_usuario' => $id_usuario,
+			   							  	  'habilidades_id_habilidad' => $id_accion,
+			   							  	  'cooldown' => 0 ,
+			   							  	  'devuelto'=> 0));
+
+			$res['dinero'] 		-= $habilidad['dinero'];
+			$res['animo']  		-= $habilidad['animo'];
+			$res['influencias'] -= $habilidad['influencias'];
+			$res->save();
+
+			//actualizar la hora en que acaba de regenerarse la accion
+			$accion_ind->cooldown = time() + $tiempo_reg;
+			$accion_ind->devuelto=0;
+			
+			//guardar en los modelo				
+			$accion_ind->save();
+
+			//Tomar nombre de habilidad para instanciación dinámica	
+    		$nombreHabilidad = $habilidad->codigo;
+
+    		//Llamar al singleton correspondiente y ejecutar dicha acción
+    		$nombreHabilidad::getInstance()->ejecutar($id_usuario);	
+
+		}
+		elseif($accion_ind->devuelto == 1)
+		{		
+			$res['dinero'] 		-= $habilidad['dinero'];
+			$res['animo']  		-= $habilidad['animo'];
+			$res['influencias'] -= $habilidad['influencias'];
+			$res->save();
+
+			//actualizar la hora en que acaba de regenerarse la accion
+			$accion_ind->cooldown = time() + $tiempo_reg;
+			$accion_ind->devuelto=0;
+			
+			//guardar en los modelo				
+			$accion_ind->save();
+
+			//Tomar nombre de habilidad para instanciación dinámica	
+    		$nombreHabilidad = $habilidad->codigo;
+
+    		//Llamar al singleton correspondiente y ejecutar dicha acción
+    		$nombreHabilidad::getInstance()->ejecutar($id_usuario);
+		}
+		else
+		{
+			Yii::app()->user->setFlash('regen', 'La habilidad no se ha regenerado todavía.');
+			//$this-> redirect(array('acciones/index'));
+			throw new Exception('La habilidad no se ha regenerado todavía.');			
+		}
+	}
 }

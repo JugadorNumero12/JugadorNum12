@@ -1,58 +1,60 @@
 // Página de login (site/login) y de registro (registro/index)
 
 div.envoltorio-login {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 	background-color: green;
-	background-image: url("/yii/JugadorNum12/images/login/fondo-login.jpg");
+	background-image: url("images/login/fondo-login.jpg");
 	background-size: cover;
+	background-attachment: fixed;
+	
+	min-height: 100%;
+	min-width: 960px;
+	height: auto !important;
+	margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 	width:100%;
 
 	text-shadow:2px 2px 2px black;
 
 	div.envoltorio2-login {
 	background-color: transparent;
-	width:65%;
+	width:960px;
 	margin: 0 auto;	
 		
 		//DIVISIONES PRINCIPALES LOGIN
 
 		//Division del texto de bienvenida
 		div#descripcion-login {
-			width:65%;
-			background-color: transparent;
+			width:57%;
+			background-color: rgba(0,0,0,0.5);
 			float:left; 
-			padding-top: 20em;
-		    padding-bottom: 10em;
-
-
+			padding: 1em;
+			border-radius: 20px;
+			margin-top: 150px;
 
 		    p{
 		    	text-align: left;
 				color: white;
 				font-size: 1.4em;
-
+				padding: 5px;
 		    }
 
 		    h1 {
 			text-align: left;
 			color: white;
 			font-size: 2.5em;
+			padding: 10px;
 			}
 
 		}//#descripcion-login
 
 		//Division de la entrada de usuario 
 		div#entrada-login {
-			width:25%;
-			background-color: transparent;
+			background-color: rgba(0,0,0,0.5);
 			float:right; 
-			padding-top: 13em;
-		    padding-bottom: 10em;
+			padding: 1em;
 		    color:white;
 		    font-size: 1.5em;
+		    border-radius: 20px;
+		    margin-top: 150px;
 		}//#entrada-login
 
 	}//#envoltorio2-login
@@ -60,6 +62,16 @@ div.envoltorio-login {
 		
 }//#envoltorio-login
 
+.envoltorio-errores{
+	background-color: rgba(255,0,0,0.5);
+	border-radius: 10px;
+}
+
+.errorMessage{
+	color: white;
+	padding: 5px;
+	font-size: small;
+}
 
 //PIE DE PÁGINA 
 * {
@@ -93,13 +105,3 @@ div.pie-pagina-login a {
 	color: white;
 	text-decoration: none;
 }
-
-	
-
-
-
-
-
-
-
-

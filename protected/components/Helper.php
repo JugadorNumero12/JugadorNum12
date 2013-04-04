@@ -3,7 +3,7 @@
 class Helper
 {
 	/*Sirve para cambiar más facilmente los factores de partido*/
-	public  static $datos_factores = array (	
+	public static $datos_factores = array (	
 		//Si es local
 		'local' => array (
 			'ambiente'=> 'ambiente',

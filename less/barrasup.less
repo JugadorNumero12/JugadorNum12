@@ -1,0 +1,245 @@
+@ColorRecursoDinero: limegreen;
+@ColorRecursoAnimo: orangered;
+@ColorRecursoInfluencia: dodgerblue;
+
+#barrasup {
+	position: fixed;
+
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: -5%;
+
+	width: 110%;
+	height: @BarraSupAlto;
+
+	.gradient(@VERDE_12, darken(@VERDE_12, 5%), lighten(@VERDE_12, 5%));
+	.drop-shadow(0, 0, 16px, 1);
+
+	z-index: 100;
+
+	#barrasup-envoltorio {
+		position: absolute;
+
+		width: 960px;
+		height: @BarraSupAlto;
+
+		margin: 0;
+		padding: 0;
+
+		left: 50%;
+		margin-left: (-960px/2);
+
+		#barrasup-izquierda {
+			position: absolute;
+
+			left: @TopBlockMargin;
+			top: 0;
+
+			#barrasup-logo{
+				width: 170px;
+				height: 30px;
+				margin: 0.3em 2em 0 0;
+			}
+		}
+
+		#barrasup-derecha {
+			position: absolute;
+
+			right: (@TopBlockMargin - 1px);
+			top: 0;
+
+			height: @BarraSupAlto;
+		}
+
+		#barrasup-centro {
+			position: absolute;
+
+			left: 50%;
+			top: 0;
+
+			width: 500px;
+			margin-left: -250px;
+
+			div.barrasup-recursos{
+				float:left;
+				margin: 0.4em 1em 0 1em;
+			}
+
+			img.barrasup-icono-dinero{
+				height: 24px;
+				width: 24px;
+				float:left;
+				padding: 3px 10px 0 0;
+			}
+
+			img.barrasup-icono-animo{
+				height: 24px;
+				width: 24px;
+				float:left;
+				padding: 2px 10px 0 0;
+			}
+
+			img.barrasup-icono-influencias{
+				height: 24px;
+				width: 24px;
+				float:left;
+				padding: 2px 10px 0 0;
+			}
+
+			#barrasup-progressbar-dinero{
+				width: 100px;
+				height: 24px;
+				float:left;
+				background: fade(black, 10%);
+				border-color: darken(@ColorRecursoDinero, 25%);
+				div.ui-progressbar-value{
+					background: @ColorRecursoDinero;
+					border-color: darken(@ColorRecursoDinero, 25%);
+				}
+
+				#progressbar-label-dinero{
+					width: 100%;
+					text-align: center;
+					float: left;
+    				margin-top: 4px;
+    				font-weight: bold;
+    				text-shadow: 0 0 3px darken(@ColorRecursoDinero, 50%);;
+    				color: lighten(@ColorRecursoDinero, 40%);
+				}
+			}
+
+			#barrasup-progressbar-animo{
+				width: 100px;
+				height: 24px;
+				float:left;
+				background: fade(black, 10%);
+				border-color: darken(@ColorRecursoAnimo, 25%);
+				div.ui-progressbar-value{
+					background: @ColorRecursoAnimo;
+					border-color: darken(@ColorRecursoAnimo, 25%);
+				}
+
+				#progressbar-label-animo{
+					width: 100%;
+					text-align: center;
+					float: left;
+    				margin-top: 4px;
+    				font-weight: bold;
+    				text-shadow: 0 0 3px darken(@ColorRecursoAnimo, 50%);;
+    				color: lighten(@ColorRecursoAnimo, 40%);
+				}
+			}
+
+			#barrasup-progressbar-influencias{
+				width: 100px;
+				height: 24px;
+				float:left;
+				background: fade(black, 10%);
+				border-color: darken(@ColorRecursoInfluencia, 25%);
+				div.ui-progressbar-value{
+					background: @ColorRecursoInfluencia;
+					border-color: darken(@ColorRecursoInfluencia, 25%);
+				}
+
+
+				#progressbar-label-influencias{
+					width: 100%;
+					text-align: center;
+					float: left;
+    				margin-top: 4px;
+    				font-weight: bold;
+    				text-shadow: 0 0 3px darken(@ColorRecursoInfluencia, 50%);
+    				color: lighten(@ColorRecursoInfluencia, 40%);
+				}
+			}
+		}
+	}
+}
+
+// Menú de usuario ubicado a la derecha de la barra
+@UserMenuBorderColor: fade(black, 30%);
+
+#user-menu {
+	margin: 4px;
+	margin-right: 0;
+
+	min-width: 170px;
+
+	.rounded(4px);
+	border: 1px solid @UserMenuBorderColor;
+
+	@Verde12Trans: fade(@VERDE_12, 50%);
+	.gradient(lighten(@Verde12Trans, 5%), lighten(@Verde12Trans, 10%), @Verde12Trans );
+
+	.drop-shadow(0, 0, 4px, .2);
+
+	// Elementos del menú
+	.user-menu-item {
+		display: block;
+
+		padding: 3px;
+		margin: 0;
+		
+		height: 24px;
+
+		img {
+			margin-right: 12px;
+			.rounded(2px);
+		}
+
+		.user-menu-txt {
+			position: relative;
+			top: -7px;
+
+			color: #666;
+		}
+
+		.user-menu-title {
+			font-weight: bold;
+			color: lighten(@VERDE_12, 25%);
+			text-shadow: 0 1px 0 darken(@VERDE_12, 25%);
+		}
+	}
+
+	// Elementos del menú que se ocultan por defecto
+	.user-menu-hidden {
+		display: none;
+
+		border-top: 1px solid @UserMenuBorderColor;
+
+		img {
+			.opacity(.3);
+		}
+
+		&:hover {
+			background-color: white; 
+			.box-shadow(inset 0 0 16px fade(#DDD,50%));
+
+			.user-menu-txt {
+				color: #333;
+			}
+
+			img {
+				.opacity(.5);
+			}
+		}
+	}
+
+	&:hover {
+		background: #EEE;
+
+		.drop-shadow(0, 0, 16px, .5);
+		.border-radius(4px, 0, 0, 4px);
+
+		.user-menu-hidden {
+			display: block;
+		}
+
+		.user-menu-title {
+			color: #666;
+			text-shadow: 0 1px 0 white;
+		}
+	}
+}

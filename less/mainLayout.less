@@ -15,145 +15,94 @@
     border: 0px white;
 }
 
-// ------------
+@MenuWidth: 180px;
 
-div#envoltorio1 {
+@TopBlockPadding: 10px;
+@TopBlockMargin: 10px;
+@TopBlockBorder: 1px;
+@TopBlockBorderColor: @VERDE_12_CLARO;
+@TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
+
+.top-block {
+    padding: @TopBlockPadding;
+    margin: @TopBlockMargin;
+
+    border: @TopBlockBorder solid @TopBlockBorderColor;
+    .rounded(10px);
+    background: fade(white, 80%);
+}
+
+// Envoltorio
+#envoltorio-main {
+    margin: 0 auto;
+    padding: 0;
+
+    padding-top: @BarraSupAlto;
+
+    width: 960px;
     min-height: 100%;
-    height: 100%;
-    margin: 0 auto ;
-    width:100%;
+	height: auto !important;
+	height: 100%;
 
-	div#envoltorio2 {
-        height: 100%;
-		text-align: left;
-		margin: 0 auto;
-		width: 960px;
+    background-color: fade(white, 50%);
+    .box-shadow(0 0 32px white);
 
-		// CABECERA
-		// --------------
-		div#cabecera {
-			float: left;
-			width:100%;
-			margin: 0 0 3em 0;
+    #clasificacion {
+    	width: 960px - (@TopBlockExtras);
 
-			div#logo {
-				.propiedades_basicas();
-				float: left;
-			}
+    	text-align: center;
 
-			div#titulo-jugador {
-				.propiedades_basicas();
-				float: left;
-				margin: 1em 0em 0em 0.5em;
-				width: 800px;
-				height: 100px;
-			}
+        .clasif-item {
+            display: inline;
+            list-style: none;
 
-            div#clasificacion {
-                .propiedades_basicas();
-                li {
-                    display: inline;
-                    list-style-type: none;
-                    margin: 0em 1.5em 0em 2em;
-                    img.escudos-clasificacion{
-                    	width: 50px; 
-                    	height: 50px; 
-                    }  
-                }
-            }
+            margin: 0 12px;
+            padding: 0;
 
-            #datos-cabecera{
-				background-color: blue;
-				width: 800px;
-				margin: 0px 0px 3em 15em;
+            .opacity(.7);
 
-				div.elemento-nivel-dato-cabecera{
-					width: 10%;
-					margin: 1.25em 0.5em 1.25em 0.8em;
-					float:left;
-				}
+        	.clasif-posicion, .clasif-hash {
+                position: relative;
+                top: -6px;
 
-				div.elemento-dinero-dato-cabecera{
-					width: 10%;
-					margin: 1.25em 2.5em 1.25em 1.3em;
-					float:left;
-				}
+        		font-style: italic;
+        		font-size: 28px;
+        		font-weight: bold;
+        		font-family: Georgia, serif;
+        		color: fade(darken(@VERDE_12, 10%), 70%);
+        	}
 
-				div.elemento-barras-dato-cabecera{
-					width: 25%;
-					margin: 1em 1em;
-					float:left;
-				}
+        	.clasif-hash {
+        		font-size: 20px;
+        		color: fade(darken(@VERDE_12, 10%), 40%);
+        	}
 
-				img.imagen1-dato-cabecera{
-					width:25px;
-					height:25px;
-				}
-
-				img.imagen2-dato-cabecera{
-					width:25px;
-					height:25px;
-					margin: 0.25em 0 0 0;
-				}
-
-				div.texto-nivel-dato-cabecera{
-					float:right;
-					margin: 0.3em 3em 0 0;
-				}
-
-				div.texto-dinero-dato-cabecera{
-					float:right;
-					margin: 0.3em 1em 0 0;
-				}
-
-				div.progressbar-cabecera{
-					width: 80%;
-					float:right;
-				}
-
-				//TEXTO DE LAS BARRAS DE PROGRESO
-				.label1{
-					float: right;
-					margin-right: 30%;
-					margin-top: 5px;
-					font-weight: bold;
-					text-shadow: 1px 1px 0 #fff;
-				}//#label1
-
-				.label2{
-				    float: left;
-				    margin-left: 40%;
-				    margin-top: 5px;
-				    font-weight: bold;
-				    text-shadow: 1px 1px 0 #fff;
-				}//#label2
-					
-			}//#table
-		
+        	&:hover {
+        		.opacity(1);
+        	}
         }
 
-		// CENTRO DE LA PAGINA
-        // -----------------------
+        .clasif-mi-equipo {
+            border-bottom: 2px solid @VERDE_12_CLARO;
+            margin-bottom: -2px;
+        }
+    }
 
-		//Menu izquierdo (menu principal navegacion Perfil, aficion etc)
-		#menu-izquierdo{
-			width: 17%;
-			float:left;
-		}//#menu-izquierdo
+	// CENTRO DE LA PAGINA
+    // -----------------------
 
-		//Incluye el div del contenido 
-		#grupo-centro{
-			width:80%;
-			float:left;
-			margin: 1em 0em 0em 1em;
+	//Incluye el div del contenido 
+	#grupo-centro{
+		width: (960px - @MenuWidth - @TopBlockExtras - @TopBlockPadding - @TopBlockBorder*2);
+		float: left;
+		margin: 0;
 
-			#contenido{
-			 	text-align: center;
-			}//#contenido
-		}//#grupo-derecha
+		#contenido{
+		 	text-align: center;
+		}
+	}
 
-	}//#envoltorio2
-}//#envoltorio1
+}
 
 
 

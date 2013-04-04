@@ -6,18 +6,6 @@
 // codigo PHP 
 
 ?>
-
-<head>
-<!-- jQuery -->
-	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
-	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
-	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
-</head>
-
-<body>
-
 	<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
 
 		<div class="perfil-grupo-arriba">
@@ -29,34 +17,23 @@
 				<?php switch ($modeloU->personaje)
 								{
 								case Usuarios::PERSONAJE_ULTRA: ?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/ultra.jpg'; ?>" width=150 height=150 border=0 alt="Ultra"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/ultra.jpg'; ?>" width=200 height=200 border=0 alt="Ultra"> 
 								  <?php break;
 								case Usuarios::PERSONAJE_MOVEDORA:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/animadora.jpg'; ?>" width=150 height=150 border=0 alt="Animadora"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/animadora.jpg'; ?>" width=200 height=200 border=0 alt="Animadora"> 
 								  <?php break;
 								case Usuarios::PERSONAJE_EMPRESARIO:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/empresario.jpg'; ?>" width=150 height=150 border=0 alt="Empresario"> 
+								  <img src="<?php echo Yii::app()->BaseUrl.'/images/perfil/empresario.jpg'; ?>" width=200 height=200 border=0 alt="Empresario"> 
 								  <?php break;
 								} ?>
 				</div>
 
 				<div class="perfil-grupo-arriba-izquierda-equipo">
-				
-				 <?php switch ($modeloU->equipos->id_equipo)
-								{
-								case 1: ?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" width=100 height=100 border=0 alt="Escudo rojo"> 
-								  <?php break;
-								case 2:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" width=100 height=100 border=0 alt="Escudo verde"> 
-								  <?php break;
-								case 3:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" width=100 height=100 border=0 alt="Escudo negro"> 
-								  <?php break;
-								  case 4:?>
-								  <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" width=100 height=100 border=0 alt="Escudo blanco"> 
-								  <?php break;
-								} ?> 
+					<img
+						src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$modeloU->equipos->token.'.png'; ?>"
+						width="200" height="200"
+						alt="<?php echo $modeloU->equipos->nombre; ?>"> 
+						
 				</div>
 
 			</div>
@@ -66,20 +43,6 @@
 						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
 						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>Dinero: </th> <td><?php echo $modeloU->recursos->dinero ?></td> </tr> 
-						<tr><th>&Aacute;nimo: </th> <td class="barrita" id="bar" data-valor="<?php echo $modeloU->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
-						<tr><th>Influencias: </th> <td class="barrita" id="bar2" data-valor="<?php echo $modeloU->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
-<!-- MASTER
-						<tr><th>&Aacute;nimo: </th> <td><?php echo $modeloU->recursos->animo ?> </td> </tr> 
-						<tr><th>Influencias: </th> <td><?php echo $modeloU->recursos->influencias ?></td> </tr> 
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>&Aacute;nimo: m&aacute;ximo: </th> <td><?php echo $modeloU->recursos->animo_max ?></td> </tr> 
-						<tr><th>Influencias m&aacute;ximas: </th> <td><?php echo $modeloU->recursos->influencias_max ?> </td> </tr> 
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>Regeneraci&oacute;n de usuario: </th> <td><?php echo $modeloU->recursos->dinero_gen ?></td> </tr> 
-						<tr><th>Regeneraci&oacute;n de &aacute;nimo: </th> <td><?php echo $modeloU->recursos->animo_gen ?> </td> </tr>
-						<tr><th>Regeneraci&oacute;n de influencias: </th> <td><?php echo $modeloU->recursos->influencias_gen ?> </td> </tr>
-!-->
 						<tr><th> <br></th> <td> </td> <br></tr> 
 						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
 						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
@@ -134,7 +97,3 @@
 
 
 	</div></div> <!--ENVOLTORIOS-->
-
-</body>
-
-</html>

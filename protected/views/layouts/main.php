@@ -5,191 +5,221 @@
 	<meta http-equiv="Content-Type" content="text/html" charset="<?php echo Yii::app()->charset; ?>" />
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+	<!-- LESS import script -->
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.jgrowl.css" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/main.less" />
+	<script type="text/javascript">
+	    less = {
+	        env: "development", // or "production"
+	        async: false,       // load imports async
+	        fileAsync: false,   // load imports async when in a page under
+	                            // a file protocol
+	        poll: 1000,         // when in watch mode, time in ms between polls
+	        functions: {},      // user functions, keyed by name
+	        dumpLineNumbers: "comments", // or "mediaquery" or "all"
+	        relativeUrls: false,// whether to adjust url's to be relative
+	                            // if false, url's are already relative to the
+	                            // entry less file
+	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
+	                            //resource
+	    };
+	</script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
 	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPerfil.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+    
 	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
-<body>
+<body class="<?php echo Yii::app()->getParams()->bgclass ?>">
 
-<div id="envoltorio1"><div id="envoltorio2">
+<!-- Barra Superior -->
+<div id="barrasup">
+	<div id="barrasup-envoltorio">
+		<!-- Parte izquierda de la barra -->
+		<div id="barrasup-izquierda">
+			<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/logos/logo-barra.png" alt="logo">
+		</div>
 
-  	<!-- DIVISION DE CABECERA -->
-    <div id="cabecera">
-    	<div id = "logo">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/images/logos/logo2.jpg'; ?>" width=100 height=160 border=0 alt="Logo Jugador numero 12">
-    	</div>
-    	<div id = "titulo-jugador">
-    		<img src="<?php echo Yii::app()->BaseUrl.'/images/logos/Jugador_Num_12_Verde.png'; ?>" width=800 height=100 border=0 alt="Logo Jugador numero 12">
-    	</div>
-    	<div id = "clasificacion">
-            <?php $clasificacion = Clasificacion::model()->findAll(array('order'=>'posicion ASC')); ?>
-    		<ul>
-    			<?php foreach ($clasificacion as $equipo) { ?>
-                    <li> 
-                        <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
-                            <?php switch ($equipo->equipos->nombre)
-								{
-								case 'Rojos': ?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rojo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rojo.png'; ?>" alt="Rojos">
-									<?php break;
-								case 'Verdes':?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Verde"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-verde.png'; ?>" alt="Verdes">								  
-									<?php break;
-								case 'Negros':?>
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Negro"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-negro.png'; ?>" alt="Negros">
-									<?php break;
-								case 'Blancos':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Blanco"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-blanco.png'; ?>" alt="Blancos">
-									<?php break;
-								case 'Naranjas':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Naranja"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-naranja.png'; ?>" alt="Naranjas">
-									<?php break;
-								case 'Amarillos':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Amarillo"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-amarillo.png'; ?>" alt="Amarillos">
-									<?php break;
-								case 'Azules':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Azul"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-azul.png'; ?>" alt="Azules">
-									<?php break;
-								case 'Rosas':?>				
-								  	<img title="<?php echo $equipo->posicion . "&ordm; con " . $equipo->puntos . " puntos, ver informaci&oacute;n del equipo Rosa"; ?>", class="escudos-clasificacion" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/escudo-rosa.png'; ?>" alt="Rosas">
-									<?php break;
-								} ?>
-                        </a>
-                    </li>
-                <?php } ?>
-    		</ul>
-    	</div>
+		<!-- Parte central de la barra -->
+		<div id="barrasup-centro">
 
-    	<?php $personaje = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent); ?>
-    	<!--<?php $recursos = Recursos::model()->findByPk($personaje->id_usuario) ?>-->
-	    <div id="datos-cabecera">
-			<div class="elemento-nivel-dato-cabecera">
-				<img class="imagen1-dato-cabecera" title="Nivel" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-nick.png';?>" alt="Icono nivel">
-				<div class="texto-nivel-dato-cabecera"> <?php echo $personaje->nivel ?> </div>
-			</div> 
-			<div class="elemento-dinero-dato-cabecera">
-				<img class="imagen1-dato-cabecera" title="Dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
-				<div class="texto-dinero-dato-cabecera"> <?php echo $personaje->recursos->dinero ?> </div>
+			<!-- Barra del dinero -->
+			<div class="barrasup-recursos" title="Dinero">
+				<img class="barrasup-icono-dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+				<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
+					<div id="progressbar-label-dinero"></div>
+				</div>
 			</div>
-			<div class="elemento-barras-dato-cabecera">
-				<img class="imagen2-dato-cabecera" title="&Aacute;nimo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
-				<div id="bar" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></div>
-			</div> 
-			<div class="elemento-barras-dato-cabecera">
-				<img class="imagen2-dato-cabecera" title="Influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
-				<div id="bar2" class="progressbar-cabecera" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></div>
+
+			<!-- Barra de ánimo -->
+			<div class="barrasup-recursos" title="&Aacute;nimo">
+				<img class="barrasup-icono-animo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+				<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
+					<div id="progressbar-label-animo"></div>
+				</div>
+			</div>
+
+			<!-- Barra de influencias -->
+			<div class="barrasup-recursos" title="Influencias">
+				<img class="barrasup-icono-influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+				<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
+					<div id="progressbar-label-influencias"></div>
+				</div>
 			</div> 
 		</div>
- 
-    </div>
-	
-    <!-- DIVISION DEL MENU IZQUIERDO -->
-    <div id="menu-izquierdo">
-		<div id='cssmenu'>
-			<ul>
-				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil');?>">
-				   	<li class="elementos-menu">
-				   		<?php
-				   			switch ($personaje->personaje){
-				   				case Usuarios::PERSONAJE_ULTRA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="perfil-ultra">
-				   					<?php break;
-				   				case Usuarios::PERSONAJE_EMPRESARIO: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="perfil-empresario">
-				   					<?php break;
-				   				case Usuarios::PERSONAJE_MOVEDORA: ?>
-				   					<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="perfil-RRPP">
-				   					<?php break;
-				   			}
-				   		?>
-				   		<div class="nombre-menu">Perfil</div>
-				   	</li>
-				</a>
-				<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
-				   	<li class="elementos-menu">
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-						<div class="nombre-menu">Afici&oacute;n</div>
+
+		<!-- Parte derecha de la barra -->
+		<div id="barrasup-derecha">
+			<!-- Menú de usuario -->
+			<ul id="user-menu">
+				<!-- Avatar + Nombre -->
+				<li class="user-menu-item">
+					<img alt="<?php echo Yii::app()->getParams()->usuario->nick; ?>"
+					     src="<?php switch (Yii::app()->getParams()->usuario->personaje) {
+							case Usuarios::PERSONAJE_EMPRESARIO:
+								echo Yii::app()->createUrl('/images/perfil/empresario-menu.jpg');
+							break;
+							case Usuarios::PERSONAJE_MOVEDORA: 
+								echo Yii::app()->createUrl('/images/perfil/animadora-menu.jpg');
+							break;
+							case Usuarios::PERSONAJE_ULTRA:
+								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
+							break;
+						} ?>" width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+				</li>
+
+				<!-- Link al perfil -->
+				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
+						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
 					</li>
 				</a>
-				<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
-				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">Habilidades</div>
-				   	</li>
-			    </a>
-			   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
-			   		<li class="elementos-menu">
-			   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-			   			<div class="nombre-menu">Desbloqueadas</div>
-			   		</li>
-			   	</a>			   	
-				<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">Calendario</div>
-				   	</li>
-			  	</a>
-			    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">Clasificaci&oacute;n</div>
-				   	</li>
-				</a>
-				<a <?php echo "href=".Yii::app()->createUrl('/site/logout').""?>>
-				   	<li class="elementos-menu">
-				   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-sin-definir.png'; ?>" alt="perfil-sin-definir">
-				   		<div class="nombre-menu">Logout</div>
-				   	</li>
-				</a>
 
+				<!-- Logout -->
+				<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-logout.png"
+						     width="24" height="24"/><span class="user-menu-txt">Logout</span>
+					</li>
+				</a>
 			</ul>
 		</div>
-    </div>
+	</div>
+</div>
+
+<div id="envoltorio-main">
+
+  	<!-- DIVISION DE CABECERA -->
+	<div id="clasificacion" class="top-block">
+        <ul>
+		<?php foreach (Yii::app()->getParams()->clasificacion as $equipo): ?>
+            <a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => $equipo->equipos_id_equipo) ); ?>">  
+            <li class="clasif-item<?php if ($equipo->equipos->id_equipo == Yii::app()->user->usAfic) { echo ' clasif-mi-equipo'; } ?>">
+            	<span class="clasif-hash">#</span><span class="clasif-posicion"><?php echo $equipo->posicion ?></span>
+            	<img
+                	title="<?php echo $equipo->equipos->nombre . ' &ndash; ' . $equipo->puntos . ' puntos'; ?>",
+                	class="clasif-escudo equipo-<?php echo $equipo->equipos->token ?>"
+                	src="<?php echo Yii::app()->BaseUrl . '/images/escudos/40px/' . $equipo->equipos->token . '.png'; ?>"
+                	alt="<?php echo $equipo->equipos->nombre; ?>"
+                	width="40" height="40" />
+            </li></a>
+        <?php endforeach ?>
+		</ul>
+	</div>
+	
+    <!-- DIVISION DEL MENU IZQUIERDO -->
+    <ul id="menu-izquierdo" class="top-block">
+		<a href="<?php echo $this->createUrl( '/usuarios/index', array() ); ?>">
+			<li class="menu-item menu-item-first">
+				<?php switch (Yii::app()->getParams()->usuario->personaje):
+					case Usuarios::PERSONAJE_EMPRESARIO: ?>
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
+					<?php break;
+					case Usuarios::PERSONAJE_MOVEDORA: ?>
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="menu-inicio-movedora">
+					<?php break;
+					case Usuarios::PERSONAJE_ULTRA: ?>
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="menu-inicio-ultra">
+					<?php break;
+				endswitch ?>
+				<div class="nombre-menu">Inicio</div>
+			</li>
+		</a>
+		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
+		   	<li class="menu-item">
+				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="menu-aficion">
+				<div class="nombre-menu">Mi Afici&oacute;n</div>
+			</li>
+		</a>
+		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
+		   	<li class="menu-item">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/calendario.png'; ?>" alt="menu-calendario">
+		   		<div class="nombre-menu">Calendario</div>
+		   	</li>
+	  	</a>
+	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
+	   		<li class="menu-item">
+	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
+	   			<div class="nombre-menu">Mis Habilidades</div>
+	   		</li>
+	   	</a>
+	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
+		   	<li class="menu-item">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
+		   		<div class="nombre-menu">&Aacute;rbol Habilidades</div>
+		   	</li>
+	    </a>			   	
+	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
+		   	<li class="menu-item menu-item-last">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/clasificacion.png'; ?>" alt="menu-clasificacion">
+		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
+		   	</li>
+		</a>
+	</ul>
     
     <!-- DIVISION PARA FLOTAR -->
-    <div id="grupo-centro">
+    <div id="grupo-centro" class="top-block">
 
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
 	      <?php
-    			foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        			echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
-    			}
+    		foreach(Yii::app()->user->getFlashes() as $key => $message) { ?>
+    			<script type="text/javascript">
+    			$.jGrowl( "<?php echo $message; ?>", { sticky: true });
+    			</script>
+        	<?php	//echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+    		}
 		  ?>
-	      <?php echo $content; ?>
+		  <?php echo $content; ?>
+
+
 	    </div>
-
-	    <!-- <table id="table">
-		    <tr><th>Nick: </th> <td><?php echo $personaje->nick ?></td> </tr> 
-			<tr><th>Nivel: </th> <td><?php echo $personaje->nivel ?> </td> </tr> 
-			<tr><th> <br></th> <td> </td> <br></tr> 
-			<tr><th>Dinero: </th> <td><?php echo $personaje->recursos->dinero ?></td> </tr> 
-			<tr><th>&Aacute;nimo: </th> <td id="bar" data-valor="<?php echo $personaje->recursos->animo?>" data-max="<?php echo $recursos->animo_max ?>"><div class="label1">Label</div></td> </tr> 
-			<tr><th>Influencias: </th> <td id="bar2" data-valor="<?php echo $personaje->recursos->influencias?>" data-max="<?php echo $recursos->influencias_max ?>"><div class="label2">Label</div></td> </tr> 
-		</table> -->
-
-
-	<div class="push"></div>
   	
-    
-</div></div> <!-- envoltorios -->
+
+	</div>
+
+	<!-- TODO Quitar esto mejorando CSS -->
+	<div style="clear:both"></div>
+
+</div>
 
 <!-- DIVISION DEL PIE DE PÁGINA -->
-    <div id="pie-pagina">
+<!--    <div id="pie-pagina">
         Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
-    </div>
+    </div>-->
 
 </body>
 
