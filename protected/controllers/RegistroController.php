@@ -124,7 +124,9 @@ class RegistroController extends Controller
 		$this->render('equipo',array('error'=>$error,'equipos'=>$equipos, 'seleccionado'=>$seleccionado));
 		
 	}
-	public function actionPersonaje($id_usuario){
+	
+	public function actionPersonaje($id_usuario)
+	{
 		$modelo = Usuarios::model()->findByPk($id_usuario);
 		$modelo->scenario='update';
 		$error = false;
@@ -157,7 +159,7 @@ class RegistroController extends Controller
 				if($modelo->save()){
 					$this->crearRecursos($modelo->id_usuario, $modelo->personaje);
 					$transaction->commit();
-					$this->redirect(array('site/login'));
+					$this->redirect(array('site/index'));
 				}else $error = true;
 			}else $error = true;
 		} catch (Exception $e) {
