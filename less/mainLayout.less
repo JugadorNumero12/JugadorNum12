@@ -1,4 +1,10 @@
 //Layout que se usa en todas las páginas
+@charset 'utf-8';
+
+@import 'priv/imports';
+@import 'priv/general';
+
+@import 'priv/barrasup';
 
 // COLORES
 // ------------
@@ -131,3 +137,41 @@
 	text-decoration: none;
 }
 
+#menu-izquierdo{
+    width: @MenuWidth;
+    float:left;
+
+    margin-top: 0;
+    padding: 0;
+
+    .menu-item {
+        padding: 5px 8px;
+
+        border: 0 solid @TopBlockBorderColor;
+        border-width: 1px 0 0 0;
+
+        .nombre-menu{
+            font-weight:bold;
+            float: right;
+            margin: 0.4em 0;
+        }
+
+        .icono-menu{
+            width:24px;
+            height:24px;
+        }
+
+        &:hover {
+            background-color: (@VERDE_12_CLARO+#333);
+        }
+    }
+
+    .menu-item-first {
+        border-width: 0;
+        .border-radius(10px, 0, 0, 10px);
+    }
+
+    .menu-item-last {
+        .border-radius(0, 10px, 10px, 0);
+    }
+}
