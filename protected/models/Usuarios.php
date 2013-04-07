@@ -262,6 +262,77 @@ class Usuarios extends CActiveRecord
 		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
 		AccionesGrupales::model()->finalizaGrupales();
 		Recursos::model()->actualizaRecursos($id_usuario);
-        // EXP: comprobar el siguiente nivel.
+        // TODO EXP: comprobar el siguiente nivel.
 	}
+
+    /**
+     * Devuelve la experencia necesaria para alcanzar el siguiente nivel
+     * La experencia necesaria depende del nivel actual y un modificador 
+     * la curvatura de dificultad es de 1.1^nivel
+     *
+     * @param $nivel_actual 
+     * @param $modificador ; valor por defecto 500.
+     * @return experencia necesaria para alcanzar el siguiente nivel.
+     */
+    public function exp_necesaria($nivel_actual, $modificador = 500)
+    {
+        return   $modificador * pow( 1.1, ($nivel_actual-1) );
+    }
+
+    /**
+     *
+     *
+     *
+     */
+    public function crearPersonaje($id_usuario, $personaje_escogido)
+    {
+        $rec=new Recursos;
+        $rec->setAttributes(array('usuarios_id_usuario'=>$id_usuario));
+        switch ($personaje_escogido) {
+
+            case Usuarios::PERSONAJE_MOVEDORA: //animadora
+                echo "animadora";
+                $rec->setAttributes(array('dinero'=>2400));
+                $rec->setAttributes(array('dinero_gen'=>20.0));
+                $rec->setAttributes(array('influencias'=>5));
+                $rec->setAttributes(array('influencias_max'=>12));
+                $rec->setAttributes(array('influencias_gen'=>3.0));
+                $rec->setAttributes(array('animo'=>50));
+                $rec->setAttributes(array('animo_max'=>250));
+                $rec->setAttributes(array('animo_gen'=>9.0));
+                break;
+            case Usuarios::PERSONAJE_EMPRESARIO: //empresario
+                echo "empresario";
+                $rec->setAttributes(array('dinero'=>20000));
+                $rec->setAttributes(array('dinero_gen'=>160.0));
+                $rec->setAttributes(array('influencias'=>3));
+                $rec->setAttributes(array('influencias_max'=>8));
+                $rec->setAttributes(array('influencias_gen'=>2.0));
+                $rec->setAttributes(array('animo'=>15));
+                $rec->setAttributes(array('animo_max'=>50));
+                $rec->setAttributes(array('animo_gen'=>1.0));
+                break;
+            case Usuarios::PERSONAJE_ULTRA: //ultra
+                echo "ultra";
+                $rec->setAttributes(array('dinero'=>8000));
+                $rec->setAttributes(array('dinero_gen'=>50.0));
+                $rec->setAttributes(array('influencias'=>1));
+                $rec->setAttributes(array('influencias_max'=>2));
+                $rec->setAttributes(array('influencias_gen'=>1.0));
+                $rec->setAttributes(array('animo'=>100));
+                $rec->setAttributes(array('animo_max'=>400));
+                $rec->setAttributes(array('animo_gen'=>15.0));
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        $rec->setAttributes(array('ultima_act'=> time()));
+        $rec->save();
+
+            //    $modelo->setAttributes(array('nivel'=>1));
+
+    }
+
 }
