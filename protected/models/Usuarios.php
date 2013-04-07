@@ -279,7 +279,7 @@ class Usuarios extends CActiveRecord
 		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
 		AccionesGrupales::model()->finalizaGrupales();
 		Recursos::model()->actualizaRecursos($id_usuario);
-        // TODO EXP: comprobar el siguiente nivel.
+        // TODO EXP
 	}
 
     /**
@@ -291,10 +291,42 @@ class Usuarios extends CActiveRecord
      * @param $modificador ; valor por defecto 500.
      * @return experencia necesaria para alcanzar el siguiente nivel.
      */
-    public static function exp_necesaria($nivel_actual, $modificador = 500)
+    public static function expNecesaria($nivel_actual, $modificador = 500)
     {
         return   $modificador * pow( 1.1, ($nivel_actual) );
     }
+
+    /** 
+     * Suma la experiencia indicada al jugador.
+     * Si el jugador sube de nivel, actualiza los valores de
+     *  - indicadores de recursos
+     *  - nivel
+     *  - exp_necesaria
+     *
+     * @param $exp a sumar al jugador
+     * @return true si el jugador ha subido de nivel, false en caso contrario
+     */
+    public function sumarExp($exp)
+    {
+        /* Experencia acumulada */
+        $exp_acc = $this->exp + $exp;
+        $this->setAttributes(array('exp'=>$exp_acc));
+
+        /* Comprobar si subimos de nivel */
+        if ($exp_acc >= $this->exp_necesaria) {
+            $nivel_actual = $this->nivel + 1;
+            $this->setAttributes(array('nivel'=>$nivel_actual));
+
+            /* Actualizar atributos del personaje */
+            // TODO
+
+            $this->save();
+            return true;
+        } else {
+            $this->save();
+            return false;
+        }
+    } 
 
     /**
      * Fija los atributos del nuevo personaje:
@@ -306,7 +338,7 @@ class Usuarios extends CActiveRecord
         /* NIVEL Y EXP */
         $this->setAttributes(array('nivel'=>1));
         $this->setAttributes(array('exp'=>0));
-        $exp_necesaria_lv_2 = Usuarios::exp_necesaria(1);
+        $exp_necesaria_lv_2 = Usuarios::expNecesaria(1);
         $this->setAttributes(array( 'exp_necesaria'=> $exp_necesaria_lv_2));
         
         /* RECURSOS */
