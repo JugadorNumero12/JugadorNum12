@@ -314,8 +314,18 @@ class Usuarios extends CActiveRecord
 
         /* Comprobar si subimos de nivel */
         if ($exp_acc >= $this->exp_necesaria) {
-            $nivel_actual = $this->nivel + 1;
+            /* Posible subir varios niveles */
+            $nivel_actual = $this->nivel;
+            $exp_sig_nivel = $this->exp_necesaria;
+            
+            while($exp_acc >= $exp_sig_nivel) {
+                // FIXME
+                $nivel_actual = $nivel_actual + 1;
+                $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
+            }
+
             $this->setAttributes(array('nivel'=>$nivel_actual));
+            $this->setAttributes(array('exp_necesaria'=>$exp_sig_nivel));
 
             /* Actualizar atributos del personaje */
             // TODO
@@ -323,6 +333,7 @@ class Usuarios extends CActiveRecord
             $this->save();
             return true;
         } else {
+            /* No aumentamos de nivel */
             $this->save();
             return false;
         }
@@ -336,8 +347,7 @@ class Usuarios extends CActiveRecord
     public function crearPersonaje()
     {
         /* NIVEL Y EXP */
-        $this->setAttributes(array('nivel'=>1));
-        $this->setAttributes(array('exp'=>0));
+        $this->setAttributes(array('nivel'=>1, 'exp'=>0));
         $exp_necesaria_lv_2 = Usuarios::expNecesaria(1);
         $this->setAttributes(array( 'exp_necesaria'=> $exp_necesaria_lv_2));
         

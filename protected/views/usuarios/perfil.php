@@ -1,11 +1,10 @@
-<?php
-/* @var $modeloU Modelo del usuario*/
-/* @var $accionesPas array con las acciones pasivas desbloqueadas por el usuario*/
-/* @var $accionesPas array con las acciones de partido desbloqueadas por el usuario*/
+<!-- 
+	@var $modeloU Modelo del usuario
+	@var $accionesPas array con las acciones pasivas desbloqueadas por el usuario
+	@var $accionesPas array con las acciones de partido desbloqueadas por el usuario
+	@var $recursos recursos del usuario
+-->
 
-// codigo PHP 
-
-?>
 	<div class="envoltorio-perfil"> <div class="envoltorio2-perfil"> 
 
 		<div class="perfil-grupo-arriba">
@@ -40,13 +39,41 @@
 
 			<div class="perfil-grupo-arriba-derecha">
 				<table >
-						<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
-						<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th> <br></th> <td> </td> <br></tr> 
-						<tr><th>Email: </th><td><?php echo $modeloU->email ?></td></tr>
-						<tr><td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
-	    				<td><?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail'),'class'=>"button small black"));?></td></tr>
+						<tr>
+							<th>Nick: </th>
+							<td><?php echo $modeloU->nick ?></td>
+						</tr> 
+						<tr>
+							<th>Nivel: </th>
+							<td><?php echo $modeloU->nivel ?> </td>
+						</tr> 
+						<tr>
+							<th>Experencia: <br></th>
+							<td>
+								<!-- FIXME: dar estilo a la brrar de progreso (actualmente no aparece) -->
+								<div id="barra-progreso-exp" data-valor="<?php echo $modeloU->exp?>" data-max="<?php echo $modeloU->exp_necesaria ?>">
+									<div id="progress-label-exp"> <?php echo $modeloU->exp?> / <?php echo $modeloU->exp_necesaria?> </div>
+								</div>
+							</td> 
+						</tr> 
+						<tr>
+							<th> <br></th>
+							<td> </td> <br>
+						</tr> 
+						<tr>
+							<th>Email: </th>
+							<td><?php echo $modeloU->email ?></td>
+						</tr>
+						<tr>
+							<td><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></td>
+	    					<td><?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail'),'class'=>"button small black"));?></td>
+	    				</tr>
+	    				<!-- DEBUG -->
+	    				<tr>
+							<td><?php echo CHtml::submitButton('+500 exp', array('submit' => array('debug'),'class'=>"button small black"));?></td>
+	    					<td><?php echo CHtml::submitButton('+5000 exp', array('submit' => array('debug2'),'class'=>"button small black"));?></td>
+	    				</tr>
+	    				<!-- ** -->
 				</table>
 			</div>
 		</div>
