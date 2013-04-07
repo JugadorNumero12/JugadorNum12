@@ -131,9 +131,10 @@ class RegistroController extends Controller
 					$modelo->setAttributes(array('personaje'=>Usuarios::PERSONAJE_ULTRA));
 				}
 
+				$modelo->crearPersonaje();
 
 				if($modelo->save()){
-					Usuarios::model()->crearPersonaje($modelo->id_usuario, $modelo->personaje);
+					//Usuarios::model()->crearPersonaje($modelo->id_usuario, $modelo->personaje);
 					$transaction->commit();
 					$this->redirect(array('site/index'));
 				}else $error = true;

@@ -21,6 +21,17 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
+    /*
+        const DINERO_BASE = 6000;
+        const DINERO_GEN_BASE = 10.0;
+        const INFLUENCIAS_BASE = 
+        const INFLUENCIAS_MAX_BASE = 
+        const INFLUENCIAS_GEN_BASE = 0.1;
+        const ANIMO_BASE = 30;
+        const ANIMO_MAX_BASE = 
+        const ANIMO_GEN_BASE = 1.0;
+    */
+
 	const BCRYPT_ROUNDS = 12;
 
 	public $antigua_clave;
@@ -61,22 +72,28 @@ class Usuarios extends CActiveRecord
 			array('nick, pass, email', 'required'),
 			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
 			array('personaje', 'numerical', 'integerOnly'=>true),
-			array('equipos_id_equipo, nivel', 'length', 'max'=>10),
+			array('equipos_id_equipo', 'length', 'max'=>10),
 			array('nick', 'length', 'max'=>20),
 			array('pass, email', 'length', 'max'=>255),
-			/*Validaciones para cambio de contraseña*/
+			array('nivel exp exp_necesaria', 'numerical', 'integerOnly'=>true),
+            array('nivel', 'length', 'max'=>10),
+
+            /* Validaciones para cambio de contraseña */
 			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
 			array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
 			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
-			// Contraseña: minimo 6 caracteres, sin maximo. No hay restricciones de numeros o letras
+			
+            /* Validacion de la contraseña */
 			array('nueva_clave1,nueva_clave2','match','pattern'=>'/^.{6,}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
-			/*Validaciones para cambio de email*/
+			
+            /* Validaciones para el cambio de email*/
 			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
 			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
 			array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
 			array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
-			/*Validaciones para registrar usuario*/
+			
+            /*Validaciones para registrar usuario*/
 			array('nueva_email1','comprobarEmail','on'=>'registro'),
 			array('nuevo_nick','comprobarNick','on'=>'registro'),
 			array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
@@ -274,24 +291,31 @@ class Usuarios extends CActiveRecord
      * @param $modificador ; valor por defecto 500.
      * @return experencia necesaria para alcanzar el siguiente nivel.
      */
-    public function exp_necesaria($nivel_actual, $modificador = 500)
+    public static function exp_necesaria($nivel_actual, $modificador = 500)
     {
-        return   $modificador * pow( 1.1, ($nivel_actual-1) );
+        return   $modificador * pow( 1.1, ($nivel_actual) );
     }
 
     /**
-     *
-     *
-     *
+     * Fija los atributos del nuevo personaje:
+     *  - Recursos iniciales en funcion del personaje escogido
+     *  - nivel y experencia iniciales
      */
-    public function crearPersonaje($id_usuario, $personaje_escogido)
+    public function crearPersonaje()
     {
+        /* NIVEL Y EXP */
+        $this->setAttributes(array('nivel'=>1));
+        $this->setAttributes(array('exp'=>0));
+        $exp_necesaria_lv_2 = Usuarios::exp_necesaria(1);
+        $this->setAttributes(array( 'exp_necesaria'=> $exp_necesaria_lv_2));
+        
+        /* RECURSOS */
         $rec=new Recursos;
-        $rec->setAttributes(array('usuarios_id_usuario'=>$id_usuario));
-        switch ($personaje_escogido) {
+        $rec->setAttributes(array('usuarios_id_usuario'=>$this->id_usuario));
+        
+        switch ($this->personaje) {
 
-            case Usuarios::PERSONAJE_MOVEDORA: //animadora
-                echo "animadora";
+            case Usuarios::PERSONAJE_MOVEDORA: 
                 $rec->setAttributes(array('dinero'=>2400));
                 $rec->setAttributes(array('dinero_gen'=>20.0));
                 $rec->setAttributes(array('influencias'=>5));
@@ -301,8 +325,8 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo_max'=>250));
                 $rec->setAttributes(array('animo_gen'=>9.0));
                 break;
-            case Usuarios::PERSONAJE_EMPRESARIO: //empresario
-                echo "empresario";
+
+            case Usuarios::PERSONAJE_EMPRESARIO: 
                 $rec->setAttributes(array('dinero'=>20000));
                 $rec->setAttributes(array('dinero_gen'=>160.0));
                 $rec->setAttributes(array('influencias'=>3));
@@ -312,8 +336,8 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo_max'=>50));
                 $rec->setAttributes(array('animo_gen'=>1.0));
                 break;
-            case Usuarios::PERSONAJE_ULTRA: //ultra
-                echo "ultra";
+
+            case Usuarios::PERSONAJE_ULTRA:
                 $rec->setAttributes(array('dinero'=>8000));
                 $rec->setAttributes(array('dinero_gen'=>50.0));
                 $rec->setAttributes(array('influencias'=>1));
@@ -324,15 +348,13 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo_gen'=>15.0));
                 break;
             
-            default:
-                # code...
+            default: 
                 break;
         }
         $rec->setAttributes(array('ultima_act'=> time()));
         $rec->save();
 
-            //    $modelo->setAttributes(array('nivel'=>1));
-
+        $this->save();
     }
 
 }
