@@ -4,13 +4,16 @@
  * Modelo de la tabla <<usuarios>>
  *
  * Columnas disponibles
- * 	string 	$id_usuario
- * 	string 	$equipos_id_equipo
+ * ---------------------
+ * 	int 	$id_usuario
+ * 	int 	$equipos_id_equipo
  * 	string 	$nick
  * 	string 	$pass
  * 	string 	$email
- * 	integer $personaje
- * 	string 	$nivel
+ * 	tinyint $personaje
+ * 	tinyint	$nivel
+ * 	int 	$exp
+ * 	int 	$exp_necesaria
  */
 class Usuarios extends CActiveRecord
 {
@@ -27,6 +30,7 @@ class Usuarios extends CActiveRecord
 	public $nueva_email1;
 	public $nueva_email2;
 	public $nuevo_nick;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -46,12 +50,13 @@ class Usuarios extends CActiveRecord
 	}
 
 	/**
+     * Deben definirse solo reglas para aquellos atributos que recibiran entradas
+     * del usuario
+     *
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
 			array('nick, pass, email', 'required'),
 			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
@@ -80,9 +85,11 @@ class Usuarios extends CActiveRecord
 			array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
 			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
 			
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id_usuario, equipos_id_equipo, nick, pass, email, personaje, nivel', 'safe', 'on'=>'search'),
+			// Regla usada por la funcion search() ; No se incluyen aquellos atributos que no se usen para buscar
+            // Atributos no incluidos
+            //  - pass
+            //  - exp_necesaria
+			array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,6 +97,7 @@ class Usuarios extends CActiveRecord
 	 * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
 	 *
 	 * @param $clave Clave a comprobar
+     * @return Clave válida
 	 */
 	public function comprobarClave ($clave)
 	{
@@ -103,6 +111,7 @@ class Usuarios extends CActiveRecord
 	 * Cambia la clave del usuario a la clave pasada por parámetro.
 	 *
 	 * @param $clave Nueva clase
+     * @return éxito
 	 */
 	public function cambiarClave ($clave)
 	{
@@ -118,7 +127,11 @@ class Usuarios extends CActiveRecord
 	}
 
 
-	/*Compara para comprobar que su clave coincide con la de la BBDD*/
+	/**
+     * Compara para comprobar que su clave coincide con la de la BBDD
+     * 
+     * @param $antigua_clave
+     */
 	public function clavesIguales($antigua_clave)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
@@ -128,7 +141,11 @@ class Usuarios extends CActiveRecord
 	    }
 	}
 
-	/*Comprobar que el email coincide con el de la BBDD*/
+	/**
+     * Comprobar que el email coincide con el de la BBDD
+     *
+     * @param $antigua_email
+     */
 	public function emailIguales($antigua_email)
 	{
 	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
@@ -157,13 +174,12 @@ class Usuarios extends CActiveRecord
 	}
 
 	/**
-	 * Define las relaciones entre <usuarios - tabla>
+	 * Define las relaciones entre <usuarios> - <tabla>
 	 *
-	 * @devuelve array de relaciones
+	 * @return array de relaciones
 	 */
 	public function relations()
 	{
-		/* ROBER */
 		return array(
 			/*Relacion entre <<usuarios>> y <<recursos>>*/
 			'recursos'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
@@ -199,42 +215,53 @@ class Usuarios extends CActiveRecord
 			'email' => 'Email',
 			'personaje' => 'Personaje',
 			'nivel' => 'Nivel',
+            'exp' => 'Experiencia',
+            'exp_necesaria' => 'Experiencia Necesaria'
 		);
 	}
 
 	/**
+     * Warning: Please modify the following code to remove attributes that
+     * should not be searched.
+     *
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_usuario',$this->id_usuario,true);
+        /* Atributos no contemplados para la búsqueda
+            - pass
+            - exp_necesaria
+        */
+		
+        $criteria->compare('id_usuario',$this->id_usuario,true);
 		$criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
 		$criteria->compare('nick',$this->nick,true);
-		$criteria->compare('pass',$this->pass,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('personaje',$this->personaje);
 		$criteria->compare('nivel',$this->nivel,true);
+        $criteria->compare('exp',$this->exp,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
-	/*
-	* Esta función se encarga de generar recursos y finalizar individuales/grupales
-	* Se llamará antes de cada acción que lo necesite (prácticamente todas)
-	*/
+    /**
+	 * Función que se encarga de :
+     *  - generar recursos
+     *  - finalizar acciones individuales
+     *  - finalizar acciones grupales
+	 */
 	public function actualizaDatos($id_usuario)
 	{
 		//Actualizar todos los datos necesarios
 		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
 		AccionesGrupales::model()->finalizaGrupales();
 		Recursos::model()->actualizaRecursos($id_usuario);
+        // EXP: comprobar el siguiente nivel.
 	}
 }
