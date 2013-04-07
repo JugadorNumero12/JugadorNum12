@@ -284,4 +284,91 @@ class ScriptsController extends Controller
 
 
 	}
+
+	///LIGA
+	public function defaultLiga(){
+		//TODO
+		//pillar el codigo de https://github.com/samuelmgalan/CalendarioLiga/blob/master/src/src/Calendario.java
+		//traducirlo a php
+
+		//TODO
+		//meter jornadas de ida en $empar[0..N]
+		//las de vuelta en $empar[N+1..2N]
+		//llamar a generaLiga($empar)
+	}
+
+	/*
+	* Genera una liga nueva que:
+	*  empezará en '$dentro_de' dias, 
+	*  dejará '$jornada' dias entre jornadas (si metes null escoje el minimo que no superpone jornadas)
+	*  y sus partidos se jugarán a las '$horas' (si hay pocas horas, se juegan el día anterior en el mismo horario).
+	*
+	* Los partidos se generan "talcual" en el orden en que vienen en '$emparejamientos'
+	*/
+	public function generaLiga($emparejamientos, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
+	{
+		const un_dia = 3600*24;
+		const partidosXdia = count($horas);
+		const diasXjornada = ceil( count($emparejamientos[0]) / partidosXdia);
+
+		if($jornada=== null) $jornada= diasXjornada;
+
+		if(diasXjornada<$jornada)
+			Yii::log("Las jornadas se superponen unas a otras, aumente la separación entre ellas",'warning');
+
+		$fecha = time(); // hoy, este segundo
+		$fecha -= $fecha % un_dia; // las 0:00 de hoy
+		$fecha += un_dia*($dentro_de+diasXjornada-1); // las 0:00 del día de la primera jornada.
+
+	    $transaction = Yii::app()->db->beginTransaction();
+    	try
+    	{
+			foreach ($emparejamientos as $jornada) {
+
+				foreach ($jornada as $partido) {
+					$h = 0; //escojer la primera hora diponible
+					$time = $fecha;//la fecha "origen" de la jornada
+
+					generaPartido($partido[0], $partido[1], $time+$horas[$h]*3600);
+
+					if(++$h >=partidosXdia)//si ya no hay más horas ese día
+					{
+						$h = 0;
+						$time -= un_dia;//empiezo a rellenar el día anterior
+					}
+				}
+				$fecha += un_dia*$jornada;
+			}
+
+			$transaction->commit();
+    	}
+    	catch (Exception $ex)
+    	{
+    		$transaction->rollback();
+    		throw $ex;
+    	}
+
+	}
+
+	/*
+	* Añade un nuevo partido entre los equipos indicados en la fecha indicada.
+	* 
+	* No compruebo, que los equipos existan (en principio eso me da igual).
+	* 
+	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
+	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
+	*/
+	private function generaPartido(int $id_local, int $id_visitande, int $time)
+	{
+		if($time<time()) 
+			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
+		$partido = new Partido();
+		$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
+		   							  'equipos_id_equipo_2' => $id_visitande,
+		   							  'hora' => $time,
+		   							));
+		$partido->save();
+      
+
+	}
 }
