@@ -83,7 +83,7 @@ class EmailsController extends Controller
 	 */
 	public function actionLeerEmail($id){
 		$email = Emails::model()->findByPk($id);
-		if($email === NULL) throw new CHttpException( 404, 'Email inexistente');
+		if($email === NULL) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
 		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
@@ -110,7 +110,7 @@ class EmailsController extends Controller
 	 */ 
 	public function actionEliminarEmail($id,$antes){
 		$email = Emails::model()->findByPk($id);
-		if($email === null) throw new CHttpException( 404, 'Email inexistente');
+		if($email === null) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
 		$trans = Yii::app()->db->beginTransaction();
 		try{
 			$id_usr= Yii::app()->user->usIdent;
