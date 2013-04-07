@@ -34,6 +34,12 @@ class Controller extends CController
 			// Obtiene la información del usuario
 			$usuario = Usuarios::model()->with('recursos')->findByPK(Yii::app()->user->usIdent);
 			Yii::app()->setParams(array('usuario'=>$usuario));
+
+			// Obtiene la información de la mensajeria
+			$mensajeria = Emails::model()->with('usuarioTo')->findByPK(Yii::app()->user->usIdent);
+			$count = count($mensajeria);
+			Yii::app()->setParams(array('count'=>$count));
+
 		}
 		
 		Yii::app()->setParams(array('bgclass'=>'bg-estadio-fuera'));
