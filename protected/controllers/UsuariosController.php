@@ -161,27 +161,6 @@ class UsuariosController extends Controller
     }
 
     /*
-     * Muestra los datos de la cuenta del usuario
-     *  Nick
-     *  eMail
-     *
-     * El id del usuario se recoge de la variable de sesion
-     * 
-     * @ruta    jugadorNum12/usuarios/cuenta
-     */
-    public function actionCuenta()
-    {
-        /* Actualizar datos de usuario (recuros,individuales y grupales) */
-        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
-        /* Fin de actualización */
-        
-        $id= Yii::app()->user->usIdent;
-        $modelo = Usuarios:: model()->findByPk($id);
-        
-        $this->render('cuenta',array('modelo'=>$modelo));
-    }
-
-    /*
      * Muestra un formulario para cambiar la clave del usuario
      * Si hay datos en $_POST procesa el formulario y guarda la
      * nueva clave en la tabla <<usuarios>> 
