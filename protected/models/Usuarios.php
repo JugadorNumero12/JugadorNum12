@@ -289,11 +289,11 @@ class Usuarios extends CActiveRecord
      *
      * @param $nivel_actual 
      * @param $modificador ; valor por defecto 500.
-     * @return experencia necesaria para alcanzar el siguiente nivel.
+     * @return (int) experencia necesaria para alcanzar el siguiente nivel.
      */
     public static function expNecesaria($nivel_actual, $modificador = 500)
     {
-        return   $modificador * pow( 1.1, ($nivel_actual) );
+        return (int) ( $modificador * pow( 1.1, ($nivel_actual)) );
     }
 
     /** 
@@ -319,7 +319,6 @@ class Usuarios extends CActiveRecord
             $exp_sig_nivel = $this->exp_necesaria;
             
             while($exp_acc >= $exp_sig_nivel) {
-                // FIXME
                 $nivel_actual = $nivel_actual + 1;
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
             }
