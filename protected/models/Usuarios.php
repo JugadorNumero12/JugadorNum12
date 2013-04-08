@@ -21,11 +21,6 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
-    /* SISTEMA DE NIVELES */
-    const PROPORCION_MAYOR = 0.6;
-    const PROPORCION_INTERMEDIA = 0.3;
-    const PROPORCION_MENOR = 0.1;
-
     /* *** */
     /*
         const DINERO_BASE = 6000;
@@ -278,7 +273,6 @@ class Usuarios extends CActiveRecord
 		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
 		AccionesGrupales::model()->finalizaGrupales();
 		Recursos::model()->actualizaRecursos($id_usuario);
-        // TODO EXP
 	}
 
     /**
@@ -292,6 +286,8 @@ class Usuarios extends CActiveRecord
      */
     public static function expNecesaria($nivel_actual, $modificador = 500)
     {
+        // FIXME: nivelar la curva resultante. 
+        // para debugg exite la vista </usuarios/exp>
         return (int) ( $modificador * pow( 1.1, ($nivel_actual)) );
     }
 
@@ -301,7 +297,9 @@ class Usuarios extends CActiveRecord
      *  - indicadores de recursos
      *  - nivel
      *  - exp_necesaria
-     *
+     * 
+     * Nota: La funcion contempla la posibilidad de subir varios niveles de golpe
+     * 
      * @param $exp a sumar al jugador
      * @return true si el jugador ha subido de nivel, false en caso contrario
      */
@@ -330,40 +328,109 @@ class Usuarios extends CActiveRecord
             $nuevos_atributos = $this->actualizarAtributos($nivel_inicial, $nivel_actual);
 
             /* Guardamos los nuevos atributos del usuario */
-            $this->setAttributes(array('nivel'=>$nivel_actual));
-            $this->setAttributes(array('exp_necesaria'=>$exp_sig_nivel));
-            $this->recursos->setAttributes(array('dinero_gen'=>$nuevos_atributos['dinero_gen']));
-
+            $this->setAttributes( array( 
+                'nivel'=>$nivel_actual,
+                'exp_necesaria'=>$exp_sig_nivel
+            ));
+            $this->recursos->setAttributes( array(
+                'dinero_gen'=>      $nuevos_atributos['dinero_gen'],
+                'animo_gen'=>       $nuevos_atributos['animo_gen'],
+                'influencias_gen'=> $nuevos_atributos['influencias_gen'],
+                'animo_max'=>       $nuevos_atributos['animo_max'],
+                'influencias_max'=> $nuevos_atributos['influencias_max']
+            ));
             $this->save();
             $this->recursos->save();
+
             return true;
         } else {
             /* No aumentamos de nivel: guardamos la nueva exp acumulada */
             $this->save();
+
             return false;
         }
     } 
 
+    /* SISTEMA DE NIVELES */
+    const PROPORCION_MAYOR = 55;
+    const PROPORCION_INTERMEDIA = 30;
+    const PROPORCION_MENOR = 15;
+    
+    const UNIDAD_DINERO_GEN = 18;
+    const UNIDAD_ANIMO_GEN = 6;
+    const UNIDAD_INFLUENCIAS_GEN = 1;
+    
+    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
+    const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
+    const ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
+    const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
+    const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
+    const ULTRA_UNIDAD_ANIMO_MAX = 30;
+    /* *** */
+
     /**
-     * Calcula los nuevos valores de generacion de recursos
+     * Esta funcion se llama al subir de nivel.
+     * Calcula los nuevos valores de generacion de recursos y valor maximo
      *  - dinero_gen
      *  - animo_gen
      *  - influencias_gen
-     * y de valor maximo de recursos
      *  - animo_max
      *  - influencias_max
+     * Nota: "dinero_gen", "animo_gen" e "influencias_gen" son los "r_gen" ; 
+     * "animo_max" e "influencias_max" son los "r_max"
      *
-     * Tiene en cuenta el tipo de personaje del jugador.
-     * CONSTATNES
+     * Para determinar los nuevos valores, nos basaremos en el personaje y 
+     * las siguientes reglas:
+     * 
+     * 1) Se aumentan 2 "r_gen" por nivel.
      *
-     * @param
-     * @param
-     * @return (array)
+     * 2) La probabilidad de aumentar un determinado "r_gen" en UNIDAD_RECURSO es:
+     *  - PROPORCION_MAYOR% probabilidades => 
+     *      ultra: animo, RRPP: influencias, empresario: dinero 
+     *  - PROPORCION_INTERMEDIA% probabilidades =>
+     *      ultra: dinero, RRPP: animo, empresario: influencias
+     *  - PROPORCION_MENOR% probabilidades =>
+     *      ultra: influencias, RRPP: dinero, empresario: animo
+     *
+     * 3) Se aumentaran los "r_max" cada 5 niveles dependiendo del personaje.
+     * Ver las constantes
+     *  - ANIMADORA_UNIDAD_INFLUENCIAS_MAX
+     *  - EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
+     *  - ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
+     *  - ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
+     *  - EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
+     *  - ULTRA_UNIDAD_ANIMO_MAX = 30;
+     *  
+     * @param $nivel_incial
+     * @param $nivel_actual
+     * @return (array) nuevos atributos calculados.
      *
      */
     public function actualizarAtributos($nivel_inicial, $nivel_actual)
     {
+        $diferencia_niveles = $nivel_actual - $nivel_inicial;
+        switch ($this->personaje) {
+            
+            case Usuarios::PERSONAJE_ULTRA:
+            
+            break;
+
+            case Usuarios::PERSONAJE_MOVEDORA:
+            
+            break;
+
+            case Usuarios::PERSONAJE_EMPRESARIO:
+            
+            break;
+        }
+
         $atributos['dinero_gen'] = $this->recursos->dinero_gen + 1;
+        $atributos['animo_gen'];
+        $atributos['influencias_gen'];
+
+        $atributos['animo_max'];
+        $atributos['influencias_max'];
+        
         return $atributos;
     }
 
@@ -385,6 +452,17 @@ class Usuarios extends CActiveRecord
         
         switch ($this->personaje) {
 
+            case Usuarios::PERSONAJE_ULTRA:
+                $rec->setAttributes(array('dinero'=>8000));
+                $rec->setAttributes(array('dinero_gen'=>50.0));
+                $rec->setAttributes(array('influencias'=>1));
+                $rec->setAttributes(array('influencias_max'=>2));
+                $rec->setAttributes(array('influencias_gen'=>1.0));
+                $rec->setAttributes(array('animo'=>100));
+                $rec->setAttributes(array('animo_max'=>400));
+                $rec->setAttributes(array('animo_gen'=>15.0));
+                break;
+
             case Usuarios::PERSONAJE_MOVEDORA: 
                 $rec->setAttributes(array('dinero'=>2400));
                 $rec->setAttributes(array('dinero_gen'=>20.0));
@@ -405,17 +483,6 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo'=>15));
                 $rec->setAttributes(array('animo_max'=>50));
                 $rec->setAttributes(array('animo_gen'=>1.0));
-                break;
-
-            case Usuarios::PERSONAJE_ULTRA:
-                $rec->setAttributes(array('dinero'=>8000));
-                $rec->setAttributes(array('dinero_gen'=>50.0));
-                $rec->setAttributes(array('influencias'=>1));
-                $rec->setAttributes(array('influencias_max'=>2));
-                $rec->setAttributes(array('influencias_gen'=>1.0));
-                $rec->setAttributes(array('animo'=>100));
-                $rec->setAttributes(array('animo_max'=>400));
-                $rec->setAttributes(array('animo_gen'=>15.0));
                 break;
             
             default: 
