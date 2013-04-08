@@ -21,6 +21,12 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
+    /* SISTEMA DE NIVELES */
+    const PROPORCION_MAYOR = 0.6;
+    const PROPORCION_INTERMEDIA = 0.3;
+    const PROPORCION_MENOR = 0.1;
+
+    /* *** */
     /*
         const DINERO_BASE = 6000;
         const DINERO_GEN_BASE = 10.0;
@@ -47,18 +53,12 @@ class Usuarios extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Usuarios the static model class
 	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+	public static function model($className=__CLASS__) { return parent::model($className); }
 
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
-	{
-		return 'usuarios';
-	}
+	public function tableName() { return 'usuarios'; }
 
 	/**
      * Deben definirse solo reglas para aquellos atributos que recibiran entradas
@@ -142,7 +142,6 @@ class Usuarios extends CActiveRecord
 			return true;
 		}
 	}
-
 
 	/**
      * Compara para comprobar que su clave coincide con la de la BBDD
@@ -314,29 +313,59 @@ class Usuarios extends CActiveRecord
 
         /* Comprobar si subimos de nivel */
         if ($exp_acc >= $this->exp_necesaria) {
-            /* Posible subir varios niveles */
+
             $nivel_actual = $this->nivel;
+            $nivel_inicial = $nivel_actual; 
             $exp_sig_nivel = $this->exp_necesaria;
             
+            /* Posible subir varios niveles */
             while($exp_acc >= $exp_sig_nivel) {
                 $nivel_actual = $nivel_actual + 1;
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
             }
 
+            /* Obtener los nuevos valores de los atributos del personaje:
+             * ritmo de generacion de recursos 
+             * valores maximos de los recursos */
+            $nuevos_atributos = $this->actualizarAtributos($nivel_inicial, $nivel_actual);
+
+            /* Guardamos los nuevos atributos del usuario */
             $this->setAttributes(array('nivel'=>$nivel_actual));
             $this->setAttributes(array('exp_necesaria'=>$exp_sig_nivel));
-
-            /* Actualizar atributos del personaje */
-            // TODO
+            $this->recursos->setAttributes(array('dinero_gen'=>$nuevos_atributos['dinero_gen']));
 
             $this->save();
+            $this->recursos->save();
             return true;
         } else {
-            /* No aumentamos de nivel */
+            /* No aumentamos de nivel: guardamos la nueva exp acumulada */
             $this->save();
             return false;
         }
     } 
+
+    /**
+     * Calcula los nuevos valores de generacion de recursos
+     *  - dinero_gen
+     *  - animo_gen
+     *  - influencias_gen
+     * y de valor maximo de recursos
+     *  - animo_max
+     *  - influencias_max
+     *
+     * Tiene en cuenta el tipo de personaje del jugador.
+     * CONSTATNES
+     *
+     * @param
+     * @param
+     * @return (array)
+     *
+     */
+    public function actualizarAtributos($nivel_inicial, $nivel_actual)
+    {
+        $atributos['dinero_gen'] = $this->recursos->dinero_gen + 1;
+        return $atributos;
+    }
 
     /**
      * Fija los atributos del nuevo personaje:
