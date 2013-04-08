@@ -36,7 +36,8 @@ class Controller extends CController
 			Yii::app()->setParams(array('usuario'=>$usuario));
 
 			// Obtiene la información de la mensajeria
-			$mensajeria = Emails::model()->with('usuarioTo')->findByPK(Yii::app()->user->usIdent);
+			 //Saca la lista de los emails recibidos por el usuario y que ademas no los haya leido
+        	$mensajeria = Emails:: model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent, 'leido'=>0));
 			$count = count($mensajeria);
 			Yii::app()->setParams(array('count'=>$count));
 

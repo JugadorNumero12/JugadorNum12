@@ -37,6 +37,7 @@ class EmailsController extends Controller
 	 */
 	public function actionIndex(){
 		$niks = array();
+		//Saca todos los emails recibidos por el usuario y que no los haya borrado
 		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent,'borrado_to'=>0));
 		foreach ($emails as $i=>$email){
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
