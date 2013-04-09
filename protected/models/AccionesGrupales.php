@@ -417,13 +417,13 @@ class AccionesGrupales extends CActiveRecord
 		if($accion['completada'] == 1)
 		{
 			$accion->save();
-			//si se ha completado creamos una notificación
+			//Si se ha completado creamos una notificación
 			$notificacion = new Notificaciones;
 			$notificacion->fecha = time();
 			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
-			$notificacion->url = "acciones/ver?id_accion=". $id_accion;
+			$notificacion->url = "usuarios/index";
 			$notificacion->save();
-			//Enviamos la notificación a los interesados
+			//Enviamos la notificación a la afición
 			$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>Usuarios::model()->findByPk($id_user)->equipos_id_equipo));
 			foreach ($componentes as $componente){
 				$usrnotif = new Usrnotif;
@@ -510,7 +510,7 @@ class AccionesGrupales extends CActiveRecord
 			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
 		}
 
-		//Enviamos la notificación correspondiente
+		/*//Enviamos la notificación correspondiente
 		$notificacion = new Notificaciones;
 		$notificacion->fecha = time();
 		$notificacion->mensaje = Usuarios::model()->findByPk($id_usuario)->nick . " ha abierto la acción " . Habilidades::model()->findByPk($id_accion)->nombre;
@@ -523,7 +523,7 @@ class AccionesGrupales extends CActiveRecord
 			$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 			$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 			$usrnotif->save();
-		}
+		}*/
 
 		return $accion_grupal['id_accion_grupal'];
 	}
