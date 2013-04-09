@@ -286,15 +286,52 @@ class ScriptsController extends Controller
 	}
 
 	///LIGA
-	public function defaultLiga(){
-		//TODO
-		//pillar el codigo de https://github.com/samuelmgalan/CalendarioLiga/blob/master/src/src/Calendario.java
-		//traducirlo a php
+	private function calendario($participantes=null){
+		if($participantes===null)
+			$participantes=Clasificacion::->select('equipos_id_equipo');
+			//esto debería devolver una lista con todos los id_equipo
 
-		//TODO
-		//meter jornadas de ida en $empar[0..N]
-		//las de vuelta en $empar[N+1..2N]
-		//llamar a generaLiga($empar)
+		const N = count($participantes);
+		$calendario = array();
+
+		//https://github.com/samuelmgalan/CalendarioLiga/blob/master/src/src/Calendario.java
+		$cont = 0;
+		$cont2 = N-2;
+		for($i=0; $i<N-1; $i++){
+			for($j=0; $j<$N/2; $j++){
+				//matriz1[i][j]
+				$m1_ij = $participantes[$cont++];
+				if($cont==(N-1)) $cont=0;
+
+				//matriz2[i][j]
+				if($j==0) $m2_ij = $participantes[N-1];
+				else {
+					$m2_ij = $participantes[$cont2--];
+					if($cont2<0) $cont2 = N-2;
+				}
+
+				//Elaboro la matriz final de enfrentamientos por jornada (primera vuelta)
+				if($j==0 && $i%2==0){
+						$calendario[$i][$j][0] = $m2_ij;
+						$calendario[$i][$j][1] = $m1_ij;
+				}else {
+						$calendario[$i][$j][0] = $m1_ij;
+						$calendario[$i][$j][1] = $m2_ij;
+				}
+
+				//segunda vuelta - al reves que la primera
+				if($j==0 && $i%2==0){
+						$calendario[$i+N][$j][0] = $m1_ij;
+						$calendario[$i+N][$j][1] = $m2_ij;
+				}else {
+						$calendario[$i+N][$j][0] = $m2_ij;
+						$calendario[$i+N][$j][1] = $m1_ij;
+				}
+
+			}
+		}
+
+		return $calendario;
 	}
 
 	/*
@@ -305,8 +342,9 @@ class ScriptsController extends Controller
 	*
 	* Los partidos se generan "talcual" en el orden en que vienen en '$emparejamientos'
 	*/
-	public function generaLiga($emparejamientos, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
+	public function generaLiga($emparejamientos=null, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
 	{
+		if($emparejamientos=== null) $emparejamientos= calendario();
 		const un_dia = 3600*24;
 		const partidosXdia = count($horas);
 		const diasXjornada = ceil( count($emparejamientos[0]) / partidosXdia);
