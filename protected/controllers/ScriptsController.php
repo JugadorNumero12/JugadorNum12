@@ -316,16 +316,16 @@ class ScriptsController extends Controller
 						$calendario[$i][$j][1] = $eq0;
 
 						//segunda vuelta
-						$calendario[$i+N][$j][0] = $eq0;
-						$calendario[$i+N][$j][1] = $eq1;
+						$calendario[$i+N-1][$j][0] = $eq0;
+						$calendario[$i+N-1][$j][1] = $eq1;
 				}else {
 						//primera vuelta
 						$calendario[$i][$j][0] = $eq0;
 						$calendario[$i][$j][1] = $eq1;
 
 						//segunda vuelta
-						$calendario[$i+N][$j][0] = $eq1;
-						$calendario[$i+N][$j][1] = $eq0;
+						$calendario[$i+N-1][$j][0] = $eq1;
+						$calendario[$i+N-1][$j][1] = $eq0;
 				}
 
 			}
