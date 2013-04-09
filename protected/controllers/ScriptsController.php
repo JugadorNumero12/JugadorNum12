@@ -298,7 +298,7 @@ class ScriptsController extends Controller
 		$cont = 0;
 		$cont2 = N-2;
 		for($i=0; $i<N-1; $i++){
-			for($j=0; $j<$N/2; $j++){
+			for($j=0; $j<N/2; $j++){
 
 				$eq0 = $participantes[$cont++];
 				if($cont==(N-1)) $cont=0;
