@@ -21,17 +21,25 @@ class Usuarios extends CActiveRecord
 	const PERSONAJE_MOVEDORA = 1;
 	const PERSONAJE_EMPRESARIO = 2;
 
+    /* SISTEMA DE NIVELES */
+    const PROPORCION_MAYOR = 55;
+    const PROPORCION_INTERMEDIA = 30;
+    const PROPORCION_MENOR = 15;
+    
+    const UNIDAD_DINERO_GEN = 18;
+    const UNIDAD_ANIMO_GEN = 6;
+    const UNIDAD_INFLUENCIAS_GEN = 1;
+
+    const FRECUENCIA_NIVELES = 5;
+    const AUMENTOS_POR_NIVEL = 2;
+
+    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
+    const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
+    const ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
+    const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
+    const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
+    const ULTRA_UNIDAD_ANIMO_MAX = 30;
     /* *** */
-    /*
-        const DINERO_BASE = 6000;
-        const DINERO_GEN_BASE = 10.0;
-        const INFLUENCIAS_BASE = 
-        const INFLUENCIAS_MAX_BASE = 
-        const INFLUENCIAS_GEN_BASE = 0.1;
-        const ANIMO_BASE = 30;
-        const ANIMO_MAX_BASE = 
-        const ANIMO_GEN_BASE = 1.0;
-    */
 
 	const BCRYPT_ROUNDS = 12;
 
@@ -194,21 +202,29 @@ class Usuarios extends CActiveRecord
 		return array(
 			/*Relacion entre <<usuarios>> y <<recursos>>*/
 			'recursos'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<acciones_individuales>>*/
+			
+            /*Relacion entre <<usuarios>> y <<acciones_individuales>>*/
             'accionesIndividuales'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<desbloqueadas>> */
+			
+            /*Relacion entre <<usuarios>> y <<desbloqueadas>> */
 			'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<habilidades>>*/
+			
+            /*Relacion entre <<usuarios>> y <<habilidades>>*/
 			'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
-			/*Relacion entre <<usuarios>> y <<acciones_turno>> */
+			
+            /*Relacion entre <<usuarios>> y <<acciones_turno>> */
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<equipos>> */
+			
+            /*Relacion entre <<usuarios>> y <<equipos>> */
 			'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
-			/*Relacion entre <<usuarios>> y <<participaciones>> */
+			
+            /*Relacion entre <<usuarios>> y <<participaciones>> */
 			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<acciones_grupales>> */
+			
+            /*Relacion entre <<usuarios>> y <<acciones_grupales>> */
 			'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
-			/*Relacion entre <<usuarios>> y <<acciones_turno>>*/
+			
+            /*Relacion entre <<usuarios>> y <<acciones_turno>>*/
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
 		);
 	}
@@ -350,26 +366,6 @@ class Usuarios extends CActiveRecord
         }
     } 
 
-    /* SISTEMA DE NIVELES */
-    const PROPORCION_MAYOR = 55;
-    const PROPORCION_INTERMEDIA = 30;
-    const PROPORCION_MENOR = 15;
-    
-    const UNIDAD_DINERO_GEN = 18;
-    const UNIDAD_ANIMO_GEN = 6;
-    const UNIDAD_INFLUENCIAS_GEN = 1;
-
-    const FRECUENCIA_NIVELES = 5;
-    const AUMENTOS_POR_NIVEL = 2;
-
-    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
-    const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
-    const ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
-    const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
-    const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
-    const ULTRA_UNIDAD_ANIMO_MAX = 30;
-    /* *** */
-
     /**
      * Esta funcion se llama al subir de nivel.
      * Calcula los nuevos valores de generacion de recursos y valor maximo
@@ -500,12 +496,12 @@ class Usuarios extends CActiveRecord
         $this->setAttributes(array( 'exp_necesaria'=> $exp_necesaria_lv_2));
         
         /* RECURSOS */
-        $rec=new Recursos;
+        $rec=new Recursos();
         $rec->setAttributes(array('usuarios_id_usuario'=>$this->id_usuario));
         
         switch ($this->personaje) {
 
-            case Usuarios::PERSONAJE_ULTRA:
+            case self::PERSONAJE_ULTRA:
                 $rec->setAttributes(array('dinero'=>8000));
                 $rec->setAttributes(array('dinero_gen'=>50.0));
                 $rec->setAttributes(array('influencias'=>1));
@@ -516,7 +512,7 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo_gen'=>15.0));
                 break;
 
-            case Usuarios::PERSONAJE_MOVEDORA: 
+            case self::PERSONAJE_MOVEDORA: 
                 $rec->setAttributes(array('dinero'=>2400));
                 $rec->setAttributes(array('dinero_gen'=>20.0));
                 $rec->setAttributes(array('influencias'=>5));
@@ -527,7 +523,7 @@ class Usuarios extends CActiveRecord
                 $rec->setAttributes(array('animo_gen'=>9.0));
                 break;
 
-            case Usuarios::PERSONAJE_EMPRESARIO: 
+            case self::PERSONAJE_EMPRESARIO: 
                 $rec->setAttributes(array('dinero'=>20000));
                 $rec->setAttributes(array('dinero_gen'=>160.0));
                 $rec->setAttributes(array('influencias'=>3));

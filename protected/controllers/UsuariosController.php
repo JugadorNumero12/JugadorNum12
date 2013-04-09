@@ -274,6 +274,7 @@ class UsuariosController extends Controller
 
         $this->redirect(array('usuarios/perfil'));
     }
+    // Listado de niveles de exp necesarios
     public function actionExp()
     {
         $exp = array(100);
@@ -281,6 +282,61 @@ class UsuariosController extends Controller
             $exp[$i] = Usuarios::expNecesaria($i);
         }
         $this->render('exp', array('array'=>$exp));
+    }
+    // ejemplos de personajes
+    public function actionEjemplos()
+    {
+        $ultras = array();
+        $chicas = array();
+        $empresarios = array();
+
+        for($i = 0; $i < 10; $i++) {
+            $p = new Usuarios();
+            $p->setAttributes( array(
+                'nick'=>"test_ultra".$i,
+                'pass'=>"123456",
+                'equipos_id_equipo'=>1,
+                'email'=>$i."@test.com",
+                'personaje'=>Usuarios::PERSONAJE_ULTRA,
+            ));
+            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->save();
+            $ultras[$i] = $p;
+        }
+        
+        for($i = 0; $i < 10; $i++) {
+            $p = new Usuarios();
+            $p->setAttributes( array(
+                'nick'=>"test_chica".$i,
+                'pass'=>"123456",
+                'equipos_id_equipo'=>1,
+                'email'=>$i."@test.com",
+                'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
+            ));
+            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->save();
+            $chicas[$i] = $p;
+        }
+
+        for($i = 0; $i < 10; $i++) {
+            $p = new Usuarios();
+            $p->setAttributes( array(
+                'nick'=>"test_empresario".$i,
+                'pass'=>"123456",
+                'equipos_id_equipo'=>1,
+                'email'=>$i."@test.com",
+                'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
+            ));
+            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->save();
+            $empresarios[$i] = $p;
+        }
+
+        $this->render('ejemplos', array(
+            'ultras'=>$ultras,
+            'chicas'=>$chicas,
+            'empresarios'=>$empresarios
+        ));
     }
     /* ** */
 
