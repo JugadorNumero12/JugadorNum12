@@ -56,10 +56,19 @@
 								</div>
 							</td> 
 						</tr> 
+						<tr> Generaci&oacute;n de recursos </tr>
 						<tr>
-							<th> <br></th>
-							<td> </td> <br>
+							<th> Dinero </th>
+							<td> <?php echo $modeloU->recursos->dinero_gen ?> </td> 
+						</tr>
+						<tr>
+							<th> A&acute;nimo </th>
+							<td> <?php echo $modeloU->recursos->animo_gen ?> </td> 
 						</tr> 
+						<tr>
+							<th> Influencias </th>
+							<td> <?php echo $modeloU->recursos->influencias_gen ?> </td> 
+						</tr>  
 						<tr>
 							<th>Email: </th>
 							<td><?php echo $modeloU->email ?></td>

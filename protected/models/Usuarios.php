@@ -421,17 +421,18 @@ class Usuarios extends CActiveRecord
         $atributos['influencias_max'] = $this->recursos->influencias_max;
 
         /* generacion de los r_gen */
-        for ($i = 1; $i <= AUMENTOS_POR_NIVEL; $i++) {
+        for ($i = 1; $i <= self::AUMENTOS_POR_NIVEL; $i++) {
             $atributo = Usuarios::queAtributo($this->personaje);
+
             if ($atributo == 'dinero_gen') {
-                $cantidad = UNIDAD_DINERO_GEN;
+                $cantidad = self::UNIDAD_DINERO_GEN;
             } else if ($atributo == 'animo_gen') {
-                $cantidad = UNIDAD_ANIMO_GEN;
+                $cantidad = self::UNIDAD_ANIMO_GEN;
             } else if ($atributo == 'influencias_gen') {
-                $cantidad = UNIDAD_INFLUENCIAS_GEN;
+                $cantidad = self::UNIDAD_INFLUENCIAS_GEN;
             }
 
-            $atributos[$atributo] += $cantidad; 
+            $atributos[$atributo] = $atributos[$atributo] + $cantidad; 
         }
 
         // TODO : atributos <MAX>
@@ -453,9 +454,9 @@ class Usuarios extends CActiveRecord
             [----------------Mayor-------media---menor]
             [--------------------|-----------|--------]
         */
-        $p_mayor = PROPORCION_MAYOR;
-        $p_media = $p_mayor + PROPORCION_INTERMEDIA;
-        $p_menor = $p_media + PROPORCION_MENOR;
+        $p_mayor = self::PROPORCION_MAYOR;
+        $p_media = $p_mayor + self::PROPORCION_INTERMEDIA;
+        $p_menor = $p_media + self::PROPORCION_MENOR;
         
         /* Determinar segun el personaje que atributo aumentar */
         $aleatorio = rand(0,100);
