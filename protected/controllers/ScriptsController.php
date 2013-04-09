@@ -300,32 +300,32 @@ class ScriptsController extends Controller
 		for($i=0; $i<N-1; $i++){
 			for($j=0; $j<$N/2; $j++){
 
-				$local = $participantes[$cont++];
+				$eq0 = $participantes[$cont++];
 				if($cont==(N-1)) $cont=0;
 
-				if($j==0) $visitante = $participantes[N-1];
+				if($j==0) $eq1 = $participantes[N-1];
 				else {
-					$visitante = $participantes[$cont2--];
+					$eq1 = $participantes[$cont2--];
 					if($cont2<0) $cont2 = N-2;
 				}
 
 				//Elaboro la matriz final de enfrentamientos por jornada
 				if($j==0 && $i%2==0){
 						//primera vuelta
-						$calendario[$i][$j][0] = $visitante;
-						$calendario[$i][$j][1] = $local;
+						$calendario[$i][$j][0] = $eq1;
+						$calendario[$i][$j][1] = $eq0;
 
 						//segunda vuelta
-						$calendario[$i+N][$j][0] = $local;
-						$calendario[$i+N][$j][1] = $visitante;
+						$calendario[$i+N][$j][0] = $eq0;
+						$calendario[$i+N][$j][1] = $eq1;
 				}else {
 						//primera vuelta
-						$calendario[$i][$j][0] = $local;
-						$calendario[$i][$j][1] = $visitante;
+						$calendario[$i][$j][0] = $eq0;
+						$calendario[$i][$j][1] = $eq1;
 
 						//segunda vuelta
-						$calendario[$i+N][$j][0] = $visitante;
-						$calendario[$i+N][$j][1] = $local;
+						$calendario[$i+N][$j][0] = $eq1;
+						$calendario[$i+N][$j][1] = $eq0;
 				}
 
 			}
