@@ -107,6 +107,14 @@
 					</li>
 				</a>
 
+				<!-- Notificaciones -->
+				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
+						     width="24" height="24"/><span class="user-menu-txt">Notificaciones</span>
+					</li>
+				</a>
+
 				<!-- Mensajeria -->
 				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
