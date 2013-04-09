@@ -5,7 +5,6 @@
  *
  * Columnas disponibles
  * string 	$id_notificacion
- * string 	$equipos_id_equipo
  * string 	$fecha
  * string 	$mensaje
  * string	$url
@@ -38,7 +37,7 @@ class Notificaciones extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_notificacion, equipos_id_equipo', 'length', 'max'=>10),
+			array('id_notificacion', 'length', 'max'=>10),
 			array('url', 'length', 'max'=>50),
 			array('fecha', 'length', 'max'=>11),
 
@@ -56,8 +55,6 @@ class Notificaciones extends CActiveRecord
 	public function relations()
 	{
 		return array(
-			/*Relacion entre <<notificaciones>> y <<equipos>>*/
-			//'equipo'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'), no creo que sea necesaria
 			/*Relacion entre <<usrnotif>> y <<notificaciones>>*/
 			'usrnotif'=>array(self::HAS_MANY, 'Usrnotif', 'notificaciones_id_notificacion'),
 		 );

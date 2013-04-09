@@ -249,7 +249,6 @@ KEY `emails_FKIndex2` (`id_usuario_from`)
 DROP TABLE IF EXISTS `notificaciones`;
 CREATE TABLE IF NOT EXISTS `notificaciones` (
 `id_notificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`equipos_id_equipo` int(10) unsigned NOT NULL,
 `fecha` int(11) unsigned NOT NULL DEFAULT 0,
 `mensaje` text NOT NULL,
 `url` varchar(50) NOT NULL,
