@@ -286,48 +286,58 @@ class UsuariosController extends Controller
     // ejemplos de personajes
     public function actionEjemplos()
     {
+        Yii::app()->db->createCommand('DELETE FROM recursos WHERE usuarios_id_usuario IN
+            (SELECT id_usuario from usuarios WHERE email="test@test.com")')->query();
+        Yii::app()->db->createCommand('DELETE FROM usuarios WHERE email="test@test.com"')->query();
+
         $ultras = array();
         $chicas = array();
         $empresarios = array();
 
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 30; $i++) {
             $p = new Usuarios();
             $p->setAttributes( array(
                 'nick'=>"test_ultra".$i,
                 'pass'=>"123456",
                 'equipos_id_equipo'=>1,
-                'email'=>$i."@test.com",
+                'email'=>"test@test.com",
                 'personaje'=>Usuarios::PERSONAJE_ULTRA,
             ));
+            $p->save();
             $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->sumarExp(5000);
             $p->save();
             $ultras[$i] = $p;
         }
         
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 30; $i++) {
             $p = new Usuarios();
             $p->setAttributes( array(
                 'nick'=>"test_chica".$i,
                 'pass'=>"123456",
                 'equipos_id_equipo'=>1,
-                'email'=>$i."@test.com",
+                'email'=>"test@test.com",
                 'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
             ));
+            $p->save();
             $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->sumarExp(5000);
             $p->save();
             $chicas[$i] = $p;
         }
 
-        for($i = 0; $i < 10; $i++) {
+        for($i = 0; $i < 30; $i++) {
             $p = new Usuarios();
             $p->setAttributes( array(
                 'nick'=>"test_empresario".$i,
                 'pass'=>"123456",
                 'equipos_id_equipo'=>1,
-                'email'=>$i."@test.com",
+                'email'=>"test@test.com",
                 'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
             ));
+            $p->save();
             $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
+            $p->sumarExp(5000);
             $p->save();
             $empresarios[$i] = $p;
         }
