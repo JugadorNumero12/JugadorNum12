@@ -417,6 +417,20 @@ class AccionesGrupales extends CActiveRecord
 		if($accion['completada'] == 1)
 		{
 			$accion->save();
+			//si se ha completado creamos una notificación
+			$notificacion = new Notificaciones;
+			$notificacion->fecha = time();
+			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
+			$notificacion->url = "acciones/ver?id_accion=". $id_accion;
+			$notificacion->save();
+			//Enviamos la notificación a los interesados
+			$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>Usuarios::model()->findByPk($id_user)->equipos_id_equipo));
+			foreach ($componentes as $componente){
+				$usrnotif = new Usrnotif;
+				$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+				$usrnotif->usuarios_id_usuario = $componente->id_usuario;
+				$usrnotif->save();
+			}
 			Yii::import('application.components.Acciones.*');
 			$nombreHabilidad = $habilidad->codigo;
     		//Llamar al singleton correspondiente y ejecutar dicha acción
@@ -434,6 +448,22 @@ class AccionesGrupales extends CActiveRecord
 		}
 		else
 		{
+			//si se ha aportado algo creamos notivicación
+			$notificacion = new Notificaciones;
+			$notificacion->fecha = time();
+			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha participado en la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
+			$notificacion->url = "acciones/ver?id_accion=". $id_accion;
+			$notificacion->save();
+			//enviamos notificaciones a los participantes de la acción
+			$participaciones = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion));
+			foreach($participaciones as $participacion){
+				if($participacion->usuarios_id_usuario != $id_user){
+					$usrnotif = new Usrnotif;
+					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+					$usrnotif->usuarios_id_usuario = $participacion->usuarios_id_usuario;//$habilidad->id_habilidad;//
+					$usrnotif->save();
+				}
+			}
 			Yii::app()->user->setFlash('aporte', 'Tu equipo agradece tu generosa contribución.');
 		}
 	}
@@ -478,6 +508,21 @@ class AccionesGrupales extends CActiveRecord
 		{
 			Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
 			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
+		}
+
+		//Enviamos la notificación correspondiente
+		$notificacion = new Notificaciones;
+		$notificacion->fecha = time();
+		$notificacion->mensaje = Usuarios::model()->findByPk($id_usuario)->nick . " ha abierto la acción " . Habilidades::model()->findByPk($id_accion)->nombre;
+		$notificacion->url = "acciones/ver?id_accion=". $accion_grupal->id_accion_grupal;
+		$notificacion->save();
+		//Enviamos la notificación a los interesados
+		$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+		foreach ($componentes as $componente){
+			$usrnotif = new Usrnotif;
+			$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+			$usrnotif->usuarios_id_usuario = $componente->id_usuario;
+			$usrnotif->save();
 		}
 
 		return $accion_grupal['id_accion_grupal'];
