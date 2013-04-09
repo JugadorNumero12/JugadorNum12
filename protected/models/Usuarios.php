@@ -247,7 +247,6 @@ class Usuarios extends CActiveRecord
             - pass
             - exp_necesaria
         */
-		
         $criteria->compare('id_usuario',$this->id_usuario,true);
 		$criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
 		$criteria->compare('nick',$this->nick,true);
@@ -359,7 +358,10 @@ class Usuarios extends CActiveRecord
     const UNIDAD_DINERO_GEN = 18;
     const UNIDAD_ANIMO_GEN = 6;
     const UNIDAD_INFLUENCIAS_GEN = 1;
-    
+
+    const FRECUENCIA_NIVELES = 5;
+    const AUMENTOS_POR_NIVEL = 2;
+
     const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
     const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
     const ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
@@ -382,7 +384,7 @@ class Usuarios extends CActiveRecord
      * Para determinar los nuevos valores, nos basaremos en el personaje y 
      * las siguientes reglas:
      * 
-     * 1) Se aumentan 2 "r_gen" por nivel.
+     * 1) Se aumentan AUMENTOS_POR_NIVEL "r_gen" por nivel.
      *
      * 2) La probabilidad de aumentar un determinado "r_gen" en UNIDAD_RECURSO es:
      *  - PROPORCION_MAYOR% probabilidades => 
@@ -392,7 +394,7 @@ class Usuarios extends CActiveRecord
      *  - PROPORCION_MENOR% probabilidades =>
      *      ultra: influencias, RRPP: dinero, empresario: animo
      *
-     * 3) Se aumentaran los "r_max" cada 5 niveles dependiendo del personaje.
+     * 3) Se aumentaran los "r_max" cada FRECUENCIA_NIVELES niveles dependiendo del personaje.
      * Ver las constantes
      *  - ANIMADORA_UNIDAD_INFLUENCIAS_MAX
      *  - EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
@@ -408,30 +410,80 @@ class Usuarios extends CActiveRecord
      */
     public function actualizarAtributos($nivel_inicial, $nivel_actual)
     {
+        // TODO: contemplar que se aumentan varios niveles
         $diferencia_niveles = $nivel_actual - $nivel_inicial;
-        switch ($this->personaje) {
-            
-            case Usuarios::PERSONAJE_ULTRA:
-            
-            break;
 
-            case Usuarios::PERSONAJE_MOVEDORA:
-            
-            break;
+        /* Valores iniciales de los atributos */
+        $atributos['dinero_gen'] =      $this->recursos->dinero_gen;
+        $atributos['animo_gen'] =       $this->recursos->animo_gen;
+        $atributos['influencias_gen'] = $this->recursos->influencias_gen;
+        $atributos['animo_max'] =       $this->recursos->animo_max;
+        $atributos['influencias_max'] = $this->recursos->influencias_max;
 
-            case Usuarios::PERSONAJE_EMPRESARIO:
-            
-            break;
+        /* generacion de los r_gen */
+        for ($i = 1; $i <= AUMENTOS_POR_NIVEL; $i++) {
+            $atributo = Usuarios::queAtributo($this->personaje);
+            if ($atributo == 'dinero_gen') {
+                $cantidad = UNIDAD_DINERO_GEN;
+            } else if ($atributo == 'animo_gen') {
+                $cantidad = UNIDAD_ANIMO_GEN;
+            } else if ($atributo == 'influencias_gen') {
+                $cantidad = UNIDAD_INFLUENCIAS_GEN;
+            }
+
+            $atributos[$atributo] += $cantidad; 
         }
 
-        $atributos['dinero_gen'] = $this->recursos->dinero_gen + 1;
-        $atributos['animo_gen'];
-        $atributos['influencias_gen'];
-
-        $atributos['animo_max'];
-        $atributos['influencias_max'];
+        // TODO : atributos <MAX>
+        $atributos['influencias_max'] += 1;
         
         return $atributos;
+    }
+
+    /** 
+     * Dado un personaje, determina que atributo de generacion aumentar
+     *
+     * @param (int) tipo de personaje
+     * @return (string) el nombre del atributo a aumentar
+     */
+    private static function queAtributo($personaje)
+    {
+
+        /* generacion de las proporciones 
+            [----------------Mayor-------media---menor]
+            [--------------------|-----------|--------]
+        */
+        $p_mayor = PROPORCION_MAYOR;
+        $p_media = $p_mayor + PROPORCION_INTERMEDIA;
+        $p_menor = $p_media + PROPORCION_MENOR;
+        
+        /* Determinar segun el personaje que atributo aumentar */
+        $aleatorio = rand(0,100);
+        if ($aleatorio > $p_media ){
+            /* atributo MENOR */
+            switch ($personaje) {
+                case Usuarios::PERSONAJE_ULTRA: return 'influencias_gen';     
+                case Usuarios::PERSONAJE_MOVEDORA: return 'dinero_gen';
+                case Usuarios::PERSONAJE_EMPRESARIO: return 'animo_gen';
+                default: return 'dinero_gen'; // no deberiamos llegar aqui
+            }
+        } else if ($aleatorio > $p_mayor) {
+            /* atributo MEDIO */
+            switch ($personaje) {
+                case Usuarios::PERSONAJE_ULTRA: return 'dinero_gen';
+                case Usuarios::PERSONAJE_MOVEDORA: return 'animo_gen';
+                case Usuarios::PERSONAJE_EMPRESARIO: return 'influencias_gen';
+                default: return 'dinero_gen'; // no deberiamos llegar aqui
+            }
+        } else {
+            /* atributo MAYOR */
+            switch ($personaje) {
+                case Usuarios::PERSONAJE_ULTRA: return 'animo_gen';
+                case Usuarios::PERSONAJE_MOVEDORA: return 'influencias_gen';
+                case Usuarios::PERSONAJE_EMPRESARIO: return 'dinero_gen';
+                default: return 'dinero_gen'; // no deberiamos llegar aqui
+            }
+        }
     }
 
     /**
