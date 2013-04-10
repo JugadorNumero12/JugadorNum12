@@ -14,11 +14,10 @@ class ChatHandler extends YiiChatDbHandlerBase {
         return hash('sha1',$this->getChatId().time().rand(1000,9999));      
     }
     protected function getIdentityName(){
-        // find the identity name here
-        // example: 
-        //  $model = MyPeople::model()->findByPk($this->getIdentity());
-        //  return $model->userFullName();
-        return "jhonn doe"; 
+        // the name shown
+        $id = Yii::app()->user->usIdent;
+        $model = Usuarios::model()->findByPk($id);
+        return $model->nick; 
     }
     protected function getDateFormatted($value){
         // format the date numeric $value

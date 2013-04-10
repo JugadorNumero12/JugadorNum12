@@ -3,12 +3,12 @@
 <?php 
     $this->widget('YiiChatWidget',array(
         'chat_id'=>'123',                   // a chat identificator
-        'identity'=>Yii::app()->user->id,   // the user, Yii::app()->user->id ?
+        'identity'=>Yii::app()->user->usIdent,   // the user
         'selector'=>'#chat',                // were it will be inserted
         'minPostLen'=>2,                    // min and
-        'maxPostLen'=>20,                   // max string size for post
+        'maxPostLen'=>50,                   // max string size for post
         //'model'=>new MyYiiChatHandler(),
-        'model'=>new ChatHandler(),    // the class handler. **** FOR DEMO, READ MORE LATER IN THIS DOC ****
+        'model'=>new ChatHandler(),    // the class handler.
         'data'=>'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
         'onSuccess'=>new CJavaScriptExpression(
