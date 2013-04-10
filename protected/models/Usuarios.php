@@ -26,11 +26,11 @@ class Usuarios extends CActiveRecord
     const PROPORCION_INTERMEDIA = 30;
     const PROPORCION_MENOR = 15;
     
-    const UNIDAD_DINERO_GEN = 18;
-    const UNIDAD_ANIMO_GEN = 6;
+    const UNIDAD_DINERO_GEN = 40;
+    const UNIDAD_ANIMO_GEN = 12;
     const UNIDAD_INFLUENCIAS_GEN = 1;
 
-    const FRECUENCIA_NIVELES = 5;
+    const FRECUENCIA_NIVELES= 5;
     const AUMENTOS_POR_NIVEL = 2;
 
     const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
@@ -39,8 +39,6 @@ class Usuarios extends CActiveRecord
     const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
     const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
     const ULTRA_UNIDAD_ANIMO_MAX = 30;
-
-    const VECES_MAX = 5;
     /* *** */
 
 	const BCRYPT_ROUNDS = 12;
@@ -283,6 +281,8 @@ class Usuarios extends CActiveRecord
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales
+     *
+     * @param $id_usuario
 	 */
 	public function actualizaDatos($id_usuario)
 	{
@@ -295,17 +295,19 @@ class Usuarios extends CActiveRecord
     /**
      * Devuelve la experencia necesaria para alcanzar el siguiente nivel
      * La experencia necesaria depende del nivel actual y un modificador 
-     * la curvatura de dificultad es de 1.1^nivel
+     * La curva esta sacada de:
+     * stackoverflow.com/questions/6954874/php-game-formula-to-calculate-a-level-based-on-exp
      *
      * @param $nivel_actual 
-     * @param $modificador ; valor por defecto 500.
+     * @param $modificador ; valor por defecto 30.
      * @return (int) experencia necesaria para alcanzar el siguiente nivel.
      */
-    public static function expNecesaria($nivel_actual, $modificador = 500)
+    public static function expNecesaria($nivel_actual, $modificador = 30)
     {
-        // FIXME: nivelar la curva resultante. 
-        // para debugg exite la vista </usuarios/exp>
-        return (int) ( $modificador * pow( 1.1, ($nivel_actual)) );
+        $a = pow(($nivel_actual+1),3);
+        $b = $modificador*pow(($nivel_actual+1),2);
+        $c = $modificador*($nivel_actual+1);
+        return (int) ($a+$b+$c);
     }
 
     /** 
@@ -433,7 +435,7 @@ class Usuarios extends CActiveRecord
                 $atributos[$atributo] = $atributos[$atributo] + $cantidad; 
             }
 
-            if ( ($nivel_actual - $niveles_subidos) % self::VECES_MAX == 0){
+            if ( ($nivel_actual - $niveles_subidos) % self::FRECUENCIA_NIVELES == 0){
                 $cuantoSubirMaximos = Usuarios::cuantoSubirMaximos($this->personaje);
                 $atributos['influencias_max'] += $cuantoSubirMaximos['influencias_max'];
                 $atributos['animo_max'] += $cuantoSubirMaximos['animo_max'];
