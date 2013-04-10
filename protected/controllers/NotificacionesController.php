@@ -37,14 +37,13 @@ class NotificacionesController extends Controller
 	 */
 	public function actionIndex(){
 
-		$misUsrnotif = Usrnotif::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$misUsrnotif = Usrnotif::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent, 'leido'=>0));
 
 		$notificaciones = array();
 		foreach ($misUsrnotif as $usrnotif){
 			$notificacion = Notificaciones::model()->findByPK($usrnotif['notificaciones_id_notificacion']);
 			if ($notificacion === null)
 				Yii::app()->user->setFlash('notificaion', 'Notificacion no encontrada.');
-				//throw new Exception("Notificacion no encontrada.)", 404);
 			$notificaciones[] = array('notificacion'=>$notificacion,'leido'=>$usrnotif->leido);
 		}
 		$this->render('index',array('notificaciones'=>$notificaciones));
@@ -57,21 +56,17 @@ class NotificacionesController extends Controller
 	 */
 	public function actionLeer($id , $url){
 		$usrnotif = Usrnotif::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,'notificaciones_id_notificacion' => $id));	
-			if($usrnotif === null) Yii::app()->user->setFlash('inexistente', 'Notificacion inexistente.');
-			if($usrnotif->leido == 0){
-				$trans = Yii::app()->db->beginTransaction();
-				try{
-					$usrnotif->leido = !$usrnotif->leido;
-					if($usrnotif->save()){
-						$trans->commit();
-					}
-				}catch(Exception $e){
-					$trans->rollback();
+		if($usrnotif === null || $usrnotif->leido == 1) Yii::app()->user->setFlash('error', 'Notificacion inexistente o ya leida.');
+			$trans = Yii::app()->db->beginTransaction();
+			try{
+				$usrnotif->leido = !$usrnotif->leido;
+				if($usrnotif->save()){
+					$trans->commit();
 				}
+			}catch(Exception $e){
+				$trans->rollback();
 			}
-			if($url == "")
-			$this->redirect(array('notificaciones/index'));
-			else $this->redirect(array($url));
+		$this->redirect(array($url));
 	}
 
 	/**
