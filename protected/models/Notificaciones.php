@@ -97,7 +97,6 @@ class Notificaciones extends CActiveRecord
 	}
 
 	public static function borrarNotificaciones(){
-		//$usrNotifs =  Usrnotif::model()->findAllByAttributes(array('leido'=>1));
 		//Borramos conexiones de notificaciones leidas
 		Usrnotif::model()->deleteAllByAttributes(array('leido'=>1)); 
 		//Cogemos todas las notificaciones
