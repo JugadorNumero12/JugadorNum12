@@ -20,6 +20,8 @@ class SiteController extends Controller
 			'page'=>array(
 				'class'=>'CViewAction',
 			),
+			//yii chat
+			 'chat'=>array('class'=>'YiiChatAction'),
 		);
 	}
 
@@ -119,6 +121,7 @@ class SiteController extends Controller
 
 		// display the login form
 		$this->render('login',array('model'=>$modelo));
+
 	}
 
 	/**
@@ -128,5 +131,9 @@ class SiteController extends Controller
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+
+	public function actionChats(){
+		$this->render('/chat/index');
 	}
 }
