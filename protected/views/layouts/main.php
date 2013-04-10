@@ -111,7 +111,7 @@
 				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
-						     width="24" height="24"/><span class="user-menu-txt">Notificaciones</span>
+						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
 					</li>
 				</a>
 
@@ -119,7 +119,7 @@
 				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-mensajes.png"
-						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->count?> </span>
+						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
 					</li>
 				</a>
 

@@ -38,8 +38,14 @@ class Controller extends CController
 			// Obtiene la información de la mensajeria
 			 //Saca la lista de los emails recibidos por el usuario y que ademas no los haya leido
         	$mensajeria = Emails:: model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent, 'leido'=>0));
-			$count = count($mensajeria);
-			Yii::app()->setParams(array('count'=>$count));
+			$countmens = count($mensajeria);
+			Yii::app()->setParams(array('countmens'=>$countmens));
+
+			// Obtiene la información de las notificaciones
+			 //Saca la lista de las notinicaciones recibidas por el usuario y que ademas no haya leido
+        	$notificaciones = Usrnotif:: model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent, 'leido'=>0));
+			$countnot = count($notificaciones);
+			Yii::app()->setParams(array('countnot'=>$countnot));
 
 		}
 		
