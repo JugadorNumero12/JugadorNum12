@@ -286,6 +286,7 @@ class UsuariosController extends Controller
     // ejemplos de personajes
     public function actionEjemplos()
     {
+        // borramos los personajes de ejemplos de la base de datos
         Yii::app()->db->createCommand('DELETE FROM recursos WHERE usuarios_id_usuario IN
             (SELECT id_usuario from usuarios WHERE email="test@test.com")')->query();
         Yii::app()->db->createCommand('DELETE FROM usuarios WHERE email="test@test.com"')->query();
@@ -294,54 +295,36 @@ class UsuariosController extends Controller
         $chicas = array();
         $empresarios = array();
 
-        for($i = 0; $i < 30; $i++) {
-            $p = new Usuarios();
-            $p->setAttributes( array(
-                'nick'=>"test_ultra".$i,
-                'pass'=>"123456",
-                'equipos_id_equipo'=>1,
-                'email'=>"test@test.com",
-                'personaje'=>Usuarios::PERSONAJE_ULTRA,
-            ));
-            $p->save();
-            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
-            $p->sumarExp(5000);
-            $p->save();
-            $ultras[$i] = $p;
-        }
+            for($i = 0; $i < 50; $i++) {
+                $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
+                $u->setAttributes( array(
+                    'nick'=>"test_ultra".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_ULTRA,
+                ));
+                $c->setAttributes( array(
+                    'nick'=>"test_chica".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
+                ));
+                $e->setAttributes( array(
+                    'nick'=>"test_empresario".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
+                ));
+                $u->save(); $c->save(); $e->save();
+                $u->crearPersonaje(); $c->crearPersonaje(); $e->crearPersonaje();
+                $u->sumarExp($i*1000); $c->sumarExp($i*1000); $e->sumarExp($i*1000);
+                $u->save(); $c->save(); $e->save();
+                $ultras[$i] = $u; $chicas[$i] = $c; $empresarios[$i] = $e;
+            }
         
-        for($i = 0; $i < 30; $i++) {
-            $p = new Usuarios();
-            $p->setAttributes( array(
-                'nick'=>"test_chica".$i,
-                'pass'=>"123456",
-                'equipos_id_equipo'=>1,
-                'email'=>"test@test.com",
-                'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
-            ));
-            $p->save();
-            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
-            $p->sumarExp(5000);
-            $p->save();
-            $chicas[$i] = $p;
-        }
-
-        for($i = 0; $i < 30; $i++) {
-            $p = new Usuarios();
-            $p->setAttributes( array(
-                'nick'=>"test_empresario".$i,
-                'pass'=>"123456",
-                'equipos_id_equipo'=>1,
-                'email'=>"test@test.com",
-                'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
-            ));
-            $p->save();
-            $p->crearPersonaje(); // "nivel" "exp" "exp_necesaria" y "recursos"  
-            $p->sumarExp(5000);
-            $p->save();
-            $empresarios[$i] = $p;
-        }
-
         $this->render('ejemplos', array(
             'ultras'=>$ultras,
             'chicas'=>$chicas,
