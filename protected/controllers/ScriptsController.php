@@ -286,9 +286,10 @@ class ScriptsController extends Controller
 	}
 
 	///LIGA
-	private function calendario($participantes=null){
+	private function calendario($participantes=null)
+	{
 		if($participantes===null)
-			$participantes=Clasificacion::->select('equipos_id_equipo');
+			$participantes=Clasificacion::model()->select('equipos_id_equipo');
 			//esto debería devolver una lista con todos los id_equipo
 
 		const N = count($participantes);
@@ -297,7 +298,7 @@ class ScriptsController extends Controller
 		//https://github.com/samuelmgalan/CalendarioLiga/blob/master/src/src/Calendario.java
 		$cont = 0;
 		$cont2 = N-2;
-		for($i=0; $i<N-1; $i++){
+		for($i=0; $i<N-1; $i++)
 			for($j=0; $j<N/2; $j++){
 
 				$eq0 = $participantes[$cont++];
@@ -329,7 +330,6 @@ class ScriptsController extends Controller
 				}
 
 			}
-		}
 
 		return $calendario;
 	}
