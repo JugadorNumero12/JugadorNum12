@@ -746,18 +746,18 @@ class Partido
 				//Creamos una notificación de fin de partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
-				$notificacion->mensaje = Equipos::model()->findByPk($id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($id_visitante)->nombre . "(visitante)";
+				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
 				$notificacion->url = "partidos/index";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
-				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_local));
+				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_local));
 				foreach ($componentes as $componente){
 					$usrnotif = new Usrnotif;
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
 				}
-				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_visitante));
+				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_visitante));
 				foreach ($componentes as $componente){
 					$usrnotif = new Usrnotif;
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
