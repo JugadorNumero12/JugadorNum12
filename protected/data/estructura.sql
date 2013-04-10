@@ -252,8 +252,7 @@ CREATE TABLE IF NOT EXISTS `notificaciones` (
 `fecha` int(11) unsigned NOT NULL DEFAULT 0,
 `mensaje` text NOT NULL,
 `url` varchar(50) NOT NULL,
-PRIMARY KEY (`id_notificacion`),
-KEY `notificaciones_FKIndex1` (`equipos_id_equipo`)
+PRIMARY KEY (`id_notificacion`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
