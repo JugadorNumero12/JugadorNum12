@@ -60,6 +60,19 @@ class Emails extends CActiveRecord
 	}
 
 	/**
+	*Saca los usuarios de destino de un mensaje.
+	*espera algo como user1,user2,user3 y lo se para por las comas
+	*
+	*@devuelve arra con los usuarios
+	*/
+	public function sacarUsuarios($usuarios){
+
+		$usur_descomp = explode(",", $usuarios);
+		return $usur_descomp;
+
+	}
+
+	/**
 	 * Define las relaciones entre <emails - tabla>
 	 *
 	 * @devuelve array de relaciones

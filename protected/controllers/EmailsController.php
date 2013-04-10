@@ -53,28 +53,40 @@ class EmailsController extends Controller
 	 * @redirige juagdorNum12/emails
 	 */
 	public function actionRedactar($destinatario, $tema){
-		$trans = Yii::app()->db->beginTransaction();
+
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
 		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
-		try{
-			$email = new Emails;
-			if (isset($_POST['Emails']) ) {
-				$email->scenario='redactar';
-				$email->attributes=$_POST['Emails']; //asunto y contenido
-				$email->setAttributes(array('id_usuario_from'=>$yo->id_usuario)); //remitente
-				$email->setAttributes(array('fecha'=>time()));//fecha
-				$para = Usuarios::model()->findByAttributes(array('nick'=>$_POST['Emails']['nombre']));
-				if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
-				$email->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
-				if($email->save()){
-					$trans->commit();
-					$this->redirect(array('index'));
-				}
-			}
-		}catch(Exception $e){
-			$trans->rollback();
+		$des="";
+
+		$email = new Emails;
+		if(isset($_POST['Emails'])){
+			$email->scenario='redactar';			
+
+			$destinatarios = $_POST['Emails']['nombre'];
+			$des = $email->sacarUsuarios($destinatarios);
+			foreach ($des as $destinatario) {
+				$emailAux = new Emails;
+				$emailAux->scenario='redactar';
+				$trans = Yii::app()->db->beginTransaction();
+				try{
+					$emailAux->attributes=$_POST['Emails']; //asunto y contenido
+					$emailAux->setAttributes(array('id_usuario_from'=>$yo->id_usuario)); //remitente
+					$emailAux->setAttributes(array('fecha'=>time()));//fecha
+					$para = Usuarios::model()->findByAttributes(array('nick'=>$destinatario));
+					if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
+					$emailAux->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
+					if($emailAux->save()){
+						$trans->commit();
+						//$this->redirect(array('index'));
+					}
+
+				}catch(Exception $e){
+					$trans->rollback();
+				}				
+			}			
 		}
-		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
+		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema, 'des'=>$des));
+
 	}
 
 	/**

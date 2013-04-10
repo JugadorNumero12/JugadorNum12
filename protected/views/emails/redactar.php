@@ -54,5 +54,7 @@
 	  <?php	} ?>
 	</tr>
 
+
 </table>
+
  <?php $this->endWidget(); ?>
