@@ -95,4 +95,17 @@ class Notificaciones extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public static function borrarNotificaciones(){
+		//Borramos conexiones de notificaciones leidas
+		Usrnotif::model()->deleteAllByAttributes(array('leido'=>1)); 
+		//Cogemos todas las notificaciones
+		$notificaciones = Notificaciones::model()->findAll();
+		foreach($notificaciones as $notificacion){
+			//si a alguna de las notificaciones ha sido leida por todos los usuarios se borra
+			$u = Usrnotif::model()->findByAttributes(array('notificaciones_id_notificacion'=>$notificacion->id_notificacion));
+			if($u === null)$notificacion->delete();
+		}
+	}
+		
 }

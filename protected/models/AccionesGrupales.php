@@ -132,6 +132,7 @@ class AccionesGrupales extends CActiveRecord
 			$busqueda->params = array(':bTiempo' => $tiempo,
 									':bCompletada' => 0,
 									);
+
 			$transaction = Yii::app()->db->beginTransaction();
 
 			$grupales = AccionesGrupales::model()->findAll($busqueda);
@@ -143,6 +144,21 @@ class AccionesGrupales extends CActiveRecord
 				$participantes = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
 				//Recorro todos los participantes devolviendoles sus recursos.
 				//Esto incluye el creador de la acción.
+				
+				$notificacion = new Notificaciones;
+				$notificacion->fecha = time();
+				$notificacion->mensaje = "La habilidad " . Habilidades::model()->findByPk($gp->habilidades_id_habilidad)->nombre . " ha finalizado."; 
+				$notificacion->url = "usuarios/index";
+				$notificacion->save();
+				//Enviamos la notificación a los participantes
+				foreach($participantes as $participacion){
+					$usrnotif = new Usrnotif;
+					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+					$usrnotif->usuarios_id_usuario = $participacion->usuarios_id_usuario;//$habilidad->id_habilidad;//
+					$usrnotif->save();
+				}
+
+
 				foreach ($participantes as $participante)
 				{
 					//Cojo el dinero,influencia y animo aportado por el usuario
@@ -162,6 +178,7 @@ class AccionesGrupales extends CActiveRecord
 				//Borro esa accion grupal iniciada por el usuario que quiere cambiar de equipo
 				AccionesGrupales::model()->deleteByPk($gp->id_accion_grupal);
 			}
+
 			//Finalizar transacción con éxito
 			$transaction->commit();  
 		}
@@ -510,20 +527,20 @@ class AccionesGrupales extends CActiveRecord
 			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
 		}
 
-		/*//Enviamos la notificación correspondiente
+		//Enviamos la notificación correspondiente
 		$notificacion = new Notificaciones;
 		$notificacion->fecha = time();
 		$notificacion->mensaje = Usuarios::model()->findByPk($id_usuario)->nick . " ha abierto la acción " . Habilidades::model()->findByPk($id_accion)->nombre;
 		$notificacion->url = "acciones/ver?id_accion=". $accion_grupal->id_accion_grupal;
 		$notificacion->save();
-		//Enviamos la notificación a los interesados
+		//Enviamos la notificación a la afición
 		$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
 		foreach ($componentes as $componente){
 			$usrnotif = new Usrnotif;
 			$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 			$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 			$usrnotif->save();
-		}*/
+		}
 
 		return $accion_grupal['id_accion_grupal'];
 	}
