@@ -27,6 +27,11 @@ class Usuarios extends CActiveRecord
                 /* *** */
 
         /* SISTEMA DE NIVELES */
+    const POCA_EXP = 50;
+    const MEDIA_EXP = 100;
+    const BASTANTE_EXP = 400;
+    const MUCHA_EXP = 1000;
+
     const PROPORCION_MAYOR = 55;
     const PROPORCION_INTERMEDIA = 30;
     const PROPORCION_MENOR = 15;

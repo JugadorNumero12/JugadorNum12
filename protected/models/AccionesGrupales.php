@@ -59,7 +59,6 @@ class AccionesGrupales extends CActiveRecord
 	 */
 	public function relations()
 	{
-		/* MARCOS */
 		return array(
 			//relacion con tablas de la arquitectura (1ª iteración)
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
@@ -439,8 +438,9 @@ class AccionesGrupales extends CActiveRecord
 	}
 
 	// Función para usar una acción grupal
-	public static function usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad)
+	public static function usarGrupal($usuario, $id_accion, $id_equipo, $res, $habilidad)
 	{		
+		$id_usuario = $usuario->id_usuario;
 		/*
 			Se deberia obtener la accion grupal mediante su PK (id_accion_grupal)
 			Como $id_accion equivale $id_habilidad por como se redirige desde acciones/index
@@ -480,6 +480,9 @@ class AccionesGrupales extends CActiveRecord
 			throw new Exception("Participación no creada. (AccionesController,actionUsar)");	
 		}
 
+		// EXP: sumar experencia al usuario
+		$usuario->sumarExp(Usuarios::MEDIA_EXP);
+		//XXX
 		return $accion_grupal['id_accion_grupal'];
 	}
 }
