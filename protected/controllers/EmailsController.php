@@ -89,8 +89,7 @@ class EmailsController extends Controller
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
 		$to = $usuario_to->nick;
-		if(Yii::app()->user->usIdent == $email->id_usuario_from) $el_otro = $to;
-		else $el_otro = $from;
+
 		if($email->id_usuario_to == Yii::app()->user->usIdent && !$email->leido){
 			$trans = Yii::app()->db->beginTransaction();
 			try{
@@ -101,7 +100,7 @@ class EmailsController extends Controller
 				$trans->rollback();
 			}
 		}
-		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to,'el_otro'=>$el_otro));
+		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to));
 	}
 
 	/**
