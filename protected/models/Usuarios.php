@@ -39,6 +39,8 @@ class Usuarios extends CActiveRecord
     const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
     const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
     const ULTRA_UNIDAD_ANIMO_MAX = 30;
+
+    const VECES_MAX = 5;
     /* *** */
 
 	const BCRYPT_ROUNDS = 12;
@@ -399,15 +401,14 @@ class Usuarios extends CActiveRecord
      *  - EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
      *  - ULTRA_UNIDAD_ANIMO_MAX = 30;
      *  
-     * @param $nivel_incial
+     * @param $nivel_inicial
      * @param $nivel_actual
      * @return (array) nuevos atributos calculados.
      *
      */
     public function actualizarAtributos($nivel_inicial, $nivel_actual)
     {
-        // TODO: contemplar que se aumentan varios niveles
-        $diferencia_niveles = $nivel_actual - $nivel_inicial;
+        $niveles_subidos = $nivel_actual - $nivel_inicial;
 
         /* Valores iniciales de los atributos */
         $atributos['dinero_gen'] =      $this->recursos->dinero_gen;
@@ -416,25 +417,67 @@ class Usuarios extends CActiveRecord
         $atributos['animo_max'] =       $this->recursos->animo_max;
         $atributos['influencias_max'] = $this->recursos->influencias_max;
 
-        /* generacion de los r_gen */
-        for ($i = 1; $i <= self::AUMENTOS_POR_NIVEL; $i++) {
-            $atributo = Usuarios::queAtributo($this->personaje);
+        while ($niveles_subidos > 0) {
+            /* generacion de los r_gen */
+            for ($i = 1; $i <= self::AUMENTOS_POR_NIVEL; $i++) {
+                $atributo = Usuarios::queAtributo($this->personaje);
 
-            if ($atributo == 'dinero_gen') {
-                $cantidad = self::UNIDAD_DINERO_GEN;
-            } else if ($atributo == 'animo_gen') {
-                $cantidad = self::UNIDAD_ANIMO_GEN;
-            } else if ($atributo == 'influencias_gen') {
-                $cantidad = self::UNIDAD_INFLUENCIAS_GEN;
+                if ($atributo == 'dinero_gen') {
+                    $cantidad = self::UNIDAD_DINERO_GEN;
+                } else if ($atributo == 'animo_gen') {
+                    $cantidad = self::UNIDAD_ANIMO_GEN;
+                } else if ($atributo == 'influencias_gen') {
+                    $cantidad = self::UNIDAD_INFLUENCIAS_GEN;
+                }
+
+                $atributos[$atributo] = $atributos[$atributo] + $cantidad; 
             }
 
-            $atributos[$atributo] = $atributos[$atributo] + $cantidad; 
-        }
+            if ( ($nivel_actual - $niveles_subidos) % self::VECES_MAX == 0){
+                $cuantoSubirMaximos = Usuarios::cuantoSubirMaximos($this->personaje);
+                $atributos['influencias_max'] += $cuantoSubirMaximos['influencias_max'];
+                $atributos['animo_max'] += $cuantoSubirMaximos['animo_max'];
+            }
 
-        // TODO : atributos <MAX>
-        $atributos['influencias_max'] += 1;
-        
+            $niveles_subidos -= 1;
+        }
         return $atributos;
+    }
+
+    /**
+     * Determina que cantidad subir los atributos 
+     *  - influencias_max
+     *  - ainmo_max
+     * dependiendo unicamente del tipo de personaje
+     *
+     * @param $personaje : tipo de personaje 
+     * @return (array) cantidad a subir los atributos "maximos" 
+    */
+    private static function cuantoSubirMaximos($personaje)
+    {
+        switch ($personaje) {
+            case self::PERSONAJE_ULTRA: 
+                return(array(
+                    'influencias_max'=>self::ULTRA_UNIDAD_INFLUENCIAS_MAX,
+                    'animo_max'=>self::ULTRA_UNIDAD_ANIMO_MAX
+                ));
+            case self::PERSONAJE_MOVEDORA:
+                return (array(
+                    'influencias_max'=>self::ANIMADORA_UNIDAD_INFLUENCIAS_MAX,
+                    'animo_max'=>self::ANIMADORA_UNIDAD_ANIMO_MAX
+                ));
+            case self::PERSONAJE_EMPRESARIO:
+                return (array(
+                    'influencias_max'=>self::EMPRESARIO_UNIDAD_INFLUENCIAS_MAX,
+                    'animo_max'=>self::EMPRESARIO_UNIDAD_ANIMO_MAX
+                    ));
+            default:
+                // No deberiamos llegar a este punto
+                return (array(
+                    'influencias_max'=>self::EMPRESARIO_UNIDAD_INFLUENCIAS_MAX,
+                    'animo_max'=>self::ANIMADORA_UNIDAD_ANIMO_MAX
+                ));
+        }
     }
 
     /** 
