@@ -112,7 +112,7 @@ class AccionesTurno extends CActiveRecord
 		 $modelo->setAttributes(array('usuarios_id_usuario'=> $id_usuario ,
 										'partidos_id_partido'=> $id_partido,
 										'equipos_id_equipo'=> $id_equipo,
-										'influenciasAcc'=> 0));
+										'influencias_acc'=> 0));
 	}
 
 	//incorpora registro en la tabla acciones turno si el usuario aun no estaba
@@ -124,6 +124,7 @@ class AccionesTurno extends CActiveRecord
 		if($participante  === null)
 		{
 			agregarParticipacion($id_usuario, $id_partido,$id_equipo);
+
 		}
                 
 	}																	'
