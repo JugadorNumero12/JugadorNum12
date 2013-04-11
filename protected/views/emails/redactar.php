@@ -7,6 +7,9 @@
 					'validateOnSubmit'=>true,),
 			    ));
  ?>
+
+<h1> Redactar mensaje </h1>
+
 <table>
   <tr>
   	<?php if($destinatario != "") $email->nombre=$destinatario; if($tema != "")	$email->asunto=$tema; ?> 
@@ -36,8 +39,8 @@
 	   <tr>
 	    <td >
 	    	<?php echo CHtml::submitButton('Enviar',array('class'=>"button small black"));?>
-	    	<?php echo CHtml::button('Bandeja de entrada', array('submit' => array('emails/'),'class'=>"button small black")); ?> 
-			<?php echo CHtml::button('Enviados', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> 
+	    	<?php echo CHtml::button('Bandeja de entrada', array('submit' => array('emails/index'),'class'=>"button small black")); ?> 
+			<?php echo CHtml::button('Bandeja de salida', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> 
 
 	    </td>
 	   
