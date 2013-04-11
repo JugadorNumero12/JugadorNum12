@@ -22,7 +22,7 @@ class RetransmitirRRSS extends AccionPartSingleton
    }
 
 	/* Aplicar los efectos de la accion */
-	public function ejecutar($id_usuario)
+	public function ejecutar($id_usuario,$id_partido,$id_equipo)
 	{
 		  $ret =0 ; 
 	      //Traer el array de efectos
@@ -45,6 +45,8 @@ class RetransmitirRRSS extends AccionPartSingleton
 	      {
 	        $ret = -1;
 	      }
+	      // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
+	      AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
 	      //Finalizar función
 	      return $ret;
 	}

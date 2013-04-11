@@ -21,7 +21,7 @@ class BeberCerveza extends AccionPartSingleton
    }
 
 	/* Aplicar efectos de la accion */
-	public function ejecutar($id_usuario)
+	public function ejecutar($id_usuario,$id_partido,$id_equipo)
 	{
 		//Traer el array de efectos
 	    parent::ejecutar($id_usuario);
@@ -40,6 +40,8 @@ class BeberCerveza extends AccionPartSingleton
 	    {
 	      return -1;
 	    }
+	    // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
+	    AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
 	}
 
 	public function finalizar() {}
