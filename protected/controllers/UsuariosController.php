@@ -161,33 +161,12 @@ class UsuariosController extends Controller
     }
 
     /*
-     * Muestra los datos de la cuenta del usuario
-     *  Nick
-     *  eMail
-     *
-     * El id del usuario se recoge de la variable de sesion
-     * 
-     * @ruta    jugadorNum12/usuarios/cuenta
-     */
-    public function actionCuenta()
-    {
-        /* Actualizar datos de usuario (recuros,individuales y grupales) */
-        Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
-        /* Fin de actualización */
-        
-        $id= Yii::app()->user->usIdent;
-        $modelo = Usuarios:: model()->findByPk($id);
-        
-        $this->render('cuenta',array('modelo'=>$modelo));
-    }
-
-    /*
      * Muestra un formulario para cambiar la clave del usuario
      * Si hay datos en $_POST procesa el formulario y guarda la
      * nueva clave en la tabla <<usuarios>> 
      *
      * @ruta        jugadorNum12/usuarios/cambiarClave
-     * @redirige    jugadorNum12/usuarios/cuenta
+     * @redirect    jugadorNum12/usuarios/perfil
      */
     public function actionCambiarClave()
     {
@@ -210,7 +189,7 @@ class UsuariosController extends Controller
             //Sino es correcto, mensaje de error
             if ($modelo->save()) 
             { 
-               $this->redirect(array('usuarios/cuenta'));
+               $this->redirect(array('usuarios/perfil'));
             }
            
         }
@@ -224,7 +203,7 @@ class UsuariosController extends Controller
      * nuevo email en la tabla <<usuarios>> 
      *
      * @ruta        jugadorNum12/usuarios/cambiarEmail
-     * @redirige    jugadorNum12/usuarios/cuenta
+     * @redirect    jugadorNum12/usuarios/perfil
      */
     public function actionCambiarEmail()
     {
@@ -257,7 +236,7 @@ class UsuariosController extends Controller
                 if ($modelo->save()) 
                 {
                    $trans->commit();
-                   $this->redirect(array('usuarios/cuenta'));
+                   $this->redirect(array('usuarios/perfil'));
                 }else
                 {
                     $trans->commit(); 
@@ -269,6 +248,90 @@ class UsuariosController extends Controller
                 }               
         $this->render('cambiarEmail',array('model'=>$modelo));
     }
+
+    /* DEBUG */
+    // +500 experencia
+    public function actionDebug()
+    {
+        $id = Yii::app()->user->usIdent;
+        $usuario = Usuarios:: model()->findByPk($id);
+        
+        // transaccion
+        $usuario->sumarExp(500);
+        // end transaccion
+
+        $this->redirect(array('usuarios/perfil'));
+    }
+    // + 5000 experencia
+    public function actionDebug2()
+    {
+        $id = Yii::app()->user->usIdent;
+        $usuario = Usuarios:: model()->findByPk($id);
+
+        // transaccion
+        $usuario->sumarExp(5000);
+        // end transaccion
+
+        $this->redirect(array('usuarios/perfil'));
+    }
+    // Listado de niveles de exp necesarios
+    public function actionExp()
+    {
+        $exp = array(100);
+        for($i = 0; $i < 100; $i++) {
+            $exp[$i] = Usuarios::expNecesaria($i);
+        }
+        $this->render('exp', array('array'=>$exp));
+    }
+    // ejemplos de personajes
+    public function actionEjemplos()
+    {
+        // borramos los personajes de ejemplos de la base de datos
+        Yii::app()->db->createCommand('DELETE FROM recursos WHERE usuarios_id_usuario IN
+            (SELECT id_usuario from usuarios WHERE email="test@test.com")')->query();
+        Yii::app()->db->createCommand('DELETE FROM usuarios WHERE email="test@test.com"')->query();
+
+        $ultras = array();
+        $chicas = array();
+        $empresarios = array();
+
+            for($i = 0; $i < 50; $i++) {
+                $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
+                $u->setAttributes( array(
+                    'nick'=>"test_ultra".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_ULTRA,
+                ));
+                $c->setAttributes( array(
+                    'nick'=>"test_chica".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
+                ));
+                $e->setAttributes( array(
+                    'nick'=>"test_empresario".$i,
+                    'pass'=>"123456",
+                    'equipos_id_equipo'=>1,
+                    'email'=>"test@test.com",
+                    'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
+                ));
+                $u->save(); $c->save(); $e->save();
+                $u->crearPersonaje(); $c->crearPersonaje(); $e->crearPersonaje();
+                $u->sumarExp($i*1000); $c->sumarExp($i*1000); $e->sumarExp($i*1000);
+                $u->save(); $c->save(); $e->save();
+                $ultras[$i] = $u; $chicas[$i] = $c; $empresarios[$i] = $e;
+            }
+        
+        $this->render('ejemplos', array(
+            'ultras'=>$ultras,
+            'chicas'=>$chicas,
+            'empresarios'=>$empresarios
+        ));
+    }
+    /* ** */
 
     /**
      * Returns the data model based on the primary key given in the GET variable.

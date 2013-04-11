@@ -75,7 +75,8 @@ DROP TABLE IF EXISTS `acciones_turno`;
 CREATE TABLE IF NOT EXISTS `acciones_turno` (
   `partidos_id_partido` int(10) unsigned NOT NULL,
   `equipos_id_equipo` int(10) unsigned NOT NULL,
-  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,  
+  `influencias_acc` int(10) unsigned NOT NULL,
   KEY `acciones_turno_FKIndex1` (`partidos_id_partido`),
   KEY `acciones_turno_FKIndex2` (`equipos_id_equipo`),  
   KEY `acciones_turno_FKIndex3` (`usuarios_id_usuario`),  
@@ -221,7 +222,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `pass` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `personaje` tinyint(4) unsigned DEFAULT NULL,
-  `nivel` int(10) unsigned DEFAULT NULL,
+  `nivel` tinyint(4) unsigned DEFAULT NULL,
+  `exp` int(10) unsigned DEFAULT NULL,
+  `exp_necesaria` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

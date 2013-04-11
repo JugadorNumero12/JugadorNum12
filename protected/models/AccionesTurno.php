@@ -38,11 +38,11 @@ class AccionesTurno extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo', 'required'),
-			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo', 'length', 'max'=>10),
+			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo, influencias_acc', 'required'),
+			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo, influencias_acc', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo', 'safe', 'on'=>'search'),
+			array('usuarios_id_usuario, partidos_id_partido, equipos_id_equipo, influencias_acc', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,7 @@ class AccionesTurno extends CActiveRecord
 			'usuarios_id_usuario' => 'Usuarios Id Usuario',
 			'partidos_id_partido' => 'Partidos Id Partido',
 			'equipos_id_equipo' => 'Equipos Id Equipo',
+			'influencias_acc' => 'Influencias acumuladas',
 		);
 	}
 
@@ -88,9 +89,43 @@ class AccionesTurno extends CActiveRecord
 		$criteria->compare('usuarios_id_usuario',$this->usuarios_id_usuario,true);
 		$criteria->compare('partidos_id_partido',$this->partidos_id_partido,true);
 		$criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
+		$criteria->compare('influencias_acc',$this->equipos_id_equipo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	// Busca participacion en la tabla acciones turno
+	public function buscarParticipacion($id_usuario, $id_partido,$id_equipo)
+	{
+		 $participacion =Participaciones::model()->findAllByAttributes(array('usuarios_id_usuario'=> $id_usuario ,
+																			'partidos_id_partido'=> $id_partido,
+																			'equipos_id_equipo'=> $id_equipo));
+
+		return $participacion; 
+	}
+
+	public function agregarParticipacion($id_usuario, $id_partido,$id_equipo)
+	{
+		 $modelo=new AccionesTurno();
+		 $modelo->setAttributes(array('usuarios_id_usuario'=> $id_usuario ,
+										'partidos_id_partido'=> $id_partido,
+										'equipos_id_equipo'=> $id_equipo,
+										'influencias_acc'=> 0));
+	}
+
+	//incorpora registro en la tabla acciones turno si el usuario aun no estaba
+	public static function incorporarAccion($id_usuario, $id_partido,$id_equipo)
+	{
+		 // Busco si ha Participado ya ese usuario en en ese partido
+		$participante = buscarParticipacion($id_usuario, $id_partido,$id_equipo) ;
+
+		if($participante  === null)
+		{
+			agregarParticipacion($id_usuario, $id_partido,$id_equipo);
+
+		}
+                
+	}																	'
 }
