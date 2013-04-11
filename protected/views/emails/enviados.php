@@ -8,6 +8,7 @@
 			    ));
  ?>
 
+<h1> Bandeja de Salida</h1>
 
 <table>
 	<tr> <th>Enviado a </th> <th> Asunto </th> <th> Fecha </th> <th> &nbsp; </th> </tr>

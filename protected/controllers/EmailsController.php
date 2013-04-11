@@ -38,7 +38,8 @@ class EmailsController extends Controller
 	public function actionIndex(){
 		$niks = array();
 		//Saca todos los emails recibidos por el usuario y que no los haya borrado
-		$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent,'borrado_to'=>0));
+		//$emails = Emails::model()->findAllByAttributes(array('order'=>'fecha ASC', 'params'=>array( 'id_usuario_to'=>Yii::app()->user->usIdent,'borrado_to'=>0)));
+		$emails = Emails::model()->findAll( array( 'params' => array( 'id_usuario_to'=>Yii::app()->user->usIdent, 'borrado_to'=>0), 'order' => 'fecha DESC' ) );
 		foreach ($emails as $i=>$email){
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
 			$niks[$i] = $usuario->nick;
@@ -77,7 +78,7 @@ class EmailsController extends Controller
 					$emailAux->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
 					if($emailAux->save()){
 						$trans->commit();
-						//$this->redirect(array('index'));
+						$this->redirect(array('index'));
 					}
 
 				}catch(Exception $e){
@@ -151,7 +152,8 @@ class EmailsController extends Controller
 	 */
 	public function actionEnviados(){
 		$niks = array();
-		$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>Yii::app()->user->usIdent,'borrado_from'=>0));
+		//$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>Yii::app()->user->usIdent,'borrado_from'=>0));
+		$emails = Emails::model()->findAll( array( 'params' => array( 'id_usuario_from'=>Yii::app()->user->usIdent ,'borrado_from'=>0), 'order' => 'fecha DESC' ) );
 		foreach ($emails as $i=>$email){
 			$usuario=Usuarios::model()->findByPk($email->id_usuario_to);
 			$niks[$i] = $usuario->nick;
