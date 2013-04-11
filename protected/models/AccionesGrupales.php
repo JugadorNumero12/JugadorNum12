@@ -18,17 +18,23 @@
 class AccionesGrupales extends CActiveRecord
 {
     /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return AccionesGrupales the static model class
+     * Funcion predetirmada de Yii.
+     * Devuelve el modelo estatico de la clase "active record" especificada.
+     *
+     * @static
+     * @param $className (string) nombre de la clase "active record". Por defecto __CLASS__
+     * @return (AccionesGrupales) el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
     {
-        return parent::model($className);
+        return parent::model($className); 
     }
 
-        /**
-     * @return string the associated database table name
+    /**
+     * Funcion predeterminada de Yii
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * @return (string) nombre de la tabla en la base de datos
      */
     public function tableName()
     {
@@ -36,32 +42,33 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * @return array validation rules for model attributes.
+     * Funcion predeterminada de Yii
+     * Define las reglas definidas para los atributos del modelo, incluida la regla usada por "search()"
+     * Nota: deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * @return (array) reglas de validacion para los atributos
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion, completada', 'required'),
             array('usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc', 'length', 'max'=>10),
             array('finalizacion', 'length', 'max'=>11),
             array('completada', 'length', 'max'=>1),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
+            // regla usada por "search()"
             array('id_accion_grupal, usuarios_id_usuario, habilidades_id_habilidad, equipos_id_equipo, influencias_acc, animo_acc, dinero_acc, jugadores_acc, finalizacion, completada', 'safe', 'on'=>'search'),
         );
     }
 
     /**
-     * Define las relaciones entre <acciones_grupales - tabla>
+     * Funcion predeterminada de Yii
+     * Define las relaciones entre la tabla <acciones_grupales> y el resto de tablas
      *
-     * @devuelve array de relaciones
+     * @return (array) relaciones entre <acciones_grupales> - <tabla>
      */
     public function relations()
     {
         return array(
-            //relacion con tablas de la arquitectura (1ª iteración)
             'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
             'habilidades'=>array(self::BELONGS_TO, 'Habilidades', 'habilidades_id_habilidad'),
             'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
@@ -70,7 +77,10 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * @return array customized attribute labels (name=>label)
+     * Funcion predeterminada de Yii
+     * Define los nombres "completos" de los atributos
+     *
+     * @return (array) nombres de los atributos 
      */
     public function attributeLabels()
     {
@@ -89,6 +99,8 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
+     * Funcion predeterminada de Yii
+     *
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
@@ -421,12 +433,21 @@ class AccionesGrupales extends CActiveRecord
             }
         }
 
-        // Si la accion esta completada con esa aportacion, se ejecuta la accion ; se guardas los cambios en la accion
+        // 1) Si la accion esta completada con esa aportacion
+        //  - se ejecuta la accion 
+        //  - bonificacion de experencia a los participantes de la accion
+        // 2) Se guardas los cambios en la accion
         if($accion['completada'] == 1) {     
             Yii::import('application.components.Acciones.*');
             $nombreHabilidad = $habilidad->codigo;
             //Llamar al singleton correspondiente y ejecutar dicha acción
             $nombreHabilidad::getInstance()->ejecutar($id_accion);
+
+            // actualizar la exp de todos los participantes
+            $participantes = $accion->participaciones; //FIXME
+            foreach ($participaciones as $p) {
+                Usuarios::model()->findByPk($p->usuarios_id_usuario)->sumarExp(Usuarios::BASTANTE_EXP);
+            }
         } 
         $accion->save();
 
@@ -454,15 +475,17 @@ class AccionesGrupales extends CActiveRecord
         
         //sumarselos al crear nueva accion grupal
         $accion_grupal = new AccionesGrupales();
-        $accion_grupal->setAttributes( array('usuarios_id_usuario' => $id_usuario,
-                                             'habilidades_id_habilidad' => $id_accion,
-                                             'equipos_id_equipo' => $id_equipo,
-                                             'influencias_acc'   => $habilidad['influencias'],
-                                             'animo_acc'         => $habilidad['animo'],
-                                             'dinero_acc'        => $habilidad['dinero'],
-                                             'jugadores_acc'     => 1,
-                                             'finalizacion'      => $habilidad['cooldown_fin']+time(),                                                   
-                                             'completada'        => 0 ));
+        $accion_grupal->setAttributes( array(
+            'usuarios_id_usuario' => $id_usuario,
+            'habilidades_id_habilidad' => $id_accion,
+            'equipos_id_equipo' => $id_equipo,
+            'influencias_acc'   => $habilidad['influencias'],
+            'animo_acc'         => $habilidad['animo'],
+            'dinero_acc'        => $habilidad['dinero'],
+            'jugadores_acc'     => 1,
+            'finalizacion'      => $habilidad['cooldown_fin']+time(),                                                   
+            'completada'        => 0
+        ));
         //guardar en los modelos
         $res->save();
         $accion_grupal->save();
@@ -474,8 +497,7 @@ class AccionesGrupales extends CActiveRecord
         $participacion->dinero_aportado = $habilidad['dinero'];
         $participacion->influencias_aportadas = $habilidad['influencias'];
         $participacion->animo_aportado = $habilidad['animo'];
-        if (!$participacion->save())
-        {
+        if (!$participacion->save()) {
             Yii::app()->user->setFlash('error', 'Participación no creada. (AccionesController,actionUsar.');
             throw new Exception("Participación no creada. (AccionesController,actionUsar)");    
         }
