@@ -78,7 +78,7 @@ class YiiChatWidget extends CWidget {
 	}// end run()
 
 	public function _prepareAssets(){
-		$localAssetsDir = dirname(__FILE__) . '/assets';
+		$localAssetsDir = dirname(__FILE__) . '/funct';
 		$this->_baseUrl = Yii::app()->getAssetManager()->publish(
 				$localAssetsDir);
         $cs = Yii::app()->getClientScript();
