@@ -23,18 +23,18 @@ class PunteroLaser extends AccionPartSingleton
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario)
   {
-      $ret = 0;
+      $ret =0 ; 
+      //Traer el array de efectos
+      parent::ejecutar($id_usuario);
 
-      $creador = Usuarios::model()->findByPk($id_usuario);
-      if ($creador == null)
-        throw new Exception("Usuario inexistente.", 404);
-        
-      $equipo = $creador->equipos;
-      $sigPartido = $equipo->sigPartido;
-
-      //1.- Añadir bonificación al partido
-      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['PunteroLaser']['defensivo']));
-
+      //Validar usuario
+      $us = Usuarios::model()->findByPk($id_usuario);
+      if ($us === null)
+        throw new Exception("Usuario incorrecto.", 404); 
+      // Cojo el equipo del usuario
+      $equipo = $us->equipos;
+      // Modifico Los factores de ese partido
+      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['PunteroLaser']['defensivo']));
       //Finalizar función
       return $ret;
   }
