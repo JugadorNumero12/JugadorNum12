@@ -93,4 +93,36 @@ class AccionesTurno extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	// Busca participacion en la tabla acciones turno
+	public function buscarParticipacion($id_usuario, $id_partido,$id_equipo)
+	{
+		 $participacion =Participaciones::model()->findAllByAttributes(array('usuarios_id_usuario'=> $id_usuario ,
+																			'partidos_id_partido'=> $id_partido,
+																			'equipos_id_equipo'=> $id_equipo));
+
+		return $participacion; 
+	}
+
+	public function agregarParticipacion($id_usuario, $id_partido,$id_equipo)
+	{
+		 $modelo=new AccionesTurno();
+		 $modelo->setAttributes(array('usuarios_id_usuario'=> $id_usuario ,
+										'partidos_id_partido'=> $id_partido,
+										'equipos_id_equipo'=> $id_equipo,
+										'influenciasAcc'=> 0));
+	}
+
+	//incorpora registro en la tabla acciones turno si el usuario aun no estaba
+	public static function incorporarAccion($id_usuario, $id_partido,$id_equipo)
+	{
+		 // Busco si ha Participado ya ese usuario en en ese partido
+		$participante = buscarParticipacion($id_usuario, $id_partido,$id_equipo) ;
+
+		if($participante  === null)
+		{
+			agregarParticipacion($id_usuario, $id_partido,$id_equipo);
+		}
+                
+	}																	'
 }
