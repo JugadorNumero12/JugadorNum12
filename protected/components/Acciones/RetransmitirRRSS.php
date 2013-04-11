@@ -24,23 +24,29 @@ class RetransmitirRRSS extends AccionPartSingleton
 	/* Aplicar los efectos de la accion */
 	public function ejecutar($id_usuario)
 	{
-	    $ret = 0;
+		  $ret =0 ; 
+	      //Traer el array de efectos
+	      parent::ejecutar($id_usuario);
 
-	    $creador = Usuarios::model()->findByPk($id_usuario);
-	    if ($creador === null)
-	      throw new Exception("Usuario inexistente.", 404);
-	      
-	    $equipo = $creador->equipos;
-	    $sigPartido = $equipo->sigPartido;
-
-	    //1.- Añadir bonificación al partido
-	    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['RetransmitirRRSS']['defensivo']));
-	   
-	    //2.- Dar recursos al creador
-	    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['RetransmitirRRSS']['animo']));
-
-	    //Finalizar función
-	    return $ret;
+	      //Validar usuario
+	      $us = Usuarios::model()->findByPk($id_usuario);
+	      if ($us === null)
+	        throw new Exception("Usuario incorrecto.", 404); 
+	      // Cojo el equipo del usuario
+	      $equipo = $us->equipos;
+	      // Modifico Los factores de ese partido
+	      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['RetransmitirRRSS']['defensivo']));
+	      //Modifico los recursos Del usuario
+	      if (Recursos::aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['RetransmitirRRSS']['animo']) == 0)
+	      {
+	        $ret = min($ret,0);
+	      }
+	      else
+	      {
+	        $ret = -1;
+	      }
+	      //Finalizar función
+	      return $ret;
 	}
 
 	/* restarurar valores tras el partido */

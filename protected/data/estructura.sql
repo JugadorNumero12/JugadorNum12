@@ -75,7 +75,8 @@ DROP TABLE IF EXISTS `acciones_turno`;
 CREATE TABLE IF NOT EXISTS `acciones_turno` (
   `partidos_id_partido` int(10) unsigned NOT NULL,
   `equipos_id_equipo` int(10) unsigned NOT NULL,
-  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,  
+  `influencias_acc` int(10) unsigned NOT NULL,
   KEY `acciones_turno_FKIndex1` (`partidos_id_partido`),
   KEY `acciones_turno_FKIndex2` (`equipos_id_equipo`),  
   KEY `acciones_turno_FKIndex3` (`usuarios_id_usuario`),  
