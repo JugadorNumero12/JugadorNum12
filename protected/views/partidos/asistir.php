@@ -1,3 +1,9 @@
+<?php
+	Yii::app()->clientScript->registerLinkTag(
+		'stylesheet/less', 'text/css', 
+		Yii::app()->request->baseUrl . '/less/partido.less'
+	);
+?>
 <div id="partido-dibujo">
 	Dibujo del partido aquí
 </div>
@@ -14,28 +20,28 @@
 
 	<!-- Información del equipo local -->
 	<div id="partido-equipo-local">
-		<div id="partido-nombre-local"><?php echo $eqLoc->nombre ?></div>
-		<div id="partido-escudo-local"><img src="<?php
-			echo Yii::app()->BaseUrl . '/images/escudos/' . $eqLoc->token . '.png' ?>" /></div>
-		<div id="partido-nivel-local">Nivel <?php echo $eqLoc->nivel_equipo ?></div>
-		<div id="partido-aforo-local"><?php echo $partido->aforo_local ?> asistentes</div>
+		<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>
+		<div class="equipo-info equipo-escudo"><img src="<?php
+			echo Yii::app()->BaseUrl . '/images/escudos/' . $eqLoc->token . '.png' ?>" width="100"/></div>
+		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqLoc->nivel_equipo ?></div>
+		<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_local ?> asistentes</div>
 	</div>
 
 	<!-- Información del equipo visitante -->
 	<div id="partido-equipo-visit">
-		<div id="partido-nombre-visit"><?php echo $eqVis->nombre ?></div>
-		<div id="partido-escudo-visit"><img src="<?php
-			echo Yii::app()->BaseUrl . '/images/escudos/' . $eqVis->token . '.png' ?>" /></div>
-		<div id="partido-nivel-visit">Nivel <?php echo $eqVis->nivel_equipo ?></div>
-		<div id="partido-aforo-visit"><?php echo $partido->aforo_visitante ?> asistentes</div>
+		<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>
+		<div class="equipo-info equipo-escudo"><img src="<?php
+			echo Yii::app()->BaseUrl . '/images/escudos/' . $eqVis->token . '.png' ?>" width="100" /></div>
+		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqVis->nivel_equipo ?></div>
+		<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_visitante ?> asistentes</div>
 	</div>
 </div>
 
-<div id="partido-info">
-	<nav id="partido-info-tabs">
+<div id="equipo-info">
+	<nav id="equipo-info-tabs">
 
 	</nav>
-	<div id="partido-info-content">
+	<div id="equipo-info-content">
 
 	</div>
 </div>
