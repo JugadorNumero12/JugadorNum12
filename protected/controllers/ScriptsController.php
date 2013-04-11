@@ -289,25 +289,27 @@ class ScriptsController extends Controller
 	private function calendario($participantes=null)
 	{
 		if($participantes===null)
-			$participantes=Clasificacion::model()->select('equipos_id_equipo');
+			$participantes=Clasificacion::model()->getAttributes(array('equipos_id_equipo'));
 			//esto debería devolver una lista con todos los id_equipo
 
-		const N = count($participantes);
+		die(var_dump($participantes));
+
+		$N = count($participantes);
 		$calendario = array();
 
 		//https://github.com/samuelmgalan/CalendarioLiga/blob/master/src/src/Calendario.java
 		$cont = 0;
-		$cont2 = N-2;
-		for($i=0; $i<N-1; $i++)
-			for($j=0; $j<N/2; $j++){
+		$cont2 = $N-2;
+		for($i=0; $i<$N-1; $i++)
+			for($j=0; $j<$N/2; $j++){
 
 				$eq0 = $participantes[$cont++];
-				if($cont==(N-1)) $cont=0;
+				if($cont==($N-1)) $cont=0;
 
-				if($j==0) $eq1 = $participantes[N-1];
+				if($j==0) $eq1 = $participantes[$N-1];
 				else {
 					$eq1 = $participantes[$cont2--];
-					if($cont2<0) $cont2 = N-2;
+					if($cont2<0) $cont2 = $N-2;
 				}
 
 				//Elaboro la matriz final de enfrentamientos por jornada
@@ -317,16 +319,16 @@ class ScriptsController extends Controller
 						$calendario[$i][$j][1] = $eq0;
 
 						//segunda vuelta
-						$calendario[$i+N-1][$j][0] = $eq0;
-						$calendario[$i+N-1][$j][1] = $eq1;
+						$calendario[$i+$N-1][$j][0] = $eq0;
+						$calendario[$i+$N-1][$j][1] = $eq1;
 				}else {
 						//primera vuelta
 						$calendario[$i][$j][0] = $eq0;
 						$calendario[$i][$j][1] = $eq1;
 
 						//segunda vuelta
-						$calendario[$i+N-1][$j][0] = $eq1;
-						$calendario[$i+N-1][$j][1] = $eq0;
+						$calendario[$i+$N-1][$j][0] = $eq1;
+						$calendario[$i+$N-1][$j][1] = $eq0;
 				}
 
 			}
@@ -334,6 +336,7 @@ class ScriptsController extends Controller
 		return $calendario;
 	}
 
+	const un_dia = 86400;//segundos de un dia (60²*24)
 	/*
 	* Genera una liga nueva que:
 	*  empezará en '$dentro_de' dias, 
@@ -344,19 +347,19 @@ class ScriptsController extends Controller
 	*/
 	public function generaLiga($emparejamientos=null, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
 	{
-		if($emparejamientos=== null) $emparejamientos= calendario();
-		const un_dia = 3600*24;
-		const partidosXdia = count($horas);
-		const diasXjornada = ceil( count($emparejamientos[0]) / partidosXdia);
+		if($emparejamientos=== null) $emparejamientos= $this->calendario();
 
-		if($jornada=== null) $jornada= diasXjornada;
+		$partidosXdia = count($horas);
+		$diasXjornada = ceil( count($emparejamientos[0]) / $partidosXdia);
 
-		if(diasXjornada<$jornada)
+		if($jornada=== null) $jornada= $diasXjornada;
+
+		if($diasXjornada<$jornada)
 			Yii::log("Las jornadas se superponen unas a otras, aumente la separación entre ellas",'warning');
 
 		$fecha = time(); // hoy, este segundo
 		$fecha -= $fecha % un_dia; // las 0:00 de hoy
-		$fecha += un_dia*($dentro_de+diasXjornada-1); // las 0:00 del día de la primera jornada.
+		$fecha += un_dia*($dentro_de+$diasXjornada-1); // las 0:00 del día de la primera jornada.
 
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
@@ -367,9 +370,9 @@ class ScriptsController extends Controller
 					$h = 0; //escojer la primera hora diponible
 					$time = $fecha;//la fecha "origen" de la jornada
 
-					generaPartido($partido[0], $partido[1], $time+$horas[$h]*3600);
+					generaPartido($partido[0], $partido[1], $time+$horas[$h]*3600, false);
 
-					if(++$h >=partidosXdia)//si ya no hay más horas ese día
+					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
 						$h = 0;
 						$time -= un_dia;//empiezo a rellenar el día anterior
@@ -396,7 +399,7 @@ class ScriptsController extends Controller
 	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
 	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
 	*/
-	private function generaPartido(int $id_local, int $id_visitande, int $time)
+	private function generaPartido(int $id_local, int $id_visitande, int $time, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -408,5 +411,10 @@ class ScriptsController extends Controller
 		$partido->save();
       
 
+	}
+
+	//Debgging url
+	public function actionLiga(){
+		$this->generaLiga();
 	}
 }
