@@ -288,7 +288,7 @@ class ScriptsController extends Controller
 	///LIGA
 	/*
 	* Dada una lista de id_equipos, genera unos emparejamientos con el codigo se sam.
-	* Si, no se pasan paritcipantes coje todos los que haya en la tabla Clasificacion
+	* Si no se pasan paritcipantes, coje todos los que haya en la tabla Clasificacion.
 	*/
 	private function calendario($participantes=null)
 	{
@@ -406,16 +406,29 @@ class ScriptsController extends Controller
 	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
 	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
 	*/
-	private function generaPartido($id_local, $id_visitande, $time, $generateNewTransaction=true)
+	public function generaPartido($id_local, $id_visitande, $time, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
-		$partido = new Partidos();
-		$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
-		   							  'equipos_id_equipo_2' => $id_visitande,
-		   							  'hora' => $time,
-		   							));
-		$partido->save();
+
+		if($generateNewTransaction)
+			$transaction = Yii::app()->db->beginTransaction();
+
+    	try
+    	{
+			$partido = new Partidos();
+			$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
+			   							  'equipos_id_equipo_2' => $id_visitande,
+			   							  'hora' => $time,
+			   							));
+			$partido->save();
+			if($generateNewTransaction) $transaction->commit();
+    	}
+    	catch (Exception $ex)
+    	{
+    		if($generateNewTransaction) $transaction->rollback();
+    		throw $ex;
+    	}
       
 
 	}
