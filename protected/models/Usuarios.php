@@ -49,6 +49,10 @@ class Usuarios extends CActiveRecord
     const ANIMADORA_UNIDAD_ANIMO_MAX = 450; 
     const EMPRESARIO_UNIDAD_ANIMO_MAX = 150;
     const ULTRA_UNIDAD_ANIMO_MAX = 750;
+
+    const MOD_EXP_DINERO = 0.1;
+    const MOD_EXP_ANIMO = 1;
+    const MOD_EXP_INFLUENCIAS = 10;
                 /* *** */
 
         /* RECURSOS INICIALES */
