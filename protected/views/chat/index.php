@@ -6,7 +6,6 @@
         'selector'=>'#chat',                // were it will be inserted
         'minPostLen'=>2,                    // min and
         'maxPostLen'=>50,                   // max string size for post
-        //'model'=>new MyYiiChatHandler(),
         'model'=>new ChatHandler(),    // the class handler.
         'data'=>'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
