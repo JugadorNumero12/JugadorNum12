@@ -38,10 +38,10 @@ class EmailsController extends Controller
 	public function actionIndex(){
 		$niks = array();
 		//Saca todos los emails recibidos por el usuario y que no los haya borrado
-		//$emails = Emails::model()->findAllByAttributes(array('order'=>'fecha ASC', 'params'=>array( 'id_usuario_to'=>Yii::app()->user->usIdent,'borrado_to'=>0)));
-		$emails = Emails::model()->findAll( array( 'params' => array( 'id_usuario_to'=>Yii::app()->user->usIdent, 'borrado_to'=>0), 'order' => 'fecha DESC' ) );
+		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND leido =0 AND borrado_to =0) ORDER BY fecha DESC";
+		$emails = Yii::app()->db->createCommand($sql)->queryAll();
 		foreach ($emails as $i=>$email){
-			$usuario=Usuarios::model()->findByPk($email->id_usuario_from);
+			$usuario=Usuarios::model()->findByPk($email['id_usuario_from']);
 			$niks[$i] = $usuario->nick;
 		}
 		$this->render('index',array('emails'=>$emails,'niks'=>$niks));
@@ -78,13 +78,14 @@ class EmailsController extends Controller
 					$emailAux->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
 					if($emailAux->save()){
 						$trans->commit();
-						$this->redirect(array('index'));
+						
 					}
 
 				}catch(Exception $e){
 					$trans->rollback();
 				}				
-			}			
+			}
+			$this->redirect(array('index'));			
 		}
 		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema, 'des'=>$des));
 
@@ -152,13 +153,35 @@ class EmailsController extends Controller
 	 */
 	public function actionEnviados(){
 		$niks = array();
-		//$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>Yii::app()->user->usIdent,'borrado_from'=>0));
-		$emails = Emails::model()->findAll( array( 'params' => array( 'id_usuario_from'=>Yii::app()->user->usIdent ,'borrado_from'=>0), 'order' => 'fecha DESC' ) );
+		//saca todos los emails enviados por el usuario y que no los haya borrado
+		$sql = "SELECT * FROM  emails WHERE (id_usuario_from =".Yii::app()->user->usIdent." AND borrado_from =0) ORDER BY fecha DESC";
+		$emails = Yii::app()->db->createCommand($sql)->queryAll();
 		foreach ($emails as $i=>$email){
-			$usuario=Usuarios::model()->findByPk($email->id_usuario_to);
+			$usuario=Usuarios::model()->findByPk($email['id_usuario_to']);
 			$niks[$i] = $usuario->nick;
 		}
 		$this->render('enviados',array('emails'=>$emails,'niks'=>$niks));
+	}
+
+	/**
+	 * Al mandar un mensaje a toda la aficion saca los nombres de todos los de tu equipo para mandar el mensaje
+	 *
+	 * @parametro 	id del equipo al que se va a mandar el mensaje
+	 * @redirige 	jugadorNum12/email/redactar
+	 */
+	public function actionMensajeEquipo($id_equipo){
+
+		//coje a todos los jugadores de ese equipo
+		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+
+		$destinatarios = "";
+		//Para cada jugador del equipo lo guarda en el string de envio
+		foreach ($mi_aficion as $jugador) {
+			$destinatarios.=$jugador->nick.",";
+		}
+
+		$this->redirect(array('emails/redactar/','destinatario'=>$destinatarios, 'tema'=>""));
+
 	}
 
 	/**

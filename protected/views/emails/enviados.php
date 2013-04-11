@@ -17,10 +17,10 @@
 	
 	<tr> 
 		<td> <?php echo $niks[$i]; ?> </td> 
-		<td> <?php echo $email->asunto; ?> </td> 
-		<td> <?php echo Yii::app()->dateFormatter->formatDateTime($email->fecha, 'medium', 'short'); ?> </td>  
-		<td> <?php echo CHtml::button('Leer', array('submit' => array('emails/leerEmail', 'id'=>$email->id_email),'class'=>"button small black")); ?> </td> 
-		<td> <?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email->id_email, 'antes'=>'salida'),'class'=>"button small black")); ?> </td> 
+		<td> <?php echo $email['asunto']; ?> </td> 
+		<td> <?php echo Yii::app()->dateFormatter->formatDateTime($email['fecha'], 'medium', 'short'); ?> </td>  
+		<td> <?php echo CHtml::button('Leer', array('submit' => array('emails/leerEmail', 'id'=>$email['id_email']),'class'=>"button small black")); ?> </td> 
+		<td> <?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email['id_email'], 'antes'=>'salida'),'class'=>"button small black")); ?> </td> 
 	</tr>
 		
 <?php }?>
