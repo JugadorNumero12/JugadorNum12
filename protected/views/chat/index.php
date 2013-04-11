@@ -1,4 +1,3 @@
-<h1>Yii Chat Demo</h1>
 <div id='chat'></div>
 <?php 
     $this->widget('YiiChatWidget',array(

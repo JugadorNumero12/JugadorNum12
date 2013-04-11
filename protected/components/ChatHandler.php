@@ -21,11 +21,13 @@ class ChatHandler extends YiiChatDbHandlerBase {
     }
     protected function getDateFormatted($value){
         // format the date numeric $value
-        return Yii::app()->format->formatDateTime($value);
+        //return Yii::app()->format->formatDateTime($value);
+        return date("H:i",$value); //Muestro solo la hora y los minutos
     }
     protected function acceptMessage($message){
         // return true for accept this message. false reject it.
-        return true;
+        //return true;
+        return $message;
     }
 }
 ?>
