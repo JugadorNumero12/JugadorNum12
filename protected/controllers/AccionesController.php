@@ -149,6 +149,10 @@ class AccionesController extends Controller
 				$this-> redirect(array('acciones/index'));
 			}
 
+			// XXX
+			$usuario = Usuarios::model()->findByPk($id_usuario);
+			//XXX
+
 			//Si tenemos suficientes recursos miramos si es individual o grupal
 			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) 
 			{ 								   
@@ -167,7 +171,8 @@ class AccionesController extends Controller
 				//Si no esta creada
 				if($accion_grupal === null)
 				{
-					$nuevo_id = AccionesGrupales::usarGrupal($id_usuario, $id_accion, $id_equipo, $res, $habilidad);			
+					// XXX
+					$nuevo_id = AccionesGrupales::usarGrupal($usuario, $id_accion, $id_equipo, $res, $habilidad);			
 				} 
 				else 
 				{
