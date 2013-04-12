@@ -288,16 +288,18 @@ class ScriptsController extends Controller
 	///LIGA
 	/*
 	* Dada una lista de id_equipos, genera unos emparejamientos con el codigo se sam.
+	* Ej : calendario(array(1,2,3,4,5,6,7,8));
 	* Si no se pasan paritcipantes, coje todos los que haya en la tabla Clasificacion.
 	*/
 	private function calendario($participantes=null)
 	{
-		if($participantes===null)
-			$participantes=Clasificacion::model()->getAttributes(array('equipos_id_equipo'));
-			//esto debería devolver una lista con todos los id_equipo
-			//					$participantes= array(1,2,3,4,5,6,7,8);
-		die(var_dump($participantes));
-
+		if($participantes===null){//devolver una lista con todos los id_equipo
+    		$i=0;
+    		$participantes = array();
+    		$consulta=Clasificacion::model()->findAll();
+    		foreach ($consulta as $row) 
+    			$participantes[$i++]= (int)$row['equipos_id_equipo'];
+    	}
 
 		$N = count($participantes);
 		$calendario = array();
@@ -375,11 +377,11 @@ class ScriptsController extends Controller
 
 				foreach ($jornada as $partido) {
 					$h = 0; //escojer la primera hora diponible
-					$time = $fecha;//la fecha "origen" de la jornada
+					$time = $fecha;//time = la fecha "origen" de la jornada
 
-					$this->generaPartido($partido[0], $partido[1], $time+$horas[$h]*3600, false);
+					$this->generaPartido($partido[0], $partido[1], $time+$horas[$h++]*3600, false);
 
-					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
+					if($h >=$partidosXdia)//si ya no hay más horas ese día
 					{
 						$h = 0;
 						$time -= 86400;//empiezo a rellenar el día anterior
@@ -435,6 +437,7 @@ class ScriptsController extends Controller
 
 	//Debgging url
 	public function actionLiga(){
-		$this->generaLiga();
+		$this->generaLiga(null, 1, 2, array(22,17,12) );
+		//genera una liga con emparejamientos por defecto, que empieza mañana, con jornadas cada 2 días
 	}
 }
