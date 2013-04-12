@@ -32,7 +32,7 @@ class Usuarios extends CActiveRecord
     const BASTANTE_EXP = 400;
     const MUCHA_EXP = 1000;
 
-    const PROPORCION_MAYOR = 55;
+    const PROPORCION_MAYOR = 55; //proporcion de los random
     const PROPORCION_INTERMEDIA = 30;
     const PROPORCION_MENOR = 15;
     
@@ -40,17 +40,17 @@ class Usuarios extends CActiveRecord
     const UNIDAD_ANIMO_GEN = 14;
     const UNIDAD_INFLUENCIAS_GEN = 1;
 
-    const FRECUENCIA_NIVELES= 5;
-    const AUMENTOS_POR_NIVEL = 2;
+    const FRECUENCIA_NIVELES= 5; //cada cuando aumento los maximos
+    const AUMENTOS_POR_NIVEL = 2; //cuantos ramdom cojo
 
-    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 70;
+    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 70; //si una animadora aumenta 1 nivel y le toca aumentar influencias aumenta 70
     const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 44;
     const ULTRA_UNIDAD_INFLUENCIAS_MAX = 20;
     const ANIMADORA_UNIDAD_ANIMO_MAX = 450; 
     const EMPRESARIO_UNIDAD_ANIMO_MAX = 150;
     const ULTRA_UNIDAD_ANIMO_MAX = 750;
 
-    const MOD_EXP_DINERO = 0.1;
+    const MOD_EXP_DINERO = 0.1; //para que al participar en acciones grupales la experiencia que ganas sea proporcional a lo que aportas
     const MOD_EXP_ANIMO = 1;
     const MOD_EXP_INFLUENCIAS = 10;
                 /* *** */
