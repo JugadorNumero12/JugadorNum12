@@ -322,7 +322,7 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-	 * Función que se encarga de :
+	 * Funcion que se encarga de :
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales
