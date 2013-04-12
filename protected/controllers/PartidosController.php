@@ -183,7 +183,6 @@ class PartidosController extends Controller
 		$equipoLocal = Equipos::model()->findByPk($partido->equipos_id_equipo_1);
 		$equipoVisitante = Equipos::model()->findByPk($partido->equipos_id_equipo_2);
 
-
 		//Comprobación de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null))
 		{
@@ -231,20 +230,12 @@ class PartidosController extends Controller
 			Yii::app()->user->setFlash('sig_partido', 'Ese no es el proximo partido de tu equipo.');
 			$this-> redirect(array('partidos/index'));
 */
-
-				//fixme no se si esto va aqui
-				//Calculo del porcertage para mostrar en el grafico cirular
-				$porcentage = 0;
-				$porcentage = ((($partido->estado + 10) * 100) / 20);
-
-
 				//pasar los datos del partido y los equipos
-				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
-								 'nombre_visitante' => $equipoVisitante->nombre,
-								 'equipoLocal' => $equipoLocal,
-								 'equipoVisitante' => $equipoVisitante,
-								 'estado' => $partido,
-								 'porcentage' => $porcentage);
+				$datosVista = array(
+					'eqLoc' => $equipoLocal,
+					'eqVis' => $equipoVisitante,
+					'partido' => $partido
+				);
 				$this->render('asistir', $datosVista);
 			}
 		}

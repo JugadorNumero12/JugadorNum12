@@ -17,43 +17,82 @@
  */
 class Usuarios extends CActiveRecord
 {
-	const PERSONAJE_ULTRA = 0;
-	const PERSONAJE_MOVEDORA = 1;
-	const PERSONAJE_EMPRESARIO = 2;
+            /* SEGURIDAD */
+    const BCRYPT_ROUNDS = 12;
+    
+    /* IDENTIFICADORES DE LOS PERSONAJES */
+    const PERSONAJE_ULTRA = 0;
+    const PERSONAJE_MOVEDORA = 1;
+    const PERSONAJE_EMPRESARIO = 2;
+                /* *** */
 
-    /* SISTEMA DE NIVELES */
+        /* SISTEMA DE NIVELES */
+    const POCA_EXP = 50;
+    const MEDIA_EXP = 100;
+    const BASTANTE_EXP = 400;
+    const MUCHA_EXP = 1000;
+
     const PROPORCION_MAYOR = 55;
     const PROPORCION_INTERMEDIA = 30;
     const PROPORCION_MENOR = 15;
     
-    const UNIDAD_DINERO_GEN = 18;
-    const UNIDAD_ANIMO_GEN = 6;
+    const UNIDAD_DINERO_GEN = 110;
+    const UNIDAD_ANIMO_GEN = 14;
     const UNIDAD_INFLUENCIAS_GEN = 1;
 
-    const FRECUENCIA_NIVELES = 5;
+    const FRECUENCIA_NIVELES= 5;
     const AUMENTOS_POR_NIVEL = 2;
 
-    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 4;
-    const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
-    const ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
-    const ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
-    const EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
-    const ULTRA_UNIDAD_ANIMO_MAX = 30;
+    const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 70;
+    const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 44;
+    const ULTRA_UNIDAD_INFLUENCIAS_MAX = 20;
+    const ANIMADORA_UNIDAD_ANIMO_MAX = 450; 
+    const EMPRESARIO_UNIDAD_ANIMO_MAX = 150;
+    const ULTRA_UNIDAD_ANIMO_MAX = 750;
 
-    const VECES_MAX = 5;
-    /* *** */
+    const MOD_EXP_DINERO = 0.1;
+    const MOD_EXP_ANIMO = 1;
+    const MOD_EXP_INFLUENCIAS = 10;
+                /* *** */
 
-	const BCRYPT_ROUNDS = 12;
+        /* RECURSOS INICIALES */
+    const ULTRA_DINERO_INICIO = 9000;
+    const ANIMADORA_DINERO_INICIO = 1000;
+    const EMPRESARIO_DINERO_INICIO = 25000;
 
-	public $antigua_clave;
+    const ULTRA_ANIMO_GEN_INICIO = 30;
+    const ANIMADORA_ANIMO_GEN_INICIO = 19;
+    const EMPRESARIO_ANIMO_GEN_INICIO = 9;
+
+    const ULTRA_DINERO_GEN_INICIO = 24;
+    const ANIMADORA_DINERO_GEN_INICIO = 7;
+    const EMPRESARIO_DINERO_GEN_INICIO = 40;
+
+    const ULTRA_INFLUENCIAS_GEN_INICIO = 3;
+    const ANIMADORA_INFLUENCIAS_GEN_INICIO = 10;
+    const EMPRESARIO_INFLUENCIAS_GEN_INICIO = 5;
+
+    const ULTRA_ANIMO_MAX_INICIO = 100;
+    const ANIMADORA_ANIMO_MAX_INICIO = 60;
+    const EMPRESARIO_ANIMO_MAX_INICIO = 25;
+
+    const ULTRA_INFLUENCIAS_MAX_INICIO = 4; 
+    const ANIMADORA_INFLUENCIAS_MAX_INICIO = 16;
+    const EMPRESARIO_INFLUENCIAS_MAX_INICIO = 9;
+                /* *** */
+
+    /* ------------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------------ */
+
+    public $antigua_clave;
 	public $nueva_clave1;
 	public $nueva_clave2;
 	public $antigua_email;
 	public $nueva_email1;
 	public $nueva_email2;
 	public $nuevo_nick;
-
-	/**
+    
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Usuarios the static model class
@@ -74,6 +113,7 @@ class Usuarios extends CActiveRecord
 	public function rules()
 	{
 		return array(
+            /* Reglas definidas */
 			array('nick, pass, email', 'required'),
 			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
 			array('personaje', 'numerical', 'integerOnly'=>true),
@@ -231,23 +271,23 @@ class Usuarios extends CActiveRecord
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_usuario' => 'Id Usuario',
-			'equipos_id_equipo' => 'Equipos Id Equipo',
-			'nick' => 'Nick',
-			'pass' => 'Pass',
-			'email' => 'Email',
-			'personaje' => 'Personaje',
-			'nivel' => 'Nivel',
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id_usuario' => 'Id Usuario',
+            'equipos_id_equipo' => 'Equipos Id Equipo',
+            'nick' => 'Nick',
+            'pass' => 'Pass',
+            'email' => 'Email',
+            'personaje' => 'Personaje',
+            'nivel' => 'Nivel',
             'exp' => 'Experiencia',
             'exp_necesaria' => 'Experiencia Necesaria'
-		);
-	}
+        );
+    }
 
 	/**
      * Warning: Please modify the following code to remove attributes that
@@ -258,7 +298,6 @@ class Usuarios extends CActiveRecord
 	 */
 	public function search()
 	{
-
 		$criteria=new CDbCriteria;
 
         /* Atributos no contemplados para la búsqueda
@@ -266,46 +305,48 @@ class Usuarios extends CActiveRecord
             - exp_necesaria
         */
         $criteria->compare('id_usuario',$this->id_usuario,true);
-		$criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
-		$criteria->compare('nick',$this->nick,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('personaje',$this->personaje);
-		$criteria->compare('nivel',$this->nivel,true);
+        $criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
+        $criteria->compare('nick',$this->nick,true);
+        $criteria->compare('email',$this->email,true);
+        $criteria->compare('personaje',$this->personaje);
+        $criteria->compare('nivel',$this->nivel,true);
         $criteria->compare('exp',$this->exp,true);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array('criteria'=>$criteria));
+    }
 
     /**
-	 * Función que se encarga de :
+	 * Funcion que se encarga de :
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales
-	 */
-	public function actualizaDatos($id_usuario)
-	{
-		//Actualizar todos los datos necesarios
-		AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
-		AccionesGrupales::model()->finalizaGrupales();
-		Recursos::model()->actualizaRecursos($id_usuario);
-	}
+     *
+     * @param $id_usuario
+     */
+    public function actualizaDatos($id_usuario)
+    {
+        //Actualizar todos los datos necesarios
+        AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
+        AccionesGrupales::model()->finalizaGrupales();
+        Recursos::model()->actualizaRecursos($id_usuario);
+    }
 
     /**
      * Devuelve la experencia necesaria para alcanzar el siguiente nivel
      * La experencia necesaria depende del nivel actual y un modificador 
-     * la curvatura de dificultad es de 1.1^nivel
+     * La curva esta sacada de:
+     * stackoverflow.com/questions/6954874/php-game-formula-to-calculate-a-level-based-on-exp
      *
      * @param $nivel_actual 
-     * @param $modificador ; valor por defecto 500.
+     * @param $modificador ; valor por defecto 30.
      * @return (int) experencia necesaria para alcanzar el siguiente nivel.
      */
-    public static function expNecesaria($nivel_actual, $modificador = 500)
+    public static function expNecesaria($nivel_actual, $modificador = 30)
     {
-        // FIXME: nivelar la curva resultante. 
-        // para debugg exite la vista </usuarios/exp>
-        return (int) ( $modificador * pow( 1.1, ($nivel_actual)) );
+        $a = pow(($nivel_actual+1),3);
+        $b = $modificador*pow(($nivel_actual+1),2);
+        $c = $modificador*($nivel_actual+1);
+        return (int) ($a+$b+$c);
     }
 
     /** 
@@ -363,7 +404,6 @@ class Usuarios extends CActiveRecord
         } else {
             /* No aumentamos de nivel: guardamos la nueva exp acumulada */
             $this->save();
-
             return false;
         }
     } 
@@ -395,11 +435,11 @@ class Usuarios extends CActiveRecord
      * 3) Se aumentaran los "r_max" cada FRECUENCIA_NIVELES niveles dependiendo del personaje.
      * Ver las constantes
      *  - ANIMADORA_UNIDAD_INFLUENCIAS_MAX
-     *  - EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 2;
-     *  - ULTRA_UNIDAD_INFLUENCIAS_MAX = 1;
-     *  - ANIMADORA_UNIDAD_ANIMO_MAX = 15; 
-     *  - EMPRESARIO_UNIDAD_ANIMO_MAX = 5;
-     *  - ULTRA_UNIDAD_ANIMO_MAX = 30;
+     *  - EMPRESARIO_UNIDAD_INFLUENCIAS_MAX;
+     *  - ULTRA_UNIDAD_INFLUENCIAS_MAX;
+     *  - ANIMADORA_UNIDAD_ANIMO_MAX; 
+     *  - EMPRESARIO_UNIDAD_ANIMO_MAX;
+     *  - ULTRA_UNIDAD_ANIMO_MAX;
      *  
      * @param $nivel_inicial
      * @param $nivel_actual
@@ -433,12 +473,12 @@ class Usuarios extends CActiveRecord
                 $atributos[$atributo] = $atributos[$atributo] + $cantidad; 
             }
 
-            if ( ($nivel_actual - $niveles_subidos) % self::VECES_MAX == 0){
+            /* generacion de los r_max */
+            if ( ($nivel_actual - $niveles_subidos) % self::FRECUENCIA_NIVELES == 0){
                 $cuantoSubirMaximos = Usuarios::cuantoSubirMaximos($this->personaje);
                 $atributos['influencias_max'] += $cuantoSubirMaximos['influencias_max'];
                 $atributos['animo_max'] += $cuantoSubirMaximos['animo_max'];
             }
-
             $niveles_subidos -= 1;
         }
         return $atributos;
@@ -535,54 +575,53 @@ class Usuarios extends CActiveRecord
     {
         /* NIVEL Y EXP */
         $this->setAttributes(array('nivel'=>1, 'exp'=>0));
-        $exp_necesaria_lv_2 = Usuarios::expNecesaria(1);
-        $this->setAttributes(array( 'exp_necesaria'=> $exp_necesaria_lv_2));
+        $this->setAttributes(array('exp_necesaria'=> Usuarios::expNecesaria(1)));
         
         /* RECURSOS */
         $rec=new Recursos();
         $rec->setAttributes(array('usuarios_id_usuario'=>$this->id_usuario));
         
         switch ($this->personaje) {
-
             case self::PERSONAJE_ULTRA:
-                $rec->setAttributes(array('dinero'=>8000));
-                $rec->setAttributes(array('dinero_gen'=>50.0));
-                $rec->setAttributes(array('influencias'=>1));
-                $rec->setAttributes(array('influencias_max'=>2));
-                $rec->setAttributes(array('influencias_gen'=>1.0));
-                $rec->setAttributes(array('animo'=>100));
-                $rec->setAttributes(array('animo_max'=>400));
-                $rec->setAttributes(array('animo_gen'=>15.0));
-                break;
-
+                $rec->setAttributes(array(
+                    'dinero'=>self::ULTRA_DINERO_INICIO, 
+                    'dinero_gen'=>self::ULTRA_DINERO_GEN_INICIO,
+                    'influencias'=>self::ULTRA_INFLUENCIAS_MAX_INICIO,
+                    'influencias_max'=>self::ULTRA_INFLUENCIAS_MAX_INICIO,
+                    'influencias_gen'=>self::ULTRA_INFLUENCIAS_GEN_INICIO,
+                    'animo'=>self::ULTRA_ANIMO_MAX_INICIO,
+                    'animo_max'=>self::ULTRA_ANIMO_MAX_INICIO,
+                    'animo_gen'=>self::ULTRA_ANIMO_GEN_INICIO
+                ));
+            break;
             case self::PERSONAJE_MOVEDORA: 
-                $rec->setAttributes(array('dinero'=>2400));
-                $rec->setAttributes(array('dinero_gen'=>20.0));
-                $rec->setAttributes(array('influencias'=>5));
-                $rec->setAttributes(array('influencias_max'=>12));
-                $rec->setAttributes(array('influencias_gen'=>3.0));
-                $rec->setAttributes(array('animo'=>50));
-                $rec->setAttributes(array('animo_max'=>250));
-                $rec->setAttributes(array('animo_gen'=>9.0));
+                $rec->setAttributes(array(
+                    'dinero'=>self::ANIMADORA_DINERO_INICIO, 
+                    'dinero_gen'=>self::ANIMADORA_DINERO_GEN_INICIO,
+                    'influencias'=>self::ANIMADORA_INFLUENCIAS_MAX_INICIO,
+                    'influencias_max'=>self::ANIMADORA_INFLUENCIAS_MAX_INICIO,
+                    'influencias_gen'=>self::ANIMADORA_INFLUENCIAS_GEN_INICIO,
+                    'animo'=>self::ANIMADORA_ANIMO_MAX_INICIO,
+                    'animo_max'=>self::ANIMADORA_ANIMO_MAX_INICIO,
+                    'animo_gen'=>self::ANIMADORA_ANIMO_GEN_INICIO
+                ));
                 break;
-
             case self::PERSONAJE_EMPRESARIO: 
-                $rec->setAttributes(array('dinero'=>20000));
-                $rec->setAttributes(array('dinero_gen'=>160.0));
-                $rec->setAttributes(array('influencias'=>3));
-                $rec->setAttributes(array('influencias_max'=>8));
-                $rec->setAttributes(array('influencias_gen'=>2.0));
-                $rec->setAttributes(array('animo'=>15));
-                $rec->setAttributes(array('animo_max'=>50));
-                $rec->setAttributes(array('animo_gen'=>1.0));
-                break;
-            
-            default: 
-                break;
+                $rec->setAttributes(array(
+                    'dinero'=>self::EMPRESARIO_DINERO_INICIO, 
+                    'dinero_gen'=>self::EMPRESARIO_DINERO_GEN_INICIO,
+                    'influencias'=>self::EMPRESARIO_INFLUENCIAS_MAX_INICIO,
+                    'influencias_max'=>self::EMPRESARIO_INFLUENCIAS_MAX_INICIO,
+                    'influencias_gen'=>self::EMPRESARIO_INFLUENCIAS_GEN_INICIO,
+                    'animo'=>self::EMPRESARIO_ANIMO_MAX_INICIO,
+                    'animo_max'=>self::EMPRESARIO_ANIMO_MAX_INICIO,
+                    'animo_gen'=>self::EMPRESARIO_ANIMO_GEN_INICIO
+                ));
+            break; 
+            default: break;
         }
         $rec->setAttributes(array('ultima_act'=> time()));
         $rec->save();
-
         $this->save();
     }
 
