@@ -21,22 +21,27 @@
           
           <h4> Pr&oacute;ximo partido </h4>
             <div class = "info-proximo-partido">
-              <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->local->id_equipo) )?>">
-                <?php echo $proximoPartido->local->nombre ?> 
-              </a>
 
-              <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->visitante->id_equipo) )?>">
-                <?php echo $proximoPartido->visitante->nombre ?>
-              </a>
-    
-              <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
-            </div>
+              <?php if($proximoPartido !== null) { ?>
 
-            <?php if($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
-              <?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$proximoPartido->id_partido),'class'=>"button small black")) ?> 
-            <?php } else {?>
-              <?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximoPartido->id_partido),'class'=>"button small black")) ?>
-            <?php } ?>
+                <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->local->id_equipo) )?>">
+                  <?php echo $proximoPartido->local->nombre ?> 
+                </a> 
+
+                <a href="<?php //echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->visitante->id_equipo) )?>">
+                  <?php echo $proximoPartido->visitante->nombre ?>
+                </a>
+      
+                <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
+              </div>
+
+              <?php if($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
+                <?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$proximoPartido->id_partido),'class'=>"button small black")) ?> 
+              <?php } else {?>
+                <?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximoPartido->id_partido),'class'=>"button small black")) ?>
+              <?php } ?> 
+
+            <?php } else echo "No hay proximo partido" ?> <!-- end if proximoPartido !== null-->
         
         </div>
     </div>
