@@ -100,9 +100,9 @@ class AccionesGrupales extends CActiveRecord
 
     /**
      * Funcion predeterminada de Yii
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
      *
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @return (array CActiveDataProvider) creterio definido para las busquedas/filtros
      */
     public function search()
     {
@@ -122,18 +122,15 @@ class AccionesGrupales extends CActiveRecord
         $criteria->compare('finalizacion',$this->finalizacion,true);
         $criteria->compare('completada',$this->finalizacion,true);
 
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
-        ));
+        return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
 
-    /*
-    * Esta función finaliza todas las acciones grupales no terminadas a tiempo.
-    */
+    /**
+     * Finaliza todas las acciones grupales no terminadas a tiempo
+     */
     public function finalizaGrupales()
     {
-        try
-        {
+        try {
             //Traer acciones y Helper   
             Yii::import('application.components.Acciones.*');
 
@@ -141,22 +138,18 @@ class AccionesGrupales extends CActiveRecord
             $busqueda=new CDbCriteria;
             $busqueda->addCondition(':bTiempo >= finalizacion');
             $busqueda->addCondition('completada = :bCompletada');
-            $busqueda->params = array(':bTiempo' => $tiempo,
-                                    ':bCompletada' => 0,
-                                    );
+            $busqueda->params = array(':bTiempo' => $tiempo,':bCompletada' => 0);
             $transaction = Yii::app()->db->beginTransaction();
 
             $grupales = AccionesGrupales::model()->findAll($busqueda);
 
             //Iterar sobre las acciones grupales resultantes de la búsqueda
-            foreach ($grupales as $gp)
-            {       
+            foreach ($grupales as $gp) {       
                 //Tomar participaciones
                 $participantes = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
                 //Recorro todos los participantes devolviendoles sus recursos.
                 //Esto incluye el creador de la acción.
-                foreach ($participantes as $participante)
-                {
+                foreach ($participantes as $participante) {
                     //Cojo el dinero,influencia y animo aportado por el usuario
                     $dinero=$participante->dinero_aportado;
                     $influencia=$participante->influencias_aportadas;
@@ -176,28 +169,32 @@ class AccionesGrupales extends CActiveRecord
             }
             //Finalizar transacción con éxito
             $transaction->commit();  
-        }
-        catch (Exception $ex)
-        {
+        } catch (Exception $ex) {
             //Rollback de la transacción en caso de error
             $transaction->rollback();
-            //throw $ex;
         }       
     }
 
-    // Función para finalizar una grupal dada y devolver los recursos. Recibe
-    // booleano para indicar si se debe borrar la acción.
+    /** 
+     * Funcion para finalizar una grupal dada y devolver los recursos a los participantes.
+     * 
+     * @param $id_accion_grupal 
+     * @param (boolean) indica si se debe borrar la accion 
+     */
     public static function finalizaGrupal($id_accion_grupal, $eliminar = true)
     {
-        try
-        {       
+        try {       
             // 1. Devolver recursos a los participantes (incluido el creador)
             $participantes=Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal));
 
             //Recorrer todos los participantes devolviendoles sus recursos
-            foreach ($participantes as $participante)
-            {
-                // Aumentar recursos a los participantes
+            $u;
+            foreach ($participantes as $participante) {
+                // 0. Aportar poca experencia (por el esfuerzo)
+                $u = Usuarios::model()->findByPk($participante->usuarios_id_usuario);
+                $u->sumarExp(Usuarios::POCA_EXP);
+
+                // 1. Aumentar recursos a los participantes
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
@@ -206,19 +203,23 @@ class AccionesGrupales extends CActiveRecord
                 Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));        
             }
             // 3. Borrar grupal si es necesario
-            if ($eliminar)
-            {
+            if ($eliminar) {
                 AccionesGrupales::model()->deleteByPk($id_accion_grupal);
             }
         }
-        catch (Exception $e)
-        {
+        catch (Exception $e) {
             // Dejar el try/catch para permitir posible logging de excepciones
             throw $e;
         }
     }   
 
-    // Función expulsa a un jugador de una acción grupal dada
+    /**
+     * Expulsa a un jugador de una accion grupal dada (borrarle de la lista de participantes)
+     *
+     * @static
+     * @param $id_accion
+     * @param $id_jugador
+     */ 
     public static function expulsarJugador($id_accion, $id_jugador)
     {
         $acc = AccionesGrupales::model()->findByPk($id_accion);
@@ -226,8 +227,7 @@ class AccionesGrupales extends CActiveRecord
         $part = Participaciones::model()->findByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
         
         //Se comprueba la coherencia de la petición
-        if ($rec === null)
-        {
+        if ($rec === null) {
             Yii::app()->user->setFlash('recursos', 'Recursos inexistentes. (actionExpulsar,AccionesController).');
             throw new Exception('Recursos inexistentes. (actionExpulsar,AccionesController)');
         }
@@ -242,18 +242,14 @@ class AccionesGrupales extends CActiveRecord
         if ($acc['usuarios_id_usuario']!= Yii::app()->user->usIdent) {
             Yii::app()->user->setFlash('privilegios', 'No tienes privilegios sobre la acción.');
             throw new CHttpException('No tienes privilegios sobre la acción.');
-            //$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
         }
         if ($id_jugador == Yii::app()->user->usIdent) {
             Yii::app()->user->setFlash('error', 'No puedes expulsarte a tí mismo.');
             throw new CHttpException('No puedes expulsarte a tí mismo.');
-            //$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
         }
-
         if ($part == null) {
             Yii::app()->user->setFlash('participante', 'El jugador indicado no participa en la acción.');
             throw new CHttpException('El jugador indicado no participa en la acción.');
-            //$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
         }
 
         $actAni = $rec['animo'];
@@ -278,8 +274,7 @@ class AccionesGrupales extends CActiveRecord
         //$part->delete(); // elegante, pero no funciona
         $n = Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion,'usuarios_id_usuario'=>$id_jugador));
 
-        if($n != 1) 
-        {
+        if($n != 1) {
             //Si salta esto es que había más de una participación del mismo usuario en la acción
             Yii::log('[DATABASE_ERROR] El usuario '.$id_jugador.' tiene '.$n.' participaciones en la acción '.$id_accion,'error');
             Yii::app()->user->setFlash('base_datos', 'Error en la base de datos. Pongase en contacto con un administrador.');
@@ -303,6 +298,7 @@ class AccionesGrupales extends CActiveRecord
      *  5) error al actualizar la participacion en la base de datos
      *  6) la participacion es vacia (ignorarla)
      *
+     * @static
      * @param $id_accion
      * @param $recursosAportados
      * @param $accion
@@ -444,9 +440,11 @@ class AccionesGrupales extends CActiveRecord
             $nombreHabilidad::getInstance()->ejecutar($id_accion);
 
             // actualizar la exp de todos los participantes
-            $participantes = $accion->participaciones; //FIXME
-            foreach ($participaciones as $p) {
-                Usuarios::model()->findByPk($p->usuarios_id_usuario)->sumarExp(Usuarios::BASTANTE_EXP);
+            $participantes = $accion->participaciones;
+            $u;
+            foreach ($participantes as $p) {
+                $u = Usuarios::model()->findByPk($p->usuarios_id_usuario);
+                $u->sumarExp(Usuarios::MUCHA_EXP);
             }
         } 
         $accion->save();
@@ -458,7 +456,17 @@ class AccionesGrupales extends CActiveRecord
         }
     }
 
-    // Función para usar una acción grupal
+    /**
+     * Usar una accion grupal
+     *
+     * @static
+     * @param $usuario
+     * @param $id_accion
+     * @param $id_equipo
+     * @param $res : recursos del jugador
+     * @param $habilidad
+     * @return (int) id de la nueva accion grupal
+     */
     public static function usarGrupal($usuario, $id_accion, $id_equipo, $res, $habilidad)
     {       
         $id_usuario = $usuario->id_usuario;
@@ -502,9 +510,7 @@ class AccionesGrupales extends CActiveRecord
             throw new Exception("Participación no creada. (AccionesController,actionUsar)");    
         }
 
-        // EXP: sumar experencia al usuario
         $usuario->sumarExp(Usuarios::MEDIA_EXP);
-        //XXX
         return $accion_grupal['id_accion_grupal'];
     }
 }
