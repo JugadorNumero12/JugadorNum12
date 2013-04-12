@@ -1,33 +1,37 @@
 <?php
 
-/* Control para la funcionalidad relacionada con las acciones */
+/** 
+ * Controlador para la funcionalidad relacionada con las acciones 
+ */
 class AccionesController extends Controller
 {
 	/**
-	 * @return array de filtros para actions
+	 * Funcion predeterminada de Yii
+	 * 
+	 * @return (array) filtros para "actions"
 	 */
 	public function filters()
 	{
 		return array(
 			'accessControl', // Reglas de acceso
-			'postOnly + delete', // we only allow deletion via POST request
+			'postOnly + delete', // permitir "delete" solo via POST
 		);
 	}
 
 	/**
+	 * Funcion predeterminada de Yii 
 	 * Especifica las reglas de control de acceso.
-	 * Esta función es usada por el filtro "accessControl".
-	 * @return array con las reglas de control de acceso
+	 * 
+	 *  - Permite realizar a los usuarios autenticados cualquier accion
+	 *  - Niega el acceso al resto de usuarios
+	 *
+	 * @return (array) reglas usadas por el filtro "accessControl"
 	 */
 	public function accessRules()
 	{
 		return array(
-			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
-				'users'=>array('@'),
-			),
-			array('deny',  // Niega acceso al resto de usuarios
-				'users'=>array('*'),
-			),
+			array('allow', 'users'=>array('@')),
+			array('deny',  'users'=>array('*')),
 		);
 	}
 
@@ -36,9 +40,9 @@ class AccionesController extends Controller
 	 * Las acciones que el usuario no pueda hacer (por falta de recursos)
 	 * aparecen remarcadas 
 	 * 
-	 * El id del usuario se recoge de la varibale de sesion
+	 * Nota : El id del usuario se recoge de la varibale de sesion
 	 * 
-	 * @ruta jugadorNum12/acciones
+	 * @route jugadorNum12/acciones
 	 */
 	public function actionIndex()
 	{
@@ -90,13 +94,15 @@ class AccionesController extends Controller
 	 * El id del jugador y la aficion a la que pertence se recogen de 
 	 * la variable de sesion
 	 *
-	 * @parametro 	id de la accion que se ejecuta
-	 * @ruta 		jugadorNum12/acciones/usar/{$id_accion}
-	 * @redirige 	jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
-	 * @redirige	jugadorNum12/usuarios/perfil 			si es accion individual
+	 * @param $id_accion : id de la accion que se ejecuta
+	 * @route jugadorNum12/acciones/usar/{$id_accion}
+	 * @redirect jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
+	 * @redirect jugadorNum12/usuarios/perfil 			si es accion individual
 	 */
 	public function actionUsar($id_accion)
-	{		
+	{	
+			// TODO : pasar la logica al modelo 
+
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
@@ -215,19 +221,21 @@ class AccionesController extends Controller
 
 	/**
 	 * Muestra la informacion relativa a una accion grupal abierta
-	 *  recursos totales requeridos en la accion
-	 *  jugadores que participan en ella
-	 *  recursos aportados por cada jugador
-	 *  efecto si se consigue la accion
+	 *  - recursos totales requeridos en la accion
+	 *  - jugadores que participan en ella
+	 *  - recursos aportados por cada jugador
+	 *  - efecto si se consigue la accion
 	 *  
 	 * Si es el usuario que la creo, muestra ademas
-	 *  botones para expulsar participantes
+	 *  - botones para expulsar participantes
 	 * 
-	 * @parametro 	id de la accion grupal que se muestra
-	 * @ruta 		jugadorNum12/acciones/ver/{$id_accion}
+	 * @param $id_accion : id de la accion grupal que se muestra
+	 * @route jugadorNum12/acciones/ver/{$id_accion}
 	 */
 	public function actionVer($id_accion)
 	{
+			// TODO: pasar logica al modelo
+
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
@@ -290,13 +298,15 @@ class AccionesController extends Controller
 	 * accion que se recogen por $_POST 
 	 *
 	 * El id del jugador se recoge de la variable de sesion
-	 *
-	 * @parametro 	id de la accion en la que se va a participar
-	 * @ruta 		jugadorNum12/acciones/participar/{$id}
-	 * @redirige 	jugadorNum12/equipos/ver/{$id_equipo}
+	 * 
+	 * @param $id_accion : id de la accion en la que se va a participar
+	 * @route jugadorNum12/acciones/participar/{$id}
+	 * @redirect jugadorNum12/equipos/ver/{$id_equipo}
 	 */
 	public function actionParticipar($id_accion)
 	{
+		// TODO: pasar logica al modelo
+
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
@@ -378,10 +388,10 @@ class AccionesController extends Controller
 	 * Los recursos que puso el jugador le son devueltos
 	 * (comprobando limite de animo e influencias)
 	 * 
-	 * @parametro 	id_accion de donde se va a expulsar al jugador
-	 * @parametro 	id_jugador que se va a expulsar
-	 * @ruta 		jugadorNum12/acciones/expulsar/{$id_accion}/{$id_jugador}
-	 * @redirige 	jugadorNum12/acciones/ver/{$id_accion}
+	 * @param $id_accion : ide de la accion de donde se va a expulsar al jugador
+	 * @param $id_jugador : ide del jugador que se va a expulsar
+	 * @route jugadorNum12/acciones/expulsar/{$id_accion}/{$id_jugador}
+	 * @redirect jugadorNum12/acciones/ver/{$id_accion}
 	 */
 	public function actionExpulsar($id_accion, $id_jugador)
 	{
@@ -389,29 +399,27 @@ class AccionesController extends Controller
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
 		
-		/* MARCOS */
 		//Empieza la transacción
 		$trans = Yii::app()->db->beginTransaction();
-		try
-		{
+		try {
 			AccionesGrupales::expulsarJugador($id_accion, $id_jugador);
 			$trans->commit();
-
-		} 
-		catch (Exception $exc) 
-		{
+		} catch (Exception $exc) {
     		$trans->rollback();
     		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
-    		//throw $exc;
 		}
 
+		// redirect
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
 	
 	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
+	 * Funcion predeterminada de Yii
+	 * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET
+	 * Si el modelo de datos no se encuentra, se lanza una excepcion HTTP
+	 * 
+	 * @param $id : id del modelo que se va a cargar 
+	 * @return modelo de datos
 	 */
 	public function loadModel($id)
 	{
@@ -422,8 +430,10 @@ class AccionesController extends Controller
 	}
 
 	/**
-	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
+	 * Funcion predeterminada de Yii
+	 * Realiza la validacion por Ajax
+	 *
+	 * @param $model (CModel) modelo a ser validado
 	 */
 	protected function performAjaxValidation($model)
 	{
@@ -433,4 +443,5 @@ class AccionesController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
 }
