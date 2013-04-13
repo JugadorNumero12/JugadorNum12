@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo para la tabla <<clasificacion>>
+ * Modelo para la tabla ```clasificacion```
  *
  * Columnas disponibles:
  * - string $equipos_id_equipo
@@ -47,7 +47,7 @@ class Clasificacion extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return string[]     reglas de validacion para los atributos
+     * @return object[]     reglas de validacion para los atributos
      */
 	public function rules()
 	{
@@ -93,28 +93,25 @@ class Clasificacion extends CActiveRecord
     /**
      * Devuelve la lista de modelos con las condiciones de busqueda/filtro
      *
-     *
      * > Funcion predeterminada de Yii
      *
-     * @return \CActiveDataProvider[]   criterio definido para las busquedas-filtros
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
      */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+        $criteria=new CDbCriteria;
 
-		$criteria=new CDbCriteria;
+        $criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
+        $criteria->compare('posicion',$this->posicion,true);
+        $criteria->compare('puntos',$this->puntos,true);
+        $criteria->compare('ganados',$this->ganados,true);
+        $criteria->compare('empatados',$this->empatados,true);
+        $criteria->compare('perdidos',$this->perdidos,true);
+        $criteria->compare('diferencia_goles',$this->perdidos,true);
 
-		$criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
-		$criteria->compare('posicion',$this->posicion,true);
-		$criteria->compare('puntos',$this->puntos,true);
-		$criteria->compare('ganados',$this->ganados,true);
-		$criteria->compare('empatados',$this->empatados,true);
-		$criteria->compare('perdidos',$this->perdidos,true);
-		$criteria->compare('diferencia_goles',$this->perdidos,true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
 	}
+
 }
