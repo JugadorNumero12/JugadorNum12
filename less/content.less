@@ -1,4 +1,12 @@
 @charset 'utf-8';
 
 @import 'priv/imports';
-@import 'priv/general';
+
+.inner-block {
+    padding: @TopBlockPadding;
+    margin: 0;
+
+    border: @TopBlockBorder solid @TopBlockBorderColor;
+    .rounded(10px);
+    background: fade(white, 80%);
+}

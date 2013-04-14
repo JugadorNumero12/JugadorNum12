@@ -1,0 +1,73 @@
+@import 'priv/imports';
+
+#contenido {
+	@DrawingWidth: (@ContentWidth - @TopBlockPadding) * 2 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
+	@ScoreboardWidth: (@ContentWidth - @TopBlockPadding) * 3 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
+	@ScoreboardTeamWidth: (@ScoreboardWidth - @TopBlockPadding) / 2 - 2;
+
+	#partido-dibujo {
+		float: left;
+		width: @DrawingWidth;
+	}
+
+	#partido-marcador {
+		float: right;
+		width: @ScoreboardWidth;
+
+		#partido-marcador-general {
+			width: @ScoreboardWidth;
+			position: absolute;
+		}
+
+		#partido-goles {
+			position: absolute;
+			width: 100%;
+
+			top: 56px;
+
+			text-align: center;
+			font-size: 48px;
+			font-family: Impact, Charcoal, sans-serif;
+
+			color: darken(@VERDE_12+#222, 10%);
+		}
+
+		#partido-tiempo {
+			text-align: center;
+			font-size: 32px;
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+			font-weight: bold;
+		}
+
+		#partido-tiempo-turno {
+			text-align: center;
+			font-size: 16px;
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+		}
+
+		#partido-equipo-local {
+			float: left;
+			width: @ScoreboardTeamWidth;
+
+			text-align: left;
+		}
+
+		#partido-equipo-visit {
+			float: right;
+			width: @ScoreboardTeamWidth;
+
+			text-align: right;
+		}
+
+		.equipo-info {
+			margin: 8px 0;
+		}
+
+		.equipo-nombre {
+			font-family: Verdana;
+			font-size: 28px;
+			font-weight: bold;
+			margin-top: 0;
+		}
+	}
+}

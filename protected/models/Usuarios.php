@@ -280,9 +280,18 @@ class Usuarios extends CActiveRecord
             'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
             
             /*Relacion entre <<usuarios>> y <<acciones_turno>>*/
-            'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
-        );
-    }
+			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+
+			/*Relacion entre <<usuarios>> y <<emails>>*/
+			'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
+			
+            /*Relacion entre <<usuarios>> y <<emails>>*/
+			'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
+			
+            /*Relacion entre <<usuarios>> y <<usrnotif>> */
+			'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
+		);
+	}
 
     /**
      * @return array customized attribute labels (name=>label)
