@@ -50,7 +50,6 @@ class HabilidadesController extends Controller
 		$desbloqueadas = array();
 		$requisitos = array();
 		$puedeDesbloquear = array();
-		$nivel = array();
 		foreach ($habilidades as $ih => $h) { //para cada habilidad
 
 			//1) vemos si el usuario tiene esa habilidad desbloqueada
@@ -66,8 +65,6 @@ class HabilidadesController extends Controller
 			$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo];
 			$requisitos[$ih] = $habilidadesRequisito;
 
-			$nivel[$ih] = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo]['nivel']; 
-
 			//3) indica si el usuario puede desbloquear la habilidad
 			$puedeDesbloquear[$ih] = $h->puedeDesbloquear(Yii::app()->user->usIdent, $h->id_habilidad);	
 		}
@@ -78,7 +75,6 @@ class HabilidadesController extends Controller
 			'desbloqueadas' => $desbloqueadas,
 			'requisitos' => $requisitos,
 			'puedeDesbloquear' =>$puedeDesbloquear,
-			'nivel' => $nivel,
 		);
 
 		// Manda pintar la lista a la vista

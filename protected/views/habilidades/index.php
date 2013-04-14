@@ -3,8 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 /* @var $habilidades Array con todas las habilidades, obtenidas de la BDD */
 /* @var $desbloqueadas Array que indica true si el usuario ha desbloqueado la habilidad y false si no la ha desbloqueada
-/* @var $habilidadesRequisito Array que guarda las habilidades requisito para desbloquear la accion
-/* @var $nivelRequerido Array que guarda el nivel requerido para desbloquear una habilidad */
+/* @var $requisitos Array que guarda los requisitos par desbloquear una accion
+/* @var $puedeDesbloquear Array que indica true si se puede desbloquear la accion y false si no se puede*/
 ?>
 
 <div class="envoltorio">
@@ -50,7 +50,7 @@ foreach ( $habilidades as $i=>$habilidad ){ ?>
 
     <!-- Muestro los requisitos de la accion  -->
     Requisitos para desbloquear la accion <br>
-    Nivel: <?php echo $nivel[$i];  ?>  <br>
+    Nivel: <?php echo $requisitos[$i]['nivel'];  ?>  <br>
     Hab previas desbloqueadas necesarias 
     <?php 
     if (count($requisitos[$i]['desbloqueadas_previas']) == 0){ echo "Ninguna"; }
