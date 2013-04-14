@@ -13,7 +13,7 @@ function updateData () {
 }
 
 $(document).ready(function(evt){
-  if (partido) {
+  if (window.partido) {
     partido.ajax = false;
 
     // Actualiza los tiempos

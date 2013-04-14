@@ -15,14 +15,14 @@
 	}
 
 	$.extend(partido, {
-		id = <?php echo $partido->id_partido ?>,
-		tiempo = <?php echo $partido->tiempoRestantePartido() ?>,
-		tiempoTurno = <?php echo $partido->tiempoRestanteTurno() ?>,
-		golesLocal = <?php echo $partido->goles_local ?>,
-		golesVisit = <?php echo $partido->goles_visitante ?>,
-		turno = <?php echo $partido->turno ?>,
-		estado = <?php echo $partido->estado ?>
-	}
+		id: <?php echo $partido->id_partido ?>,
+		tiempo: <?php echo $partido->tiempoRestantePartido() ?>,
+		tiempoTurno: <?php echo $partido->tiempoRestanteTurno() ?>,
+		golesLocal: <?php echo $partido->goles_local ?>,
+		golesVisit: <?php echo $partido->goles_visitante ?>,
+		turno: <?php echo $partido->turno ?>,
+		estado: <?php echo $partido->estado ?>
+	});
 
 	info.turnos = {
 		inicial: <?php echo Partido::PRIMER_TURNO ?>,
