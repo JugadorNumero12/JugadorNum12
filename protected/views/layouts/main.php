@@ -39,6 +39,8 @@
 	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
 	                            //resource
 	    };
+
+	    baseUrl = '<?php echo Yii::app()->request->baseUrl; ?>';
 	</script>
 	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
 </head>

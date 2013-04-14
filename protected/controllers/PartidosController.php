@@ -265,35 +265,26 @@ class PartidosController extends Controller
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
-		if (($partido->equipos_id_equipo_1 != $equipoUsuario->id_equipo) && ($partido->equipos_id_equipo_2 != $equipoUsuario->id_equipo)) 
-		{			
+		if (($partido->equipos_id_equipo_1 != $equipoUsuario->id_equipo) && ($partido->equipos_id_equipo_2 != $equipoUsuario->id_equipo)) {			
 			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido).');
 			//throw new Exception("No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido)", 401);							
-		} 
-		// Un usuario solo puede asistir al próximo partido de su equipo
-		else 
-		{
-			if($equipoUsuario->partidos_id_partido != $id_partido ) 
-			{			
-				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
-				//throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
-			} 
-			// Creamos el renderPartial del estado del partido
-			else 
-			{	
-				//fixme no se si esto va aqui
-				//Calculo del porcertage para mostrar en el grafico cirular
-				$porcentage = 0;
-				$porcentage = ((($partido->estado + 10) * 100) / 20);
-				//pasar los datos del partido y los equipos
-				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
-								 'nombre_visitante' => $equipoVisitante->nombre,
-								 'equipoLocal' => $equipoLocal,
-								 'equipoVisitante' => $equipoVisitante,
-								 'estado' => $partido,
-								 'porcentage' => $porcentage);
-				$this->renderPartial('_estadoPartido',$datosVista,false,true);
-			}
+		} else if ($equipoUsuario->partidos_id_partido != $id_partido ) {			
+			Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
+			//throw new Exception("Este no es el próximo partido de tu equipo. (actionActPartido)", 401);				
+		} else {
+			//pasar los datos del partido y los equipos
+			$data = array(
+				'golesLocal' => (int) $partido->goles_local,
+				'golesVisit' => (int) $partido->goles_visitante,
+				'turno' => (int) $partido->turno,
+				'estado' => (int) $partido->estado,
+				'tiempo' => (int) $partido->tiempoRestantePartido(),
+				'tiempoTurno' => (int) $partido->tiempoRestanteTurno(),
+				//'estado' => $partido
+			);
+
+			echo CJavaScript::jsonEncode($data);
+			Yii::app()->end();
 		}
 	}
 
