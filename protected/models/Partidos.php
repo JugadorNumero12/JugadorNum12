@@ -160,7 +160,7 @@ class Partidos extends CActiveRecord
     public function tiempoRestantePartido()
     {
         // TODO
-        return 1;
+        return 120;
     }
 
     /**
@@ -171,7 +171,7 @@ class Partidos extends CActiveRecord
     public function tiempoRestanteTurno()
     {
         // TODO
-        return 1;
+        return 25;
     }
 
     /** 
