@@ -18,23 +18,11 @@
  */
 class Participaciones extends CActiveRecord
 {
-    /** 
-     * cantidad de dinero disponible
-     * 
-     * @type double
-     */
+    /** @type double */
     public $dinero_nuevo;
-    /** 
-     * cantidad de animo disponible 
-     *
-     * @type double 
-     */
+    /** @type double */
     public $animo_nuevo;
-    /** 
-     * cantidad de influencia disponible 
-     *
-     * @type double  
-     */
+    /** @type double */
     public $influencia_nueva;
 
     /**
