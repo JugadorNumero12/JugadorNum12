@@ -42,33 +42,33 @@ class HabilidadesController extends Controller
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
 		
-		$idUsuario = Yii::app()->user->usIdent;
+		//Sacar una lista de las acciones desbloqueadas de un usuario
+		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
-		// Obtiene una lista con todas las habilidades
-		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
+		//Sacar una lista con los recursos del usuario
+		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
-		// FIXME: Hacerlo mínimamente eficiente -- esto es O(N²)
-		$desbloqueadas = array();
-		foreach ($habilidades as $ih => $h) {
-			$desb = false;
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
+			//throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+			
+		//A partir de las acciones sacamos las habilidades para poder mostrarlas
+		$acciones = array();
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
 
-			foreach ($h['desbloqueadas'] as $id => $d) {
-				if ( $d['usuarios_id_usuario'] == $idUsuario) {
-					$desb = true;
-				}
-			}
-
-			$desbloqueadas[$ih] = $desb;
+			//Comprobación de seguridad
+			if ($hab === null)
+				Yii::app()->user->setFlash('habilidad', 'Habilidad no encontrada. (actionIndex,AccionesController).');
+				//throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
-		// Prepara los datos a enviar a la vista
-		$datosVista = array(
-			'habilidades' => $habilidades,
-			'desbloqueadas' => $desbloqueadas
-		);
-
-		// Manda pintar la lista a la vista
-		$this->render('index', $datosVista);
+		//Envía los datos para que los muestre la vista
+		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'accionesDesbloqueadas'=>$accionesDesbloqueadas));
 	}
 
 	/**
