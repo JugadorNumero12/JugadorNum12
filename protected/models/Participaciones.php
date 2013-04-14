@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo para la tabla ```participaciones```
+ * Modelo para la tabla participaciones
  *
  * Columnas disponibles:
  *
@@ -13,24 +13,37 @@
  * | string | $influencias_aportadas                |
  * | string | $animo_aportado                       |
  *
+ *
  * @package modelos
  */
 class Participaciones extends CActiveRecord
 {
-    /** @type double    recurso dinero */
+    /** 
+     * cantidad de dinero disponible
+     * 
+     * @type double
+     */
     public $dinero_nuevo;
-    /** @type double    recurso animo */
+    /** 
+     * cantidad de animo disponible 
+     *
+     * @type double 
+     */
     public $animo_nuevo;
-    /** @type double    recurso influencia */
+    /** 
+     * cantidad de influencia disponible 
+     *
+     * @type double  
+     */
     public $influencia_nueva;
 
     /**
-     * Devuelve el modelo estatico de la clase ```active record``` especificada.
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
      * > Funcion predetirmada de Yii
      *
      * @static
-     * @param string $className     nombre de la clase ```active record```
+     * @param string $className     nombre de la clase active record
      * @return \AccionesGrupales    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
@@ -74,7 +87,7 @@ class Participaciones extends CActiveRecord
     }
 
     /**
-     * Define las relaciones entre la tabla ```participaciones``` y el resto de tablas
+     * Define las relaciones entre la tabla participaciones y el resto de tablas
      *
      * Relaciones definidas:
      *
@@ -83,7 +96,7 @@ class Participaciones extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return object[]     relaciones entre ```participaciones``` - ```tabla```
+     * @return object[]     relaciones entre participaciones - tabla
      */
     public function relations()
     {
@@ -94,7 +107,7 @@ class Participaciones extends CActiveRecord
     }
 
     /**
-     * Define los nombres _completos_ de los atributos
+     * Define los nombres completos de los atributos
      *
      * > Funcion predeterminada de Yii
      *

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo de la tabla ```habilidades```
+ * Modelo de la tabla habilidades
  *
  * Columnas disponibles:
  *
@@ -10,25 +10,35 @@
  * | string | $id_habilidad      |
  * | string | $codigo            |
  *
+ *
  * @package modelos
  */
 class Habilidades extends CActiveRecord
 {
     /**
-     * Definicion de los tipos de acciones
+     * Definicion de las acciones grupales : 0
      */ 
     const TIPO_GRUPAL = 0;
+    /**
+     * Definicion de las acciones individuales : 1
+     */
     const TIPO_INDIVIDUAL = 1;
+    /**
+     * Definicion de las acciones de partido : 2
+     */
     const TIPO_PARTIDO = 2;
+    /**
+     * Definicion de las acciones pasivas : 3
+     */
     const TIPO_PASIVA = 3;
 
     /**
-     * Devuelve el modelo estatico de la clase ```active record``` especificada.
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
      * > Funcion predetirmada de Yii
      *
      * @static
-     * @param string $className     nombre de la clase ```active record```
+     * @param string $className     nombre de la clase active record
      * @return \AccionesGrupales    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
@@ -69,7 +79,7 @@ class Habilidades extends CActiveRecord
     }
 
     /**
-     * Define las relaciones entre la tabla ```habilidades``` y el resto de tablas
+     * Define las relaciones entre la tabla habilidades y el resto de tablas
      *
      * Relaciones definidas:
      *
@@ -79,7 +89,7 @@ class Habilidades extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return object[]     relaciones entre ```habilidades``` - ```tabla```
+     * @return object[]     relaciones entre habilidades - tabla
      */
     public function relations()
     {
@@ -91,7 +101,7 @@ class Habilidades extends CActiveRecord
     }
 
     /**
-     * Define los nombres _completos_ de los atributos
+     * Define los nombres completos de los atributos
      *
      * > Funcion predeterminada de Yii
      *

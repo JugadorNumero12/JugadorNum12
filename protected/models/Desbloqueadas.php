@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo de la tabla ```desbloqueadas```
+ * Modelo de la tabla desbloqueadas
  *
  * Columnas disponibles:
  *
@@ -10,17 +10,18 @@
  * | string | $habilidades_id_habilidad |
  * | string | $usuarios_id_usuario      |
  *
+ *
  * @package modelos
  */
 class Desbloqueadas extends CActiveRecord
 {
     /**
-     * Devuelve el modelo estatico de la clase ```active record``` especificada.
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
      * > Funcion predetirmada de Yii
      *
      * @static
-     * @param string $className     nombre de la clase _active record_
+     * @param string $className     nombre de la clase active record
      * @return \AccionesGrupales    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
@@ -60,7 +61,7 @@ class Desbloqueadas extends CActiveRecord
     }
 
     /**
-     * Define las relaciones entre la tabla ```desbloqueadas``` y el resto de tablas
+     * Define las relaciones entre la tabla desbloqueadas y el resto de tablas
      *
      * Relaciones definidas:
      * 
@@ -69,7 +70,7 @@ class Desbloqueadas extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return object[]     relaciones entre ```desbloqueadas``` - ```tabla```
+     * @return object[]     relaciones entre desbloqueadas - tabla
      */
     public function relations()
     {
@@ -80,7 +81,7 @@ class Desbloqueadas extends CActiveRecord
     }
 
     /**
-     * Define los nombres _completos_ de los atributos
+     * Define los nombres completos de los atributos
      *
      * > Funcion predeterminada de Yii
      *

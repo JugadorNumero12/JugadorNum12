@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo de la tabla ```partidos```
+ * Modelo de la tabla partidos
  *
  * Columnas disponibles:
  *
@@ -12,10 +12,17 @@
  * | string | $equipos_id_equipo_2              |
  * | object | $hora                             |
  * | string | $cronica                          |
+ *
+ *
+ * @package modelos
  */
 class Partidos extends CActiveRecord
 {
-    /** @type object[]  Facilita cambiar facilmente los factores de partido */
+    /** 
+     * Facilita cambiar los factores de partido 
+     *
+     * @type object[]  
+     */
     public static $datos_factores = array ( 
         //Si es local
         'local' => array (
@@ -38,12 +45,12 @@ class Partidos extends CActiveRecord
     );
 
     /**
-     * Devuelve el modelo estatico de la clase ```active record``` especificada.
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
      * > Funcion predetirmada de Yii
      *
      * @static
-     * @param string $className     nombre de la clase ```active record```
+     * @param string $className     nombre de la clase active record
      * @return \AccionesGrupales    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
@@ -84,7 +91,7 @@ class Partidos extends CActiveRecord
     }
 
     /**
-     * Define las relaciones entre la tabla ```partidos``` y el resto de tablas
+     * Define las relaciones entre la tabla partidos y el resto de tablas
      *
      * Relaciones definidas:
      *
@@ -95,7 +102,7 @@ class Partidos extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return object[]     relaciones entre ```partidos``` - ```tabla```
+     * @return object[]     relaciones entre partidos - tabla
      */
     public function relations()
     {
@@ -104,11 +111,11 @@ class Partidos extends CActiveRecord
             'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'partidos_id_partido'),
             'local'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo_1'),
             'visitante'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo_2'),
-             );
+        );
     }
 
     /**
-     * Define los nombres _completos_ de los atributos
+     * Define los nombres completos de los atributos
      *
      * > Funcion predeterminada de Yii
      *
@@ -160,7 +167,7 @@ class Partidos extends CActiveRecord
      *
      * @return int              flag de error (0 si no ha habido ningun error; -1 cc)
      */
-    public static function aumentar_factores($id_partido,$id_equipo, $columna, $cantidad)
+    public static function aumentar_factores($id_partido, $id_equipo, $columna, $cantidad)
     {
         // buscar el partido
         $partido=Partidos::model()->findByPK($id_partido);
@@ -215,7 +222,7 @@ class Partidos extends CActiveRecord
      *
      * @return int              flag de error (0 si no ha habido ningun error ; -1 cc)
      */
-    public static function disminuir_factores($id_partido,$id_equipo, $columna, $cantidad)
+    public static function disminuir_factores($id_partido, $id_equipo, $columna, $cantidad)
     {
         // buscar el partido
         $partido=Partidos::model()->findByPK($id_partido);
@@ -258,7 +265,7 @@ class Partidos extends CActiveRecord
 
 
     /** 
-     * Funcion auxiliar que modifica la tabla de partidos _de forma proporcionada_
+     * Funcion auxiliar que modifica la tabla de partidos de forma proporcionada
      * 
      * @static 
      *

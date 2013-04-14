@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo para la tabla ```clasificacion```
+ * Modelo para la tabla clasificacion
  *
  * Columnas disponibles:
  *
@@ -14,17 +14,18 @@
  * | string | $empatados         | 
  * | string | $perdidos          |
  *
+ *
  * @package modelos
  */
 class Clasificacion extends CActiveRecord
 {
     /**
-     * Devuelve el modelo estatico de la clase ```active record``` especificada.
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
      * > Funcion predetirmada de Yii
      *
      * @static
-     * @param string $className     nombre de la clase ```active record```
+     * @param string $className     nombre de la clase active record
      * @return \AccionesGrupales    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
@@ -64,7 +65,7 @@ class Clasificacion extends CActiveRecord
     }
 
     /**
-     * Define las relaciones entre la tabla ```clasificacion``` y el resto de tablas
+     * Define las relaciones entre la tabla clasificacion y el resto de tablas
      *
      * Relaciones definidas:
      *
@@ -72,7 +73,7 @@ class Clasificacion extends CActiveRecord
      *
      * > Funcion predeterminada de Yii
      *
-     * @return object[]     relaciones entre ```clasificacion``` - ```tabla```
+     * @return object[]     relaciones entre clasificacion - tabla
      */
     public function relations()
     {
@@ -80,7 +81,7 @@ class Clasificacion extends CActiveRecord
     }
 
     /**
-     * Define los nombres _completos_ de los atributos
+     * Define los nombres completos de los atributos
      *
      * > Funcion predeterminada de Yii
      *
