@@ -1,89 +1,115 @@
 <?php
 
 /**
- * Modelo de la tabla <<desbloqueadas>>
+ * Modelo de la tabla desbloqueadas
  *
- * columnas disponibles:
- * string $habilidades_id_habilidad
- * string $usuarios_id_usuario
+ * Columnas disponibles:
+ *
+ * |tipo    | nombre                    |
+ * |:-------|:--------------------------|
+ * | string | $habilidades_id_habilidad |
+ * | string | $usuarios_id_usuario      |
+ *
+ *
+ * @package modelos
  */
 class Desbloqueadas extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Desbloqueadas the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Devuelve el modelo estatico de la clase active record especificada.
+     *
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
+     * @return \AccionesGrupales    el modelo estatico de la clase
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'desbloqueadas';
-	}
+    /**
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
+    public function tableName()
+    {
+        return 'desbloqueadas';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('habilidades_id_habilidad, usuarios_id_usuario', 'required'),
-			array('habilidades_id_habilidad, usuarios_id_usuario', 'length', 'max'=>10),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('habilidades_id_habilidad, usuarios_id_usuario', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
+    public function rules()
+    {
+        return array(
+            array('habilidades_id_habilidad, usuarios_id_usuario', 'required'),
+            array('habilidades_id_habilidad, usuarios_id_usuario', 'length', 'max'=>10),
+            array('habilidades_id_habilidad, usuarios_id_usuario', 'safe', 'on'=>'search'),
+        );
+    }
 
-	/**
-	 * Define las relaciones entre <desbloqueadas - tabla>
-	 *
-	 * @devuelve array de relaciones
-	 */
-	public function relations()
-	{
-		/* ALEX */
-		return array( 
-			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
+    /**
+     * Define las relaciones entre la tabla desbloqueadas y el resto de tablas
+     *
+     * Relaciones definidas:
+     * 
+     * - usuarios
+     * - habilidades
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     relaciones entre desbloqueadas - tabla
+     */
+    public function relations()
+    {
+        return array( 
+            'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
             'habilidades'=>array(self::BELONGS_TO, 'Habilidades' , 'habilidades_id_habilidad'),
-		);
-	}
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'habilidades_id_habilidad' => 'Habilidades Id Habilidad',
-			'usuarios_id_usuario' => 'Usuarios Id Usuario',
-		);
-	}
+    /**
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'habilidades_id_habilidad' => 'Habilidades Id Habilidad',
+            'usuarios_id_usuario' => 'Usuarios Id Usuario',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+    /**
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
+     */
+    public function search()
+    {
+        $criteria=new CDbCriteria;
 
-		$criteria=new CDbCriteria;
+        $criteria->compare('habilidades_id_habilidad',$this->habilidades_id_habilidad,true);
+        $criteria->compare('usuarios_id_usuario',$this->usuarios_id_usuario,true);
 
-		$criteria->compare('habilidades_id_habilidad',$this->habilidades_id_habilidad,true);
-		$criteria->compare('usuarios_id_usuario',$this->usuarios_id_usuario,true);
+        return new CActiveDataProvider($this, array('criteria'=>$criteria));
+    }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
 }

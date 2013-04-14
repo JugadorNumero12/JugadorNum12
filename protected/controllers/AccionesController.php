@@ -5,28 +5,26 @@
  */
 class AccionesController extends Controller
 {
-	/**
-	 * Funcion predeterminada de Yii
-	 * 
-	 * @return (array) filtros para "actions"
-	 */
+    /**
+     * Funcion predeterminada de Yii
+     * Permitimos "delete" solo via POST 
+     *
+     * @return (array) filtros para "actions"
+     */
 	public function filters()
 	{
-		return array(
-			'accessControl', // Reglas de acceso
-			'postOnly + delete', // permitir "delete" solo via POST
-		);
+		return array('accessControl', 'postOnly + delete');
 	}
 
-	/**
-	 * Funcion predeterminada de Yii 
-	 * Especifica las reglas de control de acceso.
-	 * 
-	 *  - Permite realizar a los usuarios autenticados cualquier accion
-	 *  - Niega el acceso al resto de usuarios
-	 *
-	 * @return (array) reglas usadas por el filtro "accessControl"
-	 */
+    /**
+     * Funcion predeterminada de Yii 
+     * Especifica las reglas de control de acceso.
+     * 
+     *  - Permite realizar a los usuarios autenticados cualquier accion
+     *  - Niega el acceso al resto de usuarios
+     *
+     * @return (array) reglas usadas por el filtro "accessControl"
+     */
 	public function accessRules()
 	{
 		return array(
@@ -59,7 +57,6 @@ class AccionesController extends Controller
 		//Comprobaciones de seguridad
 		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
 			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
-			//throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
 			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
@@ -70,8 +67,6 @@ class AccionesController extends Controller
 			//Comprobación de seguridad
 			if ($hab === null)
 				Yii::app()->user->setFlash('hamilidad', 'Habilidad no encontrada. (actionIndex,AccionesController).');
-				//throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
-				
 			$acciones[] = $hab;
 		}
 
@@ -413,14 +408,14 @@ class AccionesController extends Controller
 		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
 	}
 	
-	/**
-	 * Funcion predeterminada de Yii
-	 * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET
-	 * Si el modelo de datos no se encuentra, se lanza una excepcion HTTP
-	 * 
-	 * @param $id : id del modelo que se va a cargar 
-	 * @return modelo de datos
-	 */
+    /**
+     * Funcion predeterminada de Yii
+     * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET
+     * Si el modelo de datos no se encuentra, se lanza una excepcion HTTP
+     * 
+     * @param $id : id del modelo que se va a cargar 
+     * @return modelo de datos
+     */
 	public function loadModel($id)
 	{
 		$model=AccionesGrupales::model()->findByPk($id);
@@ -429,12 +424,12 @@ class AccionesController extends Controller
 		return $model;
 	}
 
-	/**
-	 * Funcion predeterminada de Yii
-	 * Realiza la validacion por Ajax
-	 *
-	 * @param $model (CModel) modelo a ser validado
-	 */
+    /**
+     * Funcion predeterminada de Yii
+     * Realiza la validacion por Ajax
+     *
+     * @param $model (CModel) modelo a ser validado
+     */
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='acciones-grupales-form')

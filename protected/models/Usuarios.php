@@ -1,41 +1,54 @@
 <?php
 
 /**
- * Modelo de la tabla <<usuarios>>
+ * Modelo de la tabla usuarios
  *
- * Columnas disponibles
- * ---------------------
- * 	int 	$id_usuario
- * 	int 	$equipos_id_equipo
- * 	string 	$nick
- * 	string 	$pass
- * 	string 	$email
- * 	tinyint $personaje
- * 	tinyint	$nivel
- * 	int 	$exp
- * 	int 	$exp_necesaria
+ * Columnas disponibles:
+ *
+ * |tipo    | nombre                        |
+ * |:-------|:------------------------------|
+ * | int    | $id_usuario                   |
+ * | int    | $equipos_id_equipo            |
+ * | string | $nick                         |
+ * | string | $pass                         |
+ * | string | $email                        |
+ * | tinyint| $personaje                    |
+ * | tinyint| $nivel                        |
+ * | int    | $exp                          |
+ * | int    | $exp_necesaria                |
+ *
+ *
+ * @package modelos
  */
 class Usuarios extends CActiveRecord
 {
-            /* SEGURIDAD */
+    /** Seguridad de contraseñas : determina el numero de vueltas del algoritmo */
     const BCRYPT_ROUNDS = 12;
     
-    /* IDENTIFICADORES DE LOS PERSONAJES */
+    /** Identificador del personaje ultra : 0 */
     const PERSONAJE_ULTRA = 0;
+    /** Identificador del personaje RRPP : 1 */
     const PERSONAJE_MOVEDORA = 1;
+    /** Identificador del personaje empresario : 2 */
     const PERSONAJE_EMPRESARIO = 2;
-                /* *** */
 
-        /* SISTEMA DE NIVELES */
+    /** Modulo de experencia: poca experencia */
     const POCA_EXP = 50;
+    /** Modulo de experencia: media experencia */
     const MEDIA_EXP = 100;
+    /** Modulo de experencia: bastante experencia */
     const BASTANTE_EXP = 400;
+    /** Modulo de experencia: mucha experenia */
     const MUCHA_EXP = 1000;
 
+    /** Modulo de experencia: probabilidad de mejorar el recurso mayoritario */ 
     const PROPORCION_MAYOR = 55;
+    /** Modulo de experencia: probabilidad de mejorar el recurso mediano */
     const PROPORCION_INTERMEDIA = 30;
+    /** Modulo de experencia: probabilidad de mejorar el recurso minoritario */
     const PROPORCION_MENOR = 15;
     
+    /** Modulo de experencia: unidad */
     const UNIDAD_DINERO_GEN = 110;
     const UNIDAD_ANIMO_GEN = 14;
     const UNIDAD_INFLUENCIAS_GEN = 1;
@@ -85,194 +98,197 @@ class Usuarios extends CActiveRecord
     /* ------------------------------------------------------------------------ */
 
     public $antigua_clave;
-	public $nueva_clave1;
-	public $nueva_clave2;
-	public $antigua_email;
-	public $nueva_email1;
-	public $nueva_email2;
-	public $nuevo_nick;
+    public $nueva_clave1;
+    public $nueva_clave2;
+    public $antigua_email;
+    public $nueva_email1;
+    public $nueva_email2;
+    public $nuevo_nick;
     
     /**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Usuarios the static model class
-	 */
-	public static function model($className=__CLASS__) { return parent::model($className); }
+     * Returns the static model of the specified AR class.
+     * @param string $className active record class name.
+     * @return Usuarios the static model class
+     */
+    public static function model($className=__CLASS__) { return parent::model($className); }
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName() { return 'usuarios'; }
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() { return 'usuarios'; }
 
-	/**
+    /**
      * Deben definirse solo reglas para aquellos atributos que recibiran entradas
      * del usuario
      *
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		return array(
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        return array(
             /* Reglas definidas */
-			array('nick, pass, email', 'required'),
-			array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
-			array('personaje', 'numerical', 'integerOnly'=>true),
-			array('equipos_id_equipo', 'length', 'max'=>10),
-			array('nick', 'length', 'max'=>20),
-			array('pass, email', 'length', 'max'=>255),
-			array('nivel exp exp_necesaria', 'numerical', 'integerOnly'=>true),
+            array('nick, pass, email', 'required'),
+            array('nueva_clave1,nueva_clave2,antigua_clave','safe','on'=>'cambiarClave'),
+            array('personaje', 'numerical', 'integerOnly'=>true),
+            array('equipos_id_equipo', 'length', 'max'=>10),
+            array('nick', 'length', 'max'=>20),
+            array('pass, email', 'length', 'max'=>255),
+            array('nivel exp exp_necesaria', 'numerical', 'integerOnly'=>true),
             array('nivel', 'length', 'max'=>10),
 
             /* Validaciones para cambio de contraseña */
-			array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
-			array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
-			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
-			array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
-			
+            array('nueva_clave1,nueva_clave2,antigua_clave','required','on'=>'cambiarClave','message'=>'Tienes que rellenar estos campos'),
+            array('antigua_clave', 'clavesIguales','on'=>'cambiarClave'),
+            array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'cambiarClave','message'=>'Deben coincidir las contrase&ntilde;as'),
+            array('nueva_clave1,nueva_clave2', 'compare', 'operator'=>'!=','compareAttribute'=>'antigua_clave','on'=>'cambiarClave','message'=>'Debe ser distinta a la contrase&ntilde;a actual'),
+            
             /* Validacion de la contraseña */
-			array('nueva_clave1,nueva_clave2','match','pattern'=>'/^.{6,}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
-			
+            array('nueva_clave1,nueva_clave2','match','pattern'=>'/^.{6,}$/','message'=>'Contrase&ntilde;a inv&aacute;lida'),
+            
             /* Validaciones para el cambio de email*/
-			array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
-			array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
-			array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
-			array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
-			
+            array('nueva_email1,nueva_email2','comprobarEmail','on'=>'cambiarEmail'),
+            array('nueva_email2', 'compare', 'compareAttribute'=>'nueva_email1','on'=>'cambiarEmail','message'=>'Deben coincidir los emails'),
+            array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
+            array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
+            
             /*Validaciones para registrar usuario*/
-			array('nueva_email1','comprobarEmail','on'=>'registro'),
-			array('nuevo_nick','comprobarNick','on'=>'registro'),
-			array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
-			array('nueva_email1','required','on'=>'registro','message'=>'Introduzca un e-mail válido.'),
-			array('nueva_clave1','required','on'=>'registro','message'=>'Introduzca una contraseña.'),
-			array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
-			array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
-			
-			// Regla usada por la funcion search() ; No se incluyen aquellos atributos que no se usen para buscar
+            array('nueva_email1','comprobarEmail','on'=>'registro'),
+            array('nuevo_nick','comprobarNick','on'=>'registro'),
+            array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
+            array('nueva_email1','required','on'=>'registro','message'=>'Introduzca un e-mail válido.'),
+            array('nueva_clave1','required','on'=>'registro','message'=>'Introduzca una contraseña.'),
+            array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
+            array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
+            
+            // Regla usada por la funcion search() ; No se incluyen aquellos atributos que no se usen para buscar
             // Atributos no incluidos
             //  - pass
             //  - exp_necesaria
-			array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
-		);
-	}
+            array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
+        );
+    }
 
-	/**
-	 * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
-	 *
-	 * @param $clave Clave a comprobar
+    /**
+     * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
+     *
+     * @param $clave Clave a comprobar
      * @return Clave válida
-	 */
-	public function comprobarClave ($clave)
-	{
-		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
-		$valida = $bcrypt->verify($clave, $this->pass);
+     */
+    public function comprobarClave ($clave)
+    {
+        $bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
+        $valida = $bcrypt->verify($clave, $this->pass);
 
-		return $valida;
-	}
+        return $valida;
+    }
 
-	/**
-	 * Cambia la clave del usuario a la clave pasada por parámetro.
-	 *
-	 * @param $clave Nueva clase
+    /**
+     * Cambia la clave del usuario a la clave pasada por parámetro.
+     *
+     * @param $clave Nueva clase
      * @return éxito
-	 */
-	public function cambiarClave ($clave)
-	{
-		$bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
-		$hash = $bcrypt->hash($clave);
+     */
+    public function cambiarClave ($clave)
+    {
+        $bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
+        $hash = $bcrypt->hash($clave);
 
-		if ($hash === false) {
-			return false;
-		} else {
-			$this['pass'] = $hash;
-			return true;
-		}
-	}
+        if ($hash === false) {
+            return false;
+        } else {
+            $this['pass'] = $hash;
+            return true;
+        }
+    }
 
-	/**
+    /**
      * Compara para comprobar que su clave coincide con la de la BBDD
      * 
      * @param $antigua_clave
      */
-	public function clavesIguales($antigua_clave)
-	{
-	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
+    public function clavesIguales($antigua_clave)
+    {
+        $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
 
-	    if (!$usuario->comprobarClave($this->antigua_clave)) {
-	        $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
-	    }
-	}
+        if (!$usuario->comprobarClave($this->antigua_clave)) {
+            $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
+        }
+    }
 
-	/**
+    /**
      * Comprobar que el email coincide con el de la BBDD
      *
      * @param $antigua_email
      */
-	public function emailIguales($antigua_email)
-	{
-	    $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-	    if ( $usuario->email != $this->antigua_email)
-	        $this->addError($antigua_email, 'Introduzca correctamente el email actual');
-	}
+    public function emailIguales($antigua_email)
+    {
+        $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
+        if ( $usuario->email != $this->antigua_email)
+            $this->addError($antigua_email, 'Introduzca correctamente el email actual');
+    }
 
-	/*Comprueba que ese email sea único*/
-	public function comprobarEmail($nueva_email1)
-	{
-	    $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
+    /*Comprueba que ese email sea único*/
+    public function comprobarEmail($nueva_email1)
+    {
+        $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
 
-	    if($registro <> null){
-	        $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
-	    }
-	}
+        if($registro <> null){
+            $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
+        }
+    }
 
-	/*Comprobar que el nombre sea único*/
-	public function comprobarNick($nuevo_nick)
-	{
-	    $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
+    /*Comprobar que el nombre sea único*/
+    public function comprobarNick($nuevo_nick)
+    {
+        $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
 
-	    if($registro <> null){
-	        $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
-	    }
-	}
+        if($registro <> null){
+            $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
+        }
+    }
 
-	/**
-	 * Define las relaciones entre <usuarios> - <tabla>
-	 *
-	 * @return array de relaciones
-	 */
-	public function relations()
-	{
-		return array(
-			/*Relacion entre <<usuarios>> y <<recursos>>*/
-			'recursos'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
-			
+    /**
+     * Define las relaciones entre <usuarios> - <tabla>
+     *
+     * @return array de relaciones
+     */
+    public function relations()
+    {
+        return array(
+            /*Relacion entre <<usuarios>> y <<recursos>>*/
+            'recursos'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
+            
             /*Relacion entre <<usuarios>> y <<acciones_individuales>>*/
             'accionesIndividuales'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
-			
+            
             /*Relacion entre <<usuarios>> y <<desbloqueadas>> */
-			'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
-			
+            'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
+            
             /*Relacion entre <<usuarios>> y <<habilidades>>*/
-			'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
-			
+            'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
+            
             /*Relacion entre <<usuarios>> y <<acciones_turno>> */
-			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
-			
+            'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+            
             /*Relacion entre <<usuarios>> y <<equipos>> */
-			'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
-			
+            'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
+            
             /*Relacion entre <<usuarios>> y <<participaciones>> */
-			'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
-			
+            'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
+            
             /*Relacion entre <<usuarios>> y <<acciones_grupales>> */
-			'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
-			
+            'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
+            
             /*Relacion entre <<usuarios>> y <<acciones_turno>>*/
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+
 			/*Relacion entre <<usuarios>> y <<emails>>*/
 			'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
-			/*Relacion entre <<usuarios>> y <<emails>>*/
+			
+            /*Relacion entre <<usuarios>> y <<emails>>*/
 			'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
-			/*Relacion entre <<usuarios>> y <<usrnotif>> */
+			
+            /*Relacion entre <<usuarios>> y <<usrnotif>> */
 			'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
 		);
 	}
@@ -295,16 +311,16 @@ class Usuarios extends CActiveRecord
         );
     }
 
-	/**
+    /**
      * Warning: Please modify the following code to remove attributes that
      * should not be searched.
      *
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		$criteria=new CDbCriteria;
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     */
+    public function search()
+    {
+        $criteria=new CDbCriteria;
 
         /* Atributos no contemplados para la búsqueda
             - pass
@@ -322,7 +338,7 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-	 * Funcion que se encarga de :
+     * Funcion que se encarga de :
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales
