@@ -15,21 +15,13 @@
  */
 class Habilidades extends CActiveRecord
 {
-    /**
-     * Definicion de las acciones grupales : 0
-     */ 
+    /** Definicion de las habilidades grupales : 0 */ 
     const TIPO_GRUPAL = 0;
-    /**
-     * Definicion de las acciones individuales : 1
-     */
+    /** Definicion de las habilidades individuales : 1 */
     const TIPO_INDIVIDUAL = 1;
-    /**
-     * Definicion de las acciones de partido : 2
-     */
+    /** Definicion de las habilidades de partido : 2 */
     const TIPO_PARTIDO = 2;
-    /**
-     * Definicion de las acciones pasivas : 3
-     */
+    /** Definicion de las acciones pasivas : 3 */
     const TIPO_PASIVA = 3;
 
     /**
