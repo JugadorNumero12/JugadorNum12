@@ -268,6 +268,12 @@ class Usuarios extends CActiveRecord
 			
             /*Relacion entre <<usuarios>> y <<acciones_turno>>*/
 			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+			/*Relacion entre <<usuarios>> y <<emails>>*/
+			'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
+			/*Relacion entre <<usuarios>> y <<emails>>*/
+			'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
+			/*Relacion entre <<usuarios>> y <<usrnotif>> */
+			'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
 		);
 	}
 
@@ -316,7 +322,7 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-	 * Función que se encarga de :
+	 * Funcion que se encarga de :
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales

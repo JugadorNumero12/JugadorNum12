@@ -21,21 +21,23 @@ class IniciarOla extends AccionPartSingleton
    }
    
   /* Aplicar los efectos de la accion */
-  public function ejecutar($id_usuario)
+  public function ejecutar($id_usuario,$id_partido,$id_equipo)
   {
-      $ret = 0;
+      $ret =0 ; 
+      //Traer el array de efectos
+      parent::ejecutar($id_usuario);
 
-      $creador = Usuarios::model()->findByPk($id_usuario);
-      if ($creador === null)
-        throw new Exception("Usuario inexistente.", 404);
-        
-      $equipo = $creador->equipos;
-      $sigPartido = $equipo->sigPartido;
-
-      //1.- Añadir bonificación al partido
-      $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['IniciarOla']['moral']));
-
-      //Finalizar función
+      //Validar usuario
+      $us = Usuarios::model()->findByPk($id_usuario);
+      if ($us === null)
+        throw new Exception("Usuario incorrecto.", 404); 
+      // Cojo el equipo del usuario
+      $equipo = $us->equipos;
+      // Modifico Los factores de ese partido
+      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['IniciarOla']['moral']));
+      // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
+      AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
+       //Finalizar función
       return $ret;
   }
 

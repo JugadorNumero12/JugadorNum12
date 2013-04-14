@@ -98,7 +98,12 @@
 							case Usuarios::PERSONAJE_ULTRA:
 								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
 							break;
-						} ?>" width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+						} ?>" width="24" height="24">
+						<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?> 
+								<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
+									<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/barra-nota.png'; ?>" width="17" height="17"> 
+								<?php }?>
+					   </span> 
 				</li>
 
 				<!-- Link al perfil -->
@@ -106,6 +111,22 @@
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
 						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
+					</li>
+				</a>
+
+				<!-- Notificaciones -->
+				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
+						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
+					</li>
+				</a>
+
+				<!-- Mensajeria -->
+				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-mensajes.png"
+						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
 					</li>
 				</a>
 

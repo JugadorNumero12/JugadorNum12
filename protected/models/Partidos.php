@@ -224,7 +224,7 @@ class Partidos extends CActiveRecord
 	 * @parametro proporción de recursos que aumentamos
 	 * @devuelve flag de error
 	 */
-	public static function aumentar_factores_prop($id_partido,$id_equipo, $columna, $proporcion)
+	public static function aumentar_factores_prop($id_partido, $id_equipo, $columna, $proporcion)
 	{
 		//Cojo el modelo correspondiente a ese id
 		$partido=Partidos::model()->findByPK($id_partido);

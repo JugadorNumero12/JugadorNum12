@@ -267,7 +267,7 @@ INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_i
  (10, 9, 6000, 70, 15);
 
 TRUNCATE `partidos`;
-INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
+/*INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
  -- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
  (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
@@ -293,7 +293,7 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
  (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
  -- Partido para comprobar si los datos son reintroducidos correctamente
- (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+ (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);*/
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
