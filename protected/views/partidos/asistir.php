@@ -3,6 +3,12 @@
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/partido.less'
 	);
+	Yii::app()->clientScript->registerScript('partidos-data',
+		'if(!partido)partido = {};partido.tiempo='
+		. $partido->tiempoRestantePartido()
+		. ';partido.tiempoTurno='
+		. $partido->tiempoRestanteTurno()
+		. ';');
 ?>
 <div id="partido-dibujo" class="inner-block">
 	Dibujo del partido aquí

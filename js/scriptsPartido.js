@@ -1,26 +1,20 @@
+function fmtTime (seconds) {
+  var s = seconds%60;
+  var m = seconds/60;
 
-function abc()
-{
-	$('.percentage').easyPieChart({
-    
-    //configuration
+  return (m<10 ? '0'+m : m) + ':' + (s<10 ? '0'+s : s);
+}
 
-    trackColor: '#88C425',
-    lineCap: 'butt',
-    lineWidth: 25,
-    size: 230
-  });
+$(document).ready(function(evt){
+  if (partido) {
+    var matchTime = $('#partido-tiempo');
+    var turnTime = $('#partido-tiempo-turno');
+
+    // Actualiza los tiempos
+    setInterval(function(){
+      partido.tiempo--;
+      partido.tiempoTurno--;
+
+    }, 1000);
   }
-$(function() {
-  $('.percentage').easyPieChart({
-    
-    //configuration
-
-    trackColor: '#88C425',
-    lineCap: 'butt',
-    lineWidth: 25,
-    animate: 2000,
-    size: 230
-  });
-
 });
