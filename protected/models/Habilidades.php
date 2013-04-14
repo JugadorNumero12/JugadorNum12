@@ -49,6 +49,36 @@ class Habilidades extends CActiveRecord
 		);
 	}
 
+
+	/**
+	 * Comprueba que el usuario puede desbloquear la habilidad.  Nivel necesario, hab necesarias desbloqueadas etc
+	 *
+	 * @param $id_usuario usuario que quiere desbloquear la habilidad
+	 * @param $id_habilidad habilidad que quiere ser desbloqueada
+     * @return $desbloqueda true si es capaz, false si no lo es
+	 */
+	public function puedeDesbloquear($id_usuario, $id_habilidad)
+	{
+		//Obtenemos los datos del usuario (para consultar el nivel)
+		$usuario = Usuarios::model()->findByPk($id_usuario);
+
+		//Obtenemos los datos de la habilidad (para consultar su codigo)
+		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+
+		//comprobamos que el usario tenga un nivel igual o superior al requisito para desbloquear la habilidad
+		if ($usuario->nivel >= RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['nivel']){
+			return true;
+		} else{
+			Yii::app()->user->setFlash('desbloqueada', 'No tienes nivel suficiente para desbloquear la habilidad');
+			return false;
+		}
+		
+	
+    	//$ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+		//$desbloqueada = false;
+		//return $desbloqueada;
+	}
+
 	/**
 	 * Define las relaciones entre <habilidades - tabla>
 	 *
