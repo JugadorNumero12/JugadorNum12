@@ -49,6 +49,61 @@ class Habilidades extends CActiveRecord
 		);
 	}
 
+
+	/**
+	 * Comprueba que el usuario puede desbloquear la habilidad.  Nivel necesario, hab necesarias desbloqueadas etc
+	 *
+	 * @param $id_usuario usuario que quiere desbloquear la habilidad
+	 * @param $id_habilidad habilidad que quiere ser desbloqueada
+     * @return $desbloqueda true si es capaz, false si no lo es
+	 */
+	public function puedeDesbloquear($id_usuario, $id_habilidad)
+	{
+		//Obtenemos los datos del usuario (para consultar el nivel)
+		$usuario = Usuarios::model()->findByPk($id_usuario);
+
+		//Obtenemos los datos de la habilidad (para consultar su codigo)
+		$habilidad = Habilidades::model()->findByPk($id_habilidad);
+
+		$puedeDesbloquear=true;
+		$comentarioFlash = "";
+
+		//1) comprobamos que el usario tenga un nivel igual o superior al requisito para desbloquear la habilidad
+		if ($usuario->nivel < RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['nivel']){
+			$comentarioFlash .= "Nivel insuficiente. ";
+			$puedeDesbloquear = false;
+		}
+
+		//2) Comprobamos que el usuario haya desbloqueado las habilidades requisito antes de intentar desbloquear esta
+
+		//sacamos las habilidades requisito
+		$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['desbloqueadas_previas'];
+
+		if($habilidadesRequisito !==null){
+
+			//Comprobamos que las haya desbloqueado
+			foreach ($habilidadesRequisito as $habilidadReq) {
+				//Con el codigo de la habilidad saco la habilidad requisito
+				$habilidadAux = Habilidades::model()->findByAttributes((array('codigo'=> $habilidadReq)));
+
+				//miro si el usuario tiene esa habilidad desbloqueada
+				$desbloqueada = Desbloqueadas::model()->findByAttributes((array('habilidades_id_habilidad'=> $habilidadAux->id_habilidad, 'usuarios_id_usuario'=> $id_usuario)));
+
+				if($desbloqueada === null){
+					$puedeDesbloquear = false; 
+					$comentarioFlash .= "Desbloquea antes ".$habilidadReq.". ";
+				}
+				
+			}
+		}
+
+		if($puedeDesbloquear == false){
+			//Yii::app()->user->setFlash('desbloqueada', $comentarioFlash);
+		}
+
+		return $puedeDesbloquear;
+	}
+
 	/**
 	 * Define las relaciones entre <habilidades - tabla>
 	 *
