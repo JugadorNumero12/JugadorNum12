@@ -194,16 +194,10 @@
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>
-	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
-	   		<li class="menu-item">
-	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
-	   			<div class="nombre-menu">Mis Habilidades</div>
-	   		</li>
-	   	</a>
 	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
-		   		<div class="nombre-menu">&Aacute;rbol Habilidades</div>
+		   		<div class="nombre-menu">Habilidades</div>
 		   	</li>
 	    </a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
