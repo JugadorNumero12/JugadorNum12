@@ -35,7 +35,7 @@ SET time_zone = "+00:00";
 
 SET FOREIGN_KEY_CHECKS = 0; 
 
--- --------------------------------------------------------
+-- -----------------------------------------d---------------
 
 DROP TABLE IF EXISTS `acciones_grupales`;
 CREATE TABLE IF NOT EXISTS `acciones_grupales` (
@@ -230,6 +230,47 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `emails`;
+CREATE TABLE IF NOT EXISTS `emails` (
+`id_email` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id_usuario_to` int(10) unsigned NOT NULL,
+`id_usuario_from` int(10) unsigned NOT NULL,
+`fecha` int(11) unsigned NOT NULL DEFAULT 0,
+`contenido` text NOT NULL,
+`leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
+`borrado_to` tinyint(1) unsigned NOT NULL DEFAULT 0,
+`borrado_from` tinyint(1) unsigned NOT NULL DEFAULT 0,
+`asunto` varchar(50) NOT NULL,
+PRIMARY KEY (`id_email`),
+KEY `emails_FKIndex1` (`id_usuario_to`),
+KEY `emails_FKIndex2` (`id_usuario_from`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `notificaciones`;
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+`id_notificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`fecha` int(11) unsigned NOT NULL DEFAULT 0,
+`mensaje` text NOT NULL,
+`url` varchar(50) NOT NULL,
+PRIMARY KEY (`id_notificacion`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `usrnotif`;
+CREATE TABLE IF NOT EXISTS `usrnotif` (
+  `notificaciones_id_notificacion` int(10) unsigned NOT NULL,
+  `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `leido` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  KEY `usrnotif_FKIndex1` (`notificaciones_id_notificacion`),
+  KEY `usrnotif_FKIndex2` (`usuarios_id_usuario`),  
+  PRIMARY KEY (`notificaciones_id_notificacion`,`usuarios_id_usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 -- DECLARACIÓN DE LAS FOREIGN KEY
 -- --------------------------------------------------------
 SET FOREIGN_KEY_CHECKS = 1;
@@ -252,6 +293,8 @@ ALTER TABLE usuarios ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_e
 ALTER TABLE acciones_turno ADD FOREIGN KEY (partidos_id_partido) REFERENCES partidos(id_partido);
 ALTER TABLE acciones_turno ADD FOREIGN KEY (equipos_id_equipo) REFERENCES equipos(id_equipo);
 ALTER TABLE acciones_turno ADD FOREIGN KEY (usuarios_id_usuario) REFERENCES usuarios(id_usuario);
+ALTER TABLE emails ADD FOREIGN KEY (id_usuario_to) REFERENCES usuarios(id_usuario);
+ALTER TABLE emails ADD FOREIGN KEY (id_usuario_from) REFERENCES usuarios(id_usuario);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

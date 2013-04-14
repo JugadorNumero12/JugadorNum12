@@ -288,16 +288,18 @@ class ScriptsController extends Controller
 	///LIGA
 	/*
 	* Dada una lista de id_equipos, genera unos emparejamientos con el codigo se sam.
-	* Si no se pasan paritcipantes, coje todos los que haya en la tabla Clasificacion.
+	* Ej : calendario(array(1,2,6,7,8)); -> emaprejamientos para los equipos_id = 1,2,3,6,7,8 (deja fuera al 4 y 5)
+	* Si no se pasan paritcipantes, coje todos los equipos que haya en la tabla Clasificacion.
 	*/
 	private function calendario($participantes=null)
 	{
-		if($participantes===null)
-			$participantes=Clasificacion::model()->getAttributes(array('equipos_id_equipo'));
-			//esto debería devolver una lista con todos los id_equipo
-			//					$participantes= array(1,2,3,4,5,6,7,8);
-		die(var_dump($participantes));
-
+		if($participantes===null){//devolver una lista con todos los id_equipo
+    		$i=0;
+    		$participantes = array();
+    		$consulta=Clasificacion::model()->findAll();
+    		foreach ($consulta as $row) 
+    			$participantes[$i++]= (int)$row['equipos_id_equipo'];
+    	}
 
 		$N = count($participantes);
 		$calendario = array();
@@ -341,18 +343,22 @@ class ScriptsController extends Controller
 		return $calendario;
 	}
 
-	/*
+	/* WARNING todo el algoritmo esta diseñado para tomar como refernecia de cambio de día las 0:00 GMT
+	*
 	* Genera una liga nueva que:
 	*  empezará en '$dentro_de' dias, 
 	*  dejará '$descanso' dias entre jornadas (si metes null escoje el minimo que no superpone jornadas)
 	*  y sus partidos se jugarán a las '$horas' (si hay pocas horas, se juegan el día anterior en el mismo horario).
 	*
-	* Los partidos se generan "talcual" en el orden en que vienen en '$emparejamientos'
+	*	Las horas se introducen como un entero entre 0 y 24, que corresponde con la hora GMT+0
+	*	Ej: en verano: array(20, 27.5, 13) => los partidos se jugarán a las 22:00, 19:30, 15:00 (hora española)
+	*		en invierno: array(11.25, 9)   => los partidos se jugarán a las 12:15, 10:00 (hora española)
+	*
+	* Los partidos se generan "talcual", en el orden en que vienen en '$emparejamientos'.
 	*/
-	public function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(22,21,20,19,18,17,16,12))
+	public function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(20,19,18,17,16,15,16,10))
 	{
 		if($emparejamientos=== null) $emparejamientos= $this->calendario();
-		//die(var_dump($emparejamientos));
 
 		$partidosXdia = count($horas);
 		$diasXjornada = ceil( count($emparejamientos[0]) / $partidosXdia);
@@ -366,18 +372,19 @@ class ScriptsController extends Controller
 
 		$fecha = time(); // hoy, este segundo
 		$fecha -= $fecha % 86400; // las 0:00 de hoy
-		$fecha += 86400*($dentro_de+$diasXjornada-1); // las 0:00 del día de la primera jornada.
+		$fecha += (int)(86400*($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
 
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
     	{
 			foreach ($emparejamientos as $jornada) {
 
-				foreach ($jornada as $partido) {
-					$h = 0; //escojer la primera hora diponible
-					$time = $fecha;//la fecha "origen" de la jornada
+				$time = $fecha;//time = la fecha "origen" de la jornada
+				$h = 0; //escojer la primera hora diponible
 
-					$this->generaPartido($partido[0], $partido[1], $time+$horas[$h]*3600, false);
+				foreach ($jornada as $partido) {
+					
+					$this->generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
@@ -385,6 +392,7 @@ class ScriptsController extends Controller
 						$time -= 86400;//empiezo a rellenar el día anterior
 					}
 				}
+
 				$fecha += 86400*$descanso;
 			}
 
@@ -435,6 +443,7 @@ class ScriptsController extends Controller
 
 	//Debgging url
 	public function actionLiga(){
-		$this->generaLiga();
+		$this->generaLiga(null, 1, 2, array(19.5, 17, 15.5) );
+		//genera una liga con emparejamientos por defecto, que empieza mañana, con jornadas cada 2 días
 	}
 }

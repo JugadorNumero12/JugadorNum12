@@ -7,6 +7,14 @@
 
 	<!-- LESS import script -->
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/loginLayout.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
+
+
+	<!-- jQuery -->
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
+	<title><?php echo Yii::app()->name; ?></title>
+
 	<script type="text/javascript">
 	    less = {
 	        env: "development", // or "production"
@@ -24,11 +32,6 @@
 	    };
 	</script>
 	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
-
-	<!-- jQuery -->
-	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
-	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
 <body>

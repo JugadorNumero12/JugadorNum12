@@ -324,6 +324,9 @@ class Usuarios extends CActiveRecord
      * - participaciones
      * - accionesGrupales
      * - accionesTurno
+     * - mensajesTo
+     * - mensajesFrom
+     * - usrnotificaciones
      *
      * > Funcion predeterminada de Yii
      *
@@ -341,6 +344,9 @@ class Usuarios extends CActiveRecord
             'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
             'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
             'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+            'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
+            'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
+            'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
         );
     }
 

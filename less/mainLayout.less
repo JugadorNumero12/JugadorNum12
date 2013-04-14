@@ -2,16 +2,8 @@
 @charset 'utf-8';
 
 @import 'priv/imports';
-@import 'priv/general';
 
 @import 'priv/barrasup';
-
-// COLORES
-// ------------
-@BLANCO_ROTO: #FFFCFB;
-@GRIS: #CED5DE;
-@GRIS_OSCURO: #A0A6AD;
-@VERDE_12: #597f08;
 
 // MIXINS
 // ------------
@@ -20,14 +12,6 @@
     margin: 1em 1em 1em 1em;
     border: 0px white;
 }
-
-@MenuWidth: 180px;
-
-@TopBlockPadding: 10px;
-@TopBlockMargin: 10px;
-@TopBlockBorder: 1px;
-@TopBlockBorderColor: @VERDE_12_CLARO;
-@TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
 
 .top-block {
     padding: @TopBlockPadding;
@@ -99,7 +83,7 @@
 
 	//Incluye el div del contenido 
 	#grupo-centro{
-		width: (960px - @MenuWidth - @TopBlockExtras - @TopBlockPadding - @TopBlockBorder*2);
+		width: @ContentWidth;
 		float: left;
 		margin: 0;
 

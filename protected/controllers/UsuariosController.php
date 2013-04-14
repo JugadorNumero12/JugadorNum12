@@ -285,7 +285,7 @@ class UsuariosController extends Controller
         $chicas = array();
         $empresarios = array();
 
-            for($i = 0; $i < 50; $i++) {
+            for($i = 0; $i < 10; $i++) {
                 $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
                 $u->setAttributes( array(
                     'nick'=>"test_ultra".$i,

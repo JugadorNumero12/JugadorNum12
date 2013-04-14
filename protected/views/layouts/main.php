@@ -8,7 +8,22 @@
 	<!-- LESS import script -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery.jgrowl.css" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/mainLayout.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/content.less" />
+
+	<!-- jQuery -->
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
+	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+    
+	<title><?php echo Yii::app()->name; ?></title>
+
 	<script type="text/javascript">
 	    less = {
 	        env: "development", // or "production"
@@ -26,19 +41,6 @@
 	    };
 	</script>
 	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
-
-	<!-- jQuery -->
-	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
-	<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
-	<?php $cssCoreUrl = Yii::app()->clientScript->getCoreScriptUrl();
-	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
-    
-	<title><?php echo Yii::app()->name; ?></title>
 </head>
 
 <body class="<?php echo Yii::app()->getParams()->bgclass ?>">
@@ -96,7 +98,12 @@
 							case Usuarios::PERSONAJE_ULTRA:
 								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
 							break;
-						} ?>" width="24" height="24"><span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+						} ?>" width="24" height="24">
+						<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?> 
+								<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
+									<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/barra-nota.png'; ?>" width="17" height="17"> 
+								<?php }?>
+					   </span> 
 				</li>
 
 				<!-- Link al perfil -->
@@ -104,6 +111,22 @@
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
 						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
+					</li>
+				</a>
+
+				<!-- Notificaciones -->
+				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
+						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
+					</li>
+				</a>
+
+				<!-- Mensajeria -->
+				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
+					<li class="user-menu-item user-menu-hidden">
+						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-mensajes.png"
+						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
 					</li>
 				</a>
 

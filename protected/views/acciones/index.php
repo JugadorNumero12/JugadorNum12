@@ -7,6 +7,10 @@
 <div class="encabezado"> <h1>Mis Habilidades</h1> </div>
 
 <?php 
+if (count($acciones) == 0){
+    echo "No has desbloqueado ninguna habilidad.";
+}
+
 foreach ( $acciones as $accion ){ ?>
     <div class="datos-accion">
     <div <?php if ( $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['dinero'] < $accion['dinero']){ echo 'class="remarcado"'; } ?>>
