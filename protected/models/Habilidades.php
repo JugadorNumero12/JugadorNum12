@@ -98,7 +98,7 @@ class Habilidades extends CActiveRecord
 		}
 
 		if($puedeDesbloquear == false){
-			Yii::app()->user->setFlash('desbloqueada', $comentarioFlash);
+			//Yii::app()->user->setFlash('desbloqueada', $comentarioFlash);
 		}
 
 		return $puedeDesbloquear;

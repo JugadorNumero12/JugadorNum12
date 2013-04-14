@@ -13,18 +13,18 @@ class RequisitosDesbloquearHabilidades
 		// GRUPALES
 		// ------------------------------------------------
 		'FinanciarEvento' => array (
-			'nivel'=> 5,
+			'nivel'=> 1,
 			'desbloqueadas_previas' => array ('IncentivoEconomico' => 'IncentivoEconomico',
 												'Apostar' => 'Apostar'),
 		), 
 			
 		'IncentivoEconomico' => array (
-			'nivel' => 5,
+			'nivel' => 3,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'OrganizarHomenaje' => array (
-			'nivel' => 5,
+			'nivel' => 4,
 			'desbloqueadas_previas' => array (),
 		), 
 			
@@ -34,24 +34,24 @@ class RequisitosDesbloquearHabilidades
 		), 
 		
 		'PromoverPartido' => array (
-			'nivel' => 5,
+			'nivel' => 6,
 			'desbloqueadas_previas' => array (),
 		), 
 			
 		// INDIVIDUALES
 		// ------------------------------------------------
 		'Apostar' => array (
-			'nivel' => 5,
+			'nivel' => 2,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'CrearseEspectativas' => array (
-			'nivel' => 5,
+			'nivel' => 3,
 			'desbloqueadas_previas' => array (),
 		),
 			
 		'ContratarRRPP' => array (
-			'nivel' => 5,
+			'nivel' => 4,
 			'desbloqueadas_previas' => array (),
 		),
 		
@@ -68,24 +68,24 @@ class RequisitosDesbloquearHabilidades
 		), 
 			
 		'IniciarOla' => array (
-			'nivel' => 5,
+			'nivel' => 2,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'PunteroLaser' => array (
-			'nivel' => 5,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'RetransmitirRRSS' => array (
-			'nivel' => 5,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		),
 
 		// PASIVAS
 		// -------------------------------------------------
 		'Ascender' => array (
-			'nivel' => 5,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 	);

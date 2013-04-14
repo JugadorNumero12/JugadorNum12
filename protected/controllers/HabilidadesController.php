@@ -47,29 +47,44 @@ class HabilidadesController extends Controller
 		// Obtiene una lista con todas las habilidades
 		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
 
-		// FIXME: Hacerlo mínimamente eficiente -- esto es O(N²)
 		$desbloqueadas = array();
-		foreach ($habilidades as $ih => $h) {
-			$desb = false;
+		$requisitos = array();
+		$puedeDesbloquear = array();
+		$nivel = array();
+		foreach ($habilidades as $ih => $h) { //para cada habilidad
 
-			foreach ($h['desbloqueadas'] as $id => $d) {
-				if ( $d['usuarios_id_usuario'] == $idUsuario) {
-					$desb = true;
-				}
-			}
+			//1) vemos si el usuario tiene esa habilidad desbloqueada
+			$desbloqueada = Desbloqueadas::model()->findByAttributes((array('habilidades_id_habilidad'=> $h->id_habilidad, 'usuarios_id_usuario'=> Yii::app()->user->usIdent)));
+			
+			if($desbloqueada !== null){
+				$desbloqueadas[$ih] = true;
+			} else{
+				$desbloqueadas[$ih] = false;
+			}	
 
-			$desbloqueadas[$ih] = $desb;
+			//2) saco los requisitos de la habilidad para ser desbloqueada (nivel, y habilidades previas desbloqueadas)	
+			$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo];
+			$requisitos[$ih] = $habilidadesRequisito;
+
+			$nivel[$ih] = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo]['nivel']; 
+
+			//3) indica si el usuario puede desbloquear la habilidad
+			$puedeDesbloquear[$ih] = $h->puedeDesbloquear(Yii::app()->user->usIdent, $h->id_habilidad);	
 		}
 
 		// Prepara los datos a enviar a la vista
 		$datosVista = array(
 			'habilidades' => $habilidades,
-			'desbloqueadas' => $desbloqueadas
+			'desbloqueadas' => $desbloqueadas,
+			'requisitos' => $requisitos,
+			'puedeDesbloquear' =>$puedeDesbloquear,
+			'nivel' => $nivel,
 		);
 
 		// Manda pintar la lista a la vista
 		$this->render('index', $datosVista);
 	}
+
 
 	/**
 	 * Muestra la informacion de la habilidad seleccionada
@@ -206,7 +221,7 @@ class HabilidadesController extends Controller
 	        	$this->render('adquirir', array('habilidad'=>$habilidad));
 
 	        } else{ //el ususario, no puede desbloquear la habilidad
-	        	//Yii::app()->user->setFlash('desbloqueada', 'No puedes desloquear esta habilidad.');
+	        	Yii::app()->user->setFlash('desbloqueada', 'No cumples los requisitos para desbloquear la habilidad.');
 	        	$this->redirect(array('habilidades/index'));
 	        	
 	        }
