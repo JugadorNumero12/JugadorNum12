@@ -3,13 +3,34 @@
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/partido.less'
 	);
-	Yii::app()->clientScript->registerScript('partidos-data',
-		'if(!partido)partido = {};partido.tiempo='
-		. $partido->tiempoRestantePartido()
-		. ';partido.tiempoTurno='
-		. $partido->tiempoRestanteTurno()
-		. ';');
+	Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js');
 ?>
+<script type="text/javascript">
+	if (!window.partido) {
+		window.partido = {};
+	}
+
+	if (!window.info) {
+		window.info = {}
+	}
+
+	$.extend(partido, {
+		id = <?php echo $partido->id_partido ?>,
+		tiempo = <?php echo $partido->tiempoRestantePartido() ?>,
+		tiempoTurno = <?php echo $partido->tiempoRestanteTurno() ?>,
+		golesLocal = <?php echo $partido->goles_local ?>,
+		golesVisit = <?php echo $partido->goles_visitante ?>,
+		turno = <?php echo $partido->turno ?>,
+		estado = <?php echo $partido->estado ?>
+	}
+
+	info.turnos = {
+		inicial: <?php echo Partido::PRIMER_TURNO ?>,
+		descanso: <?php echo Partido::TURNO_DESCANSO ?>,
+		final: <?php echo Partido::ULTIMO_TURNO ?>
+	}
+</script>
+
 <div id="partido-dibujo" class="inner-block">
 	Dibujo del partido aquí
 </div>
@@ -18,9 +39,23 @@
 <div id="partido-marcador" class="inner-block">
 	<!-- Información general -->
 	<div id="partido-marcador-general">
-		<div id="partido-goles"><?php echo $partido->goles_local ?>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $partido->goles_visitante ?></div>
-		<div id="partido-tiempo">12:34</div>
-		<div id="partido-tiempo-turno">01:23</div>
+		<div id="partido-goles">
+			<span id="partido-goles-local"><?php echo $partido->goles_local ?></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id="partido-goles-visit"><?php echo $partido->goles_visitante ?></span>
+		</div>
+		<div id="partido-tiempo"><?php
+			$trp = $partido->tiempoRestantePartido();
+			$s = $trp%60;
+			$m = (int)($trp/60);
+			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
+		?></div>
+		<div id="partido-tiempo-turno"><?php
+			$trt = $partido->tiempoRestanteTurno();
+			$s = $trt%60;
+			$m = (int)($trt/60);
+			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
+		?></div>
 		<div id="partido-ambiente"><?php echo $partido->ambiente ?></div>
 	</div>
 
