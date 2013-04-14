@@ -152,6 +152,27 @@ class Partidos extends CActiveRecord
         return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
 
+    /**
+     * Devuelve el tiempo para que finalize el partido
+     *
+     * @return int  tiempo restante del partido
+     */
+    public function tiempoRestantePartido()
+    {
+        // TODO
+        return 1;
+    }
+
+    /**
+     * Devuelve el tiempo para que termine el turno actual
+     *
+     * @return int  tiempo restante del turno
+     */
+    public function tiempoRestanteTurno()
+    {
+        // TODO
+        return 1;
+    }
 
     /** 
      * Funcion auxiliar que modifica los factores de un partido: aumenta el factor espeficicado
