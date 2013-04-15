@@ -73,7 +73,7 @@ class EmailsController extends Controller
 			$as = $_POST['Emails']['asunto'];
 			$no = $_POST['Emails']['nombre'];
 			$dests = Emails::model()->sacarUsuarios($no);
-
+			
 			foreach($dests as $dest){
 				$usr_dest = Usuarios::model()->findByAttributes(array('nick'=>$dest));
 				if($usr_dest!=null){

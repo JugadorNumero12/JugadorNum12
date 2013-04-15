@@ -50,7 +50,7 @@ class Emails extends CActiveRecord
 			array('fecha', 'length', 'max'=>11),
 
 			/*Validaciones para redactar email*/
-			array('nombre', 'comprobarNombres','on'=>'redactar'),
+			array('nombre','comprobarNombres','on'=>'redactar'),
 			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
 			
 			// The following rule is used by search().
@@ -77,13 +77,15 @@ class Emails extends CActiveRecord
      * 
      * @param $nombre
      */
-	public function comprobarNombres($nombre){
+	public function comprobarNombres($nombre)
+	{
 		$str = '';
 		$cont = 0;
-		$nobs = sacarUsuarios($nombre);
+		$nombs = $this->sacarUsuarios($nombre);
 		foreach($nombs as $nomb){
-			$n = Usuarios::model()->findByAttributes(array('nick'=>$dest));
-			if($n == null){
+			$nomb = trim($nomb);
+			$n = Usuarios::model()->findByAttributes(array('nick'=>$nomb));
+			if($n === null){
 				if($cont==0){
 					$str = $nomb;
 					$cont += 1;
@@ -98,9 +100,29 @@ class Emails extends CActiveRecord
 		}
 		if($cont == 1){
 			$this->addError($nombre, $str.'- no existe.');
+			return false;
 		}elseif($cont>1){
 			$this->addError($nombre, $str.'- no existen.');
+			return false;
 		}
+		return true;
+	}
+
+	/**
+     * Compara los nombres existen
+     * 
+     * @param $nombre
+     */
+	public function nombres()
+	{
+		//var_dump($nombre);
+		$nombres = array();
+		$cont = 0;
+		$usuarios = Usuarios::model()->findAll();
+		foreach($usuarios as $usr){
+			$nombe[] = $usr->nick;
+		}
+		return $nombres;
 	}
 
 	/**
