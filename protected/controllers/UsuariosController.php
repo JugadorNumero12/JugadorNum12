@@ -6,31 +6,33 @@
  */
 class UsuariosController extends Controller
 {
-	/**
-	 * @return array de filtros para actions
-	 */
+    /**
+     * Funcion predeterminada de Yii
+     * 
+     * @return (array) filtros para "actions"
+     */
 	public function filters()
 	{
 		return array(
 			'accessControl', // Reglas de acceso
-			'postOnly + delete', // we only allow deletion via POST request
+			'postOnly + delete', // permitir "delete" solo via POST
 		);
 	}
 
-	/**
-	 * Especifica las reglas de control de acceso.
-	 * Esta función es usada por el filtro "accessControl".
-	 * @return array con las reglas de control de acceso
-	 */
+    /**
+     * Funcion predeterminada de Yii 
+     * Especifica las reglas de control de acceso.
+     * 
+     *  - Permite realizar a los usuarios autenticados cualquier accion
+     *  - Niega el acceso al resto de usuarios
+     *
+     * @return (array) reglas usadas por el filtro "accessControl"
+     */
 	public function accessRules()
 	{
 		return array(
-			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
-				'users'=>array('@'),
-			),
-			array('deny',  // Niega acceso al resto de usuarios
-				'users'=>array('*'),
-			),
+			array('allow', 'users'=>array('@')),
+			array('deny', 'users'=>array('*')),
 		);
 	}
 
@@ -38,12 +40,12 @@ class UsuariosController extends Controller
      * Muestra el timeline principal de la pagina
      *
      * Informacion a mostrar
-     *  Equipo del usuario
-     *  Enlace al proximo partido del jugador
-     *  Enlace a crear una nueva habilidad grupal
-     *  Acciones grupales activas del equipo del usuario
+     *  - Equipo del usuario
+     *  - Enlace al proximo partido del jugador
+     *  - Enlace a crear una nueva habilidad grupal
+     *  - Acciones grupales activas del equipo del usuario
      * 
-     * @ruta        jugadorNum12/usuarios
+     * @route jugadorNum12/usuarios
      */
     public function actionIndex()
     {
@@ -76,17 +78,17 @@ class UsuariosController extends Controller
 
     /*
      * Muestra los datos del personaje 
-     *   Nick del jugador 
-     *   Tipo del personaje
-     *   Nivel del personaje
-     *   Aficion a la que pertenece
-     *   Recursos del personaje
-     *   Valores de control de recursos
-     *   Habilidades pasivas desbloqueadas 
+     *  - Nick del jugador 
+     *  - Tipo del personaje
+     *  - Nivel del personaje
+     *  - Aficion a la que pertenece
+     *  - Recursos del personaje
+     *  - Valores de control de recursos
+     *  - Habilidades pasivas desbloqueadas 
      *
-     * Los datos del usuario se recogen de la variable de sesion
+     * Nota: Los datos del usuario se recogen de la variable de sesion
      *
-     * @ruta jugadorNum12/usuarios/perfil
+     * @route jugadorNum12/usuarios/perfil
      */
     public function actionPerfil()
     {    
@@ -130,8 +132,8 @@ class UsuariosController extends Controller
      *  Nivel del personaje
      *  Aficion a la que pertenece
      *
-     * @parametro   id del usuario que se consulta
-     * @ruta        jugadorNum12/usuarios/ver/{$id}
+     * @param $id_usuario
+     * @route jugadorNum12/usuarios/ver/{$id}
      */
     public function actionVer($id_usuario)
     {
@@ -142,19 +144,13 @@ class UsuariosController extends Controller
          //Saco los datos el usuario pedido
         $modeloUsuario = Usuarios:: model()->findByPk($id_usuario); 
 
-        if ($modeloUsuario === null)
-        {
+        if ($modeloUsuario === null) {
             Yii::app()->user->setFlash('usuario', 'Usuario inexistente.');
             //throw new CHttpException( 404, 'El usuario no existe.');
-        }
-        else
-        {
-            if (Yii::app()->user->usIdent == $id_usuario)
-            {
+        } else {
+            if (Yii::app()->user->usIdent == $id_usuario) {
                 $this->redirect(array('usuarios/perfil'));
-            }
-            else
-            {
+            } else {
                 $this->render('ver',array('modeloU'=>$modeloUsuario)); 
             }
         }   
@@ -165,8 +161,8 @@ class UsuariosController extends Controller
      * Si hay datos en $_POST procesa el formulario y guarda la
      * nueva clave en la tabla <<usuarios>> 
      *
-     * @ruta        jugadorNum12/usuarios/cambiarClave
-     * @redirect    jugadorNum12/usuarios/perfil
+     * @route jugadorNum12/usuarios/cambiarClave
+     * @redirect jugadorNum12/usuarios/perfil
      */
     public function actionCambiarClave()
     {
@@ -178,8 +174,7 @@ class UsuariosController extends Controller
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
 
-        if (isset($_POST['Usuarios'])) 
-        {
+        if (isset($_POST['Usuarios'])) {
             //Cojo la clave de post(formulario)       
             $clave = $_POST['Usuarios']['nueva_clave1'];
             $modelo->attributes = $_POST['Usuarios'];
@@ -187,8 +182,7 @@ class UsuariosController extends Controller
             $modelo->cambiarClave($clave);          
             //Si es valido, se guarda y redirecciono a su cuenta
             //Sino es correcto, mensaje de error
-            if ($modelo->save()) 
-            { 
+            if ($modelo->save()) { 
                $this->redirect(array('usuarios/perfil'));
             }
            
@@ -202,8 +196,8 @@ class UsuariosController extends Controller
      * Si hay datos en $_POST procesa el formulario y guarda el  
      * nuevo email en la tabla <<usuarios>> 
      *
-     * @ruta        jugadorNum12/usuarios/cambiarEmail
-     * @redirect    jugadorNum12/usuarios/perfil
+     * @route jugadorNum12/usuarios/cambiarEmail
+     * @redirect jugadorNum12/usuarios/perfil
      */
     public function actionCambiarEmail()
     {
@@ -217,15 +211,13 @@ class UsuariosController extends Controller
 
         $trans=Yii::app()->db->beginTransaction();
 
-        try
-        {
+        try {
             //Realizo la comprobacion de si el email es único en su modelo, mediante rules()
             $id= Yii::app()->user->usIdent;        
             $modelo = Usuarios:: model()->findByPk($id);
             $modelo->scenario='cambiarEmail';
 
-            if (isset($_POST['Usuarios'])) 
-            {
+            if (isset($_POST['Usuarios'])) {
                 //Cojo la clave de post(formulario)       
                 $email=$_POST['Usuarios']['nueva_email1'];
                 $modelo->attributes=$_POST['Usuarios'];
@@ -233,19 +225,17 @@ class UsuariosController extends Controller
                 $modelo->setAttributes(array('email'=>$email));
                 //Si es valido, se guarda y redirecciono a su cuenta
                 //Sino es correcto, mensaje de error
-                if ($modelo->save()) 
-                {
+                if ($modelo->save()) {
                    $trans->commit();
                    $this->redirect(array('usuarios/perfil'));
-                }else
-                {
+                } else {
                     $trans->commit(); 
                 }               
             }
-        }catch (Exception $e)
-                {
-                    $trans->rollBack();
-                }               
+        } catch (Exception $e) {
+            $trans->rollBack();
+        }               
+        
         $this->render('cambiarEmail',array('model'=>$modelo));
     }
 
@@ -295,7 +285,7 @@ class UsuariosController extends Controller
         $chicas = array();
         $empresarios = array();
 
-            for($i = 0; $i < 50; $i++) {
+            for($i = 0; $i < 10; $i++) {
                 $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
                 $u->setAttributes( array(
                     'nick'=>"test_ultra".$i,
@@ -334,9 +324,12 @@ class UsuariosController extends Controller
     /* ** */
 
     /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
+     * Funcion predeterminada de Yii
+     * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET
+     * Si el modelo de datos no se encuentra, se lanza una excepcion HTTP
+     * 
+     * @param $id : id del modelo que se va a cargar 
+     * @return modelo de datos
      */
     public function loadModel($id)
     {
@@ -347,8 +340,10 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
+     * Funcion predeterminada de Yii
+     * Realiza la validacion por Ajax
+     *
+     * @param $model (CModel) modelo a ser validado
      */
     protected function performAjaxValidation($model)
     {
@@ -358,4 +353,5 @@ class UsuariosController extends Controller
             Yii::app()->end();
         }
     }
+    
 }
