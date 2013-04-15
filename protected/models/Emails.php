@@ -120,7 +120,8 @@ class Emails extends CActiveRecord
 		$cont = 0;
 		$usuarios = Usuarios::model()->findAll();
 		foreach($usuarios as $usr){
-			$nombe[] = $usr->nick;
+			$nombe[$cont] = $usr->nick;
+			$cont++;
 		}
 		return $nombres;
 	}
