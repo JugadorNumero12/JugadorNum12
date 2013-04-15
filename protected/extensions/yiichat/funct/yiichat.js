@@ -110,6 +110,11 @@ var YiiChat = function(options){
 			+"<div class='track'></div>"
 			+"<div class='text'></div>"
 		+"</div>");
+		//Muestro por pantalla solo los 10 ultimos mensajes
+		if(posts[0].childNodes.length == 10){
+			posts[0].firstChild.parentNode.removeChild(posts[0].firstChild);
+		}
+
 		var p = posts.find(".post[id='"+post.id+"']");
 		p.data('post',post);
 		var flag=false;
@@ -177,7 +182,7 @@ var YiiChat = function(options){
 			msg.css({ color: 'red' });
 			msg.parent().find(".exceded").text("size exceded");
 		}else{
-			msg.css({ color: 'red' });
+			msg.css({ color: 'black' });
 			msg.parent().find(".exceded").text("");
 		}
 	});
