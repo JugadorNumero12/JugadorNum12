@@ -48,48 +48,52 @@ class EmailsController extends Controller
 	}
 
 	/**
-	 * Muestra la formulario para redactar un email junto con una lista de usuarios
+	 * Muestra el formulario para redactar un email junto con una lista de usuarios
 	 *
 	 * @ruta jugadorNum12/emails/redactar
 	 * @redirige juagdorNum12/emails
 	 */
-	public function actionRedactar($destinatario, $tema){
-
+	public function actionRedactar($destinatario, $tema, $equipo){        
+        
+        $trans = Yii::app()->db->beginTransaction();
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
 		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
-		$des="";
-
-		$email = new Emails;
-		if(isset($_POST['Emails'])){
-			$email->scenario='redactar';			
-
-			$destinatarios = $_POST['Emails']['nombre'];
-			$des = $email->sacarUsuarios($destinatarios);
-			foreach ($des as $destinatario) {
-				$emailAux = new Emails;
-				$emailAux->scenario='redactar';
-				$trans = Yii::app()->db->beginTransaction();
-				try{
-					$emailAux->attributes=$_POST['Emails']; //asunto y contenido
-					$emailAux->setAttributes(array('id_usuario_from'=>$yo->id_usuario)); //remitente
-					$emailAux->setAttributes(array('fecha'=>time()));//fecha
-					$para = Usuarios::model()->findByAttributes(array('nick'=>$destinatario));
-					if($para === null) throw new CHttpException( 404, 'Usuario inexistente');
-					$emailAux->setAttributes(array('id_usuario_to'=>$para->id_usuario));//destinatario
-					if($emailAux->save()){
-						$trans->commit();
-						
-					}
-
-				}catch(Exception $e){
-					$trans->rollback();
-				}				
+		if($equipo == true){
+			$destinatario = "";
+			foreach($mi_aficion as $amigo){
+				$destinatario.=$amigo->nick.",";
 			}
-			$this->redirect(array('index'));			
 		}
-		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema, 'des'=>$des));
+		$email = new Emails;
+        $email->scenario='redactar';
 
+        if (isset($_POST['Emails'])) 
+        {
+            $co = $_POST['Emails']['contenido'];
+			$as = $_POST['Emails']['asunto'];
+			$no = $_POST['Emails']['nombre'];
+			$dests = Emails::model()->sacarUsuarios($no);
+
+			foreach($dests as $dest){
+				$usr_dest = Usuarios::model()->findByAttributes(array('nick'=>$dest));
+				if($usr_dest!=null){
+					$mail = new Emails;
+					$mail->fecha = time();
+					$mail->asunto = $as;
+					$mail->contenido = $co;
+					$mail->id_usuario_to = $usr_dest->id_usuario;
+					$mail->id_usuario_from = $yo->id_usuario;
+					if(!$mail->save())
+						$this->render('enviados',array());			
+				}
+				$email = new Emails;
+			}
+			$trans->commit();
+        	$this->redirect(array('index')); 
+        }   
+		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
 	}
+
 
 	/**
 	 * Muestra un email
@@ -169,7 +173,7 @@ class EmailsController extends Controller
 	 * @parametro 	id del equipo al que se va a mandar el mensaje
 	 * @redirige 	jugadorNum12/email/redactar
 	 */
-	public function actionMensajeEquipo($id_equipo){
+/*	public function actionMensajeEquipo($id_equipo){
 
 		//coje a todos los jugadores de ese equipo
 		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
@@ -182,7 +186,7 @@ class EmailsController extends Controller
 
 		$this->redirect(array('emails/redactar/','destinatario'=>$destinatarios, 'tema'=>""));
 
-	}
+	}*/
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

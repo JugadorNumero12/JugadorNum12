@@ -26,9 +26,9 @@
 	</tr>
 </table>
 
-<?php echo CHtml::button('Responder', array('submit' => array('emails/redactar', 'destinatario'=>$from, 'tema'=>$email->asunto),'class'=>"button small black")); ?>
+<?php echo CHtml::button('Responder', array('submit' => array('emails/redactar', 'destinatario'=>$from, 'tema'=>$email->asunto, 'equipo'=>false),'class'=>"button small black")); ?>
 <?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email->id_email,'antes'=>'entrada'),'class'=>"button small black")); ?>
-<?php echo CHtml::button('Redactar mensaje', array('submit' => array('emails/redactar' , 'destinatario'=>"",'tema'=>""),'class'=>"button small black")); ?>
+<?php echo CHtml::button('Redactar mensaje', array('submit' => array('emails/redactar' , 'destinatario'=>"",'tema'=>"", 'equipo'=>false),'class'=>"button small black")); ?>
 <?php echo CHtml::button('Bandeja de entrada', array('submit' => array('emails/'),'class'=>"button small black")); ?>
 <?php echo CHtml::button('Bandeja de salida', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?>
 
