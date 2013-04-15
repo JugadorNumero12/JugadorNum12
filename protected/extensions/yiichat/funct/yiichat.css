@@ -12,6 +12,7 @@
 	height: 200px;
 	width: 200px;
 	text-shadow: 0px 0px 0px;
+	text-align: left;
 }
 
 .yiichat .posts .post {

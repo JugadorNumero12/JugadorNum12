@@ -11,7 +11,9 @@ class ChatHandler extends YiiChatDbHandlerBase {
     }
     protected function createPostUniqueId(){
         // generates a unique id. 40 char.
-        return hash('sha1',$this->getChatId().time().rand(1000,9999));      
+        //DEBERIA TENER ORDEN, NO RANDOM
+        //return hash('sha1',$this->getChatId().time().rand(1000,9999));
+        return hash('sha1',$this->getChatId().time());      
     }
     protected function getIdentityName(){
         // the name shown

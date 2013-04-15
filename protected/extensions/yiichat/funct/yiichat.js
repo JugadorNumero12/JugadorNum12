@@ -25,7 +25,7 @@ var YiiChat = function(options){
 					options.onError('post_rejected',text);
 					callback(false);
 				}else{
-					add(post); //Aqui text="texto", pero post.text="1". FALLA!
+					add(post); 
 					callback(true);
 					options.onSuccess('post',text,post);
 				}
@@ -177,7 +177,7 @@ var YiiChat = function(options){
 			msg.css({ color: 'red' });
 			msg.parent().find(".exceded").text("size exceded");
 		}else{
-			msg.css({ color: 'black' });
+			msg.css({ color: 'red' });
 			msg.parent().find(".exceded").text("");
 		}
 	});

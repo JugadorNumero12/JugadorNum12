@@ -133,7 +133,7 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
-	public function actionChats(){
+	/*public function actionChats(){
 		$this->render('/chat/index');
-	}
+	}*/
 }
