@@ -51,6 +51,7 @@ class AccionesController extends Controller
 	 */
 	public function actionIndex()
 	{
+<<<<<<< Updated upstream
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
@@ -79,6 +80,9 @@ class AccionesController extends Controller
 
 		//Envía los datos para que los muestre la vista
 		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario));
+=======
+		$this-> redirect(array('habilidades/index'));
+>>>>>>> Stashed changes
 	}
 
 	/**

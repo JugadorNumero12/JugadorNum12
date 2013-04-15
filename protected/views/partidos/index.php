@@ -38,11 +38,11 @@
 
 			<td>
 				<?php if($partido->id_partido == $proximo_partido->id_partido &&  $proximo_partido->turno >= $primer_turno+1 && $proximo_partido->turno < $ultimo_turno+1) { ?>
-					<?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$partido->id_partido),'class'=>"button")) ?> 
+					<a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$partido->id_partido ) ?>" class="button">Asistir</a>
 				<?php } else if ($partido->id_partido == $proximo_partido->id_partido &&  $proximo_partido->turno == $primer_turno) {?>
-					<?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximo_partido->id_partido),'class'=>"button")) ?>
+					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido->id_partido ) ?>" class="button">Previa</a>
 				<?php } else if ($partido->turno == $ultimo_turno+1 ){ ?>
-					<?php echo CHtml::submitButton('Cronica', array('submit' => array('/partidos/previa','id_partido'=>$partido->id_partido),'class'=>"button")) ?>
+					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido->id_partido ) ?>" class="button">Cr&oacute;nica</a>
 
 				<?php } ?>
 			</td>
