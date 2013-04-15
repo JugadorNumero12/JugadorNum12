@@ -84,7 +84,7 @@ class EmailsController extends Controller
 					$mail->id_usuario_to = $usr_dest->id_usuario;
 					$mail->id_usuario_from = $yo->id_usuario;
 					if(!$mail->save())
-						$this->render('enviados',array());			
+						$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));		
 				}
 				$email = new Emails;
 			}
