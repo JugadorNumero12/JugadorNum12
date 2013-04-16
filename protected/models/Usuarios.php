@@ -255,13 +255,11 @@ class Usuarios extends CActiveRecord
      * @param string $antigua_clave     
      * @return void
      */
-    public function clavesIguales($antigua_clave)
+    public function clavesIguales($attribute,$params)
     {
-        // FIXME: no es necesario el parametro
-
         $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
         if (!$usuario->comprobarClave($this->antigua_clave)) {
-            $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
+            $this->addError('antigua_clave', 'Introduzca correctamente la contrase&ntilde;a actual');
         }
     }
 

@@ -181,6 +181,21 @@ class AccionesController extends Controller
 					$this-> redirect(array('acciones/participar',
 										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
 				}
+			} else if($habilidad['tipo'] == Habilidades::TIPO_PARTIDO ) {
+				//Sacar id de usuario,equipo y partido para poder ejecutar la accion del partido				
+				$id_usuario=Yii::app()->user->usIdent;
+				$id_equipo=Yii::app()->user->usAfic;
+				echo '<pre>'.die(var_dump($id_equipo)).'</pre>';
+				$equipo=Equipos::model()->findByAttributes(array('id_equipo' => $id_equipo)); 
+
+				if($equipo === null) {
+					//Mostrar mensaje flash de error 
+				}
+				$siguientepartido=$equipo->sigPartido;
+				$id_partido=$siguientepartido->id_partido;
+
+				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad);
+
 			} else { 
 				// Tipo inválido
 				$trans->rollback();

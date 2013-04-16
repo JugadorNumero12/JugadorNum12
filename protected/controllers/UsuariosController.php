@@ -169,10 +169,12 @@ class UsuariosController extends Controller
         /* Actualizar datos de usuario (recuros,individuales y grupales) */
         Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
         /* Fin de actualización */
-        
+
         $id= Yii::app()->user->usIdent;        
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
+
+        $this->performAjaxValidation($modelo);
 
         if (isset($_POST['Usuarios'])) {
             //Cojo la clave de post(formulario)       
