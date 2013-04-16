@@ -140,7 +140,6 @@ class AccionesTurno extends CActiveRecord
 	{
 		$influenciasAcc=$participacion->influencias_acc;
 		$participacion->setAttributes(array('influencias_acc'=> $influenciasAcc + $cantidad));
-		echo '<pre>'.die(var_dump($participacion)).'</pre>';
 		$participacion->save();
 
 	}
@@ -165,7 +164,7 @@ class AccionesTurno extends CActiveRecord
 
 		//Tomar nombre de habilidad para instanciación dinámica	
     	$nombreHabilidad = $habilidad->codigo;
-
+    	 //echo '<pre>'.die(var_dump($id_partido)).'</pre>' ; 
     	//Llamar al singleton correspondiente y ejecutar dicha acción
     	$nombreHabilidad::getInstance()->ejecutar($id_usuario,$id_partido,$id_equipo);	
 	}																
