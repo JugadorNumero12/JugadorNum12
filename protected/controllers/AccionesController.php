@@ -185,7 +185,6 @@ class AccionesController extends Controller
 				//Sacar id de usuario,equipo y partido para poder ejecutar la accion del partido				
 				$id_usuario=Yii::app()->user->usIdent;
 				$id_equipo=Yii::app()->user->usAfic;
-				echo '<pre>'.die(var_dump($id_equipo)).'</pre>';
 				$equipo=Equipos::model()->findByAttributes(array('id_equipo' => $id_equipo)); 
 
 				if($equipo === null) {
@@ -194,7 +193,7 @@ class AccionesController extends Controller
 				$siguientepartido=$equipo->sigPartido;
 				$id_partido=$siguientepartido->id_partido;
 
-				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad);
+				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
 			} else { 
 				// Tipo inválido

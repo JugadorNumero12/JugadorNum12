@@ -130,18 +130,24 @@ class AccionesTurno extends CActiveRecord
                 
 	}	
 
-	public static function usarPartido($participacion,$cantidad)
+	public static function sumarInfluencia($participacion,$cantidad)
 	{
 		$influenciasAcc=$participacion->influencias_acc;
 		$participacion->setAttributes(array('influencias_acc'=> $influenciasAcc + $cantidad));
 		$participacion->save();
 
 	}
-	public static function usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad)
+	public static function usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res)
 	{
 		// Importar acciones
 		Yii::import('application.components.Acciones.*');
 
+		// Restar recursos
+		$res['dinero'] 		-= $habilidad['dinero'];
+		$res['animo']  		-= $habilidad['animo'];
+		$res['influencias'] -= $habilidad['influencias'];
+		$res->save();
+		
 		//Incorporo la accion si ese usuario aun no ha participado
 		AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
 
@@ -149,5 +155,11 @@ class AccionesTurno extends CActiveRecord
 
 		//Sumo la influencia de esta accion a la que tenga acumulada
 		AccionesTurno::sumarInfluencia($participacion,$habilidad->influencias);
+
+		//Tomar nombre de habilidad para instanciación dinámica	
+    	$nombreHabilidad = $habilidad->codigo;
+
+    	//Llamar al singleton correspondiente y ejecutar dicha acción
+    	$nombreHabilidad::getInstance()->ejecutar($id_usuario,$id_partido,$id_equipo);	
 	}																
 }
