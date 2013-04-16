@@ -97,33 +97,39 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	// Busca participacion en la tabla acciones turno
-	public function buscarParticipacion($id_usuario, $id_partido,$id_equipo)
+	public static function buscarParticipacion($id_usuario, $id_partido,$id_equipo)
 	{
-		 $participacion =Participaciones::model()->findAllByAttributes(array('usuarios_id_usuario'=> $id_usuario ,
+		 
+		$participacion = AccionesTurno::model()->findByAttributes(array('usuarios_id_usuario'=> $id_usuario ,
 																			'partidos_id_partido'=> $id_partido,
 																			'equipos_id_equipo'=> $id_equipo));
 
+		
 		return $participacion; 
 	}
 
-	public function agregarParticipacion($id_usuario, $id_partido,$id_equipo)
+	public static  function agregarParticipacion($id_usuario, $id_partido,$id_equipo)
 	{
 		 $modelo=new AccionesTurno();
 		 $modelo->setAttributes(array('usuarios_id_usuario'=> $id_usuario ,
 										'partidos_id_partido'=> $id_partido,
 										'equipos_id_equipo'=> $id_equipo,
 										'influencias_acc'=> 0));
+
 		 $modelo->save();
 	}
 
 	//incorpora registro en la tabla acciones turno si el usuario aun no estaba
 	public static function incorporarAccion($id_usuario, $id_partido,$id_equipo)
 	{
+
 		 // Busco si ha Participado ya ese usuario en en ese partido
 		$participante = AccionesTurno::buscarParticipacion($id_usuario, $id_partido,$id_equipo);
 
+		
 		if($participante  === null)
 		{
+			
 			AccionesTurno::agregarParticipacion($id_usuario, $id_partido,$id_equipo);
 
 		}
@@ -134,6 +140,7 @@ class AccionesTurno extends CActiveRecord
 	{
 		$influenciasAcc=$participacion->influencias_acc;
 		$participacion->setAttributes(array('influencias_acc'=> $influenciasAcc + $cantidad));
+		echo '<pre>'.die(var_dump($participacion)).'</pre>';
 		$participacion->save();
 
 	}
@@ -147,7 +154,7 @@ class AccionesTurno extends CActiveRecord
 		$res['animo']  		-= $habilidad['animo'];
 		$res['influencias'] -= $habilidad['influencias'];
 		$res->save();
-		
+
 		//Incorporo la accion si ese usuario aun no ha participado
 		AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
 

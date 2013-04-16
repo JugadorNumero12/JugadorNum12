@@ -192,7 +192,6 @@ class AccionesController extends Controller
 				}
 				$siguientepartido=$equipo->sigPartido;
 				$id_partido=$siguientepartido->id_partido;
-
 				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
 			} else { 
