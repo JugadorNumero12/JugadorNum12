@@ -1,16 +1,32 @@
 <?php
 
 /** 
- * Descripcion breve: Apostar resultado del proximo partido
- * Tipo: Individual
- * Perfil asociado: Empresario, Ultra
+ * Apostar resultado del proximo partido
+ *
+ * Tipo
+ * 
+ * - Individual
+ * 
+ * Perfiles asociados
+ *
+ * - Empresario
+ * - Ultra
  *
  * Efectos
- *  aumenta el dinero al acabar el partido (de momento para cualquier resultado)
+ * 
+ * - aumenta el dinero al acabar el partido (de momento para cualquier resultado)
+ *
+ *
+ * @package componentes\acciones
  */
 class Apostar extends AccionIndSingleton
 {
-  /* Función a través de la cual se accederá al Singleton */
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion Apostar 
+   */
    public static function getInstance()
    {
       if (!self::$instancia instanceof self)
@@ -20,7 +36,13 @@ class Apostar extends AccionIndSingleton
       return self::$instancia;
    }
 
-  /* Ningun efecto al ejecutar la accion */
+  /**
+   * Ejecutar la accion
+   *
+   * @param int $id_usuario id del usuario que realiza la accion
+   * @throws \Exception usuario no encontrado
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */ 
   public function ejecutar($id_usuario)
   {
     //Traer el array de efectos
@@ -42,11 +64,17 @@ class Apostar extends AccionIndSingleton
     }
   }
 
-  /* Aplicar la bonificacion al acabar el partido */
+  /**
+   * finalizar la accion
+   *
+   * @param int $id_usuario id del usuario
+   * @param int $id_habilidad id de la habilidad usada
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */
   public function finalizar($id_usuario,$id_habilidad)
   {
-    //Validar parámetros y devolver influencias
     $res = parent::finalizar($id_usuario,$id_habilidad);
     return $res;
-  }	
+  }
+
 }

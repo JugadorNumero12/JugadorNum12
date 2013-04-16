@@ -1,26 +1,47 @@
 <?php
 
 /** 
- * Descripcion breve: Beber cerveza durante el partido
- * Tipo: Partido
- * Perfil asociado: Ultra
+ * Beber cerveza durante el partido
+ * 
+ * Tipo
  *
- * Efectos:
- *  Aumenta de forma inmediata el recurso animo 
+ * - Partido
+ *
+ * Perfiles asociados
+ *
+ * - Ultra
+ *
+ * Efectos
+ *
+ * - Aumenta de forma inmediata el recurso animo
+ *
+ *
+ * @package componentes\acciones
  */
 class BeberCerveza extends AccionPartSingleton
 {
-   /* Función a través de la cual se accederá al Singleton */
-   public static function getInstance()
-   {
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion Apostar 
+   */
+	public static function getInstance()
+   	{
       if (!self::$instancia instanceof self)
       {
          self::$instancia = new self;
       }
       return self::$instancia;
-   }
+   	}
 
-	/* Aplicar efectos de la accion */
+  /**
+   * Ejecutar la accion
+   *
+   * @param int $id_usuario id del usuario que realiza la accion
+   * @throws \Exception usuario no encontrado
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */ 
 	public function ejecutar($id_usuario,$id_partido,$id_equipo)
 	{
 		//Traer el array de efectos
@@ -44,5 +65,10 @@ class BeberCerveza extends AccionPartSingleton
 	    AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
 	}
 
+ 	/**
+   	 * Accion de partido: sin efecto en finalizar() 
+   	 * @return void
+   	 */
 	public function finalizar() {}
+
 }

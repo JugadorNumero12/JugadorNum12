@@ -1,26 +1,48 @@
 <?php
 
 /** 
- * Descripcion breve: Ascender en el trabajo
- * Tipo: Pasiva
- * Perfil asociado: Empresario, Ultra
+ * Ascender en el trabajo
+ * 
+ * Tipo
  *
- * Efectos:
- * 	Aumenta de forma permanente la generacion de dinero
+ * - Pasiva
+ * 
+ * Perfiles asociados
+ *
+ * - Empresario
+ * - Ultra
+ *
+ * Efectos
+ *
+ * - Aumenta de forma permanente la generacion de dinero
+ *
+ *
+ * @package componentes\acciones
  */
 class Ascender extends AccionPasSingleton
 {
-   /* Función a través de la cual se accederá al Singleton */
-   public static function getInstance()
-   {
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion Apostar 
+   */
+  public static function getInstance()
+  {
       if (!self::$instancia instanceof self)
       {
          self::$instancia = new self;
       }
       return self::$instancia;
-   }
+  }
 
-  /* Aplicar los efectos de la accion */
+  /**
+   * Ejecutar la accion
+   *
+   * @param int $id_usuario id del usuario que realiza la accion
+   * @throws \Exception usuario no encontrado
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */
   public function ejecutar($id_usuario)
   {
     //Validar usuario
@@ -40,8 +62,12 @@ class Ascender extends AccionPasSingleton
     }  
   }
 
-  /* Accion permanente: metodo vacio */
+  /**
+   * Accion permanente: sin efecto en finalizar() 
+   * @return void
+   */
   public function finalizar() 
   { 
   }	
+
 }
