@@ -154,25 +154,25 @@ INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
  -- desbloqueadas de Xaby (empresario)
- (1, 1), (2, 1), (3, 1), (6, 1), (7, 1), (8, 1), (14, 1),
+ (3, 1), (4, 1), (5, 1), (6, 1), (9, 1), (11, 1), 
  -- desbloqueadas de marina (movedora)
- (3, 2), (4, 2), (5, 2), (7, 2), (8, 2), (10, 2), (13, 2),
- -- desbloqueadas de arturo (empresario)
- (1, 3), (2, 3), (3, 3), (6, 3), (7, 3), (8, 3), (14, 3),
+ (3, 2), (4, 2), (5, 2), (6, 2), (9, 2), (11, 2), 
+  -- desbloqueadas de arturo (empresario)
+ (3, 3), (4, 3), (5, 3), (6, 3), (9, 3), (11, 3), 
  -- desbloqueadas de dani (ultra)
- (4, 4), (6, 4), (7, 4), (9, 4), (11, 4), (12, 4), (13, 4), (14, 4), 
+ (3, 4), (4, 4), (5, 4), (6, 4), (9, 4), (11, 4),  
  -- desbloqueadas de pedro (empresario)
- (1, 5), (2, 5), (3, 5), (6, 5), (7, 5), (8, 5), (14, 5),
+ (3, 5), (4, 5), (5, 5), (6, 5), (9, 5), (11, 5), 
  -- desbloqueadas de manu (movedora)
- (3, 6), (4, 6), (5, 6), (7, 6), (8, 6), (10, 6), (13, 6),
+ (3, 6), (4, 6), (5, 6), (6, 6), (9, 6), (11, 6), 
  -- desbloqueadas de rober (ultra)
- (4, 7), (6, 7), (7, 7), (9, 7), (11, 7), (12, 7), (13, 7), (14, 7), 
+ (3, 7), (4, 7), (5, 7), (6, 7), (9, 7), (11, 7),  
  -- desbloqueadas de marcos (ultra)
- (4, 8), (6, 8), (7, 8), (9, 8), (11, 8), (12, 8), (13, 8), (14, 8), 
+ (3, 8), (4, 8), (5, 8), (6, 8), (9, 8), (11, 8),  
  -- desbloqueadas de alex (movedora)
- (3, 9), (4, 9), (5, 9), (7, 9), (8, 9), (10, 9), (13, 9),
+ (3, 9), (4, 9), (5, 9), (6, 9), (9, 9), (11, 9), 
  -- desbloqueadas de samu (ultra)
- (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10), (14, 10);
+ (3, 10), (4, 10), (5, 10), (6, 10), (9, 10), (11, 10);
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
