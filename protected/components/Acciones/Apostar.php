@@ -25,12 +25,11 @@ class Apostar extends AccionIndSingleton
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \Apostar instancia de la accion Apostar 
+   * @return \Apostar instancia de la accion
    */
    public static function getInstance()
    {
-      if (!self::$instancia instanceof self)
-      {
+      if (!self::$instancia instanceof self) {
          self::$instancia = new self;
       }
       return self::$instancia;
@@ -54,12 +53,9 @@ class Apostar extends AccionIndSingleton
       throw new Exception("Usuario incorrecto.", 404);      
 
     //Aumentar ánimo
-    if (Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0)
-    {
+    if (Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0) {
       return 0;
-    }
-    else
-    {
+    } else {
       return -1;
     }
   }

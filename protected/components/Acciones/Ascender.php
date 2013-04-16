@@ -25,12 +25,11 @@ class Ascender extends AccionPasSingleton
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \Apostar instancia de la accion Apostar 
+   * @return \Ascender instancia de la accion 
    */
   public static function getInstance()
   {
-      if (!self::$instancia instanceof self)
-      {
+      if (!self::$instancia instanceof self) {
          self::$instancia = new self;
       }
       return self::$instancia;
@@ -52,12 +51,9 @@ class Ascender extends AccionPasSingleton
 
     //Aumentar dinero
     $helper = new Helper();
-    if (Recursos::aumentar_recursos($id_usuario,"dinero_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']) == 0)
-    {
+    if (Recursos::aumentar_recursos($id_usuario,"dinero_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']) == 0) {
       return 0;
-    }
-    else
-    {
+    } else {
       return -1;
     }  
   }
