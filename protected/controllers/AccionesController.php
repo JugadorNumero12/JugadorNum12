@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Controlador para la funcionalidad relacionada con las acciones 
+ * Controlador de las acciones 
  *
  *
  * @package controladores

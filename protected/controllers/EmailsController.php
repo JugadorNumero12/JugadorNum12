@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Funcionalidad de la mensajeria
+ * Controlador de la mensajeria
  *
  *
  * @package controladores
@@ -9,16 +9,16 @@
 class EmailsController extends Controller
 {
     /**
-     * Definicion del verbo DELETE unicamente via POST
-     *
-     * > Funcion predeterminada de Yii
-     *
-     * @return string[]     filtros definidos para "actions"
-     */
-	public function filters()
-	{
-		return array('accessControl', 'postOnly + delete');
-	}
+    * Definicion del verbo DELETE unicamente via POST
+    *
+    * > Funcion predeterminada de Yii
+    *
+    * @return string[]     filtros definidos para "actions"
+    */
+    public function filters()
+    {
+        return array('accessControl', 'postOnly + delete');
+    }
 
     /**
      * Especifica las reglas de control de acceso.
@@ -249,5 +249,5 @@ class EmailsController extends Controller
 			Yii::app()->end();
 		}
 	}
-    
+
 }
