@@ -1,41 +1,51 @@
 <?php
 
+/**
+ * Controlador de la mensajeria
+ *
+ *
+ * @package controladores
+ */
 class EmailsController extends Controller
 {
-	/**
-	 * @return array de filtros para actions
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // Reglas de acceso
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
+    /**
+    * Definicion del verbo DELETE unicamente via POST
+    *
+    * > Funcion predeterminada de Yii
+    *
+    * @return string[]     filtros definidos para "actions"
+    */
+    public function filters()
+    {
+        return array('accessControl', 'postOnly + delete');
+    }
 
-	/**
-	 * Especifica las reglas de control de acceso.
-	 * Esta función es usada por el filtro "accessControl".
-	 * @return array con las reglas de control de acceso
-	 */
+    /**
+     * Especifica las reglas de control de acceso.
+     * 
+     *  - Permite realizar a los usuarios autenticados cualquier accion
+     *  - Niega el acceso al resto de usuarios
+     *
+     * > Funcion predeterminada de Yii 
+     *
+     * @return object[]     reglas usadas por el filtro "accessControl"
+     */
 	public function accessRules()
 	{
 		return array(
-			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
-				'users'=>array('@'),
-			),
-			array('deny',  // Niega acceso al resto de usuarios
-				'users'=>array('*'),
-			),
+			array('allow', 'users'=>array('@')),
+			array('deny', 'users'=>array('*')),
 		);
 	}
 
 	/**
 	 * Muestra la bandeja de entrada del usuario
 	 *
-	 * @ruta jugadorNum12/emails
+	 * @route  jugadorNum12/emails
+     * @return void
 	 */
-	public function actionIndex(){
+	public function actionIndex()
+    {
 		$niks = array();
 		//Saca todos los emails recibidos por el usuario y que no los haya borrado
 		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND leido =0 AND borrado_to =0) ORDER BY fecha DESC";
@@ -50,11 +60,17 @@ class EmailsController extends Controller
 	/**
 	 * Muestra el formulario para redactar un email junto con una lista de usuarios
 	 *
-	 * @ruta jugadorNum12/emails/redactar
-	 * @redirige juagdorNum12/emails
+     * @param string $destinatario  nick del destinatario del mensaje
+     * @param string $tema          asunto del email
+     * @param boolean $equipo 		indica si el mensaje esta dirigido a un equipo entero (true)
+     *
+	 * @route      jugadorNum12/emails/redactar/{$destinatario}/{$tema}
+	 * @redirect   juagdorNum12/emails
+     *
+     * @return     void
 	 */
-	public function actionRedactar($destinatario, $tema, $equipo){        
-        
+	public function actionRedactar($destinatario, $tema, $equipo)
+	{                
         $trans = Yii::app()->db->beginTransaction();
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
 		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
@@ -106,9 +122,13 @@ class EmailsController extends Controller
 	/**
 	 * Muestra un email
 	 *
-	 * @ruta jugadorNum12/emails/leerEmail
+     * @param int $id   id del email a leer
+     *
+	 * @route  jugadorNum12/emails/leerEmail/{$id}
+     * @return void
 	 */
-	public function actionLeerEmail($id){
+	public function actionLeerEmail($id)
+    {
 		$email = Emails::model()->findByPk($id);
 		if($email === NULL) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
 		$usuario_from = Usuarios::model()->findByPk($email->id_usuario_from);
@@ -132,9 +152,17 @@ class EmailsController extends Controller
 	/**
 	 * Elimina un email
 	 *
-	 * @ruta jugadorNum12/emails/leerEmail 
+     * @param int $id       id del email a eliminar
+     * @param string $antes determina donde redireccionaremos.
+     *    
+	 * @route       jugadorNum12/emails/eliminarEmail/{$id}/{$antes} 
+     * @redirect    jugadorNum12/emails/index   si $antes == 'entrada'
+     * @redirect    jugadorNum12/email/enviados en caso contrario
+     *
+     * @return void
 	 */ 
-	public function actionEliminarEmail($id,$antes){
+	public function actionEliminarEmail($id,$antes)
+    {
 		$email = Emails::model()->findByPk($id);
 		if($email === null) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
 		$trans = Yii::app()->db->beginTransaction();
@@ -161,9 +189,11 @@ class EmailsController extends Controller
 	/**
 	 * Muestra la bandeja de salida del usuario
 	 *
-	 * @ruta jugadorNum12/emails/enviados
+	 * @route jugadorNum12/emails/enviados
+     * @return void
 	 */
-	public function actionEnviados(){
+	public function actionEnviados()
+    {
 		$niks = array();
 		//saca todos los emails enviados por el usuario y que no los haya borrado
 		$sql = "SELECT * FROM  emails WHERE (id_usuario_from =".Yii::app()->user->usIdent." AND borrado_from =0) ORDER BY fecha DESC";
@@ -175,32 +205,15 @@ class EmailsController extends Controller
 		$this->render('enviados',array('emails'=>$emails,'niks'=>$niks));
 	}
 
-	/**
-	 * Al mandar un mensaje a toda la aficion saca los nombres de todos los de tu equipo para mandar el mensaje
-	 *
-	 * @parametro 	id del equipo al que se va a mandar el mensaje
-	 * @redirige 	jugadorNum12/email/redactar
-	 */
-/*	public function actionMensajeEquipo($id_equipo){
-
-		//coje a todos los jugadores de ese equipo
-		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
-
-		$destinatarios = "";
-		//Para cada jugador del equipo lo guarda en el string de envio
-		foreach ($mi_aficion as $jugador) {
-			$destinatarios.=$jugador->nick.",";
-		}
-
-		$this->redirect(array('emails/redactar/','destinatario'=>$destinatarios, 'tema'=>""));
-
-	}*/
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
-	 */
+    /**
+     * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET 
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @param int $id            id del modelo que se va a cargar 
+     * @throws \CHttpException   El modelo de datos no se encuentra 
+     * @return \AccionesGrupales modelo de datos
+     */
 	public function loadModel($id)
 	{
 		$model=Emails::model()->findByPk($id);
@@ -209,16 +222,20 @@ class EmailsController extends Controller
 		return $model;
 	}
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
-	 */
+    /**
+     * Realiza la validacion por Ajax 
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @param $model (CModel) modelo a ser validado
+     * @return void
+     */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='emails-form')
-		{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='email-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
+
 }

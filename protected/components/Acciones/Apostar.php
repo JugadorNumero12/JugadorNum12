@@ -1,26 +1,47 @@
 <?php
 
 /** 
- * Descripcion breve: Apostar resultado del proximo partido
- * Tipo: Individual
- * Perfil asociado: Empresario, Ultra
+ * Apostar resultado del proximo partido
+ *
+ * Tipo
+ * 
+ * - Individual
+ * 
+ * Perfiles asociados
+ *
+ * - Empresario
+ * - Ultra
  *
  * Efectos
- *  aumenta el dinero al acabar el partido (de momento para cualquier resultado)
+ * 
+ * - aumenta el dinero al acabar el partido (de momento para cualquier resultado)
+ *
+ *
+ * @package componentes\acciones
  */
 class Apostar extends AccionIndSingleton
 {
-  /* Función a través de la cual se accederá al Singleton */
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion
+   */
    public static function getInstance()
    {
-      if (!self::$instancia instanceof self)
-      {
+      if (!self::$instancia instanceof self) {
          self::$instancia = new self;
       }
       return self::$instancia;
    }
 
-  /* Ningun efecto al ejecutar la accion */
+  /**
+   * Ejecutar la accion
+   *
+   * @param int $id_usuario id del usuario que realiza la accion
+   * @throws \Exception usuario no encontrado
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */ 
   public function ejecutar($id_usuario)
   {
     //Traer el array de efectos
@@ -32,21 +53,24 @@ class Apostar extends AccionIndSingleton
       throw new Exception("Usuario incorrecto.", 404);      
 
     //Aumentar ánimo
-    if (Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0)
-    {
+    if (Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0) {
       return 0;
-    }
-    else
-    {
+    } else {
       return -1;
     }
   }
 
-  /* Aplicar la bonificacion al acabar el partido */
+  /**
+   * finalizar la accion
+   *
+   * @param int $id_usuario id del usuario
+   * @param int $id_habilidad id de la habilidad usada
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */
   public function finalizar($id_usuario,$id_habilidad)
   {
-    //Validar parámetros y devolver influencias
     $res = parent::finalizar($id_usuario,$id_habilidad);
     return $res;
-  }	
+  }
+
 }
