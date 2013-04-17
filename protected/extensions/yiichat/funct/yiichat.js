@@ -159,7 +159,8 @@ var YiiChat = function(options){
 
 	var send = you.find('button');
 	var msg = you.find('textarea');
-	send.click(function(){
+
+	function sendmessage(){
 		var text = jQuery.trim(msg.val());
 		if(text.length<options.minPostLen){
 			options.onError('very_short_text',text);
@@ -175,7 +176,18 @@ var YiiChat = function(options){
 				setTimeout(function(){ msg.focus(); },100);
 			}
 		});
-	});
+	}
+
+	send.click(sendmessage);
+
+	msg.keyup(function(e){
+	  e = e || event;
+	  if (e.keyCode === 13) {
+	    sendmessage();
+	  }
+	  return true;
+	 });
+
 	msg.keyup(function(e){
 		var text = jQuery.trim(msg.val());
 		if(text.length > options.maxPostLen){
