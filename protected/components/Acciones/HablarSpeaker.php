@@ -26,7 +26,7 @@ class HablarSpeaker extends AccionPartSingleton
 	{
 		$ret =0 ; 
 	    //Traer el array de efectos
-	    parent::ejecutar($id_usuario);
+	    parent::ejecutar($id_usuario,$id_partido,$id_equipo);
 
 	    //Validar usuario
 	    $us = Usuarios::model()->findByPk($id_usuario);

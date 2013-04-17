@@ -99,13 +99,21 @@ class EmailsController extends Controller
 					$mail->contenido = $co;
 					$mail->id_usuario_to = $usr_dest->id_usuario;
 					$mail->id_usuario_from = $yo->id_usuario;
+					$redirect=true;
 					if(!$mail->save())
 						$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));		
+				}else{
+					$redirect=false;
+					echo(
+						'<script language="javascript" type="text/javascript">
+						alert("El ususario no existe.");
+						</script>'
+						);
 				}
 				$email = new Emails;
 			}
 			$trans->commit();
-        	$this->redirect(array('index')); 
+        	if($redirect)$this->redirect(array('index')); 
         }   
 		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
 	}
