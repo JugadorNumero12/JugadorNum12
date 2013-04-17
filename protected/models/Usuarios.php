@@ -348,6 +348,7 @@ class Usuarios extends CActiveRecord
         );
     }
 
+
     /**
      * Define los nombres completos de los atributos
      *
