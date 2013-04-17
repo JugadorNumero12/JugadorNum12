@@ -46,14 +46,10 @@ class NotificacionesController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$misUsrnotif = Usrnotif::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent, 'leido'=>0));
-		$notificaciones = array();
-		foreach ($misUsrnotif as $usrnotif) {
-			$notificacion = Notificaciones::model()->findByPK($usrnotif['notificaciones_id_notificacion']);
-			if ($notificacion === null)
-				Yii::app()->user->setFlash('notificaion', 'Notificacion no encontrada.');
-			$notificaciones[] = array('notificacion'=>$notificacion,'leido'=>$usrnotif->leido);
-		}
+		//saca las notificaciones del usuario que no haya leido ordenadas por fecha
+		$sql = "SELECT * FROM notificaciones WHERE id_notificacion IN (SELECT notificaciones_id_notificacion FROM usrnotif WHERE (usuarios_id_usuario =".Yii::app()->user->usIdent." AND leido =0)) ORDER BY fecha DESC";
+		$notificaciones = Yii::app()->db->createCommand($sql)->queryAll();
+
 		$this->render('index',array('notificaciones'=>$notificaciones));
 	}
 
