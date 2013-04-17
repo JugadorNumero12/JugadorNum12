@@ -19,6 +19,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		//yii chat
+		'application.extensions.yiichat.*',
 	),
 
 	'modules'=>array(	

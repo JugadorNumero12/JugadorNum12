@@ -185,7 +185,6 @@ class AccionesController extends Controller
 				//Sacar id de usuario,equipo y partido para poder ejecutar la accion del partido				
 				$id_usuario=Yii::app()->user->usIdent;
 				$id_equipo=Yii::app()->user->usAfic;
-				echo '<pre>'.die(var_dump($id_equipo)).'</pre>';
 				$equipo=Equipos::model()->findByAttributes(array('id_equipo' => $id_equipo)); 
 
 				if($equipo === null) {
@@ -193,8 +192,7 @@ class AccionesController extends Controller
 				}
 				$siguientepartido=$equipo->sigPartido;
 				$id_partido=$siguientepartido->id_partido;
-
-				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad);
+				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
 			} else { 
 				// Tipo inválido
@@ -212,9 +210,16 @@ class AccionesController extends Controller
 					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 				$id_acc = -1;
 				$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
-			} else {
+			}
+			else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+			{
 				//Renderizar acción grupal
 				$this->render('usar', array('id_acc'=>$nuevo_id,'habilidad'=>$habilidad, 'res'=>$res));
+			}
+			else //Es de tipo partido
+			{
+				
+                $this->redirect(array('partidos/asistir','id_partido'=>$id_partido));
 			}
 		} catch (Exception $e) {
 			$this-> redirect(array('acciones/index'));

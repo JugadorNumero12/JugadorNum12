@@ -13,80 +13,80 @@ class RequisitosDesbloquearHabilidades
 		// GRUPALES
 		// ------------------------------------------------
 		'FinanciarEvento' => array (
-			'nivel'=> 1,
-			'desbloqueadas_previas' => array ('IncentivoEconomico' => 'IncentivoEconomico',
-												'Apostar' => 'Apostar'),
+			'nivel'=> 2,
+			'desbloqueadas_previas' => array ('OrganizarHomenaje' => 'OrganizarHomenaje'),
 		), 
 			
 		'IncentivoEconomico' => array (
-			'nivel' => 3,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 4,
+			'desbloqueadas_previas' => array ('FinanciarEvento' => 'FinanciarEvento', 
+												'Ascender' => 'Ascender',),
 		), 
 		
 		'OrganizarHomenaje' => array (
-			'nivel' => 4,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 			
 		'Pintarse' => array (
-			'nivel' => 5,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'PromoverPartido' => array (
-			'nivel' => 6,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 			
 		// INDIVIDUALES
 		// ------------------------------------------------
 		'Apostar' => array (
-			'nivel' => 2,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'CrearseEspectativas' => array (
-			'nivel' => 3,
+			'nivel' => 2,
 			'desbloqueadas_previas' => array (),
 		),
 			
 		'ContratarRRPP' => array (
-			'nivel' => 4,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 3,
+			'desbloqueadas_previas' => array ('Ascender' => 'Ascender',),
 		),
 		
 		//PARTIDO 
 		// ------------------------------------------------
 		'BeberCerveza' => array (
-			'nivel' => 5,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'HablarSpeaker' => array (
-			'nivel' => 5,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 3,
+			'desbloqueadas_previas' => array ('RetransmitirRRSS' => 'RetransmitirRRSS',),
 		), 
 			
 		'IniciarOla' => array (
-			'nivel' => 2,
+			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
 		), 
 		
 		'PunteroLaser' => array (
-			'nivel' => 1,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 3,
+			'desbloqueadas_previas' => array ('IniciarOla' => 'IniciarOla',),
 		), 
 		
 		'RetransmitirRRSS' => array (
-			'nivel' => 1,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 2,
+			'desbloqueadas_previas' => array ('PromoverPartido' => 'PromoverPartido',),
 		),
 
 		// PASIVAS
 		// -------------------------------------------------
 		'Ascender' => array (
-			'nivel' => 1,
-			'desbloqueadas_previas' => array (),
+			'nivel' => 2,
+			'desbloqueadas_previas' => array ('Apostar' => 'Apostar',),
 		), 
 	);
 }
