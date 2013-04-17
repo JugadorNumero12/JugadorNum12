@@ -187,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `defensivo_local` int(11) NOT NULL DEFAULT '0',
   `defensivo_visitante` int(11) NOT NULL DEFAULT '0',
   `estado` int(11) NOT NULL DEFAULT '0',
+  `hora_ult_turno` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_partido`),
   KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
   KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)

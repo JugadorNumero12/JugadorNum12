@@ -85,7 +85,7 @@ class Partidos extends CActiveRecord
         return array(
             array('equipos_id_equipo_1, equipos_id_equipo_2, hora', 'required'),
             array('equipos_id_equipo_1, equipos_id_equipo_2, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante, dif_niveles', 'length', 'max'=>10),
-            array('hora, turno, goles_local, goles_visitante, moral_local, moral_visitante, ofensivo_local, ofensivo_visitante, defensivo_local, defensivo_visitante, estado', 'length', 'max'=>11),
+            array('hora, turno, goles_local, goles_visitante, moral_local, moral_visitante, ofensivo_local, ofensivo_visitante, defensivo_local, defensivo_visitante, estado, hora_ult_turno', 'length', 'max'=>11),
             array('id_partido, equipos_id_equipo_1, equipos_id_equipo_2, hora, cronica, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante', 'safe', 'on'=>'search'),
         );
     }
