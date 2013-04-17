@@ -42,43 +42,33 @@ class HabilidadesController extends Controller
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
 		
-		$idUsuario = Yii::app()->user->usIdent;
+		//Sacar una lista de las acciones desbloqueadas de un usuario
+		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
-		// Obtiene una lista con todas las habilidades
-		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
+		//Sacar una lista con los recursos del usuario
+		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
-		$desbloqueadas = array();
-		$requisitos = array();
-		$puedeDesbloquear = array();
-		foreach ($habilidades as $ih => $h) { //para cada habilidad
-
-			//1) vemos si el usuario tiene esa habilidad desbloqueada
-			$desbloqueada = Desbloqueadas::model()->findByAttributes((array('habilidades_id_habilidad'=> $h->id_habilidad, 'usuarios_id_usuario'=> Yii::app()->user->usIdent)));
+		//Comprobaciones de seguridad
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
+			//throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
 			
-			if($desbloqueada !== null){
-				$desbloqueadas[$ih] = true;
-			} else{
-				$desbloqueadas[$ih] = false;
-			}	
+		//A partir de las acciones sacamos las habilidades para poder mostrarlas
+		$acciones = array();
+		foreach ($accionesDesbloqueadas as $habilidad)
+		{
+			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
 
-			//2) saco los requisitos de la habilidad para ser desbloqueada (nivel, y habilidades previas desbloqueadas)	
-			$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo];
-			$requisitos[$ih] = $habilidadesRequisito;
-
-			//3) indica si el usuario puede desbloquear la habilidad
-			$puedeDesbloquear[$ih] = $h->puedeDesbloquear(Yii::app()->user->usIdent, $h->id_habilidad);	
+			//Comprobación de seguridad
+			if ($hab === null)
+				Yii::app()->user->setFlash('habilidad', 'Habilidad no encontrada. (actionIndex,AccionesController).');
+				//throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+				
+			$acciones[] = $hab;
 		}
 
-		// Prepara los datos a enviar a la vista
-		$datosVista = array(
-			'habilidades' => $habilidades,
-			'desbloqueadas' => $desbloqueadas,
-			'requisitos' => $requisitos,
-			'puedeDesbloquear' =>$puedeDesbloquear,
-		);
-
-		// Manda pintar la lista a la vista
-		$this->render('index', $datosVista);
+		//Envía los datos para que los muestre la vista
+		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'accionesDesbloqueadas'=>$accionesDesbloqueadas));
 	}
 
 
