@@ -305,7 +305,7 @@ class ScriptsController extends Controller
 	*
 	* Los partidos se generan "talcual" en el orden en que vienen en '$emparejamientos'
 	*/
-	/*public function generaLiga($emparejamientos, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
+	public function generaLiga($emparejamientos, $dentro_de=1, $jornada=null, $horas=array(22,21,20,19,18,17,16,12))
 	{
 		const un_dia = 3600*24;
 		const partidosXdia = count($horas);
@@ -348,7 +348,7 @@ class ScriptsController extends Controller
     		throw $ex;
     	}
 
-	}*/
+	}
 
 	/*
 	* Añade un nuevo partido entre los equipos indicados en la fecha indicada.
@@ -358,7 +358,7 @@ class ScriptsController extends Controller
 	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
 	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
 	*/
-	/*private function generaPartido(int $id_local, int $id_visitande, int $time)
+	private function generaPartido(int $id_local, int $id_visitande, int $time)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -370,5 +370,5 @@ class ScriptsController extends Controller
 		$partido->save();
       
 
-	}*/
+	}
 }
