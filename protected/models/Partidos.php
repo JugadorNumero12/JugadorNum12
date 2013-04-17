@@ -159,8 +159,20 @@ class Partidos extends CActiveRecord
      */
     public function tiempoRestantePartido()
     {
-        // TODO
-        return 120;
+        Yii::import('application.components.Partido');
+
+        // NOTA: asumido tiempo de turno de 1 minuto (60 segundos)
+        $duracion_turno = 60;
+        // Calcular hora de fin del encuentro
+        $fin_partido = $this->hora_ult_turno + ((Partido::ULTIMO_TURNO - ($this->turno + 1)) * $duracion_turno);
+        $restante = $fin_partido - time();
+        // Si se pregunta por un tiempo tras el partido, devolver 0, no valores negativos
+        if ($restante < 0)
+        {
+            $restante = 0;
+        }
+
+        return $restante;
     }
 
     /**
@@ -170,8 +182,20 @@ class Partidos extends CActiveRecord
      */
     public function tiempoRestanteTurno()
     {
-        // TODO
-        return 25;
+        Yii::import('application.components.Partido');
+
+        // NOTA: asumido tiempo de turno de 1 minuto (60 segundos)
+        $duracion_turno = 60;
+        // Calcular hora de fin del encuentro
+        $fin_turno = $this->hora_ult_turno + $duracion_turno;
+        $restante = $fin_turno - time();
+        // Si se pregunta por un tiempo tras el turno, devolver 0, no valores negativos
+        if ($restante < 0)
+        {
+            $restante = 0;
+        }
+
+        return $restante;
     }
 
     /** 
