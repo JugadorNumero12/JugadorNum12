@@ -45,7 +45,7 @@ class RegistroController extends Controller
 				$modelo->attributes=$_POST['Usuarios'];
 				//modifico modelo con los datos del formulario
 				$modelo->setAttributes(array('nick'=>$_POST['Usuarios']['nuevo_nick']));
-				$modelo->setAttributes(array('clave'=>$_POST['Usuarios']['nueva_clave1']));
+				$modelo->cambiarClave($_POST['Usuarios']['nueva_clave1']);
 				$modelo->setAttributes(array('email'=>$_POST['Usuarios']['nueva_email1']));
 
 				if($modelo->save()){
