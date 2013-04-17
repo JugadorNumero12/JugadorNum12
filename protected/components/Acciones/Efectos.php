@@ -1,27 +1,36 @@
 <?php
 
-/* array estatico que define los valores contantes para las acciones
+/** 
+ * Array estatico que define los valores contantes para las acciones
  *
  * listado de claves esperables
- *		aforo => valor
- *		ambiente => valor
- * 		animo => valor
- *		animo_gen => valor
- * 		animo_max => valor
- *		bonus_creador => array(claves espereables)
- * 		bonus_jugador => array(claves esperables)
- * 		defensivo => valor
- * 		dinero => valor
- * 		dinero_gen => valor
- * 		influencias => valor
- * 		influencias_gen => valor
- * 		influencias_max => valor
- * 		moral => valor
- * 		nivel_equipo => valor
- * 		ofensivo => valor
+ *	
+ * - aforo => valor
+ * - ambiente => valor
+ * - animo => valor
+ * - animo_gen => valor
+ * - animo_max => valor
+ * - bonus_creador => array(claves espereables)
+ * - bonus_jugador => array(claves esperables)
+ * - defensivo => valor
+ * - dinero => valor
+ * - dinero_gen => valor
+ * - influencias => valor
+ * - influencias_gen => valor
+ * - influencias_max => valor
+ * - moral => valor
+ * - nivel_equipo => valor
+ * - ofensivo => valor
+ *
+ *
+ * @package componentes\acciones
  */
 class Efectos
 {
+	/** 
+	 * @static
+	 * @type object[] 
+	 */
 	static $datos_acciones = array (
 		
 		// GRUPALES

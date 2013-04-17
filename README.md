@@ -9,13 +9,14 @@
 
 | Nombre completo  | GitHub |  
 |:-----:|:----------:|
+| Marcos Alarcón Rivas| MarcosAlarconRivas  | 
 | Manuel Artero Anguita　| manutero   |
 | Marina Bezares Álvarez| Argaide  | 
-| Pedro Morgado Alarcón| PedroMorgado | 
 | Daniel Escoz Solana　| Darkhogg   | 
-| Samuel Mendez Galán| samuelmgalan  | 
-| Roberto Marín Fernandez| ka2rober  | 
 | Javier López Gómez　| Ltreaper    | 
-| Marcos Alarcón Rivas| MarcosAlarconRivas  | 
-| Arturo Pareja García| arturpareja |
+| Roberto Marín Fernandez| ka2rober  | 
+| Roberto Marín Fernandez| rMarinf  | 
 | Alexandra Martín| leximagination  |
+| Samuel Mendez Galán| samuelmgalan  | 
+| Pedro Morgado Alarcón| PedroMorgado | 
+| Arturo Pareja García| arturpareja |

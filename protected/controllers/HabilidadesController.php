@@ -1,4 +1,3 @@
-
 <?php
 
 /* Pagina del "arbol" de habilidades */
@@ -48,29 +47,40 @@ class HabilidadesController extends Controller
 		// Obtiene una lista con todas las habilidades
 		$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
 
-		// FIXME: Hacerlo mínimamente eficiente -- esto es O(N²)
 		$desbloqueadas = array();
-		foreach ($habilidades as $ih => $h) {
-			$desb = false;
+		$requisitos = array();
+		$puedeDesbloquear = array();
+		foreach ($habilidades as $ih => $h) { //para cada habilidad
 
-			foreach ($h['desbloqueadas'] as $id => $d) {
-				if ( $d['usuarios_id_usuario'] == $idUsuario) {
-					$desb = true;
-				}
-			}
+			//1) vemos si el usuario tiene esa habilidad desbloqueada
+			$desbloqueada = Desbloqueadas::model()->findByAttributes((array('habilidades_id_habilidad'=> $h->id_habilidad, 'usuarios_id_usuario'=> Yii::app()->user->usIdent)));
+			
+			if($desbloqueada !== null){
+				$desbloqueadas[$ih] = true;
+			} else{
+				$desbloqueadas[$ih] = false;
+			}	
 
-			$desbloqueadas[$ih] = $desb;
+			//2) saco los requisitos de la habilidad para ser desbloqueada (nivel, y habilidades previas desbloqueadas)	
+			$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$h->codigo];
+			$requisitos[$ih] = $habilidadesRequisito;
+
+			//3) indica si el usuario puede desbloquear la habilidad
+			$puedeDesbloquear[$ih] = $h->puedeDesbloquear(Yii::app()->user->usIdent, $h->id_habilidad);	
 		}
 
 		// Prepara los datos a enviar a la vista
 		$datosVista = array(
 			'habilidades' => $habilidades,
-			'desbloqueadas' => $desbloqueadas
+			'desbloqueadas' => $desbloqueadas,
+			'requisitos' => $requisitos,
+			'puedeDesbloquear' =>$puedeDesbloquear,
 		);
 
 		// Manda pintar la lista a la vista
 		$this->render('index', $datosVista);
 	}
+
 
 	/**
 	 * Muestra la informacion de la habilidad seleccionada
@@ -159,80 +169,62 @@ class HabilidadesController extends Controller
 			$this-> redirect(array('habilidades/index'));
 
 		} else {
-			//si no esta desbloqueada y existe
-			//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
-			if(isset($_POST['aceptarBtn']))
-			{
-        		try
-        		{        			
-        			$desbloqueada = new Desbloqueadas();
-        			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
-        			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
-        			$desbloqueada->save();
 
-        			//Si es pasiva, debemos aplicar el beneficio de la misma
-        			if ($habilidad->tipo == Habilidades::TIPO_PASIVA)
-        			{		        		  		
-						Yii::import('application.components.Acciones.*');
+			// comprobamos que pueda desbloquedar la habilidad. Nivel necesario, hab necesarias desbloqueadas etc
+			if( $habilidad->puedeDesbloquear(Yii::app()->user->usIdent,$id_habilidad)){
 
-						//Tomar nombre de habilidad
-		        		$nombreHabilidad = $habilidad->codigo;
+				//si no esta desbloqueada y existe
+				//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
+				if(isset($_POST['aceptarBtn']))
+				{
+	        		try
+	        		{        			
+	        			$desbloqueada = new Desbloqueadas();
+	        			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
+	        			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
+	        			$desbloqueada->save();
 
-		        		//Llamar al singleton correspondiente y ejecutar dicha acción
-		        		$nombreHabilidad::getInstance()->ejecutar(Yii::app()->user->usIdent);
-        			}
+	        			//Si es pasiva, debemos aplicar el beneficio de la misma
+	        			if ($habilidad->tipo == Habilidades::TIPO_PASIVA)
+	        			{		        		  		
+							Yii::import('application.components.Acciones.*');
 
-        			$trans->commit(); 
-        			$this->redirect(array('acciones/'));       			
-        		} 
-        		catch ( Exception $exc ) 
-        		{
-					$trans->rollback();
-					throw $exc;
-				}
-        		
-        	}       
-        	//si el usuario cancela, rollback 	
-      		if(isset($_POST['cancelarBtn'])){
-        		$trans->rollback();
-        		$this->redirect(array('habilidades/index'));
-        	}
+							//Tomar nombre de habilidad
+			        		$nombreHabilidad = $habilidad->codigo;
 
-        	//pasar la habilidad a la vista para mostrar que habilidad se esta desboqueando
-        	$this->render('adquirir', array('habilidad'=>$habilidad));
+			        		//Llamar al singleton correspondiente y ejecutar dicha acción
+			        		$nombreHabilidad::getInstance()->ejecutar(Yii::app()->user->usIdent);
+	        			}
+
+	        			$trans->commit(); 
+	        			$this->redirect(array('acciones/'));       			
+	        		} 
+	        		catch ( Exception $exc ) 
+	        		{
+						$trans->rollback();
+						throw $exc;
+					}
+	        		
+	        	}   
+
+	        	//si el usuario cancela, rollback 	
+	      		if(isset($_POST['cancelarBtn'])){
+	        		$trans->rollback();
+	        		$this->redirect(array('habilidades/index'));
+	        	}
+
+	        	//pasar la habilidad a la vista para mostrar que habilidad se esta desboqueando
+	        	$this->render('adquirir', array('habilidad'=>$habilidad));
+
+	        } else{ //el ususario, no puede desbloquear la habilidad
+	        	Yii::app()->user->setFlash('desbloqueada', 'No cumples los requisitos para desbloquear la habilidad.');
+	        	$this->redirect(array('habilidades/index'));
+	        	
+	        }
+
 		}
 		
-/* MASTER 
-			Yii::app()->user->setFlash('desbloqueada', 'La habilidad ya ha sido desbloqueada.');
-			$this-> redirect(array('habilidades/index'));
-		} 
-
-		//si no esta desbloqueada y existe
-		//si el usuario acepta guardamos el id de la habilidad y el id de usuario en Desbloqueadas
-		if(isset($_POST['aceptarBtn'])){
-    		try{        			
-    			$desbloqueada = new Desbloqueadas();
-    			$desbloqueada['habilidades_id_habilidad'] = $id_habilidad ;
-    			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
-    			$desbloqueada->save();
-    			$trans->commit(); 
-    			$this->redirect(array('habilidades/index'));       			
-    		} catch ( Exception $exc ) {
-				$trans->rollback();
-				throw $exc;
-			}
-    		
-    	}       
-    	//si el usuario cancela, rollback 	
-  		if(isset($_POST['cancelarBtn'])){
-    		$trans->rollback();
-    		$this->redirect(array('habilidades/index'));
-    	}
-
-    	//pasar la habilidad a la vista para mostrar que habilidad se esta desboqueando
-    	$this->render('adquirir', array('habilidad'=>$habilidad));		
->>>>>>> master*/
-	}
+	} //end Action_adquirir
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

@@ -53,6 +53,7 @@
 					<tr><th>Nick: </th> <td><?php echo $modeloU->nick ?></td> </tr> 
 					<tr><th>Nivel: </th> <td><?php echo $modeloU->nivel ?> </td> </tr> 						 
 				</table>
+				<?php echo CHtml::button('Mandar mensaje', array('submit' => array('emails/redactar', 'destinatario'=>$modeloU->nick, 'tema'=>""),'class'=>"button small black")); ?>
 			</div>
 		</div>
 

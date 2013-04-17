@@ -2,7 +2,9 @@
 /* @var $this HabilidadesController */
 /* @var $dataProvider CActiveDataProvider */
 /* @var $habilidades Array con todas las habilidades, obtenidas de la BDD */
-// @var $desbloqueadas
+/* @var $desbloqueadas Array que indica true si el usuario ha desbloqueado la habilidad y false si no la ha desbloqueada
+/* @var $requisitos Array que guarda los requisitos par desbloquear una accion
+/* @var $puedeDesbloquear Array que indica true si se puede desbloquear la accion y false si no se puede*/
 ?>
 
 <div class="envoltorio">
@@ -46,11 +48,30 @@ foreach ( $habilidades as $i=>$habilidad ){ ?>
     ?>
     </div>
 
+    <!-- Muestro los requisitos de la accion  -->
+    Requisitos para desbloquear la accion <br>
+    Nivel: <?php echo $requisitos[$i]['nivel'];  ?>  <br>
+    Hab previas desbloqueadas necesarias 
+    <?php 
+    if (count($requisitos[$i]['desbloqueadas_previas']) == 0){ echo "Ninguna"; }
+    foreach ($requisitos[$i]['desbloqueadas_previas'] as $h) {
+            echo $h." ";
+        }?> <br>
+
     <div class="botones-accion">
-    <?php if (!$desbloqueadas[$i]){
+    <?php if (!$desbloqueadas[$i] && $puedeDesbloquear[$i]){
         echo CHtml::button('Adquirir habilidad', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$habilidad['id_habilidad']),'class'=>"button small black"));
-    } else { ?>
-        <div class="mensaje"> <?php echo "<b>Ya has adquirido esta habilidad</b>"; ?> </div>
+    } else { 
+            if($desbloqueadas[$i]) {?>
+                <div class="mensaje"> <?php echo "<b>Ya has adquirido esta habilidad</b>"; ?> </div>
+
+            <?php } else{
+                if (!$puedeDesbloquear[$i]){?>
+                    <div class="mensaje"> <?php echo "<b>No puedes desbloquear esta habilidad</b>"; ?> </div>
+               <?php  }
+
+
+            }?> 
     <?php } ?>
     <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$habilidad['id_habilidad']),'class'=>"button small black")); ?>
     </div>

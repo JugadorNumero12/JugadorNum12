@@ -1,30 +1,50 @@
 <?php
 
 /** 
- * Descripcion breve: Financiar evento promocional
- * Tipo: Accion grupal
- * Perfil asociado: Empresario
+ * Financiar evento promocional
+ * 
+ * Tipo
+ * 
+ * - Accion grupal
+ * 
+ * Perfiles asociados
+ * - Empresario
  *
  * Efectos
- * 	 aumenta aforo para el proximo partido 
- *	 aumenta ambiente para el proximo partido
+ *
+ * - aumenta aforo para el proximo partido 
+ * - aumenta ambiente para el proximo partido
  *
  * Bonus al creador
- * 	 ninguno
+ *
+ * - ninguno
+ *
+ *
+ * @package componentes\acciones
  */
 class FinanciarEvento extends AccionGrupSingleton
 {	
-   /* Función a través de la cual se accederá al Singleton */
-   public static function getInstance()
-   {
-      if (!self::$instancia instanceof self)
-      {
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion
+   */
+    public static function getInstance()
+    {
+      if (!self::$instancia instanceof self) {
          self::$instancia = new self;
       }
       return self::$instancia;
-   }
+    }
 
-  /* Aplicar los efectos de la accion */
+  /**
+   * Ejecutar la accion
+   *
+   * @param int $id_usuario id del usuario que realiza la accion
+   * @throws \Exception usuario no encontrado
+   * @return int 0 si completada con exito ; -1 en caso contrario
+   */ 
   public function ejecutar($id_accion)
   {
     $ret = 0;
@@ -47,16 +67,12 @@ class FinanciarEvento extends AccionGrupSingleton
     //3.- Devolver influencias
 
     $participantes = $accGrup->participaciones;
-    foreach ($participantes as $participacion)
-    {
+    foreach ($participantes as $participacion) {
       $infAportadas = $participacion->influencias_aportadas;
       $usuario = $participacion->usuarios_id_usuario;
-      if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
-      {
+      if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0) {
         $ret = min($ret,0);
-      }
-      else
-      {
+      } else {
         $ret = -1;
       }
     }
@@ -65,8 +81,10 @@ class FinanciarEvento extends AccionGrupSingleton
     return $ret;
   }
 
-  /* Restaurar valores tras el partido. NO ES NECESARIO YA. */
-  public function finalizar()
-  {
-  }	
+  /**
+   * Accion grupal: sin efecto en finalizar()
+   * @return void
+   */
+  public function finalizar() {}
+
 }

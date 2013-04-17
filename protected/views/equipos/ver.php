@@ -122,6 +122,10 @@
 
 		<?php } ?>
 
+		<?php if($mi_equipo){ ?>
+				<td><?php echo CHtml::button('Mandar mensaje a los compañeros', array('submit' => array('emails/redactar', 'destinatario'=>"", 'tema'=>"", 'equipo'=>true), 'class'=>"button small black")); ?></td>	
+		<?php } ?>
+
 		
 
 	</div></div> <!--ENVOLTORIOS-->

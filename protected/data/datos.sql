@@ -16,7 +16,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
--- TODO: COMPROBAR LIMITES DE RECURSOS EN PARTICIPACIONES 
+
+-- ------------------
+-- ATENCION
+-- ------------------
+-- los usuarios por defecto comienzan en nivel 1 a 550exp para pasar a 2
+-- --------------------------------------------------------------------
+
 
 -- ------------------------------------------------------------------------------------
 -- Vaciado de tablas
@@ -148,25 +154,25 @@ INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados
 TRUNCATE `desbloqueadas`;
 INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
  -- desbloqueadas de Xaby (empresario)
- (1, 1), (2, 1), (3, 1), (6, 1), (7, 1), (8, 1), (14, 1),
+ (3, 1), (4, 1), (5, 1), (6, 1), (9, 1), (11, 1), 
  -- desbloqueadas de marina (movedora)
- (3, 2), (4, 2), (5, 2), (7, 2), (8, 2), (10, 2), (13, 2),
- -- desbloqueadas de arturo (empresario)
- (1, 3), (2, 3), (3, 3), (6, 3), (7, 3), (8, 3), (14, 3),
+ (3, 2), (4, 2), (5, 2), (6, 2), (9, 2), (11, 2), 
+  -- desbloqueadas de arturo (empresario)
+ (3, 3), (4, 3), (5, 3), (6, 3), (9, 3), (11, 3), 
  -- desbloqueadas de dani (ultra)
- (4, 4), (6, 4), (7, 4), (9, 4), (11, 4), (12, 4), (13, 4), (14, 4), 
+ (3, 4), (4, 4), (5, 4), (6, 4), (9, 4), (11, 4),  
  -- desbloqueadas de pedro (empresario)
- (1, 5), (2, 5), (3, 5), (6, 5), (7, 5), (8, 5), (14, 5),
+ (3, 5), (4, 5), (5, 5), (6, 5), (9, 5), (11, 5), 
  -- desbloqueadas de manu (movedora)
- (3, 6), (4, 6), (5, 6), (7, 6), (8, 6), (10, 6), (13, 6),
+ (3, 6), (4, 6), (5, 6), (6, 6), (9, 6), (11, 6), 
  -- desbloqueadas de rober (ultra)
- (4, 7), (6, 7), (7, 7), (9, 7), (11, 7), (12, 7), (13, 7), (14, 7), 
+ (3, 7), (4, 7), (5, 7), (6, 7), (9, 7), (11, 7),  
  -- desbloqueadas de marcos (ultra)
- (4, 8), (6, 8), (7, 8), (9, 8), (11, 8), (12, 8), (13, 8), (14, 8), 
+ (3, 8), (4, 8), (5, 8), (6, 8), (9, 8), (11, 8),  
  -- desbloqueadas de alex (movedora)
- (3, 9), (4, 9), (5, 9), (7, 9), (8, 9), (10, 9), (13, 9),
+ (3, 9), (4, 9), (5, 9), (6, 9), (9, 9), (11, 9), 
  -- desbloqueadas de samu (ultra)
- (4, 10), (6, 10), (7, 10), (9, 10), (11, 10), (12, 10), (13, 10), (14, 10);
+ (3, 10), (4, 10), (5, 10), (6, 10), (9, 10), (11, 10);
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
@@ -261,7 +267,7 @@ INSERT INTO `participaciones` (`acciones_grupales_id_accion_grupal`, `usuarios_i
  (10, 9, 6000, 70, 15);
 
 TRUNCATE `partidos`;
-INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
+/*INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `cronica`, `turno`, `ambiente`, `aforo_local`, `aforo_visitante`, `nivel_local`, `nivel_visitante`, `ofensivo_local`, `defensivo_local`, `ofensivo_visitante`, `defensivo_visitante`) VALUES
  -- Rojos vs. Verdes: ganaron los Rojos
  -- Negros vs. Blancos: ganaron los Negros
  (1, 2, 1, 'Rojos(3) - Verdes (1); Lorem ipsum dolor sit amet, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint est laborum.', 13, 0, 100, 100, 1, 1, 1, 1, 1, 1),
@@ -287,7 +293,7 @@ INSERT INTO `partidos` (`equipos_id_equipo_1`, `equipos_id_equipo_2`, `hora`, `c
  (4, 1, 250, NULL, 0, 150, 160, 3457, 9, 9, 0, 1, 7, 0),
  (2, 3, 250, NULL, 0, 200, 125, 173, 4, 2, 4, 7, 3, 9),
  -- Partido para comprobar si los datos son reintroducidos correctamente
- (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+ (1, 2, 99999999999, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);*/
 
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
@@ -328,27 +334,27 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
  -- ultras: 4
  -- ----------------------
 TRUNCATE `usuarios`;
-INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`) VALUES
+INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`, `exp`, `exp_necesaria`) VALUES
  -- xaby: empresario
- (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 5),
+ (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 1, 0, 550),
  -- marina: movedora
- (2, 'marina', '$2a$12$1HGd6WdDNpyG8wHu0vqPr.R7VhFJe7DutNgl06FziDCLV3OSYQvkC', 'marina@marina.com', 1, 5),
+ (2, 'marina', '$2a$12$1HGd6WdDNpyG8wHu0vqPr.R7VhFJe7DutNgl06FziDCLV3OSYQvkC', 'marina@marina.com', 1, 1, 0, 550),
  -- arturo: empresario
- (1, 'arturo', '$2a$12$OQPWrk0fNriOXAqM4QW2seZ4.ITU7eTXfPaWR7.ehJViRwfG5L9lu', 'arturo@arturo.com', 2, 5),
+ (1, 'arturo', '$2a$12$OQPWrk0fNriOXAqM4QW2seZ4.ITU7eTXfPaWR7.ehJViRwfG5L9lu', 'arturo@arturo.com', 2, 1, 0, 550),
  -- dani: ultra
- (1, 'dani', '$2a$12$Xqfm1L28HICeWypJtEEaFOcnJayZZXnp8s.tHAGEZzUaxz5.DvHoW', 'dani@dani.com', 0, 5),
+ (1, 'dani', '$2a$12$Xqfm1L28HICeWypJtEEaFOcnJayZZXnp8s.tHAGEZzUaxz5.DvHoW', 'dani@dani.com', 0, 1, 0, 550),
  -- pedro: empresario
- (2, 'pedro', '$2a$12$0Z6Q7FdQUMKhz1gCuah4jegHD/mV87SE1TPQdb9O4ouy7Nh/YhF8y', 'pedro@pedro.com', 2, 5),
+ (2, 'pedro', '$2a$12$0Z6Q7FdQUMKhz1gCuah4jegHD/mV87SE1TPQdb9O4ouy7Nh/YhF8y', 'pedro@pedro.com', 2, 1, 0, 550),
  -- manu: movedora
- (3, 'manu', '$2a$12$WDe3nJqlmi5.Jbvuzroo4.oW1oufdiQNb9cRW.lEXOA5LBmqO/uQ.', 'manu@manu.com', 1, 5),
+ (3, 'manu', '$2a$12$WDe3nJqlmi5.Jbvuzroo4.oW1oufdiQNb9cRW.lEXOA5LBmqO/uQ.', 'manu@manu.com', 1, 1, 0, 550),
  -- rober: ultra
- (2, 'rober', '$2a$12$EI56YEwNyV395M5rQsuk..HNYXFrOKFkwgzwkwvNoCgkBMe5Z1Nl.', 'rober@rober.com', 0, 5),
+ (2, 'rober', '$2a$12$EI56YEwNyV395M5rQsuk..HNYXFrOKFkwgzwkwvNoCgkBMe5Z1Nl.', 'rober@rober.com', 0, 1, 0, 550),
  -- marcos: ultra
- (1, 'marcos', '$2a$12$Pqca.CQrIopqmBV/9ON9E.RVOjv33YUX3D.1O8K3rhEa79Q.gDEV6', 'marcos@marcos.com', 0, 5),
+ (1, 'marcos', '$2a$12$Pqca.CQrIopqmBV/9ON9E.RVOjv33YUX3D.1O8K3rhEa79Q.gDEV6', 'marcos@marcos.com', 0, 1, 0, 550),
  -- alex: movedora
- (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 5),
+ (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 1, 0, 550),
  -- samu: ultra
- (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 5);
+ (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 1, 0, 550);
 
  SET FOREIGN_KEY_CHECKS = 1; 
 
