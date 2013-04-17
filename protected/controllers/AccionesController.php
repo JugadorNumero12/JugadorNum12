@@ -210,9 +210,16 @@ class AccionesController extends Controller
 					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 				$id_acc = -1;
 				$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
-			} else {
+			}
+			else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+			{
 				//Renderizar acción grupal
 				$this->render('usar', array('id_acc'=>$nuevo_id,'habilidad'=>$habilidad, 'res'=>$res));
+			}
+			else //Es de tipo partido
+			{
+				
+                $this->redirect(array('partidos/asistir','id_partido'=>$id_partido));
 			}
 		} catch (Exception $e) {
 			$this-> redirect(array('acciones/index'));
