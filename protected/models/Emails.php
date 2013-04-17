@@ -77,8 +77,10 @@ class Emails extends CActiveRecord
      * 
      * @param $nombre
      */
-	public function comprobarNombres($nombre)
+	public function comprobarNombres($attribute, $params)
 	{
+		die(var_dump($attribute));
+		return true;
 		$str = '';
 		$cont = 0;
 		$nombs = $this->sacarUsuarios($nombre);
@@ -100,12 +102,9 @@ class Emails extends CActiveRecord
 		}
 		if($cont == 1){
 			$this->addError($nombre, $str.'- no existe.');
-			return false;
 		}elseif($cont>1){
 			$this->addError($nombre, $str.'- no existen.');
-			return false;
 		}
-		return true;
 	}
 
 	/**
