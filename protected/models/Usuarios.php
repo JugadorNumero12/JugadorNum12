@@ -269,13 +269,13 @@ class Usuarios extends CActiveRecord
      * @param string $antigua_email
      * @return void
      */
-    public function emailIguales($antigua_email)
+    public function emailIguales($attribute,$params)
     {
         // FIXME: no es necesario el parametro
 
         $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
         if ( $usuario->email != $this->antigua_email)
-            $this->addError($antigua_email, 'Introduzca correctamente el email actual');
+            $this->addError('antigua_email', 'Introduzca correctamente el email actual');
     }
 
     /**

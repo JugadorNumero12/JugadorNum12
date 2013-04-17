@@ -219,6 +219,8 @@ class UsuariosController extends Controller
             $modelo = Usuarios:: model()->findByPk($id);
             $modelo->scenario='cambiarEmail';
 
+            $this->performAjaxValidation($modelo);
+
             if (isset($_POST['Usuarios'])) {
                 //Cojo la clave de post(formulario)       
                 $email=$_POST['Usuarios']['nueva_email1'];
