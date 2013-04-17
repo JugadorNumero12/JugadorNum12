@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
   `influencias_max` int(10),
   `participantes_max` int(10) unsigned NOT NULL,
   `cooldown_fin` int(10),
+  `token` varchar(32) NOT NULL,
   PRIMARY KEY (`id_habilidad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

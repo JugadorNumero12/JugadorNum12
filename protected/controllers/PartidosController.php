@@ -292,6 +292,7 @@ class PartidosController extends Controller
 				//Calculo del porcertage para mostrar en el grafico cirular
 				$porcentage = 0;
 				$porcentage = ((($partido->estado + 10) * 100) / 20);
+
 				//pasar los datos del partido y los equipos
 				$datosVista = array('nombre_local'	=> $equipoLocal->nombre,
 								 'nombre_visitante' => $equipoVisitante->nombre,
@@ -299,6 +300,11 @@ class PartidosController extends Controller
 								 'equipoVisitante' => $equipoVisitante,
 								 'estado' => $partido,
 								 'porcentage' => $porcentage);
+				
+				//cositas del chat
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+
 				$this->renderPartial('_estadoPartido',$datosVista,false,true);
 			}
 		}
