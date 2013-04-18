@@ -3,11 +3,11 @@
 @import 'priv/imports';
 
 .inner-block {
-    padding: @TopBlockPadding;
+    padding: @InnerBlockPadding;
     margin: 0;
 
-    border: @TopBlockBorder solid @TopBlockBorderColor;
-    .rounded(10px);
+    border: @InnerBlockBorder solid @InnerBlockBorderColor;
+    .rounded(@InnerBlockRadius);
     background: fade(white, 80%);
 }
 

@@ -78,11 +78,19 @@
 	</div>
 </div>
 
-<div id="equipo-info">
-	<nav id="equipo-info-tabs">
-
-	</nav>
-	<div id="equipo-info-content">
-
+<div id="partido-info" class="inner-block">
+	<ul id="partido-info-tabs">
+		<li><a href="#partido-info-campo">Partido</a></li>
+		<li><a href="#partido-info-datos">Datos</a></li>
+		<li><a href="#partido-info-chat">Chat</a></li>
+	</ul>
+	<div id="partido-info-campo">
+		blahblah Campo
+	</div>
+	<div id="partido-info-datos">
+		blahblah Datos
+	</div>
+	<div id="partido-info-chat">
+		blahblah Chat
 	</div>
 </div>
