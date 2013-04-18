@@ -50,6 +50,7 @@ class Emails extends CActiveRecord
 			array('fecha', 'length', 'max'=>11),
 
 			/*Validaciones para redactar email*/
+			array('nombre,contenido,asunto', 'safe', 'on'=>'redactar'),
 			array('nombre','comprobarNombres','on'=>'redactar'),
 			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
 			
@@ -79,11 +80,9 @@ class Emails extends CActiveRecord
      */
 	public function comprobarNombres($attribute, $params)
 	{
-		die(var_dump($attribute));
-		return true;
 		$str = '';
 		$cont = 0;
-		$nombs = $this->sacarUsuarios($nombre);
+		$nombs = $this->sacarUsuarios($this->nombre);
 		foreach($nombs as $nomb){
 			$nomb = trim($nomb);
 			$n = Usuarios::model()->findByAttributes(array('nick'=>$nomb));
@@ -101,9 +100,9 @@ class Emails extends CActiveRecord
 			}
 		}
 		if($cont == 1){
-			$this->addError($nombre, $str.'- no existe.');
+			$this->addError('nombre', $str.'- no existe.');
 		}elseif($cont>1){
-			$this->addError($nombre, $str.'- no existen.');
+			$this->addError('nombre', $str.'- no existen.');
 		}
 	}
 

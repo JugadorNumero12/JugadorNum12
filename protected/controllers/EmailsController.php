@@ -83,6 +83,8 @@ class EmailsController extends Controller
 		$email = new Emails;
         $email->scenario='redactar';
 
+        $this->performAjaxValidation($email);
+
         if (isset($_POST['Emails'])) 
         {
             $co = $_POST['Emails']['contenido'];
@@ -232,7 +234,7 @@ class EmailsController extends Controller
      */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='email-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='emails-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
