@@ -16,16 +16,17 @@
 
 @MenuWidth: 180px;
 
-@TopBlockPadding: 8px;
-@TopBlockMargin: 10px;
+@TopBlockPadding: @TopBlockMargin - 2px;
+@TopBlockMargin: 8px;
 @TopBlockBorder: 1px;
 @TopBlockBorderColor: @VERDE_12_CLARO;
 @TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
+@TopBlockRadius: @TopBlockMargin;
 
-@ContentWidth: (960px - @MenuWidth - @TopBlockExtras - @TopBlockPadding - @TopBlockBorder*2);
+@ContentWidth: (960px - (@MenuWidth+@TopBlockExtras) - @TopBlockPadding - @TopBlockBorder*2) - 2px;
 
-@InnerBlockPadding: 8px;
-@InnerBlockMargin: 8px;
-@InnerBlockRadius: 8px;
+@InnerBlockPadding: @InnerBlockMargin - 2px;
+@InnerBlockMargin: @TopBlockPadding;
+@InnerBlockRadius: @InnerBlockMargin;
 @InnerBlockBorder: 1px;
 @InnerBlockBorderColor: @VERDE_12_CLARO;
