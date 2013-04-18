@@ -5,7 +5,7 @@ foreach ( $notificaciones as $notificacion ){ ?>
     
     <div class="lista-notificaciones"> 
     	<li>
-    		<div class="imagen-notificaciones"> <img alt="nueva-grupal" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/nueva_grupal.png"
+    		<div class="imagen-notificaciones"> <img alt="nueva-grupal" src="<?php echo Yii::app()->BaseUrl ?>/<?php echo $notificacion['imagen']; ?>"
 						     width="64" height="64"/> </div>
         	<div class="contenido-notificaciones">
         		<p><?php echo $notificacion['mensaje'];?> </p>

@@ -36,7 +36,8 @@ class RequisitosDesbloquearHabilidades
 		'PromoverPartido' => array (
 			'nivel' => 1,
 			'desbloqueadas_previas' => array (),
-		), 
+		),
+
 			
 		// INDIVIDUALES
 		// ------------------------------------------------
