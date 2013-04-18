@@ -100,7 +100,7 @@ class Emails extends CActiveRecord
 			}
 		}
 		if($cont == 1){
-			$this->addError('nombre', $str.'- no existe.');
+			$this->addError('nombre', 'El nombre -'.$str.'- no existe.');
 		}elseif($cont>1){
 			$this->addError('nombre', $str.'- no existen.');
 		}
