@@ -13,6 +13,11 @@ function updateData () {
 }
 
 $(document).ready(function(evt){
+  // Sstema de pestañas
+  $('#partido-info').tabs();
+  $('#partido-info').removeClass('ui-corner-all ui-widget-content');
+
+  // Control del partido
   if (window.partido) {
     partido.ajax = false;
 

@@ -85,7 +85,7 @@ class Partidos extends CActiveRecord
         return array(
             array('equipos_id_equipo_1, equipos_id_equipo_2, hora', 'required'),
             array('equipos_id_equipo_1, equipos_id_equipo_2, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante, dif_niveles', 'length', 'max'=>10),
-            array('hora, turno, goles_local, goles_visitante, moral_local, moral_visitante, ofensivo_local, ofensivo_visitante, defensivo_local, defensivo_visitante, estado', 'length', 'max'=>11),
+            array('hora, turno, goles_local, goles_visitante, moral_local, moral_visitante, ofensivo_local, ofensivo_visitante, defensivo_local, defensivo_visitante, estado, hora_ult_turno', 'length', 'max'=>11),
             array('id_partido, equipos_id_equipo_1, equipos_id_equipo_2, hora, cronica, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante', 'safe', 'on'=>'search'),
         );
     }
@@ -159,8 +159,20 @@ class Partidos extends CActiveRecord
      */
     public function tiempoRestantePartido()
     {
-        // TODO
-        return 120;
+        Yii::import('application.components.Partido');
+
+        // NOTA: asumido tiempo de turno de 1 minuto (60 segundos)
+        $duracion_turno = 60;
+        // Calcular hora de fin del encuentro
+        $fin_partido = $this->hora_ult_turno + ((Partido::ULTIMO_TURNO - $this->turno) * $duracion_turno);
+        $restante = $fin_partido - time();
+        // Si se pregunta por un tiempo tras el partido, devolver 0, no valores negativos
+        if ($restante < 0)
+        {
+            $restante = 0;
+        }
+
+        return $restante;
     }
 
     /**
@@ -170,8 +182,20 @@ class Partidos extends CActiveRecord
      */
     public function tiempoRestanteTurno()
     {
-        // TODO
-        return 25;
+        Yii::import('application.components.Partido');
+
+        // NOTA: asumido tiempo de turno de 1 minuto (60 segundos)
+        $duracion_turno = 60;
+        // Calcular hora de fin del encuentro
+        $fin_turno = $this->hora_ult_turno + $duracion_turno;
+        $restante = $fin_turno - time();
+        // Si se pregunta por un tiempo tras el turno, devolver 0, no valores negativos
+        if ($restante < 0)
+        {
+            $restante = 0;
+        }
+
+        return $restante;
     }
 
     /** 

@@ -87,6 +87,7 @@ class Partido
         $partido->moral_visitante = $this->moral_visitante;
 		$partido->turno = $this->turno;
 		$partido->cronica = $this->cronica;
+		$partido->hora_ult_turno = time();
         if(!$partido->save()) 
             throw new Exception('No se ha podido guardar el turno actual.');
     }

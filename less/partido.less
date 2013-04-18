@@ -1,9 +1,9 @@
 @import 'priv/imports';
 
 #contenido {
-	@DrawingWidth: (@ContentWidth - @TopBlockPadding) * 2 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
-	@ScoreboardWidth: (@ContentWidth - @TopBlockPadding) * 3 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
-	@ScoreboardTeamWidth: (@ScoreboardWidth - @TopBlockPadding) / 2 - 2;
+	@DrawingWidth: (@ContentWidth - @InnerBlockPadding) * 2 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardWidth: (@ContentWidth - @InnerBlockPadding) * 3 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardTeamWidth: (@ScoreboardWidth - @InnerBlockPadding) / 2 - 2;
 
 	#partido-dibujo {
 		float: left;
@@ -13,6 +13,7 @@
 	#partido-marcador {
 		float: right;
 		width: @ScoreboardWidth;
+		margin-bottom: @InnerBlockMargin;
 
 		#partido-marcador-general {
 			width: @ScoreboardWidth;
@@ -69,5 +70,10 @@
 			font-weight: bold;
 			margin-top: 0;
 		}
+	}
+
+	#partido-info {
+		clear: both;
+		margin-top: @InnerBlockPadding;
 	}
 }

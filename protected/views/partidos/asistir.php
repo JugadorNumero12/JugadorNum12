@@ -78,23 +78,24 @@
 	</div>
 </div>
 
-<div id="equipo-info">
-	<nav id="equipo-info-tabs">
-
-	</nav>
-	<div id="equipo-info-content">
+<div id="partido-info" class="inner-block">
+	<ul id="partido-info-tabs">
+		<li><a href="#partido-info-campo">Partido</a></li>
+		<li><a href="#partido-info-datos">Datos</a></li>
+		<li><a href="#partido-info-chat">Chat</a></li>
+	</ul>
+	<div id="partido-info-campo">
+		blahblah Campo
 	</div>
-</div>
-
-
-<br>
-<h2>Chat</h2>
-<div id='chat'></div>
+	<div id="partido-info-datos">
+		blahblah Datos
+	</div>
+	<div id="partido-info-chat">
 <?php 
     $this->widget('YiiChatWidget',array(
         'chat_id'=>'123',                   // a chat identificator
         'identity'=>Yii::app()->user->usIdent,   // the user
-        'selector'=>'#chat',                // were it will be inserted
+        'selector'=>'#partido-info-chat',                // were it will be inserted
         'minPostLen'=>1,                    // min and
         'maxPostLen'=>50,                   // max string size for post
         'model'=>new ChatHandler(),    // the class handler.
@@ -106,4 +107,6 @@
             "function(errorcode, info){  }"),
     ));
 ?>
+	</div>
+</div>
 
