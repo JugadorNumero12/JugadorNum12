@@ -149,7 +149,7 @@ class AccionesGrupales extends CActiveRecord
                 $participantes = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $gp->id_accion_grupal));
                 $notificacion = new Notificaciones;
 				$notificacion->fecha = time();
-				$notificacion->mensaje = "La habilidad " . Habilidades::model()->findByPk($gp->habilidades_id_habilidad)->nombre . " ha finalizado."; 
+				$notificacion->mensaje = "La habilidad grupal " . Habilidades::model()->findByPk($gp->habilidades_id_habilidad)->nombre . " ha finalizado."; 
 				$notificacion->url = "usuarios/index";
 				$notificacion->save();
 				//Enviamos la notificación a los participantes

@@ -111,7 +111,7 @@
 				<!-- Link al perfil -->
 				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
+						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra-perfil.png"
 						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
 					</li>
 				</a>
@@ -119,7 +119,7 @@
 				<!-- Notificaciones -->
 				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
+						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_notificacion.png"
 						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
 					</li>
 				</a>
@@ -127,7 +127,7 @@
 				<!-- Mensajeria -->
 				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-mensajes.png"
+						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_mensajes.png"
 						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
 					</li>
 				</a>
@@ -135,7 +135,7 @@
 				<!-- Logout -->
 				<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-logout.png"
+						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_logout.png"
 						     width="24" height="24"/><span class="user-menu-txt">Logout</span>
 					</li>
 				</a>
