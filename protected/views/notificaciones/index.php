@@ -5,7 +5,8 @@ foreach ( $notificaciones as $notificacion ){ ?>
     
     <div class="lista-notificaciones"> 
     	<li>
-    		<div class="imagen-notificaciones"> </div>
+    		<div class="imagen-notificaciones"> <img alt="nueva-grupal" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/nueva_grupal.png"
+						     width="64" height="64"/> </div>
         	<div class="contenido-notificaciones">
         		<p><?php echo $notificacion['mensaje'];?> </p>
         		<div class="fecha-notificaciones"><?php echo Yii::app()->dateFormatter->formatDateTime($notificacion['fecha'], 'medium', 'short'); ?></div>
