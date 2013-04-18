@@ -52,7 +52,9 @@
 	<div id="barrasup-envoltorio">
 		<!-- Parte izquierda de la barra -->
 		<div id="barrasup-izquierda">
-			<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/logos/logo-barra.png" alt="logo">
+			<a href="<?php echo Yii::app()->createUrl('/usuarios/index') ?>">
+				<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/logos/logo-barra.png" alt="logo">
+			</a>
 		</div>
 
 		<!-- Parte central de la barra -->

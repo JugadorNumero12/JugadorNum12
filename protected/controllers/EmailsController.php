@@ -83,6 +83,8 @@ class EmailsController extends Controller
 		$email = new Emails;
         $email->scenario='redactar';
 
+        $this->performAjaxValidation($email);
+
         if (isset($_POST['Emails'])) 
         {
             $co = $_POST['Emails']['contenido'];
@@ -99,17 +101,13 @@ class EmailsController extends Controller
 					$mail->contenido = $co;
 					$mail->id_usuario_to = $usr_dest->id_usuario;
 					$mail->id_usuario_from = $yo->id_usuario;
-					$redirect=true;
+					//$redirect=true;
 					if(!$mail->save())
 						$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));		
-				}else{
-					$redirect=false;
-					echo(
-						'<script language="javascript" type="text/javascript">
-						alert("El ususario no existe.");
-						</script>'
-						);
 				}
+				//else{
+				//	$redirect=false;
+				//}
 				$email = new Emails;
 			}
 			$trans->commit();
@@ -232,7 +230,7 @@ class EmailsController extends Controller
      */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='email-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='emails-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
