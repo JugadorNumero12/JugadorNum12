@@ -39,11 +39,12 @@ class Notificaciones extends CActiveRecord
 		return array(
 			array('id_notificacion', 'length', 'max'=>10),
 			array('url', 'length', 'max'=>50),
+			array('imagen', 'length', 'max'=>50),
 			array('fecha', 'length', 'max'=>11),
 
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_notificacion, equipos_id_equipo, url, fecha', 'safe', 'on'=>'search'),
+			array('id_notificacion, equipos_id_equipo, url, imagen,  fecha', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +72,7 @@ class Notificaciones extends CActiveRecord
 			'fecha' => 'Fecha',
 			'mensaje' => 'Mensaje',
 			'url' => 'Url',
+			'imagen' => 'imagen',
 		);
 	}
 
@@ -90,6 +92,7 @@ class Notificaciones extends CActiveRecord
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('mensaje',$this->mensaje,true);
 		$criteria->compare('url',$this->url);
+		$criteria->compare('imagen',$this->imagen);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
