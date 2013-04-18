@@ -12,6 +12,8 @@ class Formula
 
 	const DIFNIV_NFACT_BASE = 100;
 
+	private $entropia=0.6;
+
 	/**
 	 * @param $x Punto en el que calcular la normal
 	 * @return La normal acumulada en el punto $x
@@ -99,7 +101,15 @@ class Formula
 		//Hacemos la diferencia de morales en valor absoluto
 		//tenemos en cuenta el aforo y lo sumamos a la moral que tienen
 		$difMoral = ($params['moralLoc']+$params['aforoLoc'])-  ($params['moralVis']+$params['aforoVis']);
-		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * 0.6 * ($difMoral>0 ? 10 - $avg : -10 - $avg );
+		if($difMoral >=-200 && $difMoral<=200)
+		{
+			$this->entropia=$this->entropia*2;
+		}
+		else
+		{
+			$this->entropia=0.6;
+		}
+		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * $entropia * ($difMoral>0 ? 10 - $avg : -10 - $avg );
 		return $avg;
 	}
 

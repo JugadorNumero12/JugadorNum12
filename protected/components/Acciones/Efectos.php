@@ -83,25 +83,25 @@ class Efectos
 		//PARTIDO 
 		// ------------------------------------------------
 		'BeberCerveza' => array (
-			'animo' => 25
+			'animo' => 20
 		), 
 		
 		'HablarSpeaker' => array (
-			'moral' => 20,
+			'moral' => 200,
 			'ofensivo' => 5
 		), 
 			
 		'IniciarOla' => array (
-			'moral' => 29
+			'moral' => 200
 		), 
 		
 		'PunteroLaser' => array (
-			'defensivo' => 35
+			'defensivo' => 5
 		), 
 		
 		'RetransmitirRRSS' => array (
 			'defensivo' => 3,
-			'animo' => 12
+			'animo' => 10
 		),
 
 		// PASIVAS
