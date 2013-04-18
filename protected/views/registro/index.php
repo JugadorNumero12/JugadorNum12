@@ -15,7 +15,7 @@
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'usuarios-form',
-			    'enableAjaxValidation'=>false,
+			    'enableAjaxValidation'=>true,
 			    'enableClientValidation'=>true,
 			    'clientOptions'=>array(
 					'validateOnSubmit'=>true,),

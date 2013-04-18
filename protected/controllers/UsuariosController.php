@@ -169,10 +169,12 @@ class UsuariosController extends Controller
         /* Actualizar datos de usuario (recuros,individuales y grupales) */
         Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
         /* Fin de actualización */
-        
+
         $id= Yii::app()->user->usIdent;        
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
+
+        $this->performAjaxValidation($modelo);
 
         if (isset($_POST['Usuarios'])) {
             //Cojo la clave de post(formulario)       
@@ -216,6 +218,8 @@ class UsuariosController extends Controller
             $id= Yii::app()->user->usIdent;        
             $modelo = Usuarios:: model()->findByPk($id);
             $modelo->scenario='cambiarEmail';
+
+            $this->performAjaxValidation($modelo);
 
             if (isset($_POST['Usuarios'])) {
                 //Cojo la clave de post(formulario)       
@@ -285,7 +289,7 @@ class UsuariosController extends Controller
         $chicas = array();
         $empresarios = array();
 
-            for($i = 0; $i < 50; $i++) {
+            for($i = 0; $i < 10; $i++) {
                 $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
                 $u->setAttributes( array(
                     'nick'=>"test_ultra".$i,

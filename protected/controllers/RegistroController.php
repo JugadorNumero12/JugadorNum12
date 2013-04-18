@@ -31,6 +31,9 @@ class RegistroController extends Controller
 		$seleccionado = 0;
 		
 		$modelo->scenario='registro';
+
+		$this->performAjaxValidation($modelo);
+
 		$transaction = Yii::app()->db->beginTransaction();
 		try{
 
@@ -51,8 +54,10 @@ class RegistroController extends Controller
 				if($modelo->save()){
 					$transaction->commit();
 					$this->redirect(array('registro/equipo','id_usuario'=>$modelo->id_usuario));
-				}else $error = true;
-			} else $error = true;
+				}
+				else $error = true;
+			} 
+			else $error = true;
 		}catch(Exception $e){
 			$transaction->rollback();
 			$error = true;
@@ -147,5 +152,20 @@ class RegistroController extends Controller
 														'empresario_status'=>$empresario_status , 
 														'ultra_status'=>$ultra_status));
 	}
+
+    /**
+     * Funcion predeterminada de Yii
+     * Realiza la validacion por Ajax
+     *
+     * @param $model (CModel) modelo a ser validado
+     */
+    protected function performAjaxValidation($model)
+    {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='usuarios-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
 	
 }

@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
   `influencias_max` int(10),
   `participantes_max` int(10) unsigned NOT NULL,
   `cooldown_fin` int(10),
+  `token` varchar(32) NOT NULL,
   PRIMARY KEY (`id_habilidad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -186,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `defensivo_local` int(11) NOT NULL DEFAULT '0',
   `defensivo_visitante` int(11) NOT NULL DEFAULT '0',
   `estado` int(11) NOT NULL DEFAULT '0',
+  `hora_ult_turno` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_partido`),
   KEY `partidos_FKIndex1` (`equipos_id_equipo_1`),
   KEY `partidos_FKIndex2` (`equipos_id_equipo_2`)
@@ -228,6 +230,20 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `yiichat_post`;
+CREATE TABLE IF NOT EXISTS `yiichat_post` (
+  `id` CHAR(40),
+  `chat_id` CHAR(40) NULL ,
+  `post_identity` CHAR(40) NULL ,
+  `owner` CHAR(20) NULL ,
+  `created` BIGINT(30) NULL ,
+  `text` TEXT NULL ,
+  `data` TEXT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `yiichat_chat_id` (`chat_id` ASC),  
+  INDEX `yiichat_chat_id_identity` (`chat_id` ASC, `post_identity` ASC) 
+)ENGINE = InnoDB;
 
 -- --------------------------------------------------------
 

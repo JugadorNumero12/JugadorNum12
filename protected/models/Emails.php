@@ -17,8 +17,7 @@
 class Emails extends CActiveRecord
 {
 	public $nombre;
-	//public $cont;
-	//public $asun;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -51,8 +50,9 @@ class Emails extends CActiveRecord
 			array('fecha', 'length', 'max'=>11),
 
 			/*Validaciones para redactar email*/
+			array('nombre','comprobarNombres','on'=>'redactar'),
 			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
-
+			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id_email, id_usuario_to, id_usuario_from, fecha, contenido, leido, asunto,borrado_to,borrado_from', 'safe', 'on'=>'search'),
@@ -70,6 +70,59 @@ class Emails extends CActiveRecord
 		$usur_descomp = explode(",", $usuarios);
 		return $usur_descomp;
 
+	}
+
+	/**
+     * Compara los nombres existen
+     * 
+     * @param $nombre
+     */
+	public function comprobarNombres($attribute, $params)
+	{
+		die(var_dump($attribute));
+		return true;
+		$str = '';
+		$cont = 0;
+		$nombs = $this->sacarUsuarios($nombre);
+		foreach($nombs as $nomb){
+			$nomb = trim($nomb);
+			$n = Usuarios::model()->findByAttributes(array('nick'=>$nomb));
+			if($n === null){
+				if($cont==0){
+					$str = $nomb;
+					$cont += 1;
+				}elseif($cont==1){
+					$str = 'Los nombres -'.$str.','.$nomb;
+					$cont += 1;
+				}else{
+					$str .= '.'.$nomb;
+					$cont += 1;
+				}
+			}
+		}
+		if($cont == 1){
+			$this->addError($nombre, $str.'- no existe.');
+		}elseif($cont>1){
+			$this->addError($nombre, $str.'- no existen.');
+		}
+	}
+
+	/**
+     * Compara los nombres existen
+     * 
+     * @param $nombre
+     */
+	public function nombres()
+	{
+		//var_dump($nombre);
+		$nombres = array();
+		$cont = 0;
+		$usuarios = Usuarios::model()->findAll();
+		foreach($usuarios as $usr){
+			$nombe[$cont] = $usr->nick;
+			$cont++;
+		}
+		return $nombres;
 	}
 
 	/**

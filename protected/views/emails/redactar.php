@@ -39,9 +39,10 @@
 	   <tr>
 	    <td >
 	    	<?php echo CHtml::submitButton('Enviar',array('class'=>"button small black"));?>
-	    	<?php echo CHtml::button('Bandeja de entrada', array('submit' => array('emails/index'),'class'=>"button small black")); ?> 
-			<?php echo CHtml::button('Bandeja de salida', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> 
-
+	    </td>
+	    <td >
+	    	<?php  echo CHtml::link('Bandeja de entrada',array('emails/index'),array('class'=>"button small black")); ?>
+	    	<?php  echo CHtml::link('Bandeja de salida',array('emails/enviados'),array('class'=>"button small black")); ?>
 	    </td>
 	   
 	   </tr>

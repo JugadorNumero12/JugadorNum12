@@ -15,6 +15,7 @@
 | Daniel Escoz Solana　| Darkhogg   | 
 | Javier López Gómez　| Ltreaper    | 
 | Roberto Marín Fernandez| ka2rober  | 
+| Roberto Marín Fernandez| rMarinf  | 
 | Alexandra Martín| leximagination  |
 | Samuel Mendez Galán| samuelmgalan  | 
 | Pedro Morgado Alarcón| PedroMorgado | 
