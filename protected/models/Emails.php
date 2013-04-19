@@ -52,7 +52,7 @@ class Emails extends CActiveRecord
 			/*Validaciones para redactar email*/
 			array('nombre,contenido,asunto', 'safe', 'on'=>'redactar'),
 			array('nombre','comprobarNombres','on'=>'redactar'),
-			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar estos campos'),
+			array('nombre,contenido,asunto','required','on'=>'redactar','message'=>'Tienes que rellenar este campo'),
 			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

@@ -83,9 +83,21 @@
 //Fin estilo notificaciones
 
 //Estilo de la mensajeria
-.bandejas-mensajeria{
+//Cosas generales
+.tam-tablas{
 	margin-top: 1.5em;
 	width: 700px;
+	border-spacing:0px 10px;
+}
+.recuadro{
+	border: 2px solid;
+	border-color: grey;
+	.rounded(10px);
+}
+
+//Estilo de las bandejas de entrada
+.bandejas-mensajeria{
+	.tam-tablas;
 	border-collapse:collapse;
 	//border-spacing:100px 100px;
 
@@ -98,10 +110,19 @@
 		overflow:hidden;
 		text-overflow: ellipsis;
 	}
-
 }
 
+//Estilo de las vista redactar
+.col-izq{
+	width: 20%;
+	border-spacing:20px 20px;
+}
 
+.col-dcha{
+	width: 80%;
+	text-align: left;
 
+}
+//Fin estilo vista redactar
 
 //Fin estilo mensajeria
