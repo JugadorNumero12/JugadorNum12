@@ -73,13 +73,7 @@ class EmailsController extends Controller
 	{                
         $trans = Yii::app()->db->beginTransaction();
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
-		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
-		if($equipo == true){
-			$destinatario = "";
-			foreach($mi_aficion as $amigo){
-				$destinatario.=$amigo->nick.",";
-			}
-		}
+	
 		$email = new Emails;
         $email->scenario='redactar';
 
@@ -109,7 +103,7 @@ class EmailsController extends Controller
 			$trans->commit();
         	$this->redirect(array('index')); 
         }   
-		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
+		$this->render('redactar',array('email'=>$email,'destinatario'=>$destinatario , 'tema'=>$tema));
 	}
 
 
