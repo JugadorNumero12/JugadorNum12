@@ -48,7 +48,7 @@ class EmailsController extends Controller
     {
 		$niks = array();
 		//Saca todos los emails recibidos por el usuario y que no los haya borrado
-		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND leido =0 AND borrado_to =0) ORDER BY fecha DESC";
+		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND borrado_to =0) ORDER BY fecha DESC";
 		$emails = Yii::app()->db->createCommand($sql)->queryAll();
 		foreach ($emails as $i=>$email){
 			$usuario=Usuarios::model()->findByPk($email['id_usuario_from']);

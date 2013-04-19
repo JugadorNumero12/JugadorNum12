@@ -9,6 +9,71 @@
  ?>
 
 <h1> Leer mensaje </h1>
+
+
+
+
+
+<div class="recuadro">
+<table class="tam-tablas">
+	<tr>
+		<td class="col-izq"> From:</td>
+		<td class="col-dcha"> <?php echo $from; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> To:</td>
+		<td class="col-dcha"> <?php echo $to; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> Asunto:</td>
+		<td class="col-dcha"> <?php echo $email->asunto; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> Mensaje:</td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq" colspan="2"> <?php echo $form->labelEx($email,$email->contenido,array('maxlength' => 300, 'rows' => 8, 'cols' => 3)); ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> <?php echo CHtml::button('Responder', array('submit' => array('emails/redactar', 'destinatario'=>$from, 'tema'=>$email->asunto, 'equipo'=>false),'class'=>"button small black")); ?></td>
+ 	</tr>
+
+</table>
+
+</div>
+
+<div class="recuadro">
+<table class="tam-tablas">
+	<tr>
+		<td class="col-izq"> From:</td>
+		<td class="col-dcha"> <?php echo $from; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> To:</td>
+		<td class="col-dcha"> <?php echo $to; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> Asunto:</td>
+		<td class="col-dcha"> <?php echo $email->asunto; ?></td>
+ 	</tr>
+ 	<tr>
+		<td class="col-izq"> Mensaje:</td>
+ 	</tr>
+
+</table>
+
+	<div class="texto-mensaje"> <p>dsfsdflhdsklhnkvjhlorhgkjlhdfkghkdfljghkdfjgkljkdfjñlhñuohrgfkjndfkljhgkñldfshgñfdhsklhdfhdfnkvljchkkjcxhvkjlbhskljdfhgkjhadsklkldfjklhufdnmldfkjhgldfhlkjhj</p></div>
+
+<table>
+ 	<tr>
+		<td class="col-izq"> <?php echo CHtml::button('Responder', array('submit' => array('emails/redactar', 'destinatario'=>$from, 'tema'=>$email->asunto, 'equipo'=>false),'class'=>"button small black")); ?></td>
+ 	</tr>
+
+</table>
+
+</div>
+
+<br> <br> <br> <br> <br>
  
 <table>
 	<tr> <th>Remitente </th> <th> Destinatario </th> <th> Asunto </th> <th> Fecha </th> <th> &nbsp; </th> </tr>
