@@ -1,0 +1,94 @@
+@import 'priv/imports';
+
+.tabla-clasificacion
+{
+	cellspacing: 0;
+	
+	// Estilo a la primera fila
+	tr:first-child 
+	{
+		// Estilo a las cabeceras
+		th:first-child
+		{
+			color: white;
+			background-color: #75ce63;
+			border-top-left-radius: 5px;
+		    -moz-border-radius-topleft: 5px;
+		    -webkit-border-top-left-radius: 5px;
+		    padding: 10px;
+		}
+
+		th:last-child
+		{
+			color: white;
+			background-color: #75ce63;
+			border-top-right-radius: 5px;
+		    -moz-border-radius-topright: 5px;
+		    -webkit-border-top-right-radius: 5px;
+		    padding: 10px;
+		}
+
+		th
+		{
+			color: white;
+			background-color: #75ce63;
+		    padding: 10px;
+		}
+	}
+
+	th
+	{
+		color: white;
+		background-color: #75ce63;
+	    padding: 10px;
+	}
+	
+	// Estilo a la ultima fila
+	tr:last-child 
+	{
+
+    	border-top:none;
+		td:first-child
+		{
+			color: black;
+			//background-color: #a8e19d;
+			border-bottom-left-radius: 5px;
+		    -moz-border-radius-bottomleft: 5px;
+		    -webkit-border-bottom-left-radius: 5px;
+		    padding: 5px;		
+		}
+		td:last-child
+		{
+			color: black;
+			//background-color: #a8e19d;
+			border-bottom-right-radius: 5px;
+		    -moz-border-radius-bottomright: 5px;
+		    -webkit-border-bottom-right-radius: 5px;
+		    padding: 5px;
+	    }
+	}
+
+	// Estilo a las columnas
+	td
+	{
+		color: black;
+		//background-color: #a8e19d;
+	    padding: 5px;
+	}
+
+	// Estilo a las filas
+	tr
+	{
+		border: 1px solid black;
+	}
+}
+
+.columna
+{
+	background-color: #a8e19d;
+}
+
+.columna-alt
+{
+	background-color: #cde9c7;
+}
