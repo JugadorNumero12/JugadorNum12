@@ -153,7 +153,7 @@ class AccionesGrupales extends CActiveRecord
 				$notificacion->mensaje = "La habilidad " . Habilidades::model()->findByPk($gp->habilidades_id_habilidad)->nombre . " ha finalizado sin completarse."; 
 
 				$notificacion->url = "usuarios/index";
-                $notificacion->imagen = "images/iconos/finalizada_grupal.png";
+                $notificacion->imagen = "images/iconos/notificaciones/finalizada_grupal.png";
 				$notificacion->save();
 				//Enviamos la notificación a los participantes
 				foreach($participantes as $participacion){
@@ -455,7 +455,7 @@ class AccionesGrupales extends CActiveRecord
 			$notificacion->fecha = time();
 			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
 			$notificacion->url = "usuarios/index";
-            $notificacion->imagen = "images/iconos/completa_grupal.png";
+            $notificacion->imagen = "images/iconos/notificaciones/completa_grupal.png";
 			$notificacion->save();
 			//Enviamos la notificación a la afición
 			$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>Usuarios::model()->findByPk($id_user)->equipos_id_equipo));
@@ -489,7 +489,7 @@ class AccionesGrupales extends CActiveRecord
 			$notificacion->fecha = time();
 			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha participado en la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
 			$notificacion->url = "acciones/ver?id_accion=". $id_accion;
-            $notificacion->imagen = "images/iconos/participacion_grupal.png";
+            $notificacion->imagen = "images/iconos/notificaciones/participacion_grupal.png";
 			$notificacion->save();
 			//enviamos notificaciones a los participantes de la acción
 			$participaciones = Participaciones::model()->findAllByAttributes(array('acciones_grupales_id_accion_grupal'=>$id_accion));
@@ -565,7 +565,7 @@ class AccionesGrupales extends CActiveRecord
 		$notificacion->fecha = time();
 		$notificacion->mensaje = Usuarios::model()->findByPk($id_usuario)->nick . " ha abierto la acción " . Habilidades::model()->findByPk($id_accion)->nombre;
 		$notificacion->url = "acciones/ver?id_accion=". $accion_grupal->id_accion_grupal;
-        $notificacion->imagen = "images/iconos/nueva_grupal.png";
+        $notificacion->imagen = "images/iconos/notificaciones/nueva_grupal.png";
 		$notificacion->save();
 		//Enviamos la notificación a la afición
 		$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
