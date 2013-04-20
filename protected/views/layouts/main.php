@@ -39,6 +39,8 @@
 	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
 	                            //resource
 	    };
+
+	    baseUrl = '<?php echo Yii::app()->request->baseUrl; ?>';
 	</script>
 	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
 </head>
@@ -50,7 +52,9 @@
 	<div id="barrasup-envoltorio">
 		<!-- Parte izquierda de la barra -->
 		<div id="barrasup-izquierda">
-			<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/logos/logo-barra.png" alt="logo">
+			<a href="<?php echo Yii::app()->createUrl('/usuarios/index') ?>">
+				<img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/logos/logo-barra.png" alt="logo">
+			</a>
 		</div>
 
 		<!-- Parte central de la barra -->
@@ -192,16 +196,10 @@
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>
-	   	<a href="<?php echo Yii::app()->createUrl('/acciones');?>">
-	   		<li class="menu-item">
-	   			<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/habilidades/habilidades.png'; ?>" alt="menu-desbloqueadas">
-	   			<div class="nombre-menu">Mis Habilidades</div>
-	   		</li>
-	   	</a>
 	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
-		   		<div class="nombre-menu">&Aacute;rbol Habilidades</div>
+		   		<div class="nombre-menu">Habilidades</div>
 		   	</li>
 	    </a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">

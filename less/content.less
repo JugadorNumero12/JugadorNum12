@@ -1,3 +1,25 @@
 @charset 'utf-8';
 
 @import 'priv/imports';
+
+.inner-block {
+    padding: @InnerBlockPadding;
+    margin: 0;
+
+    border: @InnerBlockBorder solid @InnerBlockBorderColor;
+    .rounded(@InnerBlockRadius);
+    background: fade(white, 80%);
+}
+
+.iconos-recursos {
+	width: 24px;
+	height: 24px;
+}
+
+.ui-accordion-header-active{
+	border-bottom: 1px solid black;
+}
+
+.habilidad{
+	border-top: 1px solid black;
+}

@@ -269,13 +269,13 @@ class Usuarios extends CActiveRecord
      * @param string $antigua_email
      * @return void
      */
-    public function emailIguales($antigua_email)
+    public function emailIguales($attribute,$params)
     {
         // FIXME: no es necesario el parametro
 
         $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
         if ( $usuario->email != $this->antigua_email)
-            $this->addError($antigua_email, 'Introduzca correctamente el email actual');
+            $this->addError('antigua_email', 'Introduzca correctamente el email actual');
     }
 
     /**
@@ -284,12 +284,12 @@ class Usuarios extends CActiveRecord
      * @param string $nuevo_email   email a comprobar
      * @return void
      */
-    public function comprobarEmail($nuevo_email)
+    public function comprobarEmail($attribute,$params)
     {
-        $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nuevo_email));
+        $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
 
-        if($registro <> null){
-            $this->addError($nuevo_email, 'Ese email ya se encuentra registrado');
+        if($registro !== null){
+            $this->addError('nueva_email1', 'Ese email ya se encuentra registrado');
         }
     }
 
@@ -299,12 +299,12 @@ class Usuarios extends CActiveRecord
      * @param string $nuevo_nick    nick a comprobar
      * @return void
      */
-    public function comprobarNick($nuevo_nick)
+    public function comprobarNick($attribute,$params)
     {
         $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
 
-        if($registro <> null){
-            $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
+        if($registro !== null){
+            $this->addError('nuevo_nick', 'Ese nick ya se encuentra registrado');
         }
     }
 

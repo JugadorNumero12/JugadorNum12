@@ -124,6 +124,7 @@ class Partido
         $partido->moral_visitante = $this->moral_visitante;
 		$partido->turno = $this->turno;
 		$partido->cronica = $this->cronica;
+		$partido->hora_ult_turno = time();
         if(!$partido->save()) 
             throw new Exception('No se ha podido guardar el turno actual.');
     }
@@ -788,6 +789,7 @@ class Partido
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
 				$notificacion->url = "partidos/index";
+				$notificacion->imagen = "images/iconos/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_local));

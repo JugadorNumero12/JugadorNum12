@@ -1,9 +1,9 @@
 @import 'priv/imports';
 
 #contenido {
-	@DrawingWidth: (@ContentWidth - @TopBlockPadding) * 2 / 5;
-	@ScoreboardWidth: @ContentWidth - @DrawingWidth - @TopBlockPadding;
-	@ScoreboardTeamWidth: (@ScoreboardWidth - @TopBlockPadding) / 2;
+	@DrawingWidth: (@ContentWidth - @InnerBlockPadding) * 2 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardWidth: (@ContentWidth - @InnerBlockPadding) * 3 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardTeamWidth: (@ScoreboardWidth - @InnerBlockPadding) / 2 - 2;
 
 	#partido-dibujo {
 		float: left;
@@ -13,10 +13,37 @@
 	#partido-marcador {
 		float: right;
 		width: @ScoreboardWidth;
+		margin-bottom: @InnerBlockMargin;
 
 		#partido-marcador-general {
 			width: @ScoreboardWidth;
 			position: absolute;
+		}
+
+		#partido-goles {
+			position: absolute;
+			width: 100%;
+
+			top: 56px;
+
+			text-align: center;
+			font-size: 48px;
+			font-family: Impact, Charcoal, sans-serif;
+
+			color: darken(@VERDE_12+#222, 10%);
+		}
+
+		#partido-tiempo {
+			text-align: center;
+			font-size: 32px;
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+			font-weight: bold;
+		}
+
+		#partido-tiempo-turno {
+			text-align: center;
+			font-size: 16px;
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
 		}
 
 		#partido-equipo-local {
@@ -41,6 +68,12 @@
 			font-family: Verdana;
 			font-size: 28px;
 			font-weight: bold;
+			margin-top: 0;
 		}
+	}
+
+	#partido-info {
+		clear: both;
+		margin-top: @InnerBlockPadding;
 	}
 }
