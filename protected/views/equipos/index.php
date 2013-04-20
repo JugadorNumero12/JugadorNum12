@@ -6,7 +6,7 @@
 <!-- codigo HTML -->
 
 <div class="clasificacion"> 
-	<table class="tabla-clasificacion">
+	<table class="tabla-general">
 	<tr>
 		<th colspan="7">CLASIFICACI&Oacute;N</th>
 	</tr> 
