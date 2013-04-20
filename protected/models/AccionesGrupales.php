@@ -325,7 +325,7 @@ class AccionesGrupales extends CActiveRecord
     {
         // 1) Comprobacion: la accion es del equipo del user
         if($accion['equipos_id_equipo']!= Yii::app()->user->usAfic) {
-            Yii::app()->user->setFlash('equipo', 'No puedes participar en esta acción.');
+            Yii::app()->user->setFlash('equipo', 'No puedes participar en esta acción. No es de tu equipo');
             throw new Exception('No puedes participar en esta acción.');
         }
 
@@ -564,7 +564,7 @@ class AccionesGrupales extends CActiveRecord
 		$notificacion = new Notificaciones;
 		$notificacion->fecha = time();
 		$notificacion->mensaje = Usuarios::model()->findByPk($id_usuario)->nick . " ha abierto la acción " . Habilidades::model()->findByPk($id_accion)->nombre;
-		$notificacion->url = "acciones/ver?id_accion=". $accion_grupal->id_accion_grupal;
+		$notificacion->url = "acciones/participar?id_accion=". $accion_grupal->id_accion_grupal;
         $notificacion->imagen = "images/iconos/notificaciones/nueva_grupal.png";
 		$notificacion->save();
 		//Enviamos la notificación a la afición
