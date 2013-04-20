@@ -5,7 +5,8 @@
 
 <!-- codigo HTML -->
 
-<div class="clasificacion"> <table cellspacing="0">
+<div class="clasificacion"> 
+	<table class="tabla-clasificacion">
 	<tr>
 		<th>Equipo</th>
 		<th>Posici&oacute;n</th>
@@ -30,4 +31,5 @@
 	</tr>
 	<?php } ?>
 	<tr></tr>
-</table> </div>
+	</table> 
+</div>
