@@ -1,77 +1,96 @@
 <?php
 
 /**
- * Modelo de la tabla <<usrnotif>>
+ * Modelo de la tabla usrnotif
  *
- * Columnas disponibles
- * string 	$id_email
- * string 	$id_usuario_to
- * string 	$id_usuario_from
- * string 	$fecha
- * string 	$contenido
- * string	$leido
- * string 	$asunto
- * string 	$borrado_to
- * string 	$borrado_from
+ * Columnas disponibles:
+ *
+ * |tipo    | nombre                    |
+ * |:-------|:--------------------------|
+ * | string | $id_email                 |
+ * | string | $id_usuario_to            |
+ * | string | $id_usuario_from          |
+ * | string | $fecha                    |
+ * | string | $contenido                |
+ * | string | $leido                    |
+ * | string | $asunto                   |
+ * | string | $borrado_to               |
+ * | string | $borrado_from             |
  */
 class Usrnotif extends CActiveRecord
 {
-	//public $nombre;
-	//public $cont;
-	//public $asun;
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Usrnotif the static model class
-	 */
+    /**
+     * Devuelve el modelo estatico de la clase active record especificada.
+     *
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
+     * @return \AccionesGrupales    el modelo estatico de la clase
+     */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	/**
-	 * @return string the associated database table name
-	 */
+    /**
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
 	public function tableName()
 	{
 		return 'usrnotif';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{ 	
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('notificaciones_id_notificacion, usuarios_id_usuario', 'length', 'max'=>10),
-			array('leido', 'length', 'max'=>1),
+    /**
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
+    public function rules()
+    {
+        return array(
+            array('notificaciones_id_notificacion, usuarios_id_usuario', 'length', 'max'=>10),
+            array('leido', 'length', 'max'=>1),
+            array('notificaciones_id_notificacion, usuarios_id_usuario, leido', 'safe', 'on'=>'search'),
+        );
+    }
 
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('notificaciones_id_notificacion, usuarios_id_usuario, leido', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * Define las relaciones entre <usrnotif - tabla>
-	 *
-	 * @devuelve array de relaciones
-	 */
+    /**
+     * Define las relaciones entre la tabla usuarios y el resto de tablas
+     *
+     * Relaciones definidas:
+     *
+     * - notificaciones
+     * - usuarios
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     relaciones entre usrnotif - tabla
+     */
 	public function relations()
 	{
 		return array(
-			/*Relacion entre <<usrnotif>> y <<notificaciones>>*/
 			'notificaciones'=>array(self::BELONGS_TO, 'Notificaciones', 'notificaciones_id_notificacion'),
-			/*Relacion entre <<usrnotif>> y <<usuarios>>*/
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario'),
 		 );
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+    /**
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
 	public function attributeLabels()
 	{
 		return array(
@@ -81,15 +100,23 @@ class Usrnotif extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
+    /**
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
+     *
+     * Atributos no contemplados para la busqueda
+     *
+     * - fecha
+     * - contenido
+     * - asunto
+     * - borrado_to
+     * - borrado_from
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
+     */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('notificaciones_id_notificacion',$this->notificaciones_id_notificacion,true);
@@ -97,8 +124,7 @@ class Usrnotif extends CActiveRecord
 		$criteria->compare('id_usuario_from',$this->id_usuario_from,true);
 		$criteria->compare('leido',$this->leido);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		return new CActiveDataProvider($this, array('criteria'=>$criteria));
 	}
+
 }
