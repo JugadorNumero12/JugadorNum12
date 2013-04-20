@@ -17,7 +17,7 @@
 <table class="tam-tablas">
 	<tr>
 		<td class="col-izq"> From:</td>
-		<td class="col-dcha"> marina</td>
+		<td class="col-dcha"> <?php echo $nombre_usuario; ?></td>
  	</tr>
  	<tr>
 		<td class="col-izq"> <?php echo $form->labelEx($email,'to'); ?>:</td>
@@ -55,7 +55,7 @@
 <tr> 
 	<td><?php  echo CHtml::link('Bandeja de entrada',array('emails/index'),array('class'=>"button small black")); ?> </td>
 	<td> &nbsp; &nbsp; &nbsp; </td>
-	<td><?php echo CHtml::button('Bandeja de salida', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> </td>
+	<td> <?php  echo CHtml::link('Bandeja de salida',array('emails/enviados'),array('class'=>"button small black")); ?></td>
 </tr>
 </table>
 

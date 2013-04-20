@@ -1,45 +1,78 @@
 <?php
+
 /**
-*
-* CLASE PARA EL PARTIDO
-*
-*/
+ * Clase que contiene la logica de un partido
+ *
+ * Reparto de los turnos
+ *
+ * - turno 0 : turno de inicializacion
+ * - turnos 1 - 5 : turnos de juego (1 parte)
+ * - turno 6 : turno del descanso 
+ * - turnos 7 - 11 : turnos de juego (2 parte)
+ * - turno 12 : turno de finalizacion
+ *
+ *
+ * @package componentes
+ */
 class Partido
 {
-	/* Un partido se juega entre los turnos 1 - 10 
-	* El turno 0 es inicialización de partido.
-	* El turno 6 es de descanso del partido.
-	*/
+	/** turno de inicializacion del partido */
 	const PRIMER_TURNO = 0;
+	/** turno de finalizacion del partido */
 	const ULTIMO_TURNO = 12;
+	/** turno para el descanso */
 	const TURNO_DESCANSO = 6;
 
+	/** puntuacion de ambiente estandar */
 	const AMBIENTE_MEDIO = 500;
 
+	/** @type int */
 	private $id_partido;
+	/** @type int */
 	private $id_local;
+	/** @type int */
 	private $id_visitante;
+	/** @type int */
 	private $turno;
+	/** @type string */
 	private $cronica;
+	/** @type int */
 	private $ambiente;
+	/** @type int */
 	private $dif_niveles;
+	/** @type int */
 	private $aforo_local;
+	/** @type int */
 	private $aforo_visitante;
 
+	/** @type int */
 	private $ofensivo_local;
+    /** @type int */
 	private $ofensivo_visitante;
+    /** @type int */
 	private $defensivo_local;
+    /** @type int */
 	private $defensivo_visitante;
 	
+    /** @type int */
 	private $goles_local;
+    /** @type int */
 	private $goles_visitante;
+    /** @type int */
 	private $estado;
+    /** @type int */
 	private $moral_local;
+    /** @type int */
 	private $moral_visitante;
 
 	/**
-     * Constructora: Inicializar todos los datos de la clase
-     * en función de la fila correspondiente de la tabla Partidos.
+     * Inicializar los atributos del objeto partido
+     *
+     * > Consulta la tabla Partidos
+     *
+     * @param int $id_partido   id del partido
+     * @throws \Exception       partido inexistente
+     * @return void
      */
     function Partido($id_partido)
     {
@@ -66,8 +99,12 @@ class Partido
         $this->moral_visitante = $partido->moral_visitante;
     }
     
-    /*
-     * Guarda toda la información del estado actual en la base de datos.
+    /**
+     * Guarda toda la información del estado actual en la base de datos
+     *
+     * @throws \Exception   partido inexistente
+     * @throws \Exception   fallo al guardar el turno actual en la BD
+     * @return void
      */
     private function guardaEstado()
     {
@@ -93,13 +130,16 @@ class Partido
     }
 
 	/**
-	 * Estado 0: generar el estado inicial, 
-	 * carga las acciones preparatorias y calcula por primera vez 
-	 * las variables ambiente, aforos, diferencia de niveles 
-	 * y valor ofensivo y defensivo basico de los equipos.
-	 * y lo almacena en la tabla turnos.
-	 * A partir de la diferencia de niveles, almacena el primer estado
-	 * del partido.
+	 * Generar el estado inicial del partido (primer estado del partido)
+     *
+     * - fija el turno del partido a 1 
+	 * - carga las acciones preparatorias 
+     * - calcula las variables de ambiente, aforos y diferencia de niveles
+	 * - carga el valor ofensivo y defensivo basico de los equipos
+     *
+     * @throws \Exception Equipo local/visitante no encontrado
+     * @throws \Excepction Partido no encontrado
+     * @return void
 	 */
 	private function inicializaEncuentro()
 	{
@@ -749,7 +789,7 @@ class Partido
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
 				$notificacion->url = "partidos/index";
-				$notificacion->imagen = "images/iconos/partido_terminado.png";
+				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_local));
