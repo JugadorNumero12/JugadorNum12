@@ -152,6 +152,10 @@ class PartidosController extends Controller
 	
 		if($modeloPartido->turno == $ultimo_turno+1) 
 		{
+			// Cargar css de previa
+			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			
 			//si el partido se jugo, obtener cronica
 			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
 									 		'modeloL'=>$modeloEquipoLocal,

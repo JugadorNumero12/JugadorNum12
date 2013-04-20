@@ -65,6 +65,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/acordeon.j
 		<td align="center" class="columna"><?php echo $modeloP->aforo_visitante; ?></td>
 	</tr>
 </table>
+
 <div class="accordion" style="margin-top: 20px;">
     <h3 class="ui-accordion-header-active"><b>ACCIONES GRUPALES DEL EQUIPO LOCAL</b></h3>
     <div>
