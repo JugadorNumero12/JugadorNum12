@@ -63,7 +63,7 @@
 
 			<!-- Barra del dinero -->
 			<div class="barrasup-recursos" title="Dinero">
-				<img class="barrasup-icono-dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+				<img class="barrasup-icono-dinero" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero">
 				<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
 					<div id="progressbar-label-dinero"></div>
 				</div>
@@ -71,7 +71,7 @@
 
 			<!-- Barra de ánimo -->
 			<div class="barrasup-recursos" title="&Aacute;nimo">
-				<img class="barrasup-icono-animo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+				<img class="barrasup-icono-animo" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo">
 				<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
 					<div id="progressbar-label-animo"></div>
 				</div>
@@ -79,7 +79,7 @@
 
 			<!-- Barra de influencias -->
 			<div class="barrasup-recursos" title="Influencias">
-				<img class="barrasup-icono-influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+				<img class="barrasup-icono-influencias" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias">
 				<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
 					<div id="progressbar-label-influencias"></div>
 				</div>
