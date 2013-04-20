@@ -17,7 +17,7 @@
 <table class="tam-tablas">
 	<tr>
 		<td class="col-izq"> From:</td>
-		<td class="col-dcha"> marina</td>
+		<td class="col-dcha"> <?php echo $nombre_usuario; ?></td>
  	</tr>
  	<tr>
 		<td class="col-izq"> <?php echo $form->labelEx($email,'to'); ?>:</td>
