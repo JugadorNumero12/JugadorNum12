@@ -99,7 +99,7 @@ class AccionesController extends Controller
 	 *
 	 * > No se le pasaran acciones individuales ni de partido
 	 *
-	 * @param int $id_accion 	id de la accion que se ejecuta
+	 * @param int $id_accion 	id de la habilidad que se ejecuta
 	 * 
 	 * @route jugadorNum12/acciones/usar/{$id_accion}
 	 * @redirect jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
@@ -206,17 +206,20 @@ class AccionesController extends Controller
 			// Finalizar transacción
 			$trans->commit();
 
-			//Renderizar acción individual 
+			//Redireccionar acción individual 
 			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
 				/* 	como no está definido el id_accion_grupal, le damos cualquier valor
 					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 				$id_acc = -1;
-				$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
+				Yii::app()->user->setFlash('error', 'Exito al usar la accion');
+				$this->redirect(array('habilidades/index/'));
 			}
 			else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
 			{
-				//Renderizar acción grupal
-				$this->render('usar', array('id_acc'=>$nuevo_id,'habilidad'=>$habilidad, 'res'=>$res));
+				//redireccionar acción grupal participar
+				Yii::app()->user->setFlash('error', 'La accion grupal se ha creado con exito');
+		
+				$this->redirect(array('acciones/participar/','id_accion'=>$nuevo_id));				
 			}
 			else //Es de tipo partido
 			{

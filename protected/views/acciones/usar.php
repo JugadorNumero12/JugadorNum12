@@ -28,7 +28,7 @@
 			<?php 
 				if ($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL)
 				{
-					echo CHtml::button('Aceptar', array('submit' => array('acciones/index'),'class'=>"button small black")); 
+					echo CHtml::button('Aceptar', array('submit' => array('habilidades/index'),'class'=>"button small black")); 
 				}
 				else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
 				{

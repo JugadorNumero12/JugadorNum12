@@ -51,7 +51,7 @@
 
       <div class = "perfil-derecha-iniciar">
         <h4> Iniciar nueva acci&oacute;n </h4>
-        <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/acciones/index',),'class'=>"button small black")) ?> 
+        <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/habilidades/index',),'class'=>"button small black")) ?> 
       </div>
 
       <div class = "perfil-derecha-acciones">
@@ -76,7 +76,7 @@
                           No 
                           <?php }?>
                         </td>
-                        <td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
+                        <td> <?php echo CHtml::submitButton('Participar',array('submit' => array('/acciones/participar','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
                     </tr>
                 <?php } ?>
             </table>
