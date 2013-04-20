@@ -14,12 +14,12 @@
 		</div>
 		<div id="info-equipo">
 			<div id="nombre-equipo">	
-			<?php echo strtoupper($modeloL->nombre); ?>	
+			<?php echo strtoupper($modeloL->nombre).'<br>'.($modeloP->goles_local); ?>	
 			</div>
 		</div>
 		<div id="info-equipo">
 			<div id="nombre-equipo">	
-			<?php echo strtoupper($modeloV->nombre); ?>	
+			<?php echo strtoupper($modeloV->nombre).'<br>'.($modeloP->goles_visitante); ?>	
 			</div>
 		</div>
 		<div id="escudo-equipo">
