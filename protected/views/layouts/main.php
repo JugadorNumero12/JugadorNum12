@@ -173,13 +173,13 @@
 			<li class="menu-item menu-item-first">
 				<?php switch (Yii::app()->getParams()->usuario->personaje):
 					case Usuarios::PERSONAJE_EMPRESARIO: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/empresario-menu.jpg'; ?>" alt="menu-inicio-empresario">
 					<?php break;
 					case Usuarios::PERSONAJE_MOVEDORA: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="menu-inicio-movedora">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/animadora-menu.jpg'; ?>" alt="menu-inicio-movedora">
 					<?php break;
 					case Usuarios::PERSONAJE_ULTRA: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="menu-inicio-ultra">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/ultra-menu.jpg'; ?>" alt="menu-inicio-ultra">
 					<?php break;
 				endswitch ?>
 				<div class="nombre-menu">Inicio</div>
@@ -187,25 +187,25 @@
 		</a>
 		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 		   	<li class="menu-item">
-				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="menu-aficion">
+				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_aficion.png'; ?>" alt="menu-aficion">
 				<div class="nombre-menu">Mi Afici&oacute;n</div>
 			</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
 		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/calendario.png'; ?>" alt="menu-calendario">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>
 	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_habilidades.png'; ?>" alt="menu-arbol">
 		   		<div class="nombre-menu">Habilidades</div>
 		   	</li>
 	    </a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
 		   	<li class="menu-item menu-item-last">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/clasificacion.png'; ?>" alt="menu-clasificacion">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
 		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 		   	</li>
 		</a>
