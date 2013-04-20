@@ -1,40 +1,48 @@
 <?php
 
-/* Pagina del "arbol" de habilidades */
+/**
+ * Controlador de las habilidades
+ *
+ *
+ * @package controladores
+ */
 class HabilidadesController extends Controller
 {
-	/**
-	 * @return array de filtros para actions
-	 */
+    /**
+    * Definicion del verbo DELETE unicamente via POST
+    *
+    * > Funcion predeterminada de Yii
+    *
+    * @return string[]     filtros definidos para "actions"
+    */
 	public function filters()
 	{
-		return array(
-			'accessControl', // Reglas de acceso
-			'postOnly + delete', // we only allow deletion via POST request
-		);
+		return array('accessControl', 'postOnly + delete');
 	}
 
-	/**
-	 * Especifica las reglas de control de acceso.
-	 * Esta función es usada por el filtro "accessControl".
-	 * @return array con las reglas de control de acceso
-	 */
+    /**
+     * Especifica las reglas de control de acceso.
+     * 
+     *  - Permite realizar a los usuarios autenticados cualquier accion
+     *  - Niega el acceso al resto de usuarios
+     *
+     * > Funcion predeterminada de Yii 
+     *
+     * @return object[]     reglas usadas por el filtro "accessControl"
+     */
 	public function accessRules()
 	{
 		return array(
-			array('allow', // Permite realizar a los usuarios autenticados cualquier acción
-				'users'=>array('@'),
-			),
-			array('deny',  // Niega acceso al resto de usuarios
-				'users'=>array('*'),
-			),
+			array('allow', 'users'=>array('@')),
+			array('deny', 'users'=>array('*')),
 		);
 	}
 
 	/**
 	 * Muestra el arbol de habilidades completo 
 	 *
-	 * @ruta 	jugadorNum12/habilidades
+	 * @route  jugadorNum12/habilidades
+	 * @return void
 	 */
 	public function actionIndex()
 	{
@@ -49,9 +57,9 @@ class HabilidadesController extends Controller
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Comprobaciones de seguridad
-		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null))
+		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null)) {
 			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
-			//throw new Exception("Acciones o recursos no encontrados. (actionIndex, AccionesController)", 404);
+		}
 			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
 		$acciones = array();
@@ -60,9 +68,9 @@ class HabilidadesController extends Controller
 			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
 
 			//Comprobación de seguridad
-			if ($hab === null)
+			if ($hab === null) {
 				Yii::app()->user->setFlash('habilidad', 'Habilidad no encontrada. (actionIndex,AccionesController).');
-				//throw new Exception("Habilidad no encontrada. (actionIndex,AccionesController)", 404);
+			}	
 				
 			$acciones[] = $hab;
 		}
@@ -74,16 +82,15 @@ class HabilidadesController extends Controller
 
 	/**
 	 * Muestra la informacion de la habilidad seleccionada
-	 *  nombre
-	 *  descripcion (efecto, coste, detalles, ...)
-	 *  requisitos para desbloquear 
+	 *  
+	 * - Nombre de la habilidad
+	 * - Descripción de la habilidad 
+	 * - Coste en recursos
+	 * - Requisitos necesarios para desbloquear la habilidad
 	 * 
-	 * el id del usuario se recoge de la variable de sesion
-	 * Si la accion ya esta desbloqueada por el usuario, indicarlo
-	 * Si no esta aun disponible mostrar un boton para escogerla
-	 *
-	 * @parametro 	id de la habilidad seleccionada
-	 * @ruta 		jugadorNum12/habilidades/{$id_habilidad}
+	 * @param int $id_habilidad	id de la habilidad seleccionada
+	 * @route jugadorNum12/habilidades/{$id_habilidad}
+     * @return void
 	 */
 	public function actionVer($id_habilidad)
 	{
@@ -97,7 +104,6 @@ class HabilidadesController extends Controller
 
 		if ($habilidad === null) {
 			Yii::app()->user->setFlash('habilidad', 'Habilidad inexistente.');
-			//throw new CHttpException( 404, 'Habilidad inexistente');
 		}
 
 		$desb = false;
@@ -120,12 +126,16 @@ class HabilidadesController extends Controller
 	/**
 	 * Muestra un formulario de confirmacion para adquirir una habilidad
 	 * 
-	 * Si hay datos en $_POST procesa el formulario y registra 
-	 * la habilidad como desbloqueada
+	 * > Si hay datos en $_POST procesa el formulario y registra la habilidad como desbloqueada
 	 *
-	 * @parametro 	id de la habilidad que se va a adquirir
-	 * @redirige 	jugadorNum12/acciones si la habilidad es una accion
-	 * @redirige 	jugadorNum12/usuarios/perfil si la habilidad es pasiva
+	 * @param int $id_habilidad	id de la habilidad que se va a adquirir
+     * 
+     * @route jugadorNum12/habilidades/adquirir/{$id_habilidad}
+	 * @redirect jugadorNum12/acciones si la habilidad es una accion
+	 * @redirect jugadorNum12/usuarios/perfil si la habilidad es pasiva
+     *
+     * @throws \Exception Fallo al guardar la nueva habilidad en la BD
+     * @return void
 	 */
 	public function actionAdquirir($id_habilidad)
 	{
@@ -140,16 +150,16 @@ class HabilidadesController extends Controller
 		$habilidad = Habilidades::model()->findByPk($id_habilidad);
 
 		//vemos si una habilidad esta desbloqueada para el usuario
-		$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,
-																	   'habilidades_id_habilidad' => $id_habilidad
-																	  ));
+		$desbloqueada = Desbloqueadas::model()->findByAttributes(array(
+            'usuarios_id_usuario' => Yii::app()->user->usIdent,
+		    'habilidades_id_habilidad' => $id_habilidad
+		));
 
 		//realizar transaccion con la base de datos
 		if($habilidad === null){
 			//si la habilidad que quieres desbloquear existe como tal
 			$trans->rollback();
 			Yii::app()->user->setFlash('habilidad', 'Habilidad inexistente.');
-			//throw new CHttpException(404,'La habilidad no existe.');
 		}
 
 		if ( $desbloqueada != null){
@@ -157,9 +167,7 @@ class HabilidadesController extends Controller
 			$trans->rollback();
 			Yii::app()->user->setFlash('desbloqueada', 'La habilidad ya ha sido desbloqueada.');
 			$this-> redirect(array('habilidades/index'));
-
 		} else {
-
 			// comprobamos que pueda desbloquedar la habilidad. Nivel necesario, hab necesarias desbloqueadas etc
 			if( $habilidad->puedeDesbloquear(Yii::app()->user->usIdent,$id_habilidad)){
 
@@ -208,19 +216,20 @@ class HabilidadesController extends Controller
 
 	        } else{ //el ususario, no puede desbloquear la habilidad
 	        	Yii::app()->user->setFlash('desbloqueada', 'No cumples los requisitos para desbloquear la habilidad.');
-	        	$this->redirect(array('habilidades/index'));
-	        	
+	        	$this->redirect(array('habilidades/index'));	
 	        }
-
 		}
-		
-	} //end Action_adquirir
+	} 
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
-	 */
+    /**
+     * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET 
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @param int $id            id del modelo que se va a cargar 
+     * @throws \CHttpException   El modelo de datos no se encuentra 
+     * @return \AccionesGrupales modelo de datos
+     */
 	public function loadModel($id)
 	{
 		$model=Habilidades::model()->findByPk($id);
@@ -229,16 +238,20 @@ class HabilidadesController extends Controller
 		return $model;
 	}
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
-	 */
+    /**
+     * Realiza la validacion por Ajax 
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @param $model (CModel) modelo a ser validado
+     * @return void
+     */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='habilidades-form')
-		{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='habilidades-form'){
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
+
 }
