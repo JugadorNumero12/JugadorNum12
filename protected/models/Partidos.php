@@ -386,8 +386,39 @@ class Partidos extends CActiveRecord
         // Agregar datos al array
         foreach ($listaPartidos as $p)
         {
-            //$parPorJornadas[$p->jornada]
+            $parPorJornadas[$p->jornada][] = $p;
         }
+        return $parPorJornadas;
+    }
 
+    /** 
+     * Funcion auxiliar que toma la lista de partidos divididos por jornadas y
+     * agrupados por parejas (para la vista del calendario)
+     * 
+     * @static 
+     *
+     * @return array asociativo                  con los partidos divididos en jornadas
+     */
+    public static function partidosAgrupados()
+    {
+        // Obtener la lista de partidos
+        $listaPartidos = self::partidosPorJornadas();
+        // Crear array inicial de datos
+        $grupos = array();
+        // Agregar datos al array
+        $fin = count($listaPartidos);
+        for ($i = 1; $i < $fin; $i+=2) 
+        {
+            // Agregar elementos
+            $grupos[] = array(
+                            array('jornada' => $i,
+                                'partidos' => $listaPartidos[$i],
+                                ),
+                            array('jornada' => $i+1,
+                                'partidos' => $listaPartidos[$i+1],
+                                ),
+                        );
+        }
+        return $grupos;
     }
 }
