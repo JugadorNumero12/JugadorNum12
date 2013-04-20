@@ -82,7 +82,7 @@ class PartidosController extends Controller
 		$primer_turno=Partido::PRIMER_TURNO;
 		$ultimo_turno=Partido::ULTIMO_TURNO;
 		// Obtener la lista de partidos
-		$listaPartidos = Partidos::model()->findAll();
+		$listaPartidos = Partidos::partidosAgrupados();
 
 		//pasar los datos a la vista y renderizarla
 		$datosVista = array( 'lista_partidos'=>$listaPartidos, 'equipo_usuario'=>$id_equipo_usuario, 
