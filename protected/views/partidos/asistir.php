@@ -113,4 +113,11 @@
 ?>
 	</div>
 </div>
+<?php foreach ($l_acciones as $a) { ?>
+	<div>
+		<a href="<?php echo $this->createUrl( '/acciones/usar', array('id_accion' => $a->id_habilidad) ); ?>">
+			<?php echo $a->nombre; ?>
+		</a>
+	</div>
+<?php } ?>
 
