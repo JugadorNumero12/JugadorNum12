@@ -204,7 +204,7 @@ class HabilidadesController extends Controller
 	        			}
 
 	        			$trans->commit(); 
-	        			$this->redirect(array('acciones/'));       			
+	        			$this->redirect(array('habilidades/'));       			
 	        		} 
 	        		catch ( Exception $exc ) 
 	        		{
