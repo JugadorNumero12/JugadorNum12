@@ -122,8 +122,8 @@ var YiiChat = function(options){
 			if(options.othersPostCssStyle != null)
 				p.addClass(options.othersPostCssStyle);
 		}
-		p.find('.track').html("<div class='owner'>"+post.owner+"</div>"
-			+"<div class='time'>"+post.time+"</div>");
+		p.find('.track').html('<div class="time">'+post.time +
+			'</div>'+'<div class="owner">'+post.owner+'</div>');
 		p.find('.text').html(post.text);
 	}
 	var scroll = function(){
@@ -176,11 +176,11 @@ var YiiChat = function(options){
 	msg.keyup(function(e){
 		var text = jQuery.trim(msg.val());
 		if(text.length > options.maxPostLen){
-			msg.css({ color: 'red' });
-			msg.parent().find(".exceded").text("size exceded");
+			msg.addClass('error');
+			msg.parent().find(".exceded").text('Mensaje demasiado largo');
 		}else{
-			msg.css({ color: 'black' });
-			msg.parent().find(".exceded").text("");
+			msg.removeClass('error');
+			msg.parent().find(".exceded").text('');
 		}
 	});
 	var launchTimer = function(){
