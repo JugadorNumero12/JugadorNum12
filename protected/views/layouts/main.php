@@ -185,11 +185,23 @@
 				<div class="nombre-menu">Inicio</div>
 			</li>
 		</a>
+	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
+		   	<li class="menu-item">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_habilidades.png'; ?>" alt="menu-arbol">
+		   		<div class="nombre-menu">Habilidades</div>
+		   	</li>
+	    </a>
 		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
 		   	<li class="menu-item">
 				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_aficion.png'; ?>" alt="menu-aficion">
 				<div class="nombre-menu">Mi Afici&oacute;n</div>
 			</li>
+		</a>			   	
+	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
+		   	<li class="menu-item menu-item-last">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
+		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
+		   	</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
 		   	<li class="menu-item">
@@ -197,18 +209,6 @@
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
 	  	</a>
-	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
-		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_habilidades.png'; ?>" alt="menu-arbol">
-		   		<div class="nombre-menu">Habilidades</div>
-		   	</li>
-	    </a>			   	
-	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-		   	<li class="menu-item menu-item-last">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
-		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
-		   	</li>
-		</a>
 	</ul>
     
     <!-- DIVISION PARA FLOTAR -->
