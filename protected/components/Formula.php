@@ -214,7 +214,14 @@ class Formula
 		$pesos = self::pesos($params);
 		$tot = array_sum( $pesos );
 		foreach ( $pesos as $i=>$v ) {
-			$probs[$i] = $v/$tot;
+			if($tot == 0)
+			{
+				$probs[$i]=0.1;
+			}
+			else
+			{
+				$probs[$i] = $v/$tot;			}
+			
 		}
 
 		return $probs;
