@@ -118,7 +118,7 @@ class UsuariosController extends Controller
         //Saco los recursos disponibles del usuario
         $recursos = Recursos::model()->findByPk($id);
 
-        // Cargar css de ver habilidad
+        // Cargar css de ver perfil
         $uri = Yii::app()->request->baseUrl.'/less/infoperfil.less';
         Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
@@ -153,7 +153,11 @@ class UsuariosController extends Controller
         } else {
             if (Yii::app()->user->usIdent == $id_usuario) {
                 $this->redirect(array('usuarios/perfil'));
-            } else {
+            } else {      
+                // Cargar css de ver perfil
+                $uri = Yii::app()->request->baseUrl.'/less/infoperfil.less';
+                Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+
                 $this->render('ver',array('modeloU'=>$modeloUsuario)); 
             }
         }   
@@ -193,7 +197,7 @@ class UsuariosController extends Controller
            
         }
 
-        // Cargar css de ver habilidad
+        // Cargar css de cambiar datos
         $uri = Yii::app()->request->baseUrl.'/less/cambiodatos.less';
         Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
         
@@ -248,7 +252,7 @@ class UsuariosController extends Controller
             $trans->rollBack();
         }     
         
-        // Cargar css de ver habilidad
+        // Cargar css de cambiar datos
         $uri = Yii::app()->request->baseUrl.'/less/cambiodatos.less';
         Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
         
