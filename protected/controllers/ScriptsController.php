@@ -377,6 +377,7 @@ class ScriptsController extends Controller
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
     	{
+    		$jornada_act = 1;
 			foreach ($emparejamientos as $jornada) {
 
 				$time = $fecha;//time = la fecha "origen" de la jornada
@@ -384,7 +385,7 @@ class ScriptsController extends Controller
 
 				foreach ($jornada as $partido) {
 					
-					$this->generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
+					$this->generaPartido($jornada_act, $partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
@@ -393,6 +394,7 @@ class ScriptsController extends Controller
 					}
 				}
 
+    			$jornada_act++;
 				$fecha += 86400*$descanso;
 			}
 
@@ -413,8 +415,10 @@ class ScriptsController extends Controller
 	* 
 	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
 	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
+	*
+	* ATENCION los partidos empiezan con sigpartido -> id = 0 !!!!
 	*/
-	public function generaPartido($id_local, $id_visitande, $time, $generateNewTransaction=true)
+	public function generaPartido($jornada_actual, $id_local, $id_visitande, $time, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -422,14 +426,30 @@ class ScriptsController extends Controller
 		if($generateNewTransaction)
 			$transaction = Yii::app()->db->beginTransaction();
 
-    	try
+		$equipo_local = Equipos::model()->findByPk($id_local);
+		$equipo_visitante = Equipos::model()->findByPk($id_visitande);
+		try
     	{
 			$partido = new Partidos();
 			$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
 			   							  'equipos_id_equipo_2' => $id_visitande,
 			   							  'hora' => $time,
+			   							  'jornada' => $jornada_actual,
 			   							));
+			
 			$partido->save();
+
+
+			if (($equipo_local->partidos_id_partido == 0) || ($time < $equipo_local->sigPartido->hora) ){  
+				$equipo_local->setAttributes(array('partidos_id_partido'=>$partido->id_partido ));
+			}
+			
+			if( ($equipo_visitante->partidos_id_partido == 0) || ($time < $equipo_visitante->sigPartido->hora) )
+				$equipo_visitante->setAttributes(array('partidos_id_partido'=>$partido->id_partido ));
+    	
+    		$equipo_local->save();
+    		$equipo_visitante->save();
+
 			if($generateNewTransaction) $transaction->commit();
     	}
     	catch (Exception $ex)

@@ -15,7 +15,7 @@
 <?php
 	$form = $this->beginWidget('CActiveForm', array(
 				'id'=>'usuarios-form',
-			    'enableAjaxValidation'=>false,
+			    'enableAjaxValidation'=>true,
 			    'enableClientValidation'=>true,
 			    'clientOptions'=>array(
 					'validateOnSubmit'=>true,),
@@ -98,6 +98,9 @@
 	  <?php endif; ?></tr>-->
 
 	  <tr>
+	    <td >
+	    	<?php echo CHtml::button('Volver',array('onclick' => 'js:document.location.href="'.$this->createUrl('site/login').'"','class'=>"button large black"));?>
+	    </td>
 	    <td >
 	    	<?php echo CHtml::resetButton('Reiniciar',array('class'=>"button large black"));?>
 	    </td>

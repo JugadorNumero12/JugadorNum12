@@ -23,7 +23,7 @@ class AccionPartSingleton
    /* Codigo asociado a ejecutar dicha acción. P. ej.: dar X de ánimo al jugador. 
    Tambien devuelve las influencias aportadas.
    Se llamará al crear una grupal o participar en ella, siempre y cuando los recursos hayan sido alcanzados. */
-   public function ejecutar($id_usuario)
+   public function ejecutar($id_usuario,$id_partido,$id_equipo)
    {
    }
 

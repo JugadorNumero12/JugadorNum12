@@ -1,9 +1,9 @@
 @import 'priv/imports';
 
 #contenido {
-	@DrawingWidth: (@ContentWidth - @TopBlockPadding) * 2 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
-	@ScoreboardWidth: (@ContentWidth - @TopBlockPadding) * 3 / 5 - @TopBlockPadding*2 - @TopBlockBorder*2;
-	@ScoreboardTeamWidth: (@ScoreboardWidth - @TopBlockPadding) / 2 - 2;
+	@DrawingWidth: (@ContentWidth - @InnerBlockMargin) * 2 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardWidth: (@ContentWidth - @InnerBlockMargin) * 3 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardTeamWidth: (@ScoreboardWidth - @InnerBlockPadding) / 2 - 2;
 
 	#partido-dibujo {
 		float: left;
@@ -13,6 +13,7 @@
 	#partido-marcador {
 		float: right;
 		width: @ScoreboardWidth;
+		margin-bottom: @InnerBlockMargin;
 
 		#partido-marcador-general {
 			width: @ScoreboardWidth;
@@ -68,6 +69,43 @@
 			font-size: 28px;
 			font-weight: bold;
 			margin-top: 0;
+		}
+	}
+
+	#partido-info {
+		clear: both;
+		margin-top: @InnerBlockPadding;
+		padding: 4px;
+
+		#partido-info-tabs {
+			margin: -2px;
+			margin-bottom: 4px;
+
+			padding: 1px 2px 0;
+
+			border: 1px solid (@VERDE_12_CLARO - #111);
+			.rounded(4px);
+
+			.gradient(@VERDE_12_CLARO, @VERDE_12_CLARO+#111, @VERDE_12_CLARO+#222);
+
+			font-family: sans;
+			font-size: 12px;
+			font-weight: bold;
+
+			li {
+				margin: 0 2px 0 0;
+				padding: 0;
+
+				border: 1px solid @VERDE_12_CLARO;
+
+				a {
+					padding: 5px 12px 3px;
+				}
+
+				&.ui-tabs-selected {
+					border-bottom: 1px solid @VERDE_12_CLARO;
+				}
+			}
 		}
 	}
 }

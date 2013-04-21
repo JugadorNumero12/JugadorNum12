@@ -118,6 +118,9 @@ class UsuariosController extends Controller
         //Saco los recursos disponibles del usuario
         $recursos = Recursos::model()->findByPk($id);
 
+        // Cargar css de ver habilidad
+        $uri = Yii::app()->request->baseUrl.'/less/infoperfil.less';
+        Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario, 
                         'accionesPas'=>$accionesPas,
@@ -169,10 +172,12 @@ class UsuariosController extends Controller
         /* Actualizar datos de usuario (recuros,individuales y grupales) */
         Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
         /* Fin de actualización */
-        
+
         $id= Yii::app()->user->usIdent;        
         $modelo = Usuarios:: model()->findByPk($id);
         $modelo->scenario='cambiarClave';
+
+        $this->performAjaxValidation($modelo);
 
         if (isset($_POST['Usuarios'])) {
             //Cojo la clave de post(formulario)       
@@ -187,7 +192,12 @@ class UsuariosController extends Controller
             }
            
         }
+
+        // Cargar css de ver habilidad
+        $uri = Yii::app()->request->baseUrl.'/less/cambiodatos.less';
+        Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
         
+        // Renderizar vista
         $this->render('cambiarClave',array('model'=>$modelo));            
     }
 
@@ -216,6 +226,8 @@ class UsuariosController extends Controller
             $id= Yii::app()->user->usIdent;        
             $modelo = Usuarios:: model()->findByPk($id);
             $modelo->scenario='cambiarEmail';
+
+            $this->performAjaxValidation($modelo);
 
             if (isset($_POST['Usuarios'])) {
                 //Cojo la clave de post(formulario)       
@@ -285,7 +297,7 @@ class UsuariosController extends Controller
         $chicas = array();
         $empresarios = array();
 
-            for($i = 0; $i < 50; $i++) {
+            for($i = 0; $i < 10; $i++) {
                 $u = new Usuarios(); $e = new Usuarios(); $c = new Usuarios();
                 $u->setAttributes( array(
                     'nick'=>"test_ultra".$i,

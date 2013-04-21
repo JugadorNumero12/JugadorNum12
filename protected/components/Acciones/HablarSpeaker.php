@@ -1,17 +1,32 @@
 <?php
 
 /** 
- * Descripcion breve: Hablar con el speaker del partido
- * Tipo: Partido
- * Perfil asociado: Movedora
+ * Hablar por el speaker del estadio
  *
- * Efectos:
- *  Aumenta el factor de partido "moral_propio"
- *  Aumenta el factor de partido "ofensivo_propio"
+ * Tipo
+ *
+ * - Partido
+ * 
+ * Perfil asociado
+ *
+ * - RRPP
+ *
+ * Efectos
+ *
+ * - Aumenta el factor de partido "moral_propio"
+ * - Aumenta el factor de partido "ofensivo_propio"
+ *
+ *
+ * @package componentes\acciones
  */
 class HablarSpeaker extends AccionPartSingleton
 {
-   /* Función a través de la cual se accederá al Singleton */
+  /**
+   * Funcion para acceder al patron Singleton
+   *
+   * @static
+   * @return \Apostar instancia de la accion
+   */
    public static function getInstance()
    {
       if (!self::$instancia instanceof self)
@@ -26,7 +41,7 @@ class HablarSpeaker extends AccionPartSingleton
 	{
 		$ret =0 ; 
 	    //Traer el array de efectos
-	    parent::ejecutar($id_usuario);
+	    parent::ejecutar($id_usuario,$id_partido,$id_equipo);
 
 	    //Validar usuario
 	    $us = Usuarios::model()->findByPk($id_usuario);

@@ -48,80 +48,128 @@ class Usuarios extends CActiveRecord
     /** Modulo de experencia: probabilidad de mejorar el recurso minoritario */
     const PROPORCION_MENOR = 15;
     
-    /** Modulo de experencia: unidad */
+    /** Modulo de experencia: unidad de aumento para el atributo generacion de dinero */
     const UNIDAD_DINERO_GEN = 110;
+    /** Modulo de experencia: unidad de aumento para el atributo generacion de animo */
     const UNIDAD_ANIMO_GEN = 14;
+    /** Modulo de experencia: unidad de aumento para el atributo generacion de influencias */
     const UNIDAD_INFLUENCIAS_GEN = 1;
 
+    /** Modulo de experencia: define cada cuantos niveles se recalculara los atributos maximos */
     const FRECUENCIA_NIVELES= 5;
+    /** Modulo de experencia: determina el numero de vueltas para el algoritmo al subir de nivel */
     const AUMENTOS_POR_NIVEL = 2;
 
+    /** Modulo de experencia: unidad de aumento para el atributo influencias maximas de la RRPP */
     const ANIMADORA_UNIDAD_INFLUENCIAS_MAX = 70;
+    /** Modulo de experencia: unidad de aumento para el atributo influencias maximas del empresario */
     const EMPRESARIO_UNIDAD_INFLUENCIAS_MAX = 44;
+    /** Modulo de experencia: unidad de aumento para el atributo influencias maximas del ultra */
     const ULTRA_UNIDAD_INFLUENCIAS_MAX = 20;
+    /** Modulo de experencia: unidad de aumento para el atributo animo maximo de la RRPP */
     const ANIMADORA_UNIDAD_ANIMO_MAX = 450; 
+    /** Modulo de experencia: unidad de aumento para el atributo animo maximo del empresario */
     const EMPRESARIO_UNIDAD_ANIMO_MAX = 150;
+    /** Modulo de experencia: unidad de aumento para el atributo animo maximo del ultra */
     const ULTRA_UNIDAD_ANIMO_MAX = 750;
 
+    /** Modulo de experencia: modificador al calcular la experencia al participar en acciones con dinero */
     const MOD_EXP_DINERO = 0.1;
+    /** Modulo de experencia: modificador al calcular la experencia al participar en acciones con animo */
     const MOD_EXP_ANIMO = 1;
+    /** Modulo de experencia: modificador al calcular la experencia al participar en acciones con influencias */
     const MOD_EXP_INFLUENCIAS = 10;
-                /* *** */
 
-        /* RECURSOS INICIALES */
+    /** Recursos iniciales: dinero inicial para el ultra */
     const ULTRA_DINERO_INICIO = 9000;
+    /** Recursos iniciales: dinero inicial para la RRPP */
     const ANIMADORA_DINERO_INICIO = 1000;
+    /** Recursos iniciales: dinero inicial para el empresario */
     const EMPRESARIO_DINERO_INICIO = 25000;
-
+    /** Recursos iniciales: animo inicial para el utra */
     const ULTRA_ANIMO_GEN_INICIO = 30;
+    /** Recursos iniciales: animo inicial para la RRPP */
     const ANIMADORA_ANIMO_GEN_INICIO = 19;
+    /** Recursos iniciales: animo inicial para el empresario */
     const EMPRESARIO_ANIMO_GEN_INICIO = 9;
-
+    /** Recursos iniciales: generacion de dinero inicial para el ultra */
     const ULTRA_DINERO_GEN_INICIO = 24;
+    /** Recursos iniciales: generacion de dinero inicial para la RRPP */
     const ANIMADORA_DINERO_GEN_INICIO = 7;
+    /** Recursos iniciales: generacion de dinero inicial para el empresario */
     const EMPRESARIO_DINERO_GEN_INICIO = 40;
-
+    /** Recursos iniciales: generacion de influencias inicial para el ultra */
     const ULTRA_INFLUENCIAS_GEN_INICIO = 3;
+    /** Recursos iniciales: generacion de influencias inicial para la animadora */
     const ANIMADORA_INFLUENCIAS_GEN_INICIO = 10;
+    /** Recursos iniciales: generacion de influencias inicial para el empresario */
     const EMPRESARIO_INFLUENCIAS_GEN_INICIO = 5;
-
+    /** Recursos iniciales: animo maximo inicial para el ultra */
     const ULTRA_ANIMO_MAX_INICIO = 100;
+    /** Recursos iniciales: animo maximo inicial para la RRPP */
     const ANIMADORA_ANIMO_MAX_INICIO = 60;
+    /** Recursos iniciales: animo maximo inicial para el empresario */
     const EMPRESARIO_ANIMO_MAX_INICIO = 25;
-
+    /** Recursos iniciales: influencias maximas para el ultra */
     const ULTRA_INFLUENCIAS_MAX_INICIO = 4; 
+    /** Recursos iniciales: influencias maximas para la RRPP */
     const ANIMADORA_INFLUENCIAS_MAX_INICIO = 16;
+    /** Recursos iniciales: influencias maximas para el empresario */
     const EMPRESARIO_INFLUENCIAS_MAX_INICIO = 9;
-                /* *** */
 
     /* ------------------------------------------------------------------------ */
     /* ------------------------------------------------------------------------ */
 
+    /** @type string */
     public $antigua_clave;
+    /** @type string */
     public $nueva_clave1;
+    /** @type string */
     public $nueva_clave2;
+    /** @type string */
     public $antigua_email;
+    /** @type string */
     public $nueva_email1;
+    /** @type string */
     public $nueva_email2;
+    /** @type string */
     public $nuevo_nick;
     
     /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return Usuarios the static model class
-     */
-    public static function model($className=__CLASS__) { return parent::model($className); }
-
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName() { return 'usuarios'; }
-
-    /**
-     * Deben definirse solo reglas para aquellos atributos que recibiran entradas
-     * del usuario
+     * Devuelve el modelo estatico de la clase active record especificada.
      *
-     * @return array validation rules for model attributes.
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
+     * @return \AccionesGrupales    el modelo estatico de la clase
+     */
+    public static function model($className=__CLASS__) 
+    { 
+        return parent::model($className); 
+    }
+
+    /**
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
+    public function tableName() 
+    { 
+        return 'usuarios'; 
+    }
+
+    /**
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
      */
     public function rules()
     {
@@ -151,7 +199,7 @@ class Usuarios extends CActiveRecord
             array('nueva_email1,nueva_email2,antigua_email','required','on'=>'cambiarEmail','message'=>'Tienes que rellenar estos campos'),
             array('antigua_email', 'emailIguales','on'=>'cambiarEmail'),
             
-            /*Validaciones para registrar usuario*/
+            /* Validaciones para registrar usuario*/
             array('nueva_email1','comprobarEmail','on'=>'registro'),
             array('nuevo_nick','comprobarNick','on'=>'registro'),
             array('nuevo_nick',  'required','on'=>'registro','message'=>'Introduzca un nick válido.'),
@@ -160,33 +208,33 @@ class Usuarios extends CActiveRecord
             array('nueva_clave2','required','on'=>'registro','message'=>'Repita la contraseña.'),
             array('nueva_clave2', 'compare', 'compareAttribute'=>'nueva_clave1','on'=>'registro','message'=>'Deben coincidir las contrase&ntilde;as'),
             
-            // Regla usada por la funcion search() ; No se incluyen aquellos atributos que no se usen para buscar
-            // Atributos no incluidos
-            //  - pass
-            //  - exp_necesaria
+            /* Regla usada por la funcion search() ; No se incluyen aquellos atributos que no se usen para buscar
+             * Atributos no incluidos
+             *  - pass
+             *  - exp_necesaria
+             */
             array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
         );
     }
 
     /**
-     * Comprueba que la clave pasada por parámetro es válida con respecto a la clave de la base de datos.
+     * Comprueba que la clave pasada por parametro es valida con respecto a la clave de la base de datos
      *
-     * @param $clave Clave a comprobar
-     * @return Clave válida
+     * @param string $clave     clave a comprobar
+     * @return string           clave valida
      */
     public function comprobarClave ($clave)
     {
         $bcrypt = new Bcrypt(self::BCRYPT_ROUNDS);
         $valida = $bcrypt->verify($clave, $this->pass);
-
         return $valida;
     }
 
     /**
-     * Cambia la clave del usuario a la clave pasada por parámetro.
+     * Cambia la clave del usuario a la clave pasada por parametro.
      *
-     * @param $clave Nueva clase
-     * @return éxito
+     * @param string $clave     clave nueva 
+     * @return boolean          flag de exito
      */
     public function cambiarClave ($clave)
     {
@@ -202,99 +250,110 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-     * Compara para comprobar que su clave coincide con la de la BBDD
+     * Comprueba que la clave coincide con la de la BBDD
      * 
-     * @param $antigua_clave
+     * @param string $antigua_clave     
+     * @return void
      */
-    public function clavesIguales($antigua_clave)
+    public function clavesIguales($attribute,$params)
     {
         $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
-
         if (!$usuario->comprobarClave($this->antigua_clave)) {
-            $this->addError($antigua_clave, 'Introduzca correctamente la contrase&ntilde;a actual');
+            $this->addError('antigua_clave', 'Introduzca correctamente la contrase&ntilde;a actual');
         }
     }
 
     /**
-     * Comprobar que el email coincide con el de la BBDD
+     * Comprueba que el email coincide con el de la BBDD
      *
-     * @param $antigua_email
+     * @param string $antigua_email
+     * @return void
      */
-    public function emailIguales($antigua_email)
+    public function emailIguales($attribute,$params)
     {
+        // FIXME: no es necesario el parametro
+
         $usuario = Usuarios:: model()->findByPk(Yii::app()->user->usIdent);
         if ( $usuario->email != $this->antigua_email)
-            $this->addError($antigua_email, 'Introduzca correctamente el email actual');
+            $this->addError('antigua_email', 'Introduzca correctamente el email actual');
     }
 
-    /*Comprueba que ese email sea único*/
-    public function comprobarEmail($nueva_email1)
+    /**
+     * Comprueba que el email pasado por parametro sea unico (no se encuentra ya registrado)
+     * 
+     * @param string $nuevo_email   email a comprobar
+     * @return void
+     */
+    public function comprobarEmail($attribute,$params)
     {
         $registro=Usuarios::model()->findByAttributes(array('email'=>$this->nueva_email1));
 
-        if($registro <> null){
-            $this->addError($nueva_email1, 'Ese email ya se encuentra registrado');
-        }
-    }
-
-    /*Comprobar que el nombre sea único*/
-    public function comprobarNick($nuevo_nick)
-    {
-        $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
-
-        if($registro <> null){
-            $this->addError($nuevo_nick, 'Ese nick ya se encuentra registrado');
+        if($registro !== null){
+            $this->addError('nueva_email1', 'Ese email ya se encuentra registrado');
         }
     }
 
     /**
-     * Define las relaciones entre <usuarios> - <tabla>
+     * Comprueba que el nombre pasado por parametro sea unico (no se encuentra ya registrado)
      *
-     * @return array de relaciones
+     * @param string $nuevo_nick    nick a comprobar
+     * @return void
+     */
+    public function comprobarNick($attribute,$params)
+    {
+        $registro=Usuarios::model()->findByAttributes(array('nick'=>$this->nuevo_nick));
+
+        if($registro !== null){
+            $this->addError('nuevo_nick', 'Ese nick ya se encuentra registrado');
+        }
+    }
+
+    /**
+     * Define las relaciones entre la tabla usuarios y el resto de tablas
+     *
+     * Relaciones definidas:
+     *
+     * - recursos
+     * - accionesIndividuales
+     * - desbloqueadas
+     * - habilidades
+     * - accionesTurno
+     * - equipos
+     * - participaciones
+     * - accionesGrupales
+     * - accionesTurno
+     * - mensajesTo
+     * - mensajesFrom
+     * - usrnotificaciones
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     relaciones entre usuario - tabla
      */
     public function relations()
     {
         return array(
-            /*Relacion entre <<usuarios>> y <<recursos>>*/
             'recursos'=>array(self::HAS_ONE, 'Recursos', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<acciones_individuales>>*/
             'accionesIndividuales'=>array(self::HAS_MANY, 'AccionesIndividuales', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<desbloqueadas>> */
             'desbloqueadas'=>array(self::HAS_MANY, 'Desbloqueadas', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<habilidades>>*/
             'habilidades'=>array(self::MANY_MANY,'Habilidades','Desbloquedas(usuarios_id_usuario,habilidades_id_habilidad)'), 
-            
-            /*Relacion entre <<usuarios>> y <<acciones_turno>> */
             'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<equipos>> */
             'equipos'=>array(self::BELONGS_TO, 'Equipos', 'equipos_id_equipo'),
-            
-            /*Relacion entre <<usuarios>> y <<participaciones>> */
             'participaciones'=>array(self::HAS_MANY, 'Participaciones', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<acciones_grupales>> */
             'accionesGrupales'=>array(self::HAS_MANY, 'AccionesGrupales', 'usuarios_id_usuario'),
-            
-            /*Relacion entre <<usuarios>> y <<acciones_turno>>*/
-			'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
-
-			/*Relacion entre <<usuarios>> y <<emails>>*/
-			'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
-			
-            /*Relacion entre <<usuarios>> y <<emails>>*/
-			'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
-			
-            /*Relacion entre <<usuarios>> y <<usrnotif>> */
-			'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
-		);
-	}
+            'accionesTurno'=>array(self::HAS_MANY, 'AccionesTurno', 'usuarios_id_usuario'),
+            'mensajesTo'=>array(self::HAS_MANY, 'Emails',  'id_usuario_to'),
+            'mensajesFrom'=>array(self::HAS_MANY, 'Emails', 'id_usuario_from'),
+            'usrnotificaciones'=>array(self::HAS_MANY, 'Usrnotif', 'usuarios_id_usuario'),
+        );
+    }
 
     /**
-     * @return array customized attribute labels (name=>label)
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
      */
     public function attributeLabels()
     {
@@ -312,20 +371,21 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-     * Warning: Please modify the following code to remove attributes that
-     * should not be searched.
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
      *
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * Atributos no contemplados para la busqueda
+     *
+     * - pass
+     * - exp_necesaria
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
      */
     public function search()
     {
         $criteria=new CDbCriteria;
 
-        /* Atributos no contemplados para la búsqueda
-            - pass
-            - exp_necesaria
-        */
         $criteria->compare('id_usuario',$this->id_usuario,true);
         $criteria->compare('equipos_id_equipo',$this->equipos_id_equipo,true);
         $criteria->compare('nick',$this->nick,true);
@@ -338,30 +398,38 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-     * Funcion que se encarga de :
+     * Funcion que se encarga de actualizar recursos y acciones del usuario
+     *
+     * Datos que se actualizan:
+     *
      *  - generar recursos
      *  - finalizar acciones individuales
      *  - finalizar acciones grupales
      *
-     * @param $id_usuario
+     * @param int $id_usuario   id del usuario que se va a actualizar
+     * @return void
      */
     public function actualizaDatos($id_usuario)
     {
-        //Actualizar todos los datos necesarios
         AccionesIndividuales::model()->finalizaIndividuales($id_usuario);
         AccionesGrupales::model()->finalizaGrupales();
         Recursos::model()->actualizaRecursos($id_usuario);
     }
 
     /**
-     * Devuelve la experencia necesaria para alcanzar el siguiente nivel
-     * La experencia necesaria depende del nivel actual y un modificador 
-     * La curva esta sacada de:
-     * stackoverflow.com/questions/6954874/php-game-formula-to-calculate-a-level-based-on-exp
+     * Devuelve la experencia necesaria para alcanzar el siguiente nivel.
      *
-     * @param $nivel_actual 
-     * @param $modificador ; valor por defecto 30.
-     * @return (int) experencia necesaria para alcanzar el siguiente nivel.
+     * La experencia necesaria depende del nivel actual y un modificador 
+     *
+     * La curva se ha encontrado en
+     * <stackoverflow.com/questions/6954874/php-game-formula-to-calculate-a-level-based-on-exp>
+     *
+     * @static
+     *
+     * @param int $nivel_actual     nivel del jugador
+     * @param int $modificador      modificador para determinar la curva; dejar en su valor por defecto
+     * 
+     * @return int                  experencia necesaria para alcanzar el siguiente nivel
      */
     public static function expNecesaria($nivel_actual, $modificador = 30)
     {
@@ -372,16 +440,18 @@ class Usuarios extends CActiveRecord
     }
 
     /** 
-     * Suma la experiencia indicada al jugador.
-     * Si el jugador sube de nivel, actualiza los valores de
+     * Suma la experiencia indicada al jugador
+     *
+     * Si el jugador sube de nivel, actualiza los valores de:
+     *
      *  - indicadores de recursos
      *  - nivel
      *  - exp_necesaria
      * 
-     * Nota: La funcion contempla la posibilidad de subir varios niveles de golpe
+     * > La funcion contempla la posibilidad de subir varios niveles de golpe
      * 
-     * @param $exp a sumar al jugador
-     * @return true si el jugador ha subido de nivel, false en caso contrario
+     * @param int $exp  experencia a sumar al jugador
+     * @return boolean  indicador si el jugador ha subido de nivel (true si el jugador ha subido)
      */
     public function sumarExp($exp)
     {
@@ -431,31 +501,32 @@ class Usuarios extends CActiveRecord
     } 
 
     /**
-     * Esta funcion se llama al subir de nivel.
-     * Calcula los nuevos valores de generacion de recursos y valor maximo
+     * Actualiza los atributos del jugador al subir de nivel
+     *
+     * Calcula los nuevos valores de generacion de recursos y valor maximo:
+     *
      *  - dinero_gen
      *  - animo_gen
      *  - influencias_gen
      *  - animo_max
      *  - influencias_max
-     * Nota: "dinero_gen", "animo_gen" e "influencias_gen" son los "r_gen" ; 
-     * "animo_max" e "influencias_max" son los "r_max"
-     *
-     * Para determinar los nuevos valores, nos basaremos en el personaje y 
-     * las siguientes reglas:
      * 
-     * 1) Se aumentan AUMENTOS_POR_NIVEL "r_gen" por nivel.
+     * > dinero_gen, animo_gen e influencias_gen son los <r_gen>
+     *
+     * > animo_max e influencias_max son los <r_max>
+     *
+     * Para determinar los nuevos valores, nos basaremos en el personaje y las siguientes reglas:
+     * 
+     * 1) Se aumentan AUMENTOS_POR_NIVEL "r_gen" por nivel
      *
      * 2) La probabilidad de aumentar un determinado "r_gen" en UNIDAD_RECURSO es:
-     *  - PROPORCION_MAYOR% probabilidades => 
-     *      ultra: animo, RRPP: influencias, empresario: dinero 
-     *  - PROPORCION_INTERMEDIA% probabilidades =>
-     *      ultra: dinero, RRPP: animo, empresario: influencias
-     *  - PROPORCION_MENOR% probabilidades =>
-     *      ultra: influencias, RRPP: dinero, empresario: animo
      *
-     * 3) Se aumentaran los "r_max" cada FRECUENCIA_NIVELES niveles dependiendo del personaje.
-     * Ver las constantes
+     *  - PROPORCION_MAYOR% probabilidades => ultra: animo, RRPP: influencias, empresario: dinero 
+     *  - PROPORCION_INTERMEDIA% probabilidades => ultra: dinero, RRPP: animo, empresario: influencias
+     *  - PROPORCION_MENOR% probabilidades => ultra: influencias, RRPP: dinero, empresario: animo
+     *
+     * 3) Se aumentaran los "r_max" cada FRECUENCIA_NIVELES niveles dependiendo del personaje y las constantes:
+     *
      *  - ANIMADORA_UNIDAD_INFLUENCIAS_MAX
      *  - EMPRESARIO_UNIDAD_INFLUENCIAS_MAX;
      *  - ULTRA_UNIDAD_INFLUENCIAS_MAX;
@@ -463,10 +534,10 @@ class Usuarios extends CActiveRecord
      *  - EMPRESARIO_UNIDAD_ANIMO_MAX;
      *  - ULTRA_UNIDAD_ANIMO_MAX;
      *  
-     * @param $nivel_inicial
-     * @param $nivel_actual
-     * @return (array) nuevos atributos calculados.
+     * @param int $nivel_inicial    nivel de partida del jugador
+     * @param int $nivel_actual     nivel que alcanza el jugador
      *
+     * @return object[]             nuevos atributos calculados
      */
     public function actualizarAtributos($nivel_inicial, $nivel_actual)
     {
@@ -507,13 +578,16 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-     * Determina que cantidad subir los atributos 
+     * Determina cuanto subir los atributos maximos
+     *
+     * Se basa unicamente en el tipo de personaje. Fija:
+     * 
      *  - influencias_max
      *  - ainmo_max
-     * dependiendo unicamente del tipo de personaje
      *
-     * @param $personaje : tipo de personaje 
-     * @return (array) cantidad a subir los atributos "maximos" 
+     * @static
+     * @param int $personaje    tipo de personaje 
+     * @return object[]         cantidad a subir los atributos maximos
     */
     private static function cuantoSubirMaximos($personaje)
     {
@@ -545,8 +619,9 @@ class Usuarios extends CActiveRecord
     /** 
      * Dado un personaje, determina que atributo de generacion aumentar
      *
-     * @param (int) tipo de personaje
-     * @return (string) el nombre del atributo a aumentar
+     * @static
+     * @param int $personaje    tipo de personaje
+     * @return string           el nombre del atributo a aumentar
      */
     private static function queAtributo($personaje)
     {
@@ -589,17 +664,23 @@ class Usuarios extends CActiveRecord
     }
 
     /**
-     * Fija los atributos del nuevo personaje:
-     *  - Recursos iniciales en funcion del personaje escogido
-     *  - nivel y experencia iniciales
+     * Fija los atributos de un nuevo personaje y lo guarda en la base de datos
+     *
+     * Para un personaje fija:
+     *
+     * - Recursos iniciales en funcion del personaje escogido
+     * - nivel inicial (1)
+     * - experencia inicial (0)
+     *
+     * @return void
      */
     public function crearPersonaje()
     {
-        /* NIVEL Y EXP */
+        /* Nivel y Exp */
         $this->setAttributes(array('nivel'=>1, 'exp'=>0));
         $this->setAttributes(array('exp_necesaria'=> Usuarios::expNecesaria(1)));
         
-        /* RECURSOS */
+        /* Recursos */
         $rec=new Recursos();
         $rec->setAttributes(array('usuarios_id_usuario'=>$this->id_usuario));
         
