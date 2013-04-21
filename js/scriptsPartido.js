@@ -89,6 +89,24 @@ function updateState (state) {
  * @param state (Se considera que se llamara con un estado correcto [-10, 10])
  * @return [{x, y}]
  */
+ function posiciones(state){
+  var pos = {locals:[], visits:[]};
+
+    pos.locals = pos.locals.concat(
+        porteroAdelantado(),
+        lineaDefensivaAdelantada(),
+        centroCampistasAdelantados(),
+        delanterosAdelantados()
+    );
+        pos.visits = pos.visits.concat(
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasAtrasados(),
+        delanterosAtrasados()
+    );
+    return pos;
+ }
+ /*
 function posiciones (state) {
   var pos = {locals: [], visits: []};
   
@@ -132,15 +150,10 @@ function posiciones (state) {
         delanterosColocados()
     );
   }
-  /*
-  for ( var i = 0; i < 11; i++ ) {
-    //pos.locals.push({x: Math.random(), y: Math.random()*2-1});
-    pos.visits.push({x: Math.random(), y: Math.random()*2-1});
-  }
-  pos.locals = posicionesDefensivas();
-  */
+
   return pos;
 }
+*/
 
 /** 
  * Devuelve un punto aleatorio aproximado al dado por parametro
@@ -157,16 +170,16 @@ function ptoAleatorio(x, y) {
   
   operacion = Math.random();
   if (operacion <= 0.5) {
-    xr = xr + ( Math.floor((Math.random()*10)+1) ) / 600;
+    xr = xr + ( Math.floor((Math.random()*10)+1) ) / 200;
   } else {
-    xr = xr - ( Math.floor((Math.random()*10)+1) ) / 600;
+    xr = xr - ( Math.floor((Math.random()*10)+1) ) / 200;
   } 
 
   operacion = Math.random();
   if (operacion <= 0.5) {
-    yr = yr + ( Math.floor((Math.random()*10)+1) ) / 600;
+    yr = yr + ( Math.floor((Math.random()*10)+1) ) / 200;
   } else {
-    yr = yr - ( Math.floor((Math.random()*10)+1) ) / 600;
+    yr = yr - ( Math.floor((Math.random()*10)+1) ) / 200;
   }
 
   return {x: xr, y: yr};
@@ -177,7 +190,7 @@ function ptoAleatorio(x, y) {
  *
  * @return {x, y}
  */
-function porteroColocado(){ return [{x: 0.2, y: 0.2}]; }
+function porteroColocado(){ return [{x: 0.1, y: 0}]; }
 
 /**
  * Devuelve un punto aleatorio cercano al medio del campo
@@ -190,10 +203,10 @@ function porteroAdelantado(){ return [ptoAleatorio( 0.6, 0 )]; }
  * @return [{x, y}]
  */
 function lineaDefensivaAtrasada() {
-  var li =  ptoAleatorio( 0.3,  -0.7);
-  var ct1 =  ptoAleatorio( 0.25, -0.3);
-  var ct2 =  ptoAleatorio( 0.25, 0.3);
-  var ld =  ptoAleatorio( 0.3,  0.7);
+  var li =  ptoAleatorio( 0.3,  -0.65);
+  var ct1 =  ptoAleatorio( 0.25, -0.2);
+  var ct2 =  ptoAleatorio( 0.25, 0.2);
+  var ld =  ptoAleatorio( 0.3,  0.65);
   return [li, ct1, ct2, ld];
 }
 
@@ -203,11 +216,24 @@ function lineaDefensivaAtrasada() {
  * @return [{x, y}]
  */
 function lineaDefensivaAdelantada() {
-  var li =   ptoAleatorio( 1.1,  -0.8);
+  var li =   ptoAleatorio( 0.8,  -0.8);
   var ct1 =  ptoAleatorio( 0.3, -0.1);
-  var ct2 =  ptoAleatorio( 0.6, 0.2);
-  var ld =   ptoAleatorio( 0.9,  0.8);
+  var ct2 =  ptoAleatorio( 0.8, 0.3);
+  var ld =   ptoAleatorio( 1,  0.8);
   return [li, ct1, ct2, ld];
+}
+
+/**
+ * Devuelve 4 puntos que representan los centro campistas atrasados
+ *
+ * @return [{x, y}]
+ */
+function centroCampistasAtrasados(){
+  var mc = ptoAleatorio( 0.5, 0.15 );
+  var mp = ptoAleatorio( 0.6, -0.2 );
+  var ii = ptoAleatorio( 0.75, -0.65 );
+  var id = ptoAleatorio( 0.75, 0.65 );
+  return [mc, mp, ii, id];
 }
 
 /**
@@ -216,10 +242,10 @@ function lineaDefensivaAdelantada() {
  * @return [{x, y}]
  */
 function centroCampistasColocados() {
-  var mc = ptoAleatorio( 0.9, 0.1 );
-  var mp = ptoAleatorio( 1.3, -0.25 );
-  var ii = ptoAleatorio( 1.45, -0.75 );
-  var id = ptoAleatorio( 1.45, 0.75 );
+  var mc = ptoAleatorio( 0.7, 0.1 );
+  var mp = ptoAleatorio( 0.9, -0.25 );
+  var ii = ptoAleatorio( 1.25, -0.75 );
+  var id = ptoAleatorio( 1.25, 0.75 );
   return [mc, mp, ii, id];
 }
 
@@ -229,11 +255,22 @@ function centroCampistasColocados() {
  * @return [{x, y}]
  */
 function centroCampistasAdelantados() {
-  var mc = ptoAleatorio( 1.4, 0.2 );
-  var mp = ptoAleatorio( 1.6, -0.25 );
-  var ii = ptoAleatorio( 1.75, -0.8 );
-  var id = ptoAleatorio( 1.75, 0.8 );
+  var mc = ptoAleatorio( 1.2, 0 );
+  var mp = ptoAleatorio( 1.4, -0.4 );
+  var ii = ptoAleatorio( 1.7, -0.8 );
+  var id = ptoAleatorio( 1.7, 0.8 );
   return [mc, mp, ii, id]; 
+}
+
+/**
+ * Devuelve 2 puntos que representan los delanteros colocados atrasados
+ *
+ * @return [{x, y}]
+ */
+function delanterosAtrasados() {
+  var sp = ptoAleatorio( 1, -0.45 );
+  var dc = ptoAleatorio( 1.3, 0.1 );
+  return [sp, dc];
 }
 
 /**
@@ -242,8 +279,20 @@ function centroCampistasAdelantados() {
  * @return [{x, y}]
  */
 function delanterosColocados() {
-  var sp = ptoAleatorio( 1.7, -0.4 );
-  var dc = ptoAleatorio( 1.85, 0 );
+  var sp = ptoAleatorio( 1.35, -0.4 );
+  var dc = ptoAleatorio( 1.5, 0.2 );
+  return [sp, dc];
+}
+
+/**
+ * Devuelve 2 puntos que representan los centro delanteros adelantados
+ *
+ * @return [{x, y}]
+ */
+function delanterosAdelantados() {
+  var sp = ptoAleatorio( 1.55, 0.5);
+  var dc = ptoAleatorio( 1.7, 0.1);
+  return[sp, dc];
 }
 
 // --------------------------------------------------------------------------------
