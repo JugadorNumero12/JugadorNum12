@@ -118,6 +118,9 @@ class UsuariosController extends Controller
         //Saco los recursos disponibles del usuario
         $recursos = Recursos::model()->findByPk($id);
 
+        // Cargar css de ver habilidad
+        $uri = Yii::app()->request->baseUrl.'/less/infoperfil.less';
+        Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
         $this->render('perfil',array('modeloU'=>$modeloUsuario, 
                         'accionesPas'=>$accionesPas,

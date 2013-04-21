@@ -68,7 +68,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/acordeon.j
 
 <div class="accordion" style="margin-top: 20px;">
     <h3 class="ui-accordion-header-active"><b>ACCIONES GRUPALES DEL EQUIPO LOCAL</b></h3>
-    <div>
+    <div class="info-acciones">
         <?php foreach ( $modeloGL as $accionL ){ ?>
 		    <?php if($accionL->completada == 1){ ?> 
 				<li> <?php echo $accionL->habilidades->nombre; ?>
