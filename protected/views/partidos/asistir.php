@@ -81,14 +81,18 @@
 <div id="partido-info" class="inner-block">
 	<ul id="partido-info-tabs">
 		<li><a href="#partido-info-campo">Partido</a></li>
-		<li><a href="#partido-info-datos">Datos</a></li>
 		<li><a href="#partido-info-chat">Chat</a></li>
+		<li><a href="#partido-info-datos">Datos</a></li>
+		<li><a href="#partido-info-cronica">Cronica</a></li>
 	</ul>
 	<div id="partido-info-campo">
 		<div id="js-campo"></div>
 	</div>
 	<div id="partido-info-datos">
 		Datos no disponibles
+	</div>
+	<div id="partido-info-cronica">
+		Crónica no disponible
 	</div>
 	<div id="partido-info-chat">
 <?php 
