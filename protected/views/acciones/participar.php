@@ -17,7 +17,15 @@
 			    ));
 ?>
 
-<div class="encabezado-participar"> <h1>Participar en: <?php echo $habilidad['nombre']; ?> </h1> </div>
+
+<h1>Participar en: <?php echo $habilidad['nombre']; ?> </h1>
+
+<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="128" height="128"/> </div>
+
+<div class="meter">
+    <span class="s1" style="width:<?php echo (($accion->dinero_acc + $accion->animo_acc + $accion->influencias_acc)/ ($accion->habilidades->dinero_max + $accion->habilidades->animo_max + $accion->habilidades->influencias_max))*100; ?>%"></span>
+</div>
+
 <table cellspacing="5px">
 	  <tr>
 	    <td ><b><?php echo $form->labelEx($participacion,'Dinero'); ?>:</b></td>
