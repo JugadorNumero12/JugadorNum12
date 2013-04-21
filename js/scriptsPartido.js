@@ -10,6 +10,7 @@ function updateData (recalc) {
   $('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
   $('#partido-goles-local').text(partido.golesLocal);
   $('#partido-goles-visit').text(partido.golesVisit);
+
   if (recalc) {
     updateState(partido.estado);
   }
@@ -48,8 +49,6 @@ function updateState (state) {
 
   var height = $(campo).height() - mh;
   var width = $(campo).width() - mw;
-
-  console.log([width,height]);
 
   var pos = posiciones(state, width, height);
   for ( var i = 0; i < 11; i++ ) {
@@ -356,8 +355,13 @@ $(document).ready(function(evt){
             url: baseUrl + '/partidos/actpartido?id_partido=' + partido.id
 
           }).done(function(data,status){
+            var turnoAct = partido.turno;
             $.extend(partido, JSON.parse(data));
-            updateData(true);
+            updateData(turnoAct != partido.turno);
+
+            if (partido.tiempo <= 0) {
+              window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+            }
 
           }).always(function(){
             partido.ajax = false;

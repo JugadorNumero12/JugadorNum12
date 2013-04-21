@@ -81,14 +81,18 @@
 <div id="partido-info" class="inner-block">
 	<ul id="partido-info-tabs">
 		<li><a href="#partido-info-campo">Partido</a></li>
-		<li><a href="#partido-info-datos">Datos</a></li>
 		<li><a href="#partido-info-chat">Chat</a></li>
+		<li><a href="#partido-info-datos">Datos</a></li>
+		<li><a href="#partido-info-cronica">Cronica</a></li>
 	</ul>
 	<div id="partido-info-campo">
 		<div id="js-campo"></div>
 	</div>
 	<div id="partido-info-datos">
-		blahblah Datos
+		Datos no disponibles
+	</div>
+	<div id="partido-info-cronica">
+		Crónica no disponible
 	</div>
 	<div id="partido-info-chat">
 <?php 
@@ -102,9 +106,9 @@
         'data'       => 'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
         'onSuccess'  => new CJavaScriptExpression(
-            "function(code, text, post_id){   }"),
+            "function(code, text, post_id){}"),
         'onError'    => new CJavaScriptExpression(
-            "function(errorcode, info){  }"),
+            "function(errorcode, info){}"),
     ));
 ?>
 	</div>

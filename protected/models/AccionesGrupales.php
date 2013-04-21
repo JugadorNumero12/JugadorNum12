@@ -152,7 +152,7 @@ class AccionesGrupales extends CActiveRecord
 
 				$notificacion->mensaje = "La habilidad " . Habilidades::model()->findByPk($gp->habilidades_id_habilidad)->nombre . " ha finalizado sin completarse."; 
 
-				$notificacion->url = "usuarios/index";
+				$notificacion->url = "notificaciones/index";
                 $notificacion->imagen = "images/iconos/notificaciones/finalizada_grupal.png";
 				$notificacion->save();
 				//Enviamos la notificación a los participantes
