@@ -42,7 +42,7 @@
 	<td><?php echo CHtml::button('Cambiar equipo', array('submit' => array('equipos/cambiar', 'id_nuevo_equipo'=>$equipo->id_equipo), 'class'=>"button small black")); ?></td>
 <?php } ?>
 
-<?php if($mi_equipo){ ?>
+<?php if($mi_equipo && count($equipo->usuarios) >1){ ?>
 		<td><?php echo CHtml::button('Mandar mensaje a los compañeros', array('submit' => array('emails/mensajeEquipo', 'id_equipo'=>$equipo->id_equipo), 'class'=>"button small black")); ?></td>	
 <?php } ?>
 
