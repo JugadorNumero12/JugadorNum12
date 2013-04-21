@@ -49,8 +49,6 @@ function updateState (state) {
   var height = $(campo).height() - mh;
   var width = $(campo).width() - mw;
 
-  console.log([width,height]);
-
   var pos = posiciones(state, width, height);
   for ( var i = 0; i < 11; i++ ) {
     $(locals[i]).css({
@@ -78,7 +76,6 @@ function posiciones (state) {
     pos.locals.push({x: Math.random(), y: Math.random()*2-1});
     pos.visits.push({x: Math.random(), y: Math.random()*2-1});
   }
-  
   return pos;
 }
 
