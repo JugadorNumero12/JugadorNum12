@@ -78,14 +78,7 @@ function posiciones (state) {
     pos.locals.push({x: Math.random(), y: Math.random()*2-1});
     pos.visits.push({x: Math.random(), y: Math.random()*2-1});
   }
-  pos.locals[0] = {x:0.1,y:0};
-  pos.locals[1] = {x:0.1,y:1};
-  pos.locals[2] = {x:0.9,y:0};
-
-  pos.visits[0] = {x:0.1,y:0};
-  pos.visits[1] = {x:0.1,y:1};
-  pos.visits[2] = {x:0.9,y:0};
-
+  
   return pos;
 }
 
