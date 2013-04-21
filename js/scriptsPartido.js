@@ -89,28 +89,49 @@ function updateState (state) {
  * @param state (Se considera que se llamara con un estado correcto [-10, 10])
  * @return [{x, y}]
  */
- function posiciones(state){
-  var pos = {locals:[], visits:[]};
-
+function posiciones (state) {
+  var pos = {locals: [], visits: []};
+  
+  if (state < -7) {
     pos.locals = pos.locals.concat(
-        porteroAdelantado(),
-        lineaDefensivaAdelantada(),
-        centroCampistasAdelantados(),
-        delanterosAdelantados()
-    );
-        pos.visits = pos.visits.concat(
         porteroColocado(),
         lineaDefensivaAtrasada(),
         centroCampistasAtrasados(),
         delanterosAtrasados()
     );
-    return pos;
- }
- /*
-function posiciones (state) {
-  var pos = {locals: [], visits: []};
-  
-  if (state < -3) {
+    pos.visits = pos.visits.concat(
+        porteroAdelantado(),
+        lineaDefensivaAdelantada(),
+        centroCampistasAdelantados(),
+        delanterosAdelantados()
+    );
+  } else if (state < -4) {
+    pos.locals = pos.locals.concat(
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasAtrasados(),
+        delanterosColocados()
+    );
+    pos.visits = pos.visits.concat(
+        porteroAdelantado(),
+        lineaDefensivaAdelantada(),
+        centroCampistasColocados(),
+        delanterosAdelantados()
+    );
+  } else if (state < -1) {
+    pos.locals = pos.locals.concat(
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasColocados(),
+        delanterosAtrasados()
+    );
+    pos.visits = pos.visits.concat(
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasColocados(),
+        delanterosAtrasados()
+    );
+  } else if (state < 1) {
     pos.locals = pos.locals.concat(
         porteroColocado(),
         lineaDefensivaAtrasada(),
@@ -118,22 +139,35 @@ function posiciones (state) {
         delanterosColocados()
     );
     pos.visits = pos.visits.concat(
-        porteroAdelantado(),
-        lineaDefensivaAdelantada(),
-        centroCampistasAdelantados(),
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasColocados(),
         delanterosColocados()
     );
   } else if (state < 4) {
     pos.locals = pos.locals.concat(
         porteroColocado(),
         lineaDefensivaAtrasada(),
-        centroCampistasColocados(),
+        centroCampistasAdelantados(),
         delanterosColocados()
     );
     pos.visits = pos.visits.concat(
         porteroColocado(),
         lineaDefensivaAtrasada(),
+        centroCampistasAtrasados(),
+        delanterosColocados()
+    );
+  } else if (state < 7) {
+    pos.locals = pos.locals.concat(
+        porteroAdelantado(),
+        lineaDefensivaAdelantada(),
         centroCampistasColocados(),
+        delanterosAdelantados()
+    );
+    pos.visits = pos.visits.concat(
+        porteroColocado(),
+        lineaDefensivaAtrasada(),
+        centroCampistasAtrasados(),
         delanterosColocados()
     );
   } else {
@@ -141,19 +175,18 @@ function posiciones (state) {
         porteroAdelantado(),
         lineaDefensivaAdelantada(),
         centroCampistasAdelantados(),
-        delanterpoosColocados()
+        delanterosAdelantados()
     );
     pos.visits = pos.visits.concat(
         porteroColocado(),
         lineaDefensivaAtrasada(),
-        centroCampistasColocados(),
-        delanterosColocados()
+        centroCampistasAtrasados(),
+        delanterosAtrasados()
     );
   }
 
   return pos;
 }
-*/
 
 /** 
  * Devuelve un punto aleatorio aproximado al dado por parametro
