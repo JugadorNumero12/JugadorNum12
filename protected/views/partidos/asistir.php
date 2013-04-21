@@ -85,25 +85,25 @@
 		<li><a href="#partido-info-chat">Chat</a></li>
 	</ul>
 	<div id="partido-info-campo">
-		blahblah Campo
+		<div id="js-campo"></div>
 	</div>
 	<div id="partido-info-datos">
 		blahblah Datos
 	</div>
 	<div id="partido-info-chat">
 <?php 
-    $this->widget('YiiChatWidget',array(
-        'chat_id'=>'123',                   // a chat identificator
-        'identity'=>Yii::app()->user->usIdent,   // the user
-        'selector'=>'#partido-info-chat',                // were it will be inserted
-        'minPostLen'=>1,                    // min and
-        'maxPostLen'=>50,                   // max string size for post
-        'model'=>new ChatHandler(),    // the class handler.
-        'data'=>'any data',                 // data passed to the handler
+    $this->widget('YiiChatWidget', array(
+        'chat_id'    => '123',                   // a chat identificator
+        'identity'   => Yii::app()->user->usIdent,   // the user
+        'selector'   => '#partido-info-chat',                // were it will be inserted
+        'minPostLen' => 1,                    // min and
+        'maxPostLen' => 50,                   // max string size for post
+        'model'      => new ChatHandler(),    // the class handler.
+        'data'       => 'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
-        'onSuccess'=>new CJavaScriptExpression(
+        'onSuccess'  => new CJavaScriptExpression(
             "function(code, text, post_id){   }"),
-        'onError'=>new CJavaScriptExpression(
+        'onError'    => new CJavaScriptExpression(
             "function(errorcode, info){  }"),
     ));
 ?>
