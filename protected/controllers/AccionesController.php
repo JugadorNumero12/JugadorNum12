@@ -180,6 +180,7 @@ class AccionesController extends Controller
 				} else {
 					//Si esta creada 
 					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+					Yii::app()->user->setFlash('recursos', 'La acción ya existe. Participa en ella.');
 					$this-> redirect(array('acciones/participar',
 										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
 				}
