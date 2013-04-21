@@ -48,7 +48,7 @@
 			</td>
 			
 			<td <?php echo 'class='.(($alt === 1)? '"columna-alt"' : '"columna"'); ?>>
-				<?php echo Yii::app()->format->formatDatetime($partido->hora)?>
+				<?php echo date('Y-m-d G:i', $partido->hora)?>
 			</td>
 
 			<td <?php echo 'class='.(($alt === 1)? '"columna-alt"' : '"columna"'); ?>>
@@ -75,7 +75,7 @@
 			</td>
 			
 			<td <?php echo 'class='.(($alt === 1)? '"columna-alt"' : '"columna"'); ?>>
-				<?php echo Yii::app()->format->formatDatetime($partido2->hora)?>
+				<?php echo date('Y-m-d G:i', $partido2->hora)?>
 			</td>
 
 			<td <?php echo 'class='.(($alt === 1)? '"columna-alt"' : '"columna"'); ?>>

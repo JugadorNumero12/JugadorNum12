@@ -28,7 +28,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/acordeon.j
 			</div>
 		</div>
 	</div>
-	<div id="info-hora"><b>Inicio del encuentro:</b> <?php echo Yii::app()->format->formatDatetime($modeloP->hora); ?>
+	<div id="info-hora"><b>Inicio del encuentro:</b> <?php echo date('Y-m-d G:i', $modeloP->hora); ?>
 						<br>
 						<b>Ambiente:</b> <?php echo $modeloP->ambiente;; ?>
 	</div>
