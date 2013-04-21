@@ -664,6 +664,26 @@ class Usuarios extends CActiveRecord
     }
 
     /**
+    * Dado un id de una habilidad comprueba si esa habilidad está desbloqueada para el usuario
+    *
+    * @param int $habilidad               id de la habilidad
+    * @return boolean $desbloqueada       true si la habilidad está desbloqueada por el usuario, false si no está desbloqueada
+    */
+    public function estaDesbloqueada($habilidad){
+        $habilidadesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>$this->id_usuario));
+
+        $desbloqueada = false;
+
+        foreach($habilidadesDesbloqueadas as $d){
+            if ($d->habilidades_id_habilidad == $habilidad){
+                $desbloqueada = true;
+            }
+        }
+
+        return $desbloqueada;
+    }
+
+    /**
      * Fija los atributos de un nuevo personaje y lo guarda en la base de datos
      *
      * Para un personaje fija:

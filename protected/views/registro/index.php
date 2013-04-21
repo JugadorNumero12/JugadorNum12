@@ -10,6 +10,14 @@
 /* @var $equipos (array con los equipos de la DB) */
 
 ?>
+<?php
+	Yii::app()->clientScript->registerLinkTag(
+		'stylesheet/less', 'text/css', 
+		Yii::app()->request->baseUrl . '/less/registro.less'
+	);
+?>
+<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
 
 <div class="envoltorio2-registro">
 <?php
@@ -98,6 +106,9 @@
 	  <?php endif; ?></tr>-->
 
 	  <tr>
+	    <td >
+	    	<?php echo CHtml::button('Volver',array('onclick' => 'js:document.location.href="'.$this->createUrl('site/login').'"','class'=>"button large black"));?>
+	    </td>
 	    <td >
 	    	<?php echo CHtml::resetButton('Reiniciar',array('class'=>"button large black"));?>
 	    </td>

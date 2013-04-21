@@ -8,35 +8,30 @@
 @ButtonTextColor: darken(@VERDE_12, 30%);
 @ButtonTextShadow: lighten(@VERDE_12, 15%);
 
-@InputBorderColor: #333;
-@InputBgColor: #EEE;
-@InputBgGradTop: darken(@InputBgColor, 3%);
-@InputBgGradBottom: lighten(@InputBgColor, 3%);
-@InputInsetColor: fade(#333, 50%);
+@InputBorderColor: #999;
+@InputBgColor: #F9F9F9;
+@InputInsetColor: fade(black, 20%);
 
-@InputFocusBorderColor: darken(@VERDE_12, 20%);
-@InputFocusBgColor: lighten(@VERDE_12+#555, 30%);
-@InputFocusBgGradTop: darken(@InputFocusBgColor, 3%);
-@InputFocusBgGradBottom: lighten(@InputFocusBgColor, 3%);
+@InputFocusBorderColor: @VERDE_12_CLARO - #333;
+@InputFocusBgColor: #FFF;
 @InputFocusInsetColor: fade(darken(@VERDE_12, 10%), 60%);
 
-input {
+input, textarea {
 	padding: 4px 8px;
 
 	border: 1px solid @InputBorderColor;
 	.rounded(5px);
 
-	.gradient(@InputBgColor, @InputBgGradBottom, @InputBgGradTop);
-	.box-shadow(inset 0 2px 2px @InputInsetColor);
+	background-color: @InputBgColor;//.gradient(@InputBgColor, @InputBgGradBottom, @InputBgGradTop);
+	.box-shadow(inset 0 2px 4px -2px @InputInsetColor);
 
 	&:focus {
-		border-color: @InputFocusBorderColor;
-		.gradient(@InputFocusBgColor, @InputFocusBgGradBottom, @InputFocusBgGradTop);
-		.box-shadow(inset 0 2px 2px @InputFocusInsetColor);
+		border: 1px solid @InputFocusBorderColor;
+		background-color: @InputFocusBgColor;
 	}
 }
 
-input[type="button"], input[type="reset"], input[type="submit"], .button, .button:visited {
+button, input[type="button"], input[type="reset"], input[type="submit"], .button, .button:visited {
 	padding: 3px 14px 4px;
 
 	border: 1px solid @ButtonBorderColor;

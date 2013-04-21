@@ -1,8 +1,8 @@
 @import 'priv/imports';
 
 #contenido {
-	@DrawingWidth: (@ContentWidth - @InnerBlockPadding) * 2 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
-	@ScoreboardWidth: (@ContentWidth - @InnerBlockPadding) * 3 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@DrawingWidth: (@ContentWidth - @InnerBlockMargin) * 2 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	@ScoreboardWidth: (@ContentWidth - @InnerBlockMargin) * 3 / 5 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
 	@ScoreboardTeamWidth: (@ScoreboardWidth - @InnerBlockPadding) / 2 - 2;
 
 	#partido-dibujo {
@@ -75,5 +75,180 @@
 	#partido-info {
 		clear: both;
 		margin-top: @InnerBlockPadding;
+		padding: 4px;
+
+		background: white;
+
+		#partido-info-tabs {
+			margin: -2px;
+			margin-bottom: 4px;
+
+			padding: 1px 2px 0;
+
+			border: 1px solid (@VERDE_12_CLARO - #111);
+			.rounded(4px);
+
+			.gradient(@VERDE_12_CLARO, @VERDE_12_CLARO+#111, @VERDE_12_CLARO+#222);
+
+			font-family: sans;
+			font-size: 12px;
+			font-weight: bold;
+
+			li {
+				margin: 0 2px 0 0;
+				padding: 0;
+
+				border: 1px solid (@VERDE_12_CLARO/* - #222*/);
+				color: fade(@VERDE_12, 70%);
+
+				a {
+					padding: 5px 12px 3px;
+					color: inherit;
+					font-weight: bold;
+				}
+			}
+
+			.ui-state-default {
+				border-color: @VERDE_12_CLARO - #222;
+				background: fade(@VERDE_12, 50%);
+				color: fade(white, 80%);
+				text-shadow: 0 0 1px fade(black, 75%);
+			}
+
+			.ui-state-hover {
+				border-color: @VERDE_12;
+				background: fade(@VERDE_12, 85%);
+				color: fade(white, 95%);
+				text-shadow: 0 0 1px fade(black, 75%);
+			}
+
+			.ui-tabs-selected {
+				background: white;
+				color: @VERDE_12;
+				text-shadow: none;
+			}
+		}
+
+		.ui-tabs-panel {
+			padding: 0;
+			margin: -2px;
+		}
+
+		#partido-info-campo {
+			// Necesita un cambio pero bueno
+			width: 734px;
+			height: 458px;
+
+			background: url('images/fondos/partido_campo_med.jpg');
+			background-size: 100%;
+			.rounded(@InnerBlockRadius);
+
+
+			#js-campo {
+				position: absolute;
+				width: inherit;
+				height: inherit;
+			}
+
+			.js-marca-visit, .js-marca-local {
+				position: absolute;
+
+				height: 28px;
+				width: 28px;
+			}
+
+			.js-marca-local {
+				background: url('images/iconos/icono_circulo.png');
+
+			}
+
+			.js-marca-visit {
+				background: url('images/iconos/icono_cruz.png');
+			}
+
+		}
+
+		#partido-info-chat {
+
+
+
+			.posts {
+				margin: 0;
+				width: auto;
+
+				.rounded(4px);
+				border: 1px solid @VERDE_12_CLARO;
+
+				.post {
+					.rounded(3px);
+
+					padding: 0 4px 1px;
+					margin: 0 0 2px 0;
+
+					font-size: 11px;
+					border-width: 0;
+					background: none;
+
+					background: lighten(@VERDE_12_CLARO + #333, 10%);
+
+					.track {
+						padding: 0;
+						margin: 0;
+						margin-right: 12px;
+
+						float: left;
+
+						.owner {
+							padding: 0;
+							margin: 0;
+
+							font-weight: bold;
+							color: black;
+						}
+
+						.time {
+							padding: 0;
+							margin: 0;
+							margin-right: 12px;
+
+							font-size: 8px;
+							color: black;
+						}
+					}
+
+					.text {
+						margin: 0;
+						padding: 0;
+
+						float: left;
+					}
+				}
+
+				.yiichat-post-myown {
+					background: (@VERDE_12_CLARO + #191919);
+				}
+			}
+
+			.you {
+				text-align: right;
+				width: 100%;
+
+				#yiichat-message {
+					display: inline;
+					width: 500px;
+					margin-right: 8px;
+				}
+				#yiichat-send {
+					display: inline;
+					font-size: 12px;
+					width: 80px;
+				}
+
+				.error {
+					background: lighten(red, 40%);
+					border-color: lighten(red, 10%);
+				}
+			}
+		}
 	}
 }

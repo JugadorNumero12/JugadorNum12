@@ -170,6 +170,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `equipos_id_equipo_1` int(10) unsigned NOT NULL,
   `equipos_id_equipo_2` int(10) unsigned NOT NULL,
   `hora` int(11) unsigned NOT NULL,
+  `jornada` int(10) unsigned NOT NULL,
   `cronica` text NOT NULL,
   `ambiente` int(10) unsigned NOT NULL DEFAULT '0',
   `nivel_local` int(10) unsigned NOT NULL DEFAULT '0',

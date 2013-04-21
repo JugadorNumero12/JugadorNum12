@@ -377,6 +377,7 @@ class ScriptsController extends Controller
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
     	{
+    		$jornada_act = 1;
 			foreach ($emparejamientos as $jornada) {
 
 				$time = $fecha;//time = la fecha "origen" de la jornada
@@ -384,7 +385,7 @@ class ScriptsController extends Controller
 
 				foreach ($jornada as $partido) {
 					
-					$this->generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
+					$this->generaPartido($jornada_act, $partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
@@ -393,6 +394,7 @@ class ScriptsController extends Controller
 					}
 				}
 
+    			$jornada_act++;
 				$fecha += 86400*$descanso;
 			}
 
@@ -416,7 +418,7 @@ class ScriptsController extends Controller
 	*
 	* ATENCION los partidos empiezan con sigpartido -> id = 0 !!!!
 	*/
-	public function generaPartido($id_local, $id_visitande, $time, $generateNewTransaction=true)
+	public function generaPartido($jornada_actual, $id_local, $id_visitande, $time, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -432,6 +434,7 @@ class ScriptsController extends Controller
 			$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
 			   							  'equipos_id_equipo_2' => $id_visitande,
 			   							  'hora' => $time,
+			   							  'jornada' => $jornada_actual,
 			   							));
 			
 			$partido->save();

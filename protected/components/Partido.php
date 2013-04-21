@@ -789,7 +789,7 @@ class Partido
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
 				$notificacion->url = "partidos/index";
-				$notificacion->imagen = "images/iconos/partido_terminado.png";
+				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_local));

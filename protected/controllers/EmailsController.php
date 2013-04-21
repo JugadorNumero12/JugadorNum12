@@ -48,7 +48,7 @@ class EmailsController extends Controller
     {
 		$niks = array();
 		//Saca todos los emails recibidos por el usuario y que no los haya borrado
-		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND leido =0 AND borrado_to =0) ORDER BY fecha DESC";
+		$sql = "SELECT * FROM  emails WHERE (id_usuario_to =".Yii::app()->user->usIdent." AND borrado_to =0) ORDER BY fecha DESC";
 		$emails = Yii::app()->db->createCommand($sql)->queryAll();
 		foreach ($emails as $i=>$email){
 			$usuario=Usuarios::model()->findByPk($email['id_usuario_from']);
@@ -62,24 +62,24 @@ class EmailsController extends Controller
 	 *
      * @param string $destinatario  nick del destinatario del mensaje
      * @param string $tema          asunto del email
-     * @param boolean $equipo 		indica si el mensaje esta dirigido a un equipo entero (true)
      *
 	 * @route      jugadorNum12/emails/redactar/{$destinatario}/{$tema}
 	 * @redirect   juagdorNum12/emails
      *
      * @return     void
 	 */
-	public function actionRedactar($destinatario, $tema, $equipo)
+	/**
+	 * Muestra la formulario para redactar un email junto con una lista de usuarios
+	 *
+	 * @ruta jugadorNum12/emails/redactar
+	 * @redirige juagdorNum12/emails
+	 */
+	public function actionRedactar($destinatario, $tema)
 	{                
         $trans = Yii::app()->db->beginTransaction();
 		$yo = Usuarios::model()->findByAttributes(array('id_usuario'=>Yii::app()->user->usIdent));
-		$mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$yo->equipos_id_equipo));
-		if($equipo == true){
-			$destinatario = "";
-			foreach($mi_aficion as $amigo){
-				$destinatario.=$amigo->nick.",";
-			}
-		}
+		$nombre_usuario=$yo->nick;
+
 		$email = new Emails;
         $email->scenario='redactar';
 
@@ -109,7 +109,7 @@ class EmailsController extends Controller
 			$trans->commit();
         	$this->redirect(array('index')); 
         }   
-		$this->render('redactar',array('email'=>$email,'mi_aficion'=>$mi_aficion, 'destinatario'=>$destinatario , 'tema'=>$tema));
+		$this->render('redactar',array('email'=>$email,'destinatario'=>$destinatario , 'tema'=>$tema, 'nombre_usuario'=>$nombre_usuario));
 	}
 
 
@@ -198,6 +198,30 @@ class EmailsController extends Controller
 		}
 		$this->render('enviados',array('emails'=>$emails,'niks'=>$niks));
 	}
+
+	/**
+   * Al mandar un mensaje a toda la aficion saca los nombres de todos los de tu equipo para mandar el mensaje
+   *
+   * @parametro   id del equipo al que se va a mandar el mensaje
+   * @redirige   jugadorNum12/email/redactar
+   */
+  public function actionMensajeEquipo($id_equipo){
+
+    //coje a todos los jugadores de ese equipo
+    $mi_aficion = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$id_equipo));
+
+    $destinatarios = "";
+    //Para cada jugador del equipo lo guarda en el string de envio
+    foreach ($mi_aficion as $jugador) {
+    	if($jugador->id_usuario != Yii::app()->user->usIdent){
+      		$destinatarios.=$jugador->nick.",";
+      	}
+    }
+
+    $this->redirect(array('emails/redactar/','destinatario'=>$destinatarios, 'tema'=>""));
+
+  }
+
 
     /**
      * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET 

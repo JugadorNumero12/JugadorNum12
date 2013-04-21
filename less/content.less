@@ -11,15 +11,116 @@
     background: fade(white, 80%);
 }
 
-.iconos-recursos {
-	width: 24px;
-	height: 24px;
+//Estilo de notificacinoes
+.lista-notificaciones{
+	margin: 6px;
+	background-color: transparent;
+	width: 700px;
+	height: 95px;
+	border-bottom: 2px solid;
+	border-color: grey;
+
+	.imagen-notificaciones{
+		background-color: transparent;
+		height: 64px;
+		width: 64px;
+		position:relative;
+		top:6px;
+		left:8px;	
+	}
+
+	.contenido-notificaciones{
+		background-color: transparent;
+		width: 520px;
+		height: 70px;
+		position:relative;
+		left:80px;
+		top: -70px;
+
+		p{
+			text-align: left;
+			padding-top: 6px; 
+		}		
+	}
+
+	.fecha-notificaciones{
+		background-color: transparent;
+		width: 90px;
+		height: 35px;
+		position:relative;
+		left:530px;
+		top:-35px;
+		p{
+			text-align: left;
+			padding-top: 6px; 
+		}		
+	}
+
+	.boton-notificaciones{
+		background-color: transparent;
+		width: 90px;
+		height: 30px;
+		position:relative;
+		left:200px;
+		top:-30px;
+		
+	}
+}
+//Fin estilo notificaciones
+
+//Estilo de la mensajeria
+//Cosas generales
+.tam-tablas{
+	margin-top: 1.5em;
+	width: 700px;
+	border-spacing:0px 10px;
+
+}
+.recuadro{
+	border: 2px solid;
+	border-color: grey;
+	.rounded(10px);
+
 }
 
-.ui-accordion-header-active{
-	border-bottom: 1px solid black;
+//Estilo de las bandejas de entrada
+.bandejas-mensajeria{
+	.tam-tablas;
+	border-collapse:collapse;
+	//border-spacing:100px 100px;
+
+	border-bottom: 2px solid;
+	border-color: grey;
+
+	table-layout:  fixed;
+
+	p{
+		overflow:hidden;
+		text-overflow: ellipsis;
+	}
 }
 
-.habilidad{
-	border-top: 1px solid black;
+//Estilo de las vista redactar y leer mensaje
+.col-izq{
+	width: 20%;
+	border-spacing:20px 20px;
+	p{
+		text-align: left;
+		padding-left: 35px;
+	}
 }
+
+.col-dcha{
+	width: 80%;
+	text-align: left;
+
+}
+
+.alinear-derecha{
+	position:relative;
+	background-color: transparent;
+	left:450px;
+}
+//Fin estilo vista redactar y leer mensaje
+//Fin estilo mensajeria
+

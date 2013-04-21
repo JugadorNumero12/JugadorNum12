@@ -51,18 +51,21 @@ class HabilidadesController extends Controller
 		/* Fin de actualización */
 		
 		//Sacar una lista de las acciones desbloqueadas de un usuario
-		$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		//$accionesDesbloqueadas = Desbloqueadas::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
 		//Sacar una lista con los recursos del usuario
 		$recursosUsuario = Recursos::model()->findByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
 
+		//Sacar el nivel del usuario
+		$usuario = Usuarios::model()->findByPK(Yii::app()->user->usIdent);
+
 		//Comprobaciones de seguridad
-		if (($accionesDesbloqueadas === null) || ($recursosUsuario === null)) {
+		/*if (($accionesDesbloqueadas === null) || ($recursosUsuario === null)) {
 			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
-		}
+		} */
 			
 		//A partir de las acciones sacamos las habilidades para poder mostrarlas
-		$acciones = array();
+		/* $acciones = array();
 		foreach ($accionesDesbloqueadas as $habilidad)
 		{
 			$hab = Habilidades::model()->findByPK($habilidad['habilidades_id_habilidad']);
@@ -73,10 +76,12 @@ class HabilidadesController extends Controller
 			}	
 				
 			$acciones[] = $hab;
-		}
+		} */
+
+		$acciones = Habilidades::model()->findAll();
 
 		//Envía los datos para que los muestre la vista
-		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'accionesDesbloqueadas'=>$accionesDesbloqueadas));
+		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'usuario'=>$usuario));
 	}
 
 
@@ -119,6 +124,10 @@ class HabilidadesController extends Controller
 			'desbloqueada' => $desb
 		);
 
+		// Cargar css de ver habilidad
+		$uri = Yii::app()->request->baseUrl.'/less/infohabilidad.less';
+		Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			
 		// Manda pintar la habilidad en la vista
 		$this->render('ver', $datosVista);
 	}

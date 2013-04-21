@@ -10,6 +10,10 @@
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/mainLayout.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/content.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/tablas.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infohabilidad.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infopartido.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/participar.less" />
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -18,9 +22,10 @@
 	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+
+
     
 	<title><?php echo Yii::app()->name; ?></title>
 
@@ -62,7 +67,7 @@
 
 			<!-- Barra del dinero -->
 			<div class="barrasup-recursos" title="Dinero">
-				<img class="barrasup-icono-dinero" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-dinero.png';?>" alt="Icono dinero">
+				<img class="barrasup-icono-dinero" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero">
 				<div id="barrasup-progressbar-dinero" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->dinero) ?>">
 					<div id="progressbar-label-dinero"></div>
 				</div>
@@ -70,7 +75,7 @@
 
 			<!-- Barra de ánimo -->
 			<div class="barrasup-recursos" title="&Aacute;nimo">
-				<img class="barrasup-icono-animo" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-animo.png';?>" alt="Icono animo">
+				<img class="barrasup-icono-animo" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo">
 				<div id="barrasup-progressbar-animo" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->animo)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->animo_max ?>">
 					<div id="progressbar-label-animo"></div>
 				</div>
@@ -78,7 +83,7 @@
 
 			<!-- Barra de influencias -->
 			<div class="barrasup-recursos" title="Influencias">
-				<img class="barrasup-icono-influencias" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/menu-influencia.png';?>" alt="Icono influencias">
+				<img class="barrasup-icono-influencias" src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias">
 				<div id="barrasup-progressbar-influencias" data-valor="<?php echo (Yii::app()->getParams()->usuario->recursos->influencias)?>" data-max="<?php echo Yii::app()->getParams()->usuario->recursos->influencias_max ?>">
 					<div id="progressbar-label-influencias"></div>
 				</div>
@@ -103,17 +108,17 @@
 								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
 							break;
 						} ?>" width="24" height="24">
-						<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?> 
-								<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
-									<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/barra-nota.png'; ?>" width="17" height="17"> 
-								<?php }?>
-					   </span> 
+					<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+					<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
+						<div class="notificacion-alerta">!</div>
+						<!--<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/menu/barra_nota.png'; ?>" width="17" height="17"> -->
+					<?php }?>
 				</li>
 
 				<!-- Link al perfil -->
 				<a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-perfil.png"
+						<img alt="Perfil" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra-perfil.png"
 						     width="24" height="24"/><span class="user-menu-txt">Perfil</span>
 					</li>
 				</a>
@@ -121,23 +126,27 @@
 				<!-- Notificaciones -->
 				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-notificacion.png"
-						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
+						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_notificacion.png"
+						     width="24" height="24"/><span class="user-menu-txt"><?php
+						     	$not = Yii::app()->getParams()->countnot;
+						     	if ($not > 0) { echo "<span class=\"contador\">$not</span>"; } ?>Notificaciones</span>
 					</li>
 				</a>
 
 				<!-- Mensajeria -->
 				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-mensajes.png"
-						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
+						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_mensajes.png"
+						     width="24" height="24"/><span class="user-menu-txt"><?php
+						     	$msg = Yii::app()->getParams()->countmens;
+						     	if ($msg > 0) { echo "<span class=\"contador\">$msg</span>"; } ?>Mensajes</span>
 					</li>
 				</a>
 
 				<!-- Logout -->
 				<a href="<?php echo Yii::app()->createUrl('/site/logout') ?>">
 					<li class="user-menu-item user-menu-hidden">
-						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/iconos/menu/barra-logout.png"
+						<img alt="Logout" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_logout.png"
 						     width="24" height="24"/><span class="user-menu-txt">Logout</span>
 					</li>
 				</a>
@@ -172,42 +181,42 @@
 			<li class="menu-item menu-item-first">
 				<?php switch (Yii::app()->getParams()->usuario->personaje):
 					case Usuarios::PERSONAJE_EMPRESARIO: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-empresario-2.png'; ?>" alt="menu-inicio-empresario">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/empresario-menu.jpg'; ?>" alt="menu-inicio-empresario">
 					<?php break;
 					case Usuarios::PERSONAJE_MOVEDORA: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-RRPP-2.png'; ?>" alt="menu-inicio-movedora">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/animadora-menu.jpg'; ?>" alt="menu-inicio-movedora">
 					<?php break;
 					case Usuarios::PERSONAJE_ULTRA: ?>
-						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/perfil-ultra.png'; ?>" alt="menu-inicio-ultra">
+						<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/perfil/ultra-menu.jpg'; ?>" alt="menu-inicio-ultra">
 					<?php break;
 				endswitch ?>
 				<div class="nombre-menu">Inicio</div>
 			</li>
 		</a>
-		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
-		   	<li class="menu-item">
-				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/aficion.png'; ?>" alt="menu-aficion">
-				<div class="nombre-menu">Mi Afici&oacute;n</div>
-			</li>
-		</a>
-		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/calendario.png'; ?>" alt="menu-calendario">
-		   		<div class="nombre-menu">Calendario</div>
-		   	</li>
-	  	</a>
 	   	<a href="<?php echo Yii::app()->createUrl('/habilidades');?>">
 		   	<li class="menu-item">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/habilidades.png'; ?>" alt="menu-arbol">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_habilidades.png'; ?>" alt="menu-arbol">
 		   		<div class="nombre-menu">Habilidades</div>
 		   	</li>
-	    </a>			   	
+	    </a>
+		<a href="<?php echo $this->createUrl( '/equipos/ver', array('id_equipo' => Yii::app()->user->usAfic) ); ?>">
+		   	<li class="menu-item">
+				<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_aficion.png'; ?>" alt="menu-aficion">
+				<div class="nombre-menu">Mi Afici&oacute;n</div>
+			</li>
+		</a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-		   	<li class="menu-item menu-item-last">
-		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/menu/clasificacion.png'; ?>" alt="menu-clasificacion">
+		   	<li class="menu-item">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
 		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 		   	</li>
 		</a>
+		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
+		   	<li class="menu-item menu-item-last">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_calendario.png'; ?>" alt="menu-calendario">
+		   		<div class="nombre-menu">Calendario</div>
+		   	</li>
+	  	</a>
 	</ul>
     
     <!-- DIVISION PARA FLOTAR -->

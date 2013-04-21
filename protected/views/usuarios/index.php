@@ -35,10 +35,10 @@
                 <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
               </div>
 
-              <?php if($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
-                <?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$proximoPartido->id_partido),'class'=>"button small black")) ?> 
+              <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Asistir</a>
               <?php } else {?>
-                <?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximoPartido->id_partido),'class'=>"button small black")) ?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Previa</a>
               <?php } ?> 
 
             <?php } else echo "No hay proximo partido" ?> <!-- end if proximoPartido !== null-->
@@ -51,7 +51,7 @@
 
       <div class = "perfil-derecha-iniciar">
         <h4> Iniciar nueva acci&oacute;n </h4>
-        <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/acciones/index',),'class'=>"button small black")) ?> 
+        <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/habilidades/index',),'class'=>"button small black")) ?> 
       </div>
 
       <div class = "perfil-derecha-acciones">
@@ -76,7 +76,7 @@
                           No 
                           <?php }?>
                         </td>
-                        <td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
+                        <td> <?php echo CHtml::submitButton('Participar',array('submit' => array('/acciones/participar','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
                     </tr>
                 <?php } ?>
             </table>

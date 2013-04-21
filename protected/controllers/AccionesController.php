@@ -99,7 +99,7 @@ class AccionesController extends Controller
 	 *
 	 * > No se le pasaran acciones individuales ni de partido
 	 *
-	 * @param int $id_accion 	id de la accion que se ejecuta
+	 * @param int $id_accion 	id de la habilidad que se ejecuta
 	 * 
 	 * @route jugadorNum12/acciones/usar/{$id_accion}
 	 * @redirect jugadorNum12/equipos/ver/{$id_equipo} 	si es accion grupal
@@ -180,6 +180,7 @@ class AccionesController extends Controller
 				} else {
 					//Si esta creada 
 					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+					Yii::app()->user->setFlash('recursos', 'La acción ya existe. Participa en ella.');
 					$this-> redirect(array('acciones/participar',
 										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
 				}
@@ -206,17 +207,20 @@ class AccionesController extends Controller
 			// Finalizar transacción
 			$trans->commit();
 
-			//Renderizar acción individual 
+			//Redireccionar acción individual 
 			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
 				/* 	como no está definido el id_accion_grupal, le damos cualquier valor
 					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 				$id_acc = -1;
-				$this->render('usar', array('id_acc'=>$id_acc,'habilidad'=>$habilidad, 'res'=>$res));
+				Yii::app()->user->setFlash('error', 'Exito al usar la accion');
+				$this->redirect(array('habilidades/index/'));
 			}
 			else if ($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
 			{
-				//Renderizar acción grupal
-				$this->render('usar', array('id_acc'=>$nuevo_id,'habilidad'=>$habilidad, 'res'=>$res));
+				//redireccionar acción grupal participar
+				Yii::app()->user->setFlash('error', 'La accion grupal se ha creado con exito');
+		
+				$this->redirect(array('acciones/participar/','id_accion'=>$nuevo_id));				
 			}
 			else //Es de tipo partido
 			{
@@ -314,7 +318,7 @@ class AccionesController extends Controller
 	 * @param int $id_accion   id de la accion en la que se va a participar
 	 *
 	 * @route jugadorNum12/acciones/participar/{$id}
-	 * @redirect jugadorNum12/equipos/ver/{$id_equipo}
+	 * @redirect jugadorNum12/accion/participar/{$id_accion}
 	 * 
 	 * @throws \Exception      accion inexistente
      * @throws \Exception      habilidad inexistente
@@ -389,11 +393,11 @@ class AccionesController extends Controller
 			AccionesGrupales::participar($id_accion, $recursosAportados, $accion, $habilidad, $participacion, $nuevo_participante);
 
 			$transaccion->commit();
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
 			throw $exc;
 		}
 	}

@@ -84,9 +84,9 @@ class Partidos extends CActiveRecord
     {
         return array(
             array('equipos_id_equipo_1, equipos_id_equipo_2, hora', 'required'),
-            array('equipos_id_equipo_1, equipos_id_equipo_2, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante, dif_niveles', 'length', 'max'=>10),
+            array('equipos_id_equipo_1, equipos_id_equipo_2, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante, dif_niveles, jornada', 'length', 'max'=>10),
             array('hora, turno, goles_local, goles_visitante, moral_local, moral_visitante, ofensivo_local, ofensivo_visitante, defensivo_local, defensivo_visitante, estado, hora_ult_turno', 'length', 'max'=>11),
-            array('id_partido, equipos_id_equipo_1, equipos_id_equipo_2, hora, cronica, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante', 'safe', 'on'=>'search'),
+            array('id_partido, equipos_id_equipo_1, equipos_id_equipo_2, hora, cronica, ambiente, nivel_local, nivel_visitante, aforo_local, aforo_visitante, jornada', 'safe', 'on'=>'search'),
         );
     }
 
@@ -370,4 +370,55 @@ class Partidos extends CActiveRecord
         }
     }
 
+    /** 
+     * Funcion auxiliar que toma la lista de partidos divididos por jornadas
+     * 
+     * @static 
+     *
+     * @return array asociativo                  con los partidos divididos en jornadas
+     */
+    public static function partidosPorJornadas()
+    {
+        // Obtener la lista de partidos
+        $listaPartidos = Partidos::model()->findAll();
+        // Crear array inicial de datos
+        $parPorJornadas = array();
+        // Agregar datos al array
+        foreach ($listaPartidos as $p)
+        {
+            $parPorJornadas[$p->jornada][] = $p;
+        }
+        return $parPorJornadas;
+    }
+
+    /** 
+     * Funcion auxiliar que toma la lista de partidos divididos por jornadas y
+     * agrupados por parejas (para la vista del calendario)
+     * 
+     * @static 
+     *
+     * @return array asociativo                  con los partidos divididos en jornadas
+     */
+    public static function partidosAgrupados()
+    {
+        // Obtener la lista de partidos
+        $listaPartidos = self::partidosPorJornadas();
+        // Crear array inicial de datos
+        $grupos = array();
+        // Agregar datos al array
+        $fin = count($listaPartidos);
+        for ($i = 1; $i < $fin; $i+=2) 
+        {
+            // Agregar elementos
+            $grupos[] = array(
+                            array('jornada' => $i,
+                                'partidos' => $listaPartidos[$i],
+                                ),
+                            array('jornada' => $i+1,
+                                'partidos' => $listaPartidos[$i+1],
+                                ),
+                        );
+        }
+        return $grupos;
+    }
 }

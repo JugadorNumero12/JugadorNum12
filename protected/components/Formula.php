@@ -100,7 +100,9 @@ class Formula
 		//Hacemos la diferencia de morales en valor absoluto
 		//tenemos en cuenta el aforo y lo sumamos a la moral que tienen
 		$difMoral = ($params['moralLoc']+$params['aforoLoc'])-  ($params['moralVis']+$params['aforoVis']);
+
 		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * 3.5* ($difMoral>0 ? 10 - $avg : -10 - $avg );
+
 		return $avg;
 	}
 
