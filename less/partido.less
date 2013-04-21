@@ -129,14 +129,16 @@
 			}
 		}
 
-		#partido-info-campo {
+		.ui-tabs-panel {
 			padding: 0;
+			margin: -2px;
+		}
 
+		#partido-info-campo {
 			// Necesita un cambio pero bueno
 			width: 734px;
 			height: 458px;
 
-			margin: -2px;
 			background: url('images/fondos/partido_campo_med.jpg');
 			background-size: 100%;
 			.rounded(@InnerBlockRadius);
@@ -151,18 +153,102 @@
 			.js-marca-visit, .js-marca-local {
 				position: absolute;
 
-				height: 32px;
-				width: 32px;
+				height: 28px;
+				width: 28px;
 			}
 
 			.js-marca-local {
-				background: blue;
+				background: url('images/iconos/icono_circulo.png');
+
 			}
 
 			.js-marca-visit {
-				background: red;
+				background: url('images/iconos/icono_cruz.png');
 			}
 
+		}
+
+		#partido-info-chat {
+
+
+
+			.posts {
+				margin: 0;
+				width: auto;
+
+				.rounded(4px);
+				border: 1px solid @VERDE_12_CLARO;
+
+				.post {
+					.rounded(3px);
+
+					padding: 0 4px 1px;
+					margin: 0 0 2px 0;
+
+					font-size: 11px;
+					border-width: 0;
+					background: none;
+
+					background: lighten(@VERDE_12_CLARO + #333, 10%);
+
+					.track {
+						padding: 0;
+						margin: 0;
+						margin-right: 12px;
+
+						float: left;
+
+						.owner {
+							padding: 0;
+							margin: 0;
+
+							font-weight: bold;
+							color: black;
+						}
+
+						.time {
+							padding: 0;
+							margin: 0;
+							margin-right: 12px;
+
+							font-size: 8px;
+							color: black;
+						}
+					}
+
+					.text {
+						margin: 0;
+						padding: 0;
+
+						float: left;
+					}
+				}
+
+				.yiichat-post-myown {
+					background: (@VERDE_12_CLARO + #191919);
+				}
+			}
+
+			.you {
+				text-align: right;
+				width: 100%;
+
+				#yiichat-message {
+					display: inline;
+					width: 500px;
+					margin-right: 8px;
+				}
+				#yiichat-send {
+					display: inline;
+					font-size: 12px;
+					width: 80px;
+				}
+
+				.error {
+					background: lighten(red, 40%);
+					border-color: lighten(red, 10%);
+				}
+			}
 		}
 	}
 }

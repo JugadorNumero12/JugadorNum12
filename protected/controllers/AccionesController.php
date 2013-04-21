@@ -180,6 +180,7 @@ class AccionesController extends Controller
 				} else {
 					//Si esta creada 
 					//sacar el id de accion grupal (pk) y redirigir a participar($id_accion_grupal)
+					Yii::app()->user->setFlash('recursos', 'La acción ya existe. Participa en ella.');
 					$this-> redirect(array('acciones/participar',
 										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
 				}
@@ -317,7 +318,7 @@ class AccionesController extends Controller
 	 * @param int $id_accion   id de la accion en la que se va a participar
 	 *
 	 * @route jugadorNum12/acciones/participar/{$id}
-	 * @redirect jugadorNum12/equipos/ver/{$id_equipo}
+	 * @redirect jugadorNum12/accion/participar/{$id_accion}
 	 * 
 	 * @throws \Exception      accion inexistente
      * @throws \Exception      habilidad inexistente
@@ -392,11 +393,11 @@ class AccionesController extends Controller
 			AccionesGrupales::participar($id_accion, $recursosAportados, $accion, $habilidad, $participacion, $nuevo_participante);
 
 			$transaccion->commit();
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
-			$this-> redirect(array('acciones/ver','id_accion'=>$id_accion));
+			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
 			throw $exc;
 		}
 	}

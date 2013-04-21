@@ -11,6 +11,9 @@
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/content.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/tablas.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infohabilidad.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infopartido.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/participar.less" />
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -19,9 +22,10 @@
 	Yii::app()->clientScript->registerCssFile($cssCoreUrl . '/jui/css/base/jquery-ui.css'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsMain.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+
+
     
 	<title><?php echo Yii::app()->name; ?></title>
 
@@ -104,11 +108,11 @@
 								echo Yii::app()->createUrl('/images/perfil/ultra-menu.jpg');
 							break;
 						} ?>" width="24" height="24">
-						<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?> 
-								<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
-									<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/menu/barra_nota.png'; ?>" width="17" height="17"> 
-								<?php }?>
-					   </span> 
+					<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+					<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
+						<div class="notificacion-alerta">!</div>
+						<!--<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/menu/barra_nota.png'; ?>" width="17" height="17"> -->
+					<?php }?>
 				</li>
 
 				<!-- Link al perfil -->
@@ -123,7 +127,9 @@
 				<a href="<?php echo Yii::app()->createUrl('/notificaciones/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Notificacion" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_notificacion.png"
-						     width="24" height="24"/><span class="user-menu-txt">Notificaciones  <?php echo Yii::app()->getParams()->countnot?></span>
+						     width="24" height="24"/><span class="user-menu-txt"><?php
+						     	$not = Yii::app()->getParams()->countnot;
+						     	if ($not > 0) { echo "<span class=\"contador\">$not</span>"; } ?>Notificaciones</span>
 					</li>
 				</a>
 
@@ -131,7 +137,9 @@
 				<a href="<?php echo Yii::app()->createUrl('/emails/index') ?>">
 					<li class="user-menu-item user-menu-hidden">
 						<img alt="Mensajeria" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_mensajes.png"
-						     width="24" height="24"/><span class="user-menu-txt">Mensajer&iacute;a <?php echo Yii::app()->getParams()->countmens?> </span>
+						     width="24" height="24"/><span class="user-menu-txt"><?php
+						     	$msg = Yii::app()->getParams()->countmens;
+						     	if ($msg > 0) { echo "<span class=\"contador\">$msg</span>"; } ?>Mensajes</span>
 					</li>
 				</a>
 
@@ -198,13 +206,13 @@
 			</li>
 		</a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-		   	<li class="menu-item menu-item-last">
+		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
 		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 		   	</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-		   	<li class="menu-item">
+		   	<li class="menu-item menu-item-last">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>
