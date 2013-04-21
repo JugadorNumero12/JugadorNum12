@@ -77,6 +77,8 @@
 		margin-top: @InnerBlockPadding;
 		padding: 4px;
 
+		background: white;
+
 		#partido-info-tabs {
 			margin: -2px;
 			margin-bottom: 4px;
@@ -96,16 +98,71 @@
 				margin: 0 2px 0 0;
 				padding: 0;
 
-				border: 1px solid @VERDE_12_CLARO;
+				border: 1px solid (@VERDE_12_CLARO/* - #222*/);
+				color: fade(@VERDE_12, 70%);
 
 				a {
 					padding: 5px 12px 3px;
-				}
-
-				&.ui-tabs-selected {
-					border-bottom: 1px solid @VERDE_12_CLARO;
+					color: inherit;
+					font-weight: bold;
 				}
 			}
+
+			.ui-state-default {
+				border-color: @VERDE_12_CLARO - #222;
+				background: fade(@VERDE_12, 50%);
+				color: fade(white, 80%);
+				text-shadow: 0 0 1px fade(black, 75%);
+			}
+
+			.ui-state-hover {
+				border-color: @VERDE_12;
+				background: fade(@VERDE_12, 85%);
+				color: fade(white, 95%);
+				text-shadow: 0 0 1px fade(black, 75%);
+			}
+
+			.ui-tabs-selected {
+				background: white;
+				color: @VERDE_12;
+				text-shadow: none;
+			}
+		}
+
+		#partido-info-campo {
+			padding: 0;
+
+			// Necesita un cambio pero bueno
+			width: 734px;
+			height: 458px;
+
+			margin: -2px;
+			background: url('images/fondos/partido_campo.png');
+			background-size: 100%;
+			.rounded(@InnerBlockRadius);
+
+
+			#js-campo {
+				position: absolute;
+				width: inherit;
+				height: inherit;
+			}
+
+			.js-marca-visit, .js-marca-local {
+				position: absolute;
+
+				height: 24px;
+				width: 24px;
+			}
+
+			.js-marca-local {
+				background: blue;
+			}
+
+			.js-marca-visit {
+				background: red;
+			}
+
 		}
 	}
 }

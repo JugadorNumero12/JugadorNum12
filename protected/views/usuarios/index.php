@@ -35,10 +35,10 @@
                 <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
               </div>
 
-              <?php if($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
-                <?php echo CHtml::submitButton('Asistir', array('submit' => array('/partidos/asistir','id_partido'=>$proximoPartido->id_partido),'class'=>"button small black")) ?> 
+              <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Asistir</a>
               <?php } else {?>
-                <?php echo CHtml::submitButton('Previa', array('submit' => array('/partidos/previa','id_partido'=> $proximoPartido->id_partido),'class'=>"button small black")) ?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Previa</a>
               <?php } ?> 
 
             <?php } else echo "No hay proximo partido" ?> <!-- end if proximoPartido !== null-->
