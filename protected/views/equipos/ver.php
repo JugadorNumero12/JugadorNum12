@@ -67,7 +67,7 @@
 										No 
 									<?php }?>
 									</td>
-								<td> <?php echo CHtml::submitButton('Ver',array('submit' => array('/acciones/ver','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
+								<td> <?php  echo CHtml::link('Participar',array('acciones/participar','id_accion'=>$ag->id_accion_grupal),array('class'=>"button small black")); ?> 	</td>		
 							</tr>				
 					 <?php } ?>
 					</table>
@@ -122,7 +122,7 @@
 
 		<?php } ?>
 
-		<?php if($mi_equipo){ ?>
+		<?php if($mi_equipo && count($equipo->usuarios) > 1 ){ ?>
         	<td><?php echo CHtml::button('Mandar mensaje a los compañeros', array('submit' => array('emails/mensajeEquipo', 'id_equipo'=>$equipo->id_equipo), 'class'=>"button small black")); ?></td>  
    		<?php } ?>
 
