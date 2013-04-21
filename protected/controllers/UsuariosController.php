@@ -192,7 +192,12 @@ class UsuariosController extends Controller
             }
            
         }
+
+        // Cargar css de ver habilidad
+        $uri = Yii::app()->request->baseUrl.'/less/cambiodatos.less';
+        Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
         
+        // Renderizar vista
         $this->render('cambiarClave',array('model'=>$modelo));            
     }
 

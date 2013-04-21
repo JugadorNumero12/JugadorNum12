@@ -13,34 +13,33 @@
 					'validateOnSubmit'=>true,),
 			    ));
  ?>
-
-<table cellspacing="5px">
+<div id="form-cambio">
+	<table cellspacing="5px">
 	  <tr>
-	    <td colspan="2" align="center"><span class="under">CAMBIAR CONTRASE&Ntilde;A</span></td>
+	    <td align="center"><span class="cambio">CAMBIO DE CONTRASE&Ntilde;A</span></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Contrase&ntilde;a actual'); ?>:</td>
-	    <td><?php echo $form->passwordField($model,'antigua_clave'); ?></td>
+	    <td align="center"><?php echo $form->passwordField($model,'antigua_clave', array('placeholder' => 'Clave actual', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($model,'antigua_clave'); ?></td>
+	    <td><?php echo $form->error($model,'antigua_clave'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Nueva Contrase&ntilde;a'); ?>:</td>
-	    <td><?php echo $form->passwordField($model,'nueva_clave1'); ?></td>
+	    <td align="center"><?php echo $form->passwordField($model,'nueva_clave1', array('placeholder' => 'Nueva clave', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($model,'nueva_clave1'); ?></td>
+	    <td><?php echo $form->error($model,'nueva_clave1'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->labelEx($model,'Repetir nueva contrase&ntilde;a'); ?>:</td>
-	    <td><?php echo $form->passwordField($model,'nueva_clave2'); ?></td>
+	    <td align="center"><?php echo $form->passwordField($model,'nueva_clave2', array('placeholder' => 'Repita nueva clave', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><?php echo $form->error($model,'nueva_clave2'); ?></td>
+	    <td><?php echo $form->error($model,'nueva_clave2'); ?></td>
 	  </tr>
 	  <tr>
-	    <td colspan="2" align="center"><?php echo CHtml::submitButton('Cambiar contraseña');?></td>
+	    <td align="center"><?php echo CHtml::submitButton('Cambiar contraseña');?></td>
 	  </tr>
 	</table>
-	<?php $this->endWidget(); ?>
+</div>
+
+<?php $this->endWidget(); ?>
