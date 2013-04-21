@@ -16,27 +16,28 @@
 <div id="form-cambio">
 	<table cellspacing="5px">
 	  <tr>
-	    <td align="center"><span class="cambio">CAMBIO DE CONTRASE&Ntilde;A</span></td>
+	    <td align="center" colspan="2"><span class="cambio">CAMBIO DE CONTRASE&Ntilde;A</span></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->passwordField($model,'antigua_clave', array('placeholder' => 'Clave actual', 'size' => 30)); ?></td>
+	    <td align="center" colspan="2"><?php echo $form->passwordField($model,'antigua_clave', array('placeholder' => 'Clave actual', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td><?php echo $form->error($model,'antigua_clave'); ?></td>
+	    <td colspan="2"><?php echo $form->error($model,'antigua_clave'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->passwordField($model,'nueva_clave1', array('placeholder' => 'Nueva clave', 'size' => 30)); ?></td>
+	    <td align="center" colspan="2"><?php echo $form->passwordField($model,'nueva_clave1', array('placeholder' => 'Nueva clave', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td><?php echo $form->error($model,'nueva_clave1'); ?></td>
+	    <td colspan="2"><?php echo $form->error($model,'nueva_clave1'); ?></td>
 	  </tr>
 	  <tr>
-	    <td align="center"><?php echo $form->passwordField($model,'nueva_clave2', array('placeholder' => 'Repita nueva clave', 'size' => 30)); ?></td>
+	    <td align="center" colspan="2"><?php echo $form->passwordField($model,'nueva_clave2', array('placeholder' => 'Repita nueva clave', 'size' => 30)); ?></td>
 	  </tr>
 	  <tr>
-	    <td><?php echo $form->error($model,'nueva_clave2'); ?></td>
+	    <td colspan="2"><?php echo $form->error($model,'nueva_clave2'); ?></td>
 	  </tr>
 	  <tr>
+	    <td align="center"><?php echo CHtml::button('Volver',array('onclick' => 'js:document.location.href="'.$this->createUrl('usuarios/perfil').'"','class'=>"button large black"));?></td>
 	    <td align="center"><?php echo CHtml::submitButton('Cambiar contraseña');?></td>
 	  </tr>
 	</table>
