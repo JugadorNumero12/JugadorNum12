@@ -13,6 +13,7 @@
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/tablas.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infohabilidad.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infopartido.less" />
+	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/participar.less" />
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -24,6 +25,8 @@
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+
+
     
 	<title><?php echo Yii::app()->name; ?></title>
 
