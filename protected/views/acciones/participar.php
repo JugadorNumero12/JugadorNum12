@@ -17,11 +17,6 @@
 			    ));
 ?>
 
-<head>
-
-
-
-</head>
 
 <h1>Participar en: <?php echo $habilidad['nombre']; ?> </h1>
 
@@ -54,38 +49,47 @@
 	</tr>
 </table>
 
-<table class="tabla-dcha">
-	  <tr>
-	    <td ><?php echo $form->labelEx($participacion,'Dinero'); ?>:</td>
-	    <td><?php echo $form->textField($participacion,'dinero_nuevo',array('value'=>0)); ?></td>
-	  </tr>
-	  <tr>
-	    <td><?php echo $form->error($participacion,'dinero_nuevo'); ?></td>
-	  </tr>
-	  <tr>
-	    <td ><?php echo $form->labelEx($participacion,'Animo'); ?>:</td>
-	    <td><?php echo $form->textField($participacion,'animo_nuevo',array('value'=>0)); ?></td>
-	  </tr>
-	  <tr>
-	    <td ><?php echo $form->error($participacion,'animo_nuevo'); ?></td>
-	  </tr>
-	  <tr>
-	    <td ><?php echo $form->labelEx($participacion,'Influencia'); ?>:</td>
-	    <td><?php echo $form->textField($participacion,'influencia_nueva',array('value'=>0)); ?></td>
-	  </tr>
-	  <tr>
-	    <td ><?php echo $form->error($participacion,'influencia_nueva'); ?></td>
-	  </tr>
-</table>
+<?php if($accion->completada == 0){?>
+	<table class="tabla-dcha">
+		  <tr>
+		    <td ><?php echo $form->labelEx($participacion,'Dinero'); ?>:</td>
+		    <td><?php echo $form->textField($participacion,'dinero_nuevo',array('value'=>0)); ?></td>
+		  </tr>
+		  <tr>
+		    <td><?php echo $form->error($participacion,'dinero_nuevo'); ?></td>
+		  </tr>
+		  <tr>
+		    <td ><?php echo $form->labelEx($participacion,'Animo'); ?>:</td>
+		    <td><?php echo $form->textField($participacion,'animo_nuevo',array('value'=>0)); ?></td>
+		  </tr>
+		  <tr>
+		    <td ><?php echo $form->error($participacion,'animo_nuevo'); ?></td>
+		  </tr>
+		  <tr>
+		    <td ><?php echo $form->labelEx($participacion,'Influencia'); ?>:</td>
+		    <td><?php echo $form->textField($participacion,'influencia_nueva',array('value'=>0)); ?></td>
+		  </tr>
+		  <tr>
+		    <td ><?php echo $form->error($participacion,'influencia_nueva'); ?></td>
+		  </tr>
+	</table>
 
-<table>
-	<td><?php echo CHtml::submitButton('Participar',array('class'=>"button large black")); ?></td>
-	<td> &nbsp; &nbsp; &nbsp; </td>
-	<td><?php echo CHtml::button('Volver', array('class'=>"button large black", 'onclick' => "history.go(-1);return false")); ?></td>
-<table>
+	<table>
+		<td><?php echo CHtml::submitButton('Participar',array('class'=>"button large black")); ?></td>
+		<td> &nbsp; &nbsp; &nbsp; </td>
+		<td><?php echo CHtml::button('Volver', array('class'=>"button large black", 'onclick' => "history.go(-1);return false")); ?></td>
+	<table>
 
 <br>
 <table><tr><th>N&uacute;mero de participantes actuales:</th><td><?php echo $accion['jugadores_acc'].'/'.$habilidad['participantes_max']; ?></td></tr></table>
+
+<?php } else {?>
+		<table class="tabla-dcha">  <tr> <td>Acción completada. Por favor, participa en otra. </td> </tr> </table>
+		<table>  <tr> <td><?php echo CHtml::button('Volver', array('class'=>"button large black", 'onclick' => "history.go(-1);return false")); ?> </td> </tr> </table>
+
+	<?php }?>	
+
+
 	
 
 <?php $this->endWidget(); ?>
