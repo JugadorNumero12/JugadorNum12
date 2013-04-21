@@ -175,6 +175,36 @@
 
 	.drop-shadow(0, 0, 4px, .2);
 
+	.notificacion-alerta {
+		position: absolute;
+		right: 8px;
+		top: 12px;
+
+		width: 14px;
+		height: 14px;
+
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: (@VERDE_12_CLARO + #333);
+
+		text-shadow: 0 1px fade(black, 50%);
+
+		border: 1px solid (@VERDE_12 - #333);
+		background: fade(@VERDE_12 - #333, 75%);
+		.rounded(8px);
+	}
+
+	.contador {
+		font-weight: bold;
+		font-size: 11px;
+		color: white;
+		background: fade(black, 50%);
+		padding: 1px 4px 2px;
+		margin-right: 6px;
+		.rounded(4px);
+	}
+
 	// Elementos del menú
 	.user-menu-item {
 		display: block;
