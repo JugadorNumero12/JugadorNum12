@@ -10,6 +10,14 @@
 /* @var $equipos (array con los equipos de la DB) */
 
 ?>
+<?php
+	Yii::app()->clientScript->registerLinkTag(
+		'stylesheet/less', 'text/css', 
+		Yii::app()->request->baseUrl . '/less/registro.less'
+	);
+?>
+<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
 
 <div class="envoltorio2-registro">
 <?php
