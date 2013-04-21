@@ -101,14 +101,14 @@ class Formula
 		//Hacemos la diferencia de morales en valor absoluto
 		//tenemos en cuenta el aforo y lo sumamos a la moral que tienen
 		$difMoral = ($params['moralLoc']+$params['aforoLoc'])-  ($params['moralVis']+$params['aforoVis']);
-		if($difMoral >=-200 && $difMoral<=200)
+		/*if($difMoral >=-200 && $difMoral<=200)
 		{
 			$this->entropia=$this->entropia*2;
 		}
 		else
 		{
 			$this->entropia=0.6;
-		}
+		}*/$entropia=1;
 		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * $entropia * ($difMoral>0 ? 10 - $avg : -10 - $avg );
 		return $avg;
 	}

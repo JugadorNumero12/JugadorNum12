@@ -172,7 +172,7 @@ class Partidos extends CActiveRecord
             $restante = 0;
         }
 
-        return $restante+15;
+        return $restante;
     }
 
     /**
@@ -195,7 +195,7 @@ class Partidos extends CActiveRecord
             $restante = 0;
         }
 
-        return $restante+10;
+        return $restante;
     }
 
     /** 
