@@ -88,7 +88,7 @@
 		<div id="js-campo"></div>
 	</div>
 	<div id="partido-info-datos">
-		blahblah Datos
+		Datos no disponibles
 	</div>
 	<div id="partido-info-chat">
 <?php 

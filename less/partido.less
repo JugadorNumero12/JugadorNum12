@@ -168,9 +168,15 @@
 		}
 
 		#partido-info-chat {
+
+
+
 			.posts {
 				margin: 0;
 				width: auto;
+
+				.rounded(4px);
+				border: 1px solid @VERDE_12_CLARO;
 
 				.post {
 					.rounded(3px);
@@ -194,7 +200,6 @@
 						.owner {
 							padding: 0;
 							margin: 0;
-							margin-right: 12px;
 
 							font-weight: bold;
 							color: black;
@@ -203,6 +208,7 @@
 						.time {
 							padding: 0;
 							margin: 0;
+							margin-right: 12px;
 
 							font-size: 8px;
 							color: black;
@@ -224,6 +230,7 @@
 
 			.you {
 				text-align: right;
+				width: 100%;
 
 				#yiichat-message {
 					display: inline;
@@ -232,7 +239,13 @@
 				}
 				#yiichat-send {
 					display: inline;
+					font-size: 12px;
 					width: 80px;
+				}
+
+				.error {
+					background: lighten(red, 40%);
+					border-color: lighten(red, 10%);
 				}
 			}
 		}
