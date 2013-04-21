@@ -203,13 +203,13 @@
 			</li>
 		</a>			   	
 	    <a href="<?php echo Yii::app()->createUrl('/equipos');?>">
-		   	<li class="menu-item menu-item-last">
+		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_clasificacion.png'; ?>" alt="menu-clasificacion">
 		   		<div class="nombre-menu">Clasificaci&oacute;n</div>
 		   	</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-		   	<li class="menu-item">
+		   	<li class="menu-item menu-item-last">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
 		   	</li>

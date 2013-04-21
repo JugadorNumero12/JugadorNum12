@@ -102,9 +102,9 @@
         'data'       => 'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
         'onSuccess'  => new CJavaScriptExpression(
-            "function(code, text, post_id){   }"),
+            "function(code, text, post_id){}"),
         'onError'    => new CJavaScriptExpression(
-            "function(errorcode, info){  }"),
+            "function(errorcode, info){}"),
     ));
 ?>
 	</div>

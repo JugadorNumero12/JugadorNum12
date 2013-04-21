@@ -1,31 +1,28 @@
 var YiiChat = function(options){
 	this.run = function(){
-
 	var clear = function(){
 		send.attr('disabled',null);
 		msg.attr('disabled',null);
-	}
-
+	};
 	var busy = function(){
 		send.attr('disabled','disabled');
 		msg.attr('disabled','disabled');
-	}
-
+	};
 	var actionPost = function(text, callback){
 		busy();
-		jQuery.ajax({ cache: false, type: 'post', 
+		jQuery.ajax({ cache: false, type: 'post',
 			url: options.action+'&action=sendpost&data=not_used',
-			data: { chat_id: options.chat_id, identity: options.identity, 
+			data: { chat_id: options.chat_id, identity: options.identity,
 				text: text},
 			success: function(post){
 				if(post == null || post == ""){
 					options.onError('post_empty','');
-				}else	
+				}else
 				if(post == 'REJECTED'){
 					options.onError('post_rejected',text);
 					callback(false);
 				}else{
-					add(post); 
+					add(post);
 					callback(true);
 					options.onSuccess('post',text,post);
 				}
@@ -37,24 +34,23 @@ var YiiChat = function(options){
 				callback(false);
 			}
 		});
-	}
-
+	};
 	var actionInit = function(callback){
 		busy();
-		jQuery.ajax({ cache: false, type: 'post', 
+		jQuery.ajax({ cache: false, type: 'post',
 			url: options.action+'&action=init&data=not_used',
 			data: { chat_id: options.chat_id, identity: options.identity },
 			success: function(_posts){
 				if(_posts == null || _posts == ""){
 					options.onError('init_empty','');
-				}else	
+				}else
 				if(posts == 'REJECTED'){
 					options.onError('init_rejected',text);
 				}else{
 					// _posts.chat_id, _posts.identity, _posts.posts
 					jQuery.each(_posts.posts, function(k,post){
 						add(post);
-					});	
+					});
 					options.onSuccess('init','');
 					callback();
 				}
@@ -65,8 +61,7 @@ var YiiChat = function(options){
 				options.onError('init_error',e.responseText,e);
 			}
 		});
-	}
-
+	};
 	var actionTimer = function(){
 		var last_id = '';
 		var lastPost = posts.find('.post:not(.yiichat-post-myown):last');
@@ -74,14 +69,14 @@ var YiiChat = function(options){
 		if(data != null)
 			last_id = data.id;
 		//log.html('last_id='+last_id);
-		jQuery.ajax({ cache: false, type: 'post', 
+		jQuery.ajax({ cache: false, type: 'post',
 			url: options.action+'&action=timer&data=not_used',
-			data: { chat_id: options.chat_id, identity: options.identity, 
+			data: { chat_id: options.chat_id, identity: options.identity,
 				last_id: last_id },
 			success: function(_posts){
 				if(_posts == null || _posts == ""){
 					options.onError('timer_empty','');
-				}else	
+				}else
 				if(posts == 'REJECTED'){
 					options.onError('timer_rejected',text);
 				}else{
@@ -90,7 +85,7 @@ var YiiChat = function(options){
 					jQuery.each(_posts.posts, function(k,post){
 						add(post);
 						hasPosts=true;
-					});	
+					});
 					options.onSuccess('timer','');
 					if(hasPosts==true)
 						scroll();
@@ -100,11 +95,10 @@ var YiiChat = function(options){
 				options.onError('timer_error',e.responseText,e);
 			}
 		});
-	}
-
-	// fields: 
+	};
+	// fields:
 	//	id: postid, owner: 'i am', time: 'the time stamp', text: 'the post'
-	//  chat_id: the_chat_id, identity: whoami_id	
+	//  chat_id: the_chat_id, identity: whoami_id
 	var add = function(post){
 		posts.append("<div id='"+post.id+"' class='post'>"
 			+"<div class='track'></div>"
@@ -114,7 +108,6 @@ var YiiChat = function(options){
 		if(posts[0].childNodes.length == 10){
 			posts[0].firstChild.parentNode.removeChild(posts[0].firstChild);
 		}
-
 		var p = posts.find(".post[id='"+post.id+"']");
 		p.data('post',post);
 		var flag=false;
@@ -129,12 +122,10 @@ var YiiChat = function(options){
 			if(options.othersPostCssStyle != null)
 				p.addClass(options.othersPostCssStyle);
 		}
-
 		p.find('.track').html("<div class='owner'>"+post.owner+"</div>"
 			+"<div class='time'>"+post.time+"</div>");
 		p.find('.text').html(post.text);
 	}
-
 	var scroll = function(){
 		//window.location = '#'+posts.find('.post:last').attr('id');
 		var h=0;
@@ -143,7 +134,6 @@ var YiiChat = function(options){
 		});
 		posts.scrollTop(h);
 	}
-
 	//
 	//
 	var chat = jQuery(options.selector);
@@ -152,16 +142,14 @@ var YiiChat = function(options){
 	var posts = chat.find('div.posts');
 	var you = chat.find('div.you');
 	var log = chat.find('div.log');
-
-	you.html("<textarea></textarea><div class='exceded'></div><br/>");	
-	you.append("<button>"+options.sendButtonText+"</button>");
+	you.html('<input id="yiichat-message" type="text" />');
+	you.append('<input id="yiichat-send" type="button" value="'+options.sendButtonText+'"/><div class="exceded"></div>');
 	posts.html("");
-
-	var send = you.find('button');
-	var msg = you.find('textarea');
-
+	var send = you.find('#yiichat-send');
+	var msg = you.find('#yiichat-message');
 	function sendmessage(){
 		var text = jQuery.trim(msg.val());
+		console.log(text);
 		if(text.length<options.minPostLen){
 			options.onError('very_short_text',text);
 		}else
@@ -177,9 +165,7 @@ var YiiChat = function(options){
 			}
 		});
 	}
-
 	send.click(sendmessage);
-
 	msg.keyup(function(e){
 	  e = e || event;
 	  if (e.keyCode === 13) {
@@ -187,7 +173,6 @@ var YiiChat = function(options){
 	  }
 	  return true;
 	 });
-
 	msg.keyup(function(e){
 		var text = jQuery.trim(msg.val());
 		if(text.length > options.maxPostLen){
@@ -203,8 +188,8 @@ var YiiChat = function(options){
 			try{
 				actionTimer();
 			}catch(e){}
-			launchTimer();		
-		},options.timerMs);	
+			launchTimer();
+		},options.timerMs);
 	}
 	actionInit(scroll);
 	launchTimer();
