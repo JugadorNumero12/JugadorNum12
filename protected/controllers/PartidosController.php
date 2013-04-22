@@ -201,6 +201,8 @@ class PartidosController extends Controller
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
+
+		Yii::import('application.components.Partido');
 		
 		// Obtener el equipo del usuario
 		$id_equipo_usuario = Yii::app()->user->usAfic;
@@ -216,7 +218,7 @@ class PartidosController extends Controller
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null)) {
 			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
 		}
-		if ($partido->turno < 1 ||  $partido->turno > 12) {
+		if ($partido->turno <= Partido::PRIMER_TURNO ||  $partido->turno > Partido::ULTIMO_TURNO) {
 			Yii::app()->user->setFlash('partido', 'El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido).');
 		}
 
