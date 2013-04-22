@@ -271,7 +271,7 @@ class AccionesController extends Controller
 	public function actionUsarPartido($id_accion)
 	{	
 		// Actualizar recursos de usuario
-		Usuarios::model()->actualizaRecursos(Yii::app()->user->usIdent);
+		Recursos::model()->actualizaRecursos(Yii::app()->user->usIdent);
 		
 		//Comenzar transaccion
 		$trans = Yii::app()->db->beginTransaction();

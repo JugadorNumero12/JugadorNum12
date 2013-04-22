@@ -374,14 +374,69 @@ $(document).ready(function(evt){
   }
 
   updateData(true);
+
+  // Función para ocultar div de errores
+  $("#ac-p-error").click(function ()
+  {
+    $("#ac-p-error").css("visibility", "hidden");
+  });
 });
 
 // Funcion para realizar acciones de partido por ajax
 function ejecutarAP(id)
 {
-  $.get(baseUrl + '/acciones/usarpartido?id_accion=' , 
+  $.get(baseUrl + '/acciones/usarpartido?id_accion=' + id , 
           function(data,status)
           {
-              alert("Data: " + data + "\nStatus: " + status);
+            if (status == 'success')
+            {
+              var cod = JSON.parse(data).codigo;
+              switch (cod)
+              {
+                // Habilidad no encontrada
+                case 0:
+                  $("#ac-p-error").text("Habilidad incorrecta");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Habilidad no desbloqueada
+                case 1:
+                  $("#ac-p-error").text("Acción no desbloqueada");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Recursos insuficientes
+                case 2:
+                  $("#ac-p-error").text("Recursos insuficientes");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Equipo incorrecto
+                case 3:
+                  $("#ac-p-error").text("Equipo incorrecto");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Partido incorrecto
+                case 4:
+                  $("#ac-p-error").text("Partido incorrecto");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // La acción no es de partido
+                case 5:
+                  $("#ac-p-error").text("Acción incorrecta");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Acción ejecutada con éxito
+                case 6:
+                  $("#ac-p-error").text("Acción ejecutada con éxito");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Error general
+                case 7:
+                  $("#ac-p-error").text("Error al ejecutar la acción");
+                  $("#ac-p-error").css("visibility", "visible");
+                  break;
+                // Otros errores, no hacer nada
+                default:
+                  break;
+              }
+            }
           });
 }

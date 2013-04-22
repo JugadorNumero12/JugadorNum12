@@ -113,9 +113,13 @@
 ?>
 	</div>
 </div>
-<?php foreach ($l_acciones as $a) { ?>
-	<button onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
-			<?php echo $a->nombre; ?>
-	</button>
-<?php } ?>
-
+<div id="acc-partido">
+	<h2>Acciones de partido</h2> 
+	<h3>(pulsa para ejecutar)</h3>
+	<div id="ac-p-error"></div>
+	<?php foreach ($l_acciones as $a) { ?>
+		<div class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
+			<img title="<?php echo $a->nombre; ?>" alt="<?php echo $a->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $a->token; ?>.png"  class="imagen-ac-p" />
+		</div>
+	<?php } ?>
+</div>
