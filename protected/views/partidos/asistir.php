@@ -117,9 +117,37 @@
 	<h2>Acciones de partido</h2> 
 	<h3>(pulsa para ejecutar)</h3>
 	<div id="ac-p-error"></div>
-	<?php foreach ($l_acciones as $a) { ?>
-		<div class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
+	<table class="tabla-acciones">
+	<?php $c = 0;
+	foreach ($l_acciones as $a) 
+	{ 
+		if ($c === 0) echo '<tr>';
+		?>		
+		<td class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
 			<img title="<?php echo $a->nombre; ?>" alt="<?php echo $a->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $a->token; ?>.png"  class="imagen-ac-p" />
-		</div>
-	<?php } ?>
+			<h4><?php echo $a->nombre; ?></h4>
+			<br>
+			<?php
+				echo '<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_dinero.png".'" alt="Icono dinero"> </b><span class="info-ac-p-txt">'.$a['dinero'].'</span>'.
+				'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_animo.png".'" alt="Icono animo"></b><span class="info-ac-p-txt">'.$a['animo'].'</span>'.
+				'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_influencia.png".'" alt="Icono influencia"> </b><span class="info-ac-p-txt">'.$a['influencias'].'</span>';
+			?>
+		</td>
+	<?php 
+		if ($c === 2) 
+		{
+			echo '</tr>';
+			$c = 0;
+		}
+		else
+		{
+			$c++;
+		}
+	} 
+	if ($c < 2)
+	{
+		echo '<tr>';
+	}
+	?>
+	</table>
 </div>
