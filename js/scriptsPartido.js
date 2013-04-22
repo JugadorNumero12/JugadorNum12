@@ -360,7 +360,7 @@ $(document).ready(function(evt){
             updateData(turnoAct != partido.turno);
 
             if (partido.tiempo <= 0) {
-              window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+              window.location = baseUrl + '/partidos/previa?id_partido=' + partido.id;
             }
 
           }).always(function(){
