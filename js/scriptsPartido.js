@@ -360,7 +360,7 @@ $(document).ready(function(evt){
             updateData(turnoAct != partido.turno);
 
             if (partido.tiempo <= 0) {
-              window.location = baseUrl + '/partidos/previa?id_partido=' + partido.id;
+              //window.location = baseUrl + '/partidos/previa?id_partido=' + partido.id;
             }
 
           }).always(function(){
@@ -375,3 +375,13 @@ $(document).ready(function(evt){
 
   updateData(true);
 });
+
+// Funcion para realizar acciones de partido por ajax
+function ejecutarAP(id)
+{
+  $.get(baseUrl + '/acciones/usar?id_accion=' , 
+          function(data,status)
+          {
+              alert("Data: " + data + "\nStatus: " + status);
+          });
+}
