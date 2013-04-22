@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 DROP TABLE IF EXISTS `yiichat_post`;
 CREATE TABLE IF NOT EXISTS `yiichat_post` (
-  `id` CHAR(40),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` CHAR(40) NULL ,
   `post_identity` CHAR(40) NULL ,
   `owner` CHAR(20) NULL ,
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `yiichat_post` (
   PRIMARY KEY (`id`) ,
   INDEX `yiichat_chat_id` (`chat_id` ASC),  
   INDEX `yiichat_chat_id_identity` (`chat_id` ASC, `post_identity` ASC) 
-)ENGINE = InnoDB;
+)ENGINE = InnoDB AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
