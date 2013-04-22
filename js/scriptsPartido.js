@@ -379,7 +379,7 @@ $(document).ready(function(evt){
 // Funcion para realizar acciones de partido por ajax
 function ejecutarAP(id)
 {
-  $.get(baseUrl + '/acciones/usar?id_accion=' , 
+  $.get(baseUrl + '/acciones/usarpartido?id_accion=' , 
           function(data,status)
           {
               alert("Data: " + data + "\nStatus: " + status);

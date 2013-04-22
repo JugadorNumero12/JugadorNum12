@@ -163,9 +163,12 @@ class AccionesController extends Controller
 			$usuario = Usuarios::model()->findByPk($id_usuario);
 
 			//Si tenemos suficientes recursos miramos si es individual o grupal
-			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 								   
+			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) 
+			{ 								   
 				AccionesIndividuales::usarIndividual($id_usuario, $id_accion, $res, $habilidad);
-			} else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) {
+			} 
+			else if ( $habilidad['tipo'] == Habilidades::TIPO_GRUPAL ) 
+			{
 				//Sacar la accion grupal
 				//$accion_grupal = AccionesGrupales::model()->findByPk($id_accion);
 				$id_usuario=Yii::app()->user->usIdent;
@@ -184,7 +187,9 @@ class AccionesController extends Controller
 					$this-> redirect(array('acciones/participar',
 										   'id_accion'=>$accion_grupal['id_accion_grupal'] ));
 				}
-			} else if($habilidad['tipo'] == Habilidades::TIPO_PARTIDO ) {
+			} 
+			/*else if($habilidad['tipo'] == Habilidades::TIPO_PARTIDO ) 
+			{
 				//Sacar id de usuario,equipo y partido para poder ejecutar la accion del partido				
 				$id_usuario=Yii::app()->user->usIdent;
 				$id_equipo=Yii::app()->user->usAfic;
@@ -197,7 +202,9 @@ class AccionesController extends Controller
 				$id_partido=$siguientepartido->id_partido;
 				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
-			} else { 
+			} */
+			else 
+			{ 
 				// Tipo inválido
 				$trans->rollback();
 				Yii::app()->user->setFlash('error', 'No puedes usar esa acción.');
@@ -208,7 +215,8 @@ class AccionesController extends Controller
 			$trans->commit();
 
 			//Redireccionar acción individual 
-			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) { 
+			if ( $habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL ) 
+			{ 
 				/* 	como no está definido el id_accion_grupal, le damos cualquier valor
 					porque en la vista no se usa si es de tipo individual, pero necesita ser != null */
 				$id_acc = -1;
@@ -223,13 +231,163 @@ class AccionesController extends Controller
 				$this->redirect(array('acciones/participar/','id_accion'=>$nuevo_id));				
 			}
 			else //Es de tipo partido
-			{
-				
-                $this->redirect(array('partidos/asistir','id_partido'=>$id_partido));
+			{				
+				Yii::app()->user->setFlash('error', 'No puedes forzar el uso de acciones de partido');
+                $this->redirect(array('habilidades/index','id_partido'=>$id_partido));
 			}
-		} catch (Exception $e) {
-			$this-> redirect(array('acciones/index'));
+		} 
+		catch (Exception $e) 
+		{
+			$this-> redirect(array('habilidades/index'));
 		}
+	}
+
+	/**
+	 * Ejecuta la accion de partido pulsada. Este método será llamado por Ajax durante el partido,
+	 * de modo que lo único que hará será devolver los datos de éxito o fallo para informar al 
+	 * usuario.
+	 *
+	 * Cualquier habilidad resta los recursos iniciales al jugador, además,
+	 * 
+	 * - Por ser una habilidad de partido se ejecuta al momento
+	 * 
+	 * > El id del jugador y la aficion a la que pertence se recogen de la variable de sesion
+	 *
+	 * - CODIGOS DEVUELTOS -
+	 *
+	 * 0 -> Habilidad no encontrada
+	 * 1 -> Habilidad no desbloqueada
+	 * 2 -> Recursos insuficientes
+	 * 3 -> Error de equipo
+	 * 4 -> Error de partido, puede ser que no esté en juego o que no sea el siguiente del equipo
+	 * 5 -> La acción no es de partido
+	 * 6 -> Acción ejecutada con éxito
+	 * 7 -> Error general
+	 *
+	 * @param int $id_accion 	id de la habilidad que se ejecuta
+	 *
+	 * @return void
+	 */
+	public function actionUsarPartido($id_accion)
+	{	
+		// Actualizar recursos de usuario
+		Usuarios::model()->actualizaRecursos(Yii::app()->user->usIdent);
+		
+		//Comenzar transaccion
+		$trans = Yii::app()->db->beginTransaction();
+
+		try 
+		{
+			// Importar elementos necesarios
+			Yii::import('application.components.Acciones.*');
+			Yii::import('application.components.Partido');
+
+			//Cojo el id_usuario
+			$id_usuario=Yii::app()->user->usIdent;
+
+			//Obtener modelo de Habilidades
+			$habilidad = Habilidades::model()->findByPk($id_accion);
+
+			//Habilidad no encontrada
+			if ( $habilidad === null ) 
+			{			
+				$trans->rollback();
+				// Devolver error de acción no encontrada
+				$data = array('codigo' => (int) 0);
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+			}
+
+			//Habilidad encontrada
+			//Obtener modelo de Desbloqueadas		
+			$desbloqueada = Desbloqueadas::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario,
+																	   	   'habilidades_id_habilidad' => $id_accion ));			
+			//Si no esta desbloqueada para el usuario, error
+			if( $desbloqueada === null) 
+			{				
+				$trans->rollback();
+				// Devolver error de habilidad no desbloqueada
+				$data = array('codigo' => (int) 1);
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+			} 
+			
+			//Si esta desbloqueada
+			//Obtener modelo de Recursos
+			$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
+			
+			//Si no son suficientes recursos cancelar transaccion y notificar al usuario
+			if ( $res['dinero'] 	 < $habilidad['dinero'] ||
+			     $res['animo'] 		 < $habilidad['animo']  ||
+			     $res['influencias'] < $habilidad['influencias'])
+			{			
+				$trans->rollback();
+				// Devolver error de recursos insuficientes
+				$data = array('codigo' => (int) 2);
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+			}
+
+			$usuario = Usuarios::model()->findByPk($id_usuario);
+
+			//Si tenemos suficientes recursos comprobamos el tipo de acción
+			if ($habilidad['tipo'] == Habilidades::TIPO_PARTIDO ) 
+			{
+				//Sacar id de equipo y partido para poder ejecutar la accion				
+				$id_equipo=Yii::app()->user->usAfic;
+				$equipo=Equipos::model()->findByAttributes(array('id_equipo' => $id_equipo)); 
+
+				if($equipo === null) 
+				{
+					$trans->rollback();
+					// Devolver error de equipo incorrecto
+					$data = array('codigo' => (int) 3);
+					echo CJavaScript::jsonEncode($data);
+					Yii::app()->end();
+				}
+				$siguientepartido = $equipo->sigPartido;
+				$id_partido = $siguientepartido->id_partido;
+
+				// Comprobar si el partido está en juego
+				if ($siguientepartido->turno <= Partido::PRIMER_TURNO ||  $siguientepartido->turno > Partido::ULTIMO_TURNO)
+				{
+					$trans->rollback();
+					// Devolver error de partido incorrecto
+					$data = array('codigo' => (int) 4);
+					echo CJavaScript::jsonEncode($data);
+					Yii::app()->end();
+				}
+
+				// Todo correcto, ejecutar acción de partido
+				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
+
+			} 
+			else 
+			{ 
+				// Tipo inválido
+				$trans->rollback();
+				// Devolver error de tipo inválido
+				$data = array('codigo' => (int) 5);
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+			}
+
+			// Finalizar transacción
+			$trans->commit();
+
+			// Devolver error de acción no encontrada
+			$data = array('codigo' => (int) 6);
+			echo CJavaScript::jsonEncode($data);
+			Yii::app()->end();
+		} 
+		catch (Exception $e) 
+		{
+			$trans->rollback();
+			// Devolver error general
+			$data = array('codigo' => (int) 7);
+			echo CJavaScript::jsonEncode($data);
+			Yii::app()->end();
+	}
 	}
 
 	/**
