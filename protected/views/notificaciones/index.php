@@ -1,6 +1,7 @@
 <div class="encabezado"> <h1>Mis Notificaciones</h1> </div>
 
 <?php 
+ echo CHtml::button('BORRAR_TODAS', array('submit' => array('notificaciones/eliminarNotificaciones'),'class'=>"button small black"));
 foreach ( $notificaciones as $notificacion ){ ?>
     
     <div class="lista-notificaciones"> 

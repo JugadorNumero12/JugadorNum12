@@ -84,6 +84,32 @@ class NotificacionesController extends Controller
 		$this->redirect(array($url));
 	}
 
+	/**
+	 * Eliminar las notificaciones del usuario: Cambia el estado de las notificaciones a leido
+	 *
+	 * @route jugadorNum12/notificaciones/index
+	 *
+	 * @return void
+	 */
+	public function actionEliminarNotificaciones()
+	{
+		$usrnotif = Usrnotif::model()->findAllByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent));	
+		$trans = Yii::app()->db->beginTransaction();
+		try{
+			foreach($usrnotif as $not){
+				if(!$not->leido){
+					$not->leido = !$not->leido;
+					$not->save();
+				}
+			}
+			$trans->commit();
+		} catch(Exception $e) {
+			$trans->rollback();
+		}
+		
+		$this->redirect(array('notificaciones/index'));
+	}
+
     /**
      * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET 
      *
