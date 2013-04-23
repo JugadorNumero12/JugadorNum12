@@ -89,10 +89,27 @@
 		<div id="js-campo"></div>
 	</div>
 	<div id="partido-info-datos">
-		Datos no disponibles
+		<!-- Datos  -->
+		Turno: <?php echo $partido->turno ?>
+		Estado: <?php echo $partido->estado ?>
+        Ambiente: <?php echo $partido->ambiente ?>
+        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?>
+  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?>
+  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?>
+  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?>
+  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?>
+  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?>
+  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?>
+  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?>
+  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?>
+  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?>
+        
 	</div>
 	<div id="partido-info-cronica">
-		Crónica no disponible
+		<!-- Cronica  -->
+		<td width="90px" colspan="3" style="background-color: #edf2fa">
+			<pre><?php echo $partido->cronica ?></pre>
+		</td>
 	</div>
 	<div id="partido-info-chat">
 <?php 
