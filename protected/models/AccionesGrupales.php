@@ -454,7 +454,7 @@ class AccionesGrupales extends CActiveRecord
 			$notificacion = new Notificaciones;
 			$notificacion->fecha = time();
 			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
-			$notificacion->url = "usuarios/index";
+			$notificacion->url = "notificaciones/index";
             $notificacion->imagen = "images/iconos/notificaciones/completa_grupal.png";
 			$notificacion->save();
 			//Enviamos la notificación a la afición
