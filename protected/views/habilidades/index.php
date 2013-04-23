@@ -22,7 +22,7 @@
         <div class="habilidades">
         <?php foreach ( $acciones as $accion ){ ?>
             <?php if (RequisitosDesbloquearHabilidades::$datos_acciones[$accion->codigo]['nivel'] == $i){ ?>
-                <div class="habilidad <?php if(!$usuario->estaDesbloqueada($accion['id_habilidad'])){ echo 'remarcado-sin-desbloquear';}?> <?php if($recursosUsuario['dinero'] < $accion['dinero'] && $recursosUsuario['animo'] < $accion['animo'] && $recursosUsuario['influencias'] < $accion['influencias']){ echo 'remarcado-usar';} ?>">
+                <div class="habilidad <?php if(!$usuario->estaDesbloqueada($accion['id_habilidad'])){ echo 'remarcado-sin-desbloquear';}?> <?php if($recursosUsuario['dinero'] < $accion['dinero'] || $recursosUsuario['animo'] < $accion['animo'] || $recursosUsuario['influencias'] < $accion['influencias']){ echo 'remarcado-usar';} ?>">
                     <!-- Muestro el nombre de la accion -->
                     <div class="icono-habilidad">
                         <img src="<?php echo Yii::app()->BaseUrl.'/images/habilidades/' . $accion['token'] . '.png';?>">
@@ -40,7 +40,7 @@
                                         <img src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="Habilidad individual" width="36" height="36">
                                     </div>
                                     <div class="texto-datos-habilidad">
-                                        <?php echo 'Individual'; ?>
+                                        <b><?php echo 'Individual'; ?></b>
                                     </div>
                                     <?php break;
                                 case Habilidades::TIPO_GRUPAL: ?>
@@ -48,7 +48,7 @@
                                         <img src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="Habilidad grupal" width="36" height="36">
                                     </div>
                                     <div class="texto-datos-habilidad">
-                                        <?php echo 'Grupal'; ?>
+                                        <b><?php echo 'Grupal'; ?></b>
                                     </div>
                                     <?php break;
                                 case Habilidades::TIPO_PASIVA: ?>
@@ -56,7 +56,7 @@
                                         <img src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_pasiva.png';?>" alt="Habilidad pasiva" width="36" height="36">
                                     </div>
                                     <div class="texto-datos-habilidad">
-                                        <?php echo 'Pasiva'; ?>
+                                        <b><?php echo 'Pasiva'; ?></b>
                                     </div>
                                     <?php break;
                                 case Habilidades::TIPO_PARTIDO: ?>
@@ -64,7 +64,7 @@
                                         <img src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_partido.png';?>" alt="Habilidad de partido" width="36" height="36">
                                     </div>
                                     <div class="texto-datos-habilidad">
-                                        <?php echo 'Partido'; ?>
+                                        <b><?php echo 'Partido'; ?></b>
                                     </div>
                                     <?php break;
                             } ?>
@@ -74,7 +74,7 @@
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero" width="36" height="36">
                             </div>
                             <div <?php if($recursosUsuario['dinero'] < $accion['dinero']) { echo 'class="remarcado-recurso"';};?>>
-                                <?php echo $accion['dinero']; ?>
+                                <b><?php echo $accion['dinero']; ?></b>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo" width="36" height="36">
                             </div>
                             <div <?php if($recursosUsuario['animo'] < $accion['animo']) { echo 'class="remarcado-recurso"';};?>>
-                                <?php echo $accion['animo']; ?>
+                                <b><?php echo $accion['animo']; ?></b>
                             </div>
                         </div>
 
@@ -95,7 +95,7 @@
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias" width="36" height="36">
                             </div>
                             <div <?php if($recursosUsuario['influencias'] < $accion['influencias']) { echo 'class="remarcado-recurso"';};?>>
-                               <?php echo $accion['influencias']; ?>
+                               <b><?php echo $accion['influencias']; ?></b>
                             </div>
                         </div>
                     </div>

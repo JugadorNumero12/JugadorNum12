@@ -13,21 +13,46 @@
 	border-bottom: 1px solid @TopBlockBorderColor;
 }
 
+.habilidad:last-child{ 
+	border: none;
+}
+
 .remarcado-sin-desbloquear{
 	background-color: @GRIS;
+}
+
+.remarcado-sin-desbloquear:first-child{
+	background-color: @GRIS;
+	border-top: 0 solid @TopBlockBorderColor;
+	.border-radius(10px, 0px, 0px, 10px);
+}
+
+.remarcado-sin-desbloquear:last-child{
+	background-color: @GRIS;
+	border-top: 0 solid @TopBlockBorderColor;
+	.border-radius(0px, 10px, 10px, 0px);
 }
 
 .remarcado-usar{
 	background-color: @GRIS;
 }
 
-.habilidad:last-child{ 
-	border: none;
+.remarcado-usar:first-child{
+	background-color: @GRIS;
+	border-top: 0 solid @TopBlockBorderColor;
+	.border-radius(10px, 0px, 0px, 10px);
+}
+
+.remarcado-usar:last-child{
+	background-color: @GRIS;
+	border-top: 0 solid @TopBlockBorderColor;
+	.border-radius(0px, 10px, 10px, 0px);
 }
 
 .icono-habilidad{
 	float: left;
 	padding: 1em;
+	border-right: 1px solid @TopBlockBorderColor;
 }
 
 .nombre-habilidad{
@@ -36,7 +61,7 @@
 
 .iconos-datos-habilidad{
 	float: left;
-	padding: 0 4em;
+	padding: 0 1em 0 5em;
 }
 
 .remarcado-recurso{
