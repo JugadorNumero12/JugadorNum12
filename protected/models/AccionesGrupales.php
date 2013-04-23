@@ -495,7 +495,7 @@ class AccionesGrupales extends CActiveRecord
     			$notificacion->fecha = time();
     			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha participado en la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
     			$notificacion->url = "acciones/ver?id_accion=". $id_accion;
-                $notificacion->imagen = "images/iconos/participacion_grupal.png";
+                $notificacion->imagen = "images/iconos/notificaciones/participacion_grupal.png";
     			$notificacion->save();
     			//enviamos notificaciones a los participantes de la acción
     			
