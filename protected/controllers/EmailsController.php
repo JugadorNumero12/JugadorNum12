@@ -217,7 +217,7 @@ class EmailsController extends Controller
       		$destinatarios.=$jugador->nick.",";
       	}
     }
-
+    $destinatarios = substr($destinatarios, 0, -1);
     $this->redirect(array('emails/redactar/','destinatario'=>$destinatarios, 'tema'=>""));
 
   }

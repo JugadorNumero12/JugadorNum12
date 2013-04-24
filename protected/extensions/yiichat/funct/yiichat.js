@@ -104,8 +104,8 @@ var YiiChat = function(options){
 			+"<div class='track'></div>"
 			+"<div class='text'></div>"
 		+"</div>");
-		//Muestro por pantalla solo los 10 ultimos mensajes
-		if(posts[0].childNodes.length == 10){
+		//Muestro por pantalla solo los 13 ultimos mensajes
+		if(posts[0].childNodes.length == 13){
 			posts[0].firstChild.parentNode.removeChild(posts[0].firstChild);
 		}
 		var p = posts.find(".post[id='"+post.id+"']");
@@ -149,7 +149,6 @@ var YiiChat = function(options){
 	var msg = you.find('#yiichat-message');
 	function sendmessage(){
 		var text = jQuery.trim(msg.val());
-		console.log(text);
 		if(text.length<options.minPostLen){
 			options.onError('very_short_text',text);
 		}else

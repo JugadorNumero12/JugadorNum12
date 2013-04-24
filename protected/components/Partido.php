@@ -9,7 +9,7 @@
  * - turnos 1 - 5 : turnos de juego (1 parte)
  * - turno 6 : turno del descanso 
  * - turnos 7 - 11 : turnos de juego (2 parte)
- * - turno 12 : turno de finalizacion
+ * - turno 12 : turno de finalizacion -> NO USADO YA
  *
  *
  * @package componentes
@@ -19,7 +19,7 @@ class Partido
 	/** turno de inicializacion del partido */
 	const PRIMER_TURNO = 0;
 	/** turno de finalizacion del partido */
-	const ULTIMO_TURNO = 12;
+	const ULTIMO_TURNO = 11;//12;
 	/** turno para el descanso */
 	const TURNO_DESCANSO = 6;
 
@@ -413,7 +413,7 @@ class Partido
 	{
 		$this->generaBonificacion();
 		$this->actualizaClasificacion();
-		$this->turno++;
+		//$this->turno++;
 	}
 
 	/*
@@ -760,24 +760,22 @@ class Partido
 		    	$this->guardaEstado();
 		    	break;
 		    case (($this->turno > self::PRIMER_TURNO) 
-		    	&& ($this->turno < self::ULTIMO_TURNO-1) 
+		    	&& ($this->turno < self::ULTIMO_TURNO/*-1*/) 
 		    	&& ($this->turno != self::TURNO_DESCANSO)):	
 		    	//Este apartado incluye el descanso del partido!
 		    	//Turnos de partido
 				$this->generar_estado();
 				$this->guardaEstado();
 		        break;
-		    case self::ULTIMO_TURNO-1:
+		    case self::ULTIMO_TURNO/*-1*/:
 		    	//Turno para generar el estado y crónica finales
 				$this->generar_estado();
 				$this->generaCronicaUltimoTurno();
-				$this->guardaEstado();
-		    	break;
-		    case self::ULTIMO_TURNO:
-		    	//Turno para permitir visualizar el fin de partido durante un tiempo extra
-		    	//y cambiar los datos del siguiente partido
+				/****/
 				$this->finalizaEncuentro();
+				/****/
 				$this->guardaEstado();
+				/****/
 				$this->actualizaSiguientePartido($this->id_local);
 				$this->actualizaSiguientePartido($this->id_visitante);
 				$this->rellenaSiguientePartido($this->id_local);
@@ -788,7 +786,6 @@ class Partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
-				$notificacion->url = "partidos/index";
 				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
@@ -806,7 +803,41 @@ class Partido
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
 				}
+				/****/
 		    	break;
+		    /*case self::ULTIMO_TURNO:
+		    	//Turno para permitir visualizar el fin de partido durante un tiempo extra
+		    	//y cambiar los datos del siguiente partido
+				$this->finalizaEncuentro();
+				$this->guardaEstado();
+				$this->actualizaSiguientePartido($this->id_local);
+				$this->actualizaSiguientePartido($this->id_visitante);
+				$this->rellenaSiguientePartido($this->id_local);
+				$this->rellenaSiguientePartido($this->id_visitante);
+				$this->eliminaGrupales($this->id_local);
+				$this->eliminaGrupales($this->id_visitante);
+				//Creamos una notificación de fin de partido
+				$notificacion = new Notificaciones;
+				$notificacion->fecha = time();
+				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
+				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
+				$notificacion->save();
+				//Enviamos la notificación a los interesados
+				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_local));
+				foreach ($componentes as $componente){
+					$usrnotif = new Usrnotif;
+					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
+					$usrnotif->save();
+				}
+				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_visitante));
+				foreach ($componentes as $componente){
+					$usrnotif = new Usrnotif;
+					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
+					$usrnotif->save();
+				}
+		    	break;*/
 		    default:
 		       	// No debería llegar aquí
 		    	echo "Jodimos algo";

@@ -12,7 +12,6 @@ class Formula
 
 	const DIFNIV_NFACT_BASE = 100;
 
-	private $entropia=0.6;
 
 	/**
 	 * @param $x Punto en el que calcular la normal
@@ -101,15 +100,9 @@ class Formula
 		//Hacemos la diferencia de morales en valor absoluto
 		//tenemos en cuenta el aforo y lo sumamos a la moral que tienen
 		$difMoral = ($params['moralLoc']+$params['aforoLoc'])-  ($params['moralVis']+$params['aforoVis']);
-		/*if($difMoral >=-200 && $difMoral<=200)
-		{
-			$this->entropia=$this->entropia*2;
-		}
-		else
-		{
-			$this->entropia=0.6;
-		}*/$entropia=1;
-		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * $entropia * ($difMoral>0 ? 10 - $avg : -10 - $avg );
+
+		$avg += ($difMoral>0 ? atan($difMoral/1000) : -atan($difMoral/1000)) * 3.5* ($difMoral>0 ? 10 - $avg : -10 - $avg );
+
 		return $avg;
 	}
 
@@ -221,7 +214,14 @@ class Formula
 		$pesos = self::pesos($params);
 		$tot = array_sum( $pesos );
 		foreach ( $pesos as $i=>$v ) {
-			$probs[$i] = $v/$tot;
+			if($tot == 0)
+			{
+				$probs[$i]=0.1;
+			}
+			else
+			{
+				$probs[$i] = $v/$tot;			}
+			
 		}
 
 		return $probs;

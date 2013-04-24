@@ -164,7 +164,7 @@ class Partidos extends CActiveRecord
         // NOTA: asumido tiempo de turno de 1 minuto (60 segundos)
         $duracion_turno = 60;
         // Calcular hora de fin del encuentro
-        $fin_partido = $this->hora_ult_turno + ((Partido::ULTIMO_TURNO - $this->turno) * $duracion_turno);
+        $fin_partido = $this->hora_ult_turno + ((Partido::ULTIMO_TURNO - $this->turno + 1) * $duracion_turno);
         $restante = $fin_partido - time();
         // Si se pregunta por un tiempo tras el partido, devolver 0, no valores negativos
         if ($restante < 0)

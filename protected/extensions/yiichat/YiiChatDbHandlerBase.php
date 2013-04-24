@@ -61,9 +61,20 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 		$this->_identity = $identity;
 		$this->_data = $data;
 		$message_filtered = trim($this->acceptMessage($message));
+
+		//Si no hago esto no se la manera de asignarle un nuevo id al post. Y al no asignarle nada
+		//aqui se queda "unsigned", aunque en la base de datos se guarde bien. Entra en contradiccion con que
+		//en estructura.sql el campo "id" es autoincrement. Solucion?
+		$maxId = Yii::app()->db->createCommand()
+		->select("max(id) as max")
+		->from($this->getTableName())
+		->queryScalar();
+		$newId= $maxId + 1;
+
 		if($message_filtered != ""){
 			$obj = array(
-				"id"=>$this->createPostUniqueId(),
+				//"id"=>$this->createPostUniqueId(),
+				"id"=>$newId,
 				"chat_id"=>$chat_id,
 				"post_identity"=>$identity,
 				"owner"=>substr($this->getIdentityName(),0,20),
@@ -112,12 +123,13 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			->select()
 			->from($this->getTableName())
 			->where($where_string,$where_params)
-			->limit(5) //Los 5 ultimos
-			->order('created asc')
+			->limit(12) //Los 12 ultimos
+			->order('created desc')
 			->queryAll();
 			foreach($rows as $k=>$v)
 				$rows[$k]['time']=$this->getDateFormatted($v['created']);
-			return $rows;
+			$rowsBck = array_reverse($rows);
+			return $rowsBck;
 		}
 		else{
 			// case timer, new posts since last_id, not identity
