@@ -108,10 +108,10 @@ class Recursos extends CActiveRecord
 		$criteria->compare('influencias_bloqueadas',$this->influencias_bloqueadas, true);
 		$criteria->compare('animo',$this->animo,true);
 		$criteria->compare('animo_max',$this->animo_max,true);
-		$criteria->compare('animo_gen',$this->animo_gen); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_animo',$this->animo_max,true); //<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_influencias',$this->animo_max,true); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_dinero',$this->animo_max,true);//<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		$criteria->compare('animo_gen',$this->animo_gen); 
+		$criteria->compare('bonus_animo',$this->bonus_animo,true); 
+		$criteria->compare('bonus_influencias',$this->bonus_influencias,true); 
+		$criteria->compare('bonus_dinero',$this->bonus_dinero,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -179,15 +179,12 @@ class Recursos extends CActiveRecord
 	public static function disminuir_influencias_bloqueadas($usr,$influencias_aportadas){
 
 		$u = Usuarios::model()->findByPk($usr);
-
+		if($u == null)return -1;
 		$recursos=$u->recursos;
-		if($recursos === null){
-			throw new CHttpException(404,"Recursos no encontrados. (finalizaGrupal)");
-		}else{
-			$recursos['influencias_bloqueadas']-= $influencias_aportadas;             
-		}
-
-		$recursos->save();
+		if($recursos === null)return -1;
+		$recursos['influencias_bloqueadas']-= $influencias_aportadas;
+		if($recursos->save())return 0;
+		else return -1;
 	}
 
 	/** Funcion auxiliar que modifica la tabla de recursos
