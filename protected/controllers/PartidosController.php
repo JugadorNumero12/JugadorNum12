@@ -329,6 +329,20 @@ class PartidosController extends Controller
 		}
 	}
 
+	/**
+	 *
+	 * Incrementa los recursos durante el partido de forma asíncrona
+     *
+     * @param int $id_usuario id del usuario al que incrementar recursos
+     * 
+     * @route jugadorNum12/partidos/actRecursos/{$id_usuario}
+     * @return JSON con los datos necesarios para llevar a cabo la actualización
+	 */
+	public function actionActRecursos($id_usuario)
+	{	
+        return Recursos::actualizaRecursos($id_usuario);
+	}
+
     /**
      * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET 
      *
