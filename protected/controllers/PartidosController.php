@@ -340,7 +340,24 @@ class PartidosController extends Controller
 	 */
 	public function actionActRecursos($id_usuario)
 	{
-        return Recursos::model()->actualizaRecursos($id_usuario);
+        Recursos::model()->actualizaRecursos($id_usuario);
+        $datos = Recursos::model()->findByPk($id_usuario);
+        if ($datos !== null)
+        {
+        	return json_encode(array('codigo' => 1,
+        							'influencias' => $datos->influencias,
+									'dinero' => $datos->dinero,
+									'animo' => $datos->animo,
+								));
+        }
+        else
+        {
+        	return json_encode(array('codigo' => 0,
+        							'influencias' => 0,
+									'dinero' => 0,
+									'animo' => 0,
+								));
+        }
 	}
 
     /**
