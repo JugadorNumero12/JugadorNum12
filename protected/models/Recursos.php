@@ -108,10 +108,10 @@ class Recursos extends CActiveRecord
 		$criteria->compare('influencias_bloqueadas',$this->influencias_bloqueadas, true);
 		$criteria->compare('animo',$this->animo,true);
 		$criteria->compare('animo_max',$this->animo_max,true);
-		$criteria->compare('animo_gen',$this->animo_gen); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_animo',$this->animo_max,true); //<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_influencias',$this->animo_max,true); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		$criteria->compare('bonus_dinero',$this->animo_max,true);//<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		$criteria->compare('animo_gen',$this->animo_gen); 
+		$criteria->compare('bonus_animo',$this->bonus_animo,true); 
+		$criteria->compare('bonus_influencias',$this->bonus_influencias,true); 
+		$criteria->compare('bonus_dinero',$this->bonus_dinero,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
