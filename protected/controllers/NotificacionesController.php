@@ -57,14 +57,13 @@ class NotificacionesController extends Controller
 	 * Leer una notificacion: Cambia el estado de la notificación a leida
 	 *
 	 * @param int $id 		id de la notificacion
-	 * @param string $url 	direccion de retorno una vez leida la notificacion
 	 *
-	 * @route jugadorNum12/notificaciones/leer/{$id}/{$url}
-	 * @redirect {$url}
+	 * @route jugadorNum12/notificaciones/leer/{$id}
+	 * @redirect notificaciones/index
 	 *
 	 * @return void
 	 */
-	public function actionLeer($id , $url)
+	public function actionLeer($id)
 	{
 		$usrnotif = Usrnotif::model()->findByAttributes(array('usuarios_id_usuario' => Yii::app()->user->usIdent,'notificaciones_id_notificacion' => $id));	
 		if($usrnotif === null || $usrnotif->leido == 1) {
@@ -81,7 +80,7 @@ class NotificacionesController extends Controller
 			$trans->rollback();
 		}
 		
-		$this->redirect(array($url));
+		$this->redirect(array('notificaciones/index'));
 	}
 
 	/**
