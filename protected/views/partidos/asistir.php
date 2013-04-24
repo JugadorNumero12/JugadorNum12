@@ -92,7 +92,7 @@
 		Datos no disponibles
 	</div>
 	<div id="partido-info-cronica">
-		Crónica no disponible
+		Cr&oacute;nica no disponible
 	</div>
 	<div id="partido-info-chat">
 <?php 
