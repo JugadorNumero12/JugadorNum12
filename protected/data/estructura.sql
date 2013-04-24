@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `influencias` int(10) unsigned NOT NULL,
   `influencias_max` int(10) unsigned NOT NULL,
   `influencias_gen` float NOT NULL,
+  `influencias_bloqueadas` int(10) unsigned NOT NULL DEFAULT 0,
   `animo` int(10) unsigned NOT NULL,
   `animo_max` int(10) unsigned NOT NULL,
   `animo_gen` float NOT NULL,
@@ -234,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 DROP TABLE IF EXISTS `yiichat_post`;
 CREATE TABLE IF NOT EXISTS `yiichat_post` (
-  `id` CHAR(40),
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `chat_id` CHAR(40) NULL ,
   `post_identity` CHAR(40) NULL ,
   `owner` CHAR(20) NULL ,
@@ -244,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `yiichat_post` (
   PRIMARY KEY (`id`) ,
   INDEX `yiichat_chat_id` (`chat_id` ASC),  
   INDEX `yiichat_chat_id_identity` (`chat_id` ASC, `post_identity` ASC) 
-)ENGINE = InnoDB;
+)ENGINE = InnoDB AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -271,8 +272,7 @@ CREATE TABLE IF NOT EXISTS `notificaciones` (
 `id_notificacion` int(10) unsigned NOT NULL AUTO_INCREMENT,
 `fecha` int(11) unsigned NOT NULL DEFAULT 0,
 `mensaje` text NOT NULL,
-`url` varchar(50) NOT NULL,
-`imagen` varchar(50) NOT NULL,
+`imagen` varchar(70) NOT NULL,
 PRIMARY KEY (`id_notificacion`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

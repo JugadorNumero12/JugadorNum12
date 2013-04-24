@@ -63,6 +63,6 @@
 		<th colspan="3">Cr&oacute;nica del encuentro</th>
 	</tr> 
 	<tr>
-		<td colspan="3" style="background-color: #edf2fa"><pre width="90"><?php echo $modeloP->cronica ?></pre></td>
+		<td width="90px" colspan="3" style="background-color: #edf2fa"><pre><?php echo $modeloP->cronica ?></pre></td>
 	</tr>
 </table>

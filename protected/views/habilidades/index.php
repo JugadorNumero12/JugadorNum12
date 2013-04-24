@@ -112,9 +112,9 @@
                             } else {
                                 //La habilidad no está desbloqueada
                                 if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])){ ?>
-                                    <!-- La habilidad puede desbloquearse -->
-                                    <div>
-                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                                    <!-- La habilidad puede adquirirse -->
+                                    <div class="boton-superior">
+                                        <?php echo CHtml::button('Adquirir', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>     
                                 <?php }
                             }
