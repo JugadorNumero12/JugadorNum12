@@ -1,65 +1,87 @@
 <?php
 
 /**
- * Modelo de la tabla <<recursos>>
+ * Modelo de la tabla recursos
  *
  * Columnas disponibles:
- * 	string $usuarios_id_usuario
- * 	string $dinero
- * 	double $dinero_gen
- * 	string $influencias
- * 	string $influencias_max
- * 	double $influencias_gen
- * 	string $animo
- * 	string $animo_max
- * 	double $animo_gen
+ *
+ * |tipo    | nombre                    |
+ * |:-------|:--------------------------| 	
+ * | string | $usuarios_id_usuario      |
+ * | string | $dinero                   |
+ * | double | $dinero_gen               |
+ * | string | $influencias              |
+ * | string | $influencias_max          |
+ * | double | $influencias_gen          |
+ * | string | $animo                    |
+ * | string | $animo_max                |
+ * | double | $animo_gen                |
+ *
+ *
+ * @package modelos
  */
 class Recursos extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Recursos the static model class
-	 */
+    /**
+     * Devuelve el modelo estatico de la clase active record especificada.
+     *
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
+     * @return \AccionesGrupales    el modelo estatico de la clase
+     */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	/**
-	 * @return string the associated database table name
-	 */
+    /**
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
 	public function tableName()
 	{
 		return 'recursos';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
+    /**
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
 			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, bonus_dinero, bonus_influencias, bonus_animo, ultima_act', 'required'),
 			array('dinero_gen, influencias_gen, animo_gen', 'numerical'),
 			array('usuarios_id_usuario, dinero, influencias, influencias_max, animo, animo_max, bonus_dinero, bonus_influencias, bonus_animo', 'length', 'max'=>10),
 			array('ultima_act', 'length', 'max'=>11),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
 			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen', 'safe', 'on'=>'search'),
 		);
 	}
 
-	/**
-	 * Define las relaciones entre <recursos - tabla>
-	 *
-	 * @devuelve array de relaciones
-	 */
+    /**
+     * Define las relaciones entre la tabla recursos y el resto de tablas
+     *
+     * Relaciones definidas:
+     *
+     * - usuarios
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     relaciones entre recurso - tabla
+     */
 	public function relations()
 	{
-		/* ALEX */
 		return array( 
 			'usuarios'=>array(self::BELONGS_TO, 'Usuarios', 'usuarios_id_usuario')
 		);
