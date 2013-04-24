@@ -116,9 +116,10 @@
 	<div id="partido-info-chat">
 <?php 
     $this->widget('YiiChatWidget', array(
-        'chat_id'    => '123',                   // a chat identificator
+        //'chat_id'    => '123',
+        'chat_id'    => $partido->id_partido,   // a chat identificator
         'identity'   => Yii::app()->user->usIdent,   // the user
-        'selector'   => '#partido-info-chat',                // were it will be inserted
+        'selector'   => '#partido-info-chat',   // were it will be inserted
         'minPostLen' => 1,                    // min and
         'maxPostLen' => 200,                   // max string size for post
         'model'      => new ChatHandler(),    // the class handler.
