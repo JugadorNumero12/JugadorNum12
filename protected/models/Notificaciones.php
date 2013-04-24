@@ -38,7 +38,7 @@ class Notificaciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id_notificacion', 'length', 'max'=>10),
-			array('imagen', 'length', 'max'=>50),
+			array('imagen', 'length', 'max'=>70),
 			array('fecha', 'length', 'max'=>11),
 
 			// The following rule is used by search().
