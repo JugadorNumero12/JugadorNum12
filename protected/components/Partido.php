@@ -786,7 +786,6 @@ class Partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
-				$notificacion->url = "partidos/index";
 				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
@@ -821,7 +820,6 @@ class Partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
 				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
-				$notificacion->url = "partidos/index";
 				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
