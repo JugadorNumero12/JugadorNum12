@@ -8,80 +8,91 @@
     $ultimoTurno (necesario para determinar si el proximo partido esta jugandose)
 -->
 
-<div class = "envoltorio-perfil"> <div class="envoltorio2-perfil">
-    <div class = "perfil-izquierda">
-        <h3 class="titulo-subrayado"> Tu equipo </h3>
+<?php
+  Yii::app()->clientScript->registerLinkTag(
+    'stylesheet/less', 'text/css', 
+    Yii::app()->request->baseUrl . '/less/inicio.less'
+  );
+?>
+  <!-- Escudo del equipo -->
+  <div class = "escudo-equipo">
+          <h2 class="dashboard-header"> Panel de control </h2>      
+          <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
+           width=150 height=150 alt="<?php echo $equipo->nombre ?>" >
+  </div>
 
-        <div class = "perfil-izquierda-equipo">
-            <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
-             width=150 height=150 alt="<?php echo $equipo->nombre ?>" >
-        </div>
-
-        <div class = "perfil-izquierda-partido">
-          
-          <h4> Pr&oacute;ximo partido </h4>
-            <div class = "info-proximo-partido">
-
-              <?php if($proximoPartido !== null) { ?>
-
-                <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->local->id_equipo) )?>">
-                  <?php echo $proximoPartido->local->nombre ?> 
-                </a> 
-
-                <a href="<?php //echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->visitante->id_equipo) )?>">
-                  <?php echo $proximoPartido->visitante->nombre ?>
-                </a>
+  <!-- Panel de control -->
+  <div class = "inner-block dashboard-block">
       
-                <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
-              </div>
+      <!-- Atajo al perfil del hincha -->
+      <h4> Mi personaje </h4>
+      <p>
+       Consulta el perfil de tu hincha &nbsp;
+       <a href="<?php echo Yii::app()->createUrl('/usuarios/perfil') ?>" class="button">Perfil</a>
+      </p>
 
-              <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno <= $ultimoTurno) { ?>
-                <a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Asistir</a>
-              <?php } else {?>
-                <a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Previa</a>
-              <?php } ?> 
+      <!-- Atajo al prox partido -->
+      <h4> Mi pr&oacute;ximo partido </h4>
+        <p>
+        <?php if($proximoPartido !== null) { ?>
 
-            <?php } else echo "No hay proximo partido" ?> <!-- end if proximoPartido !== null-->
+          <a href="<?php echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->local->id_equipo) )?>">
+            <?php echo $proximoPartido->local->nombre ?> 
+          </a> 
+          <?php echo " vs "; ?>
+          <a href="<?php //echo $this->createUrl('/equipos/ver', array('id_equipo'=>$proximoPartido->visitante->id_equipo) )?>">
+            <?php echo $proximoPartido->visitante->nombre ?>
+          </a>
+
+          <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
         
-        </div>
-    </div>
+          &nbsp;
 
-    <div class = "perfil-derecha">
-      <h3 class = "titulo-subrayado"> Tu afici&oacute;n </h3>
+          <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno <= $ultimoTurno) { ?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Asistir</a>
+          <?php } else {?>
+                <a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Previa</a>
+          <?php } ?> 
 
-      <div class = "perfil-derecha-iniciar">
-        <h4> Iniciar nueva acci&oacute;n </h4>
+        <?php } else echo "No hay proximo partido" ?> <!-- end if proximoPartido !== null-->
+        </p>
+
+      <!-- Atajo a su aficion -->
+      <h4> Mi afici&oacute;n </h4>
+      <p> 
+        Ayuda a tu equipo a ganar &nbsp;
         <?php echo CHtml::submitButton('Iniciar acción', array('submit' => array('/habilidades/index',),'class'=>"button small black")) ?> 
-      </div>
+      </p>
+  </div>
+ 
+  <!-- Lista de acciones grupales -->
+  <div class = "inner-block actions-block">
 
-      <div class = "perfil-derecha-acciones">
+        <h4> Acciones grupales activas </h4>
 
-            <h4> Acciones grupales activas </h4>
-            <table> 
+        <table id="tabla-acciones"> 
+            <tr> 
+                <th>Nombre</th>
+                <th>Creador</th>
+                <th>Participantes</th>
+                <th>Completada</th>
+                <th>&nbsp;</th>
+            </tr>
+
+            <?php foreach ($equipo->accionesGrupales as $ag){ ?> 
                 <tr> 
-                    <th>Nombre</th>
-                    <th>Creador</th>
-                    <th>Participantes</th>
-                    <th>Completada</th>
+                    <td><?php echo  $ag->habilidades->nombre; ?> 	</td>
+                    <td><?php echo  $ag->usuarios->nick; ?> 	</td>
+                    <td><?php echo  $ag->jugadores_acc; ?> 	</td>	
+                    <td> <?php if($ag->completada) {?>
+                      S&iacute; 
+                      <?php } else {?>
+                      No 
+                      <?php }?>
+                    </td>
+                    <td> <?php echo CHtml::submitButton('Participar',array('submit' => array('/acciones/participar','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
                 </tr>
+            <?php } ?>
+        </table>
+  </div>
 
-                <?php foreach ($equipo->accionesGrupales as $ag){ ?> 
-                    <tr> 
-                        <td><?php echo  $ag->habilidades->nombre; ?> 	</td>
-                        <td><?php echo  $ag->usuarios->nick; ?> 	</td>
-                        <td><?php echo  $ag->jugadores_acc; ?> 	</td>	
-                        <td> <?php if($ag->completada) {?>
-                          S&iacute; 
-                          <?php } else {?>
-                          No 
-                          <?php }?>
-                        </td>
-                        <td> <?php echo CHtml::submitButton('Participar',array('submit' => array('/acciones/participar','id_accion'=>$ag->id_accion_grupal),'class'=>"button small black"));?> 	</td>		
-                    </tr>
-                <?php } ?>
-            </table>
-    	
-      </div>
-    </div>
-
-</div> </div>

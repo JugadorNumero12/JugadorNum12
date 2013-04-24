@@ -104,19 +104,19 @@
 	</div>
 	<div id="partido-info-datos" class="partido-info-content">
 		<!-- Datos  -->
-		Turno: <?php echo $partido->turno ?>
-		Estado: <?php echo $partido->estado ?>
-        Ambiente: <?php echo $partido->ambiente ?>
-        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?>
-  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?>
-  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?>
-  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?>
-  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?>
-  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?>
-  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?>
-  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?>
-  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?>
-  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?>
+		Turno: <?php echo $partido->turno ?></br>
+		Estado: <?php echo $partido->estado ?></br>
+        Ambiente: <?php echo $partido->ambiente ?></br>
+        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?></br>
+  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?></br>
+  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?></br>
+  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?></br>
+  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?></br>
+  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?></br>
+  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?></br>
+  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?></br>
+  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?></br>
+  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?></br>
         
 	</div>
 	<div id="partido-info-cronica" class="partido-info-content">
