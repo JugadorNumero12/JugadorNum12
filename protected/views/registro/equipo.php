@@ -5,10 +5,13 @@
  */
 ?>
 <?php
+	Helper::registerStyleFile('registroEquipo');
+/*
 	Yii::app()->clientScript->registerLinkTag(
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/registroEquipo.less'
 	);
+	*/
 ?>
 <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>

@@ -1,8 +1,12 @@
 <?php
+	Helper::registerStyleFile('partido');
+
+	/*
 	Yii::app()->clientScript->registerLinkTag(
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/partido.less'
 	);
+	*/
 	Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js');
 ?>
 <script type="text/javascript">
@@ -125,7 +129,7 @@
 	<div id="partido-info-chat" class="partido-info-content">
 <?php 
     $this->widget('YiiChatWidget', array(
-        'chat_id'    => '123',                   // a chat identificator
+        'chat_id'    => $partido->id_partido,                   // a chat identificator
         'identity'   => Yii::app()->user->usIdent,   // the user
         'selector'   => '#partido-info-chat',                // were it will be inserted
         'minPostLen' => 1,                    // min and
