@@ -51,10 +51,22 @@
 			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
 		?></div>
 		<div id="partido-ambiente"><!--<?php echo $partido->ambiente ?>--></div>
-		<div id="partido-turno">
-<?php for ($t = Partido::PRIMER_TURNO + 1; $t < Partido::ULTIMO_TURNO; $t++ ): ?>
-			<div id="partido-turno-<?php echo $t ?>"><?php
-				echo ($t == Partido::TURNO_DESCANSO ? 'D' : ($t > Partido::TURNO_DESCANSO ? $t-1 : $t))
+		<div id="partido-turnos">
+<?php for ($t = Partido::PRIMER_TURNO + 1; $t <= Partido::ULTIMO_TURNO; $t++ ):
+	if ( $t < Partido::TURNO_DESCANSO ) {
+		$pos = -1;
+	} else if ($t == Partido::TURNO_DESCANSO ) {
+		$pos = 0;
+	} else {
+		$pos = 1;
+	}
+?>
+			<div id="partido-turno-<?php echo $t ?>" class="turno turno-<?php
+				echo ($pos < 0 ? 'pre' : ($pos > 0 ? 'post' : 'desc'))
+			?> turno-<?php
+				echo ($t < $partido->turno ? 'anterior' : ($t > $partido->turno ? 'siguiente' : 'actual'))
+			?>"><?php
+				echo ($pos < 0 ? $t : ($pos > 0 ? $t-1 : 'D'))
 			?></div>
 <?php endfor ?>
 		</div>

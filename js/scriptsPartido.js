@@ -11,6 +11,20 @@ function updateData (recalc) {
   $('#partido-goles-local').text(partido.golesLocal);
   $('#partido-goles-visit').text(partido.golesVisit);
 
+  for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
+    var turnoDiv = $('#partido-turno-'+ t);
+    turnoDiv.removeClass('turno-anterior turno-actual turno-siguiente');
+    if (t < partido.turno) {
+      turnoDiv.addClass('turno-anterior');
+
+    } else if (t > partido.turno) {
+      turnoDiv.addClass('turno-siguiente');
+      
+    } else {
+      turnoDiv.addClass('turno-actual');
+    }
+  }
+
   if (recalc) {
     updateState(partido.estado);
   }
@@ -361,7 +375,7 @@ $(document).ready(function(evt){
 
             // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica
             // NUNCA antes
-            if (partido.tiempo <= 0) {
+            if (partido.turno > info.turnos.final && partido.tiempo <= 0) {
               // window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
               window.location = baseUrl + '/partidos/index';
             }

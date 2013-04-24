@@ -61,6 +61,52 @@
 			text-align: right;
 		}
 
+		#partido-turnos {
+			@TurnoSize: 16px;
+
+			width: (@TurnoSize*11 + 12px);
+			margin: 0 auto;
+
+			.turno {
+				float: left;
+
+				padding: 0;
+				padding-right: 1px;
+				margin: 0;
+
+				width: (@TurnoSize - 1px);
+				height: @TurnoSize;
+
+				font-size: 10px;
+				//font-weight: bold;
+				font-family: sans-serif;
+				text-align: center;
+				line-height: @TurnoSize;
+
+				border: 1px solid (lighten(@VERDE_12, 10%) - #333);
+			}
+
+			.turno-pre {
+				border-right-width: 0;
+			}
+
+			.turno-post {
+				border-left-width: 0;
+			}
+
+			.turno-anterior {
+				background-color: (@VERDE_12_CLARO + #222);
+			}
+			.turno-actual {
+				background-color: (@VERDE_12_CLARO - #111);
+				color: white;
+				font-weight: bold;
+			}
+			.turno-siguiente {
+				background-color: (@VERDE_12_CLARO + #555);
+			}
+		}
+
 		.equipo-info {
 			margin: 8px 0;
 		}

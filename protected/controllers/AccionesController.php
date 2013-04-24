@@ -401,7 +401,7 @@ class AccionesController extends Controller
 			// Devolver error general
 				$data = array(
 					'ok'    => false,
-					'error' => 'Error al ejecutar la acción - ' . print_r($e, true)
+					'error' => 'Error al ejecutar la acción'
 				);
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
