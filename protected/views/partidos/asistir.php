@@ -29,6 +29,22 @@
 		descanso: <?php echo Partido::TURNO_DESCANSO ?>,
 		final: <?php echo Partido::ULTIMO_TURNO ?>
 	}
+
+	//Actualización de recursos por Ajax
+	function actRecursosAj()
+	{
+		$.get(baseUrl + '/partidos/actrecursos?id_usuario=' + <?php echo Yii::app()->user->usIdent; ?> , 
+	          function(data,status)
+	          {
+	          	if (JSON.parse(data).codigo == 1)
+	          	{
+	          		$("#progressbar-label-dinero").text(JSON.parse(data).dinero);
+	          		$("#progressbar-label-animo").text(JSON.parse(data).animo+"/"+JSON.parse(data).animo_max);
+	          		$("#progressbar-label-influencias").text(JSON.parse(data).influencias+"/"+JSON.parse(data).influencias_max);
+	          	}
+	          });
+	}
+	var intervaloRec = window.setInterval('actRecursosAj()', 30000);
 </script>
 
 <div id="partido-dibujo" class="inner-block">
@@ -143,7 +159,7 @@
 	{ 
 		if ($c === 0) echo '<tr>';
 		?>		
-		<td class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
+		<td class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>); actRecursosAj()">
 			<img title="<?php echo $a->nombre; ?>" alt="<?php echo $a->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $a->token; ?>.png"  class="imagen-ac-p" />
 			<h4><?php echo $a->nombre; ?></h4>
 			<br>

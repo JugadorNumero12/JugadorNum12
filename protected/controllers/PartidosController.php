@@ -344,19 +344,25 @@ class PartidosController extends Controller
         $datos = Recursos::model()->findByPk($id_usuario);
         if ($datos !== null)
         {
-        	return json_encode(array('codigo' => 1,
-        							'influencias' => $datos->influencias,
-									'dinero' => $datos->dinero,
-									'animo' => $datos->animo,
+        	echo json_encode(array('codigo' => (int)1,
+        							'influencias' => (int)$datos->influencias,
+									'dinero' => (int)$datos->dinero,
+									'animo' => (int)$datos->animo,
+        							'influencias_max' => (int)$datos->influencias_max,
+        							'animo_max' => (int)$datos->animo_max,
 								));
+			Yii::app()->end();
         }
         else
         {
-        	return json_encode(array('codigo' => 0,
-        							'influencias' => 0,
-									'dinero' => 0,
-									'animo' => 0,
+        	echo json_encode(array('codigo' => (int)0,
+        							'influencias' => (int)0,
+									'dinero' => (int)0,
+									'animo' => (int)0,
+        							'influencias_max' => (int)0,
+        							'animo_max' => (int)0,
 								));
+			Yii::app()->end();
         }
 	}
 
