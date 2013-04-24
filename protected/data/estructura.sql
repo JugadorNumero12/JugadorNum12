@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `recursos` (
   `influencias` int(10) unsigned NOT NULL,
   `influencias_max` int(10) unsigned NOT NULL,
   `influencias_gen` float NOT NULL,
+  `influencias_bloqueadas` int(10) unsigned NOT NULL DEFAULT 0,
   `animo` int(10) unsigned NOT NULL,
   `animo_max` int(10) unsigned NOT NULL,
   `animo_gen` float NOT NULL,

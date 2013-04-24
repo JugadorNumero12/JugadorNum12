@@ -487,7 +487,8 @@ class Usuarios extends CActiveRecord
                 'animo_gen'=>       $nuevos_atributos['animo_gen'],
                 'influencias_gen'=> $nuevos_atributos['influencias_gen'],
                 'animo_max'=>       $nuevos_atributos['animo_max'],
-                'influencias_max'=> $nuevos_atributos['influencias_max']
+                'influencias_max'=> $nuevos_atributos['influencias_max'],
+                'influencias_bloqueadas'=>$nuevos_atributos['influencias_bloqueadas']
             ));
             $this->save();
             $this->recursos->save();
@@ -549,6 +550,7 @@ class Usuarios extends CActiveRecord
         $atributos['influencias_gen'] = $this->recursos->influencias_gen;
         $atributos['animo_max'] =       $this->recursos->animo_max;
         $atributos['influencias_max'] = $this->recursos->influencias_max;
+        $atributos['influencias_bloqueadas'] = $this->recursos->influencias_bloqueadas;
 
         while ($niveles_subidos > 0) {
             /* generacion de los r_gen */
@@ -712,6 +714,7 @@ class Usuarios extends CActiveRecord
                     'influencias'=>self::ULTRA_INFLUENCIAS_MAX_INICIO,
                     'influencias_max'=>self::ULTRA_INFLUENCIAS_MAX_INICIO,
                     'influencias_gen'=>self::ULTRA_INFLUENCIAS_GEN_INICIO,
+                    'influencias_bloqueadas'=>0,
                     'animo'=>self::ULTRA_ANIMO_MAX_INICIO,
                     'animo_max'=>self::ULTRA_ANIMO_MAX_INICIO,
                     'animo_gen'=>self::ULTRA_ANIMO_GEN_INICIO
@@ -724,6 +727,7 @@ class Usuarios extends CActiveRecord
                     'influencias'=>self::ANIMADORA_INFLUENCIAS_MAX_INICIO,
                     'influencias_max'=>self::ANIMADORA_INFLUENCIAS_MAX_INICIO,
                     'influencias_gen'=>self::ANIMADORA_INFLUENCIAS_GEN_INICIO,
+                    'influencias_bloqueadas'=>0,
                     'animo'=>self::ANIMADORA_ANIMO_MAX_INICIO,
                     'animo_max'=>self::ANIMADORA_ANIMO_MAX_INICIO,
                     'animo_gen'=>self::ANIMADORA_ANIMO_GEN_INICIO
@@ -736,6 +740,7 @@ class Usuarios extends CActiveRecord
                     'influencias'=>self::EMPRESARIO_INFLUENCIAS_MAX_INICIO,
                     'influencias_max'=>self::EMPRESARIO_INFLUENCIAS_MAX_INICIO,
                     'influencias_gen'=>self::EMPRESARIO_INFLUENCIAS_GEN_INICIO,
+                    'influencias_bloqueadas'=>0,
                     'animo'=>self::EMPRESARIO_ANIMO_MAX_INICIO,
                     'animo_max'=>self::EMPRESARIO_ANIMO_MAX_INICIO,
                     'animo_gen'=>self::EMPRESARIO_ANIMO_GEN_INICIO
