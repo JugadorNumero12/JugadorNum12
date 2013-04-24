@@ -7,9 +7,23 @@ function fmtTime (seconds) {
 
 function updateData (recalc) {
   $('#partido-tiempo').text(fmtTime(partido.tiempo));
-  $('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
+  //$('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
   $('#partido-goles-local').text(partido.golesLocal);
   $('#partido-goles-visit').text(partido.golesVisit);
+
+  for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
+    var turnoDiv = $('#partido-turno-'+ t);
+    turnoDiv.removeClass('turno-anterior turno-actual turno-siguiente');
+    if (t < partido.turno) {
+      turnoDiv.addClass('turno-anterior');
+
+    } else if (t > partido.turno) {
+      turnoDiv.addClass('turno-siguiente');
+      
+    } else {
+      turnoDiv.addClass('turno-actual');
+    }
+  }
 
   if (recalc) {
     updateState(partido.estado);
@@ -359,8 +373,11 @@ $(document).ready(function(evt){
             $.extend(partido, JSON.parse(data));
             updateData(turnoAct != partido.turno);
 
-            if (partido.tiempo <= 0) {
-              window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+            // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica
+            // NUNCA antes
+            if (partido.turno > info.turnos.final && partido.tiempo <= 0) {
+              // window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+              window.location = baseUrl + '/partidos/index';
             }
 
           }).always(function(){
@@ -374,4 +391,25 @@ $(document).ready(function(evt){
   }
 
   updateData(true);
+
+  // Función para ocultar div de errores
+  $("#ac-p-error").click(function (){
+    $("#ac-p-error").css("visibility", "hidden");
+  });
 });
+
+// Funcion para realizar acciones de partido por ajax
+function ejecutarAP(id) {
+  $.ajax({
+    url: baseUrl + '/acciones/usarpartido?id_accion=' + id
+  }).done(function(data,status){
+    var json = JSON.parse(data);
+    if ( json.ok ) {
+      $("#ac-p-error").text(json.message);
+    } else {
+      $("#ac-p-error").text(json.error);
+    }
+
+    $("#ac-p-error").css("visibility", "visible");
+  });
+}

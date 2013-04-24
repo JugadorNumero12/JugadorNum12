@@ -35,7 +35,7 @@
                 <?php echo Yii::app()->format->formatDatetime($proximoPartido->hora)?>
               </div>
 
-              <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno < $ultimoTurno) { ?>
+              <?php if ($proximoPartido->turno >= $primerTurno+1 && $proximoPartido->turno <= $ultimoTurno) { ?>
                 <a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Asistir</a>
               <?php } else {?>
                 <a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$proximoPartido->id_partido ) ?>" class="button">Previa</a>

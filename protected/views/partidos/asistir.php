@@ -50,13 +50,26 @@
 			$m = (int)($trp/60);
 			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
 		?></div>
-		<div id="partido-tiempo-turno"><?php
-			$trt = $partido->tiempoRestanteTurno();
-			$s = $trt%60;
-			$m = (int)($trt/60);
-			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
-		?></div>
-		<div id="partido-ambiente"><?php echo $partido->ambiente ?></div>
+		<div id="partido-ambiente"><!--<?php echo $partido->ambiente ?>--></div>
+		<div id="partido-turnos">
+<?php for ($t = Partido::PRIMER_TURNO + 1; $t <= Partido::ULTIMO_TURNO; $t++ ):
+	if ( $t < Partido::TURNO_DESCANSO ) {
+		$pos = -1;
+	} else if ($t == Partido::TURNO_DESCANSO ) {
+		$pos = 0;
+	} else {
+		$pos = 1;
+	}
+?>
+			<div id="partido-turno-<?php echo $t ?>" class="turno turno-<?php
+				echo ($pos < 0 ? 'pre' : ($pos > 0 ? 'post' : 'desc'))
+			?> turno-<?php
+				echo ($t < $partido->turno ? 'anterior' : ($t > $partido->turno ? 'siguiente' : 'actual'))
+			?>"><?php
+				echo ($pos < 0 ? $t : ($pos > 0 ? $t-1 : 'D'))
+			?></div>
+<?php endfor ?>
+		</div>
 	</div>
 
 	<!-- Información del equipo local -->
@@ -81,27 +94,42 @@
 <div id="partido-info" class="inner-block">
 	<ul id="partido-info-tabs">
 		<li><a href="#partido-info-campo">Partido</a></li>
+		<li><a href="#partido-info-acciones">Acciones</a></li>
 		<li><a href="#partido-info-chat">Chat</a></li>
 		<li><a href="#partido-info-datos">Datos</a></li>
 		<li><a href="#partido-info-cronica">Cronica</a></li>
 	</ul>
-	<div id="partido-info-campo">
+	<div id="partido-info-campo" class="partido-info-content">
 		<div id="js-campo"></div>
 	</div>
-	<div id="partido-info-datos">
-		Datos no disponibles
+	<div id="partido-info-datos" class="partido-info-content">
+		<!-- Datos  -->
+		Turno: <?php echo $partido->turno ?>
+		Estado: <?php echo $partido->estado ?>
+        Ambiente: <?php echo $partido->ambiente ?>
+        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?>
+  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?>
+  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?>
+  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?>
+  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?>
+  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?>
+  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?>
+  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?>
+  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?>
+  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?>
+        
 	</div>
-	<div id="partido-info-cronica">
-		Crónica no disponible
+	<div id="partido-info-cronica" class="partido-info-content">
+		<pre><?php echo $partido->cronica ?></pre>
 	</div>
-	<div id="partido-info-chat">
+	<div id="partido-info-chat" class="partido-info-content">
 <?php 
     $this->widget('YiiChatWidget', array(
         'chat_id'    => '123',                   // a chat identificator
         'identity'   => Yii::app()->user->usIdent,   // the user
         'selector'   => '#partido-info-chat',                // were it will be inserted
         'minPostLen' => 1,                    // min and
-        'maxPostLen' => 50,                   // max string size for post
+        'maxPostLen' => 200,                   // max string size for post
         'model'      => new ChatHandler(),    // the class handler.
         'data'       => 'any data',                 // data passed to the handler
         // success and error handlers, both optionals.
@@ -112,5 +140,43 @@
     ));
 ?>
 	</div>
-</div>
+	<div id="partido-info-acciones" class="partido-info-content">
+		<h2>Acciones de partido</h2> 
+		<h3>(pulsa para ejecutar)</h3>
+		<div id="ac-p-error"></div>
+		<table class="tabla-acciones">
+		<?php $c = 0;
+		foreach ($l_acciones as $a) 
+		{ 
+			if ($c === 0) echo '<tr>';
+			?>		
+			<td class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
+				<img title="<?php echo $a->nombre; ?>" alt="<?php echo $a->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $a->token; ?>.png"  class="imagen-ac-p" />
+				<h4><?php echo $a->nombre; ?></h4>
+				<br>
+				<?php
+					echo '<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_dinero.png".'" alt="Icono dinero"> </b><span class="info-ac-p-txt">'.$a['dinero'].'</span>'.
+					'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_animo.png".'" alt="Icono animo"></b><span class="info-ac-p-txt">'.$a['animo'].'</span>'.
+					'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_influencia.png".'" alt="Icono influencia"> </b><span class="info-ac-p-txt">'.$a['influencias'].'</span>';
+				?>
+			</td>
+		<?php 
+			if ($c === 2) 
+			{
+				echo '</tr>';
+				$c = 0;
+			}
+			else
+			{
+				$c++;
+			}
+		} 
+		if ($c < 2)
+		{
+			echo '<tr>';
+		}
+		?>
+		</table>
+	</div>
 
+</div>

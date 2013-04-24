@@ -201,6 +201,8 @@ class PartidosController extends Controller
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
+
+		Yii::import('application.components.Partido');
 		
 		// Obtener el equipo del usuario
 		$id_equipo_usuario = Yii::app()->user->usAfic;
@@ -216,7 +218,7 @@ class PartidosController extends Controller
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null)) {
 			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
 		}
-		if ($partido->turno < 1 ||  $partido->turno > 12) {
+		if ($partido->turno <= Partido::PRIMER_TURNO ||  $partido->turno > Partido::ULTIMO_TURNO) {
 			Yii::app()->user->setFlash('partido', 'El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido).');
 		}
 
@@ -228,12 +230,27 @@ class PartidosController extends Controller
             // Un usuario solo puede asistir al próximo partido de su equipo
 			if($equipoUsuario->partidos_id_partido != $id_partido ) {			
 				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
-			} else {
+			} 
+			else 
+			{
+		        //Saca la lista de las acciones desbloqueadas por el usuario
+		        $modeloDesbloqueadas = Desbloqueadas:: model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+				//Prepara los datos de las acciones de partido
+		        $accionesPar = array();
+		        foreach ($modeloDesbloqueadas as $desbloqueada)
+		        {
+		            $infoDesbloqueada = Habilidades::model()->findAllByAttributes(array('id_habilidad' => $desbloqueada->habilidades_id_habilidad));
+		            if ($infoDesbloqueada[0]['tipo'] == Habilidades::TIPO_PARTIDO ) 
+		            {
+		                $accionesPar[] = $infoDesbloqueada[0];
+		            }
+		        }
             	//pasar los datos del partido y los equipos
                 $datosVista = array(
                     'eqLoc' => $equipoLocal,
                     'eqVis' => $equipoVisitante,
-                    'partido' => $partido
+                    'partido' => $partido,
+                    'l_acciones' => $accionesPar,
                 );
                 $this->render('asistir', $datosVista);
 

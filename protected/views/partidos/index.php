@@ -56,7 +56,7 @@
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$partido->id_partido ) ?>" class="button">Asistir</a>
 				<?php } else if ($partido->id_partido == $proximo_partido->id_partido &&  $proximo_partido->turno == $primer_turno) {?>
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido->id_partido ) ?>" class="button">Previa</a>
-				<?php } else if ($partido->turno == $ultimo_turno+1 ){ ?>
+				<?php } else if ($partido->turno > $ultimo_turno ){ ?>
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido->id_partido ) ?>" class="button">Cr&oacute;nica</a>
 
 				<?php } ?>
@@ -83,7 +83,7 @@
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/asistir?id_partido=' .$partido2->id_partido ) ?>" class="button">Asistir</a>
 				<?php } else if ($partido2->id_partido == $proximo_partido->id_partido &&  $proximo_partido->turno == $primer_turno) {?>
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido2->id_partido ) ?>" class="button">Previa</a>
-				<?php } else if ($partido2->turno == $ultimo_turno+1 ){ ?>
+				<?php } else if ($partido2->turno > $ultimo_turno ){ ?>
 					<a href="<?php echo Yii::app()->createUrl( '/partidos/previa?id_partido=' .$partido2->id_partido ) ?>" class="button">Cr&oacute;nica</a>
 
 				<?php } ?>
