@@ -1,0 +1,16 @@
+div.envoltorio-elegir-equipo{float:right;right:50%;position:relative;}
+div.contenido-elegir-equipo{background-color:rgba(0, 0, 0, 0.5);border-radius:20px;padding:2em;float:right;right:-50%;position:relative;margin-top:100px;}div.contenido-elegir-equipo h3{text-align:center;color:white;font-size:1.5em;padding:10px;}
+div.contenido-elegir-equipo td{padding:5px;}
+div.elegir-equipo{padding-bottom:2em;}div.elegir-equipo input.escudos{height:7em;padding:0.5em;margin:0.8em;}
+div.elegir-equipo input.escudo-seleccion{height:8em;border-color:orange;border-width:0.3em;margin:0;}
+div.elegir-equipo table{border:0.3em solid;border-color:rgba(0, 0, 0, 0.7);border-collapse:collapse;}
+div.elegir-equipo td{color:white;}
+div.descripcion{color:white;font-size:1.3em;padding:0.5em;text-align:center;}
+div.envoltorio-elegir-personaje{float:right;right:50%;position:relative;}
+div.contenido-elegir-personaje{background-color:rgba(0, 0, 0, 0.5);border-radius:20px;padding:2em;float:right;right:-50%;position:relative;margin-top:100px;}div.contenido-elegir-personaje h3{text-align:center;color:white;font-size:1.5em;padding:10px;}
+div.elegir-personaje input.personaje{width:10em;height:10em;}
+div.elegir-personaje input.pj-seleccion{width:10em;height:10em;border-color:orange;border-width:3px;}
+div.elegir-personaje table{padding:0.5em;}
+div.elegir-personaje td{padding:0.5em;color:white;font-size:1em;}
+div.descripcion-personaje{color:white;font-size:1.3em;padding:0.5em;text-align:center;}
+div.campos-ocultos{display:none;}

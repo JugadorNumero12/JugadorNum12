@@ -6,10 +6,13 @@
 ?>
 
 <?php
+    Helper::registerStyleFile('habilidades');
+
+/*
     Yii::app()->clientScript->registerLinkTag(
         'stylesheet/less', 'text/css', 
         Yii::app()->request->baseUrl . '/less/habilidades.less'
-    );
+    );*/
     Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/acordeon.js');
 ?>
 

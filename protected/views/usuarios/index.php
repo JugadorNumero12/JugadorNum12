@@ -9,11 +9,14 @@
 -->
 
 <?php
+  Helper::registerStyleFile('inicio');
+/*
   Yii::app()->clientScript->registerLinkTag(
     'stylesheet/less', 'text/css', 
     Yii::app()->request->baseUrl . '/less/inicio.less'
   );
-?>
+*/
+  ?>
   <!-- Escudo del equipo -->
   <div class = "escudo-equipo">
           <h2 class="dashboard-header"> Panel de control </h2>      

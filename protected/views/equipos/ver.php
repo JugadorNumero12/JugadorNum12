@@ -9,10 +9,12 @@
 ?>
 
 <?php
-	Yii::app()->clientScript->registerLinkTag(
+	Helper::registerStyleFile('aficion');
+
+	/*Yii::app()->clientScript->registerLinkTag(
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/aficion.less'
-	);
+	);*/
 ?>
 <!-- codigo HTML -->
 <div id="contenedor-descripcion-equipo">
