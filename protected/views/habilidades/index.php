@@ -32,8 +32,8 @@
                         <b><?php echo $accion['nombre'];?></b>
                     </div>
 
-                    <div class="iconos-datos-habilidad">
-                        <div>
+                    <div>
+                        <div class="dato-habilidad">
                             <?php switch($accion['tipo']){
                                 case Habilidades::TIPO_INDIVIDUAL: ?>
                                     <div>
@@ -69,7 +69,8 @@
                                     <?php break;
                             } ?>
                         </div>
-                        <div>
+
+                        <div class="dato-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero" width="36" height="36">
                             </div>
@@ -77,11 +78,8 @@
                                 <b><?php echo $accion['dinero']; ?></b>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Muestro los recursos de la accion, junto con un icono representativo de la habilidad y un icono que indica el tipo de habilidad -->
-                    <div class="iconos-datos-habilidad">
-                        <div>
+                        <div class="dato-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo" width="36" height="36">
                             </div>
@@ -90,7 +88,7 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="dato-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias" width="36" height="36">
                             </div>
@@ -101,22 +99,22 @@
                     </div>
 
                     <!-- Botones para poder usar o adquirir y para poder ver la habilidad con mas detalle -->
-                    <div class="botones-habilidades">
+                    <div class="botones-habilidad">
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
                                 if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
                                     <!-- El usuario tiene suficientes recursos para poder usar la habilidad -->
-                                    <div class="boton-superior">
+                                    <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>   
                                 <?php }   
                             } else {
                                 //La habilidad no está desbloqueada
                                 if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])){ ?>
-                                    <!-- La habilidad puede adquirirse -->
-                                    <div class="boton-superior">
-                                        <?php echo CHtml::button('Adquirir', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                                    <!-- La habilidad puede desbloquearse -->
+                                    <div>
+                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>     
                                 <?php }
                             }
@@ -125,15 +123,15 @@
                             if (!($usuario->estaDesbloqueada($accion['id_habilidad']))){
                                 if ($accion->puedeDesbloquear(Yii::app()->user->usIdent,$accion['id_habilidad'])){ ?>
                                     <!-- La habilidad puede adquirirse -->
-                                    <div class="boton-superior">
-                                        <?php echo CHtml::button('Adquirir', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                                    <div>
+                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>
                                 <?php }  
                             }
                         } ?>
                         <!-- Botón para poder ver la habilidad con mas detalle -->
-                        <div class="boton-ver-habilidad">
-                            <?php echo CHtml::button('Ver habilidad', array('submit' => array('habilidades/ver', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                        <div>
+                            <?php echo CHtml::button('Detalles', array('submit' => array('habilidades/ver', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                         </div>
                     </div>
                     <div class="clear"></div>
