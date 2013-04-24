@@ -372,15 +372,11 @@ class AccionesController extends Controller
 				// Todo correcto, ejecutar acción de partido
 				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
-<<<<<<< HEAD
 				// EXP: sumar experencia al usuario
          		$usuario->sumarExp(Usuarios::MEDIA_EXP);
 			} 
 			else 
 			{ 
-=======
-			} else { 
->>>>>>> estilo
 				// Tipo inválido
 				$trans->rollback();
 				// Devolver error de tipo inválido
