@@ -122,6 +122,10 @@ class Recursos extends CActiveRecord
 	{
 		try
 		{
+			$animo_nuevo = 0;
+			$dinero_nuevo = 0;
+			$influencias_nuevas = 0;
+
 			$ahora = time();
 
 			$transaction = Yii::app()->db->beginTransaction();
