@@ -1,0 +1,11 @@
+.envoltorio-registro{min-height:100%;height:auto !important;height:100%;margin:0 auto -142px;background-color:white;background-image:url("../images/login/fondo-login.jpg");background-size:cover;width:100%;text-shadow:2px 2px 2px black;}
+.envoltorio2-registro{float:right;right:50%;position:relative;}
+*{margin:0;}
+.footer,.push{height:142px;}
+.pie-pagina-registro{position:relative;width:100%;margin:0 auto;background:transparent;}
+.pie-pagina-registro{position:absolute;left:0;bottom:4px;width:100%;padding:0;color:white;font:0.8em helvetica,arial,sans-serif;text-align:center;}
+.pie-pagina-registro a{color:white;text-decoration:none;}
+#entrada-registro{width:80%;background-color:transparent;padding-top:5em;padding-bottom:0em;color:white;font-size:1.5em;font-weight:bold;}
+.envoltorio-contenido-registro{background-color:rgba(0, 0, 0, 0.5);border-radius:20px;padding:2em;float:right;right:-50%;position:relative;margin-top:100px;}.envoltorio-contenido-registro h3{text-align:center;color:white;font-size:1.5em;padding:10px;}
+.envoltorio-contenido-registro td{padding:5px;}
+.envoltorio-contenido-registro label{text-align:left;color:white;font-size:1.4em;padding:5px;}
