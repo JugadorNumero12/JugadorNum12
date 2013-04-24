@@ -339,8 +339,8 @@ class PartidosController extends Controller
      * @return JSON con los datos necesarios para llevar a cabo la actualización
 	 */
 	public function actionActRecursos($id_usuario)
-	{	
-        return Recursos::actualizaRecursos($id_usuario);
+	{
+        return Recursos::model()->actualizaRecursos($id_usuario);
 	}
 
     /**
