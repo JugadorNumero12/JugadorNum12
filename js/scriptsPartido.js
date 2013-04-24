@@ -7,7 +7,7 @@ function fmtTime (seconds) {
 
 function updateData (recalc) {
   $('#partido-tiempo').text(fmtTime(partido.tiempo));
-  $('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
+  //$('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
   $('#partido-goles-local').text(partido.golesLocal);
   $('#partido-goles-visit').text(partido.golesVisit);
 
@@ -359,8 +359,11 @@ $(document).ready(function(evt){
             $.extend(partido, JSON.parse(data));
             updateData(turnoAct != partido.turno);
 
+            // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica
+            // NUNCA antes
             if (partido.tiempo <= 0) {
-              window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+              // window.location = baseUrl + '/partidos/cronica?id_partido=' + partido.id;
+              window.location = baseUrl + '/partidos/index';
             }
 
           }).always(function(){

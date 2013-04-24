@@ -50,13 +50,14 @@
 			$m = (int)($trp/60);
 			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
 		?></div>
-		<div id="partido-tiempo-turno"><?php
-			$trt = $partido->tiempoRestanteTurno();
-			$s = $trt%60;
-			$m = (int)($trt/60);
-			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
-		?></div>
 		<div id="partido-ambiente"><?php echo $partido->ambiente ?></div>
+		<div id="partido-turno">
+<?php for ($t = Partido::PRIMER_TURNO + 1; $t < Partido::ULTIMO_TURNO; $t++ ): ?>
+			<div id="partido-turno-<?php echo $t ?>"><?php
+				echo ($t == Partido::TURNO_DESCANSO ? 'D' : ($t > Partido::TURNO_DESCANSO ? $t-1 : $t))
+			?></div>
+<?php endfor ?>
+		</div>
 	</div>
 
 	<!-- Información del equipo local -->
