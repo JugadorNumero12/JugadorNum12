@@ -469,6 +469,7 @@ class Usuarios extends CActiveRecord
             /* Posible subir varios niveles */
             while($exp_acc >= $exp_sig_nivel) {
                 $nivel_actual = $nivel_actual + 1;
+                Yii::app()->user->setFlash('nivel', 'Enhorabuena, has subido de nivel');
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
             }
 
