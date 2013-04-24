@@ -276,7 +276,7 @@ class AccionesGrupales extends CActiveRecord
 
         $rec['dinero'] += $partDin;
         $rec['animo'] = min(($actAni + $partAni), $maxAni);
-        //$rec['influencias'] = min(($actInf + $partInf), $maxInf); <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< si al expulsar se regenera igual
+        $rec['influencias'] = min(($actInf + $partInf), $maxInf);
         $rec['influencias_bloqueadas'] = $maxInf - min(($actInf + $partInf), $maxInf);
         $rec->save();
 
