@@ -4,7 +4,14 @@
 @var $seleccionado equipo elegido por el usuario
  */
 ?>
-
+<?php
+	Yii::app()->clientScript->registerLinkTag(
+		'stylesheet/less', 'text/css', 
+		Yii::app()->request->baseUrl . '/less/registroEquipo.less'
+	);
+?>
+<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
 <div class="envoltorio-elegir-equipo">
 
 <div class="contenido-elegir-equipo">

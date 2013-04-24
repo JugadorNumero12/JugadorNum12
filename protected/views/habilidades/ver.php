@@ -5,13 +5,14 @@
 ?>
 <div id="info-habilidad">
 	<div id="info-cabecera">
-		<div id="logo-habilidad">				
+		<div id="logo-habilidad">	
+			<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="100px" height="100px"/>			
 		</div>
 		<div id="nombre-habilidad">
 			<?php echo $habilidad['nombre']; ?>
 		</div>
 		<div id="logo-habilidad">
-			
+			<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="100px" height="100px"/>
 		</div>
 	</div>
 	<div id="info-desbloqueada">
