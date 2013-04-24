@@ -122,6 +122,10 @@ class Recursos extends CActiveRecord
 	{
 		try
 		{
+			$animo_nuevo = 0;
+			$dinero_nuevo = 0;
+			$influencias_nuevas = 0;
+
 			$ahora = time();
 
 			$transaction = Yii::app()->db->beginTransaction();
@@ -164,10 +168,21 @@ class Recursos extends CActiveRecord
 
 			//Finalizar transacción con éxito
 			$transaction->commit();  
+
+			// Devolver recursos nuevos para ser actualizados por ajax en el partido
+			return json_encode(array('influencias' => $influencias_nuevas,
+									'dinero' => $dinero_nuevo,
+									'animo' => $animo_nuevo,
+								));
 		}
 		catch (Exception $e)
 		{
 			$transaction->rollback();
+			// Devolver recursos nuevos para ser actualizados por ajax en el partido
+			return json_encode(array('influencias' => 0,
+									'dinero' => 0,
+									'animo' => 0,
+								));
 			//throw $e;			
 		}	
 	}

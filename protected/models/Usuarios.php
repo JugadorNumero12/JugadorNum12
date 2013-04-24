@@ -469,7 +469,22 @@ class Usuarios extends CActiveRecord
             /* Posible subir varios niveles */
             while($exp_acc >= $exp_sig_nivel) {
                 $nivel_actual = $nivel_actual + 1;
+                Yii::app()->user->setFlash('nivel', 'Enhorabuena, has subido de nivel. Ahora tienes nivel '. $nivel_actual);
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
+
+                //Creamos una notificacion
+                $notificacion = new Notificaciones;
+                $notificacion->fecha = time();
+                $notificacion->mensaje = " Enhorabuena, has subido de nivel. Ahora tienes nivel ". $nivel_actual;
+                $notificacion->imagen = "images/iconos/notificaciones/nivel.png";
+                $notificacion->save();
+
+                //Guardamos la notificacion en ursnotif
+                $usrnotif = new Usrnotif;
+                $usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+                $usrnotif->usuarios_id_usuario = $this->id_usuario;
+                $usrnotif->save();
+                
             }
 
             /* Obtener los nuevos valores de los atributos del personaje:

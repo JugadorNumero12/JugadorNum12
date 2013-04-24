@@ -361,6 +361,8 @@ class AccionesController extends Controller
 				// Todo correcto, ejecutar acción de partido
 				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
+				// EXP: sumar experencia al usuario
+         		$usuario->sumarExp(Usuarios::MEDIA_EXP);
 			} 
 			else 
 			{ 

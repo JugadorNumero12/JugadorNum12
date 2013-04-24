@@ -785,7 +785,7 @@ class Partido
 				//Creamos una notificación de fin de partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
-				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
+				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . " ".$this->goles_local . " - " .$this->goles_visitante." ".Equipos::model()->findByPk($this->id_visitante)->nombre;
 				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
