@@ -211,9 +211,7 @@ class AccionesGrupales extends CActiveRecord
                 // 1. Aumentar recursos a los participantes
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
-                //Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
-
-                Recursos::disminuir_influencias_bloqueadas($participante->usuarios_id_usuario, $participante->influencias_aportadas);
+                Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
                 
                 // 2. Eliminar ese modelo
                 Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));        

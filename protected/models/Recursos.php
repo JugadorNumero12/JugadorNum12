@@ -175,15 +175,12 @@ class Recursos extends CActiveRecord
 	public static function disminuir_influencias_bloqueadas($usr,$influencias_aportadas){
 
 		$u = Usuarios::model()->findByPk($usr);
-
+		if($u == null)return -1;
 		$recursos=$u->recursos;
-		if($recursos === null){
-			throw new CHttpException(404,"Recursos no encontrados. (finalizaGrupal)");
-		}else{
-			$recursos['influencias_bloqueadas']-= $influencias_aportadas;             
-		}
-
-		$recursos->save();
+		if($recursos === null)return -1;
+		$recursos['influencias_bloqueadas']-= $influencias_aportadas;
+		if($recursos->save())return 0;
+		else return -1;
 	}
 
 	/** Funcion auxiliar que modifica la tabla de recursos

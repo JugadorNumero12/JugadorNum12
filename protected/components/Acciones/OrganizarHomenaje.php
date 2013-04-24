@@ -50,7 +50,8 @@ class OrganizarHomenaje extends AccionGrupSingleton
       {
         $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
-        if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+        //if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0)
+        if(Recursos::disminuir_influencias_bloqueadas($usuario,$infAportadas)==0)
         {
           $ret = min($ret,0);
         }

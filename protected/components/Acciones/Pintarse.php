@@ -55,7 +55,8 @@ class Pintarse extends AccionGrupSingleton
         $infAportadas = $participacion->influencias_aportadas;
         $usuario = $participacion->usuarios_id_usuario;
         $ret = min($ret,Recursos::aumentar_recursos($usuario,"animo",Efectos::$datos_acciones['Pintarse']['animo']));
-        $ret = min($ret,Recursos::aumentar_recursos($usuario,"influencias",$infAportadas));
+        //$ret = min($ret,Recursos::aumentar_recursos($usuario,"influencias",$infAportadas));
+        $ret = min($ret,Recursos::disminuir_influencias_bloqueadas($usuario,$infAportadas));
       }
 
       //Finalizar función
