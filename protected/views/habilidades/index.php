@@ -132,7 +132,7 @@
                                 $existeAI = false;
                                 $accionIndividual = NULL;
                                 foreach($accionesIndividuales as $a){
-                                    if($a['habilidades_id_habildad'] == $accion['id_habilidad']){
+                                    if($a['habilidades_id_habilidad'] == $accion['id_habilidad']){
                                         $existeAI = true;
                                         $accionIndividual = $a;
                                     }
