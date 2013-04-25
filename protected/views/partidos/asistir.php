@@ -25,7 +25,15 @@
 		golesLocal: <?php echo $partido->goles_local ?>,
 		golesVisit: <?php echo $partido->goles_visitante ?>,
 		turno: <?php echo $partido->turno ?>,
-		estado: <?php echo $partido->estado ?>
+		estado: <?php echo $partido->estado ?>,
+		equipos: {
+			local: {
+				token: '<?php echo $partido->local->token ?>' 
+			},
+			visitante: {
+				token: '<?php echo $partido->visitante->token ?>'
+			}
+		}
 	});
 
 	info.turnos = {
@@ -52,7 +60,7 @@
 </script>
 
 <div id="partido-dibujo" class="inner-block">
-	Dibujo del partido aquí
+	<img id="partido-dibujo-imagen" alt="Imagen del partido" style="display: none"/>
 </div>
 
 <!-- Marcador e información de los equipos y el estadio -->
@@ -61,16 +69,10 @@
 	<div id="partido-marcador-general">
 		<div id="partido-goles">
 			<span id="partido-goles-local"><?php echo $partido->goles_local ?></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&ndash;&nbsp;
 			<span id="partido-goles-visit"><?php echo $partido->goles_visitante ?></span>
 		</div>
-		<div id="partido-tiempo"><?php
-			$trp = $partido->tiempoRestantePartido();
-			$s = $trp%60;
-			$m = (int)($trp/60);
-			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
-		?></div>
-		<div id="partido-ambiente"><!--<?php echo $partido->ambiente ?>--></div>
+		<!--<div id="partido-ambiente"><?php echo $partido->ambiente ?></div>-->
 		<div id="partido-turnos">
 <?php for ($t = Partido::PRIMER_TURNO + 1; $t <= Partido::ULTIMO_TURNO; $t++ ):
 	if ( $t < Partido::TURNO_DESCANSO ) {
@@ -90,11 +92,17 @@
 			?></div>
 <?php endfor ?>
 		</div>
+		<div id="partido-tiempo"><?php
+			$trp = $partido->tiempoRestantePartido();
+			$s = $trp%60;
+			$m = (int)($trp/60);
+			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
+		?></div>
 	</div>
 
 	<!-- Información del equipo local -->
 	<div id="partido-equipo-local">
-		<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>
+		<!--<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqLoc->token . '.png' ?>" height="96"/></div>
 		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqLoc->nivel_equipo ?></div>
@@ -103,7 +111,7 @@
 
 	<!-- Información del equipo visitante -->
 	<div id="partido-equipo-visit">
-		<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>
+		<!--<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqVis->token . '.png' ?>" height="96" /></div>
 		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqVis->nivel_equipo ?></div>
@@ -125,22 +133,22 @@
 
 	<div id="partido-info-datos" class="partido-info-content">
 		<!-- Datos  -->
-		Turno: <?php echo $partido->turno ?></br>
-		Estado: <?php echo $partido->estado ?></br>
-        Ambiente: <?php echo $partido->ambiente ?></br>
-        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?></br>
-  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?></br>
-  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?></br>
-  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?></br>
-  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?></br>
-  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?></br>
-  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?></br>
-  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?></br>
-  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?></br>
-  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?></br>
+		<b>Turno: </b><?php echo $partido->turno ?></br>
+		<b>Estado: </b><?php echo $partido->estado ?></br>
+        <b>Ambiente: </b><?php echo $partido->ambiente ?></br>
+        <b>Nivel local: </b><?php echo $partido->nivel_local ?></br>
+  		<b>Nivel visitante: </b><?php echo $partido->nivel_visitante ?></br>
+  		<b>Indice ofensivo local: </b><?php echo $partido->ofensivo_local ?></br>
+  		<b>Indice ofensivo visitante: </b><?php echo $partido->ofensivo_visitante ?></br>
+  		<b>Indice defensivo local: </b><?php echo $partido->defensivo_local ?></br>
+  		<b>Indice defensivo visitante: </b><?php echo $partido->defensivo_visitante ?></br>
+  		<b>Aforo local: </b><?php echo $partido->aforo_local ?></br>
+  		<b>Aforo visitante: </b><?php echo $partido->aforo_visitante ?></br>
+  		<b>Moral local: </b><?php echo $partido->moral_local ?></br>
+  		<b>Moral visitante: </b><?php echo $partido->moral_visitante ?></br>
 	</div>
 	<div id="partido-info-cronica" class="partido-info-content">
-		<pre><?php echo $partido->cronica ?></pre>
+		<pre id="pre-c-p"><?php echo $partido->cronica ?></pre>
 	</div>
 	<div id="partido-info-chat" class="partido-info-content">
 <?php 

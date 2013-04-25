@@ -321,6 +321,19 @@ class PartidosController extends Controller
 				'estado' => (int) $partido->estado,
 				'tiempo' => (int) $partido->tiempoRestantePartido(),
 				'tiempoTurno' => (int) $partido->tiempoRestanteTurno(),
+				// Agregados para la cronica y estado del partido
+				'cronica' => (string) $partido->cronica,
+				'ambiente' => (int) $partido->ambiente,
+				'nivel_local' => (int) $partido->nivel_local,
+				'nivel_visitante' => (int) $partido->nivel_visitante,
+				'ofensivo_local' => (int) $partido->ofensivo_local,
+				'ofensivo_visitante' => (int) $partido->ofensivo_visitante,
+				'defensivo_local' => (int) $partido->defensivo_local,
+				'defensivo_visitante' => (int) $partido->defensivo_visitante,		
+				'aforo_local' => (int) $partido->aforo_local,
+				'aforo_visitante' => (int) $partido->aforo_visitante,
+				'moral_local' => (int) $partido->moral_local,
+				'moral_visitante' => (int) $partido->moral_visitante,
 				//'estado' => $partido
 			);
 

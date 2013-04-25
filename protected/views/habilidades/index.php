@@ -19,8 +19,27 @@
 <h1 class="titulo-habilidades">Habilidades</h1>
 
 <div class="accordion">
-    <?php for ($i = 1; $i <= 4; $i++){ ?>
-    <h3 class="ui-accordion-header-active"><b>Nivel <?php echo $i; ?></b></h3>
+    <?php for ($i = 1; $i <= 4; $i++){
+        $categoria_hab = ""; 
+        switch ($i)
+        {
+            case 1:
+                $categoria_hab = "basico";
+                break;
+            case 2:
+                $categoria_hab = "medio";
+                break;
+            case 3:
+                $categoria_hab = "alto";
+                break;
+            case 4:
+                $categoria_hab = "ultimate";
+                break;
+            default:
+                break;
+        }
+        ?>
+    <h3 class="ui-accordion-header-active"><b>Nivel <?php echo $categoria_hab; ?></b></h3>
     <div>
         <div class="habilidades">
         <?php foreach ( $acciones as $accion ){ ?>
@@ -108,8 +127,9 @@
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
-                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
-                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad -->
+                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
+                                    && $usuario->sePuedeUsar($accion['id_habilidad'], $accion['tipo'])   ){ ?>
+                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
                                     <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>   
@@ -146,3 +166,4 @@
         </div>
     </div>
     <?php } ?>
+</div>
