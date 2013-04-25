@@ -1,8 +1,12 @@
 <?php
+	Helper::registerStyleFile('partido');
+
+	/*
 	Yii::app()->clientScript->registerLinkTag(
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/partido.less'
 	);
+	*/
 	Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsPartido.js');
 ?>
 <script type="text/javascript">
@@ -104,19 +108,19 @@
 	</div>
 	<div id="partido-info-datos" class="partido-info-content">
 		<!-- Datos  -->
-		Turno: <?php echo $partido->turno ?>
-		Estado: <?php echo $partido->estado ?>
-        Ambiente: <?php echo $partido->ambiente ?>
-        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?>
-  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?>
-  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?>
-  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?>
-  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?>
-  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?>
-  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?>
-  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?>
-  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?>
-  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?>
+		Turno: <?php echo $partido->turno ?></br>
+		Estado: <?php echo $partido->estado ?></br>
+        Ambiente: <?php echo $partido->ambiente ?></br>
+        Nivel de <?php echo $eqLoc->nombre ?>: <?php echo $eqLoc->nivel_equipo ?></br>
+  		Nivel de <?php echo $eqVis->nombre ?>: <?php echo $eqVis->nivel_equipo ?></br>
+  		Indice ofensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->ofensivo_local ?></br>
+  		Indice ofensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->ofensivo_visitante ?></br>
+  		Indice defensivo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->defensivo_local ?></br>
+  		Indice defensivo de <?php echo $eqVis->nombre ?>: <?php echo $partido->defensivo_visitante ?></br>
+  		Aforo de <?php echo $eqLoc->nombre ?>: <?php echo $partido->aforo_local ?></br>
+  		Aforo de <?php echo $eqVis->nombre ?>: <?php echo $partido->aforo_visitante ?></br>
+  		Moral de <?php echo $eqLoc->nombre ?>: <?php echo $partido->moral_local ?></br>
+  		Moral de <?php echo $eqVis->nombre ?>: <?php echo $partido->moral_visitante ?></br>
         
 	</div>
 	<div id="partido-info-cronica" class="partido-info-content">
@@ -125,7 +129,7 @@
 	<div id="partido-info-chat" class="partido-info-content">
 <?php 
     $this->widget('YiiChatWidget', array(
-        'chat_id'    => '123',                   // a chat identificator
+        'chat_id'    => $partido->id_partido,                   // a chat identificator
         'identity'   => Yii::app()->user->usIdent,   // the user
         'selector'   => '#partido-info-chat',                // were it will be inserted
         'minPostLen' => 1,                    // min and

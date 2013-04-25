@@ -294,5 +294,25 @@ class Helper
 			}
 		}
 	}
+
+	/**
+	 * Método auxiliar para las vistas que carga un fichero CSS/LESS. La elección
+	 * dependerá del modo: Si la aplicación se ejecuta en modo desarrollo, carga
+	 * un fichero LESS. Si no, cargaun fichero CSS.
+	 *
+	 * @param $file string Nombre del fichero sin extensión
+	 */
+	public static function registerStyleFile ($file) {
+		if (defined('YII_DEBUG') && YII_DEBUG) {
+			Yii::app()->clientScript->registerLinkTag(
+				'stylesheet/less', 'text/css', 
+				Yii::app()->request->baseUrl . '/less/' . $file . '.less'
+			);
+		} else {
+			Yii::app()->clientScript->registerCssFile(
+				Yii::app()->request->baseUrl . '/css/' . $file . '.css'
+			);
+		}
+	}
 }
 

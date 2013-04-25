@@ -6,10 +6,13 @@
 ?>
 
 <?php
+    Helper::registerStyleFile('habilidades');
+
+/*
     Yii::app()->clientScript->registerLinkTag(
         'stylesheet/less', 'text/css', 
         Yii::app()->request->baseUrl . '/less/habilidades.less'
-    );
+    );*/
     Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/acordeon.js');
 ?>
 
@@ -33,7 +36,7 @@
                     </div>
 
                     <div>
-                        <div class="dato-habilidad">
+                        <div class="tipo-habilidad">
                             <?php switch($accion['tipo']){
                                 case Habilidades::TIPO_INDIVIDUAL: ?>
                                     <div>
@@ -70,7 +73,7 @@
                             } ?>
                         </div>
 
-                        <div class="dato-habilidad">
+                        <div class="recursos-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero" width="36" height="36">
                             </div>
@@ -79,7 +82,7 @@
                             </div>
                         </div>
 
-                        <div class="dato-habilidad">
+                        <div class="recursos-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo" width="36" height="36">
                             </div>
@@ -88,7 +91,7 @@
                             </div>
                         </div>
 
-                        <div class="dato-habilidad">
+                        <div class="recursos-habilidad">
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias" width="36" height="36">
                             </div>
@@ -112,9 +115,9 @@
                             } else {
                                 //La habilidad no está desbloqueada
                                 if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])){ ?>
-                                    <!-- La habilidad puede adquirirse -->
-                                    <div class="boton-superior">
-                                        <?php echo CHtml::button('Adquirir', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                                    <!-- La habilidad puede desbloquearse -->
+                                    <div>
+                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>     
                                 <?php }
                             }
