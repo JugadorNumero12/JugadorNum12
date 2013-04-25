@@ -11,6 +11,27 @@ function updateData (recalc) {
   $('#partido-goles-local').text(partido.golesLocal);
   $('#partido-goles-visit').text(partido.golesVisit);
 
+  //Rellenar crónica
+  $('#pre-c-p').text(partido.cronica);
+
+  //Rellenar datos
+  var datosPr =
+    "<b>Turno: </b>"+partido.turno+"</br>"+
+    "<b>Estado: </b>"+partido.estado+"</br>"+
+    "<b>Ambiente: </b>"+partido.ambiente+"</br>"+
+    "<b>Nivel local: </b>"+partido.nivel_local+"</br>"+
+    "<b>Nivel visitante: </b>"+partido.nivel_visitante+"</br>"+
+    "<b>Indice ofensivo local: </b>"+partido.ofensivo_local+"</br>"+
+    "<b>Indice ofensivo visitante: </b>"+partido.ofensivo_visitante+"</br>"+
+    "<b>Indice defensivo local: </b>"+partido.defensivo_local+"</br>"+
+    "<b>Indice defensivo visitante: </b>"+partido.defensivo_visitante+"</br>"+
+    "<b>Aforo local: </b>"+partido.aforo_local+"</br>"+
+    "<b>Aforo visitante: </b>"+partido.aforo_visitante+"</br>"+
+    "<b>Moral local: </b>"+partido.moral_local+"</br>"+
+    "<b>Moral visitante: </b>"+partido.moral_visitante+"</br>";
+  $('#partido-info-datos').html(datosPr);
+
+
   for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
     var turnoDiv = $('#partido-turno-'+ t);
     turnoDiv.removeClass('turno-anterior turno-actual turno-siguiente');
@@ -19,15 +40,41 @@ function updateData (recalc) {
 
     } else if (t > partido.turno) {
       turnoDiv.addClass('turno-siguiente');
-      
+
     } else {
       turnoDiv.addClass('turno-actual');
     }
   }
 
+  updateDrawing();
+
   if (recalc) {
     updateState(partido.estado);
   }
+}
+
+function updateDrawing () {
+  var img = $('#partido-dibujo-imagen');
+
+  // Los equipos en el orden que aparecen en la carpeta
+  var swapped = false;
+  var teams = [partido.equipos.local.token, partido.equipos.visitante.token];
+  if (teams[0] > teams[1]) {
+    swapped = true;
+
+    var tmp = teams[0];
+    teams[0] = teams[1];
+    teams[1] = tmp;
+  }
+
+  // El estado actual, atendiendo al orden modificado
+  var state = (swapped) ? -partido.estado : partido.estado;
+
+  imgurl = baseUrl + '/images/dibujos_partido/' + teams[0] + '_' + teams[1] + '/estado_' + state + '.jpg';
+  console.log(imgurl);
+
+  img.show();
+  img.attr('src', imgurl);
 }
 
 function updateState (state) {
@@ -406,6 +453,7 @@ function ejecutarAP(id) {
     var json = JSON.parse(data);
     if ( json.ok ) {
       $("#ac-p-error").text(json.message);
+      actRecursosAj();
     } else {
       $("#ac-p-error").text(json.error);
     }
