@@ -217,19 +217,23 @@ class PartidosController extends Controller
 		//Comprobacion de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null)) {
 			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
+			$this-> redirect(array('partidos/index'));
 		}
 		if ($partido->turno <= Partido::PRIMER_TURNO ||  $partido->turno > Partido::ULTIMO_TURNO) {
-			Yii::app()->user->setFlash('partido', 'El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido).');
+			Yii::app()->user->setFlash('partido', 'El partido no está en juego.');
+			$this-> redirect(array('partidos/index'));
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
         // TODO eliminar esta restriccion
 		if (($partido->equipos_id_equipo_1 != $id_equipo_usuario) && ($partido->equipos_id_equipo_2 != $id_equipo_usuario))  {		
-			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido).');							
+			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo.');							
+			$this-> redirect(array('partidos/index'));
 		} else {
             // Un usuario solo puede asistir al próximo partido de su equipo
 			if($equipoUsuario->partidos_id_partido != $id_partido ) {			
-				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
+				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo.');
+				$this-> redirect(array('partidos/index'));
 			} 
 			else 
 			{
