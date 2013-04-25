@@ -289,11 +289,13 @@ class AccionesController extends Controller
 			$habilidad = Habilidades::model()->findByPk($id_accion);
 
 			//Habilidad no encontrada
-			if ( $habilidad === null ) 
-			{			
+			if ( $habilidad === null ) {			
 				$trans->rollback();
 				// Devolver error de acción no encontrada
-				$data = array('codigo' => (int) 0);
+				$data = array(
+					'ok'    => false,
+					'error' => 'Habilidad incorrecta'
+				);
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
 			}
@@ -307,7 +309,10 @@ class AccionesController extends Controller
 			{				
 				$trans->rollback();
 				// Devolver error de habilidad no desbloqueada
-				$data = array('codigo' => (int) 1);
+				$data = array(
+					'ok'    => false,
+					'error' => 'Acci&oacute;n no desbloqueada'
+				);
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
 			} 
@@ -323,7 +328,10 @@ class AccionesController extends Controller
 			{			
 				$trans->rollback();
 				// Devolver error de recursos insuficientes
-				$data = array('codigo' => (int) 2);
+				$data = array(
+					'ok'    => false,
+					'error' => 'Recursos insuficientes'
+				);				
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
 			}
@@ -331,17 +339,18 @@ class AccionesController extends Controller
 			$usuario = Usuarios::model()->findByPk($id_usuario);
 
 			//Si tenemos suficientes recursos comprobamos el tipo de acción
-			if ($habilidad['tipo'] == Habilidades::TIPO_PARTIDO ) 
-			{
+			if ($habilidad['tipo'] == Habilidades::TIPO_PARTIDO )  {
 				//Sacar id de equipo y partido para poder ejecutar la accion				
 				$id_equipo=Yii::app()->user->usAfic;
 				$equipo=Equipos::model()->findByAttributes(array('id_equipo' => $id_equipo)); 
 
-				if($equipo === null) 
-				{
+				if($equipo === null)  {
 					$trans->rollback();
 					// Devolver error de equipo incorrecto
-					$data = array('codigo' => (int) 3);
+					$data = array(
+						'ok'    => false,
+						'error' => 'Equipo incorrecto'
+					);			
 					echo CJavaScript::jsonEncode($data);
 					Yii::app()->end();
 				}
@@ -349,11 +358,13 @@ class AccionesController extends Controller
 				$id_partido = $siguientepartido->id_partido;
 
 				// Comprobar si el partido está en juego
-				if ($siguientepartido->turno <= Partido::PRIMER_TURNO ||  $siguientepartido->turno > Partido::ULTIMO_TURNO)
-				{
+				if ($siguientepartido->turno <= Partido::PRIMER_TURNO ||  $siguientepartido->turno > Partido::ULTIMO_TURNO) {
 					$trans->rollback();
 					// Devolver error de partido incorrecto
-					$data = array('codigo' => (int) 4);
+					$data = array(
+						'ok'    => false,
+						'error' => 'Partido incorrecto'
+					);			
 					echo CJavaScript::jsonEncode($data);
 					Yii::app()->end();
 				}
@@ -369,7 +380,10 @@ class AccionesController extends Controller
 				// Tipo inválido
 				$trans->rollback();
 				// Devolver error de tipo inválido
-				$data = array('codigo' => (int) 5);
+				$data = array(
+					'ok'    => false,
+					'error' => 'Acción incorrecta'
+				);
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
 			}
@@ -377,8 +391,11 @@ class AccionesController extends Controller
 			// Finalizar transacción
 			$trans->commit();
 
-			// Devolver error de acción no encontrada
-			$data = array('codigo' => (int) 6);
+			// Todo correcto
+			$data = array(
+				'ok' => true,
+				'message' => 'Acción ejecutada correctamente'
+			);
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
 		} 
@@ -386,7 +403,10 @@ class AccionesController extends Controller
 		{
 			$trans->rollback();
 			// Devolver error general
-			$data = array('codigo' => (int) 7);
+				$data = array(
+					'ok'    => false,
+					'error' => 'Error al ejecutar la acción'
+				);
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
 	}
