@@ -88,22 +88,22 @@ TRUNCATE `acciones_individuales`;
  -- ----------------------------------
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
- -- rojos
+ -- negros
  (1, 1, 0, 0, 0, 0, 0),
  -- verdes
  (2, 3, 0, 0, 0, 0, 0),
- -- negros
- (3, 2, 0, 0, 0, 0, 0),
  -- blancos
- (4, 4, 0, 0, 0, 0, 0),
+ (3, 8, 0, 0, 0, 0, 0),
  -- azules
- (5, 5, 0, 0, 0, 0, 0),
+ (4, 4, 0, 0, 0, 0, 0),
  -- rosas
- (6, 6, 0, 0, 0, 0, 0),
+ (5, 5, 0, 0, 0, 0, 0),
  -- naranjas
- (7, 7, 0, 0, 0, 0, 0),
+ (6, 6, 0, 0, 0, 0, 0),
  -- amarillos
- (8, 8, 0, 0, 0, 0, 0);
+ (7, 7, 0, 0, 0, 0, 0),
+ -- rojos
+ (8, 2, 0, 0, 0, 0, 0);
 
 TRUNCATE `desbloqueadas`;
 /*INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
@@ -130,14 +130,15 @@ TRUNCATE `desbloqueadas`;
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 5),
+ (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7)
  (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
  (0, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
  (0, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
  (0, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
  (0, 'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
  (0, 'Amarillos','amarillos',1, 3000, 350, 10, 6, 6),
- (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7);
+ (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 5);
+
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
