@@ -140,7 +140,7 @@
   		<b>Moral visitante: </b><?php echo $partido->moral_visitante ?></br>
 	</div>
 	<div id="partido-info-cronica" class="partido-info-content">
-		<pre><?php echo $partido->cronica ?></pre>
+		<pre id="pre-c-p"><?php echo $partido->cronica ?></pre>
 	</div>
 	<div id="partido-info-chat" class="partido-info-content">
 <?php 
