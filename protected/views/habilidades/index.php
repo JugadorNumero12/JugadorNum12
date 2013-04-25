@@ -3,6 +3,7 @@
 // @var $recursosUsuario
 // @var $accionesDesbloqueadas
 // @var $usuario
+// @var $datosVista
 ?>
 
 <?php

@@ -49,7 +49,8 @@
 										?>
 			</p>
 		<hr>
-			<p><b>Descripci&oacute;n:</b></p><p> <?php echo $habilidad['descripcion']; ?></p>
+		<p><b>Descripci&oacute;n:</b></p><p> <?php echo $habilidad['descripcion']; ?></p>
+
 		<?php if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL
 					|| $habilidad['tipo'] == Habilidades::TIPO_GRUPAL
 					|| $habilidad['tipo'] == Habilidades::TIPO_PARTIDO)
@@ -64,6 +65,22 @@
 						?>
 						</p>
 				<?php } ?>
+
+ 		<hr>
+		<p><b>Condiciones necesarias para desbloquear la habilidad:</b></p>
+		<p> Nivel: <?php echo $nivel; ?> </p>
+		<p>
+			Habilidades previamente desbloqueadas necesarias:
+			<?php
+				if (count($requisitos) == 0){
+					echo "Ninguna";
+				} else { 
+					foreach ($requisitos as $h){ ?>
+						<p> <?php echo "- ".$h; ?></p>
+					<?php }
+				} ?>	
+		</p>
+
 		<?php
 				if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL)
 				{ ?>
