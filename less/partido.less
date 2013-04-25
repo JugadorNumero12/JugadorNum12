@@ -2,19 +2,25 @@
 
 #contenido 
 {
-	@DrawingWidth: (@ContentWidth - @InnerBlockMargin) * 4 / 7 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
-	@ScoreboardWidth: (@ContentWidth - @InnerBlockMargin) * 3 / 7 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	//@DrawingWidth: (@ContentWidth - @InnerBlockMargin) * 4 / 7 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+	//@ScoreboardWidth: (@ContentWidth - @InnerBlockMargin) * 3 / 7 - @InnerBlockPadding*2 - @InnerBlockBorder*2;
+
+	@DrawingWidth: 360px;
+	@ScoreboardWidth: @ContentWidth - @DrawingWidth - @InnerBlockMargin - @InnerBlockPadding*4 - @InnerBlockBorder*4;
 	@ScoreboardTeamWidth: (@ScoreboardWidth - @InnerBlockPadding) / 2 - 2;
 
 	#partido-dibujo {
 		float: left;
 		width: @DrawingWidth;
+		height: 240px;
+		margin-bottom: @InnerBlockMargin;
 	}
 
 	#partido-marcador {
 		float: right;
 		width: @ScoreboardWidth;
 		margin-bottom: @InnerBlockMargin;
+		height: 240px;
 
 		#partido-marcador-general {
 			width: @ScoreboardWidth;

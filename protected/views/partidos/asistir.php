@@ -25,7 +25,15 @@
 		golesLocal: <?php echo $partido->goles_local ?>,
 		golesVisit: <?php echo $partido->goles_visitante ?>,
 		turno: <?php echo $partido->turno ?>,
-		estado: <?php echo $partido->estado ?>
+		estado: <?php echo $partido->estado ?>,
+		equipos: {
+			local: {
+				token: '<?php echo $partido->local->token ?>' 
+			},
+			visitante: {
+				token: '<?php echo $partido->visitante->token ?>'
+			}
+		}
 	});
 
 	info.turnos = {
@@ -52,7 +60,7 @@
 </script>
 
 <div id="partido-dibujo" class="inner-block">
-	Dibujo del partido aquí
+	<img id="partido-dibujo-imagen" alt="Imagen del partido" style="display: none"/>
 </div>
 
 <!-- Marcador e información de los equipos y el estadio -->
