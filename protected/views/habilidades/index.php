@@ -3,7 +3,8 @@
 // @var $recursosUsuario
 // @var $accionesDesbloqueadas
 // @var $usuario
-// @var $datosVista
+// @var $accionesGrupales
+// @var $accionesIndividuales
 ?>
 
 <?php
@@ -25,7 +26,7 @@
         switch ($i)
         {
             case 1:
-                $categoria_hab = "basico";
+                $categoria_hab = "b&aacute;sico";
                 break;
             case 2:
                 $categoria_hab = "medio";
@@ -128,8 +129,16 @@
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
+                                $existeAI = false;
+                                $accionIndividual = NULL;
+                                foreach($accionesIndividuales as $a){
+                                    if($a['habilidades_id_habildad'] == $accion['id_habilidad']){
+                                        $existeAI = true;
+                                        $accionIndividual = $a;
+                                    }
+                                }
                                 if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
-                                    /*&& $usuario->sePuedeUsar($accion['id_habilidad'], $accion['tipo'])  */ ){ ?>
+                                    && ($existeAI && ($accionIndividual['cooldown'] < time() && $accionIndividual['devuelto'] == 1))){ ?>
                                     <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
                                     <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>

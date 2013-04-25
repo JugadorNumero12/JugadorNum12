@@ -59,6 +59,9 @@ class HabilidadesController extends Controller
 		//Sacar el nivel del usuario
 		$usuario = Usuarios::model()->findByPK(Yii::app()->user->usIdent);
 
+		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$accionesIndividuales = AccionesIndividuales::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+
 		//Comprobaciones de seguridad
 		/*if (($accionesDesbloqueadas === null) || ($recursosUsuario === null)) {
 			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
@@ -81,7 +84,7 @@ class HabilidadesController extends Controller
 		$acciones = Habilidades::model()->findAll();
 
 		//Envía los datos para que los muestre la vista
-		$this->render('index', array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'usuario'=>$usuario));
+		$this->render('index', array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'usuario'=>$usuario, 'accionesGrupales'=>$accionesGrupales, 'accionesIndividuales'=>$accionesIndividuales));
 	}
 
 
@@ -117,6 +120,8 @@ class HabilidadesController extends Controller
 				$desb = true;
 			}
 		}
+
+
 
 		//$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
 
