@@ -5,7 +5,7 @@ function fmtTime (seconds) {
   return (m<10 ? '0'+m : m) + ':' + (s<10 ? '0'+s : s);
 }
 
-function updateData (recalc) {
+function updateData (recalc,redraw) {
   $('#partido-tiempo').text(fmtTime(partido.tiempo));
   //$('#partido-tiempo-turno').text(fmtTime(partido.tiempoTurno));
   $('#partido-goles-local').text(partido.golesLocal);
@@ -46,7 +46,9 @@ function updateData (recalc) {
     }
   }
 
-  updateDrawing();
+  if (redraw) {
+    updateDrawing();
+  }
 
   if (recalc) {
     updateState(partido.estado);
@@ -417,8 +419,17 @@ $(document).ready(function(evt){
 
           }).done(function(data,status){
             var turnoAct = partido.turno;
+            var golLocAct = partido.golesLocal;
+            var golVisAct = partido.golesVisit;
+
             $.extend(partido, JSON.parse(data));
-            updateData(turnoAct != partido.turno);
+
+            var recalc = turnoAct != partido.turno;
+            updateData(recalc, recalc);
+
+            if (golLocAct != partido.golesLocal || golVisAct != partido.golesVisit) {
+              
+            }
 
             // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica
             // NUNCA antes
@@ -433,11 +444,11 @@ $(document).ready(function(evt){
         }
       }
 
-      updateData(false);
+      updateData(false, false);
     }, 1000);
   }
 
-  updateData(true);
+  updateData(true, true);
 
   // Función para ocultar div de errores
   $("#ac-p-error").click(function (){
