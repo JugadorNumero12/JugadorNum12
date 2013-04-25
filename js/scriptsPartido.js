@@ -29,7 +29,7 @@ function updateData (recalc) {
     "<b>Aforo visitante: </b>"+partido.aforo_visitante+"</br>"+
     "<b>Moral local: </b>"+partido.moral_local+"</br>"+
     "<b>Moral visitante: </b>"+partido.moral_visitante+"</br>";
-  //$('#partido-info-datos').text(datosPr);
+  $('#partido-info-datos').html(datosPr);
 
 
   for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
