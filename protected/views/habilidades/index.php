@@ -147,7 +147,7 @@
                                 <?php }   
                             } else {
                                 //La habilidad no está desbloqueada
-                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad']) && $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
+                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])) { ?>
                                     <!-- La habilidad puede desbloquearse -->
                                     <div>
                                         <?php echo CHtml::button('Desbloquear', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
@@ -157,7 +157,7 @@
                         } ?>
                         <?php if (($accion['tipo']==Habilidades::TIPO_PASIVA) || ($accion['tipo']==Habilidades::TIPO_PARTIDO)){
                             if (!($usuario->estaDesbloqueada($accion['id_habilidad']))){
-                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent,$accion['id_habilidad']) && $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
+                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent,$accion['id_habilidad'])) { ?>
                                     <!-- La habilidad puede adquirirse -->
                                     <div>
                                         <?php echo CHtml::button('Desbloquear', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
