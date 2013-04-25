@@ -89,24 +89,24 @@ TRUNCATE `acciones_individuales`;
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
  -- rojos
- (1, 1, 12, 4, 0, 0, 4),
+ (1, 1, 0, 0, 0, 0, 0),
  -- verdes
- (2, 3, 9, 0, 2, 1, 2),
+ (2, 3, 0, 0, 0, 0, 0),
  -- negros
- (3, 2, 10, 1, 1, 1, -1),
+ (3, 2, 0, 0, 0, 0, 0),
  -- blancos
- (4, 4, 7, 0, 2, 1, -2),
+ (4, 4, 0, 0, 0, 0, 0),
  -- azules
- (5, 5, 5, 1, 2, 0, 2),
+ (5, 5, 0, 0, 0, 0, 0),
  -- rosas
- (6, 6, 4, 1, 1, 1, 1),
+ (6, 6, 0, 0, 0, 0, 0),
  -- naranjas
- (7, 7, 2, 0, 2, 3, -3),
+ (7, 7, 0, 0, 0, 0, 0),
  -- amarillos
- (8, 8, 1, 0, 1, 4, -5);
+ (8, 8, 0, 0, 0, 0, 0);
 
 TRUNCATE `desbloqueadas`;
-INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
+/*INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
  -- desbloqueadas de Xaby (empresario)
  (3, 1), (4, 1), (5, 1), (6, 1), (9, 1), (11, 1), 
  -- desbloqueadas de marina (movedora)
@@ -126,18 +126,18 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
  -- desbloqueadas de alex (movedora)
  (3, 9), (4, 9), (5, 9), (6, 9), (9, 9), (11, 9), 
  -- desbloqueadas de samu (ultra)
- (3, 10), (4, 10), (5, 10), (6, 10), (9, 10), (11, 10);
+ (3, 10), (4, 10), (5, 10), (6, 10), (9, 10), (11, 10);*/
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
- (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
+ (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 5),
  (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
+ (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
  (0, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
  (0, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
  (0, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
- (0,'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
- (0,'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
+ (0, 'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
+ (0, 'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
@@ -214,7 +214,7 @@ TRUNCATE `partidos`;
  -- empresarios: 	 5000 		16 			6 			8 				2 			30 		50 		1
  -- ---------------------------------------------------------------------------------------------------------
 TRUNCATE `recursos`;
-INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
+/*INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
  -- xaby: empresario
  (1, 5000, 16, 6, 8, 2, 30, 50, 1),
  -- marina: movedora
@@ -234,7 +234,7 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
  -- alex: movedora
  (9, 600, 2, 11, 12, 3, 150, 250, 9),
  -- samu: ultra
- (10, 2000, 5, 2, 2, 1, 300, 400, 15);
+ (10, 2000, 5, 2, 2, 1, 300, 400, 15);*/
 
  -- ----------------------
  -- Recuento de jugadores
@@ -244,7 +244,7 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
  -- ultras: 4
  -- ----------------------
 TRUNCATE `usuarios`;
-INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`, `exp`, `exp_necesaria`) VALUES
+/*INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`, `exp`, `exp_necesaria`) VALUES
  -- xaby: empresario
  (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 1, 0, 550),
  -- marina: movedora
@@ -264,7 +264,7 @@ INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje
  -- alex: movedora
  (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 1, 0, 550),
  -- samu: ultra
- (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 1, 0, 550);
+ (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 1, 0, 550);*/
 
  SET FOREIGN_KEY_CHECKS = 1; 
 
