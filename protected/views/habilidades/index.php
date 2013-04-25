@@ -138,7 +138,7 @@
                                     }
                                 }
                                 if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
-                                    && ($existeAI && ($accionIndividual['cooldown'] < time() && $accionIndividual['devuelto'] == 1))){ ?>
+                                    && (($existeAI && ($accionIndividual['cooldown'] < time() && $accionIndividual['devuelto'] == 1)) || !$existeAI) ){ ?>
                                     <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
                                     <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
