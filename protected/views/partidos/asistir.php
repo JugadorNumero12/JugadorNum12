@@ -61,16 +61,10 @@
 	<div id="partido-marcador-general">
 		<div id="partido-goles">
 			<span id="partido-goles-local"><?php echo $partido->goles_local ?></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&ndash;&nbsp;
 			<span id="partido-goles-visit"><?php echo $partido->goles_visitante ?></span>
 		</div>
-		<div id="partido-tiempo"><?php
-			$trp = $partido->tiempoRestantePartido();
-			$s = $trp%60;
-			$m = (int)($trp/60);
-			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
-		?></div>
-		<div id="partido-ambiente"><!--<?php echo $partido->ambiente ?>--></div>
+		<!--<div id="partido-ambiente"><?php echo $partido->ambiente ?></div>-->
 		<div id="partido-turnos">
 <?php for ($t = Partido::PRIMER_TURNO + 1; $t <= Partido::ULTIMO_TURNO; $t++ ):
 	if ( $t < Partido::TURNO_DESCANSO ) {
@@ -90,11 +84,17 @@
 			?></div>
 <?php endfor ?>
 		</div>
+		<div id="partido-tiempo"><?php
+			$trp = $partido->tiempoRestantePartido();
+			$s = $trp%60;
+			$m = (int)($trp/60);
+			echo ($m<10 ? '0'.$m : $m) . ':' . ($s<10 ? '0'.$s : $s);
+		?></div>
 	</div>
 
 	<!-- Información del equipo local -->
 	<div id="partido-equipo-local">
-		<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>
+		<!--<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqLoc->token . '.png' ?>" height="96"/></div>
 		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqLoc->nivel_equipo ?></div>
@@ -103,7 +103,7 @@
 
 	<!-- Información del equipo visitante -->
 	<div id="partido-equipo-visit">
-		<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>
+		<!--<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqVis->token . '.png' ?>" height="96" /></div>
 		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqVis->nivel_equipo ?></div>

@@ -24,10 +24,13 @@
 
 // Envoltorio
 #envoltorio-main {
-    margin: 0 auto;
-    padding: 0;
+    position: absolute;
 
-    padding-top: @BarraSupAlto;
+    left: 50%;
+
+    margin: 0;
+    margin-left: (-960px / 2);
+    padding: 0;
 
     width: 960px;
     min-height: 100%;
@@ -36,6 +39,14 @@
 
     background-color: fade(white, 50%);
     .box-shadow(0 0 32px white);
+
+    .top-padding {
+        height: @BarraSupAlto;
+    }
+
+    .bottom-padding {
+        height: (@FooterHeight + @TopBlockPadding*2 + @TopBlockMargin*2 + @TopBlockBorder*2);
+    }
 
     #clasificacion {
     	width: 960px - (@TopBlockExtras);
@@ -97,31 +108,38 @@
 
 
 //PIE DE PAGINA
-* {
-    margin: 0; //Importante para que el pie de pagina se vea abajo siempre
-}
 
 .pie-pagina {
-	position: relative;
-	width: 100%;
-	margin: 0 auto;
-	background: transparent;
-	clear: both;
-}
+    position: absolute;
+    bottom: 0;
 
-.pie-pagina{
-	left: 0;
-	bottom: 4px;
-	width: 100%;
-	padding: 0;
-	color: white;
-	font: 0.8em helvetica,arial,sans-serif;
-	text-align: center;
-}
+    width: @TotalWidth;
+    height: @FooterHeight;
 
-.pie-pagina a {
-	color: white;
-	text-decoration: none;
+    margin-top: @TopBlockMargin;
+    margin-bottom: @TopBlockMargin;
+
+    .separados {
+        margin-right: 20px;
+        color: black;
+
+        a {
+            color: inherit;
+        }
+        /*
+        a:hover{
+            color: blue;
+        }
+        a:link{
+            color: blue;
+        }
+        a:visited{
+            color: blue;
+        }
+        a:active{
+            color: blue;
+        }*/
+    }
 }
 
 #menu-izquierdo{
@@ -129,6 +147,7 @@
     float:left;
 
     margin-top: 0;
+    margin-bottom: 0;
     padding: 0;
 
     .menu-item {
@@ -160,22 +179,5 @@
 
     .menu-item-last {
         .border-radius(0, 10px, 10px, 0);
-    }
-}
-
-span.separados {
-    margin-right: 20px;
-    color: red;
-    a:hover{
-        color: blue;
-    }
-    a:link{
-        color: blue;
-    }
-    a:visited{
-        color: blue;
-    }
-    a:active{
-        color: blue;
     }
 }

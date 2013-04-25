@@ -159,6 +159,8 @@
 
 <div id="envoltorio-main">
 
+	<div class="top-padding"></div>
+
   	<!-- DIVISION DE CABECERA -->
 	<div id="clasificacion" class="top-block">
         <ul>
@@ -235,26 +237,23 @@
     		}
 		  ?>
 		  <?php echo $content; ?>
-
-
 	    </div>
-  	
-
 	</div>
 
-	<!-- TODO Quitar esto mejorando CSS -->
-	<div style="clear:both"></div>
+	<div class="clear"></div>
 
-</div>
+	<div class="bottom-padding"></div>
 
-<!-- DIVISION DEL PIE DE PÁGINA -->
-<div class="pie-pagina">
-	<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
-	<span class="separados">All Rights Reserved.</span>
-	<span class="separados"><?php echo Yii::powered(); ?></span>
-	<span class="separados"><a href="mailto:jugnum12@gmail.com">Contacto</a></span>
-	<span class="separados"><a href="http://lobonleal.blogspot.com.es">Arte</a></span>
-	<span class="separados">Universidad Complutense de Madrid.</span>
+	<!-- FUERA -->
+	<div class="pie-pagina top-block">
+		<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+		<span class="separados">All Rights Reserved.</span>
+		<span class="separados"><?php echo Yii::powered(); ?></span>
+		<span class="separados"><a href="mailto:jugnum12@gmail.com">Contacto</a></span>
+		<span class="separados"><a href="http://lobonleal.blogspot.com.es">Arte</a></span>
+		<span class="separados">Universidad Complutense de Madrid.</span>
+	</div>
+
 </div>
 
 </body>
