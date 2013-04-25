@@ -130,14 +130,14 @@ TRUNCATE `desbloqueadas`;
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
+ (0, 'Negros',   'negros',   1, 3600, 450, 10, 7, 7),
  (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
  (0, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
  (0, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
  (0, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
  (0, 'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
  (0, 'Amarillos','amarillos',1, 3000, 350, 10, 6, 6),
- (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 5);
+ (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 8, 6);
 
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
@@ -160,18 +160,18 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  -- ---------------------
  ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"', 500, 3, 1, 10000, 60, 35, 6, 600, 'financiar_evento'),
  ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"', 500, 3, 1, 10000, 60, 35, 6, 600, 'incentivo_economico'),
- ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 300, 40, 6, 600, 'organizar_homenaje'),
- ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 1000, 600, 20, 6, 600, 'pintarse_colores_equipo'),
- ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 300, 45, 6, 600, 'publicitar_internet'),
+ ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"', 60, 15, 1, 1200, 250, 40, 6, 600, 'organizar_homenaje'),
+ ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"', 200, 30, 0, 1000, 450, 20, 6, 600, 'pintarse_colores_equipo'),
+ ('PromoverPartido', 0, 'Promover el partido por las redes sociales', '"Comparte tu ilusión con tus amigos por internet."', 60, 15, 1, 1200, 250, 45, 6, 600, 'publicitar_internet'),
  ('Apostar', 1, 'Apostar por el partido', '"Dale esa pizca extra de emoción."', 500, 3, 1, NULL, NULL, NULL, 1, 200, 'apostar'),
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"', 0, 0, 0, NULL, NULL, NULL, 1, 200, '_sin_dibujo'),
  ('ContratarRRPP', 1, 'Contratar temporalmente a un relaciones públicas', '"Es muy duro movilizar las redes sociales tú sólo. Contrata temporalmente un ayudante."', 60, 15, 1, NULL, NULL, NULL, 1, 200, 'recopilar_influencias'),
  ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"Recarga energías, te espera un partido largo."', 100, 30, 0, NULL, NULL, NULL, 1, 10, 'beber_cerveza'),
  ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"Apoya a tu equipo a lo grande: anímalo con los altavoces del propio estadio."', 30, 15, 1, NULL, NULL, NULL, 1, 10, 'hablar_speaker'),
- ('IniciarOla', 2, 'Iniciar una ola en la grada', '"Mueve las gradas durante el partido."', 100, 30, 0, NULL, NULL, NULL, 1, 10, 'corear_estadio'),
+ ('IniciarOla', 2, 'Iniciar una ola en la grada', '"Mueve las gradas durante el partido."', 100, 10, 0, NULL, NULL, NULL, 1, 10, 'corear_estadio'),
  ('PunteroLaser', 2, 'Molestar con el puntero láser a un jugador', '"La mejor defensa contra un lanzamiento de falta del rival. Molesta al jugador con un puntero láser."', 100, 30, 0, NULL, NULL, NULL, 1, 10, 'arrojar_mechero'),
  ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"Ocúpate de que el partido tenga repercusión."', 30, 15, 1, NULL, NULL, NULL, 1, 10, 'retransmitir_redes_sociales'),
- ('Ascender', 3, 'Ascender en el trabajo', '"A más dinero, más acciones podrás financiar."', 500, 3, 1, NULL, NULL, NULL, 1, NULL, 'ascender_trabajo');
+ ('Ascender', 3, 'Ascender en el trabajo', '"A más dinero, más acciones podrás financiar."', 0, 0, 0, NULL, NULL, NULL, 1, NULL, 'ascender_trabajo');
 
 
 TRUNCATE `participaciones`;
