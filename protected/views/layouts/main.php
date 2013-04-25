@@ -19,6 +19,8 @@
 	Helper::registerStyleFile('infohabilidad');
 	Helper::registerStyleFile('infopartido');
 	Helper::registerStyleFile('participar');
+	Helper::registerStyleFile('cambiodatos');
+	Helper::registerStyleFile('infoperfil');
 	/*
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/mainLayout.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />

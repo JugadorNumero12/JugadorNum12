@@ -153,8 +153,8 @@ class PartidosController extends Controller
 		if($modeloPartido->turno == $ultimo_turno+1) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 			
 			//si el partido se jugo, obtener cronica
 			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
@@ -164,8 +164,8 @@ class PartidosController extends Controller
 		} elseif($id_partido == $modeloSigPartido->id_partido && $modeloSigPartido->turno == 0) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
 			//Renderizo la vista que me muestra la previa
