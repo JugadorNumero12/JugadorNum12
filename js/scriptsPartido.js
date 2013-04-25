@@ -427,6 +427,7 @@ function ejecutarAP(id) {
     var json = JSON.parse(data);
     if ( json.ok ) {
       $("#ac-p-error").text(json.message);
+      actRecursosAj();
     } else {
       $("#ac-p-error").text(json.error);
     }
