@@ -82,14 +82,14 @@ TRUNCATE `desbloqueadas`;
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
- (1, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 6),
- (1, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
- (2, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
- (3, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
- (3, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
- (2, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
- (4,'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
- (4,'Amarillos','amarillos',1, 3000, 350, 10, 6, 6);
+ (0, 'Rojos',    'rojos',    1, 3000, 400, 12, 7, 5),
+ (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
+ (0, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
+ (0, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
+ (0, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
+ (0, 'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
+ (0, 'Amarillos','amarillos',1, 3000, 350, 10, 6, 6),
+ (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7);
 
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
