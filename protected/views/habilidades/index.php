@@ -46,9 +46,18 @@
         <div class="habilidades">
         <?php foreach ( $acciones as $accion ){ ?>
             <?php if (RequisitosDesbloquearHabilidades::$datos_acciones[$accion->codigo]['nivel'] == $i){ ?>
+                <?php $existeAI = false;
+                $accionIndividual = NULL;
+                foreach($accionesIndividuales as $a){
+                    if($a['habilidades_id_habilidad'] == $accion['id_habilidad']){
+                        $existeAI = true;
+                        $accionIndividual = $a;
+                    }
+                } ?>
                 <div class="habilidad <?php if(!$usuario->estaDesbloqueada($accion['id_habilidad'])){ echo 'remarcado-sin-desbloquear';}?>
-                                         <?php if(($recursosUsuario['dinero'] < $accion['dinero'] || $recursosUsuario['animo'] < $accion['animo'] || $recursosUsuario['influencias'] < $accion['influencias']) 
-                                            && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL) ){ echo 'remarcado-usar';} ?>">
+                                        <?php if(($recursosUsuario['dinero'] < $accion['dinero'] || $recursosUsuario['animo'] < $accion['animo'] || $recursosUsuario['influencias'] < $accion['influencias']) 
+                                            && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL) ){ echo 'remarcado-usar';} ?>
+                                        <?php if ($existeAI && ($accionIndividual['cooldown'] > time() && $accionIndividual['devuelto'] == 0)){ echo 'remarcado-sin-desbloquear';}?>">
                     <!-- Muestro el nombre de la accion -->
                     <div class="icono-habilidad">
                         <img src="<?php echo Yii::app()->BaseUrl.'/images/habilidades/' . $accion['token'] . '.png';?>">
@@ -129,14 +138,6 @@
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
-                                $existeAI = false;
-                                $accionIndividual = NULL;
-                                foreach($accionesIndividuales as $a){
-                                    if($a['habilidades_id_habilidad'] == $accion['id_habilidad']){
-                                        $existeAI = true;
-                                        $accionIndividual = $a;
-                                    }
-                                }
                                 if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
                                     && (($existeAI && ($accionIndividual['cooldown'] < time() && $accionIndividual['devuelto'] == 1)) || !$existeAI) ){ ?>
                                     <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
