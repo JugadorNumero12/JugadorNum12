@@ -65,6 +65,18 @@
 						?>
 						</p>
 				<?php } ?>
+		<?php if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+			{ ?>
+				<hr>
+				<p> 
+				<?php
+					echo '<b>Recursos necesarios para completar la acci&oacute;n: </b></p><p>';
+					echo '<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_dinero.png".'" alt="Icono dinero"> </b><span class="info-gasto-txt">'.$habilidad['dinero_max'].'</span>'.
+					'<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_animo.png".'" alt="Icono animo"></b><span class="info-gasto-txt">'.$habilidad['animo_max'].'</span>'.
+					'<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_influencia.png".'" alt="Icono influencia"> </b><span class="info-gasto-txt">'.$habilidad['influencias_max'].'</span>';
+				?>
+				</p>
+				<?php } ?>
 
  		<hr>
 		<p><b>Condiciones necesarias para desbloquear la habilidad:</b></p>
