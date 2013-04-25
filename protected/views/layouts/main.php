@@ -246,11 +246,14 @@
 </div>
 
 <!-- DIVISION DEL PIE DE PÁGINA -->
-<!--    <div id="pie-pagina">
-        Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-    </div>-->
+<div class="pie-pagina">
+    <Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+	All Rights Reserved.
+	<?php echo Yii::powered(); ?>
+	<a href="mailto:jugnum12@gmail.com">Contacto</a>
+	<a href="http://lobonleal.blogspot.com.es">Arte</a>
+	Universidad Complutense de Madrid.
+</div>
 
 </body>
 

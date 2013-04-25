@@ -43,13 +43,16 @@
 		<div class="push"></div>
 
 	</div> </div> <!--ENVOLTORIOS-->
-		<!-- PIE DE PAGINA
-		<div class="pie-pagina-login">
-			<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
-			All Rights Reserved.<br/>
-			<?php echo Yii::powered(); ?>
-		</div>
-		-->
+<!-- PIE DE PAGINA -->
+<div class="pie-pagina">
+	<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+	All Rights Reserved.<br/>
+	<?php echo Yii::powered(); ?><br/>
+	<a href="mailto:jugnum12@gmail.com">Contacto</a>
+	<a href="http://lobonleal.blogspot.com.es">Arte</a><br/>
+	Universidad Complutense de Madrid.
+</div>
+		
 
 
 </body>
