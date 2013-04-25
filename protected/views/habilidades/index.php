@@ -108,8 +108,9 @@
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
-                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
-                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad -->
+                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
+                                    && $usuario->sePuedeUsar($accion['id_habilidad'], $accion['tipo'])   ){ ?>
+                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
                                     <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>   
