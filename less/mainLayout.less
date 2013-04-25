@@ -45,7 +45,7 @@
     }
 
     .bottom-padding {
-        height: (@FooterHeight + @TopBlockPadding*2 + @TopBlockMargin*2 + @TopBlockBorder*2);
+        height: (@FooterHeight + @FooterPadding*2 + @FooterMargin*2 + @FooterBorder*2);
     }
 
     #clasificacion {
@@ -119,9 +119,16 @@
     margin-top: @TopBlockMargin;
     margin-bottom: @TopBlockMargin;
 
+    padding: @FooterPadding;
+    margin: @FooterMargin;
+    border-width: @FooterBorder;
+
+    text-align: center;
+
     .separados {
         margin-right: 20px;
         color: black;
+        font: 0.8em helvetica,arial,sans-serif;
 
         a {
             color: inherit;

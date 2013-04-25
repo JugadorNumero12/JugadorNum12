@@ -245,7 +245,7 @@
 	<div class="bottom-padding"></div>
 
 	<!-- FUERA -->
-	<div class="pie-pagina top-block">
+	<div class="pie-pagina"> <!-- top-block -->
 		<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		<span class="separados">All Rights Reserved.</span>
 		<span class="separados"><?php echo Yii::powered(); ?></span>
