@@ -795,6 +795,9 @@ class Partido
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
+
+					//Devuelvo la influencia a los participantes7
+					$componente->recursos->influencias_partido_bloqueadas = 0;
 				}
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_visitante));
 				foreach ($componentes as $componente){
@@ -802,6 +805,9 @@ class Partido
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
+
+					//Devuelvo la influencia a los participantes
+					$componente->recursos->influencias_partido_bloqueadas = 0;
 				}
 				/****/
 		    	break;

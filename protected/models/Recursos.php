@@ -11,6 +11,7 @@
  * 	string $influencias_max
  * 	double $influencias_gen
  *  string influencias_bloqueadas
+ *  string influencias_partido_bloqueadas
  * 	string $animo
  * 	string $animo_max
  * 	double $animo_gen
@@ -43,13 +44,13 @@ class Recursos extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, bonus_dinero, bonus_influencias, bonus_animo, ultima_act, influencias_bloqueadas', 'required'),
+			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, bonus_dinero, bonus_influencias, bonus_animo, ultima_act, influencias_bloqueadas, influencias_partido_bloqueadas', 'required'),
 			array('dinero_gen, influencias_gen, animo_gen', 'numerical'),
-			array('usuarios_id_usuario, dinero, influencias, influencias_max, animo, animo_max, bonus_dinero, bonus_influencias, bonus_animo, influencias_bloqueadas', 'length', 'max'=>10),
+			array('usuarios_id_usuario, dinero, influencias, influencias_max, animo, animo_max, bonus_dinero, bonus_influencias, bonus_animo, influencias_bloqueadas, influencias_partido_bloqueadas', 'length', 'max'=>10),
 			array('ultima_act', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, influencias_bloqueadas', 'safe', 'on'=>'search'),
+			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, influencias_bloqueadas, influencias_partido_bloqueadas', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +80,7 @@ class Recursos extends CActiveRecord
 			'influencias_max' => 'Influencias Max',
 			'influencias_gen' => 'Influencias Gen',
 			'influencias_bloqueadas' => 'Influencias Bloqueadas',
+			'influencias_partido_bloqueadas' => 'Influencias Partodo Bloqueadas',
 			'animo' => 'Animo',
 			'animo_max' => 'Animo Max',
 			'animo_gen' => 'Animo Gen',
@@ -106,6 +108,7 @@ class Recursos extends CActiveRecord
 		$criteria->compare('influencias_max',$this->influencias_max,true);
 		$criteria->compare('influencias_gen',$this->influencias_gen);
 		$criteria->compare('influencias_bloqueadas',$this->influencias_bloqueadas, true);
+		$criteria->compare('influencias_partido_bloqueadas',$this->influencias_partido_bloqueadas, true);
 		$criteria->compare('animo',$this->animo,true);
 		$criteria->compare('animo_max',$this->animo_max,true);
 		$criteria->compare('animo_gen',$this->animo_gen); 
@@ -236,9 +239,9 @@ class Recursos extends CActiveRecord
 				{
 					$recursos->$columna=$recursos->animo_max;
 
-				}else if( ($columna==='influencias') && ($valor_nuevo >= $recursos->influencias_max-$recursos->influencias_bloqueadas))
+				}else if( ($columna==='influencias') && ($valor_nuevo >= $recursos->influencias_max-$recursos->influencias_bloqueadas-$recursos->influencias_partido_bloqueadas))
 						{
-							$recursos->$columna=$recursos->influencias_max-$recursos->influencias_bloqueadas;
+							$recursos->$columna=$recursos->influencias_max-$recursos->influencias_bloqueadas-$recursos->influencias_partido_bloqueadas;
 
 						}else 
 							{
