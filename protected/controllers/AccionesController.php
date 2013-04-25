@@ -577,7 +577,7 @@ class AccionesController extends Controller
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
-			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
+			$this-> redirect(array('usuarios/index'));
 			throw $exc;
 		}
 	}

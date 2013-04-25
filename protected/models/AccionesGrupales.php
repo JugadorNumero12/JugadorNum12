@@ -451,13 +451,10 @@ class AccionesGrupales extends CActiveRecord
         //  - bonificacion de experencia a los participantes de la accion
         // 2) Se guardas los cambios en la accion
         if($accion['completada'] == 1) {     
-
 			//Si se ha completado creamos una notificación
 			$notificacion = new Notificaciones;
 			$notificacion->fecha = time();
-			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
-			$notificacion->url = "notificaciones/index";
-            $notificacion->imagen = "images/iconos/notificaciones/completa_grupal.png";
+			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;            $notificacion->imagen = "images/iconos/notificaciones/completa_grupal.png";
 			$notificacion->save();
 			//Enviamos la notificación a la afición
 			$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>Usuarios::model()->findByPk($id_user)->equipos_id_equipo));
