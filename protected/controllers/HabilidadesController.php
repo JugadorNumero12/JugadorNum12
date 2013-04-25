@@ -125,8 +125,8 @@ class HabilidadesController extends Controller
 		);
 
 		// Cargar css de ver habilidad
-		$uri = Yii::app()->request->baseUrl.'/less/infohabilidad.less';
-		Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+		//$uri = Yii::app()->request->baseUrl.'/less/infohabilidad.less';
+		//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 			
 		// Manda pintar la habilidad en la vista
 		$this->render('ver', $datosVista);

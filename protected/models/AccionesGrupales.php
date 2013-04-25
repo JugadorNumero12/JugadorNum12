@@ -211,9 +211,8 @@ class AccionesGrupales extends CActiveRecord
                 // 1. Aumentar recursos a los participantes
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'dinero', $participante->dinero_aportado);
                 Recursos::aumentar_recursos($participante->usuarios_id_usuario,'animo', $participante->animo_aportado);
-                //Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
-
                 Recursos::disminuir_influencias_bloqueadas($participante->usuarios_id_usuario, $participante->influencias_aportadas);
+                Recursos::aumentar_recursos($participante->usuarios_id_usuario,'influencias', $participante->influencias_aportadas);
                 
                 // 2. Eliminar ese modelo
                 Participaciones::model()->deleteAllByAttributes(array('acciones_grupales_id_accion_grupal'=> $id_accion_grupal,'usuarios_id_usuario'=> $participante->usuarios_id_usuario));        
@@ -278,7 +277,7 @@ class AccionesGrupales extends CActiveRecord
 
         $rec['dinero'] += $partDin;
         $rec['animo'] = min(($actAni + $partAni), $maxAni);
-        //$rec['influencias'] = min(($actInf + $partInf), $maxInf); <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< si al expulsar se regenera igual
+        $rec['influencias'] = min(($actInf + $partInf), $maxInf);
         $rec['influencias_bloqueadas'] = $maxInf - min(($actInf + $partInf), $maxInf);
         $rec->save();
 
@@ -457,6 +456,7 @@ class AccionesGrupales extends CActiveRecord
 			$notificacion = new Notificaciones;
 			$notificacion->fecha = time();
 			$notificacion->mensaje = Usuarios::model()->findByPk($id_user)->nick . " ha completado la acción " . Habilidades::model()->findByPk($habilidad->id_habilidad)->nombre;
+			$notificacion->url = "notificaciones/index";
             $notificacion->imagen = "images/iconos/notificaciones/completa_grupal.png";
 			$notificacion->save();
 			//Enviamos la notificación a la afición

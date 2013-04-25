@@ -153,8 +153,8 @@ class PartidosController extends Controller
 		if($modeloPartido->turno == $ultimo_turno+1) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 			
 			//si el partido se jugo, obtener cronica
 			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
@@ -164,8 +164,8 @@ class PartidosController extends Controller
 		} elseif($id_partido == $modeloSigPartido->id_partido && $modeloSigPartido->turno == 0) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
 			//Renderizo la vista que me muestra la previa
@@ -327,6 +327,43 @@ class PartidosController extends Controller
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
 		}
+	}
+
+	/**
+	 *
+	 * Incrementa los recursos durante el partido de forma asíncrona
+     *
+     * @param int $id_usuario id del usuario al que incrementar recursos
+     * 
+     * @route jugadorNum12/partidos/actRecursos/{$id_usuario}
+     * @return JSON con los datos necesarios para llevar a cabo la actualización
+	 */
+	public function actionActRecursos($id_usuario)
+	{
+        Recursos::model()->actualizaRecursos($id_usuario);
+        $datos = Recursos::model()->findByPk($id_usuario);
+        if ($datos !== null)
+        {
+        	echo json_encode(array('codigo' => (int)1,
+        							'influencias' => (int)$datos->influencias,
+									'dinero' => (int)$datos->dinero,
+									'animo' => (int)$datos->animo,
+        							'influencias_max' => (int)$datos->influencias_max,
+        							'animo_max' => (int)$datos->animo_max,
+								));
+			Yii::app()->end();
+        }
+        else
+        {
+        	echo json_encode(array('codigo' => (int)0,
+        							'influencias' => (int)0,
+									'dinero' => (int)0,
+									'animo' => (int)0,
+        							'influencias_max' => (int)0,
+        							'animo_max' => (int)0,
+								));
+			Yii::app()->end();
+        }
 	}
 
     /**

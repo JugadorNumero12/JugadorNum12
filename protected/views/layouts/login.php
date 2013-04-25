@@ -5,9 +5,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::app()->charset; ?>" />
 	<meta name="language" content="<?php echo Yii::app()->language; ?>" />
 
+
 	<!-- LESS import script -->
+	<?php
+	Helper::registerStyleFile('loginLayout');
+	Helper::registerStyleFile('general');
+	/*
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/loginLayout.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
+	*/?>
 
 
 	<!-- jQuery -->
@@ -15,23 +21,12 @@
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
 	<title><?php echo Yii::app()->name; ?></title>
 
-	<script type="text/javascript">
-	    less = {
-	        env: "development", // or "production"
-	        async: false,       // load imports async
-	        fileAsync: false,   // load imports async when in a page under
-	                            // a file protocol
-	        poll: 1000,         // when in watch mode, time in ms between polls
-	        functions: {},      // user functions, keyed by name
-	        dumpLineNumbers: "comments", // or "mediaquery" or "all"
-	        relativeUrls: false,// whether to adjust url's to be relative
-	                            // if false, url's are already relative to the
-	                            // entry less file
-	        rootpath: "<?php echo Yii::app()->request->baseUrl ?>/"// a path to add on to the start of every url
-	                            //resource
-	    };
-	</script>
-	<script src="<?php echo Yii::app()->request->baseUrl; ?>/js/less.js" type="text/javascript"></script>
+<?php
+	if (defined('YII_DEBUG') && YII_DEBUG) {
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/less-boot.js');
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/less.js');
+	}
+?>
 </head>
 
 <body>

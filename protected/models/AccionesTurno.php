@@ -152,6 +152,7 @@ class AccionesTurno extends CActiveRecord
 		$res['dinero'] 		-= $habilidad['dinero'];
 		$res['animo']  		-= $habilidad['animo'];
 		$res['influencias'] -= $habilidad['influencias'];
+		$res['influencias_partido_bloqueadas'] += $habilidad['influencias']; 
 		$res->save();
 
 		//Incorporo la accion si ese usuario aun no ha participado

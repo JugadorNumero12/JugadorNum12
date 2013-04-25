@@ -11,10 +11,13 @@
 
 ?>
 <?php
+	Helper::registerStyleFile('registro');
+/*
 	Yii::app()->clientScript->registerLinkTag(
 		'stylesheet/less', 'text/css', 
 		Yii::app()->request->baseUrl . '/less/registro.less'
 	);
+	*/
 ?>
 <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsRegistro.js'); ?>
