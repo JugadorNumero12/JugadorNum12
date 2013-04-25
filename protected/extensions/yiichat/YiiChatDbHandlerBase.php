@@ -123,7 +123,7 @@ abstract class YiiChatDbHandlerBase extends CComponent implements IYiiChat {
 			->select()
 			->from($this->getTableName())
 			->where($where_string,$where_params)
-			->limit(12) //Los 12 ultimos
+			->limit(23) //Los 25 ultimos
 			->order('created desc')
 			->queryAll();
 			foreach($rows as $k=>$v)

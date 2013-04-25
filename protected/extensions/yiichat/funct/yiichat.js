@@ -104,8 +104,8 @@ var YiiChat = function(options){
 			+"<div class='track'></div>"
 			+"<div class='text'></div>"
 		+"</div>");
-		//Muestro por pantalla solo los 13 ultimos mensajes
-		if(posts[0].childNodes.length == 13){
+		//Muestro por pantalla solo los 24 ultimos mensajes
+		if(posts[0].childNodes.length == 24){
 			posts[0].firstChild.parentNode.removeChild(posts[0].firstChild);
 		}
 		var p = posts.find(".post[id='"+post.id+"']");
