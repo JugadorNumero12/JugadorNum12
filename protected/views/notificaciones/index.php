@@ -1,7 +1,7 @@
  <h1>Mis Notificaciones</h1> 
 <br> <br>
 <?php 
- if (count($notificaciones) > 1 ){echo CHtml::button('Borrar todo', array('submit' => array('notificaciones/eliminarNotificaciones'),'class'=>"button small black"));}else {echo "No tienes notificaciones";};
+ if (count($notificaciones) > 0 ){echo CHtml::button('Borrar todo', array('submit' => array('notificaciones/eliminarNotificaciones'),'class'=>"button small black"));}else {echo "No tienes notificaciones";};
 foreach ( $notificaciones as $notificacion ){ ?>
     
     <div class="lista-notificaciones"> 
