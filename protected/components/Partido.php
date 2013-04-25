@@ -798,6 +798,7 @@ class Partido
 
 					//Devuelvo la influencia a los participantes7
 					$componente->recursos->influencias_partido_bloqueadas = 0;
+					$componente->recursos->save();
 				}
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_visitante));
 				foreach ($componentes as $componente){
@@ -808,6 +809,7 @@ class Partido
 
 					//Devuelvo la influencia a los participantes
 					$componente->recursos->influencias_partido_bloqueadas = 0;
+					$componente->recursos->save();
 				}
 				/****/
 		    	break;
