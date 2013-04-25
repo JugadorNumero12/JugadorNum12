@@ -97,8 +97,11 @@
 
 
 //PIE DE PAGINA
+* {
+    margin: 0; //Importante para que el pie de pagina se vea abajo siempre
+}
 
-#pie-pagina {
+.pie-pagina {
 	position: relative;
 	width: 100%;
 	margin: 0 auto;
@@ -106,18 +109,18 @@
 	clear: both;
 }
 
-#pie-pagina{
+.pie-pagina{
 	left: 0;
 	bottom: 4px;
 	width: 100%;
 	padding: 0;
-	color: black;
+	color: white;
 	font: 0.8em helvetica,arial,sans-serif;
 	text-align: center;
 }
 
-#pie-pagina a {
-	color: black;
+.pie-pagina a {
+	color: white;
 	text-decoration: none;
 }
 
@@ -157,5 +160,22 @@
 
     .menu-item-last {
         .border-radius(0, 10px, 10px, 0);
+    }
+}
+
+span.separados {
+    margin-right: 20px;
+    color: red;
+    a:hover{
+        color: blue;
+    }
+    a:link{
+        color: blue;
+    }
+    a:visited{
+        color: blue;
+    }
+    a:active{
+        color: blue;
     }
 }

@@ -12,6 +12,10 @@ div.envoltorio-login div.envoltorio2-login div#entrada-login{background-color:rg
 .errorMessage{color:white;padding:5px;font-size:small;}
 *{margin:0;}
 .footer,.push{height:142px;}
-div.pie-pagina-login{position:relative;width:100%;margin:0 auto;background:transparent;}
-div.pie-pagina-login{position:absolute;left:0;bottom:4px;width:100%;padding:0;color:white;font:0.8em helvetica,arial,sans-serif;text-align:center;}
-div.pie-pagina-login a{color:white;text-decoration:none;}
+div.pie-pagina{position:relative;width:100%;margin:0 auto;background:transparent;}
+div.pie-pagina{position:absolute;left:0;bottom:4px;width:100%;padding:0;color:white;font:0.8em helvetica,arial,sans-serif;text-align:center;}
+div.pie-pagina a{color:white;text-decoration:none;}
+span.separados{margin-right:20px;}span.separados a:hover{color:white;}
+span.separados a:link{color:white;}
+span.separados a:visited{color:white;}
+span.separados a:active{color:white;}
