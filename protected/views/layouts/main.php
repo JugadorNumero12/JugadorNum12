@@ -228,6 +228,7 @@
 
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
+	    	<!-- BEGIN FLASH -->
 	      <?php
     		foreach(Yii::app()->user->getFlashes() as $key => $message) { ?>
     			<script type="text/javascript">
@@ -236,7 +237,10 @@
         	<?php	//echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     		}
 		  ?>
+		  <!-- END FLASH -->
+		  <!-- BEGIN CONTENT -->
 		  <?php echo $content; ?>
+		  <!-- END CONTENT -->
 	    </div>
 	</div>
 
