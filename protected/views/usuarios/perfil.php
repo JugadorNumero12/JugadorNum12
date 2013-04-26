@@ -31,8 +31,8 @@
 		<span class="span-cambio"><?php echo CHtml::submitButton('Cambiar contraseña', array('submit' => array('cambiarClave'),'class'=>"button small black"));?></span>
 		<span class="span-cambio"><?php echo CHtml::submitButton('Cambiar email', array('submit' => array('cambiarEmail'),'class'=>"button small black"));?></span>
     	<!-- DEBUG -->
-		<span class="span-cambio"><?php echo CHtml::submitButton('+500 exp', array('submit' => array('debug'),'class'=>"button small black"));?></span>
-		<span class="span-cambio"><?php echo CHtml::submitButton('+5000 exp', array('submit' => array('debug2'),'class'=>"button small black"));?></span>
+		<?php /*<span class="span-cambio"><?php echo CHtml::submitButton('+500 exp', array('submit' => array('debug'),'class'=>"button small black"));?></span>
+		<span class="span-cambio"><?php echo CHtml::submitButton('+5000 exp', array('submit' => array('debug2'),'class'=>"button small black"));?></span> */ ?>
 		<!-- ** -->
 	</div>
   </div>
