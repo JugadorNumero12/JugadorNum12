@@ -267,7 +267,14 @@ class Partido
 		$partido = Partidos::model()->findByPk($this->id_partido);
 
 		//Decimos en que turno estamos para situar
-		$cronica_turno = "Turno: ".$this->turno.".";
+		if ($this->turno > self::TURNO_DESCANSO)
+		{
+			$cronica_turno = "Turno: ".($this->turno - 1).".";
+		}
+		else
+		{
+			$cronica_turno = "Turno: ".$this->turno.".";
+		}
 
 
 		//Miramos a ver si se ha metido algun gol 
