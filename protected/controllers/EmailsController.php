@@ -129,7 +129,10 @@ class EmailsController extends Controller
 		$from = $usuario_from->nick;
 		$usuario_to = Usuarios::model()->findByPk($email->id_usuario_to);
 		$to = $usuario_to->nick;
-
+		if($from == (Usuarios::model()->findByPk(Yii::app()->user->usIdent)->nick))
+			$borrado = "borrado_from";
+		else
+			$borrado = "borrado_to";
 		if($email->id_usuario_to == Yii::app()->user->usIdent && !$email->leido){
 			$trans = Yii::app()->db->beginTransaction();
 			try{
@@ -140,40 +143,49 @@ class EmailsController extends Controller
 				$trans->rollback();
 			}
 		}
-		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to));
+		$this->render('leerEmail',array('email'=>$email,'from'=>$from,'to'=>$to, 'borrado'=>$borrado));
 	}
 
 	/**
-	 * Elimina un email
+	 * Elimina emails
 	 *
-     * @param int $id       id del email a eliminar
-     * @param string $antes determina donde redireccionaremos.
+     * @param int $id       id del email a eliminar o 0 si se quieren eliminar todos
+     * @param string $borrado determina donde redireccionaremos y si se borra de la bandeja del remitente o del destinatario.
      *    
-	 * @route       jugadorNum12/emails/eliminarEmail/{$id}/{$antes} 
-     * @redirect    jugadorNum12/emails/index   si $antes == 'entrada'
+	 * @route       jugadorNum12/emails/eliminarEmails/{$id}/{$borrado} 
+     * @redirect    jugadorNum12/emails/index   si $borrado == 'borrado_to'
      * @redirect    jugadorNum12/email/enviados en caso contrario
      *
      * @return void
 	 */ 
-	public function actionEliminarEmail($id,$antes)
+	public function actionEliminarEmails($id,$borrado)
     {
-		$email = Emails::model()->findByPk($id);
-		if($email === null) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
+		if($id != 0){
+			$email = Emails::model()->findByPk($id);
+			if($email === null) Yii::app()->user->setFlash('inexistente', 'Email inexistente.');
+			$emails = array('email'=>$email);
+		}else{
+			if($borrado == 'borrado_to')
+				$emails = Emails::model()->findAllByAttributes(array('id_usuario_to'=>Yii::app()->user->usIdent, $borrado=>0));
+			else
+				$emails = Emails::model()->findAllByAttributes(array('id_usuario_from'=>Yii::app()->user->usIdent, $borrado=>0));
+		}
 		$trans = Yii::app()->db->beginTransaction();
 		try{
-			$id_usr= Yii::app()->user->usIdent;
-			if(($email->id_usuario_to == $id_usr && $email->borrado_from) || ($email->id_usuario_from == $id_usr && $email->borrado_to) || ($email->id_usuario_from == $id_usr && $email->id_usuario_to == $id_usr )) 
-				$email->delete();
-			else{
-				if($email->id_usuario_to == $id_usr) 
-					$email->borrado_to = !$email->borrado_to;
-				else 
-					$email->borrado_from = !$email->borrado_from;
+			foreach($emails as $email){
+				$id_usr= Yii::app()->user->usIdent;
+				if(($email->id_usuario_to == $id_usr && $email->borrado_from) || ($email->id_usuario_from == $id_usr && $email->borrado_to) || ($email->id_usuario_from == $id_usr && $email->id_usuario_to == $id_usr )) 
+					$email->delete();
+				else{
+					if($email->id_usuario_to == $id_usr) 
+						$email->borrado_to = !$email->borrado_to;
+					else 
+						$email->borrado_from = !$email->borrado_from;
+				}
+				$email->save();
 			}
-
-			$email->save();
 			$trans->commit();
-			if($antes == 'entrada') $this->redirect(array('emails/index'));
+			if($borrado == 'borrado_to') $this->redirect(array('emails/index'));
 			else $this->redirect(array('emails/enviados'));
 		}catch(Exception $e){
 			$trans->rollback();

@@ -32,7 +32,7 @@
  	</tr>
  	<tr>
 		<td class="col-izq"> <?php echo CHtml::button('Responder', array('submit' => array('emails/redactar', 'destinatario'=>$from, 'tema'=>$email->asunto),'class'=>"button small black")); ?></td>
-		<td class="col-dcha"> <div class="alinear-derecha"><?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email->id_email,'antes'=>'entrada'),'class'=>"button small black")); ?></div></td>
+		<td class="col-dcha"> <div class="alinear-derecha"><?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmails', 'id'=>$email->id_email,'borrado'=>$borrado),'class'=>"button small black")); ?></div></td>
  	</tr>
 
 </table>

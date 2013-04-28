@@ -31,7 +31,7 @@
 		<td> <p><?php echo Yii::app()->dateFormatter->formatDateTime($email['fecha'], 'medium', 'short'); ?> </p> </td> 
 		<td> <?php if ($email['leido'] == 0) {echo 'No';} else {echo 'Sí';}?> </td> 
 		<td> <?php echo CHtml::button('Leer', array('submit' => array('emails/leerEmail', 'id'=>$email['id_email']),'class'=>"button small black")); ?> </td> 
-		<td> <?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmail', 'id'=>$email['id_email'],'antes'=>'entrada'),'class'=>"button small black")); ?> </td>
+		<td> <?php echo CHtml::button('Borrar', array('submit' => array('emails/eliminarEmails', 'id'=>$email['id_email'],'borrado'=>'borrado_to'),'class'=>"button small black")); ?> </td>
 	</tr>
 		
 <?php }?>
@@ -44,6 +44,8 @@
 	<td><?php echo CHtml::button('Redactar mensaje', array('submit' => array('emails/redactar', 'destinatario'=>"" , 'tema'=>"" ,'equipo'=>false),'class'=>"button small black")); ?> </td>
 	<td> &nbsp; &nbsp; &nbsp; </td>
 	<td><?php echo CHtml::button('Bandeja de salida', array('submit' => array('emails/enviados'),'class'=>"button small black")); ?> </td>
+	<td> &nbsp; &nbsp; &nbsp; </td>
+	<td><?php echo CHtml::button('Borrar mensajes ', array('submit' => array('emails/eliminarEmails', 'id'=>0, 'borrado'=>"borrado_to"),'class'=>"button small black")); ?> </td>
 </tr>
 </table>
 
