@@ -21,7 +21,7 @@
 <h1>Participar en: <?php echo $habilidad['nombre']; ?> </h1>
 
 
-<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="128" height="128"/> </div>
+<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="128" height="128"/>
 
 <div class="barra-global">
 	<p> Progreso total </p>
