@@ -4,23 +4,7 @@
  * Modelo de la tabla recursos
  *
  * Columnas disponibles:
-<<<<<<< HEAD
- *
- * |tipo    | nombre                    |
- * |:-------|:--------------------------| 	
- * | string | $usuarios_id_usuario      |
- * | string | $dinero                   |
- * | double | $dinero_gen               |
- * | string | $influencias              |
- * | string | $influencias_max          |
- * | double | $influencias_gen          |
- * | string | $animo                    |
- * | string | $animo_max                |
- * | double | $animo_gen                |
- *
- *
  * @package modelos
-=======
  * 	string $usuarios_id_usuario
  * 	string $dinero
  * 	double $dinero_gen
@@ -31,8 +15,7 @@
  *  string influencias_partido_bloqueadas
  * 	string $animo
  * 	string $animo_max
- * 	double $animo_gen
->>>>>>> develop
+ * 	double $animo_gen	
  */
 class Recursos extends CActiveRecord
 {
@@ -79,13 +62,11 @@ class Recursos extends CActiveRecord
 			array('dinero_gen, influencias_gen, animo_gen', 'numerical'),
 			array('usuarios_id_usuario, dinero, influencias, influencias_max, animo, animo_max, bonus_dinero, bonus_influencias, bonus_animo, influencias_bloqueadas, influencias_partido_bloqueadas', 'length', 'max'=>10),
 			array('ultima_act', 'length', 'max'=>11),
-<<<<<<< HEAD
-			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, influencias_bloqueadas', 'safe', 'on'=>'search')
-=======
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('usuarios_id_usuario, dinero, dinero_gen, influencias, influencias_max, influencias_gen, animo, animo_max, animo_gen, influencias_bloqueadas, influencias_partido_bloqueadas', 'safe', 'on'=>'search'),
->>>>>>> develop
+
 		);
 	}
 
