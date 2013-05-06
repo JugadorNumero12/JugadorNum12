@@ -21,6 +21,7 @@
 	Helper::registerStyleFile('participar');
 	Helper::registerStyleFile('cambiodatos');
 	Helper::registerStyleFile('infoperfil');
+	Helper::registerStyleFile('tutorial');
 	/*
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/mainLayout.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
@@ -40,6 +41,7 @@
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/draggable.js'); ?>
 
 
     
@@ -50,9 +52,15 @@
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/less.js');
 	}
 ?>
+
+
 </head>
 
 <body class="<?php echo Yii::app()->getParams()->bgclass ?>">
+
+	<div id="draggable" class="ui-widget-content">
+	  <p>Drag me around</p>
+	</div>
 
 <!-- Barra Superior -->
 <div id="barrasup">

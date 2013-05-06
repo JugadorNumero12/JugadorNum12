@@ -1,0 +1,38 @@
+// Este fichero contendrá valores globales utilizados por el resto de ficheros LESS.
+// Valores específicos que sólo se utilicen en un fichero LESS, como los tamaños de
+// la barra superior o similares, no deberían aparecer aquí.
+
+// COLORES
+// ------------
+@BLANCO_ROTO: #FFFCFB;
+@GRIS: #CED5DE;
+@GRIS_OSCURO: #A0A6AD;
+@VERDE_12: #570;
+@VERDE_12_CLARO: #9B6;
+@VERDE_12_BLANCO: #FBFFF7;
+
+@BarraSupAlto: 40px;
+
+
+@MenuWidth: 180px;
+
+@TopBlockPadding: @TopBlockMargin - 2px;
+@TopBlockMargin: 8px;
+@TopBlockBorder: 1px;
+@TopBlockBorderColor: @VERDE_12_CLARO;
+@TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
+@TopBlockRadius: @TopBlockMargin;
+
+@TotalWidth: (960px - @TopBlockExtras);
+@ContentWidth: @TotalWidth - (@MenuWidth + @TopBlockMargin + @TopBlockBorder*2);
+
+@InnerBlockPadding: @InnerBlockMargin;
+@InnerBlockMargin: @TopBlockPadding;
+@InnerBlockRadius: @InnerBlockMargin;
+@InnerBlockBorder: 1px;
+@InnerBlockBorderColor: @VERDE_12_CLARO;
+
+@FooterHeight: 15px;
+@FooterPadding: @TopBlockPadding;
+@FooterMargin: @TopBlockMargin;
+@FooterBorder: @TopBlockBorder;
