@@ -153,8 +153,8 @@ class PartidosController extends Controller
 		if($modeloPartido->turno == $ultimo_turno+1) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 			
 			//si el partido se jugo, obtener cronica
 			$this->render('cronica',array(	'modeloP'=>$modeloPartidos,
@@ -164,8 +164,8 @@ class PartidosController extends Controller
 		} elseif($id_partido == $modeloSigPartido->id_partido && $modeloSigPartido->turno == 0) 
 		{
 			// Cargar css de previa
-			$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
-			Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+			//$uri = Yii::app()->request->baseUrl.'/less/infopartido.less';
+			//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 
 			//si el partido no se ha jugado y es el siguiente partido del equipo del usuario
 			//Renderizo la vista que me muestra la previa
@@ -217,19 +217,23 @@ class PartidosController extends Controller
 		//Comprobacion de datos
 		if (($partido === null) || ($equipoUsuario === null) || ($equipoLocal === null) || ($equipoVisitante === null)) {
 			Yii::app()->user->setFlash('datos', 'Datos suministrados incorrectos - partido/equipo/local/visitante -. (actionActPartido).');
+			$this-> redirect(array('partidos/index'));
 		}
 		if ($partido->turno <= Partido::PRIMER_TURNO ||  $partido->turno > Partido::ULTIMO_TURNO) {
-			Yii::app()->user->setFlash('partido', 'El partido no ha comenzado - partido/equipo/local/visitante -. (actionActPartido).');
+			Yii::app()->user->setFlash('partido', 'El partido no está en juego.');
+			$this-> redirect(array('partidos/index'));
 		}
 
 		// Un usuario no puede asisitir a un partido en el que su equipo no participa
         // TODO eliminar esta restriccion
 		if (($partido->equipos_id_equipo_1 != $id_equipo_usuario) && ($partido->equipos_id_equipo_2 != $id_equipo_usuario))  {		
-			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo. (actionActPartido).');							
+			Yii::app()->user->setFlash('partido', 'No puedes acceder a un partido en el que no participe tu equipo.');							
+			$this-> redirect(array('partidos/index'));
 		} else {
             // Un usuario solo puede asistir al próximo partido de su equipo
 			if($equipoUsuario->partidos_id_partido != $id_partido ) {			
-				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo. (actionActPartido).');
+				Yii::app()->user->setFlash('partido', 'Este no es el próximo partido de tu equipo.');
+				$this-> redirect(array('partidos/index'));
 			} 
 			else 
 			{
@@ -321,12 +325,62 @@ class PartidosController extends Controller
 				'estado' => (int) $partido->estado,
 				'tiempo' => (int) $partido->tiempoRestantePartido(),
 				'tiempoTurno' => (int) $partido->tiempoRestanteTurno(),
+				// Agregados para la cronica y estado del partido
+				'cronica' => (string) $partido->cronica,
+				'ambiente' => (int) $partido->ambiente,
+				'nivel_local' => (int) $partido->nivel_local,
+				'nivel_visitante' => (int) $partido->nivel_visitante,
+				'ofensivo_local' => (int) $partido->ofensivo_local,
+				'ofensivo_visitante' => (int) $partido->ofensivo_visitante,
+				'defensivo_local' => (int) $partido->defensivo_local,
+				'defensivo_visitante' => (int) $partido->defensivo_visitante,		
+				'aforo_local' => (int) $partido->aforo_local,
+				'aforo_visitante' => (int) $partido->aforo_visitante,
+				'moral_local' => (int) $partido->moral_local,
+				'moral_visitante' => (int) $partido->moral_visitante,
 				//'estado' => $partido
 			);
 
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
 		}
+	}
+
+	/**
+	 *
+	 * Incrementa los recursos durante el partido de forma asíncrona
+     *
+     * @param int $id_usuario id del usuario al que incrementar recursos
+     * 
+     * @route jugadorNum12/partidos/actRecursos/{$id_usuario}
+     * @return JSON con los datos necesarios para llevar a cabo la actualización
+	 */
+	public function actionActRecursos($id_usuario)
+	{
+        Recursos::model()->actualizaRecursos($id_usuario);
+        $datos = Recursos::model()->findByPk($id_usuario);
+        if ($datos !== null)
+        {
+        	echo json_encode(array('codigo' => (int)1,
+        							'influencias' => (int)$datos->influencias,
+									'dinero' => (int)$datos->dinero,
+									'animo' => (int)$datos->animo,
+        							'influencias_max' => (int)$datos->influencias_max,
+        							'animo_max' => (int)$datos->animo_max,
+								));
+			Yii::app()->end();
+        }
+        else
+        {
+        	echo json_encode(array('codigo' => (int)0,
+        							'influencias' => (int)0,
+									'dinero' => (int)0,
+									'animo' => (int)0,
+        							'influencias_max' => (int)0,
+        							'animo_max' => (int)0,
+								));
+			Yii::app()->end();
+        }
 	}
 
     /**

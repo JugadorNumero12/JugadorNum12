@@ -3,6 +3,8 @@
 // @var $recursosUsuario
 // @var $accionesDesbloqueadas
 // @var $usuario
+// @var $accionesGrupales
+// @var $accionesIndividuales
 ?>
 
 <?php
@@ -19,13 +21,43 @@
 <h1 class="titulo-habilidades">Habilidades</h1>
 
 <div class="accordion">
-    <?php for ($i = 1; $i <= 4; $i++){ ?>
-    <h3 class="ui-accordion-header-active"><b>Nivel <?php echo $i; ?></b></h3>
+    <?php for ($i = 1; $i <= 4; $i++){
+        $categoria_hab = ""; 
+        switch ($i)
+        {
+            case 1:
+                $categoria_hab = "b&aacute;sico";
+                break;
+            case 2:
+                $categoria_hab = "medio";
+                break;
+            case 3:
+                $categoria_hab = "alto";
+                break;
+            case 4:
+                $categoria_hab = "ultimate";
+                break;
+            default:
+                break;
+        }
+        ?>
+    <h3 class="ui-accordion-header-active"><b>Nivel <?php echo $categoria_hab; ?></b></h3>
     <div>
         <div class="habilidades">
         <?php foreach ( $acciones as $accion ){ ?>
             <?php if (RequisitosDesbloquearHabilidades::$datos_acciones[$accion->codigo]['nivel'] == $i){ ?>
-                <div class="habilidad <?php if(!$usuario->estaDesbloqueada($accion['id_habilidad'])){ echo 'remarcado-sin-desbloquear';}?> <?php if($recursosUsuario['dinero'] < $accion['dinero'] || $recursosUsuario['animo'] < $accion['animo'] || $recursosUsuario['influencias'] < $accion['influencias']){ echo 'remarcado-usar';} ?>">
+                <?php $existeAI = false;
+                $accionIndividual = NULL;
+                foreach($accionesIndividuales as $a){
+                    if($a['habilidades_id_habilidad'] == $accion['id_habilidad']){
+                        $existeAI = true;
+                        $accionIndividual = $a;
+                    }
+                } ?>
+                <div class="habilidad <?php if(!$usuario->estaDesbloqueada($accion['id_habilidad'])){ echo 'remarcado-sin-desbloquear';}?>
+                                        <?php if(($recursosUsuario['dinero'] < $accion['dinero'] || $recursosUsuario['animo'] < $accion['animo'] || $recursosUsuario['influencias'] < $accion['influencias']) 
+                                            && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL) ){ echo 'remarcado-usar';} ?>
+                                        <?php if ($existeAI && ($accionIndividual['cooldown'] > time() && $accionIndividual['devuelto'] == 0)){ echo 'remarcado-sin-desbloquear';}?>">
                     <!-- Muestro el nombre de la accion -->
                     <div class="icono-habilidad">
                         <img src="<?php echo Yii::app()->BaseUrl.'/images/habilidades/' . $accion['token'] . '.png';?>">
@@ -77,7 +109,7 @@
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_dinero.png';?>" alt="Icono dinero" width="36" height="36">
                             </div>
-                            <div <?php if($recursosUsuario['dinero'] < $accion['dinero']) { echo 'class="remarcado-recurso"';};?>>
+                            <div <?php if(($recursosUsuario['dinero'] < $accion['dinero']) && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL || ($accion['tipo'] == Habilidades::TIPO_PASIVA && !($usuario->estaDesbloqueada($accion['id_habilidad']))) || ($accion['tipo'] == Habilidades::TIPO_PARTIDO && !($usuario->estaDesbloqueada($accion['id_habilidad']))))) { echo 'class="remarcado-recurso"';};?>>
                                 <b><?php echo $accion['dinero']; ?></b>
                             </div>
                         </div>
@@ -86,7 +118,7 @@
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_animo.png';?>" alt="Icono animo" width="36" height="36">
                             </div>
-                            <div <?php if($recursosUsuario['animo'] < $accion['animo']) { echo 'class="remarcado-recurso"';};?>>
+                            <div <?php if(($recursosUsuario['animo'] < $accion['animo']) && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL || ($accion['tipo'] == Habilidades::TIPO_PASIVA && !($usuario->estaDesbloqueada($accion['id_habilidad']))) || ($accion['tipo'] == Habilidades::TIPO_PARTIDO && !($usuario->estaDesbloqueada($accion['id_habilidad']))))) { echo 'class="remarcado-recurso"';};?>>
                                 <b><?php echo $accion['animo']; ?></b>
                             </div>
                         </div>
@@ -95,7 +127,7 @@
                             <div>
                                 <img src="<?php echo Yii::app()->BaseUrl.'/images/menu/recurso_influencia.png';?>" alt="Icono influencias" width="36" height="36">
                             </div>
-                            <div <?php if($recursosUsuario['influencias'] < $accion['influencias']) { echo 'class="remarcado-recurso"';};?>>
+                            <div <?php if(($recursosUsuario['influencias'] < $accion['influencias']) && ($accion['tipo'] == Habilidades::TIPO_INDIVIDUAL || $accion['tipo'] == Habilidades::TIPO_GRUPAL || ($accion['tipo'] == Habilidades::TIPO_PASIVA && !($usuario->estaDesbloqueada($accion['id_habilidad']))) || ($accion['tipo'] == Habilidades::TIPO_PARTIDO && !($usuario->estaDesbloqueada($accion['id_habilidad']))))) { echo 'class="remarcado-recurso"';};?>>
                                <b><?php echo $accion['influencias']; ?></b>
                             </div>
                         </div>
@@ -106,15 +138,16 @@
                         <?php if (($accion['tipo']==Habilidades::TIPO_INDIVIDUAL) || ($accion['tipo']==Habilidades::TIPO_GRUPAL)){
                             if ($usuario->estaDesbloqueada($accion['id_habilidad'])){
                                 // La habilidad está desbloqueada
-                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias']){ ?>
-                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad -->
+                                if ( $recursosUsuario['dinero'] >= $accion['dinero'] && $recursosUsuario['animo'] >= $accion['animo'] && $recursosUsuario['influencias'] >= $accion['influencias'] 
+                                    && (($existeAI && ($accionIndividual['cooldown'] < time() && $accionIndividual['devuelto'] == 1)) || !$existeAI) ){ ?>
+                                    <!-- El usuario tiene suficientes recursos para poder usar la habilidad y no se ha usado aun -->
                                     <div>
                                         <?php echo CHtml::button('Usar', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>   
                                 <?php }   
                             } else {
                                 //La habilidad no está desbloqueada
-                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])){ ?>
+                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent, $accion['id_habilidad'])) { ?>
                                     <!-- La habilidad puede desbloquearse -->
                                     <div>
                                         <?php echo CHtml::button('Desbloquear', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
@@ -124,10 +157,10 @@
                         } ?>
                         <?php if (($accion['tipo']==Habilidades::TIPO_PASIVA) || ($accion['tipo']==Habilidades::TIPO_PARTIDO)){
                             if (!($usuario->estaDesbloqueada($accion['id_habilidad']))){
-                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent,$accion['id_habilidad'])){ ?>
+                                if ($accion->puedeDesbloquear(Yii::app()->user->usIdent,$accion['id_habilidad'])) { ?>
                                     <!-- La habilidad puede adquirirse -->
                                     <div>
-                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('acciones/usar', 'id_accion'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
+                                        <?php echo CHtml::button('Desbloquear', array('submit' => array('habilidades/adquirir', 'id_habilidad'=>$accion['id_habilidad']),'class'=>"button small black")); ?>
                                     </div>
                                 <?php }  
                             }
@@ -144,3 +177,4 @@
         </div>
     </div>
     <?php } ?>
+</div>

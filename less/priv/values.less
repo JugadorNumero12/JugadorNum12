@@ -23,10 +23,16 @@
 @TopBlockExtras: (@TopBlockPadding+@TopBlockMargin+@TopBlockBorder)*2;
 @TopBlockRadius: @TopBlockMargin;
 
-@ContentWidth: (960px - (@MenuWidth+@TopBlockExtras) - @TopBlockMargin - @TopBlockBorder*2);
+@TotalWidth: (960px - @TopBlockExtras);
+@ContentWidth: @TotalWidth - (@MenuWidth + @TopBlockMargin + @TopBlockBorder*2);
 
 @InnerBlockPadding: @InnerBlockMargin;
 @InnerBlockMargin: @TopBlockPadding;
 @InnerBlockRadius: @InnerBlockMargin;
 @InnerBlockBorder: 1px;
 @InnerBlockBorderColor: @VERDE_12_CLARO;
+
+@FooterHeight: 15px;
+@FooterPadding: @TopBlockPadding;
+@FooterMargin: @TopBlockMargin;
+@FooterBorder: @TopBlockBorder;

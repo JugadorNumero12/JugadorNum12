@@ -21,7 +21,7 @@
 <h1>Participar en: <?php echo $habilidad['nombre']; ?> </h1>
 
 
-<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="128" height="128"/> </div>
+<img alt="imagen habilidad" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $habilidad['token'] ?>.png"  width="128" height="128"/>
 
 <div class="barra-global">
 	<p> Progreso total </p>
@@ -81,7 +81,27 @@
 	<table>
 
 <br>
-<table><tr><th>N&uacute;mero de participantes actuales:</th><td><?php echo $accion['jugadores_acc'].'/'.$habilidad['participantes_max']; ?></td></tr></table>
+<table>
+	<tr>
+		<th>
+			N&uacute;mero de participantes actuales:
+		</th>
+		<td>
+			<?php echo $accion['jugadores_acc'].'/'.$habilidad['participantes_max']; ?>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Tiempo restante para completarla:
+		</th>
+		<td>
+			<?php $t_fin = 0;
+				$t_fin = $accion['finalizacion'] - time();
+				if ($t_fin < 0) $t_fin = 0;
+			printf( '%02d h &nbsp; %02d m &nbsp; %02d s', $t_fin / 3600, $t_fin / 60 % 60, $t_fin % 60 ); ?>
+		</td>
+	</tr>
+</table>
 
 <?php } else {?>
 		<table class="tabla-dcha">  <tr> <td>Acción completada. Por favor, participa en otra. </td> </tr> </table>

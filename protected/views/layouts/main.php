@@ -19,6 +19,8 @@
 	Helper::registerStyleFile('infohabilidad');
 	Helper::registerStyleFile('infopartido');
 	Helper::registerStyleFile('participar');
+	Helper::registerStyleFile('cambiodatos');
+	Helper::registerStyleFile('infoperfil');
 	/*
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/mainLayout.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/general.less" />
@@ -157,6 +159,8 @@
 
 <div id="envoltorio-main">
 
+	<div class="top-padding"></div>
+
   	<!-- DIVISION DE CABECERA -->
 	<div id="clasificacion" class="top-block">
         <ul>
@@ -224,6 +228,7 @@
 
 	    <!-- DIVISION CENTRAL/CONTENIDO -->
 	    <div id="contenido">
+	    	<!-- BEGIN FLASH -->
 	      <?php
     		foreach(Yii::app()->user->getFlashes() as $key => $message) { ?>
     			<script type="text/javascript">
@@ -232,25 +237,28 @@
         	<?php	//echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
     		}
 		  ?>
+		  <!-- END FLASH -->
+		  <!-- BEGIN CONTENT -->
 		  <?php echo $content; ?>
-
-
+		  <!-- END CONTENT -->
 	    </div>
-  	
-
 	</div>
 
-	<!-- TODO Quitar esto mejorando CSS -->
-	<div style="clear:both"></div>
+	<div class="clear"></div>
+
+	<div class="bottom-padding"></div>
+
+	<!-- FUERA -->
+	<div class="pie-pagina"> <!-- top-block -->
+		<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
+		<span class="separados">All Rights Reserved.</span>
+		<span class="separados"><?php echo Yii::powered(); ?></span>
+		<span class="separados"><a href="mailto:jugnum12@gmail.com">Contacto</a></span>
+		<span class="separados"><a href="http://lobonleal.blogspot.com.es">Arte</a></span>
+		<span class="separados">Universidad Complutense de Madrid.</span>
+	</div>
 
 </div>
-
-<!-- DIVISION DEL PIE DE PÁGINA -->
-<!--    <div id="pie-pagina">
-        Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-    </div>-->
 
 </body>
 

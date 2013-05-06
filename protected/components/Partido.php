@@ -267,7 +267,14 @@ class Partido
 		$partido = Partidos::model()->findByPk($this->id_partido);
 
 		//Decimos en que turno estamos para situar
-		$cronica_turno = "Turno: ".$this->turno.".";
+		if ($this->turno > self::TURNO_DESCANSO)
+		{
+			$cronica_turno = "Turno: ".($this->turno - 1).".";
+		}
+		else
+		{
+			$cronica_turno = "Turno: ".$this->turno.".";
+		}
 
 
 		//Miramos a ver si se ha metido algun gol 
@@ -785,7 +792,7 @@ class Partido
 				//Creamos una notificación de fin de partido
 				$notificacion = new Notificaciones;
 				$notificacion->fecha = time();
-				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . "(local)" . " vs " . Equipos::model()->findByPk($this->id_visitante)->nombre . "(visitante)";
+				$notificacion->mensaje = Equipos::model()->findByPk($this->id_local)->nombre . " ".$this->goles_local . " - " .$this->goles_visitante." ".Equipos::model()->findByPk($this->id_visitante)->nombre;
 				$notificacion->imagen = "images/iconos/notificaciones/partido_terminado.png";
 				$notificacion->save();
 				//Enviamos la notificación a los interesados
@@ -795,6 +802,10 @@ class Partido
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
+
+					//Devuelvo la influencia a los participantes7
+					$componente->recursos->influencias_partido_bloqueadas = 0;
+					$componente->recursos->save();
 				}
 				$componentes = Usuarios::model()->findAllByAttributes(array('equipos_id_equipo'=>$this->id_visitante));
 				foreach ($componentes as $componente){
@@ -802,6 +813,10 @@ class Partido
 					$usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
 					$usrnotif->usuarios_id_usuario = $componente->id_usuario;
 					$usrnotif->save();
+
+					//Devuelvo la influencia a los participantes
+					$componente->recursos->influencias_partido_bloqueadas = 0;
+					$componente->recursos->save();
 				}
 				/****/
 		    	break;

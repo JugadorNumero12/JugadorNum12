@@ -372,7 +372,11 @@ class AccionesController extends Controller
 				// Todo correcto, ejecutar acción de partido
 				AccionesTurno::usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res);
 
-			} else { 
+				// EXP: sumar experencia al usuario
+         		$usuario->sumarExp(Usuarios::MEDIA_EXP);
+			} 
+			else 
+			{ 
 				// Tipo inválido
 				$trans->rollback();
 				// Devolver error de tipo inválido
@@ -573,7 +577,7 @@ class AccionesController extends Controller
 
 		} catch ( Exception $exc ) {
 			$transaccion->rollback();
-			$this-> redirect(array('acciones/participar','id_accion'=>$id_accion));
+			$this-> redirect(array('usuarios/index'));
 			throw $exc;
 		}
 	}

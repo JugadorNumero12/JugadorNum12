@@ -1,6 +1,5 @@
 <?php
-/* @var ejemplo de variable dada por el controlador */
-/* @var ejemplo de variable dada por el controlador */
+// @var $datosVista
 
 ?>
 <div id="info-habilidad">
@@ -49,7 +48,8 @@
 										?>
 			</p>
 		<hr>
-			<p><b>Descripci&oacute;n:</b></p><p> <?php echo $habilidad['descripcion']; ?></p>
+		<p><b>Descripci&oacute;n:</b></p><p> <?php echo $habilidad['descripcion']; ?></p>
+
 		<?php if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL
 					|| $habilidad['tipo'] == Habilidades::TIPO_GRUPAL
 					|| $habilidad['tipo'] == Habilidades::TIPO_PARTIDO)
@@ -64,6 +64,34 @@
 						?>
 						</p>
 				<?php } ?>
+		<?php if($habilidad['tipo'] == Habilidades::TIPO_GRUPAL)
+			{ ?>
+				<hr>
+				<p> 
+				<?php
+					echo '<b>Recursos necesarios para completar la acci&oacute;n: </b></p><p>';
+					echo '<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_dinero.png".'" alt="Icono dinero"> </b><span class="info-gasto-txt">'.$habilidad['dinero_max'].'</span>'.
+					'<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_animo.png".'" alt="Icono animo"></b><span class="info-gasto-txt">'.$habilidad['animo_max'].'</span>'.
+					'<b><img class="info-gasto" src="'.Yii::app()->BaseUrl."/images/menu/recurso_influencia.png".'" alt="Icono influencia"> </b><span class="info-gasto-txt">'.$habilidad['influencias_max'].'</span>';
+				?>
+				</p>
+				<?php } ?>
+
+ 		<hr>
+		<p><b>Condiciones necesarias para desbloquear la habilidad:</b></p>
+		<p> Nivel: <?php echo $nivel; ?> </p>
+		<p>
+			Habilidades previamente desbloqueadas necesarias:
+			<?php
+				if (count($requisitos) == 0){
+					echo "Ninguna";
+				} else { 
+					foreach ($requisitos as $h){ ?>
+						<p> <?php echo "- ".$h; ?></p>
+					<?php }
+				} ?>	
+		</p>
+
 		<?php
 				if($habilidad['tipo'] == Habilidades::TIPO_INDIVIDUAL)
 				{ ?>

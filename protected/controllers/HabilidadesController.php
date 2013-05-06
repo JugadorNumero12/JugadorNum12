@@ -59,6 +59,9 @@ class HabilidadesController extends Controller
 		//Sacar el nivel del usuario
 		$usuario = Usuarios::model()->findByPK(Yii::app()->user->usIdent);
 
+		$accionesGrupales = AccionesGrupales::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+		$accionesIndividuales = AccionesIndividuales::model()->findAllByAttributes(array('usuarios_id_usuario'=>Yii::app()->user->usIdent));
+
 		//Comprobaciones de seguridad
 		/*if (($accionesDesbloqueadas === null) || ($recursosUsuario === null)) {
 			Yii::app()->user->setFlash('error', 'Acciones o recursos no encontrados. (actionIndex, AccionesController).');
@@ -81,7 +84,7 @@ class HabilidadesController extends Controller
 		$acciones = Habilidades::model()->findAll();
 
 		//Envía los datos para que los muestre la vista
-		$this->render('index',array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'usuario'=>$usuario));
+		$this->render('index', array('acciones'=>$acciones, 'recursosUsuario'=>$recursosUsuario, 'usuario'=>$usuario, 'accionesGrupales'=>$accionesGrupales, 'accionesIndividuales'=>$accionesIndividuales));
 	}
 
 
@@ -118,15 +121,36 @@ class HabilidadesController extends Controller
 			}
 		}
 
+
+
+		//$habilidades = Habilidades::model()->with('desbloqueadas')->findAll();
+
+		$codigoRequisitos = array();
+
+		//saco los requisitos de la habilidad para ser desbloqueada (nivel, y habilidades previas desbloqueadas)	
+		$codigoRequisitos = RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['desbloqueadas_previas'];
+		$nivel = RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['nivel'];
+
+		$requisitos = array();
+		foreach($codigoRequisitos as $h){
+			$nombre = Habilidades::model()->findByAttributes(array('codigo'=>$h));
+			$requisitos[] = $nombre['nombre'];
+		}
+
 		// Prepara los datos a enviar a la vista
 		$datosVista = array(
 			'habilidad' => $habilidad,
-			'desbloqueada' => $desb
+			'desbloqueada' => $desb,
+			'nivel' => $nivel,
+			'requisitos' => $requisitos
 		);
 
+		// Obtiene una lista con todas las habilidades
+		
+
 		// Cargar css de ver habilidad
-		$uri = Yii::app()->request->baseUrl.'/less/infohabilidad.less';
-		Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
+		//$uri = Yii::app()->request->baseUrl.'/less/infohabilidad.less';
+		//Yii::app()->clientScript->registerLinkTag('stylesheet/less', 'text/css', $uri);
 			
 		// Manda pintar la habilidad en la vista
 		$this->render('ver', $datosVista);

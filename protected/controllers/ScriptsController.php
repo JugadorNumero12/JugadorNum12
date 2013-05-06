@@ -385,7 +385,7 @@ class ScriptsController extends Controller
 
 				foreach ($jornada as $partido) {
 					
-					$this->generaPartido($jornada_act, $partido[0], $partido[1], (int)($time+ $horas[$h]*3600), false);
+					$this->generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), $jornada_act, false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
@@ -410,15 +410,15 @@ class ScriptsController extends Controller
 
 	/*
 	* Añade un nuevo partido entre los equipos indicados en la fecha indicada.
-	* 
-	* No compruebo, que los equipos existan (en principio eso me da igual).
-	* 
-	* No relleno los datos (nivelEq, indOfens, ...) porque evidentemente puden cambiar hasta que empiece el partido.
-	* Habrá que rellenarlos (si son necesarios) en el primer turno de partido.
+	*
+	* ADVERTENCIA:
+	* Los datos (dif_niveles, indOfens, ...) puden cambiar hasta que empiece el partido,
+	* aqui se rellenan (porque se me ha pedido explicitamente),
+	* pero deberían actualizarse en el primer turno de partido.
 	*
 	* ATENCION los partidos empiezan con sigpartido -> id = 0 !!!!
 	*/
-	public function generaPartido($jornada_actual, $id_local, $id_visitande, $time, $generateNewTransaction=true)
+	public function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -428,27 +428,42 @@ class ScriptsController extends Controller
 
 		$equipo_local = Equipos::model()->findByPk($id_local);
 		$equipo_visitante = Equipos::model()->findByPk($id_visitande);
+
+		if($equipo_local===null||$equipo_visitante===null)return;
+
 		try
     	{
 			$partido = new Partidos();
 			$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
 			   							  'equipos_id_equipo_2' => $id_visitande,
 			   							  'hora' => $time,
-			   							  'jornada' => $jornada_actual,
+			   							  'jornada' => $jornada,
+			   							  'nivel_local'=>$equipo_local->nivel_equipo,
+			   							  'nivel_visitante'=>$equipo_visitante->nivel_equipo,
+			   							  'dif_niveles'=>(($equipo_local->nivel_equipo)-($equipo_visitante->nivel_equipo)),
+			   							  'aforo_local'=>$equipo_local->aforo_base,
+			   							  'aforo_visitante'=>$equipo_visitante->aforo_base,
+			   							  'ofensivo_local'=>$equipo_local->factor_ofensivo,
+			   							  'ofensivo_visitante'=>$equipo_visitante->factor_ofensivo,
+			   							  'defensivo_local'=>$equipo_local->factor_defensivo,
+			   							  'defensivo_visitante'=>$equipo_visitante->factor_defensivo,
 			   							));
 			
 			$partido->save();
 
 
-			if (($equipo_local->partidos_id_partido == 0) || ($time < $equipo_local->sigPartido->hora) ){  
-				$equipo_local->setAttributes(array('partidos_id_partido'=>$partido->id_partido ));
+			if (($equipo_local->partidos_id_partido == 0) || ($time < $equipo_local->sigPartido->hora)){
+				$equipo_local->setAttributes(array('partidos_id_partido'=>$partido->id_partido));
+				$equipo_local->save();
 			}
+				
 			
-			if( ($equipo_visitante->partidos_id_partido == 0) || ($time < $equipo_visitante->sigPartido->hora) )
-				$equipo_visitante->setAttributes(array('partidos_id_partido'=>$partido->id_partido ));
-    	
-    		$equipo_local->save();
-    		$equipo_visitante->save();
+			
+			if(($equipo_visitante->partidos_id_partido == 0) || ($time < $equipo_visitante->sigPartido->hora)){
+				$equipo_visitante->setAttributes(array('partidos_id_partido'=>$partido->id_partido));
+				$equipo_visitante->save();
+			}
+				
 
 			if($generateNewTransaction) $transaction->commit();
     	}
