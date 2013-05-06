@@ -58,9 +58,9 @@
 
 <body class="<?php echo Yii::app()->getParams()->bgclass ?>">
 
-	<div id="draggable" class="ui-widget-content">
+	<!--<div id="draggable" class="ui-widget-content">
 	  <p>Drag me around</p>
-	</div>
+	</div> -->
 
 <!-- Barra Superior -->
 <div id="barrasup">
