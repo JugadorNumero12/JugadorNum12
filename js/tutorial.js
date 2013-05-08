@@ -1,10 +1,9 @@
   $(function() {
 
-  	//$( "#ayuda-menu" ).hide();
+  	$( "#ayuda-menu" ).hide();
     $( "#ayuda-menu" ).draggable();
     $( ".cuadro-ayuda" ).hide();
     $( ".cuadro-ayuda" ).draggable();
-    $( "#ayuda-personajes" ).show();
 
     $('#button-ayuda').click(function(){
 		$('#ayuda-menu').show();
