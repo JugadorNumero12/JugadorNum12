@@ -41,7 +41,7 @@
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/scriptsGraficoCircular.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/jquery.jgrowl.js'); ?>
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/flash.js'); ?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/draggable.js'); ?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->BaseUrl.'/js/tutorial.js'); ?>
 
 
     
@@ -58,9 +58,34 @@
 
 <body class="<?php echo Yii::app()->getParams()->bgclass ?>">
 
-	<!--<div id="draggable" class="ui-widget-content">
-	  <p>Drag me around</p>
-	</div> -->
+	<!-- Ayuda  -->
+	<div id="ayuda-menu" class="ui-widget-content">
+	  <p>Men&uacute;</p>
+	  <ul>
+	  <li><a href="#" id="link-personajes" class="ui-state-default ui-corner-all">Personajes</a></li>
+	  <li><a href="#" id="link-habilidades" class="ui-state-default ui-corner-all">Habilidades</a></li>
+	  <li><a href="#" id="link-partido" class="ui-state-default ui-corner-all">Partido</a></li>
+	  </ul>
+	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
+	</div>
+
+	<div class="cuadro-ayuda" id="ayuda-personajes" class="ui-widget-content">
+	  <h2>Personajes</h2>
+	  <p>En Jugador N&uacute;mero doce puedes elegir entre 3 tipos de personaje. Cada uno cuenta con sus propias caracter&iacute;sticas. </p> <br>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/ultra.png';?>" alt="ultra"><p> <b> El ultra </b> Representa la fuerza bruta, el sector m&aacute;s radical de la afici&oacute;n, que siempre intenta hacer mella en la moral del equipo contrario para lograr que su equipo logre alzarse con la victoria. Aunque suelen ser pocos por el car&aacute;cter agresivo y escandaloso que tienen, saben hacerse escuchar y animar a su equipo mejor que cualquier otro. <br> El ultra se deja la piel para respaldar a su equipo. Cuenta con mucho &aacute;nimo base y con una regeneraci&oacute;n de &aacute;nimo muy r&aacute;pida. Dispuesto a animar a su equipo con todas sus ganas, destina una cantidad de dinero moderada para apoyar a su equipo. No cuenta con demasiada influencia. Los dem&aacute;s aficionados, que no ven bien sus habilidades radicales. Cuando gasta su escasa, influencia tarda mucho en recuperarla. </p> <br>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/animadora.png';?>" alt="ultra"><p> <b>La animadora </b> Organizadora de eventos por naturaleza, utiliza las redes sociales y cualquier medio de comunicaci&oacute;n a su alcance para mover a los aficionados a dar apoyo a su equipo. Nadie puede igualarse a la movedora de masas en su af&aacute;n por conseguir adeptos y en ganarse su confianza tan f&aacute;cilmente. <br> El perfil con mayor cantidad de este recurso es el de la animadora, pudiendo ejercer su influencia sobre cualquier medio de comunicaci&oacute;n a su alcance y ganar as&iacute; seguidores de cara al pr&oacute;ximo encuentro. Siempre dispuestos a montar cualquier fiesta con la excusa de animar al equipo, manejan unas cantidades de &aacute;nimo moderado. Sin embargo, con su perfil universitario, no disponen de mucho dinero.</p> <br>
+  	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/empresario.png';?>" alt="ultra"><p> <b>El empresario </b> Est&aacute; al frente de la lucha de las aficiones en los despachos, mueve cantidades abrumadoras de dinero. No pone pegas ni a las apuestas, ni a los sobornos y en general a nada que le proporcione rentabilidad econ&oacute;mica. Representa un alto cargo dedicado en cuerpo y alma a los negocios, pero a la hora de ir a ver un partido, prefiere sentarse en los palcos y ser un mero observador. <br> El empresario, capaz de amasar grandes fortunas en poco tiempo, destaca en el &aacute;rea econ&oacute;mica. Adem&aacute;s, cuenta tambi&eacute;n con su propio tipo de influencia, la que aporta el dinero (que no es poca). Sin embargo, apoyando a su equipo desde los negocios, y m&aacute;s pendiente de las apuestas que del partido, tiene un &aacute;nimo exiguo.</p> <br>
+	</div>
+
+	<div class="cuadro-ayuda" id="ayuda-habilidades" class="ui-widget-content">
+	  <p>Ayuda habilidades</p>
+	</div>
+
+	<div class="cuadro-ayuda" id="ayuda-partido" class="ui-widget-content">
+	  <p>Ayuda partido</p>
+	</div>
+
+	<!-- Fin ayuda -->
 
 <!-- Barra Superior -->
 <div id="barrasup">
@@ -224,9 +249,15 @@
 		   	</li>
 		</a>
 		<a href="<?php echo Yii::app()->createUrl('/partidos/index');?>">
-		   	<li class="menu-item menu-item-last">
+		   	<li class="menu-item">
 		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_calendario.png'; ?>" alt="menu-calendario">
 		   		<div class="nombre-menu">Calendario</div>
+		   	</li>
+		</a>
+		<a href="#" id="button-ayuda" >
+		   	<li class="menu-item menu-item-last">
+		   		<img class="icono-menu" src="<?php echo Yii::app()->BaseUrl.'/images/menu/menu_ayuda.png'; ?>" alt="menu-ayuda">
+		   		<div class="nombre-menu">Ayuda</div>
 		   	</li>
 	  	</a>
 	</ul>
