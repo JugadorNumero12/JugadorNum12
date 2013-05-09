@@ -85,7 +85,12 @@
 	</div>
 
 	<div class="cuadro-ayuda" id="ayuda-habilidades" class="ui-widget-content">
-	  <p>Ayuda habilidades</p>
+	  <h2>Ayuda habilidades</h2>
+	  <p> En Jugador N&uacute;mero 12 hay diferentes tipos de habilidades </p>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="ultra"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="ultra"><p> <b>Habilidades Individuales </b> El beneficio de una acci&oacute;n grupal solo afecta al jugador que la ejecuta. Estos beneficios durar&aacute;n solo hasta el siguiente partido.</p> <br>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_pasiva.png';?>" alt="ultra"><p> <b>Habilidades pasivas </b> El beneficio de una habilidad pasiva afecta solo al jugador que la ejecuta. El beneficio durar&aacute; para siempre y solo podr&aacute; ser ejecutada una vez. </p> <br>
+	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_partido.png';?>" alt="ultra"><p> <b>Habilidades de partido </b> Las habilidades de partido solo se pueden usar durante un partido en curso. Sus beneficios sirven para mejorar los par&aacute;metros de tu equipo durante el partido y ayudarle a meter gol. Se pueden hacer tantas acciones de partido durante un partido como se quiera. </p> <br>
 	</div>
 
 	<div class="cuadro-ayuda" id="ayuda-partido" class="ui-widget-content">
