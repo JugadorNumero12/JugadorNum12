@@ -29,4 +29,9 @@
 		$('#ayuda-partido').show();
 	});
 
+	$('#link-participar').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('#ayuda-participar').show();
+	});
+
   });

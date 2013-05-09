@@ -64,6 +64,7 @@
 	  <ul>
 	  <li><a href="#" id="link-personajes" class="ui-state-default ui-corner-all">Personajes</a></li>
 	  <li><a href="#" id="link-habilidades" class="ui-state-default ui-corner-all">Habilidades</a></li>
+	  <li><a href="#" id="link-participar" class="ui-state-default ui-corner-all">Participar</a></li>
 	  <li><a href="#" id="link-partido" class="ui-state-default ui-corner-all">Partido</a></li>
 	  </ul>
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
@@ -87,10 +88,24 @@
 	<div class="cuadro-ayuda" id="ayuda-habilidades" class="ui-widget-content">
 	  <h2>Ayuda habilidades</h2>
 	  <p> En Jugador N&uacute;mero 12 hay diferentes tipos de habilidades </p>
-	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="ultra"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
-	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="ultra"><p> <b>Habilidades Individuales </b> El beneficio de una acci&oacute;n grupal solo afecta al jugador que la ejecuta. Estos beneficios durar&aacute;n solo hasta el siguiente partido.</p> <br>
-	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_pasiva.png';?>" alt="ultra"><p> <b>Habilidades pasivas </b> El beneficio de una habilidad pasiva afecta solo al jugador que la ejecuta. El beneficio durar&aacute; para siempre y solo podr&aacute; ser ejecutada una vez. </p> <br>
-	  <img class="imagenes-ayuda" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_partido.png';?>" alt="ultra"><p> <b>Habilidades de partido </b> Las habilidades de partido solo se pueden usar durante un partido en curso. Sus beneficios sirven para mejorar los par&aacute;metros de tu equipo durante el partido y ayudarle a meter gol. Se pueden hacer tantas acciones de partido durante un partido como se quiera. </p> <br>
+	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="accion grupal"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
+	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="accion individual"><p> <b>Habilidades Individuales </b> El beneficio de una acci&oacute;n grupal solo afecta al jugador que la ejecuta. Estos beneficios durar&aacute;n solo hasta el siguiente partido.</p> <br>
+	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_pasiva.png';?>" alt="accion pasiva"><p> <b>Habilidades pasivas </b> El beneficio de una habilidad pasiva afecta solo al jugador que la ejecuta. El beneficio durar&aacute; para siempre y solo podr&aacute; ser ejecutada una vez. </p> <br>
+	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_partido.png';?>" alt="accion partido"><p> <b>Habilidades de partido </b> Las habilidades de partido solo se pueden usar durante un partido en curso. Sus beneficios sirven para mejorar los par&aacute;metros de tu equipo durante el partido y ayudarle a meter gol. Se pueden hacer tantas acciones de partido durante un partido como se quiera. </p> <br>
+	</div>
+
+	<div class="cuadro-ayuda" id="ayuda-participar" class="ui-widget-content">
+	  <h2>Ayuda participar</h2> <br>
+	  <p><b> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </b> <p>  
+	  <p> Para participar en una acci&oacute;n grupal ve a la pantalla de inicio y mira que acciones hay abiertas.</p><br>
+	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/grupales.png';?>" alt="grupales"><br> 
+	  <p>Entra en ellas y participa donando tus recursos</p> <br> 
+	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/participar.png';?>" alt="grupales"><br> <br> 
+	  <p><b> &iquest;De qu&eacute; sirve participar en las acciones grupales?</b></p>  
+	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido.</p> <br> 
+	  <p><b> &iquest;C&oacute;mo s&eacute; si mi equipo ganar&aacute; el siguiente partido?</b></p>  
+	  <p>En el calendario de partidos, el siguiente partido de tu equipo tendr&aacute; un bot&oacute;n llamado previa. Si entras all&iacute; ver&aacute;s una compartativa de como va tu equipo respecto al rival. </p> <br> 
+	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/previa.png';?>" alt="previa">
 	</div>
 
 	<div class="cuadro-ayuda" id="ayuda-partido" class="ui-widget-content">
