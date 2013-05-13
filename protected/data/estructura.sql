@@ -104,6 +104,7 @@ DROP TABLE IF EXISTS `desbloqueadas`;
 CREATE TABLE IF NOT EXISTS `desbloqueadas` (
   `habilidades_id_habilidad` int(10) unsigned NOT NULL,
   `usuarios_id_usuario` int(10) unsigned NOT NULL,
+  `fin_del_cooldown` int(11) unsigned NOT NULL DEFAULT '0',
   KEY `desbloqueadas_FKIndex1` (`usuarios_id_usuario`),
   KEY `desbloqueadas_FKIndex2` (`habilidades_id_habilidad`),  
   PRIMARY KEY (`habilidades_id_habilidad`,`usuarios_id_usuario`)

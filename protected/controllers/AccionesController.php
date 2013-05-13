@@ -257,12 +257,13 @@ class AccionesController extends Controller
 	 *
 	 * 0 -> Habilidad no encontrada
 	 * 1 -> Habilidad no desbloqueada
-	 * 2 -> Recursos insuficientes
-	 * 3 -> Error de equipo
-	 * 4 -> Error de partido, puede ser que no esté en juego o que no sea el siguiente del equipo
-	 * 5 -> La acción no es de partido
-	 * 6 -> Acción ejecutada con éxito
-	 * 7 -> Error general
+	 * 2 -> Habilidad en cooldown
+	 * 3 -> Recursos insuficientes 
+	 * 4 -> Error de equipo
+	 * 5 -> Error de partido, puede ser que no esté en juego o que no sea el siguiente del equipo
+	 * 6 -> La acción no es de partido
+	 * 7 -> Acción ejecutada con éxito
+	 * 8 -> Error general
 	 *
 	 * @param int $id_accion 	id de la habilidad que se ejecuta
 	 *
@@ -315,9 +316,29 @@ class AccionesController extends Controller
 				);
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
-			} 
-			
+			}
+
 			//Si esta desbloqueada
+			//Comprovar que no esta en cooldown
+			if($desbloqueada['fin_del_cooldown'] > $now= time() )
+			{				
+				$trans->rollback();
+				// Devolver error de cooldown
+				$data = array(
+					'ok'    => false,
+					'error' => 'Habilidad en cooldown'
+				);
+				echo CJavaScript::jsonEncode($data);
+				Yii::app()->end();
+			}
+			else
+			{
+				//se actualiza el cooldown
+				$desbloqueada['fin_del_cooldown']= $now +$habilidad['cooldown_fin'];
+				$desbloqueada->save();
+			}
+			
+			//Si esta disponible
 			//Obtener modelo de Recursos
 			$res = Recursos::model()->findByAttributes(array('usuarios_id_usuario' => $id_usuario));
 			
