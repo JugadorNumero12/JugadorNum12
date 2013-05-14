@@ -34,4 +34,9 @@
 		$('#ayuda-participar').show();
 	});
 
+	$('#link-objetivo').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('#ayuda-objetivo').show();
+	});
+
   });

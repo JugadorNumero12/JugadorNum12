@@ -62,12 +62,21 @@
 	<div id="ayuda-menu" class="ui-widget-content">
 	  <h2>Men&uacute;</h2>
 	  <ul>
+	  <li><a href="#" id="link-objetivo" class="ui-state-default ui-corner-all">Objetivo del juego</a></li>
 	  <li><a href="#" id="link-personajes" class="ui-state-default ui-corner-all">Personajes</a></li>
 	  <li><a href="#" id="link-habilidades" class="ui-state-default ui-corner-all">Habilidades</a></li>
 	  <li><a href="#" id="link-participar" class="ui-state-default ui-corner-all">Participar</a></li>
 	  <li><a href="#" id="link-partido" class="ui-state-default ui-corner-all">Partido</a></li>
 	  </ul>
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
+	</div>
+
+	<div class="cuadro-ayuda" id="ayuda-objetivo" class="ui-widget-content">
+	  <h2>Objetivo del juego</h2>
+	  <p><b>&iquest;Cu&aacute;l es el objetivo del juego?</b><p>
+	  <p>El objetivo del juego en jugador Num 12 es que tu equipo se proclame campe&oacute;n de la liga.</p>
+	  <p>Para proclamarse campe&oacute;n de la liga tu equipo debe, obviamente, ganar partidos. La afici&oacute;n, es decir, t&uacute; y el resto de tus compa&ntilde;eros teneis diversas maneras de influir en un partido y ayudar al equipo. <p>
+	  
 	</div>
 
 	<div class="cuadro-ayuda" id="ayuda-personajes" class="ui-widget-content">
