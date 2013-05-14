@@ -4,7 +4,7 @@
 
 ***
 
-### Listado de Issues eliminadas de la planificación
+### Listado de funcionalidades eliminadas de la planificación
 
  - **58** : Vista resumen de los partidos.
  - **146** : Barra superior de experiencia.
@@ -14,4 +14,5 @@
  - **27** : Revisión de las relaciones de los modelos.
  - **28** : Revisión de las reglas de los modelos.
  - **51** : Estilo de la página _calendario_ (almoldarlo al resto de la página)
+ - **119** : Juego funcional sobre dos pestañas del mismo navegador
  - **149** : Revisión, imagen de gol inalcanzable.
