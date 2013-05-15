@@ -35,8 +35,8 @@ class ConseguirInversores extends AccionGrupSingleton
   /**
    * Ejecutar la accion
    *
-   * @param int $id_usuario id del usuario que realiza la accion
-   * @throws \Exception usuario no encontrado
+   * @param int $id_accion identificador de la accion
+   * @throws \Exception accion no encontrada
    * @return int 0 si completada con exito ; -1 en caso contrario
    */ 
   public function ejecutar($id_accion)
@@ -45,6 +45,10 @@ class ConseguirInversores extends AccionGrupSingleton
     
     $ret = 0;
 
+    //COmpruebo si la accion existe
+    $accGrup = AccionesGrupales::model()->findByPk($id_accion);
+    if ($accGrup === null)
+      throw new Exception("Accion grupal inexistente.", 404);
     //1.- Añadir bonificación al partido
 
     //2.- Dar bonificación al creador
