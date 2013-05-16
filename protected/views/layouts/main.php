@@ -31,6 +31,8 @@
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/infopartido.less" />
 	<link rel="stylesheet/less" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/less/participar.less" />
 	*/?>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	
 
 	<!-- jQuery -->
 	<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
@@ -59,7 +61,7 @@
 <body class="<?php echo Yii::app()->getParams()->bgclass ?>">
 
 	<!-- Ayuda  -->
-	<div id="ayuda-menu" class="ui-widget-content">
+	<div id="ayuda-menu" class="ui-widget-content top-block">
 	  <h2>Men&uacute;</h2>
 	  <ul>
 	  <li><a href="#" id="link-objetivo" class="ui-state-default ui-corner-all">Objetivo del juego</a></li>
@@ -71,15 +73,19 @@
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
 	</div>
 
-	<div class="cuadro-ayuda" id="ayuda-objetivo" class="ui-widget-content">
-	  <h2>Objetivo del juego</h2>
-	  <p><b>&iquest;Cu&aacute;l es el objetivo del juego?</b><p>
+	<div class="cuadro-ayuda top-block" id="ayuda-objetivo" class="ui-widget-content">
+	  <h2>Objetivo del juego</h2> <br>
+	  <h3>&iquest;Cu&aacute;l es el objetivo del juego?</h3>
 	  <p>El objetivo del juego en jugador Num 12 es que tu equipo se proclame campe&oacute;n de la liga.</p>
 	  <p>Para proclamarse campe&oacute;n de la liga tu equipo debe, obviamente, ganar partidos. La afici&oacute;n, es decir, t&uacute; y el resto de tus compa&ntilde;eros teneis diversas maneras de influir en un partido y ayudar al equipo. <p>
-	  
+	  <h3>&iquest;C&oacute;mo ayudar a tu equipo antes del partido? </h3>
+	  <p> La afici&oacute;n de un equipo puede aportar regursos en las acciones grupales para que, al completarsen, influyan en el partido de manera beneficiosa para su equipo. Para completar una acci&oacute;n grupal se necesita el apoyo, aporte y cooperaci&oacute;n de todos dus aficionados. No sirve abir acciones grupales desde la vista del &aacute;rbol de habilidades. Se necesita participar en ellas y completarse para que sean efectivas. <br> M&aacute;s informaci&oacute;n sobre las acciones grupales en la pesta&ntilde;a de habilidades.</p>
+	  <h3>&iquest;C&oacute;mo ayudar a tu equipo durante el partido? </h3>
+	  <p> Para ayudar a un equipo durante el partido lo mejor es hacer acciones de partido. Estas acciones influyen en el &aacute;nimo y el ambiente del partido. Una afici&oacute;n fogosa es el impulso que necesita un equipo para ganar un partido. <br>M&aacute;s informaci&oacute;n sobre las acciones de partido en la pesta&ntilde;a de habilidades.</p>
+
 	</div>
 
-	<div class="cuadro-ayuda" id="ayuda-personajes" class="ui-widget-content">
+	<div class="cuadro-ayuda top-block" id="ayuda-personajes" class="ui-widget-content">
 	  <h2>Personajes</h2>
 	  <p>En Jugador N&uacute;mero doce puedes elegir entre 3 tipos de personaje. Cada uno cuenta con sus propias caracter&iacute;sticas. </p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/ultra.png';?>" alt="ultra"><p> <b> El ultra </b> Representa la fuerza bruta, el sector m&aacute;s radical de la afici&oacute;n, que siempre intenta hacer mella en la moral del equipo contrario para lograr que su equipo logre alzarse con la victoria. Aunque suelen ser pocos por el car&aacute;cter agresivo y escandaloso que tienen, saben hacerse escuchar y animar a su equipo mejor que cualquier otro. <br> El ultra se deja la piel para respaldar a su equipo. Cuenta con mucho &aacute;nimo base y con una regeneraci&oacute;n de &aacute;nimo muy r&aacute;pida. Dispuesto a animar a su equipo con todas sus ganas, destina una cantidad de dinero moderada para apoyar a su equipo. No cuenta con demasiada influencia. Los dem&aacute;s aficionados, que no ven bien sus habilidades radicales. Cuando gasta su escasa, influencia tarda mucho en recuperarla. </p> <br>
@@ -94,7 +100,7 @@
   	  </table>
 	</div>
 
-	<div class="cuadro-ayuda" id="ayuda-habilidades" class="ui-widget-content">
+	<div class="cuadro-ayuda top-block" id="ayuda-habilidades" class="ui-widget-content">
 	  <h2>Ayuda habilidades</h2>
 	  <p> En Jugador N&uacute;mero 12 hay diferentes tipos de habilidades </p>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="accion grupal"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
@@ -103,21 +109,21 @@
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_partido.png';?>" alt="accion partido"><p> <b>Habilidades de partido </b> Las habilidades de partido solo se pueden usar durante un partido en curso. Sus beneficios sirven para mejorar los par&aacute;metros de tu equipo durante el partido y ayudarle a meter gol. Se pueden hacer tantas acciones de partido durante un partido como se quiera. </p> <br>
 	</div>
 
-	<div class="cuadro-ayuda" id="ayuda-participar" class="ui-widget-content">
+	<div class="cuadro-ayuda top-block" id="ayuda-participar" class="ui-widget-content">
 	  <h2>Ayuda participar</h2> <br>
-	  <p><b> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </b> <p>  
+	  <h3> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </h3>  
 	  <p> Para participar en una acci&oacute;n grupal ve a la pantalla de inicio y mira que acciones hay abiertas.</p><br>
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/grupales.png';?>" alt="grupales"><br> 
 	  <p>Entra en ellas y participa donando tus recursos</p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/participar.png';?>" alt="grupales"><br> <br> 
-	  <p><b> &iquest;De qu&eacute; sirve participar en las acciones grupales?</b></p>  
+	  <h3> &iquest;De qu&eacute; sirve participar en las acciones grupales?</h3>  
 	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido.</p> <br> 
-	  <p><b> &iquest;C&oacute;mo s&eacute; si mi equipo ganar&aacute; el siguiente partido?</b></p>  
+	  <h3> &iquest;C&oacute;mo s&eacute; si mi equipo ganar&aacute; el siguiente partido?</h3>  
 	  <p>En el calendario de partidos, el siguiente partido de tu equipo tendr&aacute; un bot&oacute;n llamado previa. Si entras all&iacute; ver&aacute;s una compartativa de como va tu equipo respecto al rival. </p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/previa.png';?>" alt="previa">
 	</div>
 
-	<div class="cuadro-ayuda" id="ayuda-partido" class="ui-widget-content">
+	<div class="cuadro-ayuda top-block" id="ayuda-partido" class="ui-widget-content">
 	  <p>Ayuda partido</p>
 	</div>
 
