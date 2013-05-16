@@ -44,19 +44,27 @@ class ConseguirInversores extends AccionGrupSingleton
     // TODO
     
     $ret = 0;
-
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
       throw new Exception("Accion grupal inexistente.", 404);
     //1.- Añadir bonificación al partido
-
-    //2.- Dar bonificación al creador
-
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+    //2.- Dar bonificación al creador,no tiene bonificacion al creador
+    //$ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
     //3.- Devolver influencias
-
-    //4.- Finalizar función
-
+    $participantes = $accGrup->participaciones;
+    foreach ($participantes as $participacion) {
+      $infAportadas = $participacion->influencias_aportadas;
+      $usuario = $participacion->usuarios_id_usuario;
+      //if (Recursos::aumentar_recursos($usuario,"influencias",$infAportadas) == 0) {
+      if(Recursos::disminuir_influencias_bloqueadas($usuario,$infAportadas) == 0){
+        $ret = min($ret,0);
+      } else {
+        $ret = -1;
+      }
+    }
+    //4.- Finalizar funciónK
     return $ret;
   }
 
