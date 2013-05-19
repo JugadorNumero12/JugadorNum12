@@ -58,7 +58,7 @@ class ConstruirEstadio extends AccionGrupSingleton
     //1.- Añadir bonificación al partido
     $ret = min($ret,Equipos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_max",Efectos::$datos_acciones['ConstruirEstadio']['aforo_max']));
     $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['ConstruirEstadio']['moral']));
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel_equipo",Efectos::$datos_acciones['ConstruirEstadio']['nivel_equipo']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['ConstruirEstadio']['nivel_equipo']));
     //2.- Dar bonificación al creador,no tiene bonificacion al creador
     //$ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
     //3.- Devolver influencias
