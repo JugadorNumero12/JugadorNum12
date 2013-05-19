@@ -67,11 +67,11 @@ class Costes
 
 		), 
 			
-		'IniciarOla' => array (
+		'CorearEstadio' => array (
 
 		), 
 		
-		'PunteroLaser' => array (
+		'ArrojarMechero' => array (
 
 		), 
 		
