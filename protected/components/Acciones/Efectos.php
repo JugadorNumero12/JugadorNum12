@@ -91,11 +91,11 @@ class Efectos
 			'ofensivo' => 5
 		), 
 			
-		'IniciarOla' => array (
+		'CorearEstadio' => array (
 			'moral' => 200
 		), 
 		
-		'PunteroLaser' => array (
+		'ArrojarMechero' => array (
 			'defensivo' => 5
 		), 
 		

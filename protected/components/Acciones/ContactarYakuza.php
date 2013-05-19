@@ -3,8 +3,9 @@
 /** 
  * Contactar con la Yakuza japonesa
  * 
- * POR DETERMINAR
+ * Tipo : Accion individual
  *
+ * Efectos : POR DETERMINAR
  *
  * @package componentes\acciones
  */
@@ -37,9 +38,10 @@ class ContactarYakuza extends AccionPartSingleton
 	}
 
  	/**
-   	 * POR DETERMINAR
-   	 * @return void
-   	 */
+   * Finalizar la accion
+   *
+   * @return void
+   */
 	public function finalizar() 
   {
     // TODO
