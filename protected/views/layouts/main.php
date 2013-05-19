@@ -64,11 +64,12 @@
 	<div id="ayuda-menu" class="ui-widget-content top-block">
 	  <h2>Men&uacute;</h2>
 	  <ul>
-	  <li><a href="#" id="link-objetivo" class="ui-state-default ui-corner-all">Objetivo del juego</a></li>
-	  <li><a href="#" id="link-personajes" class="ui-state-default ui-corner-all">Personajes</a></li>
-	  <li><a href="#" id="link-habilidades" class="ui-state-default ui-corner-all">Habilidades</a></li>
-	  <li><a href="#" id="link-participar" class="ui-state-default ui-corner-all">Participar</a></li>
-	  <li><a href="#" id="link-partido" class="ui-state-default ui-corner-all">Partido</a></li>
+	  <li><a href="#" id="link-objetivo" >Objetivo del juego</a></li>
+	  <li><a href="#" id="link-personajes" >Personajes</a></li>
+	  <li><a href="#" id="link-habilidades" >Habilidades</a></li>
+	  <li><a href="#" id="link-participar" >Participar</a></li>
+	  <li><a href="#" id="link-asistir-partido" >Asistir al partido</a></li>
+	  <li><a href="#" id="link-desarrollo-partido" >Desarrollo partido</a></li>
 	  </ul>
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
 	</div>
@@ -76,12 +77,12 @@
 	<div class="cuadro-ayuda top-block" id="ayuda-objetivo" class="ui-widget-content">
 	  <h2>Objetivo del juego</h2> <br>
 	  <h3>&iquest;Cu&aacute;l es el objetivo del juego?</h3>
-	  <p>El objetivo del juego en jugador Num 12 es que tu equipo se proclame campe&oacute;n de la liga.</p>
+	  <p>El objetivo del juego en jugador Num 12 es que <b>tu equipo se proclame campe&oacute;n de la liga</b>.</p>
 	  <p>Para proclamarse campe&oacute;n de la liga tu equipo debe, obviamente, ganar partidos. La afici&oacute;n, es decir, t&uacute; y el resto de tus compa&ntilde;eros teneis diversas maneras de influir en un partido y ayudar al equipo. <p>
 	  <h3>&iquest;C&oacute;mo ayudar a tu equipo antes del partido? </h3>
-	  <p> La afici&oacute;n de un equipo puede aportar regursos en las acciones grupales para que, al completarsen, influyan en el partido de manera beneficiosa para su equipo. Para completar una acci&oacute;n grupal se necesita el apoyo, aporte y cooperaci&oacute;n de todos dus aficionados. No sirve abir acciones grupales desde la vista del &aacute;rbol de habilidades. Se necesita participar en ellas y completarse para que sean efectivas. <br> M&aacute;s informaci&oacute;n sobre las acciones grupales en la pesta&ntilde;a de habilidades.</p>
+	  <p> La afici&oacute;n de un equipo puede aportar regursos en las acciones grupales para que, al completarsen, influyan en el partido de manera beneficiosa para su equipo. Para <b>completar una acci&oacute;n grupal</b> se necesita el apoyo, aporte y cooperaci&oacute;n de todos dus aficionados. No sirve abrir acciones grupales desde la vista del &aacute;rbol de habilidades. Se necesita participar en ellas y completarse para que sean efectivas. <br> M&aacute;s informaci&oacute;n sobre las acciones grupales en las pesta&ntilde;as de habilidades y participar.</p>
 	  <h3>&iquest;C&oacute;mo ayudar a tu equipo durante el partido? </h3>
-	  <p> Para ayudar a un equipo durante el partido lo mejor es hacer acciones de partido. Estas acciones influyen en el &aacute;nimo y el ambiente del partido. Una afici&oacute;n fogosa es el impulso que necesita un equipo para ganar un partido. <br>M&aacute;s informaci&oacute;n sobre las acciones de partido en la pesta&ntilde;a de habilidades.</p>
+	  <p> Para ayudar a un equipo durante el partido lo mejor es hacer <b>acciones de partido</b>. Estas acciones influyen en el &aacute;nimo y el ambiente del partido. Una afici&oacute;n fogosa es el impulso que necesita un equipo para ganar un partido. <br>M&aacute;s informaci&oacute;n sobre las acciones de partido en la pesta&ntilde;a de habilidades.</p>
 
 	</div>
 
@@ -90,8 +91,7 @@
 	  <p>En Jugador N&uacute;mero doce puedes elegir entre 3 tipos de personaje. Cada uno cuenta con sus propias caracter&iacute;sticas. </p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/ultra.png';?>" alt="ultra"><p> <b> El ultra </b> Representa la fuerza bruta, el sector m&aacute;s radical de la afici&oacute;n, que siempre intenta hacer mella en la moral del equipo contrario para lograr que su equipo logre alzarse con la victoria. Aunque suelen ser pocos por el car&aacute;cter agresivo y escandaloso que tienen, saben hacerse escuchar y animar a su equipo mejor que cualquier otro. <br> El ultra se deja la piel para respaldar a su equipo. Cuenta con mucho &aacute;nimo base y con una regeneraci&oacute;n de &aacute;nimo muy r&aacute;pida. Dispuesto a animar a su equipo con todas sus ganas, destina una cantidad de dinero moderada para apoyar a su equipo. No cuenta con demasiada influencia. Los dem&aacute;s aficionados, que no ven bien sus habilidades radicales. Cuando gasta su escasa, influencia tarda mucho en recuperarla. </p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/animadora.png';?>" alt="ultra"><p> <b>La animadora </b> Organizadora de eventos por naturaleza, utiliza las redes sociales y cualquier medio de comunicaci&oacute;n a su alcance para mover a los aficionados a dar apoyo a su equipo. Nadie puede igualarse a la movedora de masas en su af&aacute;n por conseguir adeptos y en ganarse su confianza tan f&aacute;cilmente. <br> El perfil con mayor cantidad de este recurso es el de la animadora, pudiendo ejercer su influencia sobre cualquier medio de comunicaci&oacute;n a su alcance y ganar as&iacute; seguidores de cara al pr&oacute;ximo encuentro. Siempre dispuestos a montar cualquier fiesta con la excusa de animar al equipo, manejan unas cantidades de &aacute;nimo moderado. Sin embargo, con su perfil universitario, no disponen de mucho dinero.</p> <br>
-  	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/empresario.png';?>" alt="ultra"><p> <b>El empresario </b> Est&aacute; al frente de la lucha de las aficiones en los despachos, mueve cantidades abrumadoras de dinero. No pone pegas ni a las apuestas, ni a los sobornos y en general a nada que le proporcione rentabilidad econ&oacute;mica. Representa un alto cargo dedicado en cuerpo y alma a los negocios, pero a la hora de ir a ver un partido, prefiere sentarse en los palcos y ser un mero observador. <br> El empresario, capaz de amasar grandes fortunas en poco tiempo, destaca en el &aacute;rea econ&oacute;mica. Adem&aacute;s, cuenta tambi&eacute;n con su propio tipo de influencia, la que aporta el dinero (que no es poca). Sin embargo, apoyando a su equipo desde los negocios, y m&aacute;s pendiente de las apuestas que del partido, tiene un &aacute;nimo exiguo.</p> <br>
-  	  <br> <br>
+  	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/empresario.png';?>" alt="ultra"><p> <b>El empresario </b> Est&aacute; al frente de la lucha de las aficiones en los despachos, mueve cantidades abrumadoras de dinero. No pone pegas ni a las apuestas, ni a los sobornos y en general a nada que le proporcione rentabilidad econ&oacute;mica. Representa un alto cargo dedicado en cuerpo y alma a los negocios, pero a la hora de ir a ver un partido, prefiere sentarse en los palcos y ser un mero observador. <br> El empresario, capaz de amasar grandes fortunas en poco tiempo, destaca en el &aacute;rea econ&oacute;mica. Adem&aacute;s, cuenta tambi&eacute;n con su propio tipo de influencia, la que aporta el dinero (que no es poca). Sin embargo, apoyando a su equipo desde los negocios, y m&aacute;s pendiente de las apuestas que del partido, tiene un &aacute;nimo exiguo.</p> <br> 
   	  <table cellspacing=10>
   	  	<tr> <th> Perfil / Recurso</th> <th> Dinero </th> <th> &Aacute;nimo</th> <th> Influencia</th> </tr>
   	  	<tr> <td> Ultra </td> <td> <span style="color:orange">medio</span></td> <td> <span style="color:green">alto</span></td> <td> <span style="color:red">bajo</span></td> </tr>
@@ -101,8 +101,8 @@
 	</div>
 
 	<div class="cuadro-ayuda top-block" id="ayuda-habilidades" class="ui-widget-content">
-	  <h2>Ayuda habilidades</h2>
-	  <p> En Jugador N&uacute;mero 12 hay diferentes tipos de habilidades </p>
+	  <h2>Habilidades</h2>
+	  <p> En Jugador N&uacute;mero 4 hay diferentes tipos de habilidades </p>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="accion grupal"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="accion individual"><p> <b>Habilidades Individuales </b> El beneficio de una acci&oacute;n grupal solo afecta al jugador que la ejecuta. Estos beneficios durar&aacute;n solo hasta el siguiente partido.</p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_pasiva.png';?>" alt="accion pasiva"><p> <b>Habilidades pasivas </b> El beneficio de una habilidad pasiva afecta solo al jugador que la ejecuta. El beneficio durar&aacute; para siempre y solo podr&aacute; ser ejecutada una vez. </p> <br>
@@ -110,23 +110,48 @@
 	</div>
 
 	<div class="cuadro-ayuda top-block" id="ayuda-participar" class="ui-widget-content">
-	  <h2>Ayuda participar</h2> <br>
+	  <h2>Participar</h2> <br>
 	  <h3> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </h3>  
-	  <p> Para participar en una acci&oacute;n grupal ve a la pantalla de inicio y mira que acciones hay abiertas.</p><br>
+	  <p> Para participar en una acci&oacute;n grupal ve a la <b>pantalla de inicio</b> y mira que acciones hay abiertas.</p><br>
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/grupales.png';?>" alt="grupales"><br> 
 	  <p>Entra en ellas y participa donando tus recursos</p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/participar.png';?>" alt="grupales"><br> <br> 
 	  <h3> &iquest;De qu&eacute; sirve participar en las acciones grupales?</h3>  
-	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido.</p> <br> 
+	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. <b>Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido</b>.</p> <br> 
 	  <h3> &iquest;C&oacute;mo s&eacute; si mi equipo ganar&aacute; el siguiente partido?</h3>  
-	  <p>En el calendario de partidos, el siguiente partido de tu equipo tendr&aacute; un bot&oacute;n llamado previa. Si entras all&iacute; ver&aacute;s una compartativa de como va tu equipo respecto al rival. </p> <br> 
+	  <p>En el calendario de partidos, el siguiente partido de tu equipo tendr&aacute; un bot&oacute;n llamado <b>previa</b>. Si entras all&iacute; ver&aacute;s una compartativa de como va tu equipo respecto al rival. </p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/previa.png';?>" alt="previa">
 	</div>
 
-	<div class="cuadro-ayuda top-block" id="ayuda-partido" class="ui-widget-content">
-	  <p>Ayuda partido</p>
+	<div class="cuadro-ayuda top-block" id="ayuda-asistir-partido" class="ui-widget-content">
+	  <h2>Asistir al partido</h2> <br>
+	  <h3>&iquest;C&oacute;mo puedo acceder a un partido? </h3>
+	  <p>Para acceder a un partido puedes ir a inicio. Ah&iacute; indicar&aacute; la fecha y hora del siguiente partido. Cuando comience el partido al lado de la fecha y hora habr&aacute; un bot&oacute;n de asistir que te llevar&aacute; directo al partido. Si el partido a&uacute;n no ha empezado en el bot&oacute;n pondr&aacute; previa.</p>
+	  <h3> &iquest;Puedo acceder a partidos en los que no juegue mi equipo?</h3>
+	  <p> No, solo puedes acceder a partidos en los que juegue tu equipo. Tampoco pueder ver la previa de partidos en los que tu equipo no est&eacute; implicado</p>
+	  <h3>&iquest;Qu&eacute; es la previa de un partido? </h3>
+	  <p>La previa de un partido es una comparativa entre dos equipos que van a disputar un partido. Hay unos despegables en los que podr&aacute;s comparar las acciones grupales completadas de tu equipo y las de tu equipo rival. Esas acciones completadas son las que influir&aacute;n en el partido y decidir&sacute;n qui&eacute;n es el ganador. <br>Tambi&eacute;n hay unas barras para ver visualmente qui&eacute;n va mejor para el siguiente partido. </p>
+	  <h3> Una vez que estoy dentro del partido, &iquest;puedo salir?</h3>
+	  <p> S&iacute;. Puedes salir a otras pesta&ntilde;as, a mensajer&iacute;a y notificaciones, por ejemplo, y luego volver al partido sin problemas. </p>
 	</div>
 
+	<div class="cuadro-ayuda top-block" id="ayuda-desarrollo-partido" class="ui-widget-content">
+	  <h2>Ayuda Desarrollo partido</h2> <br>
+	  <h3> Estado del partido </h3>
+	  <p> Los partidos duran 10 turnos. Cada turno dura un minuto. Cuando se cambia de turno el estado del partido cambia. Es decir, se mete un gol, un equipo se acerca a la porter&iacute;a contraria, los jugadores suben a defender etc. <br>Para ver en qu&eacute; estado est&aacute; el partido actualmente hay que fijarse en los dibujos de la izquierda el marcador y el dibujo del campo en la pesta&ntilde;a partido.</p>
+	  <h3> Dibujos a la izquierda del marcador</h3>
+	  <p> Los dibujos a la izquierda del marcador indican el estado del partido. Los monigotes son de dos colores gris y resaltado. Si el monigote resaltado es del color de tu equipo entonces tu equipo va mejor, y al rev&eacute;s si el monigote resaltado es del color de tu oponente.  </p>
+	  <h3> Pesta&ntilde;a partido </h3>
+	  <p>La pesta&ntilde;a partido sirve para saber en que estado est&aacute; el partido. Los circulos indican los jugadores locales y las cruces los jugadores visitantes. Puedes ver el estado del partido seg&uacute;n la posici&oacute;n de los jugadores en el campo. Si est&aacute;n presionando una porter&iacute;a, si est&aacute;n dispersos por el campo, etc.  </p>
+	  <h3> Pesta&ntilde;a acciones</h3>
+	  <p> <b>Puedes influir en un partido para ayudar a tu equipo a ganar.</b> En la pesta&ntilde;a acciones aparecer&aacute;n las acciones de partido que tengas desbloqueadas. Pincha en los iconos para ejecutar la acci&oacute;n y esta influir&aacute; en el partido ayudando a tu equipo a ganar. <br>Puedes hacer tantas acciones de partido como quieras durante un turno. Pero entre dos acciones seguidas tendr&aacute;s que esperar un peque&ntilde;o cool-down para volver a activar la acci&oacute;n. <br>Si resulta que ha llegado la hora del partido y no te has acordado de desbloquear ninguna habilidad, puedes salir del partido ir al &aacute;rbol de habilidades, desbloquear, y luego volver al partido sin problema. </p>
+	  <h3> Pesta&ntilde;a chat</h3>
+	  <p> Chat donde hablar con el resto de la afici&oacute;n del partido y comentarlo.</p>
+	  <h3> Pesta&ntilde;a datos </h3>
+	  <p> Indican los factores que influyen en el partido y sus valores. Est&aacute; un poco en construcci&oacute;n.</p>
+	  <h3>Pesta&ntilde;a cr&oacute;nica </h3> 
+	  <p> Cada turno, se genera una cronica comentando el partido. Luego la cr&oacute;nica se guardar&aacute; como un registro para que se pueda consultar una vez acabado el partido. Est&aacute; un poco en construcci&oacute;n.  </p>
+	</div>
 	<!-- Fin ayuda -->
 
 <!-- Barra Superior -->
