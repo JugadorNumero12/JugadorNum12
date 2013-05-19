@@ -136,6 +136,70 @@
 		$('#link-tutorial-2').addClass("menu-seleccionado");
 	});
 
+	$('#link-tutorial-3').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-3').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-3').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-4').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-4').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-4').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-5').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-5').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-5').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-6').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-6').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-6').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-7').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-7').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-7').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-8').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-8').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-8').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-9').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-9').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-9').addClass("menu-seleccionado");
+	});
+
+	$('#link-tutorial-10').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+		$('#tutorial-10').show();
+		desactivarMenuSeleccionado();
+		$('#link-tutorial-10').addClass("menu-seleccionado");
+	});
+
 	$('#link-flecha-01').click(function(){
 		$('.cuadro-ayuda').hide();
 		$('.cuadro-tutorial').hide();
