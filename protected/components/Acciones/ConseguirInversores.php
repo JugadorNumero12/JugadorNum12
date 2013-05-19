@@ -54,7 +54,7 @@ class ConseguirInversores extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
 
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel_equipo",Efectos::$datos_acciones['ConseguirInversores']['nivel_equipo']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['ConseguirInversores']['nivel_equipo']));
     
     //2.- Dar bonificación al creador
     $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero",Efectos::$datos_acciones['ConseguirInversores']['bonus_creador']['dinero']));

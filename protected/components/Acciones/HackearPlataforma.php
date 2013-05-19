@@ -57,7 +57,7 @@ class HackearPlataforma extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
     
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel_equipo",Efectos::$datos_acciones['HackearPlataforma']['nivel_equipo']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['HackearPlataforma']['nivel_equipo']));
     $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['HackearPlataforma']['aforo']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
