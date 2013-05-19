@@ -64,6 +64,17 @@
 	<div id="ayuda-menu" class="ui-widget-content top-block">
 	  <h2>Men&uacute;</h2>
 	  <ul>
+	  <li><a href="#" id="link-tutorial-0" > <span class="resaltar">Tutorial </span></a></li>
+	  <li><a href="#" id="link-tutorial-1" class="submenu" >Paso 1</a></li>
+	  <li><a href="#" id="link-tutorial-2"  class="submenu" >Paso 2</a></li>
+	  <li><a href="#" id="link-tutorial-3"  class="submenu" >Paso 3</a></li>
+	  <li><a href="#" id="link-tutorial-4"  class="submenu" >Paso 4</a></li>
+	  <li><a href="#" id="link-tutorial-5"  class="submenu" >Paso 5</a></li>
+	  <li><a href="#" id="link-tutorial-6"  class="submenu" >Paso 6</a></li>
+	  <li><a href="#" id="link-tutorial-7"  class="submenu" >Paso 7</a></li>  
+	  <li><a href="#" id="link-tutorial-8"  class="submenu" >Paso 8</a></li> 
+	  <li><a href="#" id="link-tutorial-9"  class="submenu" >Paso 9</a></li> 
+	  <li><a href="#" id="link-tutorial-10"  class="submenu" >Paso 10</a></li> 
 	  <li><a href="#" id="link-objetivo" >Objetivo del juego</a></li>
 	  <li><a href="#" id="link-personajes" >Personajes</a></li>
 	  <li><a href="#" id="link-habilidades" >Habilidades</a></li>
@@ -74,15 +85,124 @@
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
 	</div>
 
+	<div class="cuadro-tutorial top-block" id="tutorial-0" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1>&iquest;Nuevo en <span style="color:#570;font-weight:bold">JUGADOR N&Uacute;MERO 12?</span> <h1>
+			<br> <br>
+			<h1>&iquest;No sabes por d&oacute;nde comenzar? <h1><br> <br>
+			<h2>En este tutorial te ayudaremos a entender este juego en </h2> <h1> <span style="color:orangered;font-weight:bold">10 sencillos pasos</span></h1> </div>
+	   <div class="flecha-dcha"><a href="#" id="link-flecha-01" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-1" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">1</span> Desbloquea habilidades</h1> <br>
+			<h2> No te olvides de las habilidades de partido</h2>
+			<br> <br> <br>
+			<h3> Ve al men&uacute; habilidades (poner estrellita) y desbloqueda las habilidades de nivel b&aacute;sico. <br> <br> Foto de desbloquear muy grande <h3>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-10" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>
+	   <div class="flecha-dcha"><a href="#" id="link-flecha-12" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-2" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">2</span> Ejecuta acciones</h1> <br>
+			<h2> Desde el &aacute;rbol de habilidades</h2>
+			<br> <br> <br>
+		</div>
+	 	<div class="flecha-izq"><a href="#" id="link-flecha-21" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+		<div class="flecha-dcha"><a href="#" id="link-flecha-23" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-3" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">3</span> Participa en acciones</h1> <br>
+			<h2> No te olvides de completarlas</h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-32" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-34" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-4" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">4</span> Gana experiencia</h1> <br>
+			<h2> Y sube de nivel</h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-43" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-45" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-5" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">5</span> Charla con tus compa&ntilde;eros de equipo</h1> <br>
+			<h2> Usa la mensajer&iacute;a</h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-54" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-56" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-6" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">6</span> Mantente al d&iacute;a</h1> <br>
+			<h2> Mira tus notificaciones</h2>
+			<br> <br> <br>		
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-65" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-67" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-7" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">7 </span> Comenta la previa</h1> <br>
+			<h2> Consulta c&oacute;mo de preparado est&aacute; tu equipo para el siguiente partido</h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-76" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-78" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-8" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">8 </span>Asiste al partido</h1> <br>
+			<h2> Apoya a tu equipo en el momento m&aacute;s improtante</h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-87" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-89" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-9" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">9 </span>Influye en el partido</h1> <br>
+			<h2> Haz acciones de partido. </h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-98" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  <div class="flecha-dcha"><a href="#" id="link-flecha-910" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
+	</div>
+
+	<div class="cuadro-tutorial top-block" id="tutorial-10" class="ui-widget-content">
+		<div class="contenido-tutorial">
+			<h1> <span class="resaltar">10 </span>&iexcl;&iexcl;Gana!!</h1> <br>
+			<h2> LLeva tu equipo a la gloria </h2>
+			<br> <br> <br>
+		</div>
+	  <div class="flecha-izq"><a href="#" id="link-flecha-109" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
+	  </div>
+
 	<div class="cuadro-ayuda top-block" id="ayuda-objetivo" class="ui-widget-content">
 	  <h2>Objetivo del juego</h2> <br>
 	  <h3>&iquest;Cu&aacute;l es el objetivo del juego?</h3>
-	  <p>El objetivo del juego en jugador Num 12 es que <b>tu equipo se proclame campe&oacute;n de la liga</b>.</p>
+	  <p>El objetivo del juego en jugador Num 12 es que <span class="resaltar">tu equipo se proclame campe&oacute;n de la liga</span>.</p>
 	  <p>Para proclamarse campe&oacute;n de la liga tu equipo debe, obviamente, ganar partidos. La afici&oacute;n, es decir, t&uacute; y el resto de tus compa&ntilde;eros teneis diversas maneras de influir en un partido y ayudar al equipo. <p>
 	  <h3>&iquest;C&oacute;mo ayudar a tu equipo antes del partido? </h3>
-	  <p> La afici&oacute;n de un equipo puede aportar regursos en las acciones grupales para que, al completarsen, influyan en el partido de manera beneficiosa para su equipo. Para <b>completar una acci&oacute;n grupal</b> se necesita el apoyo, aporte y cooperaci&oacute;n de todos dus aficionados. No sirve abrir acciones grupales desde la vista del &aacute;rbol de habilidades. Se necesita participar en ellas y completarse para que sean efectivas. <br> M&aacute;s informaci&oacute;n sobre las acciones grupales en las pesta&ntilde;as de habilidades y participar.</p>
+	  <p> La afici&oacute;n de un equipo puede aportar regursos en las acciones grupales para que, al completarsen, influyan en el partido de manera beneficiosa para su equipo. Para <span class="resaltar">completar una acci&oacute;n grupal</span> se necesita el apoyo, aporte y cooperaci&oacute;n de todos dus aficionados. No sirve abrir acciones grupales desde la vista del &aacute;rbol de habilidades. Se necesita participar en ellas y completarse para que sean efectivas. <br> M&aacute;s informaci&oacute;n sobre las acciones grupales en las pesta&ntilde;as de habilidades y participar.</p>
 	  <h3>&iquest;C&oacute;mo ayudar a tu equipo durante el partido? </h3>
-	  <p> Para ayudar a un equipo durante el partido lo mejor es hacer <b>acciones de partido</b>. Estas acciones influyen en el &aacute;nimo y el ambiente del partido. Una afici&oacute;n fogosa es el impulso que necesita un equipo para ganar un partido. <br>M&aacute;s informaci&oacute;n sobre las acciones de partido en la pesta&ntilde;a de habilidades.</p>
+	  <p> Para ayudar a un equipo durante el partido lo mejor es hacer <span class="resaltar">acciones de partido</span>. Estas acciones influyen en el &aacute;nimo y el ambiente del partido. Una afici&oacute;n fogosa es el impulso que necesita un equipo para ganar un partido. <br>M&aacute;s informaci&oacute;n sobre las acciones de partido en la pesta&ntilde;a de habilidades.</p>
 
 	</div>
 
@@ -112,12 +232,12 @@
 	<div class="cuadro-ayuda top-block" id="ayuda-participar" class="ui-widget-content">
 	  <h2>Participar</h2> <br>
 	  <h3> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </h3>  
-	  <p> Para participar en una acci&oacute;n grupal ve a la <b>pantalla de inicio</b> y mira que acciones hay abiertas.</p><br>
+	  <p> Para participar en una acci&oacute;n grupal ve a la <span class="resaltar">pantalla de inicio</span> y mira que acciones hay abiertas.</p><br>
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/grupales.png';?>" alt="grupales"><br> 
 	  <p>Entra en ellas y participa donando tus recursos</p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/participar.png';?>" alt="grupales"><br> <br> 
 	  <h3> &iquest;De qu&eacute; sirve participar en las acciones grupales?</h3>  
-	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. <b>Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido</b>.</p> <br> 
+	  <p>Cada acci&oacute;n grupal da beneficios a un equipo de cara a su pr&oacute;ximo partido. <span class="resaltar">Cuantas m&aacute;s acciones complete tu equipo m&aacute;s posibilidades tiene de ganar el pr&oacute;ximo partido</span>.</p> <br> 
 	  <h3> &iquest;C&oacute;mo s&eacute; si mi equipo ganar&aacute; el siguiente partido?</h3>  
 	  <p>En el calendario de partidos, el siguiente partido de tu equipo tendr&aacute; un bot&oacute;n llamado <b>previa</b>. Si entras all&iacute; ver&aacute;s una compartativa de como va tu equipo respecto al rival. </p> <br> 
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/previa.png';?>" alt="previa">
@@ -126,7 +246,7 @@
 	<div class="cuadro-ayuda top-block" id="ayuda-asistir-partido" class="ui-widget-content">
 	  <h2>Asistir al partido</h2> <br>
 	  <h3>&iquest;C&oacute;mo puedo acceder a un partido? </h3>
-	  <p>Para acceder a un partido puedes ir a inicio. Ah&iacute; indicar&aacute; la fecha y hora del siguiente partido. Cuando comience el partido al lado de la fecha y hora habr&aacute; un bot&oacute;n de asistir que te llevar&aacute; directo al partido. Si el partido a&uacute;n no ha empezado en el bot&oacute;n pondr&aacute; previa.</p>
+	  <p>Para acceder a un partido puedes ir a inicio. Ah&iacute; indicar&aacute; la fecha y hora del siguiente partido. Cuando comience el partido al lado de la fecha y hora habr&aacute; un bot&oacute;n de asistir que te llevar&aacute; directo al partido. Si el partido a&uacute;n no ha empezado en el bot&oacute;n pondr&aacute; previa. <br> Tambi&eacute; puedes asistir desde el calendario de partidos, buscando el pr&oacute;imo partido de tu equipo en el calendario</p>
 	  <h3> &iquest;Puedo acceder a partidos en los que no juegue mi equipo?</h3>
 	  <p> No, solo puedes acceder a partidos en los que juegue tu equipo. Tampoco pueder ver la previa de partidos en los que tu equipo no est&eacute; implicado</p>
 	  <h3>&iquest;Qu&eacute; es la previa de un partido? </h3>
@@ -144,7 +264,7 @@
 	  <h3> Pesta&ntilde;a partido </h3>
 	  <p>La pesta&ntilde;a partido sirve para saber en que estado est&aacute; el partido. Los circulos indican los jugadores locales y las cruces los jugadores visitantes. Puedes ver el estado del partido seg&uacute;n la posici&oacute;n de los jugadores en el campo. Si est&aacute;n presionando una porter&iacute;a, si est&aacute;n dispersos por el campo, etc.  </p>
 	  <h3> Pesta&ntilde;a acciones</h3>
-	  <p> <b>Puedes influir en un partido para ayudar a tu equipo a ganar.</b> En la pesta&ntilde;a acciones aparecer&aacute;n las acciones de partido que tengas desbloqueadas. Pincha en los iconos para ejecutar la acci&oacute;n y esta influir&aacute; en el partido ayudando a tu equipo a ganar. <br>Puedes hacer tantas acciones de partido como quieras durante un turno. Pero entre dos acciones seguidas tendr&aacute;s que esperar un peque&ntilde;o cool-down para volver a activar la acci&oacute;n. <br>Si resulta que ha llegado la hora del partido y no te has acordado de desbloquear ninguna habilidad, puedes salir del partido ir al &aacute;rbol de habilidades, desbloquear, y luego volver al partido sin problema. </p>
+	  <p> <span class="resaltar">Puedes influir en un partido para ayudar a tu equipo a ganar.</span> En la pesta&ntilde;a acciones aparecer&aacute;n las acciones de partido que tengas desbloqueadas. Pincha en los iconos para ejecutar la acci&oacute;n y esta influir&aacute; en el partido ayudando a tu equipo a ganar. <br>Puedes hacer tantas acciones de partido como quieras durante un turno. Pero entre dos acciones seguidas tendr&aacute;s que esperar un peque&ntilde;o cool-down para volver a activar la acci&oacute;n. <br>Si resulta que ha llegado la hora del partido y no te has acordado de desbloquear ninguna habilidad, puedes salir del partido ir al &aacute;rbol de habilidades, desbloquear, y luego volver al partido sin problema. </p>
 	  <h3> Pesta&ntilde;a chat</h3>
 	  <p> Chat donde hablar con el resto de la afici&oacute;n del partido y comentarlo.</p>
 	  <h3> Pesta&ntilde;a datos </h3>
