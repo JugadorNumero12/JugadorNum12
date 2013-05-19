@@ -57,7 +57,7 @@ class FinanciarVideojuego extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
     
     //1.- Añadir bonificación al partidok
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo_base",Efectos::$datos_acciones['FinanciarVideojuego']['aforo_base']));
+    $ret = min($ret,Partidos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_base",Efectos::$datos_acciones['FinanciarVideojuego']['aforo_base']));
     //2.- Dar bonificación al creador
     $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero",Efectos::$datos_acciones['FinanciarVideojuego']['bonus_creador']['dinero']));
     $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero_gen",Efectos::$datos_acciones['FinanciarVideojuego']['bonus_creador']['dinero_gen']));

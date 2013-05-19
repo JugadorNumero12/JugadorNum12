@@ -47,7 +47,7 @@ class FalsearCuentas extends AccionIndSingleton
         if ($us === null)
           throw new Exception("Usuario incorrecto.", 404);  
 
-        if (Recursos::aumentar_recursos($id_usuario,"bonus_dinero",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0) {
+        if (Recursos::aumentar_recursos($id_usuario,"bonus_dinero",Efectos::$datos_acciones['FalsearCuentas']['bonus_jugador']['dinero']) == 0) {
           return 0;
         } else {
           return -1;
