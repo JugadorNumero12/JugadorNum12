@@ -7,6 +7,8 @@
 		$('#link-partido').removeClass("menu-seleccionado");
 		$('#link-participar').removeClass("menu-seleccionado");
 		$('#link-objetivo').removeClass("menu-seleccionado");
+		$('#link-asistir-partido').removeClass("menu-seleccionado");
+		$('#link-desarrollo-partido').removeClass("menu-seleccionado");
 	}
 
   	$( "#ayuda-menu" ).hide();
@@ -56,6 +58,20 @@
 		$('#ayuda-objetivo').show();
 		desactivarMenuSeleccionado();
 		$('#link-objetivo').addClass("menu-seleccionado");
+	});
+
+	$('#link-asistir-partido').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('#ayuda-asistir-partido').show();
+		desactivarMenuSeleccionado();
+		$('#link-asistir-partido').addClass("menu-seleccionado");
+	});
+
+	$('#link-desarrollo-partido').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('#ayuda-desarrollo-partido').show();
+		desactivarMenuSeleccionado();
+		$('#link-desarrollo-partido').addClass("menu-seleccionado");
 	});
 
   });

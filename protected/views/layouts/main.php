@@ -68,7 +68,8 @@
 	  <li><a href="#" id="link-personajes" >Personajes</a></li>
 	  <li><a href="#" id="link-habilidades" >Habilidades</a></li>
 	  <li><a href="#" id="link-participar" >Participar</a></li>
-	  <li><a href="#" id="link-partido" >Partido</a></li>
+	  <li><a href="#" id="link-asistir-partido" >Asistir al partido</a></li>
+	  <li><a href="#" id="link-desarrollo-partido" >Desarrollo partido</a></li>
 	  </ul>
 	  <div><input type="button" id="cerrar-ayuda" value="Cerrar" /></div>
 	</div>
@@ -100,7 +101,7 @@
 	</div>
 
 	<div class="cuadro-ayuda top-block" id="ayuda-habilidades" class="ui-widget-content">
-	  <h2>Ayuda habilidades</h2>
+	  <h2>Habilidades</h2>
 	  <p> En Jugador N&uacute;mero 4 hay diferentes tipos de habilidades </p>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_grupal.png';?>" alt="accion grupal"><p> <b>Habilidades Grupales </b> Se necesita la colaboraci&oacute;n de toda la afici&oacute;n para completarlas. Una vez abiertas, hay un tiempo l&iacute;mite para completarlas. Para participar en una acci&oacute;n grupal, donando tus recursos, ve a la pantalla de inicio y comprueba cu&aacute;les son las acciones abiertas de tu equipo. Tambi&eacute;n lo puedes ver en la pantalla de Mi afici&oacute;n. Si el tiempo l&iacute;mite para una acci&oacute;n grupal se acaba sin completarla, los recursos aportados volver&aacute;n a sus due&ntilde;os.</p> <br>
 	  <img class="imagenes-ayuda-izq" src="<?php echo Yii::app()->BaseUrl.'/images/iconos/icono_individual.png';?>" alt="accion individual"><p> <b>Habilidades Individuales </b> El beneficio de una acci&oacute;n grupal solo afecta al jugador que la ejecuta. Estos beneficios durar&aacute;n solo hasta el siguiente partido.</p> <br>
@@ -109,7 +110,7 @@
 	</div>
 
 	<div class="cuadro-ayuda top-block" id="ayuda-participar" class="ui-widget-content">
-	  <h2>Ayuda participar</h2> <br>
+	  <h2>Participar</h2> <br>
 	  <h3> &iquest;C&oacute;mo participo en una acci&oacute;n grupal? </h3>  
 	  <p> Para participar en una acci&oacute;n grupal ve a la <b>pantalla de inicio</b> y mira que acciones hay abiertas.</p><br>
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/grupales.png';?>" alt="grupales"><br> 
@@ -122,10 +123,35 @@
 	  <img class="imagenes-ayuda-centro" src="<?php echo Yii::app()->BaseUrl.'/images/ayuda/previa.png';?>" alt="previa">
 	</div>
 
-	<div class="cuadro-ayuda top-block" id="ayuda-partido" class="ui-widget-content">
-	  <p>Ayuda partido</p>
+	<div class="cuadro-ayuda top-block" id="ayuda-asistir-partido" class="ui-widget-content">
+	  <h2>Asistir al partido</h2> <br>
+	  <h3>&iquest;C&oacute;mo puedo acceder a un partido? </h3>
+	  <p>Para acceder a un partido puedes ir a inicio. Ah&iacute; indicar&aacute; la fecha y hora del siguiente partido. Cuando comience el partido al lado de la fecha y hora habr&aacute; un bot&oacute;n de asistir que te llevar&aacute; directo al partido. Si el partido a&uacute;n no ha empezado en el bot&oacute;n pondr&aacute; previa.</p>
+	  <h3> &iquest;Puedo acceder a partidos en los que no juegue mi equipo?</h3>
+	  <p> No, solo puedes acceder a partidos en los que juegue tu equipo. Tampoco pueder ver la previa de partidos en los que tu equipo no est&eacute; implicado</p>
+	  <h3>&iquest;Qu&eacute; es la previa de un partido? </h3>
+	  <p>La previa de un partido es una comparativa entre dos equipos que van a disputar un partido. Hay unos despegables en los que podr&aacute;s comparar las acciones grupales completadas de tu equipo y las de tu equipo rival. Esas acciones completadas son las que influir&aacute;n en el partido y decidir&sacute;n qui&eacute;n es el ganador. <br>Tambi&eacute;n hay unas barras para ver visualmente qui&eacute;n va mejor para el siguiente partido. </p>
+	  <h3> Una vez que estoy dentro del partido, &iquest;puedo salir?</h3>
+	  <p> S&iacute;. Puedes salir a otras pesta&ntilde;as, a mensajer&iacute;a y notificaciones, por ejemplo, y luego volver al partido sin problemas. </p>
 	</div>
 
+	<div class="cuadro-ayuda top-block" id="ayuda-desarrollo-partido" class="ui-widget-content">
+	  <h2>Ayuda Desarrollo partido</h2> <br>
+	  <h3> Estado del partido </h3>
+	  <p> Los partidos duran 10 turnos. Cada turno dura un minuto. Cuando se cambia de turno el estado del partido cambia. Es decir, se mete un gol, un equipo se acerca a la porter&iacute;a contraria, los jugadores suben a defender etc. <br>Para ver en qu&eacute; estado est&aacute; el partido actualmente hay que fijarse en los dibujos de la izquierda el marcador y el dibujo del campo en la pesta&ntilde;a partido.</p>
+	  <h3> Dibujos a la izquierda del marcador</h3>
+	  <p> Los dibujos a la izquierda del marcador indican el estado del partido. Los monigotes son de dos colores gris y resaltado. Si el monigote resaltado es del color de tu equipo entonces tu equipo va mejor, y al rev&eacute;s si el monigote resaltado es del color de tu oponente.  </p>
+	  <h3> Pesta&ntilde;a partido </h3>
+	  <p>La pesta&ntilde;a partido sirve para saber en que estado est&aacute; el partido. Los circulos indican los jugadores locales y las cruces los jugadores visitantes. Puedes ver el estado del partido seg&uacute;n la posici&oacute;n de los jugadores en el campo. Si est&aacute;n presionando una porter&iacute;a, si est&aacute;n dispersos por el campo, etc.  </p>
+	  <h3> Pesta&ntilde;a acciones</h3>
+	  <p> <b>Puedes influir en un partido para ayudar a tu equipo a ganar.</b> En la pesta&ntilde;a acciones aparecer&aacute;n las acciones de partido que tengas desbloqueadas. Pincha en los iconos para ejecutar la acci&oacute;n y esta influir&aacute; en el partido ayudando a tu equipo a ganar. <br>Puedes hacer tantas acciones de partido como quieras durante un turno. Pero entre dos acciones seguidas tendr&aacute;s que esperar un peque&ntilde;o cool-down para volver a activar la acci&oacute;n. <br>Si resulta que ha llegado la hora del partido y no te has acordado de desbloquear ninguna habilidad, puedes salir del partido ir al &aacute;rbol de habilidades, desbloquear, y luego volver al partido sin problema. </p>
+	  <h3> Pesta&ntilde;a chat</h3>
+	  <p> Chat donde hablar con el resto de la afici&oacute;n del partido y comentarlo.</p>
+	  <h3> Pesta&ntilde;a datos </h3>
+	  <p> Indican los factores que influyen en el partido y sus valores. Est&aacute; un poco en construcci&oacute;n.</p>
+	  <h3>Pesta&ntilde;a cr&oacute;nica </h3> 
+	  <p> Cada turno, se genera una cronica comentando el partido. Luego la cr&oacute;nica se guardar&aacute; como un registro para que se pueda consultar una vez acabado el partido. Est&aacute; un poco en construcci&oacute;n.  </p>
+	</div>
 	<!-- Fin ayuda -->
 
 <!-- Barra Superior -->
