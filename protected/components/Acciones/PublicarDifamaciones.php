@@ -52,10 +52,15 @@ class PublicarDifamaciones extends AccionGrupSingleton
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
       throw new Exception("Accion grupal inexistente.", 404);
+
+    $creador = $accGrup->usuarios;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
+
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel_equipo",Efectos::$datos_acciones['PublicarDifamaciones']['nivel_equipo']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['PublicarDifamaciones']['ambiente']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['PublicarDifamaciones']['aforo']));
     //2.- Dar bonificación al creador
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;

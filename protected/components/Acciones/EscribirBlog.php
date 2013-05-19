@@ -45,7 +45,7 @@ class EscribirBlog extends AccionPasSingleton
         throw new Exception("Usuario incorrecto.", 404);      
 
       //Aumentar animo_max
-      $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_max",Efectos::$datos_acciones['Ascender']['dinero_gen'])); 
+      $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_max",Efectos::$datos_acciones['EscribirBlog']['influencias_max'])); 
 
       return $ret;
   }

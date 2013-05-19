@@ -144,4 +144,55 @@ class Equipos extends CActiveRecord
         return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
 
+    /** Funcion auxiliar que modifica la tabla de equipos
+     * 
+     * @paremetro equipo al que modificamos sus recursos
+     * @parametro columna sobre la que modificamos (dinero, dinero_gen, ...)
+     * @parametro cantidad de recursos que aumentamos
+     * @devuelve flag de error
+     * @ejemplo Recursos::aumentar_recursos(3, "animo", 30);
+     */
+    public static function aumentar_recursos_equipo($id_equipo, $columna, $cantidad)
+    {
+        /* ROBER */
+        /*Recupero el usuario del que voy a aumentar los recursos*/
+        $equipo=Equipos::model()->findByPK($id_equipo);
+
+        //Comprobación de seguridad
+        if ($equipo === null)
+        {
+            throw new CHttpException(404,"Equipo no encontrado. (aumentar_recursos_equipo,Helper.php)");
+            
+        }
+    
+        /*Cojo la columna a modificar del modelo, para modificarla despues*/
+        $actuales=$equipo->$columna;
+        $valor_nuevo=$actuales + $cantidad;
+        /*Debo comprobar que no esta o sobrepasa en su máximo el atributo*/
+
+        /*En el caso del animo*/
+        if( ($columna==='aforo_base') && ($valor_nuevo >= $equipo->aforo_max))
+        {
+            $equipo->$columna=$equipo->aforo_max;
+
+        }
+        else
+        {
+            $equipo->$columna=$valor_nuevo;
+        }
+        
+        /*Si save() no lanza error entonces se realizo correctamente la actualizacion
+         sino devuelves error*/
+        if($equipo->save())
+        {
+            return 0;
+
+        }else
+            {
+                return -1;
+            }
+            
+        
+    }
+
 }
