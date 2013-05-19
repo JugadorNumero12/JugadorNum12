@@ -271,6 +271,7 @@ class AccionesController extends Controller
 	 */
 	public function actionUsarPartido($id_accion)
 	{	
+
 		// Actualizar recursos de usuario
 		Recursos::model()->actualizaRecursos(Yii::app()->user->usIdent);
 		
@@ -326,7 +327,8 @@ class AccionesController extends Controller
 				// Devolver error de cooldown
 				$data = array(
 					'ok'    => false,
-					'error' => 'Habilidad en cooldown'
+					'error' => 'Habilidad en cooldown',
+					'cooldownEnd' => $desbloqueada['fin_del_cooldown']
 				);
 				echo CJavaScript::jsonEncode($data);
 				Yii::app()->end();
@@ -415,7 +417,8 @@ class AccionesController extends Controller
 			// Todo correcto
 			$data = array(
 				'ok' => true,
-				'message' => 'Acción ejecutada correctamente'
+				'message' => 'Acción ejecutada correctamente',
+				'cooldownEnd' => $desbloqueada['fin_del_cooldown']
 			);
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
@@ -426,7 +429,7 @@ class AccionesController extends Controller
 			// Devolver error general
 				$data = array(
 					'ok'    => false,
-					'error' => 'Error al ejecutar la acción'
+					'error' => 'Error al ejecutar la acción '
 				);
 			echo CJavaScript::jsonEncode($data);
 			Yii::app()->end();
