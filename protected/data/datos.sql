@@ -38,15 +38,15 @@ SET time_zone = "+00:00";
 -- CONSTANTES DEFINIDAS 
 -- ---------------------
 -- Tipos de habilidades
---  GRUPALES 		= 0
---  INDIVIDUALES 	= 1
---  PARTIDO 		= 2
---  PASIVAS 		= 3
+--  GRUPALES        = 0
+--  INDIVIDUALES    = 1
+--  PARTIDO         = 2
+--  PASIVAS         = 3
 --
 -- Tipos de personajes
---  ULTRA 			= 0
---  MOVEDORA 		= 1
---  EMPRESARIO 		= 2
+--  ULTRA           = 0
+--  MOVEDORA        = 1
+--  EMPRESARIO      = 2
 -- ---------------------
 
 -- ------------------------------------------------------------
@@ -60,18 +60,18 @@ SET time_zone = "+00:00";
  -- Blancos vs. Negros (partido 8)
  -- -----------------------------------------------------
  -- Rojos:
- -- 	xaby (1) 	=> habilidades: 1, 2, 3
- -- 	arturo (3) 	=> habilidades: 1, 2, 3
- --	 	dani(4)		=> habilidades: 4
- --  	marcos(8)   => habilidades: 4
+ --     xaby (1)    => habilidades: 1, 2, 3
+ --     arturo (3)  => habilidades: 1, 2, 3
+ --     dani(4)     => habilidades: 4
+ --     marcos(8)   => habilidades: 4
  -- Verdes:
- -- 	marina(2)	=> habilidades: 3, 4, 5
- -- 	pedro (5)	=> habilidades: 1, 2, 3
- -- 	rober(7)	=> habilidades: 4
- -- 	alex(9) 	=> habilidades: 3, 4, 5
+ --     marina(2)   => habilidades: 3, 4, 5
+ --     pedro (5)   => habilidades: 1, 2, 3
+ --     rober(7)    => habilidades: 4
+ --     alex(9)     => habilidades: 3, 4, 5
  -- Negros: 
- -- 	manu(6)	    => habilidades: 3, 4, 5 
- -- 	samu(10)    => habilidades: 4
+ --     manu(6)     => habilidades: 3, 4, 5 
+ --     samu(10)    => habilidades: 4
 SET FOREIGN_KEY_CHECKS = 0; 
 
 TRUNCATE `acciones_grupales`;
@@ -81,10 +81,10 @@ TRUNCATE `acciones_individuales`;
 
  
  -- ----------------------------------
- -- Rojos (1)   7 puntos 	+4 goles
- -- Negros (3) 	4 puntos 	-1 goles
- -- Verdes (2) 	2 puntos 	+2 goles
- -- Blancos (4) 2 puntos 	-2 goles
+ -- Rojos (1)   7 puntos    +4 goles
+ -- Negros (3)  4 puntos    -1 goles
+ -- Verdes (2)  2 puntos    +2 goles
+ -- Blancos (4) 2 puntos    -2 goles
  -- ----------------------------------
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
@@ -142,22 +142,22 @@ INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `afor
  -- ---------------------------------------------------------------------------------------------------------------------------------
  -- Tabla de costes para las habilidades 
  -- ---------------------------------------------------------------------------------------------------------------------------------
- --									dinero animo influencias | dinero_max animo_max influencias_max | participantes_max cooldown_fin
- -- Habilidades "empresariales" => 	 500 	3 		1 		 |	10000 		60 			12 			|	3 					200 			 	 
- -- Habilidades "ultra"			=>   200 	30 		0 		 |	4000 		600			1 			|   3 					200 			
- -- Habilidades "movedora"		=>   60 	15 		1 		 |  1200 		300 		24 			|   3   				200
+ --                                 dinero animo influencias | dinero_max animo_max influencias_max | participantes_max cooldown_fin
+ -- Habilidades "empresariales" =>   500    3       1        |  10000       60          12          |   3                   200                  
+ -- Habilidades "ultra"         =>   200    30      0        |  4000        600         1           |   3                   200             
+ -- Habilidades "movedora"      =>   60     15      1        |  1200        300         24          |   3                   200
  -- ----------------------------------------------------------------------------------------------------------------------------------
 TRUNCATE `habilidades`;
 INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, `animo`, `influencias`, `dinero_max`, `animo_max`, `influencias_max`, `participantes_max`, `cooldown_fin`, `token`) VALUES
  -- ---------------------
  -- Tipos de habilidades
  -- ---------------------
- -- GRUPALES 		0
- -- INDIVIDUALES 	1
- -- PARTIDO 		2
- -- PASIVAS 		3
+ -- GRUPALES        0
+ -- INDIVIDUALES    1
+ -- PARTIDO         2
+ -- PASIVAS         3
  -- ---------------------
- ('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"',                                                                         500, 3,  1, 10000, 60, 120,             6, 600, 'financiar_evento'),                            
+('FinanciarEvento', 0, 'Financiar un evento promocional', '"El marketing lo es todo: organizar un evento promocional ayudará a caldear el ambiente del próximo partido además de atraer más espectadores al estadio"',                                                                         500, 3,  1, 10000, 60, 120,             6, 600, 'financiar_evento'),                            
  ('IncentivoEconomico', 0, 'Incentivo económico a los jugadores', '"Los jugadores pueden correr más... sólo necesitan un pequeño empujoncito. Aumenta el nivel del equipo para el próximo partido; el impulsor del incentivo recupera influencias que haya destinado a otras acciones"',        500, 3,  1, 10000, 60, 120,             6, 600, 'incentivo_economico'),                         
  ('OrganizarHomenaje', 0, 'Organizar homenaje a un jugador', '"Organiza un homenaje antes del partido a un jugador amado por la grada y conseguiras atraer a más espectadores para el próximo encuentro; el impulsor gana además influencias dentro del club si logra completar el homenaje"',  60,  15, 1, 1200, 300, 240,             6, 600, 'organizar_homenaje'),                          
  ('Pintarse', 0, 'Pintarse con los colores del equipo', '"Demuestra tu pasión por los colores de tu equipo. Sube el ambiente para el próximo partido"',                                                                                                                                         200, 30, 0, 1000, 600, 100,             6, 600, 'pintarse_colores_equipo'),                     
@@ -165,13 +165,13 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  ('ConseguirInversores', 0, 'Conseguir inversores extranjeros', '"Muévete por el mundillo empresarial para conseguir inversores extranjeros para tu equipo; quién sabe, quizá convezcas a algún jeque millonario para que invierta en el equipo"',                                              800, 30, 5, 60000, 380, 80,             6, 900, 'conseguir_inversores_extranjeros'),            
  ('ConstruirEstadio', 0, 'Construir estadio', '"Un gran equipo necesita un gran estadio. Consigue un buen arquitecto, recalifica unos terrenos un par de sobornos a políticos y bualah! Más aficionados, mejores palcos, mejores derechos en televisión..."',                                   20000, 100, 9, 1000000000, 3500, 400,   4, 15000, 'construir_estadio'),                   
  ('FicharJugador', 0, 'Fichar un jugador para el equipo', '"El fichaje de jugadores no tiene porque ser algo exclusivamente de los clubes... un buen aficionado con, digamos, las suficientes influencias sobre la directiva el club puede hacer que se fiche a ese jugador deseado"',          10000, 30, 8,  500000000,  2000, 250,   8, 10000, 'fichar_jugador'),          
- ('FinanciarPelicula', 0, 'Producir una película o un documental sobre el club, qué significan los colores del equipo, los valores de la cantera... esas chorradas que se traducen en pasta; pasta gansa',                                                                                      5000, 35, 5, 9500, 600, 100,            6, 600, 'financiar_pelicula'),
+ ('FinanciarPelicula', 0, 'Financiar Pelicula sobre el equipo', '"Producir una película o un documental sobre el club, qué significan los colores del equipo, los valores de la cantera... esas chorradas que se traducen en pasta; pasta gansa"',                                                                                      5000, 35, 5, 9500, 600, 100,            6, 600, 'financiar_pelicula'),
  ('HackearPlataforma', 0, 'Hackear plataforma web rival', '"Organiza a unos amigos informáticos para hackear los blogs y páginas que den apoyo al equipo contrario, peudes conseguir que vayan menos hinchas de su equipo a animar al partido"',                                                300, 35, 4, 400, 90, 10,                5, 600, 'hackear_plataforma_rival'),
  ('PublicarDifamaciones', 0, 'Pulicar difamaciones sobre el rival', '"La prensa sensacionalista puede ser tu aliada. Y la rosa. Y si nos ponemos los telediarios de Cuatro; un buen rumor si tiene morbo se difundirá por los medios como la polvora"',                                         600, 20, 7, 900, 900, 100,              6, 600, 'publicar_difamaciones'),
  ('AlquilarBus', 0, 'Alquilar bus de hinchas para ir a animar el partido', '"Mueve a toda la peña para ir al próximo partido del equipo y llenar el estadio"',                                                                                                                                  60, 6, 0, 5000, 200, 4,                 9, 600, 'alquilar_bus'),
- ('ObrasBeneficas', 0, 'Mueve los hilos para que el club se plubicite con diversas obras benéficas para lavar su imagen pública y que caiga mejor a los aficioandos',                                                                                                                           60, 9, 3, 9000, 300, 60,                4, 800, 'obras_beneficas'),
+ ('ObrasBeneficas', 0, 'Participar en obras benéficas', '"Mueve los hilos para que el club se plubicite con diversas obras benéficas para lavar su imagen pública y que caiga mejor a los aficioandos"',                                                                                                                           60, 9, 3, 9000, 300, 60,                4, 800, 'obras_beneficas'),
  ('MandarJugadorHospital', 0, 'Mandar a un jugador rival al hospital', '"Chicos, que parezca un accidente"',                                                                                                                                                                                    100, 30, 3, 5000, 500, 40,              6, 600, 'mandar_jugador_hospital'), 
- ('ConciertoRock', 0, 'Concierto de Rock', '"Toca con tus amigos un nuevo cántico para el equipo"', 																																															100, 30, 3, 400, 500, 3, 				4, 400, 'concierto_estadio'),
+ ('ConciertoRock', 0, 'Concierto de Rock', '"Toca con tus amigos un nuevo cántico para el equipo"',                                                                                                                                                                                             100, 30, 3, 400, 500, 3,                4, 400, 'concierto_estadio'),
 
  ('Apostar', 1, 'Apostar por el partido', '"Dale esa pizca extra de emoción."',                                                                                                                                                                                                                 500,  3,  1,  NULL, NULL, NULL,         1, 200, 'apostar'),                              
  ('CrearseEspectativas', 1, 'Crearse espectativas para el próximo partido', '"Crearse espectativas para siguiente partido: obtienes inmediatamente puntos de animo"',                                                                                                                           0,    0,  0,  NULL, NULL, NULL,         1, 200, 'crear_cantico'),                          
@@ -181,16 +181,17 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
  ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"Recarga energías, te espera un partido largo."',                                                                                                                                                                                     100, 30, 0, NULL, NULL, NULL,           1, 10, 'beber_cerveza'),
  ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"Apoya a tu equipo a lo grande: anímalo con los altavoces del propio estadio."',                                                                                                                                                    30,  15, 1, NULL, NULL, NULL,           1, 10, 'hablar_speaker'),
  ('CorearEstadio', 2, 'Corear en el estadio', '"Mueve las gradas durante el partido."',                                                                                                                                                                                                         100, 30, 0, NULL, NULL, NULL,           1, 10, 'corear_estadio'),
- ('ArrojarMechero', 2, 'Arroja objetos al campo o molesta con el puntero láser a un jugador', '"La mejor defensa contra un lanzamiento de falta del rival. Molesta al jugador con un puntero láser o arroja mecheros al portero en un córner"',                                                 100, 30, 0, NULL, NULL, NULL,           1, 10, 'arrojar_mechero'),
+ ('ArrojarMechero', 2, 'Arrojar objetos al campo', '"La mejor defensa contra un lanzamiento de falta del rival. Molesta al jugador con un puntero láser o arroja mecheros al portero en un córner"',                                                                                            100, 30, 0, NULL, NULL, NULL,           1, 10, 'arrojar_mechero'),
  ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"Ocúpate de que el partido tenga repercusión."',                                                                                                                                                                    30,  15, 1, NULL, NULL, NULL,           1, 10, 'retransmitir_redes_sociales'),
  ('DoblarApuesta', 2, 'Doblar la apuesta durante el partido', '"Seguramente hoy sea tu día de suerte"',                                                                                                                                                                                         0,   20, 0, NULL, NULL, NULL,           1, 10, 'doblar_apuesta'), 
- ('TumultoGradas', 2, 'Participar en un tumulto en las gradas del estadio', '"¡¡¡PELEA!!! ¡¡¡PELEA!!! ¡¡¡PELEA!!!"',                                                                                                                                                                            0, 60, 0,   NULL, NULL, NULL,           1, 10, 'pelea_aficiones'), 
- ('EntrevistaPartido', 2, 'Entrevistar el partido', '"Ser el periodista durante el partido"', 																																																	0,20, 10,   NULL, NULL, NULL, 			1, 10, 'entrevista_descanso'),
+ ('TumultoGradas', 2, 'Participar en un tumulto en las gradas', '"¡¡¡PELEA!!! ¡¡¡PELEA!!! ¡¡¡PELEA!!!"',                                                                                                                                                                                        0, 60, 0,   NULL, NULL, NULL,           1, 10, 'pelea_aficiones'), 
+ ('EntrevistaPartido', 2, 'Entrevistar el partido', '"Ser el periodista durante el partido"',                                                                                                                                                                                                   0,20, 10,   NULL, NULL, NULL,           1, 10, 'entrevista_descanso'),
 
  ('ContactarYakuza', 3, 'Contactar con la Yakuza japonesa', '"¿Te creías importante? No existe ningún tiburón de los negocios fuera de su alcance."',                                                                                                                                           3000, 20, 8,         NULL, NULL, NULL,  1, NULL, 'contactos_yakuza'),                     
- ('EscribirBlog', 3, 'Escribir blog de opinión', '"Al principio tendrás 2 visitas, la tuya y la de tu madre... pero si trabajas en él a diário con paciencia podrías convertir tu voz en un referente"',                                                                                        0, 25, 0,            NULL, NULL; NULL,  1, NULL, 'escribir_blog'),
+ ('EscribirBlog', 3, 'Escribir blog de opinión', '"Al principio tendrás 2 visitas, la tuya y la de tu madre... pero si trabajas en él a diário con paciencia podrías convertir tu voz en un referente"',                                                                                        0, 25, 0,            NULL, NULL, NULL,  1, NULL, 'escribir_blog'),
  ('Ascender', 3, 'Ascender en el trabajo', '"A más dinero, más acciones podrás financiar."',                                                                                                                                                                                                    500, 3, 1,           NULL, NULL, NULL,  1, NULL, 'ascender_trabajo'),
  ('EquipamientoHeroe', 3, 'Equipamiento de super héroe', '"Hata a Iron Man le gusta el futbol, ¡SEAH!!!"',                                                                                                                                                                                      30000000, 5000, 300, NULL, NULL, NULL,  1, NULL, 'equipamiento_super_heroe');
+
 
 TRUNCATE `participaciones`;
 
@@ -227,10 +228,10 @@ TRUNCATE `partidos`;
 -- -------------------------------------------------------------------------------------------------------
  -- Recursos iniciales
  -- --------------------------------------------------------------------------------------------------------
- -- 				dinero dinero_gen influencias influencias_max influencias_gen animo animo_max animo_gen
- -- ultras: 		 2000 		5 			2 			2 				1 			300 	400 	15  
- -- movedoras: 		 600 		2 			11 			12 				3 			150 	250 	9
- -- empresarios: 	 5000 		16 			6 			8 				2 			30 		50 		1
+ --                 dinero dinero_gen influencias influencias_max influencias_gen animo animo_max animo_gen
+ -- ultras:          2000       5           2           2               1           300     400     15  
+ -- movedoras:       600        2           11          12              3           150     250     9
+ -- empresarios:     5000       16          6           8               2           30      50      1
  -- ---------------------------------------------------------------------------------------------------------
 TRUNCATE `recursos`;
 INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
