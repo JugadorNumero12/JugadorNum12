@@ -110,7 +110,7 @@ class Habilidades extends CActiveRecord
 			foreach ($habilidadesRequisito as $habilidadReq) {
 				//Con el codigo de la habilidad saco la habilidad requisito
 				$habilidadAux = Habilidades::model()->findByAttributes((array('codigo'=> $habilidadReq)));
-
+                echo '<pre>'.die(var_dump($habilidadAux)).'</pre>';
 				//miro si el usuario tiene esa habilidad desbloqueada
 				$desbloqueada = Desbloqueadas::model()->findByAttributes((array('habilidades_id_habilidad'=> $habilidadAux->id_habilidad, 'usuarios_id_usuario'=> $id_usuario)));
 
