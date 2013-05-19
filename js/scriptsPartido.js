@@ -445,7 +445,7 @@ $(document).ready(function(evt){
             updateData(recalc, recalc);
 
             if (golLocAct != partido.golesLocal || golVisAct != partido.golesVisit) {
-              (function(){})();
+              (function(){})(); // TODO Goles
             }
 
             // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica

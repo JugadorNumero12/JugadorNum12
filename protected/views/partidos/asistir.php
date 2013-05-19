@@ -134,7 +134,7 @@
 </div>
 
 <div id="partido-info" class="inner-block">
-	<div id="tabs-mensaje">mensaje cualquiera</div>
+	<div id="tabs-mensaje"></div>
 	<ul id="partido-info-tabs">
 		<li><a href="#partido-info-campo">Partido</a></li>
 		<li><a href="#partido-info-acciones">Acciones</a></li>
