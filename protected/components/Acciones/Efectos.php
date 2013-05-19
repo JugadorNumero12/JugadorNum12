@@ -90,7 +90,7 @@ class Efectos
 			'bonus_creador' => array ('animo_gen' => 2,'dinero_gen' => 20)
 		), 
 
-		'FinanciarVideojuego' => array (
+		'ConciertoRock' => array (
 			'aforo_base' => 100,
 			'bonus_creador' => array ('dinero' => 50,'dinero_gen' => 15)
 		), 
