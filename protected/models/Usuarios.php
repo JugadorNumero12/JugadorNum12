@@ -213,7 +213,7 @@ class Usuarios extends CActiveRecord
              *  - pass
              *  - exp_necesaria
              */
-            array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
+            array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp, puntos_desbloqueo', 'safe', 'on'=>'search'),
         );
     }
 
@@ -366,7 +366,8 @@ class Usuarios extends CActiveRecord
             'personaje' => 'Personaje',
             'nivel' => 'Nivel',
             'exp' => 'Experiencia',
-            'exp_necesaria' => 'Experiencia Necesaria'
+            'exp_necesaria' => 'Experiencia Necesaria',
+            'puntos_desbloqueo' => 'Puntos Desbloqueo'
         );
     }
 
@@ -393,6 +394,7 @@ class Usuarios extends CActiveRecord
         $criteria->compare('personaje',$this->personaje);
         $criteria->compare('nivel',$this->nivel,true);
         $criteria->compare('exp',$this->exp,true);
+        $criteria->compare('puntos_desbloqueo',$this->puntos_desbloqueo,true);
 
         return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
@@ -447,6 +449,7 @@ class Usuarios extends CActiveRecord
      *  - indicadores de recursos
      *  - nivel
      *  - exp_necesaria
+     *  - puntos_desbloqueo
      * 
      * > La funcion contempla la posibilidad de subir varios niveles de golpe
      * 
@@ -465,10 +468,12 @@ class Usuarios extends CActiveRecord
             $nivel_actual = $this->nivel;
             $nivel_inicial = $nivel_actual; 
             $exp_sig_nivel = $this->exp_necesaria;
+            $puntos_desbloqueo = $this->puntos_desbloqueo;
             
             /* Posible subir varios niveles */
             while($exp_acc >= $exp_sig_nivel) {
                 $nivel_actual = $nivel_actual + 1;
+                $puntos_desbloqueo += 1;
                 Yii::app()->user->setFlash('nivel', 'Enhorabuena, has subido de nivel. Ahora tienes nivel '. $nivel_actual);
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
 
@@ -495,7 +500,8 @@ class Usuarios extends CActiveRecord
             /* Guardamos los nuevos atributos del usuario */
             $this->setAttributes( array( 
                 'nivel'=>$nivel_actual,
-                'exp_necesaria'=>$exp_sig_nivel
+                'exp_necesaria'=>$exp_sig_nivel,
+                'puntos_desbloqueo'=>$puntos_desbloqueo
             ));
             $this->recursos->setAttributes( array(
                 'dinero_gen'=>      $nuevos_atributos['dinero_gen'],
