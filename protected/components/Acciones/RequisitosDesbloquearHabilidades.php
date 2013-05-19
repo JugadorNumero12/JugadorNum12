@@ -230,7 +230,7 @@ class RequisitosDesbloquearHabilidades
 		// ?
 		'MandarJugadorHospital' => array (
 			'nivel' => 60,
-			'desbloqueadas_previas' => array ('TumultoGrada' => 'TumultoGrada')
+			'desbloqueadas_previas' => array ('TumultoGradas' => 'TumultoGradas')
 		),
 
 		// -------------------------------------------
