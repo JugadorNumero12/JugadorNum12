@@ -21,26 +21,44 @@
 <h1 class="titulo-habilidades">Habilidades</h1>
 
 <div class="accordion">
-    <?php for ($i = 1; $i <= 4; $i++){
+    <?php for ($i = 1; $i <= 99; $i++){
         $categoria_hab = ""; 
-        switch ($i)
-        {
-            case 1:
-                $categoria_hab = "b&aacute;sico";
-                break;
-            case 2:
-                $categoria_hab = "medio";
-                break;
-            case 3:
-                $categoria_hab = "alto";
-                break;
-            case 4:
-                $categoria_hab = "ultimate";
-                break;
+        switch ($i) {
+            case 1: $categoria_hab = "inicial";
+            break;
+            
+            case 5: $categoria_hab = "b&aacute;sico";
+            break;
+            
+            case 10: $categoria_hab = "bajo";
+            break;
+            
+            case 15: $categoria_hab = "medio";
+            break;
+            
+            case 25: $categoria_hab = "medio";
+            break;
+            
+            case 35: $categoria_hab = "avanzado";
+            break;
+            
+            case 45: $categoria_hab = "alto";
+            break;
+            
+            case 60: $categoria_hab = "muy alto";
+            break;
+            
+            case 75: $categoria_hab = "extremo";
+            break;
+            
+            case 99: $categoria_hab = "ULTIMATE";
+            break;
+            
             default:
-                break;
+            break;
         }
-        ?>
+    ?>
+    
     <h3 class="ui-accordion-header-active"><b>Nivel <?php echo $categoria_hab; ?></b></h3>
     <div>
         <div class="habilidades">

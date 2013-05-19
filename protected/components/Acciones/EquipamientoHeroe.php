@@ -48,13 +48,13 @@ class EquipamientoHeroe extends AccionPasSingleton
       throw new Exception("Usuario incorrecto.", 404);      
 
     //Aumentar animo_max
-    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo_max",Efectos::$datos_acciones['Ascender']['dinero_gen']));    
+    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo_max",Efectos::$datos_acciones['EquipHeroe']['animo_max']));    
     //Aumentar animo_gen
-    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']));
+    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo_gen",Efectos::$datos_acciones['EquipHeroe']['animo_gen']));
     //Aumentar influencias_max
-    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_max",Efectos::$datos_acciones['Ascender']['dinero_gen']));
+    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_max",Efectos::$datos_acciones['EquipHeroe']['influencias_max']));
     //Aumentar influencias_gen
-    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_gen",Efectos::$datos_acciones['Ascender']['dinero_gen']));
+    $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_gen",Efectos::$datos_acciones['EquipHeroe']['influencias_gen']));
 
     return $ret;
   }
