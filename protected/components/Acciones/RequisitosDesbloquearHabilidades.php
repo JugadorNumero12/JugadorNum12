@@ -142,7 +142,7 @@ class RequisitosDesbloquearHabilidades
 		),
 
 		// Partido
-		'TumultoGrada' => array(
+		'TumultoGradas' => array(
 			'nivel' => 25,
 			'desbloqueadas_previas' => array (
 				'ArrojarMechero' => 'ArrojarMechero',
@@ -225,6 +225,10 @@ class RequisitosDesbloquearHabilidades
 			'desbloqueadas_previas' => array()
 		),
 
+		'MandarJugadorHospital' => array (
+			'nivel' => 60,
+			'desbloqueadas_previas' => array ('TumultoGrada' => 'TumultoGrada')
+		),
 		// -------------------------------------------
 		// NIVEL 9
 		// -------------------------------------------
