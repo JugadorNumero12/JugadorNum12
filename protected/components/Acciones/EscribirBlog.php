@@ -38,6 +38,16 @@ class EscribirBlog extends AccionPasSingleton
   public function ejecutar($id_usuario)
   { 
       // TODO
+      $ret = 0;
+      //Validar usuario
+      $us = Usuarios::model()->findByPk($id_usuario);
+      if ($us === null)
+        throw new Exception("Usuario incorrecto.", 404);      
+
+      //Aumentar animo_max
+      $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"influencias_max",Efectos::$datos_acciones['EscribirBlog']['influencias_max'])); 
+
+      return $ret;
   }
 
   /**

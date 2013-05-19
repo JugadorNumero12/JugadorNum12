@@ -52,12 +52,17 @@ class FinanciarPelicula extends AccionGrupSingleton
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
       throw new Exception("Accion grupal inexistente.", 404);
+
+    $creador = $accGrup->usuarios;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
+    
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,Equipos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_base",Efectos::$datos_acciones['FinanciarPelicula']['aforo_base']));
+    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['FinanciarPelicula']['nivel_equipo']));
     //2.- Dar bonificación al creador
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"animo_gen",Efectos::$datos_acciones['FinanciarPelicula']['bonus_creador']['animo_gen']));
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero_gen",Efectos::$datos_acciones['FinanciarPelicula']['bonus_creador']['dinero_gen']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {

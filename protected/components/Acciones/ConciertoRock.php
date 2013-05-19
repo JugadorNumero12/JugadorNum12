@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Financiar videojuego
+ * Dar un concierto de rock
  * 
  * Tipo : Accion grupal
  *
@@ -19,13 +19,13 @@
  *
  * @package componentes\acciones
  */
-class FinanciarVideojuego extends AccionGrupSingleton
+class ConciertoRock extends AccionGrupSingleton
 {	
   /**
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \FinanciarVideojuego instancia de la accion
+   * @return \ConciertoRock instancia de la accion
    */
     public static function getInstance()
     {
@@ -43,19 +43,22 @@ class FinanciarVideojuego extends AccionGrupSingleton
    * @return int 0 si completada con exito ; -1 en caso contrario
    */ 
   public function ejecutar($id_accion)
-  {
-    // TODO
-    
+  { 
      $ret = 0;
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
       throw new Exception("Accion grupal inexistente.", 404);
+
+    $creador = $accGrup->usuarios;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
+    
     //1.- Añadir bonificación al partidok
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
+    $ret = min($ret,Partidos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_base",Efectos::$datos_acciones['ConciertoRock']['aforo_base']));
     //2.- Dar bonificación al creador
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero",Efectos::$datos_acciones['ConciertoRock']['bonus_creador']['dinero']));
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero_gen",Efectos::$datos_acciones['ConciertoRock']['bonus_creador']['dinero_gen']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {
