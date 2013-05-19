@@ -21,7 +21,10 @@
 <h1 class="titulo-habilidades">Habilidades</h1>
 
 <div class="accordion">
-    <?php for ($i = 1; $i <= 99; $i++){
+    <?php $rango = array (1,5,10,15,25,35,45,60,75,99);
+        foreach ( $rango as $i ){
+        // for ($i = 1; $i <= 99; $i++){
+        
         $categoria_hab = ""; 
         switch ($i) {
             case 1: $categoria_hab = "inicial";
