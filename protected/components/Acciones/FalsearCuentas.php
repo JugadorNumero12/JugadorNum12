@@ -38,6 +38,20 @@ class FalsearCuentas extends AccionIndSingleton
    public function ejecutar($id_usuario)
    {
         // TODO
+
+        //Traer el array de efectos
+        parent::ejecutar($id_usuario);
+
+        //Validar usuario
+        $us = Usuarios::model()->findByPk($id_usuario);
+        if ($us === null)
+          throw new Exception("Usuario incorrecto.", 404);  
+
+        if (Recursos::aumentar_recursos($id_usuario,"bonus_dinero",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0) {
+          return 0;
+        } else {
+          return -1;
+        }
    }
 
    /**
@@ -49,7 +63,15 @@ class FalsearCuentas extends AccionIndSingleton
     */
   public function finalizar($id_usuario,$id_habilidad)
   {
-        // TODO
+    // TODO
+    $res = parent::finalizar($id_usuario,$id_habilidad);
+
+    //Restablecer bonus_influencias
+    if (Recursos::quitar_recursos($id_usuario,"bonus_dinero",Efectos::$datos_acciones['ContratarRRPP']['bonus_jugador']['influencias']) == 0) {
+      return min($res,0);
+    } else {
+      return -1;
+    }
   }
 
 }

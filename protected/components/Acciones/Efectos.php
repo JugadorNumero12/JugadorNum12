@@ -65,7 +65,47 @@ class Efectos
 			'aforo' => 0.15,
 			'moral'=> 175
 		), 
-			
+
+		'ConseguirInversores' => array (
+			'nivel_equipo' => 12,
+			'bonus_creador' => array ('dinero' => 500 ,'dinero_gen' => 20)
+		), 
+		
+		'ConstruirEstadio' => array (
+			'aforo_max' => 100,
+			'moral' => 100,
+			'nivel_equipo' => 2
+		), 
+
+		'FicharJugador' => array (
+			'aforo_base' => 100,
+			'nivel_equipo' => 3,
+			'aforo' => 100,
+			'bonus_creador' => array ('influencias_max' => 5)
+		), 	
+
+		'FinanciarPelicula' => array (
+			'aforo_base' => 100,
+			'nivel_equipo' => 3,
+			'bonus_creador' => array ('animo_gen' => 2,'dinero_gen' => 20)
+		), 
+
+		'FinanciarVideojuego' => array (
+			'aforo_base' => 100,
+			'bonus_creador' => array ('dinero' => 50,'dinero_gen' => 15)
+		), 
+
+		'HackearPlataforma' => array (
+			'nivel_equipo' => 5,
+			'aforo' => 100,
+		), 
+
+		'PublicarDifamaciones' => array (
+			'nivel_equipo' => 3,
+			'ambiente' => 150,
+			'aforo' => 100,
+		), 
+
 		// INDIVIDUALES
 		// ------------------------------------------------
 		'Apostar' => array (
@@ -79,7 +119,11 @@ class Efectos
 		'ContratarRRPP' => array (
 			'bonus_jugador' => array ('influencias' => 1)
 		),
-		
+
+		'FalsearCuentas' => array (
+			'bonus_jugador' => array ('dinero' => 50)
+		), 
+
 		//PARTIDO 
 		// ------------------------------------------------
 		'BeberCerveza' => array (
@@ -91,11 +135,11 @@ class Efectos
 			'ofensivo' => 5
 		), 
 			
-		'IniciarOla' => array (
+		'CorearEstadio' => array (
 			'moral' => 200
 		), 
 		
-		'PunteroLaser' => array (
+		'ArrojarMechero' => array (
 			'defensivo' => 5
 		), 
 		
@@ -104,10 +148,35 @@ class Efectos
 			'animo' => 10
 		),
 
+		'DoblarApuesta' => array (
+			'dinero' => 25
+		), 
+
+		'Entrevista' => array (
+			'ofensivo' => 3,
+			'defensivo' => 3
+		), 
+
 		// PASIVAS
 		// -------------------------------------------------
-			'Ascender' => array (
+		'Ascender' => array (
 			'dinero_gen' => 12
 		), 
+
+		'EquipHeroe' => array (
+			'animo_max' => 50,
+			'animo_gen' => 10,
+			'influencias_max' => 5,
+			'influencias_gen' => 2
+		), 
+
+		'EscribirBlog' => array (
+			'influencias_max' => 3
+		),
+
+		'ContactarYakuza' => array (
+			'influencias_max' => 7,
+			'influencias_gen' => 3
+		),  
 	);
 }
