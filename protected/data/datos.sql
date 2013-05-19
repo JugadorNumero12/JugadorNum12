@@ -120,7 +120,8 @@ INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) 
  -- desbloqueadas de manu (movedora)
  (3, 6), (4, 6), (5, 6), (6, 6), (9, 6), (11, 6), 
  -- desbloqueadas de rober (ultra)
- (3, 7), (4, 7), (5, 7), (6, 7), (9, 7), (11, 7),  
+ (1, 7),(2, 7),(3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7),(9, 7),(10, 7),(11, 7),(12, 7),(13, 7),(14, 7),(15, 7),
+ (16, 7),(17, 7),(18, 7),(19, 7),(20, 7),(21, 7),(22, 7),(23, 7),(24, 7),(25, 7),(26, 7),(27, 7),(28, 7),(29, 7),(30, 7),  
  -- desbloqueadas de marcos (ultra)
  (3, 8), (4, 8), (5, 8), (6, 8), (9, 8), (11, 8),  
  -- desbloqueadas de alex (movedora)
