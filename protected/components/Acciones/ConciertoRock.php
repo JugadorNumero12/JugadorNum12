@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Financiar videojuego
+ * Dar un concierto de rock
  * 
  * Tipo : Accion grupal
  *
