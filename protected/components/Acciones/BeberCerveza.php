@@ -43,6 +43,7 @@ class BeberCerveza extends AccionPartSingleton
    	 */ 
 	public function ejecutar($id_usuario,$id_partido,$id_equipo)
 	{
+      $ret =0 ; 
 		//Traer el array de efectos
 	    parent::ejecutar($id_usuario,$id_partido,$id_equipo);
 

@@ -76,7 +76,7 @@ class Costes
 		'AlquilarBus' => array (
 			'dinero' => 20000,
 			'animo' => 1800,
-			'infuencias' => 9
+			'infuencias' => 11
 		),
 
 		// Grupal
