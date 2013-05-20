@@ -39,7 +39,7 @@
             case 15: $categoria_hab = "medio";
             break;
             
-            case 25: $categoria_hab = "superior";
+            case 25: $categoria_hab = "medio-alto";
             break;
             
             case 35: $categoria_hab = "avanzado";
