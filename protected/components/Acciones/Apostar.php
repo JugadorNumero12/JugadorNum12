@@ -52,7 +52,7 @@ class Apostar extends AccionIndSingleton
     if ($us === null)
       throw new Exception("Usuario incorrecto.", 404);      
 
-    //Aumentar ánimo
+    //Aumentar dinero
     if (Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['Apostar']['dinero']) == 0) {
       return 0;
     } else {

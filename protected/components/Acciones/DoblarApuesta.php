@@ -37,7 +37,6 @@ class DoblarApuesta extends AccionPartSingleton
    	 */ 
 	public function ejecutar($id_usuario,$id_partido,$id_equipo)
 	{
-      // TODO
       $ret =0 ; 
       //Traer el array de efectos
       parent::ejecutar($id_usuario,$id_partido,$id_equipo);
@@ -47,11 +46,12 @@ class DoblarApuesta extends AccionPartSingleton
       if ($us === null)
         throw new Exception("Usuario incorrecto.", 404); 
       
-      // Modifico Los factores de ese partido
-      $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"dinero",Efectos::$datos_acciones['DoblarApuesta']['dinero']));
+      // Modifico el animo del usuario
+      $ret = min($ret,Recursos::aumentar_recursos($id_usuario,"animo",Efectos::$datos_acciones['DoblarApuesta']['animo']));
       
       // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
       AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
+
      //Finalizar función
       return $ret;
 	}
