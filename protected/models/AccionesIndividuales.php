@@ -4,16 +4,24 @@
  * Modelo de la tabla <<acciones_individuales>>
  *
  * Columnas disponibles
- * string $habilidades_id_habilidad
- * string $usuarios_id_usuario
- * string $cooldown
+ *
+ * | tipo   | nombre                    |
+ * | :----- | :------------------------ |
+ * | string | $habilidades_id_habilidad |
+ * | string | $usuarios_id_usuario      |
+ * | string | $cooldown                 |
+ *
+ * @package modelos
  */
 class AccionesIndividuales extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @param string $className active record class name.
-	 * @return AccionesIndividuales the static model class
+	 * @return \AccionesIndividuales static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -21,6 +29,10 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
+	 * Funcion que devuelve el nombre de la tabla
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -29,6 +41,10 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
+	 * Validation rules function
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -48,7 +64,9 @@ class AccionesIndividuales extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_individuales - tabla>
 	 *
-	 * @devuelve array relaciones.
+	 * > Funcion predeterminada de Yii
+	 *
+	 * @return array relaciones
 	 */
 	public function relations()
 	{
@@ -62,6 +80,10 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
+	 * Customized attribute labels 
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
@@ -75,7 +97,7 @@ class AccionesIndividuales extends CActiveRecord
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 * @return \CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
 	public function search()
 	{
@@ -93,9 +115,14 @@ class AccionesIndividuales extends CActiveRecord
 		));
 	}
 
-	/*
-	* Esta función finaliza las acciones grupales de un usuario concreto.
-	*/
+	/**
+	 * Esta función finaliza las acciones grupales de un usuario concreto.
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @throws \CHttpException 404 Error: habilidad no encontrada.
+	 * @throws \CHttpException 404 Error: no se ha podido guardar el modelo de acciones individuales.
+	 * @return void
+	 */
 	public function finalizaIndividuales($id_usuario)
 	{
 		$transaction = Yii::app()->db->beginTransaction();
@@ -150,7 +177,16 @@ class AccionesIndividuales extends CActiveRecord
     	}
 	}
 
-	// Función empleada para usar una habilidad individual
+	/**
+	 * Función empleada para usar una habilidad individual
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @param int $id_accion
+	 * @param $res
+	 * @param $habilidad
+	 * @throws \Exception   'La habilidad no se ha regenerado todavía.'
+	 * @return void
+	 */	
 	public static function usarIndividual($id_usuario, $id_accion, $res, $habilidad)
 	{
 		// Importar acciones

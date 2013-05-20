@@ -24,7 +24,7 @@ class AccionesGrupales extends CActiveRecord
     /**     
      * Devuelve el modelo estatico de la clase "active record" especificada.
      *
-     * > Funcion predetirmada de Yii.
+     * > Funcion predeterminada de Yii.
      *
      * @static
      * @param string $className   nombre de la clase "active record". Por defecto __CLASS__
