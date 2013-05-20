@@ -102,7 +102,8 @@
 			<h1> <span class="resaltar">1</span> Desbloquea habilidades</h1> <br>
 			<h2> No te olvides de las habilidades de partido</h2>
 			<br> <br> <br>
-			<h3> Ve al men&uacute; habilidades <img  src="<?php echo Yii::app()->BaseUrl ?>/images/menu/menu_habilidades.png" alt="logo"> y desbloquea las habilidades de nivel b&aacute;sico. <br> <br> Foto de desbloquear muy grande <h3>
+			<h3> Ve al men&uacute; habilidades <img  src="<?php echo Yii::app()->BaseUrl ?>/images/menu/menu_habilidades.png" alt="logo"> y desbloquea las habilidades de nivel b&aacute;sico. <h3>
+				<br> <br><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-1.png" alt="logo">
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-10" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>
 	   <div class="flecha-dcha"><a href="#" id="link-flecha-12" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -112,8 +113,8 @@
 		<div class="contenido-tutorial">
 			<h1> <span class="resaltar">2</span> Ejecuta acciones</h1> <br>
 			<h2> &Uacute;salas desde el &aacute;rbol de habilidades</h2>
-			<br> <br> <br>
-			<h3> Ahora que tienes habilidades desbloqueadas, est&aacute;s listo para usarlas y rockanrolear el mundo. <br> <br> Vuelve a &aacute;rbol de habilidades <img  src="<?php echo Yii::app()->BaseUrl ?>/images/menu/menu_habilidades.png" alt="logo"> y usa las acciones que has desbloqueado. <br> <br> <span class="resaltar">Pista: </span> Te aconsejo que uses una grupal y una individual. Pero no m&aacute;s, reservaremos nuestro recursos para parcipar.<h3>
+			<br> <br> 
+			<h3> Ahora que tienes habilidades desbloqueadas, est&aacute;s listo para usarlas y rockanrolear el mundo. <br> <br> Vuelve a &aacute;rbol de habilidades <img  src="<?php echo Yii::app()->BaseUrl ?>/images/menu/menu_habilidades.png" alt="logo"> y usa las acciones que has desbloqueado. <br> <br> <br><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-2.png" alt="logo"> <br> <br> <br> <span class="resaltar">Pista: </span> Te aconsejo que uses una grupal y una individual. Pero no m&aacute;s, reservaremos nuestro recursos para parcipar.<h3>
 		</div>
 	 	<div class="flecha-izq"><a href="#" id="link-flecha-21" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 		<div class="flecha-dcha"><a href="#" id="link-flecha-23" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -123,8 +124,8 @@
 		<div class="contenido-tutorial">
 			<h1> <span class="resaltar">3</span> Participa en acciones</h1> <br>
 			<h2> No te olvides de completarlas</h2>
-			<br> <br> <br>
-			<h3> Ve a la pantalla de inicio y encontrar&aacute;s todas las acciones grupales abiertas por tu equipo.<br><br> Pincha en participar y dona los recursos para completarlas. <br><br> <span class="resaltar">Pista: </span> Es m&aacute;s importante gastarse todos los recursos en participar en una sola acci&oacute;n y completarla que participar en muchas acciones, pero no compeltar ninguna.</h3>
+			<br> <br> 
+			<h3> Ve a la pantalla de inicio y encontrar&aacute;s todas las acciones grupales abiertas por tu equipo.<br><br> Pincha en participar y dona los recursos para completarlas. <br><br> <br> <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/grupales.png" alt="logo"> <br> <br> <br><span class="resaltar">Pista: </span> Es m&aacute;s importante gastarse todos los recursos en participar en una sola acci&oacute;n y completarla que participar en muchas acciones, pero no compeltar ninguna.</h3>
 			
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-32" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
@@ -136,7 +137,7 @@
 			<h1> <span class="resaltar">4</span> Gana experiencia</h1> <br>
 			<h2> Y sube de nivel</h2>
 			<br> <br> <br>
-			<h3>  Usa acciones, participa en ellas, completal&aacute;s , y ganar&aacute;s experiencia. Cuanto m&aacute;s teng&aacute;s m&aacute;s recursos tendr&aacute;s y m&aacute;s habilidades podr&aacute;s desbloquear <br> <br> <span class="resaltar">Pista: </span> Lo que m&aacute;s da experiencia es completar acciones. Si est&aacute;s en nivel 1 y completas una acci&oacute;n subir&aacute;s de nivel. <br> <br> <span class="resaltar">Pista: </span> Consulta tu perfil <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra-perfil.png"  width="16px" height="16px"alt="logo">para ver cu&aacute;nta experiencia tienes.  </h3>
+			<h3>  Usa acciones, participa en ellas, completal&aacute;s , y ganar&aacute;s experiencia. Cuanto m&aacute;s teng&aacute;s m&aacute;s recursos tendr&aacute;s y m&aacute;s habilidades podr&aacute;s desbloquear <br> <br> <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-4.png" alt="logo"> <br> <br>  <span class="resaltar">Pista: </span> Lo que m&aacute;s da experiencia es completar acciones. Si est&aacute;s en nivel 1 y completas una acci&oacute;n subir&aacute;s de nivel. <br> <br> <span class="resaltar">Pista: </span> Consulta tu perfil <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra-perfil.png"  width="16px" height="16px"alt="logo">para ver cu&aacute;nta experiencia tienes.  </h3>
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-43" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 	  <div class="flecha-dcha"><a href="#" id="link-flecha-45" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -158,8 +159,8 @@
 		<div class="contenido-tutorial">
 			<h1> <span class="resaltar">6</span> Mantente al d&iacute;a</h1> <br>
 			<h2> Mira tus notificaciones</h2>
-			<br> <br> <br>	
-			<h3> Encntrar&aacute;s las notificaciones <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_notificacion.png" alt="logo"> en el men&uacute; despegable donde estaba la mensajer&iacute;a.<br><br>Puedes cosultar la actividad de tu equipo con las notificaciones.</h3>	
+			<br> <br> 	
+			<h3> Encontrar&aacute;s las notificaciones <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/menu/barra_notificacion.png" alt="logo"> en el men&uacute; despegable donde estaba la mensajer&iacute;a.<br><br>Puedes cosultar la actividad de tu equipo con las notificaciones.</h3> <br> <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-6.png" alt="logo">	
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-65" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 	  <div class="flecha-dcha"><a href="#" id="link-flecha-67" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -169,8 +170,8 @@
 		<div class="contenido-tutorial">
 			<h1> <span class="resaltar">7 </span> Comenta la previa</h1> <br>
 			<h2> Consulta c&oacute;mo de preparado est&aacute; tu equipo para el siguiente partido</h2>
-			<br> <br> <br>
-			<h3> En el men&uacute; de inicio encontrar&aacute;s la fecha y la hora de tu siguiente partido. <br> <br> Si no se est&aacute; disputando ning&uacute;n partido ahora mismo ver&aacute;s al lado un bot&oacute;n que pone previa. <br> <br> La previa es una vista que compara como se han preparado dos equipos para el siguiente partido que van a disputar <br> <br>  <span style="color:#0099FF;font-weight:bold">Nota: </span> si el partido se est&aacute; disputando en ese momento. En el bot&oacute;n, en vez de previa pone asistir y te llevar&aacute; al partido. <h3>
+			<br> <br> 
+			<h3> En el men&uacute; de inicio encontrar&aacute;s la fecha y la hora de tu siguiente partido. <br> <br> Si no se est&aacute; disputando ning&uacute;n partido ahora mismo ver&aacute;s al lado un bot&oacute;n que pone previa. <br> <br> La previa es una vista que compara como se han preparado dos equipos para el siguiente partido que van a disputar <br> <br> <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-7.png" alt="logo"> <br> <br>  <span style="color:#0099FF;font-weight:bold">Nota: </span> si el partido se est&aacute; disputando en ese momento. En el bot&oacute;n, en vez de previa pone asistir y te llevar&aacute; al partido. <h3>
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-76" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 	  <div class="flecha-dcha"><a href="#" id="link-flecha-78" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -181,7 +182,7 @@
 			<h1> <span class="resaltar">8 </span>Asiste al partido</h1> <br>
 			<h2> Apoya a tu equipo en el momento m&aacute;s importante</h2>
 			<br> <br> <br>
-			<h3>En el men&uacute; de inicio encontrar&aacute;s la fecha y la hora de tu siguiente partido. <br> <br> Si el momento ha llegado habr&uacute; un bot&oacute;n de asistir. Si pinchas en &eacute;l te llevar&aacute; a la vista del partido. <br> <br> Puedes entrar en la vista del partido, salir, y despu&eacute;s volver a entrar sin problema. <h3>
+			<h3>En el men&uacute; de inicio encontrar&aacute;s la fecha y la hora de tu siguiente partido. <br> <br> Si el momento ha llegado habr&uacute; un bot&oacute;n de asistir. Si pinchas en &eacute;l te llevar&aacute; a la vista del partido. <br> <br> <img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-8.png" alt="logo"> <br> <br> Puedes entrar en la vista del partido, salir, y despu&eacute;s volver a entrar sin problema. <h3>
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-87" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 	  <div class="flecha-dcha"><a href="#" id="link-flecha-89" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -193,6 +194,7 @@
 			<h2> Haz acciones de partido. </h2>
 			<br> <br> <br>
 			<h3> En la pesta&ntilde;a acciones del partido, activa tus acciones de partido influir en &eacute;l. <br> <br> Las acciones tienen un peque&ntilde;o cool-down tienes que esperar un poco para repetir una misma acci&oacute;n de partido. <br><br>Puedes hacer tantas acciones en un turno como quieras.</h3>
+			<br> <br> <br><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-9.png" alt="logo">
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-98" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
 	  <div class="flecha-dcha"><a href="#" id="link-flecha-910" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-dcha.png" alt="logo"></a></div>
@@ -203,7 +205,7 @@
 			<h1> <span class="resaltar">10 </span>&iexcl;&iexcl;Gana!!</h1> <br>
 			<h2> LLeva tu equipo a la gloria </h2>
 			<br> <br> <br>
-			<h3>Si has seguido el tutorial paso a paso, tienes las herramientas necesarias para hacer que tu equipo arrase en la liga y se proclame campe&oacute;n. (Imagen de una copa) o in trofeo<h3>
+			<h3>Si has seguido el tutorial paso a paso, tienes las herramientas necesarias para hacer que tu equipo arrase en la liga y se proclame campe&oacute;n. <br> <br><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/tutorial-10.png" alt="logo"><h3>
 			<br> <br><h1> <span class="resaltar">Enhorabuena has acabado el tutorial </span><h1>
 		</div>
 	  <div class="flecha-izq"><a href="#" id="link-flecha-109" ><img id="barrasup-logo" src="<?php echo Yii::app()->BaseUrl ?>/images/ayuda/flecha-izq.png" alt="logo"></a></div>	   
