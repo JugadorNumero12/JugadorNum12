@@ -725,9 +725,9 @@ class Usuarios extends CActiveRecord
      * Para un personaje fija:
      *
      * - Recursos iniciales en funcion del personaje escogido
-     * - nivel inicial (1)
-     * - experencia inicial (0)
-     * - puntos de desbloqueo de habilidades (3)
+     * - nivel inicial (12)
+     * - experencia inicial (7500)
+     * - puntos de desbloqueo de habilidades (7)
      *
      * @return void
      */
@@ -786,6 +786,19 @@ class Usuarios extends CActiveRecord
         $rec->setAttributes(array('ultima_act'=> time()));
         $rec->save();
         $this->save();
+
+
+        // EXTRA
+        $this->sumarExp(7500);
+        $this->setAttributes(array('puntos_desbloqueo'=>7));
+        $recy=$this->recursos;
+        $a = $recy['animo_max'];
+        $i = $recy['influencias_max'];
+        $d = $recy['dinero'] * 5;
+        $recy->setAttributes(array('dinero'=>$d,'animo'=>$a,'influencias'=>$i));
+        $recy->save();
+        //----
+
     }
 
 }
