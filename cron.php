@@ -1,5 +1,11 @@
 <?php
 
+/** 
+ * Cron principal
+ *
+ * @package raiz
+ */
+
 // Framework path
 $yii=dirname(__FILE__).'/../framework/yii.php';
 // Config file path
