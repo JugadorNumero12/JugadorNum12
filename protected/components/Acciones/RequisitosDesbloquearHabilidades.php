@@ -104,7 +104,7 @@ class RequisitosDesbloquearHabilidades
 			'desbloqueadas_previas' => array ('Ascender' => 'Ascender')
 		),
 
-		// ?
+		// Individual
 		'FalsearCuentas' => array (
 			'nivel' => 15,
 			'desbloqueadas_previas' => array ()
@@ -142,7 +142,7 @@ class RequisitosDesbloquearHabilidades
 		),
 
 		// Partido
-		'TumultoGradas' => array(
+		'TumultoGradas' => array (
 			'nivel' => 25,
 			'desbloqueadas_previas' => array (
 				'ArrojarMechero' => 'ArrojarMechero',
@@ -161,7 +161,7 @@ class RequisitosDesbloquearHabilidades
 				'AlquilarBus' => 'AlquilarBus')
 		), 
 
-		// ?
+		// Grupal
 		'ConseguirInversores' => array (
 			'nivel' => 35,
 			'desbloqueadas_previas' => array (
@@ -213,6 +213,7 @@ class RequisitosDesbloquearHabilidades
 		// NIVEL 8
 		// -------------------------------------------
 
+		// Grupal
 		'ObrasBeneficas' => array (
 			'nivel' => 60,
 			'desbloqueadas_previas' => array (
@@ -220,15 +221,18 @@ class RequisitosDesbloquearHabilidades
 				'ConseguirInversores' => 'ConseguirInversores')
 		),
 
+		// Grupal
 		'FicharJugador' => array (
 			'nivel' => 60,
-			'desbloqueadas_previas' => array()
+			'desbloqueadas_previas' => array ()
 		),
 
+		// ?
 		'MandarJugadorHospital' => array (
 			'nivel' => 60,
-			'desbloqueadas_previas' => array ('TumultoGrada' => 'TumultoGrada')
+			'desbloqueadas_previas' => array ('TumultoGradas' => 'TumultoGradas')
 		),
+
 		// -------------------------------------------
 		// NIVEL 9
 		// -------------------------------------------
@@ -254,7 +258,7 @@ class RequisitosDesbloquearHabilidades
 		// NIVEL 10
 		// -------------------------------------------
 
-		// Individual
+		// Pasiva
 		'EquipamientoHeroe' => array (
 			'nivel' => 99,
 			'desbloqueadas_previas' => array ('ContactarYakuza' => 'ContactarYakuza')

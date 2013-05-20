@@ -46,6 +46,23 @@ function updateData (recalc,redraw) {
     }
   }
 
+  for (var a in window.acciones) {
+    var acc = window.acciones[a];
+
+    if (acc.cooldown > 0) {
+      window.acciones[a].cooldown = acc.until - (new Date()).getTime();
+      $('#cooldown-' + a).text(Math.ceil(acc.cooldown/1000));
+      $('#accion-' + a).addClass('disabled');
+
+    } else {
+      $('#cooldown-' + a).text('');
+      if (!acc.ajax) {
+        $('#accion-' + a).removeClass('disabled');
+      }
+      window.acciones[a].enabled = true;
+    }
+  }
+
   if (redraw) {
     updateDrawing();
   }
@@ -428,7 +445,7 @@ $(document).ready(function(evt){
             updateData(recalc, recalc);
 
             if (golLocAct != partido.golesLocal || golVisAct != partido.golesVisit) {
-              
+              (function(){})(); // TODO Goles
             }
 
             // Si el servidor dice que el partido ya se ha acabado, redirigimos a la crónica
@@ -451,24 +468,64 @@ $(document).ready(function(evt){
   updateData(true, true);
 
   // Función para ocultar div de errores
-  $("#ac-p-error").click(function (){
-    $("#ac-p-error").css("visibility", "hidden");
+  $("#tabs-mensaje").click(function (){
+    $("#tabs-mensaje").css({opacity: 0});
   });
 });
 
 // Funcion para realizar acciones de partido por ajax
-function ejecutarAP(id) {
-  $.ajax({
-    url: baseUrl + '/acciones/usarpartido?id_accion=' + id
-  }).done(function(data,status){
-    var json = JSON.parse(data);
-    if ( json.ok ) {
-      $("#ac-p-error").text(json.message);
-      actRecursosAj();
-    } else {
-      $("#ac-p-error").text(json.error);
-    }
+function ejecutarAP (id) {
+  // Solo realizamos petición AJAX si no se está realizando ya
+  if (!window.acciones[id].ajax && window.acciones[id].enabled) {
+    window.acciones[id].ajax = true;
+    window.hideTag = -1;
+    $("#tabs-mensaje").css({opacity: 0.3});
+    $("#tabs-mensaje").text('...');
+    $('#accion-' + id).addClass('disabled');
 
-    $("#ac-p-error").css("visibility", "visible");
-  });
+    $.ajax({
+      url: baseUrl + '/acciones/usarpartido?id_accion=' + id
+
+    }).done(function(data,status){
+      var json = JSON.parse(data);
+      if (json.ok) {
+        $("#tabs-mensaje").text(json.message);
+        actRecursosAj();
+
+      } else {
+        if (!json.cooldownEnd) {
+          $('#accion-' + id).removeClass('disabled');
+        }
+        $("#tabs-mensaje").text(json.error);
+      }
+
+      if (json.cooldownEnd) {
+        var cEnd = json.cooldownEnd * 1000;
+        var now = (new Date()).getTime();
+
+        window.acciones[id].enabled = false;
+        window.acciones[id].until = cEnd;
+        window.acciones[id].cooldown = cEnd - now;
+        $('#cooldown-' + id).text(Math.ceil((cEnd-now)/1000));
+        $('#accion-' + id).addClass('disabled');
+        /*setTimeout(function(){
+          window.acciones[id].enabled = true;
+          $('#accion-' + id).removeClass('disabled');
+        }, cEnd - now);*/
+      }
+
+      $("#tabs-mensaje").css({opacity: 1});
+    
+      var tag = (new Date()).getTime();
+      window.hideTag = tag;
+      setTimeout(function(){
+        if (window.hideTag == tag) {
+          $("#tabs-mensaje").css({opacity: 0});
+        }
+      }, 2500);
+    }).always(function(){
+
+      window.acciones[id].ajax = false;
+    });
+  }
 }

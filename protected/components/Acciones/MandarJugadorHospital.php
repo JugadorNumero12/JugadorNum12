@@ -22,7 +22,7 @@ class MandarJugadorHospital extends AccionGrupSingleton
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \ConstruirEstadio instancia de la accion
+   * @return \MandarJugadorHospital instancia de la accion
    */
     public static function getInstance()
     {
