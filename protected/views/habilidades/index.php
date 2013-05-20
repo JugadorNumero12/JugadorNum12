@@ -27,34 +27,34 @@
         
         $categoria_hab = ""; 
         switch ($i) {
-            case 1: $categoria_hab = "inicial";
+            case 1: $categoria_hab = "1+";
             break;
             
-            case 5: $categoria_hab = "b&aacute;sico";
+            case 5: $categoria_hab = "5+";
             break;
             
-            case 10: $categoria_hab = "bajo";
+            case 10: $categoria_hab = "10+";
             break;
             
-            case 15: $categoria_hab = "medio";
+            case 15: $categoria_hab = "15+";
             break;
             
-            case 25: $categoria_hab = "superior";
+            case 25: $categoria_hab = "25+";
             break;
             
-            case 35: $categoria_hab = "avanzado";
+            case 35: $categoria_hab = "35+";
             break;
             
-            case 45: $categoria_hab = "alto";
+            case 45: $categoria_hab = "45+";
             break;
             
-            case 60: $categoria_hab = "muy alto";
+            case 60: $categoria_hab = "60+";
             break;
             
-            case 75: $categoria_hab = "extremo";
+            case 75: $categoria_hab = "75+";
             break;
             
-            case 99: $categoria_hab = "ULTIMATE";
+            case 99: $categoria_hab = "99+";
             break;
             
             default:
