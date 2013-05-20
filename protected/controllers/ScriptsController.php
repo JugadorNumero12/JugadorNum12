@@ -1,11 +1,20 @@
 <?php
 
-/* Esta api permite llamar y testear los diferentes scripts. */
+/**
+* Esta api permite llamar y testear los diferentes scripts.
+*
+* @package controladores
+*/
+
 class ScriptsController extends Controller
 {
 	/**
-	 * @return array de filtros para actions
-	 */
+     * Definicion del verbo DELETE unicamente via POST
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return string[] 	filtros definidos para "actions"
+     */
 	public function filters()
 	{
 		return array(
@@ -15,10 +24,14 @@ class ScriptsController extends Controller
 	}
 
 	/**
-	 * Especifica las reglas de control de acceso.
-	 * Esta función es usada por el filtro "accessControl".
-	 * @return array con las reglas de control de acceso
-	 */
+     * Especifica las reglas de control de acceso.
+     * 
+     *  - Permite realizar a todos los usuarios cualquier accion
+     *
+     * > Funcion predeterminada de Yii 
+     *
+     * @return object[] 	reglas usadas por el filtro "accessControl"
+     */
 	public function accessRules()
 	{
 		return array(
@@ -31,7 +44,8 @@ class ScriptsController extends Controller
 	/**
 	 * Selecciona los partidos en juego y ejecuta sus turnos correspondientes.
 	 *
-	 * @ruta jugadorNum12/scriptsApi/jugarPartido
+	 * @route JugadorNum12/scripts/ejecutarturno
+	 * @return void
 	 */
 	public function actionEjecutarTurno()
 	{
@@ -66,13 +80,18 @@ class ScriptsController extends Controller
 		}
 	}
 
-	/*
-	*
-	* Selecciona las acciones individuales pendientes de devolución
-	* de recursos (finalización) y ejecuta el método oportuno de cada 
-	* una de ellas.
-	*
-	*/
+	/**
+	 * Devuelve los recursos de las acciones individuales
+	 *
+	 * Selecciona las acciones individuales pendientes de devolución
+	 * de recursos (finalización) y ejecuta el método oportuno de cada 
+	 * una de ellas.
+	 *
+	 * @route JugadorNum12/scripts/finalizaIndividuales
+	 *
+	 * @throws \Exception excepcion interna
+	 * @return void
+	 */
 	public function actionFinalizaIndividuales()
 	{
 		Yii::import('application.components.Acciones.*');
@@ -127,11 +146,16 @@ class ScriptsController extends Controller
 		}
 	}
 
-	/*
+	/**
+	* Devuelve los recursos de las acciones grupales a los participantes
 	*
 	* Selecciona las acciones grupales finalizadas sin éxito y devuelve los recursos a sus
 	* participantes y creador.
 	*
+	* @route JugadorNum12/scripts/finalizaGrupales
+	*
+	* @throws \Exception excepcion interna
+	* @return void
 	*/
 	public function actionFinalizaGrupales()
 	{
@@ -189,7 +213,23 @@ class ScriptsController extends Controller
 	}
 
 	/**
-	 * Simulador de la fórmula
+	 * Simulador de la formula estadistica
+	 *
+	 * Crea una vista en la que se muestra el simulador de un partido
+	 *
+	 * @param int $dn   diferencia de nivel
+	 * @param int $am   aforo maximo
+	 * @param int $al   aforo local
+	 * @param int $av   aforo visitante
+	 * @param int $ml   moral local
+	 * @param int $mv   moral visitinate
+	 * @param int $ol   ofensiva local
+	 * @param int $ov   ofensiva visitante
+	 * @param int $dl   defensa local
+	 * @param int $dv   defensa visitante
+     *
+     * @route JugadorNum12/scripts/formula
+     * @return void
 	 */
 	public function actionFormula($dn=0, $am=0, $al=0, $av=0, $ml=0, $mv=0, $ol=0, $ov=0, $dl=0, $dv=0)
 	{
@@ -286,10 +326,16 @@ class ScriptsController extends Controller
 	}
 
 	///LIGA
-	/*
+
+	/**
+	* Crea los emparejamientos para los equipos dados por parametro
+	*
 	* Dada una lista de id_equipos, genera unos emparejamientos con el codigo se sam.
 	* Ej : calendario(array(1,2,6,7,8)); -> emaprejamientos para los equipos_id = 1,2,3,6,7,8 (deja fuera al 4 y 5)
 	* Si no se pasan paritcipantes, coje todos los equipos que haya en la tabla Clasificacion.
+	*
+	* @param int[] $participantes   id de los equipos participantes
+	* @return int[][]
 	*/
 	private function calendario($participantes=null)
 	{
@@ -343,18 +389,28 @@ class ScriptsController extends Controller
 		return $calendario;
 	}
 
-	/* WARNING todo el algoritmo esta diseñado para tomar como refernecia de cambio de día las 0:00 GMT
+	/**  
+	*  Genera una nueva liga
 	*
-	* Genera una liga nueva que:
-	*  empezará en '$dentro_de' dias, 
-	*  dejará '$descanso' dias entre jornadas (si metes null escoje el minimo que no superpone jornadas)
-	*  y sus partidos se jugarán a las '$horas' (si hay pocas horas, se juegan el día anterior en el mismo horario).
+	*  Genera una liga nueva que:
+	*  - empezará en '$dentro_de' dias, 
+	*  - dejará '$descanso' dias entre jornadas (si metes null escoje el minimo que no superpone jornadas)
+	*  - sus partidos se jugarán a las '$horas' (si hay pocas horas, se juegan el día anterior en el mismo horario).
 	*
-	*	Las horas se introducen como un entero entre 0 y 24, que corresponde con la hora GMT+0
+	* > Las horas se introducen como un entero entre 0 y 24, que corresponde con la hora GMT+0
 	*	Ej: en verano: array(20, 27.5, 13) => los partidos se jugarán a las 22:00, 19:30, 15:00 (hora española)
 	*		en invierno: array(11.25, 9)   => los partidos se jugarán a las 12:15, 10:00 (hora española)
 	*
-	* Los partidos se generan "talcual", en el orden en que vienen en '$emparejamientos'.
+	* Los partidos se generan en el orden definido en '$emparejamientos'.
+	* > WARNING todo el algoritmo esta diseñado para tomar como refernecia de cambio de día las 0:00 GMT
+	*
+	* @param int[][] $emparejamientos   matriz de equipos emparejados generada en la funcion calendario
+	* @param int $dentro_de   dias entre partidos
+	* @param $descanso   dias de descanso
+	* @param int[] $horas    horas a las que se juegan los partidos
+	*
+	* @throws \Exception excepcion interna
+	* @return void
 	*/
 	public function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(20,19,18,17,16,15,16,10))
 	{
@@ -408,15 +464,25 @@ class ScriptsController extends Controller
 
 	}
 
-	/*
+	/**
 	* Añade un nuevo partido entre los equipos indicados en la fecha indicada.
 	*
-	* ADVERTENCIA:
+	* >ADVERTENCIA:
 	* Los datos (dif_niveles, indOfens, ...) puden cambiar hasta que empiece el partido,
 	* aqui se rellenan (porque se me ha pedido explicitamente),
 	* pero deberían actualizarse en el primer turno de partido.
 	*
-	* ATENCION los partidos empiezan con sigpartido -> id = 0 !!!!
+	* >ATENCION los partidos empiezan con sigpartido -> id = 0 !!!!
+	*
+	* @param int $id_local   id del equipo local
+	* @param int $id_visitande   id del equipo visitante
+	* @param int $time   hora del partido
+	* @param int $jornada   jornada de la liga
+	* @param bool $generateNewTransaction   generar nueva transaccion
+	*
+	* @throws \Exception Los viajes en el tiempo no esta implemetados en esta version del juego.
+	* @throws \Exception excepcion interna
+	* @return void
 	*/
 	public function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
 	{
@@ -476,7 +542,12 @@ class ScriptsController extends Controller
 
 	}
 
-	//Debgging url
+	/**
+	* Genera una liga con emparejamientos por defecto, que empieza mañana, con jornadas cada 2 días
+	*
+	* @route JugadorNum12/scripts/liga
+	* @return void
+	*/
 	public function actionLiga(){
 		$this->generaLiga(null, 1, 2, array(19.5, 17, 15.5) );
 		//genera una liga con emparejamientos por defecto, que empieza mañana, con jornadas cada 2 días
