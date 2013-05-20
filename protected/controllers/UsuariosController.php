@@ -1,15 +1,18 @@
 <?php
 
-/* Pagina de usuario, comprende:
- *   perfil del personaje
- *   cuenta de usuario
+/**
+ * Controlador de usuarios que comprende: perfil del personaje y cuenta de usuario
+ *
+ * @package controladores
  */
 class UsuariosController extends Controller
 {
     /**
-     * Funcion predeterminada de Yii
-     * 
-     * @return (array) filtros para "actions"
+     * Definicion del verbo DELETE unicamente via POST
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return string[]     filtros definidos para "actions"
      */
 	public function filters()
 	{
@@ -20,12 +23,12 @@ class UsuariosController extends Controller
 	}
 
     /**
-     * Funcion predeterminada de Yii 
      * Especifica las reglas de control de acceso.
      * 
      *  - Permite realizar a los usuarios autenticados cualquier accion
      *  - Niega el acceso al resto de usuarios
      *
+     * > Funcion predeterminada de Yii
      * @return (array) reglas usadas por el filtro "accessControl"
      */
 	public function accessRules()
@@ -45,7 +48,8 @@ class UsuariosController extends Controller
      *  - Enlace a crear una nueva habilidad grupal
      *  - Acciones grupales activas del equipo del usuario
      * 
-     * @route jugadorNum12/usuarios
+     * @route jugadorNum12/usuarios/index
+     * @return void
      */
     public function actionIndex()
     {
@@ -76,8 +80,9 @@ class UsuariosController extends Controller
         ));
     }
 
-    /*
+    /**
      * Muestra los datos del personaje 
+     *
      *  - Nick del jugador 
      *  - Tipo del personaje
      *  - Nivel del personaje
@@ -89,6 +94,7 @@ class UsuariosController extends Controller
      * Nota: Los datos del usuario se recogen de la variable de sesion
      *
      * @route jugadorNum12/usuarios/perfil
+     * @return void
      */
     public function actionPerfil()
     {    
@@ -128,15 +134,18 @@ class UsuariosController extends Controller
                         'recursos'=>$recursos) );
     }
 
-    /*
+    /**
      * Muestra los datos del personaje de otro usuario
-     *  Nick del jugador
-     *  Tipo del personaje
-     *  Nivel del personaje
-     *  Aficion a la que pertenece
      *
-     * @param $id_usuario
+     * - Nick del jugador
+     * - Tipo del personaje
+     * - Nivel del personaje
+     * - Aficion a la que pertenece
+     *
+     * @param int $id_usuario
      * @route jugadorNum12/usuarios/ver/{$id}
+     * @redirect jugadorNum12/usuarios/perfil
+     * @return void
      */
     public function actionVer($id_usuario)
     {
@@ -163,13 +172,14 @@ class UsuariosController extends Controller
         }   
     }
 
-    /*
+    /**
      * Muestra un formulario para cambiar la clave del usuario
-     * Si hay datos en $_POST procesa el formulario y guarda la
-     * nueva clave en la tabla <<usuarios>> 
+     *
+     * Si hay datos en $_POST procesa el formulario y guarda la nueva clave en la tabla <<usuarios>> 
      *
      * @route jugadorNum12/usuarios/cambiarClave
      * @redirect jugadorNum12/usuarios/perfil
+     * @return void
      */
     public function actionCambiarClave()
     {
@@ -205,13 +215,15 @@ class UsuariosController extends Controller
         $this->render('cambiarClave',array('model'=>$modelo));            
     }
 
-    /*
+    /**
      * Muestra un formulario para cambiar el eMail del usuario
+     *
      * Si hay datos en $_POST procesa el formulario y guarda el  
      * nuevo email en la tabla <<usuarios>> 
      *
      * @route jugadorNum12/usuarios/cambiarEmail
      * @redirect jugadorNum12/usuarios/perfil
+     * @return void
      */
     public function actionCambiarEmail()
     {
@@ -261,7 +273,14 @@ class UsuariosController extends Controller
     }
 
     /* DEBUG */
-    // +500 experencia
+    /**
+     * Incrementa en 500 la experiencia (DEBUG)
+     *
+     * @route jugadorNum12/usuarios/debug
+     * @redirect jugadorNum12/usuarios/perfil
+     *
+     * @return void
+     */
     public function actionDebug()
     {
         $id = Yii::app()->user->usIdent;
@@ -273,7 +292,15 @@ class UsuariosController extends Controller
 
         $this->redirect(array('usuarios/perfil'));
     }
-    // + 5000 experencia
+    
+    /**
+     * Incrementa en 5000 la experiencia (DEBUG)
+     *
+     * @route jugadorNum12/usuarios/debug2
+     * @redirect jugadorNum12/usuarios/perfil
+     *
+     * @return void
+     */
     public function actionDebug2()
     {
         $id = Yii::app()->user->usIdent;
@@ -285,7 +312,14 @@ class UsuariosController extends Controller
 
         $this->redirect(array('usuarios/perfil'));
     }
-    // Listado de niveles de exp necesarios
+
+    /**
+     * Listado de niveles de exp necesarios (DEBUG)
+     *
+     * @route jugadorNum12/usuarios/exp
+     *
+     * @return void
+     */
     public function actionExp()
     {
         $exp = array(100);
@@ -294,7 +328,14 @@ class UsuariosController extends Controller
         }
         $this->render('exp', array('array'=>$exp));
     }
-    // ejemplos de personajes
+
+    /**
+     * ejemplos de personajes(DEBUG)
+     *
+     * @route jugadorNum12/usuarios/ejemplos
+     *
+     * @return void
+     */
     public function actionEjemplos()
     {
         // borramos los personajes de ejemplos de la base de datos
@@ -342,15 +383,15 @@ class UsuariosController extends Controller
             'empresarios'=>$empresarios
         ));
     }
-    /* ** */
 
     /**
      * Funcion predeterminada de Yii
      * Devuelve el modelo de datos basado en la clave primaria dada por la variable GET
      * Si el modelo de datos no se encuentra, se lanza una excepcion HTTP
      * 
-     * @param $id : id del modelo que se va a cargar 
-     * @return modelo de datos
+     * @param int $id : id del modelo que se va a cargar 
+     * @throws \Exception 404 'The requested page does not exist.'
+     * @return \Usuarios   modelo de datos
      */
     public function loadModel($id)
     {
@@ -361,10 +402,11 @@ class UsuariosController extends Controller
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Realiza la validacion por Ajax
+     * > Funcion predeterminada de Yii 
      *
      * @param $model (CModel) modelo a ser validado
+     * @return void
      */
     protected function performAjaxValidation($model)
     {
