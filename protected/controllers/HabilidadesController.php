@@ -215,6 +215,11 @@ class HabilidadesController extends Controller
 	        			$desbloqueada['usuarios_id_usuario'] = Yii::app()->user->usIdent;
 	        			$desbloqueada->save();
 
+	        			//Al desbloquear la habilidad se gasta un punto de desbloqueo
+	        			$usuario = Usuarios::model()->findByPk(Yii::app()->user->usIdent);
+	        			$usuario->puntos_desbloqueo -= 1;
+	        			$usuario->save();
+
 	        			//Si es pasiva, debemos aplicar el beneficio de la misma
 	        			if ($habilidad->tipo == Habilidades::TIPO_PASIVA)
 	        			{		        		  		
