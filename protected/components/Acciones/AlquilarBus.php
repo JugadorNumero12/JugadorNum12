@@ -1,31 +1,28 @@
 <?php
 
 /** 
- * Hackear plataforma rival 
+ * Alquilar bus de hinchas para ir al partido
  * 
  * Tipo : Accion grupal
- *
- * Perfil asociado : RRPP
- *
+ * 
  * Efectos :
  *
- * - disminuye aforo rival para el proximo partido 
- * - disminuye el nivel del equipo contrario
+ * - aumenta el aforo del proximo partido equipo
  *
- * Bonus al creador
- *
- * - Recupera al instante todas las influencias que tuviese apostadas
+ * Bonus al creador :
+ * 
+ * - aumenta el animo_max
  *
  *
  * @package componentes\acciones
  */
-class HackearPlataforma extends AccionGrupSingleton
+class AlquilarBus extends AccionGrupSingleton
 {	
   /**
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \HackearPlataforma instancia de la accion
+   * @return \ConstruirEstadio instancia de la accion
    */
     public static function getInstance()
     {
@@ -45,8 +42,7 @@ class HackearPlataforma extends AccionGrupSingleton
   public function ejecutar($id_accion)
   {
     // TODO
-    
-     $ret = 0;
+    $ret = 0;
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
@@ -57,8 +53,9 @@ class HackearPlataforma extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
     
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['HackearPlataforma']['nivel_equipo']));
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['HackearPlataforma']['aforo']));
+   $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['AlquilarBus']['aforo']));
+    //2.- Dar bonificación al creador,no tiene bonificacion al creador
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"animo_max",Efectos::$datos_acciones['AlquilarBus']['bonus_creador']['animo_max']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {

@@ -1,31 +1,28 @@
 <?php
 
 /** 
- * Hackear plataforma rival 
- * 
+ * Mandar a un jugador rival al hospital
+ *
  * Tipo : Accion grupal
- *
- * Perfil asociado : RRPP
- *
+ * 
  * Efectos :
  *
- * - disminuye aforo rival para el proximo partido 
- * - disminuye el nivel del equipo contrario
+ * - reduce el nivel del equipo contrario
  *
- * Bonus al creador
- *
- * - Recupera al instante todas las influencias que tuviese apostadas
+ * Bonus al creador :
+ * 
+ * - ninguno
  *
  *
  * @package componentes\acciones
  */
-class HackearPlataforma extends AccionGrupSingleton
+class MandarJugadorHospital extends AccionGrupSingleton
 {	
   /**
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \HackearPlataforma instancia de la accion
+   * @return \MandarJugadorHospital instancia de la accion
    */
     public static function getInstance()
     {
@@ -45,8 +42,8 @@ class HackearPlataforma extends AccionGrupSingleton
   public function ejecutar($id_accion)
   {
     // TODO
-    
-     $ret = 0;
+
+    $ret = 0;
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
@@ -55,10 +52,10 @@ class HackearPlataforma extends AccionGrupSingleton
     $creador = $accGrup->usuarios;
     $equipo = $creador->equipos;
     $sigPartido = $equipo->sigPartido;
-    
+
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['HackearPlataforma']['nivel_equipo']));
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['HackearPlataforma']['aforo']));
+    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['MandarJugadorHospital']['nivel_equipo']));
+    
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {

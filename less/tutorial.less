@@ -3,7 +3,7 @@
 
 #ayuda-menu { 
 	  width: 150px; 
-	  height: 300px; 
+	  height: 560px; 
 	  padding: 0.5em; 
 	  z-index:10; 
 	  position: absolute;
@@ -14,12 +14,26 @@
 	  }
 	  li {
 	  	margin: 10px 0px;
+	  	color:@VERDE_12;
 	  }
 	  a {
 	  	margin: 10px 0px;
+	  	color:@VERDE_12;
 	  }
+	  li:hover{
+	  	font-weight:bold;
+	  }
+	   li.active a.active{
+	  	font-weight:bold;
+	  }
+
 	  h2{color: @VERDE_12_CLARO;}
 	  font-family: 'Open Sans', sans-serif;
+}
+
+.submenu{
+	font-size: 0.9em;
+	padding-left: 10px; 
 }
 
 
@@ -42,19 +56,52 @@
 
 }
 
-#ayuda-personajes { 
+.cuadro-tutorial { 
+	  width: 1000px; 
+	  height: 550px; 
+	  padding: 0.5em; 
+	  z-index:10; 
+	  position: absolute;
+	  left: 300px;
+	  top: 9.5em;
 	  background-color: @BLANCO_ROTO;
+	  overflow: auto;
+
+	  h2{color: @VERDE_12_CLARO;}
+	  h3{color: @VERDE_12;}
+	  b{color:@VERDE_12;}
+	  font-family: 'Open Sans', sans-serif;
+
 
 }
 
-#ayuda-habilidades { 
-	  background-color: @BLANCO_ROTO;
+
+
+.contenido-tutorial { 
+	  width: 990px; 
+	  height: 500px; 
+	  padding: 0.5em; 
+	  z-index:10; 
+	  overflow: auto;
+
+	  h2{color: @VERDE_12_CLARO;}
+	  h3{color: @VERDE_12;}
+	  b{color:@VERDE_12;}
+	  font-family: 'Open Sans', sans-serif;
+
 
 }
 
+.flecha-izq{
+	float: left;
+}
 
-#ayuda-partido { 
-	  background-color: @BLANCO_ROTO;
+.flecha-dcha{
+	float:right;
+}
+
+.cerrar-tutorial{
+	margin: 0 auto;
 }
 
 .imagenes-ayuda-izq { 
@@ -67,3 +114,22 @@
 	left: 10%;
 
 }
+
+.menu-seleccionado{
+	font-weight:bold;
+}
+
+.resaltar{
+	color:orangered;
+	font-weight:bold;
+
+}
+
+.cuadro-tutorial{
+	color:#484848; 
+	text-align: center;
+	h3{color:#484848;}
+}
+
+
+

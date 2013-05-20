@@ -18,6 +18,21 @@
 		window.info = {}
 	}
 
+	window.acciones = {
+<?php
+	$now = time();
+	foreach ($l_acciones as $a=>$acc):
+	$until = $l_desbl[$a]->fin_del_cooldown;
+?>
+		'<?php echo $acc->id_habilidad ?>': {
+			ajax: false,
+			enabled: <?php echo ($until <= $now) ? 'true' : 'false'; ?>,
+			until: <?php echo $until*1000; ?>,
+			cooldown: <?php echo ($until-$now)*1000; ?>
+		},
+<?php endforeach ?>
+	};
+
 	$.extend(partido, {
 		id: <?php echo $partido->id_partido ?>,
 		tiempo: <?php echo $partido->tiempoRestantePartido() ?>,
@@ -36,27 +51,26 @@
 		}
 	});
 
-	info.turnos = {
+	window.info.turnos = {
 		inicial: <?php echo Partido::PRIMER_TURNO ?>,
 		descanso: <?php echo Partido::TURNO_DESCANSO ?>,
 		final: <?php echo Partido::ULTIMO_TURNO ?>
 	}
 
 	//Actualización de recursos por Ajax
-	function actRecursosAj()
-	{
-		$.get(baseUrl + '/partidos/actrecursos?id_usuario=' + <?php echo Yii::app()->user->usIdent; ?> , 
-	          function(data,status)
-	          {
-	          	if (JSON.parse(data).codigo == 1)
-	          	{
-	          		$("#progressbar-label-dinero").text(JSON.parse(data).dinero);
-	          		$("#progressbar-label-animo").text(JSON.parse(data).animo+"/"+JSON.parse(data).animo_max);
-	          		$("#progressbar-label-influencias").text(JSON.parse(data).influencias+"/"+JSON.parse(data).influencias_max);
+	function actRecursosAj () {
+		$.get(baseUrl + '/partidos/actrecursos?id_usuario=' + <?php echo Yii::app()->user->usIdent; ?>, 
+	        function(data,status) {
+	        	var json = JSON.parse(data);
+	          	if (json.codigo == 1) {
+	          		$("#progressbar-label-dinero").text(json.dinero);
+	          		$("#progressbar-label-animo").text(json.animo+"/"+json.animo_max);
+	          		$("#progressbar-label-influencias").text(json.influencias+"/"+json.influencias_max);
 	          	}
-	          });
+	        }
+	    );
 	}
-	var intervaloRec = window.setInterval('actRecursosAj()', 30000);
+	var intervaloRec = window.setInterval(actRecursosAj, 30000);
 </script>
 
 <div id="partido-dibujo" class="inner-block">
@@ -120,6 +134,7 @@
 </div>
 
 <div id="partido-info" class="inner-block">
+	<div id="tabs-mensaje"></div>
 	<ul id="partido-info-tabs">
 		<li><a href="#partido-info-campo">Partido</a></li>
 		<li><a href="#partido-info-acciones">Acciones</a></li>
@@ -170,42 +185,33 @@
 	</div>
 
 	<div id="partido-info-acciones" class="partido-info-content">
-		<h2>Acciones de partido</h2> 
-		<h3>(pulsa para ejecutar)</h3>
-		<div id="ac-p-error"></div>
-		<table class="tabla-acciones">
-		<?php $c = 0;
-		foreach ($l_acciones as $a) 
-		{ 
-			if ($c === 0) echo '<tr>';
-			?>		
-			<td class="div-ac-p" onclick="ejecutarAP(<?php echo $a->id_habilidad; ?>)">
-				<img title="<?php echo $a->nombre; ?>" alt="<?php echo $a->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $a->token; ?>.png"  class="imagen-ac-p" />
-				<h4><?php echo $a->nombre; ?></h4>
-				<br>
-				<?php
-					echo '<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_dinero.png".'" alt="Icono dinero"> </b><span class="info-ac-p-txt">'.$a['dinero'].'</span>'.
-					'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_animo.png".'" alt="Icono animo"></b><span class="info-ac-p-txt">'.$a['animo'].'</span>'.
-					'<b><img class="info-ac-p" src="'.Yii::app()->BaseUrl."/images/menu/recurso_influencia.png".'" alt="Icono influencia"> </b><span class="info-ac-p-txt">'.$a['influencias'].'</span>';
-				?>
-			</td>
-		<?php 
-			if ($c === 2) 
-			{
-				echo '</tr>';
-				$c = 0;
-			}
-			else
-			{
-				$c++;
-			}
-		} 
-		if ($c < 2)
-		{
-			echo '<tr>';
-		}
-		?>
-		</table>
+		<!--<h2>Acciones de partido</h2> 
+		<h3>(pulsa para ejecutar)</h3>-->
+<?php 
+	$now = time();
+	foreach ($l_acciones as $a=>$acc):
+	$until = $l_desbl[$a]->fin_del_cooldown;
+?>		
+		<div id="accion-<?php echo $acc->id_habilidad ?>" class="accion accion-<?php echo $acc->id_habilidad ?><?php if ($until > $now) echo 'disabled';?>" onclick="ejecutarAP(<?php echo $acc->id_habilidad; ?>)">
+			<div class="accion-nombre"><?php echo $acc->nombre; ?></div>
+			<img class="accion-icono" title="<?php echo $acc->nombre; ?>" alt="<?php echo $acc->nombre; ?>" src="<?php echo Yii::app()->BaseUrl ?>/images/habilidades/<?php echo $acc->token; ?>.png" />
+			<div class="accion-recursos">
+				<div class="accion-recurso">
+					<div class="icon"><img class="dinero-icono" src="<?php echo Yii::app()->BaseUrl . '/images/menu/recurso_dinero.png' ?>"
+					    alt="Dinero"/></div><div class="cant"><?php echo $acc['dinero'] ?></div>
+				</div>
+				<div class="accion-recurso">
+					<div class="icon"><img class="animo-icono" src="<?php echo Yii::app()->BaseUrl . '/images/menu/recurso_animo.png' ?>"
+					     alt="&Aacute;nimo"/></div><div class="cant"><?php echo $acc['animo'] ?></div>
+				</div>
+				<div class="accion-recurso">
+					<div class="icon"><img class="influencias-icono" src="<?php echo Yii::app()->BaseUrl . '/images/menu/recurso_influencia.png' ?>"
+					     alt="Influencias"/></div><div class="cant"><?php echo $acc['influencias'] ?></div>
+				</div>
+			</div>
+			<div id="cooldown-<?php echo $acc->id_habilidad ?>" class="cooldown"><? if ($until > $now) echo ($until - $now); ?></div>
+			<div class="clear"></div>
+		</div>
+<?php endforeach ?>
 	</div>
-
 </div>

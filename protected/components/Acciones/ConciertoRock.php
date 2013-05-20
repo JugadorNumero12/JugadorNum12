@@ -1,31 +1,31 @@
 <?php
 
 /** 
- * Hackear plataforma rival 
+ * Dar un concierto de rock
  * 
  * Tipo : Accion grupal
  *
- * Perfil asociado : RRPP
+ * Perfil asociado : Empresario
  *
  * Efectos :
  *
- * - disminuye aforo rival para el proximo partido 
- * - disminuye el nivel del equipo contrario
+ * - aumenta el aforo base del equipo
  *
- * Bonus al creador
+ * Bonus al creador :
  *
- * - Recupera al instante todas las influencias que tuviese apostadas
+ * Aumenta el recurso <dinero>
+ * Aumenta el atributo <dinero_gen>
  *
  *
  * @package componentes\acciones
  */
-class HackearPlataforma extends AccionGrupSingleton
+class ConciertoRock extends AccionGrupSingleton
 {	
   /**
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \HackearPlataforma instancia de la accion
+   * @return \ConciertoRock instancia de la accion
    */
     public static function getInstance()
     {
@@ -43,9 +43,7 @@ class HackearPlataforma extends AccionGrupSingleton
    * @return int 0 si completada con exito ; -1 en caso contrario
    */ 
   public function ejecutar($id_accion)
-  {
-    // TODO
-    
+  { 
      $ret = 0;
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
@@ -56,9 +54,11 @@ class HackearPlataforma extends AccionGrupSingleton
     $equipo = $creador->equipos;
     $sigPartido = $equipo->sigPartido;
     
-    //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['HackearPlataforma']['nivel_equipo']));
-    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['HackearPlataforma']['aforo']));
+    //1.- Añadir bonificación al partidok
+    $ret = min($ret,Equipos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_base",Efectos::$datos_acciones['ConciertoRock']['aforo_base']));
+    //2.- Dar bonificación al creador
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero",Efectos::$datos_acciones['ConciertoRock']['bonus_creador']['dinero']));
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"dinero_gen",Efectos::$datos_acciones['ConciertoRock']['bonus_creador']['dinero_gen']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {

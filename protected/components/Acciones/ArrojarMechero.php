@@ -1,14 +1,14 @@
 <?php
 
 /** 
- * Descripcion breve: Iniciar una ola entre el publico
+ * Descripcion breve: Apuntar con puntero laser al lanzador de falta rival
  * Tipo: Partido
  * Perfil asociado: Ultra
  *
  * Efectos
- *  aumenta el factor de partido "moral"
+ *  aumenta el factor de partido "defensivo"
  */
-class IniciarOla extends AccionPartSingleton
+class ArrojarMechero extends AccionPartSingleton
 {
    /* Función a través de la cual se accederá al Singleton */
    public static function getInstance()
@@ -19,7 +19,7 @@ class IniciarOla extends AccionPartSingleton
       }
       return self::$instancia;
    }
-   
+
   /* Aplicar los efectos de la accion */
   public function ejecutar($id_usuario,$id_partido,$id_equipo)
   {
@@ -34,10 +34,10 @@ class IniciarOla extends AccionPartSingleton
       // Cojo el equipo del usuario
       $equipo = $us->equipos;
       // Modifico Los factores de ese partido
-      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"moral",Efectos::$datos_acciones['IniciarOla']['moral']));
+      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['ArrojarMechero']['defensivo']));
       // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
       AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);
-       //Finalizar función
+      //Finalizar función
       return $ret;
   }
 

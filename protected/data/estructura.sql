@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `habilidades` (
   `id_habilidad` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `codigo` varchar(45) NOT NULL,
   `tipo` int(10) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
+  `nombre` varchar(95) NOT NULL,
   `descripcion` text NOT NULL,
   `dinero` int(11) unsigned NOT NULL,
   `animo` int(10) unsigned NOT NULL,

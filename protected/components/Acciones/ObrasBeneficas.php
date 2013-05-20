@@ -1,31 +1,28 @@
 <?php
 
 /** 
- * Financiar videojuego
+ * El equipo participa en obras beneficas para lavar su imagen publica
  * 
  * Tipo : Accion grupal
- *
- * Perfil asociado : Empresario
- *
+ * 
  * Efectos :
  *
- * - aumenta el aforo base del equipo
+ * - aumenta el aforo basico del equipo para siempre
  *
  * Bonus al creador :
- *
- * Aumenta el recurso <dinero>
- * Aumenta el atributo <dinero_gen>
+ * 
+ * - aumenta el animo_gen
  *
  *
  * @package componentes\acciones
  */
-class FinanciarVideojuego extends AccionGrupSingleton
+class ObrasBeneficas extends AccionGrupSingleton
 {	
   /**
    * Funcion para acceder al patron Singleton
    *
    * @static
-   * @return \FinanciarVideojuego instancia de la accion
+   * @return \ConstruirEstadio instancia de la accion
    */
     public static function getInstance()
     {
@@ -45,17 +42,21 @@ class FinanciarVideojuego extends AccionGrupSingleton
   public function ejecutar($id_accion)
   {
     // TODO
-    
-     $ret = 0;
+    $ret = 0;
     //COmpruebo si la accion existe
     $accGrup = AccionesGrupales::model()->findByPk($id_accion);
     if ($accGrup === null)
       throw new Exception("Accion grupal inexistente.", 404);
-    //1.- Añadir bonificación al partidok
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['FinanciarEvento']['ambiente']));
-    //2.- Dar bonificación al creador
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
-    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"influencias",Efectos::$datos_acciones['IncentivoEconomico']['bonus_creador']['influencias']));
+
+    $creador = $accGrup->usuarios;
+    $equipo = $creador->equipos;
+    $sigPartido = $equipo->sigPartido;
+    
+    //1.- Añadir bonificación al partido
+    $ret = min($ret,Equipos::aumentar_recursos_equipo($equipo->id_equipo,"aforo_max",Efectos::$datos_acciones['ObrasBeneficas']['aforo_max']));
+    
+    //2.- Dar bonificación al creador,no tiene bonificacion al creador
+    $ret = min($ret,Recursos::aumentar_recursos($creador->id_usuario,"animo_gen",Efectos::$datos_acciones['ObrasBeneficas']['bonus_creador']['animo_gen']));
     //3.- Devolver influencias
     $participantes = $accGrup->participaciones;
     foreach ($participantes as $participacion) {
