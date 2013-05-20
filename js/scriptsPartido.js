@@ -29,8 +29,7 @@ function updateData (recalc,redraw) {
     "<b>Aforo visitante: </b>"+partido.aforo_visitante+"</br>"+
     "<b>Moral local: </b>"+partido.moral_local+"</br>"+
     "<b>Moral visitante: </b>"+partido.moral_visitante+"</br>";
-  $('#partido-info-datos').html(datosPr);
-
+  $('#partido-info-datos-numeritos').html(datosPr);
 
   for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
     var turnoDiv = $('#partido-turno-'+ t);
@@ -414,12 +413,23 @@ $(document).ready(function(evt){
   $('#partido-info').tabs();
   $('#partido-info').removeClass('ui-corner-all ui-widget-content');
 
+  $('#partido-info-tabs li, #partido-info-tabs li a').click(function(evt){
+    $(this).removeClass('highlight highlight-high highlight-low');
+    $(this).parent().removeClass('highlight highlight-high highlight-low');
+  });
+
   // Control del partido
   if (window.partido) {
     partido.ajax = false;
 
     // Actualiza los tiempos
     setInterval(function(){
+      var hlh = $('.highlight-high');
+      var hll = $('.highlight-low');
+      hlh.addClass('highlight highlight-low').removeClass('highlight-high');
+      hll.addClass('highlight highlight-high').removeClass('highlight-low');
+      $('ui-state-selected').removeClass('highlight highlight-low highlight-high');
+
       if (partido.tiempo > 0) {
         partido.tiempo--;
       }

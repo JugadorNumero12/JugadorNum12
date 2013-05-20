@@ -139,7 +139,7 @@
 		<li><a href="#partido-info-campo">Partido</a></li>
 		<li><a href="#partido-info-acciones">Acciones</a></li>
 		<li><a href="#partido-info-chat">Chat</a></li>
-		<li><a href="#partido-info-datos">Datos</a></li>
+		<li id="tab-datos"><a href="#partido-info-datos">Datos</a></li>
 		<li><a href="#partido-info-cronica">Cronica</a></li>
 	</ul>
 	<div id="partido-info-campo" class="partido-info-content">
@@ -147,20 +147,42 @@
 	</div>
 
 	<div id="partido-info-datos" class="partido-info-content">
-		<!-- Datos  -->
-		<b>Turno: </b><?php echo $partido->turno ?></br>
-		<b>Estado: </b><?php echo $partido->estado ?></br>
-        <b>Ambiente: </b><?php echo $partido->ambiente ?></br>
-        <b>Nivel local: </b><?php echo $partido->nivel_local ?></br>
-  		<b>Nivel visitante: </b><?php echo $partido->nivel_visitante ?></br>
-  		<b>Indice ofensivo local: </b><?php echo $partido->ofensivo_local ?></br>
-  		<b>Indice ofensivo visitante: </b><?php echo $partido->ofensivo_visitante ?></br>
-  		<b>Indice defensivo local: </b><?php echo $partido->defensivo_local ?></br>
-  		<b>Indice defensivo visitante: </b><?php echo $partido->defensivo_visitante ?></br>
-  		<b>Aforo local: </b><?php echo $partido->aforo_local ?></br>
-  		<b>Aforo visitante: </b><?php echo $partido->aforo_visitante ?></br>
-  		<b>Moral local: </b><?php echo $partido->moral_local ?></br>
-  		<b>Moral visitante: </b><?php echo $partido->moral_visitante ?></br>
+
+		<!-- Barra de título de los equipos -->
+		<div id="datos-titulo-local" class="barra datos-titulo">
+			<?php echo $partido->local->nombre ?>
+			<span class="mini">(Equipo Local)</span>
+		</div>
+		<div id="datos-titulo-visit" class="barra datos-titulo">
+			<span class="mini">(Equipo Visitante)</span>
+			<?php echo $partido->visitante->nombre ?>
+		</div>
+
+		<div class="clear"></div>
+
+		<!-- Barra del aforo -->
+		<div id="barra-aforo" class="barra">
+			Aforo
+			<div id="barra-aforo-local" class="barra-aforo barra-<?php echo $partido->local->token ?>" style="width: <?php echo ((double) $partido->aforo_local / $partido->local->aforo_max)*100 ?>%"><?php echo $partido->aforo_local ?></div>
+			<div id="barra-aforo-visit" class="barra-aforo barra-<?php echo $partido->visitante->token ?>" style="width: <?php echo ((double) $partido->aforo_visitante / $partido->local->aforo_max)*100 ?>%"><?php echo $partido->aforo_visitante ?></div>
+		</div>
+
+		<div id="partido-info-datos-numeritos">
+			<!-- Datos  -->
+			<b>Turno: </b><?php echo $partido->turno ?></br>
+			<b>Estado: </b><?php echo $partido->estado ?></br>
+	        <b>Ambiente: </b><?php echo $partido->ambiente ?></br>
+	        <b>Nivel local: </b><?php echo $partido->nivel_local ?></br>
+	  		<b>Nivel visitante: </b><?php echo $partido->nivel_visitante ?></br>
+	  		<b>Indice ofensivo local: </b><?php echo $partido->ofensivo_local ?></br>
+	  		<b>Indice ofensivo visitante: </b><?php echo $partido->ofensivo_visitante ?></br>
+	  		<b>Indice defensivo local: </b><?php echo $partido->defensivo_local ?></br>
+	  		<b>Indice defensivo visitante: </b><?php echo $partido->defensivo_visitante ?></br>
+	  		<b>Aforo local: </b><?php echo $partido->aforo_local ?></br>
+	  		<b>Aforo visitante: </b><?php echo $partido->aforo_visitante ?></br>
+	  		<b>Moral local: </b><?php echo $partido->moral_local ?></br>
+	  		<b>Moral visitante: </b><?php echo $partido->moral_visitante ?></br>
+  		</div>
 	</div>
 	<div id="partido-info-cronica" class="partido-info-content">
 		<pre id="pre-c-p"><?php echo $partido->cronica ?></pre>
