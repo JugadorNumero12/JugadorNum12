@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Clase con funciones auxiliares de utilidad
+ *
+ *
+ * @package componentes
+ */
 class Helper
 {
 	/*Sirve para cambiar más facilmente los factores de partido*/
