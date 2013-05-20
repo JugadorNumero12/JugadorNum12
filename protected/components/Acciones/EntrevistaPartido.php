@@ -13,7 +13,7 @@
  *
  * @package componentes\acciones
  */
-class Entrevista extends AccionPartSingleton
+class EntrevistaPartido extends AccionPartSingleton
 {
  	/**
    	 * Funcion para acceder al patron Singleton
@@ -49,8 +49,8 @@ class Entrevista extends AccionPartSingleton
         throw new Exception("Usuario incorrecto.", 404); 
       $equipo = $us->equipos;
       // Modifico Los factores de ese partido
-      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['Entrevista']['defensivo']));
-      $ret = min($ret,Partidos::disminuir_factores($id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['Entrevista']['ofensivo']));
+      $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"defensivo",Efectos::$datos_acciones['EntrevistaPartido']['defensivo']));
+      $ret = min($ret,Partidos::disminuir_factores($id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['EntrevistaPartido']['ofensivo']));
       
       // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella
       AccionesTurno::incorporarAccion($id_usuario, $id_partido,$id_equipo);

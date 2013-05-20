@@ -43,7 +43,7 @@
     	<p><b>Nick:&nbsp;</b><?php echo $modeloU->nick ?></p>
     	<p><b>Email:&nbsp;</b><?php echo $modeloU->email ?></p>
     	<p><b>Nivel:&nbsp;</b><?php echo $modeloU->nivel ?></p>
-    	<p><b>Experencia:&nbsp;</b>   <?php echo $modeloU->exp.' / '.$modeloU->exp_necesaria; ?>
+    	<p><b>Experiencia:&nbsp;</b>   <?php echo $modeloU->exp.' / '.$modeloU->exp_necesaria; ?>
     		<div class="meter">
     			<span class="s1" style="width:<?php echo ($modeloU->exp / $modeloU->exp_necesaria)*100; ?>%"></span>
     		</div>
