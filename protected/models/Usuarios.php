@@ -727,13 +727,14 @@ class Usuarios extends CActiveRecord
      * - Recursos iniciales en funcion del personaje escogido
      * - nivel inicial (1)
      * - experencia inicial (0)
+     * - puntos de desbloqueo de habilidades (3)
      *
      * @return void
      */
     public function crearPersonaje()
     {
         /* Nivel y Exp */
-        $this->setAttributes(array('nivel'=>1, 'exp'=>0, 'puntos_desbloqueo'=>2));
+        $this->setAttributes(array('nivel'=>1, 'exp'=>0, 'puntos_desbloqueo'=>3));
         $this->setAttributes(array('exp_necesaria'=> Usuarios::expNecesaria(1)));
         
         /* Recursos */

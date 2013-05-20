@@ -313,6 +313,7 @@ class UsuariosController extends Controller
                     'pass'=>"123456",
                     'equipos_id_equipo'=>1,
                     'email'=>"test@test.com",
+                    'puntos_desbloqueo' => 1,
                     'personaje'=>Usuarios::PERSONAJE_ULTRA,
                 ));
                 $c->setAttributes( array(
@@ -320,6 +321,7 @@ class UsuariosController extends Controller
                     'pass'=>"123456",
                     'equipos_id_equipo'=>1,
                     'email'=>"test@test.com",
+                    'puntos_desbloqueo' => 1,
                     'personaje'=>Usuarios::PERSONAJE_MOVEDORA,
                 ));
                 $e->setAttributes( array(
@@ -327,6 +329,7 @@ class UsuariosController extends Controller
                     'pass'=>"123456",
                     'equipos_id_equipo'=>1,
                     'email'=>"test@test.com",
+                    'puntos_desbloqueo' => 1,
                     'personaje'=>Usuarios::PERSONAJE_EMPRESARIO,
                 ));
                 $u->save(); $c->save(); $e->save();
