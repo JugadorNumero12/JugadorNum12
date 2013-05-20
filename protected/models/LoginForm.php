@@ -1,9 +1,11 @@
 <?php
 
 /**
- * LoginForm class.
- * LoginForm is the data structure for keeping
- * user login form data. It is used by the 'login' action of 'SiteController'.
+ * Modelo de LoginForm.
+ * LoginForm es la estructura de datos donde se guarda
+ * el login de usuario. Usado por la accion 'login' de 'SiteController'.
+ *
+ * @package modelos
  */
 class LoginForm extends CFormModel
 {
@@ -14,10 +16,15 @@ class LoginForm extends CFormModel
 	private $_identity;
 
 	/**
-	 * Declares the validation rules.
-	 * The rules state that username and password are required,
-	 * and password needs to be authenticated.
-	 */
+     * Define las reglas definidas para los atributos del modelo.
+     *
+	 * Tanto username como password requieren autenticacion
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
 	public function rules()
 	{
 		return array(
@@ -31,8 +38,12 @@ class LoginForm extends CFormModel
 	}
 
 	/**
-	 * Declares attribute labels.
-	 */
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
 	public function attributeLabels()
 	{
 		return array(
@@ -41,8 +52,13 @@ class LoginForm extends CFormModel
 	}
 
 	/**
-	 * Authenticates the password.
-	 * This is the 'authenticate' validator as declared in rules().
+	 * Autentica la contraseña
+	 *
+	 * Validador de autenticacion declarado en rules()
+	 *
+	 * @param $attribute
+	 * @param $params
+	 * @return void
 	 */
 	public function authenticate($attribute,$params)
 	{
@@ -55,8 +71,9 @@ class LoginForm extends CFormModel
 	}
 
 	/**
-	 * Logs in the user using the given username and password in the model.
-	 * @return boolean whether login is successful
+	 * Loguea al usuario usando su username y password establecidos en el modelo de datos
+	 *
+	 * @return boolean Login exitoso
 	 */
 	public function login()
 	{

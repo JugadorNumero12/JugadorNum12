@@ -1,9 +1,11 @@
 <?php
 
 /**
- * ContactForm class.
- * ContactForm is the data structure for keeping
- * contact form data. It is used by the 'contact' action of 'SiteController'.
+ * Clase ContactForm.
+ * ContactForm es la estructura de datos donde se guardan
+ * los datos de formulario de contacto. Usado por la accion'contact' de 'SiteController'.
+ *
+ * @package modelos
  */
 class ContactForm extends CFormModel
 {
@@ -14,8 +16,15 @@ class ContactForm extends CFormModel
 	public $verifyCode;
 
 	/**
-	 * Declares the validation rules.
-	 */
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
 	public function rules()
 	{
 		return array(
@@ -29,10 +38,12 @@ class ContactForm extends CFormModel
 	}
 
 	/**
-	 * Declares customized attribute labels.
-	 * If not declared here, an attribute would have a label that is
-	 * the same as its name with the first letter in upper case.
-	 */
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
 	public function attributeLabels()
 	{
 		return array(

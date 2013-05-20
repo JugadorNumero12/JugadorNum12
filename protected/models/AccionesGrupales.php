@@ -3,27 +3,32 @@
 /**
  * Modelo para la tabla <<acciones_grupales>>
  *
- * columnas disponibles:
- * -------------------------
- * string $id_accion_grupal
- * string $usuarios_id_usuario
- * string $habilidades_id_habilidad
- * string $equipos_id_equipo
- * string $influencias_acc
- * string $animo_acc
- * string $dinero_acc
- * string $jugadores_acc
- * string $finalizacion
+ * Columnas disponibles:
+ *
+ * | tipo   | nombre                    |  
+ * |:-------|:--------------------------|
+ * | string | $id_accion_grupal         |
+ * | string | $usuarios_id_usuario      |
+ * | string | $habilidades_id_habilidad |
+ * | string | $equipos_id_equipo        |
+ * | string | $influencias_acc          |
+ * | string | $animo_acc                |
+ * | string | $dinero_acc               |
+ * | string | $jugadores_acc            |
+ * | string | $finalizacion             |
+ *
+ * @package modelos
  */
 class AccionesGrupales extends CActiveRecord
 {
-    /**
-     * Funcion predetirmada de Yii.
+    /**     
      * Devuelve el modelo estatico de la clase "active record" especificada.
      *
+     * > Funcion predeterminada de Yii.
+     *
      * @static
-     * @param $className (string) nombre de la clase "active record". Por defecto __CLASS__
-     * @return (AccionesGrupales) el modelo estatico de la clase
+     * @param string $className   nombre de la clase "active record". Por defecto __CLASS__
+     * @return \AccionesGrupales  el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
     {
@@ -31,10 +36,11 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Devuelve el nombre de la tabla asociada a la clase
      *
-     * @return (string) nombre de la tabla en la base de datos
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
      */
     public function tableName()
     {
@@ -42,11 +48,13 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Define las reglas definidas para los atributos del modelo, incluida la regla usada por "search()"
+     *
      * Nota: deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
      *
-     * @return (array) reglas de validacion para los atributos
+     * > Funcion predeterminada de Yii
+     *
+     * @return array reglas de validacion para los atributos
      */
     public function rules()
     {
@@ -61,10 +69,18 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Define las relaciones entre la tabla <acciones_grupales> y el resto de tablas
      *
-     * @return (array) relaciones entre <acciones_grupales> - <tabla>
+     * Relaciones definidas:
+     *
+     * - usuarios
+     * - habilidades
+     * - equipos
+     * - participantes
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return array relaciones entre <acciones_grupales> - <tabla>
      */
     public function relations()
     {
@@ -77,10 +93,11 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Define los nombres "completos" de los atributos
      *
-     * @return (array) nombres de los atributos 
+     * > Funcion predeterminada de Yii
+     *
+     * @return array nombres de los atributos 
      */
     public function attributeLabels()
     {
@@ -99,10 +116,11 @@ class AccionesGrupales extends CActiveRecord
     }
 
     /**
-     * Funcion predeterminada de Yii
      * Devuelve la lista de modelos con las condiciones de busqueda/filtro
      *
-     * @return (array CActiveDataProvider) creterio definido para las busquedas/filtros
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider creterio definido para las busquedas/filtros
      */
     public function search()
     {
@@ -127,6 +145,8 @@ class AccionesGrupales extends CActiveRecord
 
     /**
      * Finaliza todas las acciones grupales no terminadas a tiempo
+     *
+     * @return void
      */
     public function finalizaGrupales()
     {
@@ -192,8 +212,10 @@ class AccionesGrupales extends CActiveRecord
     /** 
      * Funcion para finalizar una grupal dada y devolver los recursos a los participantes.
      * 
-     * @param $id_accion_grupal 
-     * @param (boolean) indica si se debe borrar la accion 
+     * @param int $id_accion_grupal 
+     * @param bool $eliminar indica si se debe borrar la accion 
+     * @throws \Exception excepcion interna
+     * @return void
      */
     public static function finalizaGrupal($id_accion_grupal, $eliminar = true)
     {
@@ -232,8 +254,16 @@ class AccionesGrupales extends CActiveRecord
      * Expulsa a un jugador de una accion grupal dada (borrarle de la lista de participantes)
      *
      * @static
-     * @param $id_accion
-     * @param $id_jugador
+     * @param int $id_accion
+     * @param int $id_jugador
+     * @throws \Exception 'Recursos inexistentes'
+     * @throws \CHttpException 'Acción inexistente.'
+     * @throws \CHttpException 'Acción completada.'
+     * @throws \CHttpException 'No tienes privilegios sobre la accion.'
+     * @throws \CHttpException 'No puedes expulsarte a ti mismo'
+     * @throws \CHttpException 'El jugador indicado no participa en la accion'
+     * @throws \Exception 'Error en la base de datos'
+     * @return void
      */ 
     public static function expulsarJugador($id_accion, $id_jugador)
     {
@@ -300,6 +330,7 @@ class AccionesGrupales extends CActiveRecord
 
     /** 
      * Funcion que agrega una participacion a una accion grupal
+     *
      *  -  actualiza los recursos del usuario
      *  -  suma exp al jugador en funcion de los recursos aportados
      *  -  actualiza los recursos de la accion
@@ -307,12 +338,12 @@ class AccionesGrupales extends CActiveRecord
      *  -  si se completa la accion, la ejecuta
      *
      * Comprobaciones de seguridad realizadas:
-     *  1) la participacion es para el equipo del usuario
-     *  2) la accion no ha terminado
-     *  3) el jugador tiene suficientes recursos
-     *  4) la participacion no es mayor que los recursos restantes de la accion
-     *  5) error al actualizar la participacion en la base de datos
-     *  6) la participacion es vacia (ignorarla)
+     *  1. la participacion es para el equipo del usuario
+     *  2. la accion no ha terminado
+     *  3. el jugador tiene suficientes recursos
+     *  4. la participacion no es mayor que los recursos restantes de la accion
+     *  5. error al actualizar la participacion en la base de datos
+     *  6. la participacion es vacia (ignorarla)
      *
      * @static
      * @param $id_accion
@@ -321,6 +352,15 @@ class AccionesGrupales extends CActiveRecord
      * @param $habilidad
      * @param $participacion
      * @param $nuevo_participante
+     *
+     * @throws \Exception 'No puedes participar en esta accion'
+     * @throws \Exception 'La accion ya ha acabado'
+     * @throws \Exception 'No se puede obtener el modelo de recursos'
+     * @throws \Exception 'No tienes suficientes recursos.'
+     * @throws \Exception 'Error en la BBDD.'
+     * @throws \Exception 'El usuario se ha saltado una validación.'
+     * @throws \Exception 'No has aportado nada a la acción.'
+     * @return void
      */
     public static function participar($id_accion, $recursosAportados, $accion, $habilidad, $participacion, $nuevo_participante)
     {
@@ -521,7 +561,7 @@ class AccionesGrupales extends CActiveRecord
      * @param $id_equipo
      * @param $res : recursos del jugador
      * @param $habilidad
-     * @return (int) id de la nueva accion grupal
+     * @return int id de la nueva accion grupal
      */
     public static function usarGrupal($usuario, $id_accion, $id_equipo, $res, $habilidad)
     {       

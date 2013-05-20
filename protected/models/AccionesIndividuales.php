@@ -4,16 +4,25 @@
  * Modelo de la tabla <<acciones_individuales>>
  *
  * Columnas disponibles
- * string $habilidades_id_habilidad
- * string $usuarios_id_usuario
- * string $cooldown
+ *
+ * | tipo   | nombre                    |
+ * | :----- | :------------------------ |
+ * | string | $habilidades_id_habilidad |
+ * | string | $usuarios_id_usuario      |
+ * | string | $cooldown                 |
+ *
+ * @package modelos
  */
 class AccionesIndividuales extends CActiveRecord
 {
 	/**
-	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return AccionesIndividuales the static model class
+     * Devuelve el modelo estatico de la clase active record especificada.
+     *
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
+     * @return \AccionesIndividuales static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -21,16 +30,27 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
-	 * @return string the associated database table name
-	 */
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
 	public function tableName()
 	{
 		return 'acciones_individuales';
 	}
 
 	/**
-	 * @return array validation rules for model attributes.
-	 */
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -48,8 +68,15 @@ class AccionesIndividuales extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_individuales - tabla>
 	 *
-	 * @devuelve array relaciones.
-	 */
+	 * Relaciones definidas:
+     *
+     * - habilidades
+     * - usuarios
+     *
+	 * > Funcion predeterminada de Yii
+	 *
+	 * @return object[]     relaciones entre clasificacion - tabla
+     */
 	public function relations()
 	{
 		/* PEDRO */
@@ -62,8 +89,12 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
 	public function attributeLabels()
 	{
 		return array(
@@ -74,9 +105,12 @@ class AccionesIndividuales extends CActiveRecord
 	}
 
 	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
+     */
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
@@ -93,9 +127,14 @@ class AccionesIndividuales extends CActiveRecord
 		));
 	}
 
-	/*
-	* Esta función finaliza las acciones grupales de un usuario concreto.
-	*/
+	/**
+	 * Esta función finaliza las acciones grupales de un usuario concreto.
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @throws \CHttpException 404 Error: habilidad no encontrada.
+	 * @throws \CHttpException 404 Error: no se ha podido guardar el modelo de acciones individuales.
+	 * @return void
+	 */
 	public function finalizaIndividuales($id_usuario)
 	{
 		$transaction = Yii::app()->db->beginTransaction();
@@ -150,7 +189,16 @@ class AccionesIndividuales extends CActiveRecord
     	}
 	}
 
-	// Función empleada para usar una habilidad individual
+	/**
+	 * Función empleada para usar una habilidad individual
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @param int $id_accion
+	 * @param $res
+	 * @param $habilidad
+	 * @throws \Exception   'La habilidad no se ha regenerado todavía.'
+	 * @return void
+	 */	
 	public static function usarIndividual($id_usuario, $id_accion, $res, $habilidad)
 	{
 		// Importar acciones
