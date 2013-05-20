@@ -41,7 +41,6 @@ class TumultoGradas extends AccionPartSingleton
       // Cojo el equipo del usuario
       $equipo = $us->equipos;
       // Modifico Los factores de ese partido
-      echo '<pre>'.die(var_dump($id_partido)).'</pre>';
       $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"ofensivo",Efectos::$datos_acciones['TumultoGradas']['ofensivo']));
       $ret = min($ret,Partidos::aumentar_factores($id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['TumultoGradas']['ambiente']));
       // Incorporo un registro a la tabla acciones turno si el usuario aun no esta en ella

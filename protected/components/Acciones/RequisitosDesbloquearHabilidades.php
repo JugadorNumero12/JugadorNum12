@@ -31,13 +31,13 @@ class RequisitosDesbloquearHabilidades
 		), 
 
 		// Partido
-		'RetransmitirRRSS' => array (
+		'BeberCerveza' => array (
 			'nivel' => 1,
 			'desbloqueadas_previas' => array ()
 		),
 
-		// Partido
-		'BeberCerveza' => array (
+		// Grupal 
+		'AlquilarBus' => array (
 			'nivel' => 1,
 			'desbloqueadas_previas' => array ()
 		), 
@@ -49,7 +49,7 @@ class RequisitosDesbloquearHabilidades
 		// Grupal
 		'Pintarse' => array (
 			'nivel' => 5,
-			'desbloqueadas_previas' => array ('BeberCerveza' => 'BeberCerveza')
+			'desbloqueadas_previas' => array ('AlquilarBus' => 'AlquilarBus')
 		), 
 
 		// Individual
@@ -61,20 +61,18 @@ class RequisitosDesbloquearHabilidades
 		// Partido
 		'CorearEstadio' => array (
 			'nivel' => 5,
-			'desbloqueadas_previas' => array (),
+			'desbloqueadas_previas' => array ('BeberCerveza' => 'BeberCerveza'),
 		), 
+
+		// Partido
+		'RetransmitirRRSS' => array (
+			'nivel' => 5,
+			'desbloqueadas_previas' => array ()
+		),
 
 		// -------------------------------------------
 		// NIVEL 3
 		// -------------------------------------------
-
-		// Grupal 
-		'AlquilarBus' => array (
-			'nivel' => 10,
-			'desbloqueadas_previas' => array (
-				'Pintarse' => 'Pintarse',
-			 	'CorearEstadio' => 'CorearEstadio')
-		),
 
 		// Grupal
 		'ConciertoRock' => array (

@@ -127,7 +127,7 @@ class Efectos
 
 		// Partido
 		'DoblarApuesta' => array (
-			'animo' => 100
+			'animo' => 250
 		), 
 
 		// Partido
