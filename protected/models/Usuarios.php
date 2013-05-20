@@ -16,6 +16,7 @@
  * | tinyint| $nivel                        |
  * | int    | $exp                          |
  * | int    | $exp_necesaria                |
+ * | int    | $puntos_desbloqueo            |
  *
  *
  * @package modelos
@@ -181,7 +182,7 @@ class Usuarios extends CActiveRecord
             array('equipos_id_equipo', 'length', 'max'=>10),
             array('nick', 'length', 'max'=>20),
             array('pass, email', 'length', 'max'=>255),
-            array('nivel exp exp_necesaria', 'numerical', 'integerOnly'=>true),
+            array('nivel exp exp_necesaria puntos_desbloqueo', 'numerical', 'integerOnly'=>true),
             array('nivel', 'length', 'max'=>10),
 
             /* Validaciones para cambio de contraseña */
@@ -212,8 +213,9 @@ class Usuarios extends CActiveRecord
              * Atributos no incluidos
              *  - pass
              *  - exp_necesaria
+             *  - puntos_desbloqueo
              */
-            array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp, puntos_desbloqueo', 'safe', 'on'=>'search'),
+            array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
         );
     }
 
@@ -720,7 +722,7 @@ class Usuarios extends CActiveRecord
     public function crearPersonaje()
     {
         /* Nivel y Exp */
-        $this->setAttributes(array('nivel'=>1, 'exp'=>0));
+        $this->setAttributes(array('nivel'=>1, 'exp'=>0, 'puntos_desbloqueo'=>2));
         $this->setAttributes(array('exp_necesaria'=> Usuarios::expNecesaria(1)));
         
         /* Recursos */
