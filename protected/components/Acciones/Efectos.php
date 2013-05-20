@@ -104,7 +104,21 @@ class Efectos
 			'nivel_equipo' => 3,
 			'ambiente' => 150,
 			'aforo' => 100,
+		),
+
+		'ObrasBeneficas' => array (
+			'aforo_max' => 100,
+			'bonus_creador' => array ('animo_gen' => 10)
+		),
+
+		'AlquilarBus' => array (
+			'aforo' => 100,
+			'bonus_creador' => array ('animo_max' => 50)
 		), 
+
+		'MandarJugadorHospital' => array (
+			'nivel_equipo' => 5,
+		),   
 
 		// INDIVIDUALES
 		// ------------------------------------------------
@@ -155,6 +169,11 @@ class Efectos
 		'Entrevista' => array (
 			'ofensivo' => 3,
 			'defensivo' => 3
+		),
+
+		'TumultoGradas' => array (
+			'ofensivo' => 3,
+			'ambiente' => 100
 		), 
 
 		// PASIVAS

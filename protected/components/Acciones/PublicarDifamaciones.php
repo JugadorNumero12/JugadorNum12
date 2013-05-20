@@ -58,7 +58,7 @@ class PublicarDifamaciones extends AccionGrupSingleton
     $sigPartido = $equipo->sigPartido;
 
     //1.- Añadir bonificación al partido
-    $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['PublicarDifamaciones']['nivel_equipo']));
+    $ret = min($ret,Partidos::disminuir_factores($sigPartido->id_partido,$equipo->id_equipo,"nivel",Efectos::$datos_acciones['PublicarDifamaciones']['nivel_equipo']));
     $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"ambiente",Efectos::$datos_acciones['PublicarDifamaciones']['ambiente']));
     $ret = min($ret,Partidos::aumentar_factores($sigPartido->id_partido,$equipo->id_equipo,"aforo",Efectos::$datos_acciones['PublicarDifamaciones']['aforo']));
     //2.- Dar bonificación al creador
