@@ -35,12 +35,12 @@ class AccionesGrupales extends CActiveRecord
         return parent::model($className); 
     }
 
-    /**     
+    /**
      * Devuelve el nombre de la tabla asociada a la clase
      *
      * > Funcion predeterminada de Yii
-     *
-     * @return string nombre de la tabla en la base de datos
+     * 
+     * @return string   nombre de la tabla en la base de datos
      */
     public function tableName()
     {
@@ -70,6 +70,13 @@ class AccionesGrupales extends CActiveRecord
 
     /**
      * Define las relaciones entre la tabla <acciones_grupales> y el resto de tablas
+     *
+     * Relaciones definidas:
+     *
+     * - usuarios
+     * - habilidades
+     * - equipos
+     * - participantes
      *
      * > Funcion predeterminada de Yii
      *
@@ -138,6 +145,7 @@ class AccionesGrupales extends CActiveRecord
 
     /**
      * Finaliza todas las acciones grupales no terminadas a tiempo
+     *
      * @return void
      */
     public function finalizaGrupales()

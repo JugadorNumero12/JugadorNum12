@@ -17,10 +17,13 @@
  */
 class AccionesTurno extends CActiveRecord
 {
-	/**
-	 * Returns the static model of the specified AR class.
-	 *
-	 * @param string $className active record class name.
+	    /**
+     * Devuelve el modelo estatico de la clase active record especificada.
+     *
+     * > Funcion predetirmada de Yii
+     *
+     * @static
+     * @param string $className     nombre de la clase active record
 	 * @return \AccionesTurno the static model class
 	 */
 	public static function model($className=__CLASS__)
@@ -29,24 +32,27 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
-	 * Funcion que devuelve el nombre de la tabla
-	 *
-	 * > Funcion predeterminada de Yii
-	 *
-	 * @return string the associated database table name
-	 */
+     * Devuelve el nombre de la tabla asociada a la clase
+     *
+     * > Funcion predeterminada de Yii
+     * 
+     * @return string   nombre de la tabla en la base de datos
+     */
 	public function tableName()
 	{
 		return 'acciones_turno';
 	}
 
 	/**
-	 * Validation rules
-	 *
-	 * > Funcion predeterminada de Yii
-	 *
-	 * @return array validation rules for model attributes.
-	 */
+     * Define las reglas definidas para los atributos del modelo.
+     *
+     * Incluye la regla usada por la funcion ```search()```
+     * Deben definirse solo las reglas para aquellos atributos que reciban entrada del usuario
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     reglas de validacion para los atributos
+     */
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -63,6 +69,12 @@ class AccionesTurno extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_turno - tabla>
 	 *
+	 * Relaciones definidas:
+     *
+     * - usuarios
+     * - partidos
+     * - equipos
+     *
 	 * > Funcion predeterminada de Yii
 	 *
 	 * @return array de relaciones
@@ -79,12 +91,12 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
-	 * Attribute labels
-	 *
-	 * > Funcion predeterminada de Yii
-	 *
-	 * @return array customized attribute labels (name=>label)
-	 */
+     * Define los nombres completos de los atributos
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return object[]     nombres de los atributos 
+     */
 	public function attributeLabels()
 	{
 		return array(
@@ -96,12 +108,12 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * > Funcion predeterminada de Yii
-	 *
-	 * @return \CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
+     * Devuelve la lista de modelos con las condiciones de busqueda/filtro
+     *
+     * > Funcion predeterminada de Yii
+     *
+     * @return \CActiveDataProvider[]   criterio definidos para las busquedas
+     */
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
