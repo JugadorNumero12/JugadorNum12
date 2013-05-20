@@ -479,18 +479,29 @@ class Usuarios extends CActiveRecord
                 Yii::app()->user->setFlash('nivel', 'Enhorabuena, has subido de nivel. Ahora tienes nivel '. $nivel_actual);
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
 
-                //Creamos una notificacion
-                $notificacion = new Notificaciones;
-                $notificacion->fecha = time();
-                $notificacion->mensaje = " Enhorabuena, has subido de nivel. Ahora tienes nivel ". $nivel_actual;
-                $notificacion->imagen = "images/iconos/notificaciones/nivel.png";
-                $notificacion->save();
+                //Creamos una notificacion para el nivel y otra para los puntos de desbloqueo
+                $notificacionNivel = new Notificaciones;
+                $notificacionNivel->fecha = time();
+                $notificacionNivel->mensaje = " Enhorabuena, has subido de nivel. Ahora tienes nivel ". $nivel_actual;
+                $notificacionNivel->imagen = "images/iconos/notificaciones/nivel.png";
+                $notificacionNivel->save();
 
-                //Guardamos la notificacion en ursnotif
+                $notificacionPuntos = new Notificaciones;
+                $notificacionPuntos->fecha = time();
+                $notificacionPuntos->mensaje = " Tus puntos de desbloqueo han aumentado. Ahora tienes ". $puntos_desbloqueo;
+                $notificacionPuntos->imagen = "images/iconos/notificaciones/puntos_desbloqueo.png";
+                $notificacionPuntos->save();
+
+                //Guardamos las notificaciones en ursnotif
                 $usrnotif = new Usrnotif;
-                $usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+                $usrnotif->notificaciones_id_notificacion = $notificacionNivel->id_notificacion;
                 $usrnotif->usuarios_id_usuario = $this->id_usuario;
                 $usrnotif->save();
+
+                $usrnotifPuntos = new Usrnotif;
+                $usrnotifPuntos->notificaciones_id_notificacion = $notificacionPuntos->id_notificacion;
+                $usrnotifPuntos->usuarios_id_usuario = $this->id_usuario;
+                $usrnotifPuntos->save();
                 
             }
 
