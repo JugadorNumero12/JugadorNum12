@@ -315,7 +315,7 @@ class Partido
 		        break;
 		    }
 		    case ($abs_estado >=1 && $abs_estado <=3):{ //[1,2,3] Diferencia leve
-		        $cronica_estado = " El partido esta prácticamente igualado ".$equipo_ganando." es ligeramente mejor que ".$equipo_perdiendo;
+		        $cronica_estado = " El partido esta prácticamente igualado. ".$equipo_ganando." es ligeramente mejor que ".$equipo_perdiendo.".";
 		        break;
 		    }
 		    case ($abs_estado >=4 && $abs_estado <=6):{ //[4,5,6] Diferencia normal
@@ -323,7 +323,7 @@ class Partido
 		        break;
 		    }
 		    case ($abs_estado >=7 && $abs_estado <=9):{ //[7,8,9] Muy favorable
-				$cronica_estado = " El partido esta siendo dominado por ".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
+				$cronica_estado = " El partido está siendo dominado por ".$equipo_ganando.". ".$equipo_perdiendo." tiene que ponerse las pilas.";
 		        break;
 		    }
 		}
@@ -342,7 +342,7 @@ class Partido
 		$dif_estado = abs($this->estado - $estado_antiguo);
 		switch ($dif_estado) {
 		    case ($dif_estado == 0): { //El partido sigue igual
-		    	$cronica_dif_estado = " El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido";
+		    	$cronica_dif_estado = " El partido sigue igual que antes. Nada ha cambiado. Esta muy reñido.";
 		        break;
 		    }
 		    case ($dif_estado >=1 && $dif_estado <=3):{ //[1,2,3] Diferencia leve
@@ -350,7 +350,7 @@ class Partido
 		        break;
 		    }
 		    case ($dif_estado >=4 && $dif_estado <=6):{ //[4,5,6] Diferencia ligera
-				$cronica_dif_estado = " La táctica de juego ha cambiado y el equipo ".$equipo_mejorado." ha mejorado su posicion.";
+				$cronica_dif_estado = " La táctica de juego ha cambiado y el equipo ".$equipo_mejorado." ha mejorado su posición.";
 		        break;
 		    }
 		    case ($dif_estado >=7 && $dif_estado <=9):{ //[7,8,9] Ventaja para alguien
