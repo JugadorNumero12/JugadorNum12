@@ -16,25 +16,30 @@
  */
 class Formula
 {
-
+	 /** Define el peso para la distancia "cerca" : 8 */
 	const PESOS_DIST_CERCA = 8;
-
+	 /** Define el peso de un atributo para "cerca" : 16 */
 	const PESOS_MIN_CERCA = 16;
+	 /** Define el peso de un atributo para "lejos" : 3 */
 	const PESOS_MIN_LEJOS = 3;
+	 /** Define el peso inicial : 256 */
 	const PESOS_INICIAL = 256;
+	 /** Define el peso del multiplicador : 12000 */
 	const PESOS_MULT = 12000;
-
+ 	/** Define el peso base del factorial: 100 */
 	const DIFNIV_NFACT_BASE = 100;
 
 
 	/**
-	 * @param $x Punto en el que calcular la normal
+	 * Funcion que calcula la normal acumulada en un punto
+	 *
+	 * > Algoritmo encontrado en StackOverflow
+     * 
+	 * @param (double) $x Punto en el que calcular la normal
 	 * @return La normal acumulada en el punto $x
 	 */
 	private static function cumnormdist($x)
 	{
-		// Algoritmo encontrado en StackOverflow para calcular la normal
-		// acumulada en un punto. Viva StackOverflow.
 
 		$b1 =  0.319381530;
 		$b2 = -0.356563782;
@@ -54,10 +59,12 @@ class Formula
 	}
 
 	/**
-	 * @param $x Punto en el que calcular la normal
-	 * @param $avg Media de la normal a calcular
-	 * @param $stdev Desviación típica de la normal acalcular
-	 * @return La normal N($avg,$stdev) en el punto $x
+	 * Calcula la funcion de Gauss para un punto, con una media y una desviacion
+	 *
+	 * @param (double) $x Punto en el que calcular la normal
+	 * @param (double) $avg Media de la normal a calcular
+	 * @param (double) $stdev Desviación típica de la normal acalcular
+	 * @return (double) La normal N($avg,$stdev) en el punto $x
 	 */
 	private static function gauss ( $x, $avg, $stdev ) {
 		return self::cumnormdist(($x - $avg)/$stdev);
@@ -267,4 +274,5 @@ class Formula
 		die( '<pre>' . print_r(array($probs,$rnd), true) . '</pre>' );
 		return null;
 	}
+	
 }

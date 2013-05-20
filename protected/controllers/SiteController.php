@@ -1,11 +1,18 @@
 <?php
-
+/** 
+ * Controlador principal
+ *
+ *
+ * @package controladores
+ */
 class SiteController extends Controller
 {
 	public $layout='//layouts/login';
 
 	/**
 	 * Declares class-based actions.
+	 *
+	 * @return void
 	 */
 	public function actions()
 	{
@@ -26,10 +33,12 @@ class SiteController extends Controller
 	}
 
 	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
+	 * This is the default 'index' action that is invoked when an action is not explicitly requested by users.
      *
-     * @redirect    jugadorNum12/usuarios
+     * @route 		jugadorNum12/site/index
+     * @redirect    jugadorNum12/site/login (guest)
+     * @redirect    jugadorNum12/usuarios/index
+     * @return void
 	 */
 	public function actionIndex()
 	{
@@ -43,6 +52,8 @@ class SiteController extends Controller
 
 	/**
 	 * This is the action to handle external exceptions.
+	 *
+	 * @return void
 	 */
 	public function actionError()
 	{
@@ -57,6 +68,9 @@ class SiteController extends Controller
 
 	/**
 	 * Displays the contact page
+	 *
+	 * @route JugadorNum12/site/contact
+	 * @return void
 	 */
 	public function actionContact()
 	{
@@ -83,6 +97,11 @@ class SiteController extends Controller
 
 	/**
 	 * Displays the login page
+	 *
+	 * @route 		jugadorNum12/site/login
+	 * @redirect    jugadorNum12/registro/equipo
+	 * @redirect    jugadorNum12/registro/personaje
+	 * @return void
 	 */
 	public function actionLogin()
 	{
@@ -126,6 +145,10 @@ class SiteController extends Controller
 
 	/**
 	 * Logs out the current user and redirect to homepage.
+	 *
+	 * @route jugadorNum12/site/logout
+	 * @redirect jugadorNum12/
+	 * @return void
 	 */
 	public function actionLogout()
 	{

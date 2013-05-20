@@ -32,7 +32,7 @@ class Participaciones extends CActiveRecord
      *
      * @static
      * @param string $className     nombre de la clase active record
-     * @return \AccionesGrupales    el modelo estatico de la clase
+     * @return \Participaciones    el modelo estatico de la clase
      */
     public static function model($className=__CLASS__)
     {

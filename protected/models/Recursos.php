@@ -4,7 +4,7 @@
  * Modelo de la tabla recursos
  *
  * Columnas disponibles:
- * @package modelos
+ *
  * 	string $usuarios_id_usuario
  * 	string $dinero
  * 	double $dinero_gen
@@ -15,7 +15,9 @@
  *  string influencias_partido_bloqueadas
  * 	string $animo
  * 	string $animo_max
- * 	double $animo_gen	
+ * 	double $animo_gen
+ *
+ * @package modelos	
  */
 class Recursos extends CActiveRecord
 {
