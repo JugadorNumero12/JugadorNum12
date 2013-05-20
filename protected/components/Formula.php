@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * Clase que implementa la formula interna del juego
+ *
+ * Factores relevantes 
+ *
+ *  - moral
+ *  - nivel de equipo
+ *  - aforo
+ *  - ambiente
+ *  - factor ofensivo
+ *  - factor defensivo
+ *
+ * @package componentes\acciones
+ */
 class Formula
 {
 
