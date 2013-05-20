@@ -4,18 +4,24 @@
  * Modelo para la tabla <<acciones_turno>>
  *
  * Columnas disponibles:
- * string  $usuarios_id_usuario
- * string  $habilidades_id_habilidad
- * string  $partidos_id_partido
- * string  $equipos_id_equipo
- * integer $turno
+ *
+ * | tipo    | nombre                    |
+ * | :------ | :------------------------ |
+ * | string  | $usuarios_id_usuario      |
+ * | string  | $habilidades_id_habilidad |
+ * | string  | $partidos_id_partido      |
+ * | string  | $equipos_id_equipo        |
+ * | integer | $turno                    |
+ *
+ * @package modelos
  */
 class AccionesTurno extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
+	 *
 	 * @param string $className active record class name.
-	 * @return AccionesTurno the static model class
+	 * @return \AccionesTurno the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -23,6 +29,10 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
+	 * Funcion que devuelve el nombre de la tabla
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -31,6 +41,10 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
+	 * Validation rules
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -49,7 +63,9 @@ class AccionesTurno extends CActiveRecord
 	/**
 	 * Define las relaciones entre <acciones_turno - tabla>
 	 *
-	 * @devuelve array de relaciones
+	 * > Funcion predeterminada de Yii
+	 *
+	 * @return array de relaciones
 	 */
 	public function relations()
 	{
@@ -63,6 +79,10 @@ class AccionesTurno extends CActiveRecord
 	}
 
 	/**
+	 * Attribute labels
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
@@ -77,7 +97,10 @@ class AccionesTurno extends CActiveRecord
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 *
+	 * > Funcion predeterminada de Yii
+	 *
+	 * @return \CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
 	public function search()
 	{
@@ -96,7 +119,14 @@ class AccionesTurno extends CActiveRecord
 		));
 	}
 
-	// Busca participacion en la tabla acciones turno
+	/**
+	 * Busca participacion en la tabla acciones turno
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @param int $id_partido   id del partido
+	 * @param int $id_equipo    id del equipo
+	 * @return $participacion
+	 */
 	public static function buscarParticipacion($id_usuario, $id_partido,$id_equipo)
 	{
 		 
@@ -108,6 +138,14 @@ class AccionesTurno extends CActiveRecord
 		return $participacion; 
 	}
 
+	/**
+	 * Agrega participacion en la tabla acciones turno
+	 * 
+	 * @param int $id_usuario   id del usuario
+	 * @param int $id_partido   id del partido
+	 * @param int $id_equipo    id del equipo
+	 * @return void
+	 */
 	public static  function agregarParticipacion($id_usuario, $id_partido,$id_equipo)
 	{
 		 $modelo=new AccionesTurno();
@@ -119,7 +157,14 @@ class AccionesTurno extends CActiveRecord
 		 $modelo->save();
 	}
 
-	//incorpora registro en la tabla acciones turno si el usuario aun no estaba
+	/**
+	 * incorpora registro en la tabla acciones turno si el usuario aun no estaba
+	 *
+	 * @param int $id_usuario   id del usuario
+	 * @param int $id_partido   id del partido
+	 * @param int $id_equipo    id del equipo
+	 * @return void
+	 */
 	public static function incorporarAccion($id_usuario, $id_partido,$id_equipo)
 	{
 
@@ -136,6 +181,13 @@ class AccionesTurno extends CActiveRecord
                 
 	}	
 
+    /**
+	 * Suma una cantidad de influencias a una participacion
+	 *
+	 * @param $participacion
+	 * @param int $cantidad
+	 * @return void
+	 */
 	public static function sumarInfluencia($participacion,$cantidad)
 	{
 		$influenciasAcc=$participacion->influencias_acc;
@@ -143,6 +195,16 @@ class AccionesTurno extends CActiveRecord
 		$participacion->save();
 
 	}
+
+	/**
+	 * Usar accion en el partido
+	 *
+	 * Incorpora la accion, busca la participacion y suma influencia a la accion y
+	 * 
+	 * @param $participacion
+	 * @param int $cantidad
+	 * @return void
+	 */
 	public static function usarPartido($id_usuario,$id_equipo,$id_partido,$habilidad,$res)
 	{
 		// Importar acciones
