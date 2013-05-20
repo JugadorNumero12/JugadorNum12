@@ -174,7 +174,14 @@ class RegistroController extends Controller
 				if($modelo->save()){
 					//Usuarios::model()->crearPersonaje($modelo->id_usuario, $modelo->personaje);
 					$transaction->commit();
-					$this->redirect(array('site/index'));
+					$lmodelo=new LoginForm;
+					$lmodelo->setAttributes(array('username'=>$modelo['nick']));
+					$lmodelo->setAttributes(array('password'=>$modelo['pass']));
+					if($lmodelo->validate() && $lmodelo->login())
+						$this->redirect(array('usuarios/index'));
+
+					// Else branch
+					$this->redirect(array('site/index'));		
 				} else {
                     $error = true;
                 }
