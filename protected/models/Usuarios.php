@@ -504,7 +504,7 @@ class Usuarios extends CActiveRecord
                 'nivel'=>$nivel_actual,
                 'exp_necesaria'=>$exp_sig_nivel,
                 'puntos_desbloqueo'=>$puntos_desbloqueo
-            ));
+            ));;
             $this->recursos->setAttributes( array(
                 'dinero_gen'=>      $nuevos_atributos['dinero_gen'],
                 'animo_gen'=>       $nuevos_atributos['animo_gen'],

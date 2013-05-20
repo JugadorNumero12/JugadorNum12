@@ -48,6 +48,7 @@
     			<span class="s1" style="width:<?php echo ($modeloU->exp / $modeloU->exp_necesaria)*100; ?>%"></span>
     		</div>
     	</p>
+    	<p><b>Puntos de desbloqueo:&nbsp;</b><?php echo $modeloU->puntos_desbloqueo ?></p>
     	<p><b>Generaci&oacute;n de dinero:&nbsp;</b><?php echo $modeloU->recursos->dinero_gen ?>&nbsp;/&nbsp;min</p>
     	<p><b>Generaci&oacute;n de &aacute;nimo:&nbsp;</b><?php echo $modeloU->recursos->animo_gen ?>&nbsp;/&nbsp;min</p>
     	<p><b>Generaci&oacute;n de influencias:&nbsp;</b><?php echo $modeloU->recursos->influencias_gen ?>&nbsp;/&nbsp;min</p>
