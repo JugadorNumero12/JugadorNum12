@@ -39,23 +39,24 @@ class Efectos
 		
 		// Individual
 		'CrearseEspectativas' => array (
-			'animo' => 1
+			'animo' => 75
 		),
 
 		// Individual
 		'Apostar' => array (
-			'dinero' => 600
+			'dinero' => 1000
 		), 
 
 		// Partido
 		'RetransmitirRRSS' => array (
-			'defensivo' => 3,
-			'animo' => 10
+			'defensivo' => 1,
+			'animo' => 25
 		),
 
 		//Partido 
 		'BeberCerveza' => array (
-			'animo' => 20
+			'ofensivo' => 1,
+			'animo' => 50
 		), 
 
 		// -------------------------------------------
@@ -64,21 +65,21 @@ class Efectos
 
 		// Grupal
 		'Pintarse' => array (
-			'ambiente' => 2,
-			'animo' => 30,
-			'moral'=> 200,
-			'ofensivo'=>2,
-			'bonus_creador' => array ('animo' => 15)
+			'ambiente' => 10,
+			'animo' => 100,
+			'moral'=> 20,
+			'ofensivo'=> 1,
+			'bonus_creador' => array ('animo' => 150)
 		), 
 
 		// Pasiva
 		'EscribirBlog' => array (
-			'influencias_max' => 3
+			'influencias_max' => 20
 		),
 
 		// Partido
 		'CorearEstadio' => array (
-			'moral' => 200
+			'moral' => 60
 		), 
 
 		// -------------------------------------------
@@ -87,27 +88,27 @@ class Efectos
 
 		// Grupal
 		'AlquilarBus' => array (
-			'aforo' => 100,
-			'bonus_creador' => array ('animo_max' => 50)
+			'aforo' => 60,
+			'bonus_creador' => array ('animo_max' => 30)
 		),
 
 		// Grupal
 		'ConciertoRock' => array (
-			'aforo_base' => 100,
-			'bonus_creador' => array ('dinero' => 50,'dinero_gen' => 15)
+			'aforo_base' => 120,
+			'bonus_creador' => array ('dinero' => 10000,'dinero_gen' => 50)
 		), 
 
 		// Pasiva
 		'Ascender' => array (
-			'dinero_gen' => 12
+			'dinero_gen' => 150
 		), 
 
 
 		// Grupal
 		'PromoverPartido' => array (
-			'ambiente' => 4,
+			'ambiente' => 20,
 			'aforo' => 0.15,
-			'moral'=> 175
+			'moral'=> 75
 		), 
 
 		// -------------------------------------------
@@ -116,22 +117,22 @@ class Efectos
 
 		// Individual
 		'ContratarRRPP' => array (
-			'bonus_jugador' => array ('influencias' => 1)
+			'bonus_jugador' => array ('influencias' => 10)
 		),
 
 		// Individual
 		'FalsearCuentas' => array (
-			'bonus_jugador' => array ('dinero' => 50)
+			'bonus_jugador' => array ('dinero' => 500)
 		), 
 
 		// Partido
 		'DoblarApuesta' => array (
-			'dinero' => 25
+			'animo' => 100
 		), 
 
 		// Partido
 		'ArrojarMechero' => array (
-			'defensivo' => 5
+			'defensivo' => 3
 		), 
 
 		// -------------------------------------------
@@ -140,22 +141,22 @@ class Efectos
 
 		// Grupal
 		'FinanciarEvento' => array (
-			'aforo'=> 0.15,
-			'ambiente' => 2,
-			'moral'=> 250,
+			'aforo'=> 0.25,
+			'ambiente' => 8,
+			'moral'=> 60,
 		), 
 
 		// Grupal
 		'PublicarDifamaciones' => array (
 			'nivel_equipo' => 3,
-			'ambiente' => 150,
+			'ambiente' => 40,
 			'aforo' => 100,
 		), 
 
 		// Partido
 		'TumultoGradas' => array (
-			'ofensivo' => 3,
-			'ambiente' => 100
+			'ofensivo' => 4,
+			'ambiente' => 25
 		), 
 
 		// -------------------------------------------
@@ -164,26 +165,26 @@ class Efectos
 
 		// Grupal
 		'OrganizarHomenaje' => array (
-			'aforo' => 0.2,
-			'bonus_creador' => array ('influencias_max' => 1)
+			'aforo' => 0.6,
+			'bonus_creador' => array ('influencias_max' => 11)
 		), 
 
 		// Grupal
 		'ConseguirInversores' => array (
 			'nivel_equipo' => 12,
-			'bonus_creador' => array ('dinero' => 500 ,'dinero_gen' => 20)
+			'bonus_creador' => array ('dinero' => 15000 ,'dinero_gen' => 90)
 		), 
 
 		// Grupal
 		'HackearPlataforma' => array (
 			'nivel_equipo' => 5,
-			'aforo' => 100,
+			'aforo' => 80,
 		), 
 
 		// Partido
 		'EntrevistaPartido' => array (
-			'ofensivo' => 3,
-			'defensivo' => 3
+			'ofensivo' => 1,
+			'defensivo' => 1
 		),
 
 		// -------------------------------------------
@@ -193,21 +194,21 @@ class Efectos
 		// Grupal
 		'IncentivoEconomico' => array (
 			'nivel_equipo' => 8,
-			'moral'=> 100,
-			'bonus_creador' => array ('influencias' => 2)
+			'moral'=> 65,
+			'bonus_creador' => array ('influencias' => 80)
 		), 
 
 		// Partido
 		'HablarSpeaker' => array (
-			'moral' => 200,
+			'moral' => 90,
 			'ofensivo' => 5
 		), 
 
 		// Grupal
 		'FinanciarPelicula' => array (
-			'aforo_base' => 100,
+			'aforo_base' => 350,
 			'nivel_equipo' => 3,
-			'bonus_creador' => array ('animo_gen' => 2,'dinero_gen' => 20)
+			'bonus_creador' => array ('animo_gen' => 25,'dinero_gen' => 900)
 		), 
 
 		// -------------------------------------------
@@ -216,21 +217,21 @@ class Efectos
 		
 		// Grupal
 		'ObrasBeneficas' => array (
-			'aforo_max' => 100,
-			'bonus_creador' => array ('animo_gen' => 10)
+			'aforo_max' => 200,
+			'bonus_creador' => array ('animo_gen' => 85)
 		),
 
 		// Grupal
 		'FicharJugador' => array (
 			'aforo_base' => 100,
-			'nivel_equipo' => 3,
+			'nivel_equipo' => 23,
 			'aforo' => 100,
-			'bonus_creador' => array ('influencias_max' => 5)
+			'bonus_creador' => array ('influencias_max' => 48)
 		), 	
 
 		// ?
 		'MandarJugadorHospital' => array (
-			'nivel_equipo' => 35
+			'nivel_equipo' => 25
 		),
 		
 		// -------------------------------------------
@@ -239,15 +240,15 @@ class Efectos
 
 		// Grupal
 		'ConstruirEstadio' => array (
-			'aforo_max' => 100,
-			'moral' => 100,
-			'nivel_equipo' => 2
+			'aforo_max' => 700,
+			'moral' => 140,
+			'nivel_equipo' => 8
 		), 
 
 		// Pasiva
 		'ContactarYakuza' => array (
-			'influencias_max' => 7,
-			'influencias_gen' => 3
+			'influencias_max' => 650,
+			'influencias_gen' => 40
 		),  
 
 		// -------------------------------------------
@@ -256,10 +257,10 @@ class Efectos
 
 		// Pasiva
 		'EquipHeroe' => array (
-			'animo_max' => 50,
-			'animo_gen' => 10,
-			'influencias_max' => 5,
-			'influencias_gen' => 2
+			'animo_max' => 10000,
+			'animo_gen' => 500,
+			'influencias_max' => 300,
+			'influencias_gen' => 10
 		)
 	);
 
