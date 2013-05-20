@@ -84,14 +84,6 @@
 <table>
 	<tr>
 		<th>
-			N&uacute;mero de participantes actuales:
-		</th>
-		<td>
-			<?php echo $accion['jugadores_acc'].'/'.$habilidad['participantes_max']; ?>
-		</td>
-	</tr>
-	<tr>
-		<th>
 			Tiempo restante para completarla:
 		</th>
 		<td>
@@ -101,7 +93,45 @@
 			printf( '%02d h &nbsp; %02d m &nbsp; %02d s', $t_fin / 3600, $t_fin / 60 % 60, $t_fin % 60 ); ?>
 		</td>
 	</tr>
+	<tr>
+		<th>
+			N&uacute;mero de participantes actuales:
+		</th>
+		<td>
+			<?php echo $accion['jugadores_acc'].'/'.$habilidad['participantes_max']; ?>
+		</td>
+	</tr>
 </table>
+<br>
+<table id="tabla-acciones">
+	<h4>Participantes</h4>
+	<tr> 
+		<th>Usuario</th>
+		<th>Dinero</th>
+		<th>&Aacute;nimo</th>
+		<th>Influencias</th>
+		<?php if ($usuario == $propietarioAccion){ ?>
+			<th>Expulsar</th>
+		<?php } ?>
+	</tr>
+	<?php foreach ($accionGrupal['participaciones'] as $participacion){ ?>
+		<tr>
+			<td><a href="<?php echo $this->createUrl('/usuarios/ver', array('id_usuario' => $participacion->usuario->id_usuario));?>"><?php echo $participacion->usuario->nick; ?></a></td>
+			<td><?php printf('%d / %d', $participacion->dinero_aportado, $accionGrupal->habilidades->dinero_max); ?> </td>
+			<td><?php printf('%d / %d', $participacion->animo_aportado, $accionGrupal->habilidades->animo_max); ?> </td>
+			<td><?php printf('%d / %d', $participacion->influencias_aportadas, $accionGrupal->habilidades->influencias_max); ?> </td>
+			<!--El usuario es el propietario de la accion y puede expulsar jugadores -->
+			<?php if ($usuario == $propietarioAccion){ ?>
+				<td>
+				<?php if($propietarioAccion == $usuario && $participacion->usuario->id_usuario != $usuario && $accionGrupal->completada != 1){
+					echo CHtml::button('X', array('submit' => array('acciones/expulsar', 'id_accion'=>$accionGrupal->id_accion_grupal, 'id_jugador'=>$participacion->usuarios_id_usuario), 'class'=>"button small black"));
+				} ?>
+				</td>
+			<?php } ?>
+		</tr>
+	<?php } ?>
+</table>
+<br>
 
 <?php } else {?>
 		<table class="tabla-dcha">  <tr> <td>Acción completada. Por favor, participa en otra. </td> </tr> </table>

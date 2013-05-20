@@ -93,8 +93,8 @@ class Habilidades extends CActiveRecord
 		$puedeDesbloquear=true;
 		$comentarioFlash = "";
 
-		//1) comprobamos que el usario tenga un nivel igual o superior al requisito para desbloquear la habilidad
-		if ($usuario->nivel < RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['nivel']){
+		//1) comprobamos que el usario tenga un nivel igual o superior al requisito para desbloquear la habilidad y que tenga puntos de desbloqueo
+		if (($usuario->nivel < RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['nivel']) || ($usuario->puntos_desbloqueo == 0)){
 			$comentarioFlash .= "Nivel insuficiente. ";
 			$puedeDesbloquear = false;
 		}
@@ -104,7 +104,7 @@ class Habilidades extends CActiveRecord
 		//sacamos las habilidades requisito
 		$habilidadesRequisito = RequisitosDesbloquearHabilidades::$datos_acciones[$habilidad->codigo]['desbloqueadas_previas'];
 
-		if($habilidadesRequisito !==null){
+		if($habilidadesRequisito !== null){
 
 			//Comprobamos que las haya desbloqueado
 			foreach ($habilidadesRequisito as $habilidadReq) {

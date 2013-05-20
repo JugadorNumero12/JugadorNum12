@@ -87,7 +87,8 @@ class Efectos
 
 		// Grupal
 		'AlquilarBus' => array (
-			// TODO
+			'aforo' => 100,
+			'bonus_creador' => array ('animo_max' => 50)
 		),
 
 		// Grupal
@@ -100,6 +101,7 @@ class Efectos
 		'Ascender' => array (
 			'dinero_gen' => 12
 		), 
+
 
 		// Grupal
 		'PromoverPartido' => array (
@@ -152,8 +154,9 @@ class Efectos
 
 		// Partido
 		'TumultoGradas' => array (
-			// TODO
-		),
+			'ofensivo' => 3,
+			'ambiente' => 100
+		), 
 
 		// -------------------------------------------
 		// NIVEL 6
@@ -181,7 +184,7 @@ class Efectos
 		'EntrevistaPartido' => array (
 			'ofensivo' => 3,
 			'defensivo' => 3
-		), 
+		),
 
 		// -------------------------------------------
 		// NIVEL 7
@@ -213,7 +216,8 @@ class Efectos
 		
 		// Grupal
 		'ObrasBeneficas' => array (
-			// TODO
+			'aforo_max' => 100,
+			'bonus_creador' => array ('animo_gen' => 10)
 		),
 
 		// Grupal

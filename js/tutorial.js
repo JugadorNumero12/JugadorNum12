@@ -359,7 +359,10 @@
 	});
 	
 	
-	
+	$('.cerrar-tutorial').click(function(){
+		$('.cuadro-ayuda').hide();
+		$('.cuadro-tutorial').hide();
+	});
 
 	
 

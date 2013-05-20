@@ -16,6 +16,7 @@
  * | tinyint| $nivel                        |
  * | int    | $exp                          |
  * | int    | $exp_necesaria                |
+ * | int    | $puntos_desbloqueo            |
  *
  *
  * @package modelos
@@ -181,7 +182,7 @@ class Usuarios extends CActiveRecord
             array('equipos_id_equipo', 'length', 'max'=>10),
             array('nick', 'length', 'max'=>20),
             array('pass, email', 'length', 'max'=>255),
-            array('nivel exp exp_necesaria', 'numerical', 'integerOnly'=>true),
+            array('nivel exp exp_necesaria puntos_desbloqueo', 'numerical', 'integerOnly'=>true),
             array('nivel', 'length', 'max'=>10),
 
             /* Validaciones para cambio de contraseña */
@@ -212,6 +213,7 @@ class Usuarios extends CActiveRecord
              * Atributos no incluidos
              *  - pass
              *  - exp_necesaria
+             *  - puntos_desbloqueo
              */
             array('id_usuario, equipos_id_equipo, nick, email, personaje, nivel, exp', 'safe', 'on'=>'search'),
         );
@@ -366,7 +368,8 @@ class Usuarios extends CActiveRecord
             'personaje' => 'Personaje',
             'nivel' => 'Nivel',
             'exp' => 'Experiencia',
-            'exp_necesaria' => 'Experiencia Necesaria'
+            'exp_necesaria' => 'Experiencia Necesaria',
+            'puntos_desbloqueo' => 'Puntos Desbloqueo'
         );
     }
 
@@ -393,6 +396,7 @@ class Usuarios extends CActiveRecord
         $criteria->compare('personaje',$this->personaje);
         $criteria->compare('nivel',$this->nivel,true);
         $criteria->compare('exp',$this->exp,true);
+        $criteria->compare('puntos_desbloqueo',$this->puntos_desbloqueo,true);
 
         return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
@@ -447,6 +451,7 @@ class Usuarios extends CActiveRecord
      *  - indicadores de recursos
      *  - nivel
      *  - exp_necesaria
+     *  - puntos_desbloqueo
      * 
      * > La funcion contempla la posibilidad de subir varios niveles de golpe
      * 
@@ -465,25 +470,38 @@ class Usuarios extends CActiveRecord
             $nivel_actual = $this->nivel;
             $nivel_inicial = $nivel_actual; 
             $exp_sig_nivel = $this->exp_necesaria;
+            $puntos_desbloqueo = $this->puntos_desbloqueo;
             
             /* Posible subir varios niveles */
             while($exp_acc >= $exp_sig_nivel) {
                 $nivel_actual = $nivel_actual + 1;
+                $puntos_desbloqueo += 1;
                 Yii::app()->user->setFlash('nivel', 'Enhorabuena, has subido de nivel. Ahora tienes nivel '. $nivel_actual);
                 $exp_sig_nivel = Usuarios::expNecesaria($nivel_actual);
 
-                //Creamos una notificacion
-                $notificacion = new Notificaciones;
-                $notificacion->fecha = time();
-                $notificacion->mensaje = " Enhorabuena, has subido de nivel. Ahora tienes nivel ". $nivel_actual;
-                $notificacion->imagen = "images/iconos/notificaciones/nivel.png";
-                $notificacion->save();
+                //Creamos una notificacion para el nivel y otra para los puntos de desbloqueo
+                $notificacionNivel = new Notificaciones;
+                $notificacionNivel->fecha = time();
+                $notificacionNivel->mensaje = " Enhorabuena, has subido de nivel. Ahora tienes nivel ". $nivel_actual;
+                $notificacionNivel->imagen = "images/iconos/notificaciones/nivel.png";
+                $notificacionNivel->save();
 
-                //Guardamos la notificacion en ursnotif
+                $notificacionPuntos = new Notificaciones;
+                $notificacionPuntos->fecha = time();
+                $notificacionPuntos->mensaje = " Tus puntos de desbloqueo han aumentado. Ahora tienes ". $puntos_desbloqueo;
+                $notificacionPuntos->imagen = "images/iconos/notificaciones/puntos_desbloqueo.png";
+                $notificacionPuntos->save();
+
+                //Guardamos las notificaciones en ursnotif
                 $usrnotif = new Usrnotif;
-                $usrnotif->notificaciones_id_notificacion = $notificacion->id_notificacion;
+                $usrnotif->notificaciones_id_notificacion = $notificacionNivel->id_notificacion;
                 $usrnotif->usuarios_id_usuario = $this->id_usuario;
                 $usrnotif->save();
+
+                $usrnotifPuntos = new Usrnotif;
+                $usrnotifPuntos->notificaciones_id_notificacion = $notificacionPuntos->id_notificacion;
+                $usrnotifPuntos->usuarios_id_usuario = $this->id_usuario;
+                $usrnotifPuntos->save();
                 
             }
 
@@ -495,8 +513,9 @@ class Usuarios extends CActiveRecord
             /* Guardamos los nuevos atributos del usuario */
             $this->setAttributes( array( 
                 'nivel'=>$nivel_actual,
-                'exp_necesaria'=>$exp_sig_nivel
-            ));
+                'exp_necesaria'=>$exp_sig_nivel,
+                'puntos_desbloqueo'=>$puntos_desbloqueo
+            ));;
             $this->recursos->setAttributes( array(
                 'dinero_gen'=>      $nuevos_atributos['dinero_gen'],
                 'animo_gen'=>       $nuevos_atributos['animo_gen'],
@@ -714,7 +733,7 @@ class Usuarios extends CActiveRecord
     public function crearPersonaje()
     {
         /* Nivel y Exp */
-        $this->setAttributes(array('nivel'=>1, 'exp'=>0));
+        $this->setAttributes(array('nivel'=>1, 'exp'=>0, 'puntos_desbloqueo'=>2));
         $this->setAttributes(array('exp_necesaria'=> Usuarios::expNecesaria(1)));
         
         /* Recursos */

@@ -538,10 +538,23 @@ class AccionesController extends Controller
 		/* Actualizar datos de usuario (recuros,individuales y grupales) */
 		Usuarios::model()->actualizaDatos(Yii::app()->user->usIdent);
 		/* Fin de actualización */
+
+		// Saco el usuario
+		$usuario = Yii::app()->user->usIdent;
+
+		// Cojo la acción de la tabla acciones_grupales
+		$accionGrupal = AccionesGrupales::model()
+			->with('habilidades')
+			->with('participaciones')
+			->with('usuarios')
+			->findByPk($id_accion);
+
+		// Saco el propietario de la acción
+		$propietarioAccion = $accionGrupal['usuarios_id_usuario'];
 		
 		//Iniciamos la transacción
 		$transaccion = Yii::app()->db->beginTransaction();
-			
+		
 		try {
 			//Recojo los datos de la acción
 			$accion = AccionesGrupales::model()->findByPK($id_accion);
@@ -586,7 +599,8 @@ class AccionesController extends Controller
 				$transaccion->rollback();
 				//Petición GET: Muestro el formulario
 				$this->render('participar', array('habilidad' => $habilidad, 'participacion' => $participacion,
-													'accion'=> $accion));
+													'accion'=> $accion, 'accionGrupal'=>$accionGrupal, 'usuario'=>$usuario,
+													'propietarioAccion'=>$propietarioAccion));
 				return;
 			}
 
@@ -633,11 +647,11 @@ class AccionesController extends Controller
 			$trans->commit();
 		} catch (Exception $exc) {
     		$trans->rollback();
-    		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
+    		$this-> redirect(array('acciones/participar', 'id_accion'=>$id_accion));
 		}
 
 		// redirect
-		$this-> redirect(array('acciones/ver', 'id_accion'=>$id_accion));
+		$this-> redirect(array('acciones/participar', 'id_accion'=>$id_accion));
 	}
 	
     /**

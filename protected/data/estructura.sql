@@ -231,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nivel` tinyint(4) unsigned DEFAULT NULL,
   `exp` int(10) unsigned DEFAULT NULL,
   `exp_necesaria` int(10) unsigned DEFAULT NULL,
+  `puntos_desbloqueo` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuarios_FKIndex1` (`equipos_id_equipo`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
