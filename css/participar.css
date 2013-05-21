@@ -17,3 +17,5 @@ button:active,input[type="button"]:active,input[type="reset"]:active,input[type=
 .barra-global{width:320px;margin:0 auto;margin-bottom:10px;}.barra-global p{text-align:center;font-weight:bold;}
 .tabla-izq{float:left;margin-left:50px;border-spacing:10px 10px;height:170px;}
 .tabla-dcha{float:right: ;margin-right:50px;border-spacing:10px 10px;height:170px;}
+#tabla-acciones{padding-top:20px;width:90%;border-collapse:collapse;border:1px solid #98bf21;}#tabla-acciones th{background-color:#A7C942;color:#fff;border:1px solid #98bf21;padding-top:5px;padding-bottom:4px;}
+#tabla-acciones td{background-color:#fbfff7;border:1px solid #98bf21;height:40px;}
