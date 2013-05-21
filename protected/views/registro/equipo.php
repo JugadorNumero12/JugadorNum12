@@ -28,7 +28,7 @@
                 <!-- rojos verdes negros blancos -->
 				<td><input type="image" value="1" onclick="$(this).setIdEquipo(this.value)" title="Se acerca tu derrota. Somos los Black Starks." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/negros.png'; ?>" class="escudos" alt="Negros"></td>
 				<td><input type="image" value="2" onclick="$(this).setIdEquipo(this.value)" title="Somos los Hijos de Thor. Ap&aacute;rta de nuestro camino." src="<?php echo Yii::app()->BaseUrl.'/images/escudos/verdes.png'; ?>" class="escudos" alt="Verdes"></td>
-				<td><input type="image" value="3" onclick="$(this).setIdEquipo(this.value)" title="Tiembla antes los furiosos Osos Blancos" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/blancos.png'; ?>" class="escudos" alt="Blancos"></td>
+				<td><input type="image" value="3" onclick="$(this).setIdEquipo(this.value)" title="Tiembla antes los furiosos Osos Blancos" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/morados.png'; ?>" class="escudos" alt="Blancos"></td>
 				<td><input type="image" value="4" onclick="$(this).setIdEquipo(this.value)" title="¿C&oacute;mo quieres que te humille?" src="<?php echo Yii::app()->BaseUrl.'/images/escudos/azules.png'; ?>" class="escudos" alt="Azules"></td>
 			</tr>
 			<tr>
