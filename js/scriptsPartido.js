@@ -14,23 +14,6 @@ function updateData (recalc,redraw) {
   //Rellenar crónica
   $('#pre-c-p').text(partido.cronica);
 
-  //Rellenar datos
-  var datosPr =
-    "<b>Turno: </b>"+partido.turno+"</br>"+
-    "<b>Estado: </b>"+partido.estado+"</br>"+
-    "<b>Ambiente: </b>"+partido.ambiente+"</br>"+
-    "<b>Nivel local: </b>"+partido.nivel_local+"</br>"+
-    "<b>Nivel visitante: </b>"+partido.nivel_visitante+"</br>"+
-    "<b>Indice ofensivo local: </b>"+partido.ofensivo_local+"</br>"+
-    "<b>Indice ofensivo visitante: </b>"+partido.ofensivo_visitante+"</br>"+
-    "<b>Indice defensivo local: </b>"+partido.defensivo_local+"</br>"+
-    "<b>Indice defensivo visitante: </b>"+partido.defensivo_visitante+"</br>"+
-    "<b>Aforo local: </b>"+partido.aforo_local+"</br>"+
-    "<b>Aforo visitante: </b>"+partido.aforo_visitante+"</br>"+
-    "<b>Moral local: </b>"+partido.moral_local+"</br>"+
-    "<b>Moral visitante: </b>"+partido.moral_visitante+"</br>";
-  $('#partido-info-datos-numeritos').html(datosPr);
-
   var difmor = Math.min(Math.max((partido.moral_local - partido.moral_visitante) / 300, -1), 1);
   $('#datos-morales .datos-num-local').text(partido.moral_local);
   $('#datos-morales .datos-num-visit').text(partido.moral_visitante);

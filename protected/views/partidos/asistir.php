@@ -51,7 +51,7 @@
 		},
 		moral_local: <?php echo $partido->moral_local ?>,
 		moral_visitante: <?php echo $partido->moral_visitante ?>,
-		
+
 		ofensivo_local: <?php echo $partido->ofensivo_local ?>,
 		ofensivo_visitante: <?php echo $partido->ofensivo_visitante ?>,
 
@@ -207,16 +207,16 @@
 		<li><a href="#partido-info-campo">Partido</a></li>
 		<li><a href="#partido-info-acciones">Acciones</a></li>
 		<li><a href="#partido-info-chat">Chat</a></li>
-		<li id="tab-datos"><a href="#partido-info-datos">Datos</a></li>
+		<!--<li id="tab-datos"><a href="#partido-info-datos">Datos</a></li>-->
 		<li><a href="#partido-info-cronica">Cronica</a></li>
 	</ul>
 	<div id="partido-info-campo" class="partido-info-content">
 		<div id="js-campo"></div>
 	</div>
 
-	<div id="partido-info-datos" class="partido-info-content">
+<!--	<div id="partido-info-datos" class="partido-info-content">
 
-		<!-- Barra de título de los equipos -->
+
 		<div id="datos-titulo-local" class="barra datos-titulo">
 			<?php echo $partido->local->nombre ?>
 			<span class="mini">(Equipo Local)</span>
@@ -228,7 +228,6 @@
 
 		<div class="clear"></div>
 
-		<!-- Barra del aforo -->
 		<div id="barra-aforo" class="barra">
 			Aforo
 			<div id="barra-aforo-local" class="barra-aforo barra-<?php echo $partido->local->token ?>" style="width: <?php echo ((double) $partido->aforo_local / $partido->local->aforo_max)*100 ?>%"><?php echo $partido->aforo_local ?></div>
@@ -236,7 +235,6 @@
 		</div>
 
 		<div id="partido-info-datos-numeritos">
-			<!-- Datos  -->
 			<b>Turno: </b><?php echo $partido->turno ?></br>
 			<b>Estado: </b><?php echo $partido->estado ?></br>
 	        <b>Ambiente: </b><?php echo $partido->ambiente ?></br>
@@ -252,6 +250,7 @@
 	  		<b>Moral visitante: </b><?php echo $partido->moral_visitante ?></br>
   		</div>
 	</div>
+-->
 	<div id="partido-info-cronica" class="partido-info-content">
 		<pre id="pre-c-p"><?php echo $partido->cronica ?></pre>
 	</div>
