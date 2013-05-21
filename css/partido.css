@@ -61,8 +61,6 @@
 #contenido #partido-info .ui-tabs-panel{padding:0;margin:-2px;}
 #contenido #partido-info #partido-info-campo{width:734px;height:458px;background:url('../images/fondos/partido_campo_med.jpg');background-size:100%;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;}#contenido #partido-info #partido-info-campo #js-campo{position:absolute;width:inherit;height:inherit;}
 #contenido #partido-info #partido-info-campo .js-marca-visit,#contenido #partido-info #partido-info-campo .js-marca-local{position:absolute;height:28px;width:28px;}
-#contenido #partido-info #partido-info-campo .js-marca-local{background:url('../images/iconos/icono_circulo.png');}
-#contenido #partido-info #partido-info-campo .js-marca-visit{background:url('../images/iconos/icono_cruz.png');}
 #contenido #partido-info #partido-info-datos,#contenido #partido-info #partido-info-datos *{box-sizing:border-box;}
 #contenido #partido-info #partido-info-datos .datos-titulo{width:366px;background:#99bb66;background:-webkit-gradient(linear, left bottom, left top, color-stop(0, #aacc77), color-stop(1, #bbdd88));background:-ms-linear-gradient(bottom, #aacc77, #bbdd88);background:-moz-linear-gradient(center bottom, #aacc77 0%, #bbdd88 100%);background:-o-linear-gradient(#bbdd88, #aacc77);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bbdd88', endColorstr='#aacc77', GradientType=0);font-weight:bold;border-color:#88aa55;}#contenido #partido-info #partido-info-datos .datos-titulo .mini{font-size:9px;font-style:italic;font-weight:normal;}
 #contenido #partido-info #partido-info-datos #datos-titulo-local{float:left;text-align:left;}

@@ -111,12 +111,14 @@ function updateState (state) {
   while (locals.length < 11) {
     var eltl = $('<div></div>');
     eltl.addClass('js-marca-local');
+    eltl.css({'background-image': 'url(' + baseUrl + '/images/iconos/partido/icono_circulo_' + partido.equipos.local.token + '.png)'});
     campo.append(eltl);
     locals.push(eltl);
   }
   while (visits.length < 11) {
     var eltv = $('<div></div>');
     eltv.addClass('js-marca-visit');
+    eltv.css({'background-image': 'url(' + baseUrl + '/images/iconos/partido/icono_cruz_' + partido.equipos.visitante.token + '.png)'});
     campo.append(eltv);
     visits.push(eltv);
   }
