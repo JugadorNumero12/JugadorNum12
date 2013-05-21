@@ -133,7 +133,7 @@ TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
  (0, 'Negros',   'negros',   1, 3600, 400, 10, 7, 7),
  (0, 'Verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
- (0, 'Blancos',  'blancos',  1, 4000, 400, 9,  6, 8),
+ (0, 'Morados',  'morados',  1, 4000, 400, 9,  6, 8),
  (0, 'Azules',   'azules',   1, 3500, 300, 11, 6, 7),
  (0, 'Rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
  (0, 'Naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
@@ -181,7 +181,7 @@ INSERT INTO `habilidades` (`codigo`, `tipo`, `nombre`, `descripcion`, `dinero`, 
 
  ('BeberCerveza', 2, 'Beber cerveza durante el partido', '"Recarga energías, te espera un partido largo."',                                                                                                                                                                                     1000, 0,    0,     NULL, NULL, NULL,           1, 10, 'beber_cerveza'),
  ('HablarSpeaker', 2, 'Hablar con el Speaker del estadio', '"Apoya a tu equipo a lo grande: anímalo con los altavoces del propio estadio."',                                                                                                                                                    5000, 225,  3,     NULL, NULL, NULL,           1, 10, 'hablar_speaker'),
- ('CorearEstadio', 2, 'Corear en el estadio', '"Mueve las gradas durante el partido."',                                                                                                                                                                                                         0,    150,  8,     NULL, NULL, NULL,           1, 10, 'corear_estadio'),
+ ('CorearEstadio', 2, 'Corear en el estadio', '"Mueve las gradas durante el partido."',                                                                                                                                                                                                         0,    150,  0,     NULL, NULL, NULL,           1, 10, 'corear_estadio'),
  ('ArrojarMechero', 2, 'Arrojar objetos al campo', '"La mejor defensa contra un lanzamiento de falta del rival. Molesta al jugador con un puntero láser o arroja mecheros al portero en un córner"',                                                                                            0,    250,  0,     NULL, NULL, NULL,           1, 10, 'arrojar_mechero'),
  ('RetransmitirRRSS', 2, 'Retransmitir el partido por las redes sociales', '"Ocúpate de que el partido tenga repercusión."',                                                                                                                                                                    0,    55,   1,     NULL, NULL, NULL,           1, 10, 'retransmitir_redes_sociales'),
  ('DoblarApuesta', 2, 'Doblar la apuesta durante el partido', '"Seguramente hoy sea tu día de suerte"',                                                                                                                                                                                         7500,  0,    0,     NULL, NULL, NULL,           1, 10, 'doblar_apuesta'), 
