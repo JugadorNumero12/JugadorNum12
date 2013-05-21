@@ -21,7 +21,7 @@
   <div class = "escudo-equipo">
           <h2 class="dashboard-header"> Panel de control </h2>      
           <img src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
-           width=150 height=150 alt="<?php echo $equipo->nombre ?>" >
+           width=185 height=185 alt="<?php echo $equipo->nombre ?>" >
   </div>
 
   <!-- Panel de control -->

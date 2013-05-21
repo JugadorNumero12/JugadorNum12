@@ -21,7 +21,7 @@
 	<div id="escudo-equipo">
 		<img
 			src="<?php echo Yii::app()->BaseUrl.'/images/escudos/'.$equipo->token.'.png'; ?>"
-			width=150 height=150 
+			width=185 height=185 
 			alt="<?php echo $equipo->nombre ?>"/> 
 	</div>
 

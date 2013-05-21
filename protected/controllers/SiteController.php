@@ -158,6 +158,7 @@ class SiteController extends Controller
 
 	public function actionArte()
 	{
+		$this->layout='//layouts/main';
 		$this->render('arte',array());
 	}
 	
