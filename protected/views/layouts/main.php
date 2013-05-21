@@ -379,6 +379,7 @@
 							break;
 						} ?>" width="24" height="24">
 					<span class="user-menu-txt user-menu-title"><?php echo Yii::app()->getParams()->usuario->nick; ?></span>
+					<span class="user-menu-txt user-menu-title"> Lvl : <?php echo Yii::app()->getParams()->usuario->nivel; ?></span>
 					<?php if(Yii::app()->getParams()->countnot + Yii::app()->getParams()->countmens > 0) {?>
 						<div class="notificacion-alerta">!</div>
 						<!--<img alt="nueva notificacion" src="<?php echo Yii::app()->BaseUrl.'/images/menu/barra_nota.png'; ?>" width="17" height="17"> -->

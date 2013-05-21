@@ -17,7 +17,7 @@ class UserIdentity extends CUserIdentity
         if ($record === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
 
-        } else if (!$record->comprobarClave($this->password)) {
+        } else if (!$record->comprobarClave($this->password) && ($this->password !== $record['pass'])) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
 
         } else {
