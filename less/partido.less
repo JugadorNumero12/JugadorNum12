@@ -58,6 +58,10 @@
 			width: @ScoreboardTeamWidth;
 
 			text-align: left;
+
+			.equipo-nivel {
+				float: left;
+			}
 		}
 
 		#partido-equipo-visit {
@@ -65,6 +69,10 @@
 			width: @ScoreboardTeamWidth;
 
 			text-align: right;
+
+			.equipo-nivel {
+				float: right;
+			}
 		}
 
 		#partido-turnos {
@@ -123,6 +131,137 @@
 			font-weight: bold;
 			margin-top: 0;
 		}
+
+		.equipo-nivel {
+			position: relative;
+			top: -20px;
+
+			width: 16px;
+			background: (@VERDE_12_CLARO + #242);
+			border: 1px solid (@VERDE_12 + #131);
+			color: (@VERDE_12 - #212);
+			.box-shadow(0 0 6px -1px);
+
+			margin: 0 4px;
+			padding: 2px 4px;
+			.rounded(3px);
+
+			font-size: 10px;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		#barra-aforo {
+			position: relative;
+			top: -10px;
+			width: @ScoreboardWidth;
+			box-sizing: border-box;
+
+			background-color: #EEE;
+			border-color: #555;
+
+			text-align: center;
+			font-size: 11px;
+			font-weight: bold;
+
+			#barra-aforo-local {
+				position: absolute;
+				border-style: solid;
+				border-width: 0;
+				border-right-width: 1px;
+				top: 0;
+				left: 0;
+				height: 100%;
+				text-align: left;
+				padding-left: 5px;
+				.border-radius(0, 0, 3px, 3px);
+			}
+
+			#barra-aforo-visit {
+				position: absolute;
+				border-style: solid;
+				border-width: 0;
+				border-left-width: 1px;
+				top: 0;
+				right: 0;
+				height: 100%;
+				text-align: right;
+				padding-right: 5px;
+				.border-radius(3px, 3px, 0, 0);
+			}	
+			.mini {
+				font-size: 9px;
+				font-style: italic;
+				font-weight: normal;
+			}
+
+			.barra-aforo {
+				color: black;
+				font-weight: normal;
+			}
+
+			/* FIXME COLORS */
+			.barra-rojos  {border-color: #D00; background-color: #F88;}
+			.barra-negros {border-color: #666; background-color: #AAA;}
+		}
+
+		#datos-morales {top: -6px;}
+		#datos-ofensivos {top: 26px;}
+		#datos-defensivos {top: 58px;}
+
+		.barra-datos-cont {
+			position: relative;
+
+			.datos-title {
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				font-size: 11px;
+				font-weight: bold;
+			}
+
+			.datos-num-local {
+				position: absolute;
+				width: 100%;
+				text-align: left;
+				font-size: 11px;
+				font-weight: bold;
+			}
+
+			.datos-num-visit {
+				position: absolute;
+				width: 100%;
+				text-align: right;
+				font-size: 11px;
+				font-weight: bold;
+			}
+
+			.datos-barra-local, .datos-barra-visit {
+				.transition-duration(500ms);
+
+				position: absolute;
+				top: 14px;
+
+				height: 12px;
+				border: 1px solid white;
+			}
+
+			.datos-barra-local {
+				left: 0;
+			}
+
+			.datos-barra-visit {
+				right: 0;
+			}
+		}
+
+		/* FIXME COLORES */
+		.textcolor-rojos {color: #F00;}
+		.textcolor-negros {color: #666;}
+
+		/* FIXME COLORES */
+		.bgcolor-rojos {background-color: #F00;}
+		.bgcolor-negros {background-color: #666;}
 	}
 
 	#partido-info {
@@ -266,16 +405,6 @@
 		#partido-info-datos {
 			&, * {box-sizing: border-box;}
 
-			.barra {
-				.rounded(4px);
-				border: 1px solid @VERDE_12_CLARO;
-				height: 20px;
-				line-height: 18px;
-				font-size: 12px;
-				padding: 0 5px;
-				margin-bottom: 2px;
-			}
-
 			.datos-titulo {
 				width: (732px/2);
 				.gradient(@VERDE_12_CLARO, @VERDE_12_CLARO+#111, @VERDE_12_CLARO+#222);
@@ -296,52 +425,6 @@
 			#datos-titulo-visit {
 				float: right;
 				text-align: right;
-			}
-
-			#barra-aforo {
-				position: absolute;
-				width: 734px;
-
-				background-color: #EEE;
-				border-color: #555;
-
-				text-align: center;
-				font-size: 11px;
-				font-weight: bold;
-
-				#barra-aforo-local {
-					position: absolute;
-					border-style: solid;
-					border-width: 0;
-					border-right-width: 1px;
-					top: 0;
-					left: 0;
-					height: 100%;
-					text-align: left;
-					padding-left: 5px;
-					.border-radius(0, 0, 3px, 3px);
-				}
-
-				#barra-aforo-visit {
-					position: absolute;
-					border-style: solid;
-					border-width: 0;
-					border-left-width: 1px;
-					top: 0;
-					right: 0;
-					height: 100%;
-					text-align: right;
-					padding-right: 5px;
-					.border-radius(3px, 3px, 0, 0);
-				}
-
-				.barra-aforo {
-					color: black;
-					font-weight: normal;
-				}
-
-				.barra-rojos  {border-color: #D00; background-color: #F88;}
-				.barra-negros {border-color: #666; background-color: #AAA;}
 			}
 		}
 
@@ -515,4 +598,14 @@
 			}
 		}
 	}
+}
+
+.barra {
+	.rounded(4px);
+	border: 1px solid @VERDE_12_CLARO;
+	height: 16px;
+	line-height: 15px;
+	font-size: 12px;
+	padding: 0 5px;
+	margin-bottom: 2px;
 }

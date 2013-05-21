@@ -119,8 +119,8 @@
 		<!--<div class="equipo-info equipo-nombre"><?php echo $eqLoc->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqLoc->token . '.png' ?>" height="96"/></div>
-		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqLoc->nivel_equipo ?></div>
-		<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_local ?> asistentes</div>
+		<div class="equipo-info equipo-nivel"><?php echo $eqLoc->nivel_equipo ?></div>
+		<!--<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_local ?> asistentes</div>-->
 	</div>
 
 	<!-- Información del equipo visitante -->
@@ -128,8 +128,68 @@
 		<!--<div class="equipo-info equipo-nombre"><?php echo $eqVis->nombre ?></div>-->
 		<div class="equipo-info equipo-escudo"><img src="<?php
 			echo Yii::app()->BaseUrl . '/images/escudos/96px/' . $eqVis->token . '.png' ?>" height="96" /></div>
-		<div class="equipo-info equipo-nivel">Nivel <?php echo $eqVis->nivel_equipo ?></div>
-		<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_visitante ?> asistentes</div>
+		<div class="equipo-info equipo-nivel"><?php echo $eqVis->nivel_equipo ?></div>
+		<!--<div class="equipo-info equipo-aforo"><?php echo $partido->aforo_visitante ?> asistentes</div>-->
+	</div>
+
+	<div class="clear"></div>
+	<div id="barra-aforo" class="barra">
+		Aforo
+		<?php
+			$afl = $partido->aforo_local;
+			$afv = $partido->aforo_visitante;
+			$afm = $partido->local->aforo_max;
+			$pl = (double) $afl / $afm;
+			$pv = (double) $afv / $afm;
+		?>
+		<div id="barra-aforo-local" class="barra-aforo barra-<?php echo $partido->local->token ?>" style="width: <?php echo $pl*100 ?>%">
+			<?php echo $afl ?> <span class="mini">(<?php echo round($pl*100) ?>%)</span></div>
+		<div id="barra-aforo-visit" class="barra-aforo barra-<?php echo $partido->visitante->token ?>" style="width: <?php echo $pv*100 ?>%">
+			<span class="mini">(<?php echo round($pv*100) ?>%) </span><?php echo $afv ?></div>
+	</div>
+
+	<!-- Barras de moral -->
+	<div id="datos-morales" class="barra-datos-cont">
+		<div class="datos-num-local textcolor-<?php echo $partido->local->token ?>"><?php echo $partido->moral_local ?></div>
+		<div class="datos-title">Moral</div>
+		<div class="datos-num-visit textcolor-<?php echo $partido->visitante->token ?>"><?php echo $partido->moral_visitante ?></div>
+
+		<?php
+			$dm = $partido->moral_local - $partido->moral_visitante;
+			$dmp = (double) max(min($dm / 300, 1), -1);
+			$mpl = 0.5 + ($dmp*0.48);
+			$mpv = 0.5 - ($dmp*0.48);
+		?>
+		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $mpl*100 ?>%"></div>
+		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $mpv*100 ?>%"></div>
+	</div>
+
+	<!-- Barras de índice ofensivo -->
+	<div id="datos-ofensivos" class="barra-datos-cont">
+		<div class="datos-num-local textcolor-<?php echo $partido->local->token ?>"><?php echo $partido->ofensivo_local ?></div>
+		<div class="datos-title">Ofensivo</div>
+		<div class="datos-num-visit textcolor-<?php echo $partido->visitante->token ?>"><?php echo $partido->ofensivo_visitante ?></div>
+
+		<?php
+			$opl = 0.5 * $partido->ofensivo_local / 25;
+			$opv = 0.5 * $partido->ofensivo_visitante / 25;
+		?>
+		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $opl*100 ?>%"></div>
+		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $opv*100 ?>%"></div>
+	</div>
+
+	<!-- Barras de índice defensivo -->
+	<div id="datos-defensivos" class="barra-datos-cont">
+		<div class="datos-num-local textcolor-<?php echo $partido->local->token ?>"><?php echo $partido->defensivo_local ?></div>
+		<div class="datos-title">Defensivo</div>
+		<div class="datos-num-visit textcolor-<?php echo $partido->visitante->token ?>"><?php echo $partido->defensivo_visitante ?></div>
+
+		<?php
+			$dpl = 0.5 * min($partido->defensivo_local, 25) / 25;
+			$dpv = 0.5 * min($partido->defensivo_visitante, 25) / 25;
+		?>
+		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $dpl*100 ?>%"></div>
+		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $dpv*100 ?>%"></div>
 	</div>
 </div>
 
