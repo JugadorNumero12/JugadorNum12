@@ -88,46 +88,24 @@ TRUNCATE `acciones_individuales`;
  -- ----------------------------------
 TRUNCATE `clasificacion`;
 INSERT INTO `clasificacion` (`equipos_id_equipo`, `posicion`, `puntos`, `ganados`, `empatados`, `perdidos`, `diferencia_goles`) VALUES
- -- rojos
- (1, 1, 12, 4, 0, 0, 4),
- -- verdes
- (2, 3, 9, 0, 2, 1, 2),
  -- negros
- (3, 2, 10, 1, 1, 1, -1),
+ (1, 1, 0, 0, 0, 0, 0),
+ -- verdes
+ (2, 3, 0, 0, 0, 0, 0),
  -- blancos
- (4, 4, 7, 0, 2, 1, -2),
+ (3, 8, 0, 0, 0, 0, 0),
  -- azules
- (5, 5, 5, 1, 2, 0, 2),
+ (4, 4, 0, 0, 0, 0, 0),
  -- rosas
- (6, 6, 4, 1, 1, 1, 1),
+ (5, 5, 0, 0, 0, 0, 0),
  -- naranjas
- (7, 7, 2, 0, 2, 3, -3),
+ (6, 6, 0, 0, 0, 0, 0),
  -- amarillos
- (8, 8, 1, 0, 1, 4, -5);
+ (7, 7, 0, 0, 0, 0, 0),
+ -- rojos
+ (8, 2, 0, 0, 0, 0, 0);
 
 TRUNCATE `desbloqueadas`;
-INSERT INTO `desbloqueadas` (`habilidades_id_habilidad`, `usuarios_id_usuario`) VALUES
- -- desbloqueadas de Xaby (empresario)
- (3, 1), (4, 1), (5, 1), (6, 1), (9, 1), (11, 1), 
- -- desbloqueadas de marina (movedora)
- (3, 2), (4, 2), (5, 2), (6, 2), (9, 2), (11, 2), 
-  -- desbloqueadas de arturo (empresario)
- (3, 3), (4, 3), (5, 3), (6, 3), (9, 3), (11, 3), 
- -- desbloqueadas de dani (ultra)
- (3, 4), (4, 4), (5, 4), (6, 4), (9, 4), (11, 4),  
- -- desbloqueadas de pedro (empresario)
- (3, 5), (4, 5), (5, 5), (6, 5), (9, 5), (11, 5), 
- -- desbloqueadas de manu (movedora)
- (3, 6), (4, 6), (5, 6), (6, 6), (9, 6), (11, 6), 
- -- desbloqueadas de rober (ultra)
- (1, 7),(2, 7),(3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7),(9, 7),(10, 7),(11, 7),(12, 7),(13, 7),(14, 7),(15, 7),
- (16, 7),(17, 7),(18, 7),(19, 7),(20, 7),(21, 7),(22, 7),(23, 7),(24, 7),(25, 7),(26, 7),(27, 7),(28, 7),(29, 7),(30, 7),  
- -- desbloqueadas de marcos (ultra)
- (3, 8), (4, 8), (5, 8), (6, 8), (9, 8), (11, 8),  
- -- desbloqueadas de alex (movedora)
- (3, 9), (4, 9), (5, 9), (6, 9), (9, 9), (11, 9), 
- -- desbloqueadas de samu (ultra)
- (3, 10), (4, 10), (5, 10), (6, 10), (9, 10), (11, 10);
 
 TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
@@ -236,26 +214,6 @@ TRUNCATE `partidos`;
  -- ---------------------------------------------------------------------------------------------------------
 TRUNCATE `recursos`;
 INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
- -- xaby: empresario
- (1, 5000, 16, 6, 8, 2, 30, 50, 1),
- -- marina: movedora
- (2, 600, 2, 11, 12, 3, 150, 250, 9),
- -- arturo: empresario
- (3, 5000, 16, 6, 8, 2, 30, 50, 1),
- -- dani: ultra
- (4, 2000, 5, 2, 2, 1, 300, 400, 15),
- -- pedro: empresario
- (5, 5000, 16, 6, 8, 2, 30, 50, 1),
- -- manu: movedora
- (6, 600, 2, 11, 12, 3, 150, 250, 9),
- -- rober: ultra
- (7, 2000, 5, 2, 2, 1, 300, 400, 15),
- -- marcos: ultra
- (8, 2000, 5, 2, 2, 1, 300, 400, 15),
- -- alex: movedora
- (9, 600, 2, 11, 12, 3, 150, 250, 9),
- -- samu: ultra
- (10, 2000, 5, 2, 2, 1, 300, 400, 15);
 
  -- ----------------------
  -- Recuento de jugadores
@@ -265,27 +223,6 @@ INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influenc
  -- ultras: 4
  -- ----------------------
 TRUNCATE `usuarios`;
-INSERT INTO `usuarios` (`equipos_id_equipo`, `nick`, `pass`, `email`, `personaje`, `nivel`, `exp`, `exp_necesaria`, `puntos_desbloqueo`) VALUES
- -- xaby: empresario
- (1, 'xaby', '$2a$12$.ORtEsUunupLl48TgqWaS.TcQcWfRhq/LG2j2QtzBPQJparKHpz0e', 'xaby@xaby.com', 2, 1, 0, 550, 1),
- -- marina: movedora
- (2, 'marina', '$2a$12$1HGd6WdDNpyG8wHu0vqPr.R7VhFJe7DutNgl06FziDCLV3OSYQvkC', 'marina@marina.com', 1, 1, 0, 550, 1),
- -- arturo: empresario
- (1, 'arturo', '$2a$12$OQPWrk0fNriOXAqM4QW2seZ4.ITU7eTXfPaWR7.ehJViRwfG5L9lu', 'arturo@arturo.com', 2, 1, 0, 550, 1),
- -- dani: ultra
- (1, 'dani', '$2a$12$Xqfm1L28HICeWypJtEEaFOcnJayZZXnp8s.tHAGEZzUaxz5.DvHoW', 'dani@dani.com', 0, 1, 0, 550, 1),
- -- pedro: empresario
- (2, 'pedro', '$2a$12$0Z6Q7FdQUMKhz1gCuah4jegHD/mV87SE1TPQdb9O4ouy7Nh/YhF8y', 'pedro@pedro.com', 2, 1, 0, 550, 1),
- -- manu: movedora
- (3, 'manu', '$2a$12$WDe3nJqlmi5.Jbvuzroo4.oW1oufdiQNb9cRW.lEXOA5LBmqO/uQ.', 'manu@manu.com', 1, 1, 0, 550, 1),
- -- rober: ultra
- (2, 'rober', '$2a$12$EI56YEwNyV395M5rQsuk..HNYXFrOKFkwgzwkwvNoCgkBMe5Z1Nl.', 'rober@rober.com', 0, 1, 0, 550, 1),
- -- marcos: ultra
- (1, 'marcos', '$2a$12$Pqca.CQrIopqmBV/9ON9E.RVOjv33YUX3D.1O8K3rhEa79Q.gDEV6', 'marcos@marcos.com', 0, 1, 0, 550, 1),
- -- alex: movedora
- (2, 'alex', '$2a$12$muFItwmBUdoovIQ/91nWo.t7/fULQZdgmYA9HqlnNBE5.CY6.6p3S', 'alex@alex.com', 1, 1, 0, 550, 1),
- -- samu: ultra
- (3, 'samu', '$2a$12$yq.TAX1ogUKvRI/fKYjHlOvVFt.kgEYuH2odUe/SWUubayucEJ.Y2', 'samu@samu.com', 0, 1, 0, 550, 1);
 
  SET FOREIGN_KEY_CHECKS = 1; 
 
