@@ -31,6 +31,22 @@ function updateData (recalc,redraw) {
     "<b>Moral visitante: </b>"+partido.moral_visitante+"</br>";
   $('#partido-info-datos-numeritos').html(datosPr);
 
+  var difmor = Math.min(Math.max((partido.moral_local - partido.moral_visitante) / 300, -1), 1);
+  $('#datos-morales .datos-num-local').text(partido.moral_local);
+  $('#datos-morales .datos-num-visit').text(partido.moral_visitante);
+  $('#datos-morales .datos-barra-local').css({width: (0.5 + (0.48*difmor))*100 + '%'});
+  $('#datos-morales .datos-barra-visit').css({width: (0.5 - (0.48*difmor))*100 + '%'});
+
+  $('#datos-ofensivos .datos-num-local').text(partido.ofensivo_local);
+  $('#datos-ofensivos .datos-num-visit').text(partido.ofensivo_visitante);
+  $('#datos-ofensivos .datos-barra-local').css({width: ((0.5 * Math.min(partido.ofensivo_local, 25) / 25)*100) + '%' });
+  $('#datos-ofensivos .datos-barra-visit').css({width: ((0.5 * Math.min(partido.ofensivo_visitante, 25) / 25)*100) + '%'});
+
+  $('#datos-defensivos .datos-num-local').text(partido.defensivo_local);
+  $('#datos-defensivos .datos-num-visit').text(partido.defensivo_visitante);
+  $('#datos-defensivos .datos-barra-local').css({width: ((0.5 * Math.min(partido.defensivo_local, 25) / 25)*100) + '%' });
+  $('#datos-defensivos .datos-barra-visit').css({width: ((0.5 * Math.min(partido.defensivo_visitante, 25) / 25)*100) + '%'});
+
   for (var t = info.turnos.inicial; t <= info.turnos.final; t++) {
     var turnoDiv = $('#partido-turno-'+ t);
     turnoDiv.removeClass('turno-anterior turno-actual turno-siguiente');

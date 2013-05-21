@@ -48,7 +48,15 @@
 			visitante: {
 				token: '<?php echo $partido->visitante->token ?>'
 			}
-		}
+		},
+		moral_local: <?php echo $partido->moral_local ?>,
+		moral_visitante: <?php echo $partido->moral_visitante ?>,
+		
+		ofensivo_local: <?php echo $partido->ofensivo_local ?>,
+		ofensivo_visitante: <?php echo $partido->ofensivo_visitante ?>,
+
+		defensivo_local: <?php echo $partido->defensivo_local ?>,
+		defensivo_visitante: <?php echo $partido->defensivo_visitante ?>,
 	});
 
 	window.info.turnos = {
