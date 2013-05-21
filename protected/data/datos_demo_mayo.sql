@@ -213,7 +213,6 @@ TRUNCATE `partidos`;
  -- empresarios:     5000       16          6           8               2           30      50      1
  -- ---------------------------------------------------------------------------------------------------------
 TRUNCATE `recursos`;
-INSERT INTO `recursos` (`usuarios_id_usuario`, `dinero`, `dinero_gen`, `influencias`, `influencias_max`, `influencias_gen`, `animo`, `animo_max`, `animo_gen`) VALUES
 
  -- ----------------------
  -- Recuento de jugadores
