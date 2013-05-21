@@ -141,8 +141,11 @@
 	</div>
 
 	<div class="clear"></div>
-	<div id="barra-aforo" class="barra">
-		Aforo
+	<div id="datos-aforo" class="barra-datos-cont">
+		<div class="datos-num-local textcolor-<?php echo $partido->local->token ?>"><?php echo $partido->aforo_local ?></div>
+		<div class="datos-title">Aforo</div>
+		<div class="datos-num-visit textcolor-<?php echo $partido->visitante->token ?>"><?php echo $partido->aforo_visitante ?></div>
+
 		<?php
 			$afl = $partido->aforo_local;
 			$afv = $partido->aforo_visitante;
@@ -150,10 +153,9 @@
 			$pl = (double) $afl / $afm;
 			$pv = (double) $afv / $afm;
 		?>
-		<div id="barra-aforo-local" class="barra-aforo barra-<?php echo $partido->local->token ?>" style="width: <?php echo $pl*100 ?>%">
-			<?php echo $afl ?> <span class="mini">(<?php echo round($pl*100) ?>%)</span></div>
-		<div id="barra-aforo-visit" class="barra-aforo barra-<?php echo $partido->visitante->token ?>" style="width: <?php echo $pv*100 ?>%">
-			<span class="mini">(<?php echo round($pv*100) ?>%) </span><?php echo $afv ?></div>
+		<div class="datos-barra-centro"></div>
+		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $pl*100 ?>%"></div>
+		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $pv*100 ?>%"></div>
 	</div>
 
 	<!-- Barras de moral -->
@@ -168,6 +170,8 @@
 			$mpl = 0.5 + ($dmp*0.48);
 			$mpv = 0.5 - ($dmp*0.48);
 		?>
+
+		<div class="datos-barra-centro-izq"></div><div class="datos-barra-centro-dch"></div>
 		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $mpl*100 ?>%"></div>
 		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $mpv*100 ?>%"></div>
 	</div>
@@ -182,6 +186,7 @@
 			$opl = 0.5 * $partido->ofensivo_local / 25;
 			$opv = 0.5 * $partido->ofensivo_visitante / 25;
 		?>
+		<div class="datos-barra-centro-izq"></div><div class="datos-barra-centro-dch"></div>
 		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $opl*100 ?>%"></div>
 		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $opv*100 ?>%"></div>
 	</div>
@@ -196,6 +201,7 @@
 			$dpl = 0.5 * min($partido->defensivo_local, 25) / 25;
 			$dpv = 0.5 * min($partido->defensivo_visitante, 25) / 25;
 		?>
+		<div class="datos-barra-centro-izq"></div><div class="datos-barra-centro-dch"></div>
 		<div class="datos-barra-local bgcolor-<?php echo $partido->local->token ?>" style="width: <?php echo $dpl*100 ?>%"></div>
 		<div class="datos-barra-visit bgcolor-<?php echo $partido->visitante->token ?>" style="width: <?php echo $dpv*100 ?>%"></div>
 	</div>
