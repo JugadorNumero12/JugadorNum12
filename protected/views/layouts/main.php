@@ -528,8 +528,9 @@
 		<Copyright &copy; <?php echo date('Y'); ?> by Unknown.<br/>
 		<span class="separados">All Rights Reserved.</span>
 		<span class="separados"><?php echo Yii::powered(); ?></span>
+		<span class="separados"><a href="<?php echo Yii::app()->createUrl('/site/arte');?>">Arte</a></span>
 		<span class="separados"><a href="mailto:jugnum12@gmail.com">Contacto</a></span>
-		<span class="separados"><a href="http://lobonleal.blogspot.com.es">Arte</a></span>
+		<span class="separados"><a href="http://lobonleal.blogspot.com.es">Agradecimientos</a></span>
 		<span class="separados">Universidad Complutense de Madrid.</span>
 	</div>
 
