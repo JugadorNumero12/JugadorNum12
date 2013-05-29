@@ -133,7 +133,7 @@ TRUNCATE `equipos`;
 INSERT INTO `equipos` (`partidos_id_partido`,`nombre`,`token`,`categoria`, `aforo_max`, `aforo_base`, `nivel_equipo`, `factor_ofensivo`, `factor_defensivo`) VALUES
  (0, 'Orcas negras',   'negros',   1, 3600, 400, 10, 7, 7),
  (0, 'Perros verdes',   'verdes',   1, 3000, 500, 10, 7, 6),
- (0, 'Higuanas Moradas',  'morados',  1, 4000, 400, 9,  6, 8),
+ (0, 'Iguanas Moradas',  'morados',  1, 4000, 400, 9,  6, 8),
  (0, 'Tritones azules',   'azules',   1, 3500, 300, 11, 6, 7),
  (0, 'Elefantes rosas',    'rosas',    1, 4000, 450, 10, 5, 5),
  (0, 'Carpas naranjas', 'naranjas', 1, 3600, 500, 12, 7, 7),
