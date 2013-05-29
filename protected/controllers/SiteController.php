@@ -158,8 +158,16 @@ class SiteController extends Controller
 
 	public function actionArte()
 	{
-		$this->layout='//layouts/main';
-		$this->render('arte',array());
+		// Usuario Invitado => Redireccionar a login
+		if (Yii::app()->user->isGuest) 
+		{
+			$this->redirect(array('site/login'));
+		} 
+		else 
+		{           
+			$this->layout='//layouts/main';
+			$this->render('arte',array());
+		}
 	}
 	
 }
