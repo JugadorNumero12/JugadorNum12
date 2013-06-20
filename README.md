@@ -3,8 +3,7 @@
 ##Proyecto de Ingeniería del Software
 =====================================
 
-###<a href="https://drive.google.com/?usp=chrome_app#folders/0B80G8C57fZdxX3JiaWhJcDRxLXc"> Documentación en el drive </a>
-###<a href="https://github.com/JugadorNumero12/JugadorNum12/blob/master/Documentacion_Final"> Documentación en git </a>
+###<a href="https://github.com/JugadorNumero12/JugadorNum12/blob/master/Documentacion.md"> Documentación en git </a>
 ###<a href="https://github.com/JugadorNumero12/JugadorNum12/blob/master/Organizacion.md"> Organización del grupo </a>
 ###<a href="https://github.com/JugadorNumero12/JugadorNum12/blob/master/historial-revisiones.md"> Historial de revisiones </a>
 
