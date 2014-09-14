@@ -59,10 +59,15 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=juego',
+			'connectionString' =>
+				'mysql:host='
+			  . getenv('OPENSHIFT_MYSQL_DB_HOST')
+			  . ':'
+			  . getenv('OPENSHIFT_MYSQL_DB_PORT')
+			  . ';dbname=juego',
 			'emulatePrepare' => true,
-			'username' => 'juego',
-			'password' => 'juego',
+			'username' => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
+			'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
 			'charset' => 'utf8',
 //			'tablePrefix' => 'j12_'
 		),
