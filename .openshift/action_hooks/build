@@ -23,3 +23,4 @@ rm -rf "$tmpdir/$yiidir" "$tmpdir/$yiifile"
 
 echo 'Creating necessary directories...'
 mkdir -p "$repodir/protected/runtime"
+mkdir -p "$repodir/assets"
