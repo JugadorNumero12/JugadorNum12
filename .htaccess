@@ -1,5 +1,5 @@
-Options +FollowSymLinks
-IndexIgnore */*
+Options +FollowSymLinks -Indexes
+#IndexIgnore */*
 RewriteEngine on
 
 # if a directory or a file exists, use it directly
