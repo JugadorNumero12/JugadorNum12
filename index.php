@@ -5,7 +5,7 @@ $yiis=array(
     dirname(__FILE__).'/framework/yii.php',
     dirname(__FILE__).'/../framework/yii.php'
 );
-for ($yiis as $v) {
+foreach ($yiis as $v) {
     if (is_file($v)) {
         $yii=$v
     }

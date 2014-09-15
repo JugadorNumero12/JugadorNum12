@@ -8,10 +8,15 @@ yiiurl=https://github.com/yiisoft/yii/releases/download/$yiiver/$yiifile
 repodir="$OPENSHIFT_REPO_DIR"
 tmpdir="$OPENSHIFT_TMP_DIR"
 
-rm -rfv framework
+echo 'Removing old framework...'
+rm -rf framework
 
+echo 'Downloading new framework...'
 curl -L $yiiurl >"$tmpdir/$yiifile"
-tar -xvzf "$tmpdir/$yiifile" -C "$tmpdir"
 
-mv -v "$tmpdir/$yiidir/framework" "$repodir/framework"
-rm -rfv "$tmpdir/$yiidir" "$tmpdir/$yiifile"
+echo 'Extracting framework...'
+tar -xzf "$tmpdir/$yiifile" -C "$tmpdir"
+mv "$tmpdir/$yiidir/framework" "$repodir/framework"
+
+echo 'Removing temporary files...'
+rm -rf "$tmpdir/$yiidir" "$tmpdir/$yiifile"
