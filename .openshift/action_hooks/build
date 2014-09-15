@@ -20,3 +20,6 @@ mv "$tmpdir/$yiidir/framework" "$repodir/framework"
 
 echo 'Removing temporary files...'
 rm -rf "$tmpdir/$yiidir" "$tmpdir/$yiifile"
+
+echo 'Creating necessary directories...'
+mkdir -p "$repodir/protected/runtime"
