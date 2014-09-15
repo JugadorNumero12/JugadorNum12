@@ -7,7 +7,7 @@ $yiis=array(
 );
 foreach ($yiis as $v) {
     if (is_file($v)) {
-        $yii=$v
+        $yii=$v;
     }
 }
 // Config file path
