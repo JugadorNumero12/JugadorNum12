@@ -7,3 +7,4 @@ lessc.sh
 protected/runtime/
 themes/classic/views/
 .DS_STORE
+framework

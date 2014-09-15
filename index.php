@@ -1,7 +1,15 @@
 <?php
 
 // Framework path
-$yii=dirname(__FILE__).'/../framework/yii.php';
+$yiis=array(
+    dirname(__FILE__).'/framework/yii.php',
+    dirname(__FILE__).'/../framework/yii.php'
+);
+for ($yiis as $v) {
+    if (is_file($v)) {
+        $yii=$v
+    }
+}
 // Config file path
 $config=dirname(__FILE__).'/protected/config/main.php';
 
