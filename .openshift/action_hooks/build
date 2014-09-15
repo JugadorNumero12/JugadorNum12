@@ -5,10 +5,13 @@ yiifile=yii-$yiiver.$yiihash.tar.gz
 yiidir=yii-$yiiver.$yiihash
 yiiurl=https://github.com/yiisoft/yii/releases/download/$yiiver/$yiifile
 
+repodir="$OPENSHIFT_REPO_DIR"
+tmpdir="$OPENSHIFT_TMP_DIR"
+
 rm -rfv framework
 
-curl -OL $yiiurl
-tar -xvzf $yiifile
+curl -L $yiiurl >"$tmpdir/$yiifile"
+tar -xvzf "$tmpdir/$yiifile" -C "$tmpdir"
 
-mv -v $yiidir/framework framework
-rm -rfv $yiidir $yiifile
+mv -v "$tmpdir/$yiidir/framework" "$repodir/framework"
+rm -rfv "$tmpdir/$yiidir" "$tmpdir/$yiifile"
