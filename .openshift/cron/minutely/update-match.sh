@@ -1,4 +1,4 @@
 #!/bin/bash
-cd ../../../
+cd "$OPENSHIFT_REPO_DIR"
 
 php cron.php partido
