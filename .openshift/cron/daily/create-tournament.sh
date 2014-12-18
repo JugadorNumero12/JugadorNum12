@@ -1,4 +1,4 @@
 #!/bin/bash
 cd "$OPENSHIFT_REPO_DIR"
 
-php cropn.php liga
+php cron.php liga
