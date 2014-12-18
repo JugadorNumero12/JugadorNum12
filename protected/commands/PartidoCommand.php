@@ -34,7 +34,8 @@ class PartidoCommand extends CConsoleCommand
                 throw $ex;
             }
         }*/
-        $xml = file_get_contents("http://localhost/yii/JugadorNum12/scripts/ejecutarturno");
+        Yii::import('application.controllers.ScriptController');
+        ScriptController::ejecutarTurno();
     }
 }
 ?>
