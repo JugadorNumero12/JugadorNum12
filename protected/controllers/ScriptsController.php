@@ -417,7 +417,9 @@ class ScriptsController extends Controller
 	* @throws \Exception excepcion interna
 	* @return void
 	*/
-	public static function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(20,19,18,17,16,15,16,10))
+	public static function generaLiga(
+		$emparejamientos=null, $dentro_de=1, $descanso=null,
+		$horas=array(20,19,18,17,16,15,16,10)), $periodo=86400
 	{
 		if($emparejamientos=== null) $emparejamientos= self::calendario();
 
@@ -432,8 +434,8 @@ class ScriptsController extends Controller
 		// 86400==segundos de un dia (60²*24)
 
 		$fecha = time(); // hoy, este segundo
-		$fecha -= $fecha % 86400; // las 0:00 de hoy
-		$fecha += (int)(86400*($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
+		$fecha -= $fecha % $periodo; // las 0:00 de hoy
+		$fecha += (int)($periodo*($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
 
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
@@ -445,18 +447,17 @@ class ScriptsController extends Controller
 				$h = 0; //escojer la primera hora diponible
 
 				foreach ($jornada as $partido) {
-					
-					self::generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), $jornada_act, false);
+					self::generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*$periodo), $jornada_act, false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
 						$h = 0;
-						$time -= 86400;//empiezo a rellenar el día anterior
+						$time -= $periodo;//empiezo a rellenar el día anterior
 					}
 				}
 
     			$jornada_act++;
-				$fecha += 86400*$descanso;
+				$fecha += $periodo*$descanso;
 			}
 
 			$transaction->commit();

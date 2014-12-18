@@ -24,6 +24,6 @@ class LigaCommand extends CConsoleCommand {
         );
 
         Yii::import('application.controllers.ScriptsController');
-        ScriptsController::generaLiga(null, 0, null, $horas);
+        ScriptsController::generaLiga(null, 0, null, $horas, 3600);
     }
 }
