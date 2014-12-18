@@ -146,5 +146,4 @@ class Notificaciones extends CActiveRecord
 			if($u === null)$notificacion->delete();
 		}
 	}
-		
 }

@@ -1,9 +1,9 @@
 <?php
-class PartidoCommand extends CConsoleCommand 
+class PartidoCommand extends CConsoleCommand
 {
-    public function run($args) 
+    public function run($args)
     {
-        //Ejecutamos un turno de partido        
+        //Ejecutamos un turno de partido
         /*Yii::import('application.components.*');
         Yii::import('application.models.*');
 
@@ -25,8 +25,8 @@ class PartidoCommand extends CConsoleCommand
             try
             {
                 $partido = new Partido($partido->id_partido);
-                $partido->jugarse();   
-                $transaction->commit();             
+                $partido->jugarse();
+                $transaction->commit();
             }
             catch (Exception $ex)
             {

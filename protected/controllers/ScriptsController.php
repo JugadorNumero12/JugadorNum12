@@ -69,8 +69,8 @@ class ScriptsController extends Controller
         	try
         	{
 				$partido = new Partido($partido->id_partido);
-				$partido->jugarse();   
-				$transaction->commit();     		
+				$partido->jugarse();
+				$transaction->commit();
         	}
         	catch (Exception $ex)
         	{

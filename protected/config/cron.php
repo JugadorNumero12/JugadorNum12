@@ -10,13 +10,17 @@ return array(
         // application components
         'components'=>array(
                 'db'=>array(
-                    'class' => 'CDbConnection',
-                    'connectionString' => 'mysql:host=localhost;dbname=juego',
+                    'connectionString' =>
+                        'mysql:host='
+                      . getenv('OPENSHIFT_MYSQL_DB_HOST')
+                      . ':'
+                      . getenv('OPENSHIFT_MYSQL_DB_PORT')
+                      . ';dbname=jn12',
                     'emulatePrepare' => true,
-                    'username' => 'juego',
-                    'password' => 'juego',
+                    'username' => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
+                    'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
                     'charset' => 'utf8',
-                    'enableProfiling' => true,
+        //          'tablePrefix' => 'j12_'
                 ),
                 'log'=>array(
                         'class'=>'CLogRouter',

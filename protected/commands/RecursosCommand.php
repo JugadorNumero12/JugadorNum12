@@ -8,6 +8,8 @@ class RecursosCommand extends CConsoleCommand{
 		try{
 			$recursos=Recursos::model()->findAll();
 			foreach ($recursos as $recurso) {
+				$recurso->actualizarRecursos($recurso->usuarios_id_usuario);
+				/*
 				//influencias
 				Recursos::aumentar_recursos($recurso->usuarios_id_usuario, "influencias", $recurso->influencias_gen);
 				//dinero
@@ -15,6 +17,7 @@ class RecursosCommand extends CConsoleCommand{
 				//animo
 				Recursos::aumentar_recursos($recurso->usuarios_id_usuario, "animo", $recurso->animo_gen);
 				$trans->commit();
+				*/
 			}
 		}catch(Exception $e){
 			$trans->rollback();
