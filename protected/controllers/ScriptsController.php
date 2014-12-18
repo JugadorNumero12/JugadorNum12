@@ -421,21 +421,26 @@ class ScriptsController extends Controller
 		$emparejamientos=null, $dentro_de=1, $descanso=null,
 		$horas=array(20,19,18,17,16,15,16,10), $periodo=86400)
 	{
-		if($emparejamientos=== null) $emparejamientos= self::calendario();
+		if ($emparejamientos=== null) {
+			$emparejamientos = self::calendario();
+		}
 
 		$partidosXdia = count($horas);
-		$diasXjornada = ceil( count($emparejamientos[0]) / $partidosXdia);
+		$diasXjornada = ceil(count($emparejamientos[0]) / $partidosXdia);
 
-		if($descanso=== null) $descanso= $diasXjornada;
+		if ($descanso=== null) {
+			$descanso= $diasXjornada;
+		}
 
-		if($diasXjornada<$descanso)
+		if($diasXjornada<$descanso) {
 			Yii::log("Las jornadas se superponen unas a otras, aumente la separación entre ellas",'warning');
+		}
 
 		// 86400==segundos de un dia (60²*24)
 
 		$fecha = time(); // hoy, este segundo
 		$fecha -= $fecha % 68400; // las 0:00 de hoy
-		$fecha += (int)($periodo*($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
+		$fecha += (int)($periodo * ($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
 
 	    $transaction = Yii::app()->db->beginTransaction();
     	try
@@ -491,19 +496,21 @@ class ScriptsController extends Controller
 	*/
 	public static function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
 	{
-		//if($time<time()) 
+		//if($time<time())
 		//	throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
 
-		if($generateNewTransaction)
+		if($generateNewTransaction) {
 			$transaction = Yii::app()->db->beginTransaction();
+		}
 
 		$equipo_local = Equipos::model()->findByPk($id_local);
 		$equipo_visitante = Equipos::model()->findByPk($id_visitande);
 
-		if($equipo_local===null||$equipo_visitante===null)return;
+		if ($equipo_local===null || $equipo_visitante===null) {
+			return;
+		}
 
-		try
-    	{
+		try {
 			$partido = new Partidos();
 			$partido->setAttributes(array('equipos_id_equipo_1' => $id_local,
 			   							  'equipos_id_equipo_2' => $id_visitande,
@@ -519,7 +526,6 @@ class ScriptsController extends Controller
 			   							  'defensivo_local'=>$equipo_local->factor_defensivo,
 			   							  'defensivo_visitante'=>$equipo_visitante->factor_defensivo,
 			   							));
-			
 			$partido->save();
 
 
@@ -527,14 +533,11 @@ class ScriptsController extends Controller
 				$equipo_local->setAttributes(array('partidos_id_partido'=>$partido->id_partido));
 				$equipo_local->save();
 			}
-				
-			
-			
-			if(($equipo_visitante->partidos_id_partido == 0) || ($time < $equipo_visitante->sigPartido->hora)){
+
+			if (($equipo_visitante->partidos_id_partido == 0) || ($time < $equipo_visitante->sigPartido->hora)){
 				$equipo_visitante->setAttributes(array('partidos_id_partido'=>$partido->id_partido));
 				$equipo_visitante->save();
 			}
-				
 
 			if($generateNewTransaction) $transaction->commit();
     	}
@@ -543,7 +546,6 @@ class ScriptsController extends Controller
     		if($generateNewTransaction) $transaction->rollback();
     		throw $ex;
     	}
-      
 
 	}
 

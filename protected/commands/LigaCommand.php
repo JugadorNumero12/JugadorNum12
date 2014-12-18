@@ -5,7 +5,7 @@ class LigaCommand extends CConsoleCommand {
         Partidos::limpiarTerminados();
 
         // Crea una nueva liga
-        $horas = array(
+        $horas = array_reverse(array(
             // 14 horas: de 8 a 22 (9 a 23 en verano)
             7,  7.25,  7.5,  7.75,
             8,  8.25,  8.5,  8.75,
@@ -21,7 +21,7 @@ class LigaCommand extends CConsoleCommand {
             18, 18.25, 18.5, 18.75,
             19, 19.25, 19.5, 19.75,
             20, 20.25, 20.5, 20.75,
-        );
+        ));
 
         Yii::import('application.controllers.ScriptsController');
         ScriptsController::generaLiga(null, 0, null, $horas, 3600);
