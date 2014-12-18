@@ -10,6 +10,7 @@ foreach ($yiis as $v) {
         $yii=$v;
     }
 }
+
 // Config file path
 $config=dirname(__FILE__).'/protected/config/main.php';
 

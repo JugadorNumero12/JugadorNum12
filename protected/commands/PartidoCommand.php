@@ -35,7 +35,7 @@ class PartidoCommand extends CConsoleCommand
             }
         }*/
         Yii::import('application.controllers.ScriptController');
-        ScriptController::ejecutarTurno();
+        ScriptsController::ejecutarTurno();
     }
 }
 ?>
