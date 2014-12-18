@@ -421,4 +421,19 @@ class Partidos extends CActiveRecord
         }
         return $grupos;
     }
+
+    public static function limpiarTerminados($antiguedad=0)
+    {
+        $now = time();
+
+        // Obtener la lista de partidos
+        $partidos = Partidos::model()->findAll();
+
+        // Agregar datos al array
+        foreach ($partidos as $partido) {
+            if ($partido->turno > Partido::ULTIMO_TURNO && $partido->hora_ult_turno < $now - $antiguedad) {
+                $partido-delete();
+            }
+        }
+    }
 }
