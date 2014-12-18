@@ -5,9 +5,7 @@ class LigaCommand extends CConsoleCommand {
         Partidos::limpiarTerminados();
 
         // Crea una nueva liga
-        $horas = array(
-            0.75, 0.5, 0.25, 0
-        );
+        $horas = array(0.0, 0.25, 0.5, 0.75);
 
         Yii::import('application.controllers.ScriptsController');
         ScriptsController::generaLiga(null, -1, null, $horas, 3600);
