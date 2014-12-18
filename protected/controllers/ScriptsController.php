@@ -434,7 +434,7 @@ class ScriptsController extends Controller
 		// 86400==segundos de un dia (60²*24)
 
 		$fecha = time(); // hoy, este segundo
-		$fecha -= $fecha % $periodo; // las 0:00 de hoy
+		$fecha -= $fecha % 68400; // las 0:00 de hoy
 		$fecha += (int)($periodo*($dentro_de+$diasXjornada-1)); // las 0:00 del día de la primera jornada.
 
 	    $transaction = Yii::app()->db->beginTransaction();
