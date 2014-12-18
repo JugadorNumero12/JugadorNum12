@@ -485,14 +485,13 @@ class ScriptsController extends Controller
 	* @param int $jornada   jornada de la liga
 	* @param bool $generateNewTransaction   generar nueva transaccion
 	*
-	* @throws \Exception Los viajes en el tiempo no esta implemetados en esta version del juego.
 	* @throws \Exception excepcion interna
 	* @return void
 	*/
 	public static function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
 	{
-		if($time<time()) 
-			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
+		//if($time<time()) 
+		//	throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
 
 		if($generateNewTransaction)
 			$transaction = Yii::app()->db->beginTransaction();
