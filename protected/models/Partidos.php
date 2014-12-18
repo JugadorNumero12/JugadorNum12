@@ -432,7 +432,7 @@ class Partidos extends CActiveRecord
         // Agregar datos al array
         foreach ($partidos as $partido) {
             if ($partido->turno > Partido::ULTIMO_TURNO && $partido->hora_ult_turno < $now - $antiguedad) {
-                $partido-delete();
+                $partido->delete();
             }
         }
     }
