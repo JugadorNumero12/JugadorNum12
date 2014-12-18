@@ -419,7 +419,7 @@ class ScriptsController extends Controller
 	*/
 	public static function generaLiga(
 		$emparejamientos=null, $dentro_de=1, $descanso=null,
-		$horas=array(20,19,18,17,16,15,16,10)), $periodo=86400
+		$horas=array(20,19,18,17,16,15,16,10), $periodo=86400)
 	{
 		if($emparejamientos=== null) $emparejamientos= self::calendario();
 
