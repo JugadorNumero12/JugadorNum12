@@ -1,6 +1,6 @@
 <?php
 
-// Framework path
+// Framework path (selected depending on current paths)
 $yiis=array(
     dirname(__FILE__).'/framework/yii.php',
     dirname(__FILE__).'/../framework/yii.php'
