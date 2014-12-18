@@ -49,6 +49,11 @@ class ScriptsController extends Controller
 	 */
 	public function actionEjecutarTurno()
 	{
+		self::ejecutarTurno(true);
+	}
+
+	public static function ejecutarTurno ($forzar=false)
+	{
 		Yii::import('application.components.Partido');
 
 		$tiempo=time();
@@ -337,7 +342,7 @@ class ScriptsController extends Controller
 	* @param int[] $participantes   id de los equipos participantes
 	* @return int[][]
 	*/
-	private function calendario($participantes=null)
+	private static function calendario($participantes=null)
 	{
 		if($participantes===null){//devolver una lista con todos los id_equipo
     		$i=0;
@@ -398,7 +403,7 @@ class ScriptsController extends Controller
 	*  - sus partidos se jugarán a las '$horas' (si hay pocas horas, se juegan el día anterior en el mismo horario).
 	*
 	* > Las horas se introducen como un entero entre 0 y 24, que corresponde con la hora GMT+0
-	*	Ej: en verano: array(20, 27.5, 13) => los partidos se jugarán a las 22:00, 19:30, 15:00 (hora española)
+	*	Ej: en verano: array(20, 17.5, 13) => los partidos se jugarán a las 22:00, 19:30, 15:00 (hora española)
 	*		en invierno: array(11.25, 9)   => los partidos se jugarán a las 12:15, 10:00 (hora española)
 	*
 	* Los partidos se generan en el orden definido en '$emparejamientos'.
@@ -412,9 +417,9 @@ class ScriptsController extends Controller
 	* @throws \Exception excepcion interna
 	* @return void
 	*/
-	public function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(20,19,18,17,16,15,16,10))
+	public static function generaLiga($emparejamientos=null, $dentro_de=1, $descanso=null, $horas=array(20,19,18,17,16,15,16,10))
 	{
-		if($emparejamientos=== null) $emparejamientos= $this->calendario();
+		if($emparejamientos=== null) $emparejamientos= self::calendario();
 
 		$partidosXdia = count($horas);
 		$diasXjornada = ceil( count($emparejamientos[0]) / $partidosXdia);
@@ -441,7 +446,7 @@ class ScriptsController extends Controller
 
 				foreach ($jornada as $partido) {
 					
-					$this->generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), $jornada_act, false);
+					self::generaPartido($partido[0], $partido[1], (int)($time+ $horas[$h]*3600), $jornada_act, false);
 
 					if(++$h >=$partidosXdia)//si ya no hay más horas ese día
 					{
@@ -484,7 +489,7 @@ class ScriptsController extends Controller
 	* @throws \Exception excepcion interna
 	* @return void
 	*/
-	public function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
+	public static function generaPartido($id_local, $id_visitande, $time, $jornada=0, $generateNewTransaction=true)
 	{
 		if($time<time()) 
 			throw new Exception("Los viajes en el tiempo no esta implemetados en esta version del juego.");
@@ -549,7 +554,7 @@ class ScriptsController extends Controller
 	* @return void
 	*/
 	public function actionLiga(){
-		$this->generaLiga(null, 1, 2, array(19.5, 17, 15.5) );
+		self::generaLiga(null, 1, 2, array(19.5, 17, 15.5) );
 		//genera una liga con emparejamientos por defecto, que empieza mañana, con jornadas cada 2 días
 	}
 }
