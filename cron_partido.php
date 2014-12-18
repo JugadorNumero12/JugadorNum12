@@ -1,7 +1,17 @@
 <?php
 
 // Framework path
-$yii=dirname(__FILE__).'/framework/yii.php';
+// Framework path
+$yiis=array(
+    dirname(__FILE__).'/framework/yii.php',
+    dirname(__FILE__).'/../framework/yii.php'
+);
+foreach ($yiis as $v) {
+    if (is_file($v)) {
+        $yii=$v;
+    }
+}
+
 // Config file path
 $config=dirname(__FILE__).'/protected/config/cron_partido_config.php';
 
