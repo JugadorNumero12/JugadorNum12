@@ -89,7 +89,7 @@ class ScriptsController extends Controller
 	 * Devuelve los recursos de las acciones individuales
 	 *
 	 * Selecciona las acciones individuales pendientes de devolución
-	 * de recursos (finalización) y ejecuta el método oportuno de cada 
+	 * de recursos (finalización) y ejecuta el método oportuno de cada
 	 * una de ellas.
 	 *
 	 * @route JugadorNum12/scripts/finalizaIndividuales
